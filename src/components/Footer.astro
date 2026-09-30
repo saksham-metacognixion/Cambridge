@@ -78,18 +78,20 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
   .links a, .bot a { color: inherit; text-decoration: none; }
   .col .links { margin-top: calc(3 * var(--u)); }
   .nl .box { position: relative; background: #fff; border-radius: calc(8 * var(--u)); width: calc(213 * var(--u)); height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
-  .nl input[type="email"] { position: absolute; left: calc(10 * var(--u)); top: calc(9 * var(--u)); width: calc(150 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  .nl input[type="email"] { position: absolute; inset-inline-start: calc(10 * var(--u)); top: calc(9 * var(--u)); width: calc(150 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
   .nl input::placeholder { color: #004059; opacity: 1; }
-  .nl button { position: absolute; left: calc(169 * var(--u)); top: calc(9 * var(--u)); width: calc(36 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; background: transparent; cursor: pointer; text-align: left; font: 500 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  .nl button { position: absolute; inset-inline-start: calc(169 * var(--u)); top: calc(9 * var(--u)); width: calc(36 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; background: transparent; cursor: pointer; text-align: start; font: 500 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
   .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
   .bot { margin: 0; font-size: calc(7 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; white-space: pre; }
-  .bot.right { text-align: right; }
+  .bot.right { text-align: end; }
+  /* each legal link is its own bidi run, so the pair reorders in RTL like the rest of the layout */
+  .bot.right a { unicode-bidi: isolate; }
   .accimg { margin-top: calc(24 * var(--u)); width: calc(235 * var(--u)); height: calc(45 * var(--u)); overflow: hidden; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .ft .stage > img { max-width: none; }
 
   @media (min-width: 1024px) {
-    .a { position: absolute; left: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
+    .a { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
     .nl .box { margin-top: calc(13 * var(--u)); }
     .links { height: calc(174 * var(--u)); }
     .col .links { margin-top: calc(3 * var(--u)); }
@@ -104,6 +106,6 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
     .icons { width: calc(161 * var(--u)); height: auto; }
     .stage > img[src*="line24"], .stage > img:not(.logo):not(.icons) { width: 100%; height: auto; flex: 1 1 100%; }
     .bot { flex: 1 1 auto; white-space: pre-wrap; }
-    .bot.right { text-align: left; }
+    .bot.right { text-align: start; }
   }
 </style>

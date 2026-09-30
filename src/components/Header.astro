@@ -77,14 +77,16 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .pill { background: #00415a; border-radius: calc(5 * var(--u)); }
   .book { background: #00b8ff; border-radius: calc(7 * var(--u)); }
   .booklabel { pointer-events: none; }
-  .vl > img { position: absolute; left: 0; top: calc(30 * var(--u)); width: calc(30 * var(--u)); height: calc(1 * var(--u)); transform-origin: 0 0; transform: rotate(-90deg); max-width: none; }
+  .vl > img { position: absolute; inset-inline-start: 0; top: calc(30 * var(--u)); width: calc(30 * var(--u)); height: calc(1 * var(--u)); transform-origin: 0 0; transform: rotate(-90deg); max-width: none; }
+  /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
+  :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }
   .hd ul { margin: 0; padding: 0; list-style: none; }
   .mainnav { display: flex; gap: calc(11 * var(--u)); }
   .mainnav li { width: calc(var(--w) * var(--u)); height: calc(15 * var(--u)); }
   .burger { display: none; }
 
   @media (min-width: 1024px) {
-    .a { position: absolute; left: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
+    .a { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
     .menu, .toplinks, .lang { display: contents; }
     .visit, .global, .booklabel { margin: 0; }
     .book { display: block; }
@@ -101,7 +103,7 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     #nav-toggle:checked ~ .stage .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
     #nav-toggle:focus-visible ~ .stage .burger { outline: 2px solid #00b8ff; outline-offset: 2px; }
 
-    .menu { display: none; position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
+    .menu { display: none; position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
     #nav-toggle:checked ~ .stage .menu { display: flex; }
     .deco, .chip, .pill, .chev, .booklabel { display: none; }
     .toplinks, .mainnav { display: flex; flex-direction: column; gap: calc(12 * var(--u)); }

@@ -21,7 +21,7 @@
 }
 
 @theme {
-  /* 1 spacing step = 1 Figma px, so  w-185  left-[-118]  top-1380  gap-11  are Figma values, scaled. */
+  /* 1 spacing step = 1 Figma px, so  w-185  start-[-118]  top-1380  gap-11  are Figma values, scaled. */
   --spacing: var(--u);
 
   /* Colours: exact hex values from Figma */
@@ -124,3 +124,6 @@ body {
    Swipe / scroll only, no controls. Native scrollbar hidden; nothing added to the design. */
 .hscroll { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .hscroll::-webkit-scrollbar { display: none; }
+/* Chrome rounds the initial RTL snap position of a row that overhangs the frame by 1px, which breaks the exact
+   mirror at desktop widths. Desktop RTL rows scroll without snapping; mobile/tablet rows snap in both directions. */
+@media (min-width: 1024px) { [dir='rtl'] .hscroll { scroll-snap-type: none; } }

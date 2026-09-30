@@ -49,7 +49,7 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
 
 <section id="news" class="relative bg-white font-gotham" style="--h: 590">
   <div class="stage max-lg:px-16 max-lg:py-30">
-    <h2 class="m-0 font-medium text-f28 leading-27 text-navy text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:left-305 lg:top-0 lg:w-430 lg:h-27">{txt.title}</h2>
+    <h2 class="m-0 font-medium text-f28 leading-27 text-navy text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-305 lg:top-0 lg:w-430 lg:h-27">{txt.title}</h2>
 
     <div class="flex flex-wrap justify-center gap-10 max-lg:mt-20 lg:contents">
       {pills.map((p) => (
@@ -78,7 +78,7 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
               decoding="async"
               alt={c.alt}
               class="absolute max-w-none"
-              style={`height:${c.img.h};left:${c.img.l};top:${c.img.t};width:${c.img.w}`}
+              style={`height:${c.img.h};inset-inline-start:${c.img.l};top:${c.img.t};width:${c.img.w}`}
             />
           </div>
           <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-241 lg:w-289" style={`--lx:${c.hx - c.x}`}>{c.title}</h3>
@@ -90,8 +90,8 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
       ))}
     </div>
 
-    <img src={dots.src} width={dots.width} height={dots.height} alt="" class="hidden lg:block absolute left-506 top-544" style="width:calc(40.972 * var(--u));height:calc(8.716 * var(--u))" />
-    <div class="hidden lg:block absolute left-60 -rotate-[0.31deg]" style="top:calc(587.375 * var(--u));width:calc(915.014 * var(--u));height:calc(0.25 * var(--u))">
+    <img src={dots.src} width={dots.width} height={dots.height} alt="" class="hidden lg:block absolute start-506 top-544" style="width:calc(40.972 * var(--u));height:calc(8.716 * var(--u))" />
+    <div class="hidden lg:block absolute start-60 -rotate-[0.31deg]" style="top:calc(587.375 * var(--u));width:calc(915.014 * var(--u));height:calc(0.25 * var(--u))">
       <img src={line.src} width={line.width} height={line.height} alt="" class="block w-full h-full" />
     </div>
   </div>
@@ -99,8 +99,8 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
 
 <style>
   @media (min-width: 1024px) {
-    [data-x] { left: calc(var(--x) * var(--u)); }
-    [data-card] { left: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
-    [data-card] > :not(:first-child) { left: calc((var(--lx, 0)) * var(--u)); }
+    [data-x] { inset-inline-start: calc(var(--x) * var(--u)); }
+    [data-card] { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
+    [data-card] > :not(:first-child) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
   }
 </style>

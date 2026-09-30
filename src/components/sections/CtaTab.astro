@@ -25,15 +25,15 @@ const dividers = [262, 524, 786];
     <ul class="m-0 grid list-none grid-cols-2 p-0 lg:contents">
       {items.map((it, i) => (
         <li class:list={['cta-li relative max-lg:min-h-[calc(82*var(--u))]', i < 2 && 'b', i % 2 === 0 && 'r']}>
-          <a href={it.href} class="flex h-full flex-col items-center justify-center gap-[calc(8*var(--u))] font-gotham not-italic lg:block lg:absolute lg:top-0 lg:h-82 lg:w-148" style={`left:calc(${it.cx - 74} * var(--u))`}>
-            <img src={it.icon.src} width={it.size} height={it.size} alt="" aria-hidden="true" class="lg:absolute" style={`width:calc(${it.size} * var(--u));height:calc(${it.size} * var(--u));left:calc(${it.ix - (it.cx - 74)} * var(--u));top:calc(${it.iy} * var(--u))`} />
-            <span class="block h-15 w-148 text-center font-medium text-f13 leading-[calc(15*var(--u))] text-navy-alt max-lg:w-auto lg:absolute lg:left-0 lg:top-55">{it.label}</span>
+          <a href={it.href} class="flex h-full flex-col items-center justify-center gap-[calc(8*var(--u))] font-gotham not-italic lg:block lg:absolute lg:top-0 lg:h-82 lg:w-148" style={`inset-inline-start:calc(${it.cx - 74} * var(--u))`}>
+            <img src={it.icon.src} width={it.size} height={it.size} alt="" aria-hidden="true" class="lg:absolute" style={`width:calc(${it.size} * var(--u));height:calc(${it.size} * var(--u));inset-inline-start:calc(${it.ix - (it.cx - 74)} * var(--u));top:calc(${it.iy} * var(--u))`} />
+            <span class="block h-15 w-148 text-center font-medium text-f13 leading-[calc(15*var(--u))] text-navy-alt max-lg:w-auto lg:absolute lg:start-0 lg:top-55">{it.label}</span>
           </a>
         </li>
       ))}
     </ul>
     {dividers.map((x) => (
-      <img src={line6.src} alt="" aria-hidden="true" class="pointer-events-none absolute max-lg:hidden" style={`width:calc(82 * var(--u));height:calc(0.15 * var(--u));left:calc(${x - 41} * var(--u));top:calc(40.925 * var(--u));transform:rotate(90deg)`} />
+      <img src={line6.src} alt="" aria-hidden="true" class="pointer-events-none absolute max-lg:hidden" style={`width:calc(82 * var(--u));height:calc(0.15 * var(--u));inset-inline-start:calc(${x - 41} * var(--u));top:calc(40.925 * var(--u));transform:rotate(90deg)`} />
     ))}
   </div>
 </section>
@@ -41,6 +41,6 @@ const dividers = [262, 524, 786];
   @media (max-width: 1023.98px) {
     .cta-li { border: 0 solid var(--color-teal-border); }
     .cta-li.b { border-bottom-width: calc(0.15 * var(--u)); }
-    .cta-li.r { border-right-width: calc(0.15 * var(--u)); }
+    .cta-li.r { border-inline-end-width: calc(0.15 * var(--u)); }
   }
 </style>

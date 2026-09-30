@@ -54,11 +54,11 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
 
     <div class="hscroll dpos w-full max-lg:self-stretch" style="--x:0;--y:139;--w:1052;--h:231">
       <div class="row flex gap-[calc(27*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0">
-        <span class="w-0 shrink-0 snap-start lg:absolute lg:left-0" aria-hidden="true"></span>
+        <span class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></span>
         {cards.map((card) => (
           <article class="card relative shrink-0 snap-start bg-white rounded-r15 hair-card" style={`--l:${card.x - ROW_X}`}>
             <div class="pos rounded-r15 bg-veil" style="--x:3;--y:3;--w:179;--h:155"></div>
-            <div class="pos" aria-hidden="true" style={`--x:${card.shapeX};--y:${MASK_DY - 4};--w:168.409;--h:170.657;background:url("${(card.fill as any).src}") center/100% 100% no-repeat;${maskStyle}`}></div>
+            <div class="pos shape" aria-hidden="true" style={`--x:${card.shapeX};--y:${MASK_DY - 4};--w:168.409;--h:170.657;background:url("${(card.fill as any).src}") center/100% 100% no-repeat;${maskStyle}`}></div>
             <Picture class="pos object-cover" src={card.img} formats={['avif']} fallbackFormat="webp" width={px(card.ph[2])} height={px(card.ph[3])} widths={[px(card.ph[2]), px(card.ph[2]) * 2]} sizes={`${px(card.ph[2])}px`} loading="lazy" decoding="async" alt={card.alt} style={`--x:${card.ph[0] - card.x};--y:${card.ph[1] - 1380};--w:${card.ph[2]};--h:${card.ph[3]}`} />
             <h3 class="pos font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`--x:15;--y:170;--w:${card.nameW};--h:15`}>{card.name}</h3>
             <p class="pos font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word]" style="--x:15;--y:185;--w:148;--h:20">{card.role}</p>
@@ -74,8 +74,8 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
 </section>
 
 <style>
-  .pos { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
-  .pill { position: absolute; left: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
+  .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
   .card { width: calc(185 * var(--u)); height: calc(231 * var(--u)); }
   .dpos img, img.dpos { max-width: none; }
   @media (max-width: 1023.98px) {
@@ -85,8 +85,10 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
     .hscroll.dpos { position: static; width: 100%; height: auto; }
   }
   @media (min-width: 1024px) {
-    .dpos { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
-    .row { margin-left: calc(-118 * var(--u)); width: calc(1248 * var(--u)); height: calc(231 * var(--u)); }
-    .card { position: absolute; left: calc(var(--l) * var(--u)); top: 0; }
+    .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
+    .row { margin-inline-start: calc(-118 * var(--u)); width: calc(1248 * var(--u)); height: calc(231 * var(--u)); }
+    .card { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: 0; }
   }
+  /* RTL: flip the decorative masked shape itself (its box is already mirrored) */
+  :global([dir='rtl']) .shape { scale: -1 1; }
 </style>

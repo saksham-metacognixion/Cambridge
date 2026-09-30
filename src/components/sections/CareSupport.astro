@@ -49,7 +49,7 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 
     <div class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
       <ul class="row flex gap-[calc(24*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0 m-0 list-none">
-        <li class="w-0 shrink-0 snap-start lg:absolute lg:left-0" aria-hidden="true"></li>
+        <li class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></li>
         {tiles.map((t) => (
           <li class="tile relative shrink-0 snap-start" style={`--l:${t.x}`}>
             <div class="pos bg-cyan rounded-r5 shadow-tile" style="--x:0;--y:0;--w:89;--h:87"></div>
@@ -63,8 +63,8 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 </section>
 
 <style>
-  .pos { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
-  .pill { position: absolute; left: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
+  .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
   .tile { width: calc(89 * var(--u)); height: calc(110 * var(--u)); }
   @media (max-width: 1023.98px) {
     .pill { position: static; }
@@ -74,8 +74,8 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     .dpos { position: static; }
   }
   @media (min-width: 1024px) {
-    .dpos { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
-    .row { margin-left: calc(-22 * var(--u)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
-    .tile { position: absolute; left: calc(var(--l) * var(--u)); top: 0; }
+    .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
+    .row { margin-inline-start: calc(-22 * var(--u)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
+    .tile { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: 0; }
   }
 </style>

@@ -30,8 +30,8 @@ const dividers = [148, 273, 423, 568, 758, 864];
 
 <section id="insurance" class="relative bg-white font-gotham" style="--h: 207">
   <div class="stage max-lg:px-16 max-lg:py-20 max-lg:flex max-lg:flex-col max-lg:items-center">
-    <h2 class="m-0 font-medium text-f28 leading-27 text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:max-w-430 lg:absolute lg:left-309 lg:top-0 lg:w-430 lg:h-27">{txt.title}</h2>
-    <p class="m-0 font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:mt-10 max-lg:max-w-577 lg:absolute lg:left-235 lg:top-37 lg:w-577 lg:h-13">{txt.subtitle}</p>
+    <h2 class="m-0 font-medium text-f28 leading-27 text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:max-w-430 lg:absolute lg:start-309 lg:top-0 lg:w-430 lg:h-27">{txt.title}</h2>
+    <p class="m-0 font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:mt-10 max-lg:max-w-577 lg:absolute lg:start-235 lg:top-37 lg:w-577 lg:h-13">{txt.subtitle}</p>
 
     <ul class="m-0 list-none p-0 max-lg:mt-30 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:justify-center max-lg:gap-x-30 max-lg:gap-y-20 lg:contents">
       {logos.map((l) => (
@@ -42,13 +42,13 @@ const dividers = [148, 273, 423, 568, 758, 864];
     </ul>
 
     {dividers.map((x) => (
-      <div class="hidden lg:block absolute top-86 w-48 origin-top-left rotate-90" style={`left:calc(${x + F} * var(--u));height:calc(0.15 * var(--u))`} aria-hidden="true">
+      <div class="hidden lg:block absolute top-86 w-48 origin-top-left rotate-90 rtl:origin-top-right rtl:-rotate-90" style={`inset-inline-start:calc(${x + F} * var(--u));height:calc(0.15 * var(--u))`} aria-hidden="true">
         <img src={line13.src} width={line13.width} height={line13.height} alt="" class="block w-full h-full" />
       </div>
     ))}
 
-    <a href={txt.button.href} class="relative block bg-navy-alt rounded-r7 w-118 h-30 not-italic max-lg:mt-30 lg:absolute lg:left-469 lg:top-177 no-underline">
-      <span class="absolute top-9 w-145 h-15 block text-center font-medium text-f13 leading-15 text-white whitespace-normal [word-break:break-word] lg:left-[calc(-15*var(--u))] max-lg:left-1/2 max-lg:-translate-x-1/2">{txt.button.label}</span>
+    <a href={txt.button.href} class="relative block bg-navy-alt rounded-r7 w-118 h-30 not-italic max-lg:mt-30 lg:absolute lg:start-469 lg:top-177 no-underline">
+      <span class="absolute top-9 w-145 h-15 block text-center font-medium text-f13 leading-15 text-white whitespace-normal [word-break:break-word] lg:start-[calc(-15*var(--u))] max-lg:left-1/2 max-lg:-translate-x-1/2">{txt.button.label}</span>
     </a>
   </div>
 </section>
@@ -56,6 +56,6 @@ const dividers = [148, 273, 423, 568, 758, 864];
 <style>
   [data-logo] { width: calc(var(--lw) * var(--u)); height: calc(var(--lh) * var(--u)); }
   @media (min-width: 1024px) {
-    [data-logo] { left: calc(var(--lx) * var(--u)); top: calc(var(--ly) * var(--u)); }
+    [data-logo] { inset-inline-start: calc(var(--lx) * var(--u)); top: calc(var(--ly) * var(--u)); }
   }
 </style>

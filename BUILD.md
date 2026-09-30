@@ -7,7 +7,7 @@ Never guess a colour, size, text, position or asset. If a spec is silent or uncl
 ## Scale
 Figma frame = 1052 px wide, page = 1440 px. `--u` = one Figma pixel (≈1.3688 px at 1440, fluid between 1024–1440).
 Tailwind is wired so **every number is a Figma px value**:
-`w-185 h-231 left-94 top-1380 -left-118 left-525.5 gap-11 p-10` → scaled automatically (`--spacing: var(--u)`).
+`w-185 h-231 start-94 top-1380 -start-118 start-525.5 gap-11 p-10` → scaled automatically (`--spacing: var(--u)`).
 Font sizes `text-f7 f8 f9 f10 f12 f13 f14 f16 f19 f23 f28 f30 f39`, radii `rounded-r3 r4 r5 r6 r7 r8 r12 r15 r16 r18 r21 r30 r12p6`,
 line-heights `leading-14` (= 14 Figma px), letter-spacing none, hairlines `.hair-15 .hair-25 .hair-50 .hair-100` (+ `border-<colour>`),
 shadows `shadow-bar shadow-tile shadow-news`, fonts `font-gotham` with `font-light|normal|medium|bold` (300/400/500/700).
@@ -16,11 +16,21 @@ Colours: `navy #004059`, `navy-alt #00415a`, `cyan #00b8ff`, `body #6b6b6b`, `te
 For a value with no token write it as Figma px anyway, e.g. `rounded-[calc(21.9*var(--u))]`, `style="width:calc(915.014*var(--u))"`.
 The factor lives ONLY in `src/lib/scale.ts` (TARGET_W / DESIGN_W). For image widths use `px()` from there.
 
+## RTL: logical properties only (CLAUDE.md §5)
+One stylesheet serves LTR and RTL (`dir="rtl"` on Arabic pages). Never write physical left/right:
+`start-N`/`end-N` (not left/right), `ms/me`, `ps/pe`, `text-start/end`, `rounded-ss/se/es/ee`, `border-s/e`;
+in CSS `inset-inline-start`, `margin-inline-*`, `padding-inline-*`, `border-inline-*`, `border-start-start-radius`...
+The `inset` shorthand is physical: write `inset-block: T B; inset-inline: S E`. A Figma x becomes the distance from the
+start edge, which mirrors exactly. Transforms, masks and rotations don't mirror by themselves: add an `rtl:` rule
+(flip decorative art with `scale: -1 1`; rotate thin lines the other way around the top-right corner). Centring with
+physical `left-1/2 -translate-x-1/2` is fine (symmetric) as long as no start/end offset applies at the same width.
+Photos, logos and the map are never flipped. Check: `dir="rtl"` must mirror every element box exactly.
+
 ## Section anatomy (desktop ≥1024px = pixel-faithful absolute canvas)
 ```astro
 <section class="relative bg-veil" style="--h: 553">      <!-- full-bleed background colour goes HERE (edge to edge) -->
   <div class="stage">                                     <!-- 1440 max, centred; height = --h × --u; clips overflow -->
-    <p class="absolute left-237 top-106 w-577 h-27 …">…</p>   <!-- x = PAGE x (stage left = page x 0), y = SECTION-relative -->
+    <p class="absolute start-237 top-106 w-577 h-27 …">…</p>   <!-- x = PAGE x (stage left = page x 0), y = SECTION-relative -->
   </div>
 </section>
 ```

@@ -39,21 +39,21 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
 
   <div class="stage max-lg:px-16 max-lg:py-40">
     <!-- Corner art (placed BELOW the card: see report): box 324x348 @ (0,95), clipped, rounded bottom-left 16 -->
-    <div class="corner hidden lg:block absolute left-0 top-95 w-324 h-348 overflow-clip rounded-bl-r16 pointer-events-none" aria-hidden="true">
+    <div class="corner hidden lg:block absolute start-0 top-95 w-324 h-348 overflow-clip rounded-es-r16 pointer-events-none" aria-hidden="true">
       <div class="corner-art" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
     </div>
 
-    <div class="card relative bg-white max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:left-177 lg:top-35 lg:w-698 lg:h-318">
-      <h2 class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:left-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
+    <div class="card relative bg-white max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:start-177 lg:top-35 lg:w-698 lg:h-318">
+      <h2 class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:start-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
 
       <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
-        <p class:list={[label, 'm-0 lg:absolute lg:left-54 lg:top-82 lg:w-31']}>{txt.emailLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:left-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="text-body no-underline">{txt.email}</a></p>
-        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:left-54 lg:top-126']}>{txt.phoneLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:left-54 lg:top-144 lg:w-193 lg:h-30']}>{txt.phones[0]}<br />{txt.phones[1]}</p>
-        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:left-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:left-54 lg:top-198 lg:w-193 lg:h-42']}>{txt.address}</p>
-        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:left-54 lg:top-253 lg:w-49']}>{txt.followLabel}</p>
+        <p class:list={[label, 'm-0 lg:absolute lg:start-54 lg:top-82 lg:w-31']}>{txt.emailLabel}</p>
+        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="text-body no-underline">{txt.email}</a></p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-126']}>{txt.phoneLabel}</p>
+        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-144 lg:w-193 lg:h-30']}>{txt.phones[0]}<br />{txt.phones[1]}</p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>
+        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-198 lg:w-193 lg:h-42']}>{txt.address}</p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-253 lg:w-49']}>{txt.followLabel}</p>
         <!-- TODO(figma): no per-icon links known; the six social icons are one svg image. -->
         <img src={social.src} width={social.width} height={social.height} alt={txt.social.alt} class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))" />
       </div>
@@ -61,17 +61,17 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       <form action="https://api.web3forms.com/submit" method="POST" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
         <input type="hidden" name="access_key" value={accessKey} />
 
-        <label for="contact-name" class:list={[label, 'lg:absolute lg:left-371 lg:top-47 lg:w-51']}>{txt.form.nameLabel}</label>
-        <input id="contact-name" name="name" type="text" required autocomplete="name" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:left-371 lg:top-63 lg:w-125" />
+        <label for="contact-name" class:list={[label, 'lg:absolute lg:start-371 lg:top-47 lg:w-51']}>{txt.form.nameLabel}</label>
+        <input id="contact-name" name="name" type="text" required autocomplete="name" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-63 lg:w-125" />
 
-        <label for="contact-email" class:list={[label, 'max-lg:mt-8 lg:absolute lg:left-515 lg:top-47 lg:w-76']}>{txt.form.emailLabel}</label>
-        <input id="contact-email" name="email" type="email" required autocomplete="email" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:left-515 lg:top-63 lg:w-140" />
+        <label for="contact-email" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-515 lg:top-47 lg:w-76']}>{txt.form.emailLabel}</label>
+        <input id="contact-email" name="email" type="email" required autocomplete="email" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-515 lg:top-63 lg:w-140" />
 
-        <label for="contact-message" class:list={[label, 'max-lg:mt-8 lg:absolute lg:left-371 lg:top-97 lg:w-51']}>{txt.form.messageLabel}</label>
-        <textarea id="contact-message" name="message" required placeholder={txt.form.messagePlaceholder} class="field area max-lg:w-full max-lg:max-w-284 lg:absolute lg:left-371 lg:top-113 lg:w-284 lg:h-140"></textarea>
+        <label for="contact-message" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-371 lg:top-97 lg:w-51']}>{txt.form.messageLabel}</label>
+        <textarea id="contact-message" name="message" required placeholder={txt.form.messagePlaceholder} class="field area max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-113 lg:w-284 lg:h-140"></textarea>
 
-        <button type="submit" class="relative block border-0 p-0 m-0 bg-navy rounded-r8 h-26 max-lg:w-full max-lg:max-w-284 lg:w-284 cursor-pointer not-italic max-lg:mt-8 lg:absolute lg:left-371 lg:top-263">
-          <span class="absolute block top-7 w-65 h-13 text-left max-lg:left-1/2 max-lg:-translate-x-1/2 lg:left-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">{txt.form.submit}</span>
+        <button type="submit" class="relative block border-0 p-0 m-0 bg-navy rounded-r8 h-26 max-lg:w-full max-lg:max-w-284 lg:w-284 cursor-pointer not-italic max-lg:mt-8 lg:absolute lg:start-371 lg:top-263">
+          <span class="absolute block top-7 w-65 h-13 text-start max-lg:left-1/2 max-lg:-translate-x-1/2 lg:start-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">{txt.form.submit}</span>
         </button>
       </form>
     </div>
@@ -80,11 +80,11 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
 </section>
 
 <style>
-  .pattern-img { left: 0; top: 0; width: 100%; height: 100%; }
+  .pattern-img { inset-inline-start: 0; top: 0; width: 100%; height: 100%; }
   @media (min-width: 1024px) {
-    .pattern-img { left: calc(4 * var(--u)); width: calc(1045 * var(--u)); height: calc(497 * var(--u)); }
+    .pattern-img { inset-inline-start: calc(4 * var(--u)); width: calc(1045 * var(--u)); height: calc(497 * var(--u)); }
   }
-  @media (min-width: 1024px) { .social { left: calc(53.09 * var(--u)); } }
+  @media (min-width: 1024px) { .social { inset-inline-start: calc(53.09 * var(--u)); } }
   .field {
     box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0;
     background: var(--color-field); border-radius: calc(8 * var(--u));
@@ -103,7 +103,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
     position: absolute;
     /* Exactly as Figma: inset left 169.29% of the 324-wide clipped box = 548.5, i.e. outside the clip -> not visible in Figma either.
        TODO(figma): confirm against a Figma screenshot whether the designer meant this art to show at the bottom-left. */
-    left: calc(548.5 * var(--u)); top: calc(14.303 * var(--u));
+    inset-inline-start: calc(548.5 * var(--u)); top: calc(14.303 * var(--u));
     width: calc(379.1 * var(--u)); height: calc(377.052 * var(--u));
     background-repeat: no-repeat; background-size: 100% 100%;
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
@@ -111,4 +111,5 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
     -webkit-mask-position: calc(-15.018 * var(--u)) calc(-23.169 * var(--u)); mask-position: calc(-15.018 * var(--u)) calc(-23.169 * var(--u));
     mask-mode: alpha;
   }
+  :global([dir='rtl']) .corner-art { scale: -1 1; }
 </style>

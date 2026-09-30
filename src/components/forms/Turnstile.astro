@@ -1,0 +1,18 @@
+---
+/*
+ * Cloudflare Turnstile widget for a form (scope 2.7). Renders nothing until PUBLIC_TURNSTILE_SITE_KEY is set,
+ * so local builds and the current design are unaffected. "interaction-only" keeps the widget invisible unless
+ * Cloudflare needs the visitor to click, so no element is added to the Figma layout in the normal case.
+ * The script loads once per page, only on pages that contain a form.
+ */
+interface Props { locale?: 'en' | 'ar' }
+const { locale = 'en' } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+{siteKey && (
+  <>
+    <div class="cf-turnstile" data-sitekey={siteKey} data-appearance="interaction-only" data-language={locale} data-size="flexible"></div>
+    <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+  </>
+)}

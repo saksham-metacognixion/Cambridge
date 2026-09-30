@@ -21,7 +21,6 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
   if (!h) throw new Error(`Footer: unknown hospital slug "${slug}"`);
   return t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals');
 });
-const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 ---
 
 <footer class="ft relative bg-navy rounded-t-r30 font-gotham">
@@ -52,8 +51,10 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
       </div>
     </div>
 
-    <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value={accessKey} />
+    <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="/api/forms/newsletter" method="POST">
+      <!-- Newsletter is not one of the scope's 4 forms (and a mailing list means storing data): the function rejects it
+           until Pramod decides what it should do. -->
+      <input type="hidden" name="edition" value={edition.id} />
       <h2 class="hd text-f12 font-light text-white">{c.newsletter.heading}</h2>
       <div class="box">
         <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>

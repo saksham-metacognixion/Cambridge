@@ -50,8 +50,9 @@ Photos, logos and the map are never flipped. Check: `dir="rtl"` must mirror ever
   the Figma view. Cards get `scroll-snap-align:start`. NO arrows, dots, autoplay or any added control.
 * Interactions from the client: "Book an Appointment", "Send an Inquiry", "Your Opinion Matters" open modals later →
   render them as `<a href="#book-appointment">` / `#send-inquiry` / `#your-opinion` (no modal yet). Every other link `href="#"`.
-  Email = `mailto:`. Forms = plain `<form action="https://api.web3forms.com/submit" method="POST">` with hidden
-  `access_key` = `import.meta.env.PUBLIC_WEB3FORMS_KEY`, styled exactly like the Figma boxes.
+  Email = `mailto:`. Forms = plain `<form action="/api/forms/<form-id>" method="POST">` handled by the Cloudflare
+  Pages Function `functions/api/forms/[form].ts` (fields in `src/data/forms.json`, Turnstile via `<Turnstile />`, hidden
+  `edition` input, required `consent`; nothing stored), styled exactly like the Figma boxes.
 * HTML must be semantic (header/nav/main/section/h1-h6/ul/button/form/label) as long as the pixels stay identical. Alt text: `""` for decoration,
   a short accurate description (from the layer name / visible text) for photos and logos. Never add visible text.
 

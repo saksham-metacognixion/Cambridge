@@ -1,34 +1,41 @@
 ---
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
-import ahmad from '../../assets/doctors/dr-ahmad.png';
-import amjed from '../../assets/doctors/dr-amjed.png';
-import wael from '../../assets/doctors/dr-wael.png';
-import suhaila from '../../assets/doctors/dr-suhaila.png';
-import halawani from '../../assets/doctors/dr-halawani.png';
-import rober from '../../assets/doctors/dr-rober.png';
+import { content, t } from '../../lib/content';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+import doctorsData from '../../data/doctors.json';
 import mask from '../../assets/doctors/mask-group.svg';
 import fill1 from '../../assets/doctors/fill-group1.svg';
 import fill2 from '../../assets/doctors/fill-group2.svg';
 import dots from '../../assets/dots/dots-doctors.svg';
 
 // Section page-y origin = 1241. Card row is placed with the same negative offset as Figma (first card x = -118).
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('home/doctors', edition.locale);
 const ROW_X = -118;
 const ROOT_W = 1052; // the inset % of the masked groups are relative to the 1052 wide root frame
 const MASK_DX = 6.669;
 const MASK_DY = 10.487;
 
-// x = card page x, clipL = "l" inset % of the masked group, photo = [x, y, size(w,h)] in page coords
-const cards = [
-  { name: 'Dr. Amjad Abdelqader', role: 'General Physician', x: -118, clipL: -11.12, img: amjed, alt: 'Dr. Amjad Abdelqader', ph: [-99, 1394, 144, 144], btn: 'Book Now', btnX: -89, fill: fill1, nameW: 148 },
-  { name: 'Dr. Ahmad Al Khayer', role: 'Physical Medicine & Rehab Specialist', x: 94, clipL: 9.22, img: ahmad, alt: 'Dr. Ahmad Al Khayer', ph: [128, 1406, 116, 132], btn: 'See More', btnX: 123, fill: fill1, nameW: 148 },
-  { name: 'Dr. Wael Sary', role: 'ICU & Anesthesia Specialist', x: 306, clipL: 29.09, img: wael, alt: 'Dr. Wael Sary', ph: [327, 1394, 144, 144], btn: 'See More', btnX: 335, fill: fill1, nameW: 148 },
-  { name: 'Dr. Suhaila Kallada', role: 'Physical Medicine & Rehab Specialist', x: 520, clipL: 49.52, img: suhaila, alt: 'Dr. Suhaila Kallada', ph: [542, 1392, 146, 146], btn: 'See More', btnX: 549, fill: fill1, nameW: 148 },
-  { name: 'Dr. Mohammed Halawani', role: 'Neuro Specialist', x: 733, clipL: 69.68, img: halawani, alt: 'Dr. Mohammed Halawani', ph: [755, 1388, 150, 150], btn: 'See More', btnX: 762, fill: fill1, nameW: 157 },
-  { name: 'Dr. Rober Hanna Kassab', role: 'Physical Medicine & Rehab Specialist', x: 945, clipL: 90.02, img: rober, alt: 'Dr. Rober Hanna Kassab', ph: [966, 1388, 150, 150], btn: 'See More', btnX: 974, fill: fill2, nameW: 148 },
-].map((c) => ({
-  ...c,
-  shapeX: (c.clipL * ROOT_W) / 100 + MASK_DX - c.x, // card-relative
+// x = card page x, clipL = "l" inset % of the masked group, photo = [x, y, size(w,h)] in page coords.
+// Design only; content (which doctor, button label) comes from home/doctors JSON, zipped by index.
+const design = [
+  { x: -118, clipL: -11.12, ph: [-99, 1394, 144, 144], btnX: -89, fill: fill1, nameW: 148 },
+  { x: 94, clipL: 9.22, ph: [128, 1406, 116, 132], btnX: 123, fill: fill1, nameW: 148 },
+  { x: 306, clipL: 29.09, ph: [327, 1394, 144, 144], btnX: 335, fill: fill1, nameW: 148 },
+  { x: 520, clipL: 49.52, ph: [542, 1392, 146, 146], btnX: 549, fill: fill1, nameW: 148 },
+  { x: 733, clipL: 69.68, ph: [755, 1388, 150, 150], btnX: 762, fill: fill1, nameW: 157 },
+  { x: 945, clipL: 90.02, ph: [966, 1388, 150, 150], btnX: 974, fill: fill2, nameW: 148 },
+];
+const cards = design.map((d, i) => {
+  const doc = doctorsData.doctors.find((x) => x.slug === c.doctors[i]);
+  if (!doc) throw new Error(`home/doctors: unknown doctor slug "${c.doctors[i]}"`);
+  const name = t(doc.name, edition.locale, 'doctors');
+  return { ...d, name, role: t(doc.title, edition.locale, 'doctors'), img: img(doc.photo, edition.region), alt: name, btn: c.buttons[i] as string };
+}).map((k) => ({
+  ...k,
+  shapeX: (k.clipL * ROOT_W) / 100 + MASK_DX - k.x, // card-relative
 }));
 
 const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.src}");mask-mode:alpha;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-size:calc(182.127*var(--u)) calc(161.519*var(--u));-webkit-mask-size:calc(182.127*var(--u)) calc(161.519*var(--u));mask-position:calc(-${MASK_DX}*var(--u)) calc(-${MASK_DY}*var(--u));-webkit-mask-position:calc(-${MASK_DX}*var(--u)) calc(-${MASK_DY}*var(--u));`;
@@ -36,27 +43,27 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
 
 <section class="relative overflow-x-clip" style="--h: 457">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-6 max-lg:py-6">
-    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:317;--y:0;--w:417;--h:27">Expert Care, Trusted Doctors</h2>
-    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:27">Our specialists are committed to providing the right care at every stage of your journey.</p>
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:317;--y:0;--w:417;--h:27">{c.heading}</h2>
+    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:27">{c.intro}</p>
 
-    <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label="Filter doctors by country" style="--x:371;--y:79;--w:279;--h:25">
-      <button type="button" aria-pressed="true" class="pill absolute max-lg:static bg-navy text-white border-0" style="--x:0">ALL</button>
-      <button type="button" aria-pressed="false" class="pill absolute max-lg:static bg-transparent text-navy hair-100 border-navy" style="--x:99">KSA</button>
-      <button type="button" aria-pressed="false" class="pill absolute max-lg:static bg-transparent text-navy hair-100 border-navy" style="--x:200">UAE</button>
+    <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label={c.filterLabel} style="--x:371;--y:79;--w:279;--h:25">
+      <button type="button" aria-pressed="true" class="pill absolute max-lg:static bg-navy text-white border-0" style="--x:0">{c.filters[0]}</button>
+      <button type="button" aria-pressed="false" class="pill absolute max-lg:static bg-transparent text-navy hair-100 border-navy" style="--x:99">{c.filters[1]}</button>
+      <button type="button" aria-pressed="false" class="pill absolute max-lg:static bg-transparent text-navy hair-100 border-navy" style="--x:200">{c.filters[2]}</button>
     </div>
 
     <div class="hscroll dpos w-full max-lg:self-stretch" style="--x:0;--y:139;--w:1052;--h:231">
       <div class="row flex gap-[calc(27*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0">
         <span class="w-0 shrink-0 snap-start lg:absolute lg:left-0" aria-hidden="true"></span>
-        {cards.map((c) => (
-          <article class="card relative shrink-0 snap-start bg-white rounded-r15 hair-card" style={`--l:${c.x - ROW_X}`}>
+        {cards.map((card) => (
+          <article class="card relative shrink-0 snap-start bg-white rounded-r15 hair-card" style={`--l:${card.x - ROW_X}`}>
             <div class="pos rounded-r15 bg-veil" style="--x:3;--y:3;--w:179;--h:155"></div>
-            <div class="pos" aria-hidden="true" style={`--x:${c.shapeX};--y:${MASK_DY - 4};--w:168.409;--h:170.657;background:url("${(c.fill as any).src}") center/100% 100% no-repeat;${maskStyle}`}></div>
-            <Picture class="pos object-cover" src={c.img} formats={['avif']} fallbackFormat="webp" width={px(c.ph[2])} height={px(c.ph[3])} widths={[px(c.ph[2]), px(c.ph[2]) * 2]} sizes={`${px(c.ph[2])}px`} loading="lazy" decoding="async" alt={c.alt} style={`--x:${c.ph[0] - c.x};--y:${c.ph[1] - 1380};--w:${c.ph[2]};--h:${c.ph[3]}`} />
-            <h3 class="pos font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`--x:15;--y:170;--w:${c.nameW};--h:15`}>{c.name}</h3>
-            <p class="pos font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word]" style="--x:15;--y:185;--w:148;--h:20">{c.role}</p>
-            <a href="#" class="pos bg-cyan rounded-r5" aria-label={`${c.btn} - ${c.name}`} style="--x:15;--y:202;--w:71;--h:13"></a>
-            <span class="pos pointer-events-none font-gotham font-medium text-f8 leading-10 text-white text-center not-italic" style={`--x:${c.btnX - c.x};--y:204;--w:45;--h:10`}>{c.btn}</span>
+            <div class="pos" aria-hidden="true" style={`--x:${card.shapeX};--y:${MASK_DY - 4};--w:168.409;--h:170.657;background:url("${(card.fill as any).src}") center/100% 100% no-repeat;${maskStyle}`}></div>
+            <Picture class="pos object-cover" src={card.img} formats={['avif']} fallbackFormat="webp" width={px(card.ph[2])} height={px(card.ph[3])} widths={[px(card.ph[2]), px(card.ph[2]) * 2]} sizes={`${px(card.ph[2])}px`} loading="lazy" decoding="async" alt={card.alt} style={`--x:${card.ph[0] - card.x};--y:${card.ph[1] - 1380};--w:${card.ph[2]};--h:${card.ph[3]}`} />
+            <h3 class="pos font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`--x:15;--y:170;--w:${card.nameW};--h:15`}>{card.name}</h3>
+            <p class="pos font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word]" style="--x:15;--y:185;--w:148;--h:20">{card.role}</p>
+            <a href={c.buttonHref} class="pos bg-cyan rounded-r5" aria-label={`${card.btn} - ${card.name}`} style="--x:15;--y:202;--w:71;--h:13"></a>
+            <span class="pos pointer-events-none font-gotham font-medium text-f8 leading-10 text-white text-center not-italic" style={`--x:${card.btnX - card.x};--y:204;--w:45;--h:10`}>{card.btn}</span>
           </article>
         ))}
       </div>

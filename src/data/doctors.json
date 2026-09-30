@@ -1,0 +1,11 @@
+{
+  "$comment": "PLACEHOLDER: the 6 doctors shown on the Figma Home page, text exactly as in Figma. Replace with Pramod's export (keep or adapt these field names). photo = image key (src/lib/images.ts).",
+  "doctors": [
+    { "slug": "amjad-abdelqader", "name": { "en": "Dr. Amjad Abdelqader", "ar": "" }, "title": { "en": "General Physician", "ar": "" }, "photo": "doctors/dr-amjed" },
+    { "slug": "ahmad-al-khayer", "name": { "en": "Dr. Ahmad Al Khayer", "ar": "" }, "title": { "en": "Physical Medicine & Rehab Specialist", "ar": "" }, "photo": "doctors/dr-ahmad" },
+    { "slug": "wael-sary", "name": { "en": "Dr. Wael Sary", "ar": "" }, "title": { "en": "ICU & Anesthesia Specialist", "ar": "" }, "photo": "doctors/dr-wael" },
+    { "slug": "suhaila-kallada", "name": { "en": "Dr. Suhaila Kallada", "ar": "" }, "title": { "en": "Physical Medicine & Rehab Specialist", "ar": "" }, "photo": "doctors/dr-suhaila" },
+    { "slug": "mohammed-halawani", "name": { "en": "Dr. Mohammed Halawani", "ar": "" }, "title": { "en": "Neuro Specialist", "ar": "" }, "photo": "doctors/dr-halawani" },
+    { "slug": "rober-hanna-kassab", "name": { "en": "Dr. Rober Hanna Kassab", "ar": "" }, "title": { "en": "Physical Medicine & Rehab Specialist", "ar": "" }, "photo": "doctors/dr-rober" }
+  ]
+}

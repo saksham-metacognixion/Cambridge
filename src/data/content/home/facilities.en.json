@@ -1,0 +1,18 @@
+{
+  "heading": "Bringing Expert Care Closer to You Across the Region",
+  "headingAccent": ".",
+  "mapAlt": "Map of the region showing Cambridge Hospital locations in Saudi Arabia and the United Arab Emirates",
+  "mapLabels": ["Dhahran", "Al Khobar", "Abu Dhabi", "Al Ain", "Jeddah"],
+  "listTab": "Hospitals",
+  "hospitals": ["abu-dhabi", "al-ain", "dhahran", "al-khobar", "jeddah", "al-mudeef-abu-dhabi"],
+  "book": { "label": "Book Appointment", "href": "#book-appointment" },
+  "visit": { "label": "Visit Page", "href": "#" },
+  "stats": [
+    { "number": "300,000+", "label": "Unique OPD Visits" },
+    { "number": "5,000+", "label": "Improved Impatients" },
+    { "number": "30,000+", "label": "Homecare Visits" },
+    { "number": "1200+", "label": "Healthcare Professionals" },
+    { "number": "720", "label": "Operational Beds" },
+    { "number": "6", "label": "Care Presence" }
+  ]
+}

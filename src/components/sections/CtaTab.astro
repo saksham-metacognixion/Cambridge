@@ -1,21 +1,25 @@
 ---
-import calendar from '../../assets/cta/calendar-clock.svg';
-import stetho from '../../assets/cta/stethoscope.svg';
-import magnifer from '../../assets/cta/magnifer.svg';
-import msg from '../../assets/cta/message-square-share.svg';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+import { content } from '../../lib/content';
 import line6 from '../../assets/cta/line6.svg';
 
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('home/cta', edition.locale);
+
 // left = column centre - 74 (label box w148); icon left/top are relative to the column
-const items = [
-  { label: 'Book an Appointment', href: '#book-appointment', icon: calendar, size: 24, cx: 130, ix: 113, iy: 14 },
-  { label: 'Find a Doctor', href: '#doctors', icon: stetho, size: 26, cx: 393, ix: 380, iy: 14 },
-  { label: 'Search Conditions', href: '#', icon: magnifer, size: 23, cx: 657, ix: 643, iy: 15 },
-  { label: 'Send an Inquiry', href: '#send-inquiry', icon: msg, size: 26, cx: 921, ix: 905, iy: 14 },
+// Design only; zipped by index with the content items from home/cta.json
+const layout = [
+  { size: 24, cx: 130, ix: 113, iy: 14 },
+  { size: 26, cx: 393, ix: 380, iy: 14 },
+  { size: 23, cx: 657, ix: 643, iy: 15 },
+  { size: 26, cx: 921, ix: 905, iy: 14 },
 ];
+const items = layout.map((d, i) => ({ ...d, label: c.items[i].label, href: c.items[i].href, icon: img(c.items[i].icon, edition.region) }));
 const dividers = [262, 524, 786];
 ---
 <!-- CTA Tab: page y 560, --h 82. Full-bleed white band, sits over the hero (parent handles stacking). -->
-<section class="relative bg-white" style="--h: 82" aria-label="Quick actions">
+<section class="relative bg-white" style="--h: 82" aria-label={c.ariaLabel}>
   <div class="pointer-events-none absolute inset-0 hair-15" style="border-color:var(--color-teal-border)"></div>
   <div class="stage">
     <ul class="m-0 grid list-none grid-cols-2 p-0 lg:contents">

@@ -1,0 +1,18 @@
+{
+  "title": "Get in touch with us",
+  "emailLabel": "Email:",
+  "email": "info@cambridgehospital.com",
+  "phoneLabel": "Phone:",
+  "phones": ["800-2672 - UAE", "800-2772 - KSA"],
+  "addressLabel": "Address:",
+  "address": "Prestige 17 Tower - Hamdan Bin Mohammed St - Mohamed Bin Zayed City - ME2 - Abu Dhabi",
+  "followLabel": "Follow us:",
+  "social": { "image": "contact/social-icons", "alt": "Social media icons" },
+  "form": {
+    "nameLabel": "Your Name",
+    "emailLabel": "Email Address",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write Something...",
+    "submit": "Send Message"
+  }
+}

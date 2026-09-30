@@ -1,0 +1,14 @@
+{
+  "title": "Accepted Insurance Providers",
+  "subtitle": "Providing seamless access to care through our extensive insurance network.",
+  "logos": [
+    { "image": "insurance/thiqa", "alt": "Thiqa" },
+    { "image": "insurance/daman", "alt": "Daman" },
+    { "image": "insurance/layout-set", "alt": "ADNIC – Abu Dhabi National Insurance Company" },
+    { "image": "insurance/neuron", "alt": "Neuron" },
+    { "image": "insurance/logo-original", "alt": "Almadallah Healthcare Management" },
+    { "image": "insurance/saico", "alt": "SAICO" },
+    { "image": "insurance/images", "alt": "Nextcare" }
+  ],
+  "button": { "label": "View All", "href": "#" }
+}

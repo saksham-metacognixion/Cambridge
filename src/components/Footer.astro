@@ -1,40 +1,35 @@
 ---
 import { Image } from 'astro:assets';
 import { px } from '../lib/scale';
-import logo from '../assets/footer/logo-vertical-negative.svg';
 import line24 from '../assets/footer/line24.svg';
 import group53 from '../assets/footer/group53.svg';
-import accredited from '../assets/footer/accredited.png';
+import { parsePath } from '../lib/editions';
+import { content, t } from '../lib/content';
+import { img } from '../lib/images';
+import hospitalData from '../data/hospitals.json';
 
-const quick: { label: string; href: string }[][] = [
-  [{ label: 'Cambridge', href: '#' }],
-  [{ label: 'Our Care', href: '#' }],
-  [{ label: 'Patient Hub', href: '#' }],
-  [{ label: 'Our Hospitals', href: '#' }],
-  [{ label: 'Contact Us', href: '#' }],
-  [{ label: 'Book an Appointment', href: '#book-appointment' }],
-  [{ label: 'Media Hub', href: '#' }],
-  [{ label: 'Careers', href: '#' }],
-  [{ label: 'Knowledge Center', href: '#' }],
-  [{ label: 'FAQs', href: '#' }, { label: 'Your Opinion Matters', href: '#your-opinion' }],
-  [{ label: 'Find a Doctor', href: '#' }],
-  [{ label: 'Search Conditions', href: '#' }],
-  [{ label: 'Send an Inquiry', href: '#send-inquiry' }],
-];
-const services = ['Inpatient Care', 'Outpatient Care', 'Home Health Care', 'In School Care'];
-const hospitals = [
-  'Cambridge Hospital Abu Dhabi', 'Cambridge Hospital Al Ain', 'Cambridge Hospital Dhahran',
-  'Cambridge Hospital Al Khobar', 'Cambridge Hospital Jeddah', 'Al Mudeef Center Abu Dhabi',
-];
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('layout/footer', edition.locale);
+const logo = img(c.logo.image, edition.region);
+const accredited = img(c.accreditations.image, edition.region);
+type Link = { label: string; href: string };
+const quick: Link[][] = c.quickLinks.rows;
+const services: Link[] = c.services.links;
+// Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
+const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
+  const h = hospitalData.hospitals.find((x) => x.slug === slug);
+  if (!h) throw new Error(`Footer: unknown hospital slug "${slug}"`);
+  return t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals');
+});
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 ---
 
 <footer class="ft relative bg-navy rounded-t-r30 font-gotham">
   <div class="stage" style="--h: 368">
-    <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt="Cambridge Hospital" />
+    <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt={c.logo.alt} />
 
     <nav class="col c1 a" style="--l:329;--t:76;--w:148;--ph:193" aria-labelledby="ft-quick">
-      <h2 id="ft-quick" class="hd text-f13 font-medium text-white">QUICK LINKS</h2>
+      <h2 id="ft-quick" class="hd text-f13 font-medium text-white">{c.quickLinks.heading}</h2>
       <ul class="links" style="--w:138">
         {quick.map((g) => (
           <li>{g.map((x, i) => (<>{i > 0 && <br />}<a href={x.href}>{x.label}</a></>))}</li>
@@ -42,36 +37,36 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
       </ul>
     </nav>
     <nav class="col c2 a" style="--l:452;--t:76;--w:148;--ph:193" aria-labelledby="ft-serv">
-      <h2 id="ft-serv" class="hd text-f13 font-medium text-white">SERVICES</h2>
-      <ul class="links">{services.map((s) => <li><a href="#">{s}</a></li>)}</ul>
+      <h2 id="ft-serv" class="hd text-f13 font-medium text-white">{c.services.heading}</h2>
+      <ul class="links">{services.map((s) => <li><a href={s.href}>{s.label}</a></li>)}</ul>
     </nav>
     <nav class="col c3 a" style="--l:562;--t:76;--w:148;--ph:193" aria-labelledby="ft-hosp">
-      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">OUR HOSPITALS</h2>
-      <ul class="links">{hospitals.map((s) => <li><a href="#">{s}</a></li>)}</ul>
+      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">{c.hospitals.heading}</h2>
+      <ul class="links">{hospitals.map((s) => <li><a href={c.hospitals.href}>{s}</a></li>)}</ul>
     </nav>
 
     <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">
-      <h2 class="hd text-f12 font-light text-white" style="width:calc(175 * var(--u))">TRUSTED ACCREDITATIONS</h2>
+      <h2 class="hd text-f12 font-light text-white" style="width:calc(175 * var(--u))">{c.accreditations.heading}</h2>
       <div class="accimg">
-        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={`${px(235)}px`} format="webp" loading="lazy" decoding="async" alt="Accreditations: JCI and other healthcare accreditation badges" class="block h-full w-full object-cover" />
+        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={`${px(235)}px`} format="webp" loading="lazy" decoding="async" alt={c.accreditations.alt} class="block h-full w-full object-cover" />
       </div>
     </div>
 
     <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value={accessKey} />
-      <h2 class="hd text-f12 font-light text-white">SUBSCRIBE TO OUR NEWSLETTER</h2>
+      <h2 class="hd text-f12 font-light text-white">{c.newsletter.heading}</h2>
       <div class="box">
-        <label class="sr-only" for="ft-email">Email</label>
-        <input id="ft-email" type="email" name="email" placeholder="YOUR EMAIL" required autocomplete="email" />
-        <button type="submit">Submit</button>
+        <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
+        <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" />
+        <button type="submit">{c.newsletter.submit}</button>
       </div>
     </form>
 
     <img class="a" style="--l:62;--t:319;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
     <img class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24" src={group53.src} width="161" height="16.24" alt="" />
 
-    <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">Cambridge Hospital All Rights Reserved</p>
-    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href="#">Compliance</a><span class="gap">       </span><a href="#">Privacy Policy</a></p>
+    <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">{c.copyright}</p>
+    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={c.legal.compliance.href}>{c.legal.compliance.label}</a><span class="gap">       </span><a href={c.legal.privacy.href}>{c.legal.privacy.label}</a></p>
   </div>
 </footer>
 

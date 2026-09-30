@@ -1,12 +1,18 @@
 ---
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
-import banner from '../../assets/hero/banner3.png';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+import { content } from '../../lib/content';
 import overlay from '../../assets/hero/rectangle2.png';
 import dots from '../../assets/dots/dots-hero.svg';
+
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('home/hero', edition.locale);
+const banner = img(c.banner.image, edition.region);
 ---
 <!-- Hero: page y 117, --h 500. Spec y values are page y minus 117. -->
-<section class="relative" style="--h: 500" aria-label="Hero">
+<section class="relative" style="--h: 500" aria-label={c.ariaLabel}>
   <div class="stage max-lg:flex max-lg:min-h-[calc(500*var(--u))] max-lg:flex-col max-lg:justify-center max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(48*var(--u))]">
     <Picture
       src={banner}
@@ -19,7 +25,7 @@ import dots from '../../assets/dots/dots-hero.svg';
       loading="eager"
       fetchpriority="high"
       decoding="async"
-      alt=""
+      alt={c.banner.alt}
       class="absolute left-0 top-0 h-full w-full object-cover"
       pictureAttributes={{ class: 'contents' }}
     />
@@ -38,16 +44,16 @@ import dots from '../../assets/dots/dots-hero.svg';
       pictureAttributes={{ class: 'contents' }}
     />
 
-    <h1 class="relative font-gotham font-medium not-italic text-f39 leading-37 text-navy lg:absolute lg:left-95 lg:top-141 lg:w-374 lg:h-74 whitespace-normal [word-break:break-word]">Restoring Hope,<br />Enabling Life.</h1>
+    <h1 class="relative font-gotham font-medium not-italic text-f39 leading-37 text-navy lg:absolute lg:left-95 lg:top-141 lg:w-374 lg:h-74 whitespace-normal [word-break:break-word]">{c.title[0]}<br />{c.title[1]}</h1>
 
-    <p class="relative font-gotham font-normal not-italic text-f12 leading-14 text-body lg:absolute lg:left-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">Supporting every step of your recovery journey with compassionate care and clinical excellence.</p>
+    <p class="relative font-gotham font-normal not-italic text-f12 leading-14 text-body lg:absolute lg:left-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">{c.text}</p>
 
     <div class="relative flex flex-wrap gap-[calc(14*var(--u))] lg:contents">
-      <a href="#contact" style="--sw:1;--sc:var(--color-cyan)" class="relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:left-98 lg:top-265">
-        <span class="absolute left-8 top-9 h-15 w-118 font-gotham font-medium not-italic text-f13 leading-[calc(15*var(--u))] text-cyan text-center">Get in Touch</span>
+      <a href={c.buttons[0].href} style="--sw:1;--sc:var(--color-cyan)" class="relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:left-98 lg:top-265">
+        <span class="absolute left-8 top-9 h-15 w-118 font-gotham font-medium not-italic text-f13 leading-[calc(15*var(--u))] text-cyan text-center">{c.buttons[0].label}</span>
       </a>
-      <a href="#" style="--sw:1;--sc:var(--color-cyan)" class="relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:left-250 lg:top-265">
-        <span class="absolute left-8 top-9 h-15 w-118 font-gotham font-medium not-italic text-f13 leading-[calc(15*var(--u))] text-cyan text-center">Learn More</span>
+      <a href={c.buttons[1].href} style="--sw:1;--sc:var(--color-cyan)" class="relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:left-250 lg:top-265">
+        <span class="absolute left-8 top-9 h-15 w-118 font-gotham font-medium not-italic text-f13 leading-[calc(15*var(--u))] text-cyan text-center">{c.buttons[1].label}</span>
       </a>
     </div>
 

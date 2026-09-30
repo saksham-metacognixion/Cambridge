@@ -1,0 +1,18 @@
+{
+  "heading": "Complete Care Support",
+  "intro": ["A range of diagnostic, therapeutic, and support services designed to enhance patient ", "care and recovery."],
+  "filterLabel": "Filter services by country",
+  "filters": ["ALL", "KSA", "UAE"],
+  "tiles": [
+    { "label": "Radiology", "icon": "care-support/g67-3676-first" },
+    { "label": "Laboratory", "icon": "care-support/g67-3717" },
+    { "label": "Inpatient Pharmacy", "icon": "care-support/g67-3699" },
+    { "label": "Sensory Rooms", "icon": "care-support/g67-3710" },
+    { "label": "Inpatient Gym", "icon": "care-support/g67-3703" },
+    { "label": "Hydrotherapy", "icon": "care-support/g67-3721" },
+    { "label": "Outpatient Gym", "icon": "care-support/v67-3698" },
+    { "label": "CT Scan", "icon": "care-support/g67-3706" },
+    { "label": "Dialysis", "icon": "care-support/g67-3672-radiology-right" },
+    { "label": "Blood Bank", "icon": "care-support/g67-3684-last" }
+  ]
+}

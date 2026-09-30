@@ -1,26 +1,34 @@
 ---
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
-import care from '../../assets/calculators/care.png';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+import { content } from '../../lib/content';
 
-const cards = [
-  { x: 532, y: 100, title: 'BMI Calculator', tw: 148, desc: 'Check your weight category instantly.', bx: 30 },
-  { x: 768, y: 100, title: 'Stroke Risk Calculator', tw: 148, desc: 'Understand your risk in minutes.', bx: 31 },
-  { x: 532, y: 245, title: 'Heart Age Calculator', tw: 148, desc: 'See how healthy and well your heart is.', bx: 30 },
-  { x: 768, y: 245, title: 'Lung Health Calculator', tw: 157, desc: 'Assess your lung health quickly.', bx: 31 },
+const { edition } = parsePath(Astro.url.pathname);
+const t = content('home/calculators', edition.locale);
+const care = img(t.photo.image, edition.region);
+
+// Design only; zipped by index with the content cards from home/calculators.json
+const layout = [
+  { x: 532, y: 100, tw: 148, bx: 30 },
+  { x: 768, y: 100, tw: 148, bx: 31 },
+  { x: 532, y: 245, tw: 148, bx: 30 },
+  { x: 768, y: 245, tw: 157, bx: 31 },
 ];
+const cards = layout.map((d, i) => ({ ...d, title: t.cards[i].title, desc: t.cards[i].desc, href: t.cards[i].href }));
 const u = (n: number) => `calc(${n} * var(--u))`;
 ---
 
 <section class="calc relative bg-veil" style="--h: 444" id="calculators">
   <div class="stage">
-    <p class="c-sub absolute left-475 top-57 w-577 h-13 m-0 font-gotham font-medium text-f14 leading-14 text-navy text-center not-italic">Quick insights to better understand your health and risks.</p>
+    <p class="c-sub absolute left-475 top-57 w-577 h-13 m-0 font-gotham font-medium text-f14 leading-14 text-navy text-center not-italic">{t.subtitle}</p>
     <!-- Duplicate subtitle (Gotham Book 12px, under the photo) intentionally omitted: client decision. -->
 
     <div class="c-hero">
-      <Picture src={care} formats={['avif']} fallbackFormat="webp" width={px(463)} height={px(444)} widths={[px(463), px(463) * 2]} sizes={`${px(463)}px`} loading="lazy" decoding="async" alt="Patient receiving care at Cambridge Hospital"
+      <Picture src={care} formats={['avif']} fallbackFormat="webp" width={px(463)} height={px(444)} widths={[px(463), px(463) * 2]} sizes={`${px(463)}px`} loading="lazy" decoding="async" alt={t.photo.alt}
         class="c-img absolute left-0 top-0 block w-463 h-444 object-cover" />
-      <h2 class="c-head absolute left-11 top-37 w-430 h-54 m-0 font-gotham font-medium text-f28 text-navy text-center not-italic"><span class="block">Check Your Health</span><span class="block">in Seconds<span class="text-cyan">.</span></span></h2>
+      <h2 class="c-head absolute left-11 top-37 w-430 h-54 m-0 font-gotham font-medium text-f28 text-navy text-center not-italic"><span class="block">{t.heading[0]}</span><span class="block">{t.heading[1]}<span class="text-cyan">{t.headingDot}</span></span></h2>
     </div>
 
     <div class="c-grid">
@@ -28,8 +36,8 @@ const u = (n: number) => `calc(${n} * var(--u))`;
         <div class="c-card absolute w-218 h-125 bg-white hair-card rounded-r6 box-border" style={`left:${u(c.x)};top:${u(c.y)}`}>
           <h3 class="absolute left-30 top-37 h-15 m-0 font-gotham font-medium text-f13 text-navy not-italic" style={`width:${u(c.tw)}`}>{c.title}</h3>
           <p class="absolute left-30 top-55 w-138 h-19 m-0 font-gotham font-normal text-f9 leading-10 text-body not-italic">{c.desc}</p>
-          <a href="#" class="absolute top-85 w-74 h-17 rounded-r3 bg-navy" style={`left:${u(c.bx)}`} aria-label={`Calculate Now: ${c.title}`}>
-            <span class="absolute left-8 top-4 w-59 h-10 font-gotham font-medium text-f8 leading-10 text-white not-italic">Calculate Now</span>
+          <a href={c.href} class="absolute top-85 w-74 h-17 rounded-r3 bg-navy" style={`left:${u(c.bx)}`} aria-label={`${t.cardButton}: ${c.title}`}>
+            <span class="absolute left-8 top-4 w-59 h-10 font-gotham font-medium text-f8 leading-10 text-white not-italic">{t.cardButton}</span>
           </a>
         </div>
       ))}

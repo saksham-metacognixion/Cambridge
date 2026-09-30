@@ -1,6 +1,6 @@
 ---
 import { editionFromBase, editionPaths } from '../../lib/editions';
-import { pageData } from '../../lib/content';
+import { content } from '../../lib/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -20,7 +20,7 @@ import Contact from '../../components/sections/Contact.astro';
 export const getStaticPaths = editionPaths;
 
 const edition = editionFromBase(Astro.params.base);
-const page = pageData('home', edition.locale);
+const page = content('home/meta', edition.locale);
 
 /*
  * Page composition. `mt` = gap (Figma px) between the previous section's bottom and this section's top,
@@ -44,7 +44,7 @@ const sections = [
 ];
 ---
 
-<BaseLayout edition={edition} path="" title={page.meta.title} description={page.meta.description}>
+<BaseLayout edition={edition} path="" title={page.title} description={page.description}>
   <div class="relative" style="z-index:14">
     <Header />
   </div>

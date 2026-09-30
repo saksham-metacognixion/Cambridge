@@ -1,0 +1,23 @@
+{
+  "navToggleLabel": "Toggle navigation menu",
+  "logo": { "image": "header/logo", "alt": "Cambridge Hospital", "homeLabel": "Cambridge Hospital home" },
+  "menuLabel": "Main",
+  "topLinks": [
+    { "label": "Your Opinion Matters", "href": "#your-opinion" },
+    { "label": "Media Hub", "href": "#" },
+    { "label": "Careers", "href": "#" },
+    { "label": "Knowledge Center", "href": "#" },
+    { "label": "FAQs", "href": "#" }
+  ],
+  "lang": { "en": "EN", "ar": "AR" },
+  "region": { "label": "Global", "href": "#" },
+  "visit": { "intro": "Visit", "lines": ["Cambridge", "Health Group"] },
+  "mainLinks": [
+    { "label": "About Cambridge", "href": "#" },
+    { "label": "Our Care", "href": "#" },
+    { "label": "Patient Hub", "href": "#" },
+    { "label": "Our Hospitals", "href": "#" },
+    { "label": "Contact Us", "href": "#" }
+  ],
+  "book": { "label": "BOOK AN APPOINTMENT", "ariaLabel": "Book an appointment", "href": "#book-appointment" }
+}

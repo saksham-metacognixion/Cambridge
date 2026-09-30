@@ -1,30 +1,48 @@
 import type { LocaleId } from './editions';
 
-// Page text lives in src/data/pages/<page>/<locale>.json. Arabic files stay empty until the Arabic Figma
-// frames are fetched; until then a missing Arabic key falls back to English and is reported at build time.
-const files = import.meta.glob<Record<string, unknown>>('../data/pages/*/*.json', { eager: true, import: 'default' });
+/*
+ * Content lives in JSON so a CMS can be added later (CLAUDE.md §4):
+ *   src/data/content/<page>/<section>.<locale>.json   page text (e.g. home/hero.en.json)
+ *   src/data/doctors.json, hospitals.json, news.json    entities (placeholders until Pramod's export arrives)
+ * English text is exactly as in Figma. Arabic files stay `{}` until the Arabic Figma data is fetched; until then
+ * every missing Arabic value falls back to English and the build prints one warning per file.
+ */
+const files = import.meta.glob<Record<string, unknown>>('../data/content/**/*.json', { eager: true, import: 'default' });
 
-export function pageData<T = any>(page: string, locale: LocaleId): T {
-  const en = files[`../data/pages/${page}/en.json`];
-  if (!en) throw new Error(`Missing src/data/pages/${page}/en.json`);
+/** content('home/hero', 'ar') -> merged object (Arabic where present, English otherwise). */
+export function content<T = any>(name: string, locale: LocaleId): T {
+  const en = files[`../data/content/${name}.en.json`];
+  if (!en) throw new Error(`Missing src/data/content/${name}.en.json`);
   if (locale === 'en') return en as T;
-  const loc = files[`../data/pages/${page}/${locale}.json`] ?? {};
-  return mergeFallback(en, loc, `${page}/${locale}`) as T;
+  const loc = files[`../data/content/${name}.${locale}.json`] ?? {};
+  return merge(en, loc, `${name}.${locale}`) as T;
 }
 
-const reported = new Set<string>();
-function mergeFallback(en: any, loc: any, where: string): any {
-  if (Array.isArray(en)) return en.map((v, i) => mergeFallback(v, loc?.[i], `${where}[${i}]`));
+/** Localized entity field: { en: "...", ar: "..." } -> string for the locale (English fallback). */
+export type Localized = { en: string; ar?: string };
+export function t(field: Localized, locale: LocaleId, where = 'entity'): string {
+  const v = field[locale];
+  if (v) return v;
+  if (locale !== 'en') warn(where);
+  return field.en;
+}
+
+const warned = new Set<string>();
+function warn(where: string) {
+  if (warned.has(where)) return;
+  warned.add(where);
+  console.warn(`[content] ${where}: Arabic text missing, English shown (waiting for Arabic Figma data)`);
+}
+
+function merge(en: any, loc: any, where: string): any {
+  if (Array.isArray(en)) return en.map((v, i) => merge(v, loc?.[i], where));
   if (en && typeof en === 'object') {
     const out: any = {};
-    for (const k of Object.keys(en)) out[k] = mergeFallback(en[k], loc?.[k], `${where}.${k}`);
+    for (const k of Object.keys(en)) out[k] = merge(en[k], loc?.[k], where);
     return out;
   }
   if (loc === undefined || loc === null || loc === '') {
-    if (typeof en === 'string' && !reported.has(where.split('.')[0])) {
-      reported.add(where.split('.')[0]);
-      console.warn(`[content] ${where.split('.')[0]}: Arabic text missing, English shown (waiting for Arabic Figma data)`);
-    }
+    if (typeof en === 'string' && /[A-Za-z]/.test(en)) warn(where);
     return en;
   }
   return loc;

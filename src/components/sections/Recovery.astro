@@ -1,15 +1,20 @@
 ---
+import { parsePath } from '../../lib/editions';
+import { content } from '../../lib/content';
+
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('home/recovery', edition.locale);
 ---
 
 <section class="rec relative" style="--h: 186; background:#004059">
   <div class="stage">
-    <h2 class="r-title absolute left-321 top-38 w-411 h-27 m-0 font-gotham font-medium text-f30 text-white text-center not-italic">Start Your Recovery Today!</h2>
-    <p class="r-sub absolute left-238 top-71 w-577 h-18 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">Our specialists provides personalized treatment and rehabilitation plans for your conditions.</p>
-    <a href="#book-appointment" class="r-btn absolute left-350 top-116 w-166 h-30 rounded-r7 bg-white">
-      <span class="r-l absolute left-11 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">Book an Appointment</span>
+    <h2 class="r-title absolute left-321 top-38 w-411 h-27 m-0 font-gotham font-medium text-f30 text-white text-center not-italic">{c.title}</h2>
+    <p class="r-sub absolute left-238 top-71 w-577 h-18 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{c.text}</p>
+    <a href={c.buttons[0].href} class="r-btn absolute left-350 top-116 w-166 h-30 rounded-r7 bg-white">
+      <span class="r-l absolute left-11 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">{c.buttons[0].label}</span>
     </a>
-    <a href="#doctors" class="r-btn absolute left-535 top-116 w-166 h-30 rounded-r7 bg-white">
-      <span class="r-l absolute left-9 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">Find a Doctor</span>
+    <a href={c.buttons[1].href} class="r-btn absolute left-535 top-116 w-166 h-30 rounded-r7 bg-white">
+      <span class="r-l absolute left-9 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">{c.buttons[1].label}</span>
     </a>
   </div>
 </section>

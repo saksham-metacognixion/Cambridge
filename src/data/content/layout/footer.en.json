@@ -1,0 +1,51 @@
+{
+  "logo": { "image": "footer/logo-vertical-negative", "alt": "Cambridge Hospital" },
+  "quickLinks": {
+    "heading": "QUICK LINKS",
+    "rows": [
+      [{ "label": "Cambridge", "href": "#" }],
+      [{ "label": "Our Care", "href": "#" }],
+      [{ "label": "Patient Hub", "href": "#" }],
+      [{ "label": "Our Hospitals", "href": "#" }],
+      [{ "label": "Contact Us", "href": "#" }],
+      [{ "label": "Book an Appointment", "href": "#book-appointment" }],
+      [{ "label": "Media Hub", "href": "#" }],
+      [{ "label": "Careers", "href": "#" }],
+      [{ "label": "Knowledge Center", "href": "#" }],
+      [{ "label": "FAQs", "href": "#" }, { "label": "Your Opinion Matters", "href": "#your-opinion" }],
+      [{ "label": "Find a Doctor", "href": "#" }],
+      [{ "label": "Search Conditions", "href": "#" }],
+      [{ "label": "Send an Inquiry", "href": "#send-inquiry" }]
+    ]
+  },
+  "services": {
+    "heading": "SERVICES",
+    "links": [
+      { "label": "Inpatient Care", "href": "#" },
+      { "label": "Outpatient Care", "href": "#" },
+      { "label": "Home Health Care", "href": "#" },
+      { "label": "In School Care", "href": "#" }
+    ]
+  },
+  "hospitals": {
+    "heading": "OUR HOSPITALS",
+    "href": "#",
+    "slugs": ["abu-dhabi", "al-ain", "dhahran", "al-khobar", "jeddah", "al-mudeef-abu-dhabi"]
+  },
+  "accreditations": {
+    "heading": "TRUSTED ACCREDITATIONS",
+    "image": "footer/accredited",
+    "alt": "Accreditations: JCI and other healthcare accreditation badges"
+  },
+  "newsletter": {
+    "heading": "SUBSCRIBE TO OUR NEWSLETTER",
+    "emailLabel": "Email",
+    "emailPlaceholder": "YOUR EMAIL",
+    "submit": "Submit"
+  },
+  "copyright": "Cambridge Hospital All Rights Reserved",
+  "legal": {
+    "compliance": { "label": "Compliance", "href": "#" },
+    "privacy": { "label": "Privacy Policy", "href": "#" }
+  }
+}

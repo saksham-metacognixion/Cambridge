@@ -1,0 +1,8 @@
+{
+  "title": "Start Your Recovery Today!",
+  "text": "Our specialists provides personalized treatment and rehabilitation plans for your conditions.",
+  "buttons": [
+    { "label": "Book an Appointment", "href": "#book-appointment" },
+    { "label": "Find a Doctor", "href": "#doctors" }
+  ]
+}

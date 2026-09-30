@@ -1,26 +1,33 @@
 ---
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
-import inpatient from '../../assets/services/inpatient.png';
-import outpatient from '../../assets/services/outpatient.png';
-import home from '../../assets/services/home-healthcare.png';
-import school from '../../assets/services/in-school.png';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+import { content } from '../../lib/content';
+
+const { edition } = parsePath(Astro.url.pathname);
+const s = content('home/services', edition.locale);
 
 // x = page x of the card; imgY = image top relative to card top (169/168/169 - 172)
-const cards = [
-  { x: 49, img: inpatient, alt: 'Inpatient care ward', title: 'Inpatient Care', tw: 148, desc: '24/7 hospital care for patients needing continuous support.', dw: 138, imgY: -3 },
-  { x: 295, img: outpatient, alt: 'Outpatient consultation', title: 'Outpatient Care', tw: 162, desc: 'Consultations, diagnostics, and treatments without admission.', dw: 154, imgY: -4 },
-  { x: 537, img: home, alt: 'Home health care visit', title: 'Home Health Care', tw: 175, desc: 'Quality medical care delivered at home.', dw: 138, imgY: -3 },
-  { x: 783, img: school, alt: 'In-school care', title: 'In School Care', tw: 162, desc: 'On-site care to support student health and safety.', dw: 154, imgY: -3 },
+// Design only; zipped by index with the content cards from home/services.json
+const layout = [
+  { x: 49, tw: 148, dw: 138, imgY: -3 },
+  { x: 295, tw: 162, dw: 154, imgY: -4 },
+  { x: 537, tw: 175, dw: 138, imgY: -3 },
+  { x: 783, tw: 162, dw: 154, imgY: -3 },
 ];
+const cards = layout.map((d, i) => {
+  const k = s.cards[i];
+  return { ...d, img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: k.href };
+});
 const u = (n: number) => `calc(${n} * var(--u))`;
 ---
 <!-- Services: page y 640, --h 553. Spec coords are frame-relative (frame x = 0). -->
 <section class="relative bg-veil" style="--h: 553" aria-labelledby="services-heading">
   <div class="stage max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(42*var(--u))]">
-    <h2 id="services-heading" class="m-0 font-gotham font-medium not-italic text-f28 leading-[1.2] text-navy text-center whitespace-normal [word-break:break-word] lg:absolute lg:left-319 lg:top-42 lg:w-387 lg:h-74 max-lg:mx-auto max-lg:max-w-[calc(387*var(--u))]">Delivering Excellence Across Every Stage of Care</h2>
+    <h2 id="services-heading" class="m-0 font-gotham font-medium not-italic text-f28 leading-[1.2] text-navy text-center whitespace-normal [word-break:break-word] lg:absolute lg:left-319 lg:top-42 lg:w-387 lg:h-74 max-lg:mx-auto max-lg:max-w-[calc(387*var(--u))]">{s.heading}</h2>
 
-    <p class="m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body text-center whitespace-normal [word-break:break-word] lg:absolute lg:left-237 lg:top-106 lg:w-577 lg:h-27 max-lg:mx-auto max-lg:mt-[calc(16*var(--u))] max-lg:max-w-[calc(577*var(--u))]">At Cambridge Hospital, we are committed to delivering advanced, patient-centered care with clinical excellence, providing a full spectrum of services designed around your individual needs.</p>
+    <p class="m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body text-center whitespace-normal [word-break:break-word] lg:absolute lg:left-237 lg:top-106 lg:w-577 lg:h-27 max-lg:mx-auto max-lg:mt-[calc(16*var(--u))] max-lg:max-w-[calc(577*var(--u))]">{s.text}</p>
 
     <ul class="m-0 flex list-none flex-wrap justify-center gap-x-[calc(24*var(--u))] gap-y-[calc(32*var(--u))] p-0 max-lg:mt-[calc(32*var(--u))] lg:contents">
       {cards.map((c) => (
@@ -42,8 +49,8 @@ const u = (n: number) => `calc(${n} * var(--u))`;
           />
           <h3 class="m-0 absolute left-24 top-259 h-15 font-gotham font-medium not-italic text-f19 leading-[calc(15*var(--u))] text-cyan whitespace-nowrap" style={`width:${u(c.tw)}`}>{c.title}</h3>
           <p class="m-0 absolute left-24 top-281 h-19 font-gotham font-normal not-italic text-f9 leading-[calc(10*var(--u))] text-body whitespace-normal [word-break:break-word]" style={`width:${u(c.dw)}`}>{c.desc}</p>
-          <a href="#" class="absolute left-24 top-309 block h-17 w-74 rounded-r3 bg-cyan">
-            <span class="absolute left-7 top-4 h-10 w-66 font-gotham font-medium not-italic text-f8 leading-[calc(10*var(--u))] text-white whitespace-nowrap">Start Your Care</span>
+          <a href={c.href} class="absolute left-24 top-309 block h-17 w-74 rounded-r3 bg-cyan">
+            <span class="absolute left-7 top-4 h-10 w-66 font-gotham font-medium not-italic text-f8 leading-[calc(10*var(--u))] text-white whitespace-nowrap">{s.cardButton}</span>
           </a>
         </li>
       ))}

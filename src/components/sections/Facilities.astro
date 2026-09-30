@@ -7,23 +7,25 @@ import pin4342 from '../../assets/facilities/map-pin-43x42.svg';
 import pin32 from '../../assets/facilities/map-pin-32.svg';
 import line8 from '../../assets/facilities/line8.svg';
 import line9 from '../../assets/facilities/line9.svg';
-import auh from '../../assets/facilities/auh-new.png';
-import alAin from '../../assets/facilities/al-ain.png';
-import dhahran from '../../assets/facilities/dhahran.png';
-import alKhobar from '../../assets/facilities/al-khobar.png';
-import jeddah from '../../assets/facilities/jeddah.png';
-import alMudeef from '../../assets/facilities/al-mudeef.png';
+import { content, t } from '../../lib/content';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+import hospitalsData from '../../data/hospitals.json';
 
 // Section page-y origin = 2054. Map group origin (page) = (454, 2226).
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('home/facilities', edition.locale);
 const MX = 454;
 const MY = 2226 - 2054;
-const labels = [
-  { t: 'Dhahran', x: 794, y: 2320 - 2054, w: 55 },
-  { t: 'Al Khobar', x: 816, y: 2345 - 2054, w: 69 },
-  { t: 'Abu Dhabi', x: 930.18, y: 2380 - 2054, w: 70 },
-  { t: 'Al Ain', x: 921, y: 2434 - 2054, w: 69 },
-  { t: 'Jeddah', x: 580.18, y: 2471 - 2054, w: 69 },
+// Design only; label text comes from home/facilities JSON (mapLabels), zipped by index.
+const labelPos = [
+  { x: 794, y: 2320 - 2054, w: 55 },
+  { x: 816, y: 2345 - 2054, w: 69 },
+  { x: 930.18, y: 2380 - 2054, w: 70 },
+  { x: 921, y: 2434 - 2054, w: 69 },
+  { x: 580.18, y: 2471 - 2054, w: 69 },
 ];
+const labels = labelPos.map((d, i) => ({ ...d, t: c.mapLabels[i] as string }));
 const pins = [
   { f: pin4243, x: 754, y: 2315.81 - 2054, w: 42, h: 43 },
   { f: pin4243, x: 775, y: 2338.81 - 2054, w: 42, h: 43 },
@@ -33,37 +35,46 @@ const pins = [
   { f: pin32, x: 894, y: 2410 - 2054, w: 32, h: 32 },
 ];
 
-// Rows: page-y of each element (card top = 2124, card x = 64)
-const rows = [
-  { img: auh, name: 'Cambridge Hospital ', city: 'Abu Dhabi', alt: 'Cambridge Hospital Abu Dhabi', yImg: 2139, yName: 2150, yVisit: 2195, yBtn: 2186, yBtnT: 2194, yOut: 2189 },
-  { img: alAin, name: 'Cambridge Hospital ', city: 'Al Ain', alt: 'Cambridge Hospital Al Ain', yImg: 2252, yName: 2268, yVisit: 2313, yBtn: 2304, yBtnT: 2312, yOut: 2307 },
-  { img: dhahran, name: 'Cambridge Hospital ', city: 'Dhahran', alt: 'Cambridge Hospital Dhahran', yImg: 2367, yName: 2381, yVisit: 2426, yBtn: 2417, yBtnT: 2425, yOut: 2420 },
-  { img: alKhobar, name: 'Cambridge Hospital ', city: 'Al Khobar', alt: 'Cambridge Hospital Al Khobar', yImg: 2476, yName: 2491, yVisit: 2536, yBtn: 2527, yBtnT: 2535, yOut: 2530 },
-  { img: jeddah, name: 'Cambridge Hospital ', city: 'Jeddah', alt: 'Cambridge Hospital Jeddah', yImg: 2589, yName: 2604, yVisit: 2649, yBtn: 2640, yBtnT: 2648, yOut: 2643 },
-  { img: alMudeef, name: 'Al Mudeef Center ', city: 'Abu Dhabi', alt: 'Al Mudeef Center Abu Dhabi', yImg: 2702, yName: 2717, yVisit: 2762, yBtn: 2753, yBtnT: 2761, yOut: 2756 },
+// Rows: page-y of each element (card top = 2124, card x = 64). Design only; which hospital comes from home/facilities JSON, zipped by index.
+const rowPos = [
+  { yImg: 2139, yName: 2150, yVisit: 2195, yBtn: 2186, yBtnT: 2194, yOut: 2189 },
+  { yImg: 2252, yName: 2268, yVisit: 2313, yBtn: 2304, yBtnT: 2312, yOut: 2307 },
+  { yImg: 2367, yName: 2381, yVisit: 2426, yBtn: 2417, yBtnT: 2425, yOut: 2420 },
+  { yImg: 2476, yName: 2491, yVisit: 2536, yBtn: 2527, yBtnT: 2535, yOut: 2530 },
+  { yImg: 2589, yName: 2604, yVisit: 2649, yBtn: 2640, yBtnT: 2648, yOut: 2643 },
+  { yImg: 2702, yName: 2717, yVisit: 2762, yBtn: 2753, yBtnT: 2761, yOut: 2756 },
 ];
+const rows = rowPos.map((d, i) => {
+  const h = hospitalsData.hospitals.find((x) => x.slug === c.hospitals[i]);
+  if (!h) throw new Error(`home/facilities: unknown hospital slug "${c.hospitals[i]}"`);
+  const brand = t(h.brand, edition.locale, 'hospitals');
+  const city = t(h.city, edition.locale, 'hospitals');
+  return { ...d, img: img(h.photo, edition.region), name: `${brand} `, city, alt: `${brand} ${city}` };
+});
 const dividerY = [2242, 2355, 2468, 2581, 2694];
 const cy = (y: number) => y - 2124; // card-relative y
 const cx = (x: number) => x - 64; // card-relative x
 
-const stats = [
-  { n: '300,000+', l: 'Unique OPD Visits', x: 510, y: 2662, w: 152 },
-  { n: '5,000+', l: 'Improved Impatients', x: 694, y: 2662, w: 132 },
-  { n: '30,000+', l: 'Homecare Visits', x: 852, y: 2662, w: 131 },
-  { n: '1200+', l: 'Healthcare Professionals', x: 510, y: 2748, w: 152 },
-  { n: '720', l: 'Operational Beds', x: 701, y: 2748, w: 112 },
-  { n: '6', l: 'Care Presence', x: 852, y: 2748, w: 112 },
+// Design only; number + label come from home/facilities JSON (stats), zipped by index.
+const statPos = [
+  { x: 510, y: 2662, w: 152 },
+  { x: 694, y: 2662, w: 132 },
+  { x: 852, y: 2662, w: 131 },
+  { x: 510, y: 2748, w: 152 },
+  { x: 701, y: 2748, w: 112 },
+  { x: 852, y: 2748, w: 112 },
 ];
+const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: c.stats[i].label as string }));
 ---
 
 <section class="relative bg-navy-alt overflow-x-clip" style="--h: 788">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-8 max-lg:px-4 max-lg:py-10">
-    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style="--x:480;--y:58;--w:494;--h:77">Bringing Expert Care Closer to You Across the Region<span class="text-cyan">.</span></h2>
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style="--x:480;--y:58;--w:494;--h:77">{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
 
     <!-- Map (Group 9) -->
     <div class="mapbox dpos" style={`--x:${MX};--y:${MY};--w:546.176;--h:382.084`}>
       <div class="mapin">
-        <img class="pm" src={mapVector.src} width={px(478)} height={px(382.084)} alt="Map of the region showing Cambridge Hospital locations in Saudi Arabia and the United Arab Emirates" loading="lazy" decoding="async" style="--x:0;--y:0;--w:478;--h:382.084" />
+        <img class="pm" src={mapVector.src} width={px(478)} height={px(382.084)} alt={c.mapAlt} loading="lazy" decoding="async" style="--x:0;--y:0;--w:478;--h:382.084" />
         {labels.map((l) => (
           <span class="pm font-gotham font-medium leading-[normal] text-white whitespace-nowrap not-italic" style={`--x:${l.x - MX};--y:${l.y - MY};--w:${l.w}`}>{l.t}</span>
         ))}
@@ -76,7 +87,7 @@ const stats = [
     <!-- Hospitals list -->
     <div class="list dpos" style="--x:64;--y:30;--w:358;--h:734">
       <div class="dpos2 bg-cyan rounded-t-r8 text-white" style="--x:0;--y:0;--w:149;--h:40">
-        <span class="dpos2 font-gotham font-medium text-f13 leading-15 text-center not-italic" style="--x:33;--y:15;--w:78;--h:15">Hospitals</span>
+        <span class="dpos2 font-gotham font-medium text-f13 leading-15 text-center not-italic" style="--x:33;--y:15;--w:78;--h:15">{c.listTab}</span>
       </div>
       <ul class="card dpos2 m-0 list-none bg-white rounded-b-r8 rounded-tr-r8" style="--x:0;--y:40;--w:358;--h:694">
         {rows.map((r, i) => (
@@ -88,8 +99,8 @@ const stats = [
                 <span class="block text-f10 leading-16 text-body">{r.city}</span>
               </h3>
               <div class="actions lg:contents">
-                <a href="#book-appointment" class="dpos2 book bg-cyan rounded-r3 flex items-center justify-center pl-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`}>Book Appointment</a>
-                <a href="#" class="dpos2 visit rounded-r4 flex items-center justify-center pl-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>Visit Page</a>
+                <a href={c.book.href} class="dpos2 book bg-cyan rounded-r3 flex items-center justify-center pl-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`}>{c.book.label}</a>
+                <a href={c.visit.href} class="dpos2 visit rounded-r4 flex items-center justify-center pl-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>{c.visit.label}</a>
               </div>
             </div>
             {i < 5 && <img class="dpos2 divider" src={line9.src} width={px(350)} height={px(1)} alt="" loading="lazy" decoding="async" style={`--x:0;--y:${cy(dividerY[i])};--w:350;--h:1`} />}

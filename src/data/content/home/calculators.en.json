@@ -1,0 +1,13 @@
+{
+  "subtitle": "Quick insights to better understand your health and risks.",
+  "photo": { "image": "calculators/care", "alt": "Patient receiving care at Cambridge Hospital" },
+  "heading": ["Check Your Health", "in Seconds"],
+  "headingDot": ".",
+  "cards": [
+    { "title": "BMI Calculator", "desc": "Check your weight category instantly.", "href": "#" },
+    { "title": "Stroke Risk Calculator", "desc": "Understand your risk in minutes.", "href": "#" },
+    { "title": "Heart Age Calculator", "desc": "See how healthy and well your heart is.", "href": "#" },
+    { "title": "Lung Health Calculator", "desc": "Assess your lung health quickly.", "href": "#" }
+  ],
+  "cardButton": "Calculate Now"
+}

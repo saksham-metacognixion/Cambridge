@@ -1,0 +1,9 @@
+{
+  "heading": "Expert Care, Trusted Doctors",
+  "intro": "Our specialists are committed to providing the right care at every stage of your journey.",
+  "filterLabel": "Filter doctors by country",
+  "filters": ["ALL", "KSA", "UAE"],
+  "doctors": ["amjad-abdelqader", "ahmad-al-khayer", "wael-sary", "suhaila-kallada", "mohammed-halawani", "rober-hanna-kassab"],
+  "buttons": ["Book Now", "See More", "See More", "See More", "See More", "See More"],
+  "buttonHref": "#"
+}

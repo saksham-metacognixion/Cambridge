@@ -1,43 +1,37 @@
 ---
-import logo from '../assets/header/logo.svg';
 import line1 from '../assets/header/line1.svg';
 import line2 from '../assets/header/line2.svg';
 import vector from '../assets/header/vector.svg';
 import { parsePath, getEdition, urlFor } from '../lib/editions';
+import { content } from '../lib/content';
+import { img } from '../lib/images';
 
 // Current edition and page path, so the language switch lands on the same page in the other language.
 const { edition, path } = parsePath(Astro.url.pathname);
 const enHref = urlFor(getEdition(edition.region, 'en'), path);
 const arHref = urlFor(getEdition(edition.region, 'ar'), path);
 const homeHref = urlFor(edition);
+const c = content('layout/header', edition.locale);
+const logo = img(c.logo.image, edition.region);
 
-const topLinks = [
-  { label: 'Your Opinion Matters', href: '#your-opinion', l: 408, w: 96 },
-  { label: 'Media Hub', href: '#', l: 532, w: 49 },
-  { label: 'Careers', href: '#', l: 607, w: 36 },
-  { label: 'Knowledge Center', href: '#', l: 669, w: 85 },
-  { label: 'FAQs', href: '#', l: 780, w: 27 },
-];
-const mainLinks = [
-  { label: 'About Cambridge', w: 84 },
-  { label: 'Our Care', w: 41 },
-  { label: 'Patient Hub', w: 54 },
-  { label: 'Our Hospitals', w: 62 },
-  { label: 'Contact Us', w: 51 },
-];
+// Design (positions/widths) zipped by index with the links from layout/header JSON.
+const topLinkBoxes = [ { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
+const topLinks = c.topLinks.map((x: { label: string; href: string }, i: number) => ({ ...x, ...topLinkBoxes[i] }));
+const mainLinkWidths = [84, 41, 54, 62, 51];
+const mainLinks = c.mainLinks.map((x: { label: string; href: string }, i: number) => ({ ...x, w: mainLinkWidths[i] }));
 const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
 ---
 
 <header class="hd relative z-50 bg-white shadow-bar font-gotham">
-  <input type="checkbox" id="nav-toggle" class="sr-only" aria-label="Toggle navigation menu" />
+  <input type="checkbox" id="nav-toggle" class="sr-only" aria-label={c.navToggleLabel} />
   <div class="stage" style="--h: 119">
-    <a href={homeHref} class="logo a" style="--l:41;--t:47;--w:252;--ph:45" aria-label="Cambridge Hospital home">
-      <img src={logo.src} width="252" height="45" alt="Cambridge Hospital" class="block h-auto w-full" />
+    <a href={homeHref} class="logo a" style="--l:41;--t:47;--w:252;--ph:45" aria-label={c.logo.homeLabel}>
+      <img src={logo.src} width="252" height="45" alt={c.logo.alt} class="block h-auto w-full" />
     </a>
 
     <label for="nav-toggle" class="burger" aria-hidden="true"><span></span><span></span><span></span></label>
 
-    <nav class="menu" aria-label="Main">
+    <nav class="menu" aria-label={c.menuLabel}>
       <img class="a deco" style="--l:394;--t:32;--w:10;--ph:10" src={vector.src} width="10" height="10" alt="" />
       <ul class="toplinks">
         {topLinks.map((x) => (
@@ -50,24 +44,24 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
       <div class="chip a" style="--l:846;--t:26;--w:47;--ph:25"></div>
       <div class="pill a" style="--l:849;--t:30;--w:22;--ph:18"></div>
       <ul class="lang">
-        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href={enHref} hreflang={getEdition(edition.region, 'en').lang} lang="en" class="block text-f9 font-normal not-italic text-white">EN</a></li>
-        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="block text-f9 font-medium not-italic text-navy">AR</a></li>
+        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href={enHref} hreflang={getEdition(edition.region, 'en').lang} lang="en" class="block text-f9 font-normal not-italic text-white">{c.lang.en}</a></li>
+        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="block text-f9 font-medium not-italic text-navy">{c.lang.ar}</a></li>
       </ul>
 
-      <a href="#" class="global a block whitespace-nowrap text-f9 font-medium not-italic text-navy" style="--l:932;--t:33;--w:38;--ph:15">Global</a>
+      <a href={c.region.href} class="global a block whitespace-nowrap text-f9 font-medium not-italic text-navy" style="--l:932;--t:33;--w:38;--ph:15">{c.region.label}</a>
       <!-- TODO(figma): 112:13401 keyboard_arrow_down (18x18 @966,28) glyph missing (figma-cache/chevron-down.svg not exported). Empty slot on purpose. -->
       <span class="chev a deco" style="--l:966;--t:28;--w:18;--ph:18" aria-hidden="true"></span>
 
-      <p class="visit a text-f9 not-italic text-navy" style="--l:932;--t:71;--w:111;--ph:32"><span class="font-normal">Visit</span><br /><span class="font-medium">Cambridge<br />Health Group</span></p>
+      <p class="visit a text-f9 not-italic text-navy" style="--l:932;--t:71;--w:111;--ph:32"><span class="font-normal">{c.visit.intro}</span><br /><span class="font-medium">{c.visit.lines[0]}<br />{c.visit.lines[1]}</span></p>
 
       <ul class="mainnav a" style="--l:393;--t:81;--w:595;--ph:15">
         {mainLinks.map((x) => (
-          <li style={`--w:${x.w}`}><a href="#" class="block whitespace-nowrap text-f9 font-medium not-italic text-navy">{x.label}</a></li>
+          <li style={`--w:${x.w}`}><a href={x.href} class="block whitespace-nowrap text-f9 font-medium not-italic text-navy">{x.label}</a></li>
         ))}
       </ul>
 
-      <a href="#book-appointment" class="book a" style="--l:755;--t:69;--w:138;--ph:30" aria-label="Book an appointment"></a>
-      <span class="booklabel a text-f9 font-medium not-italic text-off-white" style="--l:766;--t:80;--w:118;--ph:15" aria-hidden="true">BOOK AN APPOINTMENT</span>
+      <a href={c.book.href} class="book a" style="--l:755;--t:69;--w:138;--ph:30" aria-label={c.book.ariaLabel}></a>
+      <span class="booklabel a text-f9 font-medium not-italic text-off-white" style="--l:766;--t:80;--w:118;--ph:15" aria-hidden="true">{c.book.label}</span>
 
       {vlines.map(([l, t]) => (
         <span class="vl a deco" style={`--l:${l};--t:${t};--w:0;--ph:30`}><img src={line1.src} width="30" height="1" alt="" /></span>

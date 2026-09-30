@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import { DESIGN_W, TARGET_W } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
+import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 
 interface Props {
   edition: Edition;
@@ -51,5 +52,6 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <div class="page">
       <slot />
     </div>
+    <CountryPopupLogic />
   </body>
 </html>

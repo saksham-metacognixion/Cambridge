@@ -12,6 +12,7 @@ const bundle = async (entry, name) => {
   return import(pathToFileURL(join(out, name)).href);
 };
 const { onRequestPost, onRequest } = await bundle('functions/api/forms/[form].ts', 'form.mjs');
+const { onRequest: mw } = await bundle('functions/_middleware.ts', 'mw.mjs');
 let sent = [], tsOk = true;
 const realFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
@@ -43,5 +44,13 @@ for (const [name, run, check] of cases) {
   const r = await run(); let b = {}; try { b = await r.clone().json(); } catch {}
   const ok = await check(r, b); pass += ok ? 1 : 0; console.log(ok ? 'PASS' : 'FAIL', name, r.status, JSON.stringify(b));
 }
-console.log(`${pass}/${cases.length} passed`);
-if (pass !== cases.length) process.exit(1);
+// middleware
+const html = () => new Response('<html></html>', { headers: { 'Content-Type': 'text/html' } });
+const mwReq = (path, cookie = '') => mw({ request: Object.assign(new Request('https://site.test' + path, { headers: cookie ? { Cookie: cookie } : {} }), { cf: { country: 'AE' } }), env: {}, params: {}, next: async () => html() });
+const m1 = await mwReq('/'); const m2 = await mwReq('/ae'); const m3 = await mwReq('/', 'ch_edition=ae'); const m4 = await mwReq('/ar/find-a-doctor');
+const mw_ok = [m1.headers.get('Set-Cookie')?.startsWith('ch_geo=AE'), !m2.headers.get('Set-Cookie'), !m3.headers.get('Set-Cookie'), m4.headers.get('Set-Cookie')?.startsWith('ch_geo=AE')];
+console.log(mw_ok.every(Boolean) ? 'PASS' : 'FAIL', 'middleware: Global sets ch_geo, /ae untouched, chosen visitors untouched, Global Arabic page sets it', JSON.stringify(mw_ok));
+
+const total = pass + (mw_ok.every(Boolean) ? 1 : 0);
+console.log(`${total}/${cases.length + 1} passed`);
+if (total !== cases.length + 1) process.exit(1);

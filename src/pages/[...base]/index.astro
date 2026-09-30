@@ -1,19 +1,26 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/sections/Hero.astro';
-import CtaTab from '../components/sections/CtaTab.astro';
-import Services from '../components/sections/Services.astro';
-import Doctors from '../components/sections/Doctors.astro';
-import CareSupport from '../components/sections/CareSupport.astro';
-import Facilities from '../components/sections/Facilities.astro';
-import Testimonials from '../components/sections/Testimonials.astro';
-import Recovery from '../components/sections/Recovery.astro';
-import Calculators from '../components/sections/Calculators.astro';
-import News from '../components/sections/News.astro';
-import Insurance from '../components/sections/Insurance.astro';
-import Contact from '../components/sections/Contact.astro';
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { pageData } from '../../lib/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Hero from '../../components/sections/Hero.astro';
+import CtaTab from '../../components/sections/CtaTab.astro';
+import Services from '../../components/sections/Services.astro';
+import Doctors from '../../components/sections/Doctors.astro';
+import CareSupport from '../../components/sections/CareSupport.astro';
+import Facilities from '../../components/sections/Facilities.astro';
+import Testimonials from '../../components/sections/Testimonials.astro';
+import Recovery from '../../components/sections/Recovery.astro';
+import Calculators from '../../components/sections/Calculators.astro';
+import News from '../../components/sections/News.astro';
+import Insurance from '../../components/sections/Insurance.astro';
+import Contact from '../../components/sections/Contact.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const page = pageData('home', edition.locale);
 
 /*
  * Page composition. `mt` = gap (Figma px) between the previous section's bottom and this section's top,
@@ -37,10 +44,7 @@ const sections = [
 ];
 ---
 
-<BaseLayout
-  title="Cambridge Hospital"
-  description="Supporting every step of your recovery journey with compassionate care and clinical excellence."
->
+<BaseLayout edition={edition} path="" title={page.meta.title} description={page.meta.description}>
   <div class="relative" style="z-index:14">
     <Header />
   </div>

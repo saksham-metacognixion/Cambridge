@@ -1,0 +1,13 @@
+{
+  "$comment": "Regions x locales = the 6 editions. URL = /<region.path>/<locale.path>; see basePath() in src/lib/editions.ts. The Arabic path segment is a PLACEHOLDER until Pramod confirms the current site's Arabic URL pattern.",
+  "regions": [
+    { "id": "global", "path": "", "country": null, "name": "Global" },
+    { "id": "ae", "path": "ae", "country": "AE", "name": "UAE" },
+    { "id": "sa", "path": "sa", "country": "SA", "name": "KSA" }
+  ],
+  "locales": [
+    { "id": "en", "path": "", "dir": "ltr" },
+    { "id": "ar", "path": "ar", "dir": "rtl" }
+  ],
+  "default": { "region": "global", "locale": "en" }
+}

@@ -3,6 +3,13 @@ import logo from '../assets/header/logo.svg';
 import line1 from '../assets/header/line1.svg';
 import line2 from '../assets/header/line2.svg';
 import vector from '../assets/header/vector.svg';
+import { parsePath, getEdition, urlFor } from '../lib/editions';
+
+// Current edition and page path, so the language switch lands on the same page in the other language.
+const { edition, path } = parsePath(Astro.url.pathname);
+const enHref = urlFor(getEdition(edition.region, 'en'), path);
+const arHref = urlFor(getEdition(edition.region, 'ar'), path);
+const homeHref = urlFor(edition);
 
 const topLinks = [
   { label: 'Your Opinion Matters', href: '#your-opinion', l: 408, w: 96 },
@@ -24,7 +31,7 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
 <header class="hd relative z-50 bg-white shadow-bar font-gotham">
   <input type="checkbox" id="nav-toggle" class="sr-only" aria-label="Toggle navigation menu" />
   <div class="stage" style="--h: 119">
-    <a href="#" class="logo a" style="--l:41;--t:47;--w:252;--ph:45" aria-label="Cambridge Hospital home">
+    <a href={homeHref} class="logo a" style="--l:41;--t:47;--w:252;--ph:45" aria-label="Cambridge Hospital home">
       <img src={logo.src} width="252" height="45" alt="Cambridge Hospital" class="block h-auto w-full" />
     </a>
 
@@ -43,8 +50,8 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
       <div class="chip a" style="--l:846;--t:26;--w:47;--ph:25"></div>
       <div class="pill a" style="--l:849;--t:30;--w:22;--ph:18"></div>
       <ul class="lang">
-        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href="#" lang="en" class="block text-f9 font-normal not-italic text-white">EN</a></li>
-        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href="#" lang="ar" class="block text-f9 font-medium not-italic text-navy">AR</a></li>
+        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href={enHref} hreflang={getEdition(edition.region, 'en').lang} lang="en" class="block text-f9 font-normal not-italic text-white">EN</a></li>
+        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="block text-f9 font-medium not-italic text-navy">AR</a></li>
       </ul>
 
       <a href="#" class="global a block whitespace-nowrap text-f9 font-medium not-italic text-navy" style="--l:932;--t:33;--w:38;--ph:15">Global</a>

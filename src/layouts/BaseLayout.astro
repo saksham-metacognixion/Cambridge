@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+import fs from 'node:fs';
+import { DESIGN_W, TARGET_W } from '../lib/scale';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site).href : undefined;
+
+// Preload the main font only when the file has actually been added (avoids a 404 preload while Gotham is pending).
+const mainFont = 'public/fonts/Gotham-Book.woff2';
+const hasMainFont = fs.existsSync(mainFont);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {hasMainFont && <link rel="preload" href="/fonts/Gotham-Book.woff2" as="font" type="font/woff2" crossorigin />}
+    <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W}}`}></style>
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="page">
+      <slot />
+    </div>
+  </body>
+</html>

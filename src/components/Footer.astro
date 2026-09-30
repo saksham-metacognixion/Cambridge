@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import { px } from '../lib/scale';
+import logo from '../assets/footer/logo-vertical-negative.svg';
+import line24 from '../assets/footer/line24.svg';
+import group53 from '../assets/footer/group53.svg';
+import accredited from '../assets/footer/accredited.png';
+
+const quick: { label: string; href: string }[][] = [
+  [{ label: 'Cambridge', href: '#' }],
+  [{ label: 'Our Care', href: '#' }],
+  [{ label: 'Patient Hub', href: '#' }],
+  [{ label: 'Our Hospitals', href: '#' }],
+  [{ label: 'Contact Us', href: '#' }],
+  [{ label: 'Book an Appointment', href: '#book-appointment' }],
+  [{ label: 'Media Hub', href: '#' }],
+  [{ label: 'Careers', href: '#' }],
+  [{ label: 'Knowledge Center', href: '#' }],
+  [{ label: 'FAQs', href: '#' }, { label: 'Your Opinion Matters', href: '#your-opinion' }],
+  [{ label: 'Find a Doctor', href: '#' }],
+  [{ label: 'Search Conditions', href: '#' }],
+  [{ label: 'Send an Inquiry', href: '#send-inquiry' }],
+];
+const services = ['Inpatient Care', 'Outpatient Care', 'Home Health Care', 'In School Care'];
+const hospitals = [
+  'Cambridge Hospital Abu Dhabi', 'Cambridge Hospital Al Ain', 'Cambridge Hospital Dhahran',
+  'Cambridge Hospital Al Khobar', 'Cambridge Hospital Jeddah', 'Al Mudeef Center Abu Dhabi',
+];
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+---
+
+<footer class="ft relative bg-navy rounded-t-r30 font-gotham">
+  <div class="stage" style="--h: 368">
+    <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt="Cambridge Hospital" />
+
+    <nav class="col c1 a" style="--l:329;--t:76;--w:148;--ph:193" aria-labelledby="ft-quick">
+      <h2 id="ft-quick" class="hd text-f13 font-medium text-white">QUICK LINKS</h2>
+      <ul class="links" style="--w:138">
+        {quick.map((g) => (
+          <li>{g.map((x, i) => (<>{i > 0 && <br />}<a href={x.href}>{x.label}</a></>))}</li>
+        ))}
+      </ul>
+    </nav>
+    <nav class="col c2 a" style="--l:452;--t:76;--w:148;--ph:193" aria-labelledby="ft-serv">
+      <h2 id="ft-serv" class="hd text-f13 font-medium text-white">SERVICES</h2>
+      <ul class="links">{services.map((s) => <li><a href="#">{s}</a></li>)}</ul>
+    </nav>
+    <nav class="col c3 a" style="--l:562;--t:76;--w:148;--ph:193" aria-labelledby="ft-hosp">
+      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">OUR HOSPITALS</h2>
+      <ul class="links">{hospitals.map((s) => <li><a href="#">{s}</a></li>)}</ul>
+    </nav>
+
+    <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">
+      <h2 class="hd text-f12 font-light text-white" style="width:calc(175 * var(--u))">TRUSTED ACCREDITATIONS</h2>
+      <div class="accimg">
+        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={`${px(235)}px`} format="webp" loading="lazy" decoding="async" alt="Accreditations: JCI and other healthcare accreditation badges" class="block h-full w-full object-cover" />
+      </div>
+    </div>
+
+    <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value={accessKey} />
+      <h2 class="hd text-f12 font-light text-white">SUBSCRIBE TO OUR NEWSLETTER</h2>
+      <div class="box">
+        <label class="sr-only" for="ft-email">Email</label>
+        <input id="ft-email" type="email" name="email" placeholder="YOUR EMAIL" required autocomplete="email" />
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+
+    <img class="a" style="--l:62;--t:319;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
+    <img class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24" src={group53.src} width="161" height="16.24" alt="" />
+
+    <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">Cambridge Hospital All Rights Reserved</p>
+    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href="#">Compliance</a><span class="gap">       </span><a href="#">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<style>
+  .ft ul { margin: 0; padding: 0; list-style: none; }
+  .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
+  .ft h2.text-f13 { line-height: normal; }
+  .links { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #e7e7e7; white-space: nowrap; }
+  .links a, .bot a { color: inherit; text-decoration: none; }
+  .col .links { margin-top: calc(3 * var(--u)); }
+  .nl .box { position: relative; background: #fff; border-radius: calc(8 * var(--u)); width: calc(213 * var(--u)); height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
+  .nl input[type="email"] { position: absolute; left: calc(10 * var(--u)); top: calc(9 * var(--u)); width: calc(150 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  .nl input::placeholder { color: #004059; opacity: 1; }
+  .nl button { position: absolute; left: calc(169 * var(--u)); top: calc(9 * var(--u)); width: calc(36 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; background: transparent; cursor: pointer; text-align: left; font: 500 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
+  .bot { margin: 0; font-size: calc(7 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; white-space: pre; }
+  .bot.right { text-align: right; }
+  .accimg { margin-top: calc(24 * var(--u)); width: calc(235 * var(--u)); height: calc(45 * var(--u)); overflow: hidden; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ft .stage > img { max-width: none; }
+
+  @media (min-width: 1024px) {
+    .a { position: absolute; left: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
+    .nl .box { margin-top: calc(13 * var(--u)); }
+    .links { height: calc(174 * var(--u)); }
+    .col .links { margin-top: calc(3 * var(--u)); }
+  }
+
+  @media (max-width: 1023.98px) {
+    .stage { display: flex; flex-wrap: wrap; gap: calc(28 * var(--u)) calc(30 * var(--u)); padding: calc(32 * var(--u)) 16px; box-sizing: border-box; align-items: flex-start; }
+    .logo { width: calc(242 * var(--u)); max-width: 60vw; height: auto; }
+    .col { flex: 1 1 calc(138 * var(--u)); min-width: 0; }
+    .col, .acc, .nl { position: static; }
+    .acc, .nl { flex: 1 1 calc(235 * var(--u)); }
+    .icons { width: calc(161 * var(--u)); height: auto; }
+    .stage > img[src*="line24"], .stage > img:not(.logo):not(.icons) { width: 100%; height: auto; flex: 1 1 100%; }
+    .bot { flex: 1 1 auto; white-space: pre-wrap; }
+    .bot.right { text-align: left; }
+  }
+</style>

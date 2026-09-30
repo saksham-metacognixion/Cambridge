@@ -1,0 +1,57 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import banner from '../../assets/hero/banner3.png';
+import overlay from '../../assets/hero/rectangle2.png';
+import dots from '../../assets/dots/dots-hero.svg';
+---
+<!-- Hero: page y 117, --h 500. Spec y values are page y minus 117. -->
+<section class="relative" style="--h: 500" aria-label="Hero">
+  <div class="stage max-lg:flex max-lg:min-h-[calc(500*var(--u))] max-lg:flex-col max-lg:justify-center max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(48*var(--u))]">
+    <Picture
+      src={banner}
+      formats={['avif']}
+      fallbackFormat="webp"
+      width={px(1052)}
+      height={px(500)}
+      widths={[720, 1080, px(1052)]}
+      sizes="(min-width: 1440px) 1440px, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      alt=""
+      class="absolute left-0 top-0 h-full w-full object-cover"
+      pictureAttributes={{ class: 'contents' }}
+    />
+    <Picture
+      src={overlay}
+      formats={['avif']}
+      fallbackFormat="webp"
+      width={px(1052)}
+      height={px(159)}
+      widths={[720, 1080, px(1052)]}
+      sizes="(min-width: 1440px) 1440px, 100vw"
+      loading="lazy"
+      decoding="async"
+      alt=""
+      class="absolute left-0 top-341 h-159 w-full object-cover max-lg:top-auto max-lg:bottom-0"
+      pictureAttributes={{ class: 'contents' }}
+    />
+
+    <h1 class="relative font-gotham font-medium not-italic text-f39 leading-37 text-navy lg:absolute lg:left-95 lg:top-141 lg:w-374 lg:h-74 whitespace-normal [word-break:break-word]">Restoring Hope,<br />Enabling Life.</h1>
+
+    <p class="relative font-gotham font-normal not-italic text-f12 leading-14 text-body lg:absolute lg:left-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">Supporting every step of your recovery journey with compassionate care and clinical excellence.</p>
+
+    <div class="relative flex flex-wrap gap-[calc(14*var(--u))] lg:contents">
+      <a href="#contact" style="--sw:1;--sc:var(--color-cyan)" class="relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:left-98 lg:top-265">
+        <span class="absolute left-8 top-9 h-15 w-118 font-gotham font-medium not-italic text-f13 leading-[calc(15*var(--u))] text-cyan text-center">Get in Touch</span>
+      </a>
+      <a href="#" style="--sw:1;--sc:var(--color-cyan)" class="relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:left-250 lg:top-265">
+        <span class="absolute left-8 top-9 h-15 w-118 font-gotham font-medium not-italic text-f13 leading-[calc(15*var(--u))] text-cyan text-center">Learn More</span>
+      </a>
+    </div>
+
+    <!-- Static decorative pager dots (78:759), no behaviour -->
+    <img src={dots.src} width={41} height={8.716} alt="" aria-hidden="true" class="absolute left-506 top-420 h-[calc(8.716*var(--u))] w-41 max-lg:left-1/2 max-lg:top-auto max-lg:bottom-[calc(20*var(--u))] max-lg:-translate-x-1/2" />
+  </div>
+</section>

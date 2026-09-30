@@ -1,0 +1,154 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import mapVector from '../../assets/facilities/map-vector.svg';
+import pin4243 from '../../assets/facilities/map-pin.svg';
+import pin4342 from '../../assets/facilities/map-pin-43x42.svg';
+import pin32 from '../../assets/facilities/map-pin-32.svg';
+import line8 from '../../assets/facilities/line8.svg';
+import line9 from '../../assets/facilities/line9.svg';
+import auh from '../../assets/facilities/auh-new.png';
+import alAin from '../../assets/facilities/al-ain.png';
+import dhahran from '../../assets/facilities/dhahran.png';
+import alKhobar from '../../assets/facilities/al-khobar.png';
+import jeddah from '../../assets/facilities/jeddah.png';
+import alMudeef from '../../assets/facilities/al-mudeef.png';
+
+// Section page-y origin = 2054. Map group origin (page) = (454, 2226).
+const MX = 454;
+const MY = 2226 - 2054;
+const labels = [
+  { t: 'Dhahran', x: 794, y: 2320 - 2054, w: 55 },
+  { t: 'Al Khobar', x: 816, y: 2345 - 2054, w: 69 },
+  { t: 'Abu Dhabi', x: 930.18, y: 2380 - 2054, w: 70 },
+  { t: 'Al Ain', x: 921, y: 2434 - 2054, w: 69 },
+  { t: 'Jeddah', x: 580.18, y: 2471 - 2054, w: 69 },
+];
+const pins = [
+  { f: pin4243, x: 754, y: 2315.81 - 2054, w: 42, h: 43 },
+  { f: pin4243, x: 775, y: 2338.81 - 2054, w: 42, h: 43 },
+  { f: pin4243, x: 552, y: 2432.81 - 2054, w: 42, h: 43 },
+  { f: pin4342, x: 860, y: 2383.81 - 2054, w: 43, h: 42 },
+  { f: pin4342, x: 887, y: 2370.81 - 2054, w: 43, h: 42 },
+  { f: pin32, x: 894, y: 2410 - 2054, w: 32, h: 32 },
+];
+
+// Rows: page-y of each element (card top = 2124, card x = 64)
+const rows = [
+  { img: auh, name: 'Cambridge Hospital ', city: 'Abu Dhabi', alt: 'Cambridge Hospital Abu Dhabi', yImg: 2139, yName: 2150, yVisit: 2195, yBtn: 2186, yBtnT: 2194, yOut: 2189 },
+  { img: alAin, name: 'Cambridge Hospital ', city: 'Al Ain', alt: 'Cambridge Hospital Al Ain', yImg: 2252, yName: 2268, yVisit: 2313, yBtn: 2304, yBtnT: 2312, yOut: 2307 },
+  { img: dhahran, name: 'Cambridge Hospital ', city: 'Dhahran', alt: 'Cambridge Hospital Dhahran', yImg: 2367, yName: 2381, yVisit: 2426, yBtn: 2417, yBtnT: 2425, yOut: 2420 },
+  { img: alKhobar, name: 'Cambridge Hospital ', city: 'Al Khobar', alt: 'Cambridge Hospital Al Khobar', yImg: 2476, yName: 2491, yVisit: 2536, yBtn: 2527, yBtnT: 2535, yOut: 2530 },
+  { img: jeddah, name: 'Cambridge Hospital ', city: 'Jeddah', alt: 'Cambridge Hospital Jeddah', yImg: 2589, yName: 2604, yVisit: 2649, yBtn: 2640, yBtnT: 2648, yOut: 2643 },
+  { img: alMudeef, name: 'Al Mudeef Center ', city: 'Abu Dhabi', alt: 'Al Mudeef Center Abu Dhabi', yImg: 2702, yName: 2717, yVisit: 2762, yBtn: 2753, yBtnT: 2761, yOut: 2756 },
+];
+const dividerY = [2242, 2355, 2468, 2581, 2694];
+const cy = (y: number) => y - 2124; // card-relative y
+const cx = (x: number) => x - 64; // card-relative x
+
+const stats = [
+  { n: '300,000+', l: 'Unique OPD Visits', x: 510, y: 2662, w: 152 },
+  { n: '5,000+', l: 'Improved Impatients', x: 694, y: 2662, w: 132 },
+  { n: '30,000+', l: 'Homecare Visits', x: 852, y: 2662, w: 131 },
+  { n: '1200+', l: 'Healthcare Professionals', x: 510, y: 2748, w: 152 },
+  { n: '720', l: 'Operational Beds', x: 701, y: 2748, w: 112 },
+  { n: '6', l: 'Care Presence', x: 852, y: 2748, w: 112 },
+];
+---
+
+<section class="relative bg-navy-alt overflow-x-clip" style="--h: 788">
+  <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-8 max-lg:px-4 max-lg:py-10">
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style="--x:480;--y:58;--w:494;--h:77">Bringing Expert Care Closer to You Across the Region<span class="text-cyan">.</span></h2>
+
+    <!-- Map (Group 9) -->
+    <div class="mapbox dpos" style={`--x:${MX};--y:${MY};--w:546.176;--h:382.084`}>
+      <div class="mapin">
+        <img class="pm" src={mapVector.src} width={px(478)} height={px(382.084)} alt="Map of the region showing Cambridge Hospital locations in Saudi Arabia and the United Arab Emirates" loading="lazy" decoding="async" style="--x:0;--y:0;--w:478;--h:382.084" />
+        {labels.map((l) => (
+          <span class="pm font-gotham font-medium leading-[normal] text-white whitespace-nowrap not-italic" style={`--x:${l.x - MX};--y:${l.y - MY};--w:${l.w}`}>{l.t}</span>
+        ))}
+        {pins.map((p) => (
+          <img class="pm" src={p.f.src} width={px(p.w)} height={px(p.h)} alt="" loading="lazy" decoding="async" style={`--x:${p.x - MX};--y:${p.y - MY};--w:${p.w};--h:${p.h}`} />
+        ))}
+      </div>
+    </div>
+
+    <!-- Hospitals list -->
+    <div class="list dpos" style="--x:64;--y:30;--w:358;--h:734">
+      <div class="dpos2 bg-cyan rounded-t-r8 text-white" style="--x:0;--y:0;--w:149;--h:40">
+        <span class="dpos2 font-gotham font-medium text-f13 leading-15 text-center not-italic" style="--x:33;--y:15;--w:78;--h:15">Hospitals</span>
+      </div>
+      <ul class="card dpos2 m-0 list-none bg-white rounded-b-r8 rounded-tr-r8" style="--x:0;--y:40;--w:358;--h:694">
+        {rows.map((r, i) => (
+          <li class="row lg:contents">
+            <div class="dpos2 imgw [&_picture]:block [&_picture]:h-full" style={`--x:${cx(77)};--y:${cy(r.yImg)};--w:116;--h:91`}><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(116)} height={px(91)} widths={[px(116), px(116) * 2]} sizes={`${px(116)}px`} loading="lazy" decoding="async" alt={r.alt} /></div>
+            <div class="info lg:contents">
+              <h3 class="dpos2 m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]" style={`--x:${cx(208)};--y:${cy(r.yName)};--w:148;--h:34`}>
+                <span class="block text-f12 leading-15 text-navy-alt">{r.name}</span>
+                <span class="block text-f10 leading-16 text-body">{r.city}</span>
+              </h3>
+              <div class="actions lg:contents">
+                <a href="#book-appointment" class="dpos2 book bg-cyan rounded-r3 flex items-center justify-center pl-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`}>Book Appointment</a>
+                <a href="#" class="dpos2 visit rounded-r4 flex items-center justify-center pl-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>Visit Page</a>
+              </div>
+            </div>
+            {i < 5 && <img class="dpos2 divider" src={line9.src} width={px(350)} height={px(1)} alt="" loading="lazy" decoding="async" style={`--x:0;--y:${cy(dividerY[i])};--w:350;--h:1`} />}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats grid grid-cols-2 gap-x-6 gap-y-6 w-full max-w-[calc(360*var(--u))] lg:contents">
+      {stats.map((s) => (
+        <p class="dpos m-0 font-gotham font-medium text-white not-italic leading-[1.147] whitespace-normal [word-break:break-word]" style={`--x:${s.x};--y:${s.y - 2054};--w:${s.w}`}>
+          <span class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
+          <span class="block text-f12">{s.l}</span>
+        </p>
+      ))}
+    </div>
+    <span class="vline dpos" aria-hidden="true" style="--x:677;--y:608;--w:0.15;--h:38"><img src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:826;--y:608;--w:0.15;--h:38"><img src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:677;--y:694;--w:0.15;--h:38"><img src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:826;--y:694;--w:0.15;--h:38"><img src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+  </div>
+</section>
+
+<style>
+  img { max-width: none; }
+  .mapbox { width: min(calc(100vw - 32px), calc(546.176 * var(--u))); aspect-ratio: 546.176 / 382.084; position: relative; --m: calc(min(100vw - 32px, 546.176 * var(--u)) / 546.176); }
+  .mapin { position: relative; width: 100%; height: 100%; }
+  .pm:is(span) { font-size: 10px; }
+  .pm { position: absolute; left: calc(var(--x) * var(--m)); top: calc(var(--y) * var(--m)); width: calc(var(--w) * var(--m)); height: calc(var(--h) * var(--m)); }
+  .pm:is(span) { height: auto; }
+  .list { width: 100%; max-width: calc(358 * var(--u)); }
+  .card { padding: calc(13 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
+  .row { display: grid; grid-template-columns: calc(116 * var(--u)) minmax(0, 1fr); column-gap: calc(12 * var(--u)); align-items: start; }
+  .row > .imgw { grid-column: 1; grid-row: 1; }
+  .row > :global(img.divider) { grid-column: 1 / -1; margin-top: calc(10 * var(--u)); max-width: 100%; height: auto; }
+  .info { grid-column: 2; grid-row: 1; }
+  .actions { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); margin-top: calc(8 * var(--u)); }
+  .imgw { width: calc(116 * var(--u)); height: calc(91 * var(--u)); }
+  .book, .visit { width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
+  .list > .dpos2:first-child { position: relative; }
+  .vline, .stats { display: none; }
+  .stats { display: grid; }
+  @media (min-width: 1024px) {
+    .dpos, .dpos2 { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
+    .list { max-width: none; }
+    .card { display: block; padding: 0; }
+    .row { display: contents; }
+    .row > :global(img.divider) { margin: 0; }
+    .stats { display: contents; }
+    .vline { display: block; }
+    .vline img { position: absolute; width: calc(38 * var(--u)); height: calc(0.15 * var(--u)); left: calc((0.15 - 38) / 2 * var(--u)); top: calc((38 - 0.15) / 2 * var(--u)); transform: rotate(90deg); }
+    .mapbox { --m: var(--u); }
+    .pm:is(span) { font-size: calc(10 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .dpos2 { position: static; }
+    .mapbox { position: relative; }
+    .list > .dpos2:first-child { width: calc(149 * var(--u)); height: calc(40 * var(--u)); display: flex; align-items: center; justify-content: center; }
+    .list > .dpos2:first-child > .dpos2 { position: static; width: auto; height: auto; }
+  }
+</style>

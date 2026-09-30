@@ -1,0 +1,10 @@
+# News & Insights 2007:344 (frame x=60 page, y4041) -- frame-relative; page x = value + 60
+Title 67:4321 "News & Insights": Gotham Medium 28px #004059 centered cx460 top0 w430 h27
+Filter pills (top51, 79x25, radius 12, border 1px #004059, none filled): @321 "Blogs" | @420 "News" | @519 "Events"; text Gotham Medium 10px lh10px #004059 centered w60 h10 top59, cx 360/459/558
+Cards (3) image boxes top113 h220 radius 21.9, shadow 0 4px 4px rgba(0,0,0,0.13), overflow hidden: @0 w289 "al-khobar-image" | @313 w289 "patient" | @627 w288 "doctor"
+  image placement inside box: al-khobar: height 100.02% left -12.39% top -0.01% width 116.51% | patient: h100.12% left -10.73% top -0.06% w116.61% | doctor: h102.73% left -0.04% top -2.73% w100.07%   (all max-width none, absolute)
+Headlines Gotham Medium 16px lh18px #004059 top354: @0 w289 h73 "Cambridge Hospital Al Khobar, a state-of-the-art rehabilitative hospital in the Eastern Province of Kingdom of Saudi Arabia." | @313 w289 h35 "Abdullah, a young Emirati, is a beacon of hope and a true success story of recovery, resilience, and renewed life." | @626 w289 h73 "Dr. Robert Kassab shares insights on stroke rehabilitation and long-term care in his recent TV interview on Sabah Al Arabiya."
+Excerpts Gotham Book 9px lh11px #6b6b6b top433 w282 h44: @0 "In Q2 2019, Cambridge Medical & Rehabilitation, the UAE’s leading post-acute rehabilitation and long-term care facility, announced the opening of its first medical and rehabilitation facility...." | @313 "On August 11, 2018, 17-year-old Abdullah Al Mehrezi, bedridden and developing spasticity in all four limbs due to a dreadful road traffic accident that left him with severe traumatic brain injury, was admitted..." | @626 "Watch Dr. Robert Kassab’s TV interview on Sabah Al Arabiya, where he shares expert insights on stroke rehabilitation and long-term care, highlighting the importance of specialized treatment...."
+Arrow icons (arrow-icon-group33.svg 36.528x36.528, top475): @238 | @565 | @878
+Small divider (divider-group622.svg 40.972x8.716) @446,544  (this is Group 622 80:808)
+Line 23 (line23.svg, width 915.014, rotated -0.31deg, box h5) @0,585 w915

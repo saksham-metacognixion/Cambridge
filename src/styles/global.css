@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* ───────────── Fonts (self-hosted; drop the woff2 files into public/fonts/) ─────────────
+   Gotham licence is being checked with the client, so the files are NOT in the repo yet.
+   Until they are added, the fallback stack below is used (no other brand font is substituted). */
+@font-face { font-family: "Gotham"; font-weight: 300; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Light.woff2") format("woff2"); }
+@font-face { font-family: "Gotham"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Book.woff2") format("woff2"); }
+@font-face { font-family: "Gotham"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Gotham"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); }
+
+/* ───────────── Scale ─────────────
+   --design-w / --target-w come from src/lib/scale.ts (injected by BaseLayout).
+   --u = the length of ONE Figma pixel.
+   ≥1024px: layout scales fluidly with the page width, capped at the target width (1440px).
+   <1024px: layout is re-flowed (stacked); --u stays fixed so text / radii / gaps keep their designed size. */
+:root {
+  --u: calc(var(--target-w) * 1px / var(--design-w));
+}
+@media (min-width: 1024px) {
+  :root { --u: calc(min(100cqw, var(--target-w) * 1px) / var(--design-w)); }
+}
+
+@theme {
+  /* 1 spacing step = 1 Figma px, so  w-185  left-[-118]  top-1380  gap-11  are Figma values, scaled. */
+  --spacing: var(--u);
+
+  /* Colours: exact hex values from Figma */
+  --color-navy: #004059;          /* headings, nav text, outline/fill accents */
+  --color-navy-alt: #00415a;      /* CTA labels, some fills (distinct in Figma: #00415a) */
+  --color-cyan: #00b8ff;
+  --color-body: #6b6b6b;
+  --color-teal-border: #418ea2;
+  --color-mist: #e7e7e7;          /* footer links, header hairlines */
+  --color-chip: #ededed;
+  --color-off-white: #fffdfd;
+  --color-veil: rgba(231, 231, 231, 0.5);
+  --color-field: rgba(217, 217, 217, 0.5);
+  --color-dot-light: #f9f9f9;
+  --color-dot-grey: #d9d9d9;
+
+  --font-gotham: "Gotham", ui-sans-serif, system-ui, sans-serif;
+
+  /* Font sizes used in Figma, scaled: text-f13 = 13 Figma px */
+  --text-f7: calc(7 * var(--u));
+  --text-f8: calc(8 * var(--u));
+  --text-f9: calc(9 * var(--u));
+  --text-f10: calc(10 * var(--u));
+  --text-f12: calc(12 * var(--u));
+  --text-f13: calc(13 * var(--u));
+  --text-f14: calc(14 * var(--u));
+  --text-f16: calc(16 * var(--u));
+  --text-f19: calc(19 * var(--u));
+  --text-f23: calc(23 * var(--u));
+  --text-f28: calc(28 * var(--u));
+  --text-f30: calc(30 * var(--u));
+  --text-f39: calc(39 * var(--u));
+
+  /* Radii used in Figma, scaled: rounded-r15 = 15 Figma px */
+  --radius-r3: calc(3 * var(--u));
+  --radius-r4: calc(4 * var(--u));
+  --radius-r5: calc(5 * var(--u));
+  --radius-r6: calc(6 * var(--u));
+  --radius-r7: calc(7 * var(--u));
+  --radius-r8: calc(8 * var(--u));
+  --radius-r12: calc(12 * var(--u));
+  --radius-r15: calc(15 * var(--u));
+  --radius-r16: calc(16 * var(--u));
+  --radius-r18: calc(18 * var(--u));
+  --radius-r21: calc(21.9 * var(--u));
+  --radius-r30: calc(30 * var(--u));
+  --radius-r12p6: calc(12.658 * var(--u));
+
+  /* Shadows from Figma */
+  --shadow-bar: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.06);
+  --shadow-tile: 0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25);
+  --shadow-news: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13);
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: #fff;                 /* Figma page background layer 21:664 is #ffffff */
+  font-family: var(--font-gotham);
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Page wrapper: the size container that --u's cqw reads, and the no-horizontal-scroll guard. */
+.page { container-type: inline-size; overflow-x: clip; }
+
+/* Stage = the design canvas of one section. Children are absolutely positioned in Figma px (via --u).
+   Set the section's design height with style="--h: <figma px>". Content that overhangs the frame is
+   clipped at the stage edge, exactly like the root frame in Figma (clipsContent = true). */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--target-w) * 1px);
+  margin-inline: auto;
+  height: calc(var(--h) * var(--u));
+  overflow-x: clip;
+}
+/* Below 1024px the absolute canvas is dropped: each section supplies its own stacked layout. */
+@media (max-width: 1023.98px) {
+  .stage { height: auto; overflow-x: visible; }
+}
+
+/* Hairline borders from Figma, scaled. Width + style only: set the colour with border-<colour>. */
+.hair-15 { border-style: solid; border-width: calc(0.15 * var(--u)); }
+.hair-25 { border-style: solid; border-width: calc(0.25 * var(--u)); }
+.hair-50 { border-style: solid; border-width: calc(0.5 * var(--u)); }
+.hair-100 { border-style: solid; border-width: calc(1 * var(--u)); }
+
+/* Card outline drawn as an overlay so it never shifts the card's children (Chrome draws any border as at least 1 device px,
+   which would push absolutely-positioned content ~1px; Figma's 0.25px stroke doesn't). Host must be positioned. */
+.hair-card { border: 0; }   /* optional: --sw (Figma px, default .25) and --sc (colour, default teal) */
+.hair-card::after {
+  content: ""; position: absolute; inset: 0; box-sizing: border-box; pointer-events: none;
+  border: calc(var(--sw, 0.25) * var(--u)) solid var(--sc, var(--color-teal-border)); border-radius: inherit;
+}
+
+/* Horizontal row that overflows the frame on the right (Doctors, Care Support, Testimonials).
+   Swipe / scroll only, no controls. Native scrollbar hidden; nothing added to the design. */
+.hscroll { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.hscroll::-webkit-scrollbar { display: none; }

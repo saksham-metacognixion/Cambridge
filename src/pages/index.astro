@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import CtaTab from '../components/sections/CtaTab.astro';
+import Services from '../components/sections/Services.astro';
+import Doctors from '../components/sections/Doctors.astro';
+import CareSupport from '../components/sections/CareSupport.astro';
+import Facilities from '../components/sections/Facilities.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Recovery from '../components/sections/Recovery.astro';
+import Calculators from '../components/sections/Calculators.astro';
+import News from '../components/sections/News.astro';
+import Insurance from '../components/sections/Insurance.astro';
+import Contact from '../components/sections/Contact.astro';
+
+/*
+ * Page composition. `mt` = gap (Figma px) between the previous section's bottom and this section's top,
+ * taken from the Figma frame (negative = the section overlaps the previous one). `z` = stacking order
+ * (bottom -> top) as in the Figma layer list. Overlaps only apply on desktop (>=1024px); when the layout
+ * is stacked (tablet/mobile) sections simply follow each other.
+ */
+const sections = [
+  { id: 'hero', C: Hero, mt: -2, z: 2 }, //          Header ends 119, Hero starts 117
+  { id: 'cta', C: CtaTab, mt: -57, z: 4 }, //        Hero ends 617, CTA Tab starts 560
+  { id: 'services', C: Services, mt: -2, z: 3 }, //  CTA ends 642, Services starts 640
+  { id: 'doctors', C: Doctors, mt: 48, z: 1 }, //    Services ends 1193, Doctors starts 1241
+  { id: 'care', C: CareSupport, mt: 0, z: 5 }, //    Doctors block ends 1698
+  { id: 'facilities', C: Facilities, mt: 0, z: 6 }, // 2054
+  { id: 'stories', C: Testimonials, mt: 50, z: 7 }, // Facilities ends 2842, Testimonials starts 2892
+  { id: 'recovery', C: Recovery, mt: 54, z: 8 }, //  Testimonials ends 3313, Recovery starts 3367
+  { id: 'calculators', C: Calculators, mt: 0, z: 9 }, // 3553
+  { id: 'news', C: News, mt: 44, z: 11 }, //         Calculators ends 3997, News starts 4041
+  { id: 'insurance', C: Insurance, mt: 34, z: 12 }, // News ends 4631, Insurance starts 4665
+  { id: 'contact-section', C: Contact, mt: 34, z: 10 }, // Insurance ends 4872, Contact starts 4906
+];
+---
+
+<BaseLayout
+  title="Cambridge Hospital"
+  description="Supporting every step of your recovery journey with compassionate care and clinical excellence."
+>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    {
+      sections.map(({ id, C, mt, z }) => (
+        <div id={id} class="relative lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u));z-index:${z}`}>
+          <C />
+        </div>
+      ))
+    }
+  </main>
+  <!-- Footer starts at Figma y 5285, Contact ends at 5403 -> overlaps by 118 -->
+  <div class="relative lg:mt-(--gap)" style="--gap:calc(-118 * var(--u));z-index:13">
+    <Footer />
+  </div>
+</BaseLayout>

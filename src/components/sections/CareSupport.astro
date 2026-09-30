@@ -1,0 +1,85 @@
+---
+import { px } from '../../lib/scale';
+import radiology from '../../assets/care-support/g67-3676-first.svg';
+import laboratory from '../../assets/care-support/g67-3717.svg';
+import pharmacy from '../../assets/care-support/g67-3699.svg';
+import sensory from '../../assets/care-support/g67-3710.svg';
+import inGym from '../../assets/care-support/g67-3703.svg';
+import hydro from '../../assets/care-support/g67-3721.svg';
+import outGym from '../../assets/care-support/v67-3698.svg';
+import ct from '../../assets/care-support/g67-3706.svg';
+import dialysis from '../../assets/care-support/g67-3672-radiology-right.svg';
+import blood from '../../assets/care-support/g67-3684-last.svg';
+
+// Spec is FRAME-relative (frame 1106x356 at page x=-22, y=1698). Row is placed at page x = -22 (frame x 0).
+const FRAME_W = 1106;
+const FRAME_H = 356;
+const ROW_X = -22;
+// icon inset % = [top, right, bottom, left] of the frame
+const tiles = [
+  { label: 'Radiology', x: 0, cx: 37, w: 60, icon: radiology, inset: [58.99, 94.81, 29.66, 1.54] },
+  { label: 'Laboratory', x: 113, cx: 157, w: 60, icon: laboratory, inset: [59.06, 84.41, 28.88, 12.84] },
+  { label: 'Inpatient Pharmacy', x: 226, cx: 270.5, w: 121, icon: pharmacy, inset: [58.45, 73.54, 28.84, 22.33] },
+  { label: 'Sensory Rooms', x: 339, cx: 383, w: 82, icon: sensory, inset: [58.87, 63.2, 29.24, 32.82] },
+  { label: 'Inpatient Gym', x: 452, cx: 496.5, w: 75, icon: inGym, inset: [58.45, 53.6, 28.84, 43.14] },
+  { label: 'Hydrotherapy', x: 565, cx: 609.5, w: 71, icon: hydro, inset: [61.25, 43.75, 30.89, 52.98] },
+  { label: 'Outpatient Gym', x: 678, cx: 722, w: 82, icon: outGym, inset: [58.15, 33.54, 29.21, 62.75] },
+  { label: 'CT Scan', x: 791, cx: 835, w: 60, icon: ct, inset: [58.55, 22.54, 29.78, 73.69] },
+  { label: 'Dialysis', x: 904, cx: 948, w: 60, icon: dialysis, inset: [58.15, 12.57, 30.67, 84.09] },
+  { label: 'Blood Bank', x: 1017, cx: 1060, w: 60, icon: blood, inset: [59.27, 2.18, 29.44, 94.58] },
+].map((t) => {
+  const [it, ir, ib, il] = t.inset;
+  return {
+    ...t,
+    ix: (il * FRAME_W) / 100 - t.x,
+    iy: (it * FRAME_H) / 100 - 187,
+    iw: (FRAME_W * (100 - il - ir)) / 100,
+    ih: (FRAME_H * (100 - it - ib)) / 100,
+    lx: t.cx - t.w / 2 - t.x,
+  };
+});
+---
+
+<section class="relative bg-veil overflow-x-clip" style="--h: 356">
+  <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-6 max-lg:py-8">
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:301;--y:47;--w:417;--h:27">Complete Care Support</h2>
+    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:221;--y:82;--w:577;--h:27">A range of diagnostic, therapeutic, and support services designed to enhance patient <br class="max-lg:hidden" />care and recovery.</p>
+
+    <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label="Filter services by country" style="--x:371;--y:132;--w:279;--h:25">
+      <button type="button" aria-pressed="true" class="pill bg-navy text-white border-0" style="--x:0">ALL</button>
+      <button type="button" aria-pressed="false" class="pill bg-transparent text-navy hair-100 border-navy" style="--x:99">KSA</button>
+      <button type="button" aria-pressed="false" class="pill bg-transparent text-navy hair-100 border-navy" style="--x:200">UAE</button>
+    </div>
+
+    <div class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
+      <ul class="row flex gap-[calc(24*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0 m-0 list-none">
+        <li class="w-0 shrink-0 snap-start lg:absolute lg:left-0" aria-hidden="true"></li>
+        {tiles.map((t) => (
+          <li class="tile relative shrink-0 snap-start" style={`--l:${t.x}`}>
+            <div class="pos bg-cyan rounded-r5 shadow-tile" style="--x:0;--y:0;--w:89;--h:87"></div>
+            <img class="pos max-w-none" src={t.icon.src} width={px(t.iw)} height={px(t.ih)} alt="" loading="lazy" decoding="async" style={`--x:${t.ix};--y:${t.iy};--w:${t.iw};--h:${t.ih}`} />
+            <p class="pos m-0 font-gotham font-normal text-f10 leading-10 text-navy text-center not-italic whitespace-normal [word-break:break-word]" style={`--x:${t.lx};--y:100;--w:${t.w};--h:10`}>{t.label}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pos { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
+  .pill { position: absolute; left: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
+  .tile { width: calc(89 * var(--u)); height: calc(110 * var(--u)); }
+  @media (max-width: 1023.98px) {
+    .pill { position: static; }
+    .row { width: max-content; }
+    div[role='group'].dpos, .hscroll.dpos { position: static; width: auto; height: auto; }
+    .hscroll.dpos { width: 100%; }
+    .dpos { position: static; }
+  }
+  @media (min-width: 1024px) {
+    .dpos { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
+    .row { margin-left: calc(-22 * var(--u)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
+    .tile { position: absolute; left: calc(var(--l) * var(--u)); top: 0; }
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import pattern from '../../assets/contact/logo-pattern.png';
+import social from '../../assets/contact/social-icons.svg';
+import cornerFill from '../../assets/contact/corner-fill.svg';
+import cornerMask from '../../assets/contact/corner-mask.svg';
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+const label = 'font-normal text-f9 leading-14 text-navy not-italic whitespace-normal [word-break:break-word]';
+const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespace-normal [word-break:break-word]';
+---
+
+<section id="contact" class="relative bg-white font-gotham" style="--h: 497">
+  <!-- Logo pattern (opacity .55), page x 4 -->
+  <div class="pattern-wrap absolute inset-x-0 top-0 mx-auto w-full overflow-hidden pointer-events-none" style="max-width:calc(var(--target-w) * 1px);height:calc(497 * var(--u))" aria-hidden="true">
+    <Picture
+      src={pattern}
+      formats={['avif']}
+      fallbackFormat="webp"
+      width={px(1045)}
+      height={px(497)}
+      widths={[720, px(1045)]}
+      sizes="(min-width: 1440px) 1430px, 100vw"
+      loading="lazy"
+      decoding="async"
+      alt=""
+      class="pattern-img absolute object-cover opacity-55 max-w-none"
+    />
+  </div>
+  <!-- Grey band (full-bleed) -->
+  <div class="absolute inset-x-0 top-4 h-423 bg-veil max-lg:inset-y-0 max-lg:h-auto max-lg:top-0" aria-hidden="true"></div>
+
+  <div class="stage max-lg:px-16 max-lg:py-40">
+    <!-- Corner art (placed BELOW the card: see report): box 324x348 @ (0,95), clipped, rounded bottom-left 16 -->
+    <div class="corner hidden lg:block absolute left-0 top-95 w-324 h-348 overflow-clip rounded-bl-r16 pointer-events-none" aria-hidden="true">
+      <div class="corner-art" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
+    </div>
+
+    <div class="card relative bg-white max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:left-177 lg:top-35 lg:w-698 lg:h-318">
+      <h2 class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:left-52 lg:top-52 lg:w-278 lg:h-21">Get in touch with us</h2>
+
+      <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
+        <p class:list={[label, 'm-0 lg:absolute lg:left-54 lg:top-82 lg:w-31']}>Email:</p>
+        <p class:list={[value, 'lg:absolute lg:left-54 lg:top-100 lg:w-193']}><a href="mailto:info@cambridgehospital.com" class="text-body no-underline">info@cambridgehospital.com</a></p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:left-54 lg:top-126']}>Phone:</p>
+        <p class:list={[value, 'lg:absolute lg:left-54 lg:top-144 lg:w-193 lg:h-30']}>800-2672 - UAE<br />800-2772 - KSA</p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:left-54 lg:top-182 lg:w-41']}>Address:</p>
+        <p class:list={[value, 'lg:absolute lg:left-54 lg:top-198 lg:w-193 lg:h-42']}>Prestige 17 Tower - Hamdan Bin Mohammed St - Mohamed Bin Zayed City - ME2 - Abu Dhabi</p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:left-54 lg:top-253 lg:w-49']}>Follow us:</p>
+        <!-- TODO(figma): no per-icon links known; the six social icons are one svg image. -->
+        <img src={social.src} width={social.width} height={social.height} alt="Social media icons" class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))" />
+      </div>
+
+      <form action="https://api.web3forms.com/submit" method="POST" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
+        <input type="hidden" name="access_key" value={accessKey} />
+
+        <label for="contact-name" class:list={[label, 'lg:absolute lg:left-371 lg:top-47 lg:w-51']}>Your Name</label>
+        <input id="contact-name" name="name" type="text" required autocomplete="name" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:left-371 lg:top-63 lg:w-125" />
+
+        <label for="contact-email" class:list={[label, 'max-lg:mt-8 lg:absolute lg:left-515 lg:top-47 lg:w-76']}>Email Address</label>
+        <input id="contact-email" name="email" type="email" required autocomplete="email" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:left-515 lg:top-63 lg:w-140" />
+
+        <label for="contact-message" class:list={[label, 'max-lg:mt-8 lg:absolute lg:left-371 lg:top-97 lg:w-51']}>Message</label>
+        <textarea id="contact-message" name="message" required placeholder="Write Something..." class="field area max-lg:w-full max-lg:max-w-284 lg:absolute lg:left-371 lg:top-113 lg:w-284 lg:h-140"></textarea>
+
+        <button type="submit" class="relative block border-0 p-0 m-0 bg-navy rounded-r8 h-26 max-lg:w-full max-lg:max-w-284 lg:w-284 cursor-pointer not-italic max-lg:mt-8 lg:absolute lg:left-371 lg:top-263">
+          <span class="absolute block top-7 w-65 h-13 text-left max-lg:left-1/2 max-lg:-translate-x-1/2 lg:left-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">Send Message</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .pattern-img { left: 0; top: 0; width: 100%; height: 100%; }
+  @media (min-width: 1024px) {
+    .pattern-img { left: calc(4 * var(--u)); width: calc(1045 * var(--u)); height: calc(497 * var(--u)); }
+  }
+  @media (min-width: 1024px) { .social { left: calc(53.09 * var(--u)); } }
+  .field {
+    box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0;
+    background: var(--color-field); border-radius: calc(8 * var(--u));
+    height: calc(26 * var(--u)); padding: 0 calc(8 * var(--u));
+    font-family: var(--font-gotham); font-weight: 400; font-size: calc(9 * var(--u)); line-height: calc(14 * var(--u));
+    color: var(--color-body);
+  }
+  .field:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
+  .area {
+    height: calc(140 * var(--u)); resize: none;
+    padding: calc(10 * var(--u)) calc(11 * var(--u));
+    font-size: calc(7 * var(--u)); line-height: calc(14 * var(--u));
+  }
+  .field::placeholder { color: var(--color-body); opacity: 1; }
+  .corner-art {
+    position: absolute;
+    /* Exactly as Figma: inset left 169.29% of the 324-wide clipped box = 548.5, i.e. outside the clip -> not visible in Figma either.
+       TODO(figma): confirm against a Figma screenshot whether the designer meant this art to show at the bottom-left. */
+    left: calc(548.5 * var(--u)); top: calc(14.303 * var(--u));
+    width: calc(379.1 * var(--u)); height: calc(377.052 * var(--u));
+    background-repeat: no-repeat; background-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-size: calc(409.98 * var(--u)) calc(356.861 * var(--u)); mask-size: calc(409.98 * var(--u)) calc(356.861 * var(--u));
+    -webkit-mask-position: calc(-15.018 * var(--u)) calc(-23.169 * var(--u)); mask-position: calc(-15.018 * var(--u)) calc(-23.169 * var(--u));
+    mask-mode: alpha;
+  }
+</style>

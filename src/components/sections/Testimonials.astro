@@ -1,0 +1,133 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import ellipses from '../../assets/testimonials/bg-ellipses.svg';
+import cornerVector from '../../assets/testimonials/corner-vector.svg';
+import quoteIcon from '../../assets/testimonials/quote-icon.svg';
+import patFill from '../../assets/testimonials/pattern-fill.svg';
+import patMask from '../../assets/testimonials/pattern-mask.svg';
+import p1 from '../../assets/testimonials/patient-1.png';
+import p2 from '../../assets/testimonials/patient-2.png';
+import p4 from '../../assets/testimonials/patient-4.png';
+import p5 from '../../assets/testimonials/patient-5.png';
+import p6 from '../../assets/testimonials/patient-6.png';
+import shamma from '../../assets/testimonials/shamma.png';
+
+const u = (n: number | string) => `calc(${n} * var(--u))`;
+
+// Inset (top right bottom left) of each masked pattern element, as % of the 107x115 box.
+const INSET = {
+  A: '4.11% 3.42% -12.46% -20.43%',
+  B: '4.11% -186.3% -12.46% 169.29%',
+  C: '4.11% -376.02% -12.46% 359.01%',
+  D: '4.11% -185.36% -12.46% 168.36%',
+} as const;
+
+type Wrap = { r: number; h: string; l: string; t: string; w: string; iw: number };
+const cards: {
+  x: number; name: string; quote: string; pats: (keyof typeof INSET)[]; order: string[];
+  photo: { src: ImageMetadata; alt: string; x: number; y: number; w: number; h: number; wrap?: Wrap };
+}[] = [
+  { x: 0, name: 'Mohamed Al Menhali', quote: 'Alhamdulillah, I regained my ability to walk in about 4 months with their help.',
+    pats: ['A', 'B'], order: ['pat', 'quote', 'photo', 'name', 'vec', 'qi'],
+    photo: { src: p6, alt: 'Mohamed Al Menhali', x: 55, y: 85, w: 117, h: 146 } },
+  { x: 203, name: 'Mohamed Salem Al Bloushi', quote: 'Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.',
+    pats: ['A', 'B'], order: ['pat', 'quote', 'name', 'photo', 'vec', 'qi'],
+    photo: { src: p1, alt: 'Mohamed Salem Al Bloushi', x: 58, y: 89, w: 114, h: 142 } },
+  { x: 406, name: 'Tamam’s Mother', quote: 'We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities.',
+    pats: ['A', 'B'], order: ['qi', 'pat', 'photo', 'quote', 'name', 'vec'],
+    photo: { src: p2, alt: 'Tamam’s Mother', x: 48, y: 73, w: 127, h: 158 } },
+  { x: 609, name: 'Shamma’s Mother', quote: 'Shamma’s ability to communicate has improved remarkably and significantly, thanks to Cambridge.',
+    pats: ['A', 'B', 'B', 'C'], order: ['pat', 'quote', 'photo', 'qi', 'name', 'vec'],
+    photo: { src: shamma, alt: 'Shamma’s Mother', x: 28, y: 56, w: 157, h: 175,
+      wrap: { r: 16, h: '112.02%', l: '0', t: '-0.01%', w: '100%', iw: 157 } } },
+  { x: 812, name: 'Salem Bin Saleh', quote: 'Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.',
+    pats: ['A', 'B', 'B', 'C', 'D'], order: ['qi', 'name', 'pat', 'photo', 'vec', 'quote'],
+    photo: { src: p4, alt: 'Salem Bin Saleh', x: 53, y: 73, w: 132, h: 158,
+      wrap: { r: 18, h: '119.62%', l: '-0.14%', t: '0', w: '114.67%', iw: 132 * 1.1467 } } },
+  { x: 1014, name: 'Nujood Saeed', quote: 'With God’s grace and the team’s support, I was walking again in nearly 4 months.',
+    pats: ['A', 'B', 'B', 'C', 'D'], order: ['pat', 'qi', 'photo', 'quote', 'name', 'vec'],
+    photo: { src: p5, alt: 'Nujood Saeed', x: 66, y: 76, w: 124, h: 155 } },
+];
+---
+
+<section class="testi relative" style="--h: 421" id="testimonials">
+  <div class="stage">
+    <div class="t-head">
+      <div class="t-panel absolute left-62 top-0 rounded-r12p6 bg-cyan" style="width:calc(927.828 * var(--u));height:calc(232.906 * var(--u))"></div>
+      <img class="t-art absolute left-62 top-4" style="width:calc(927.828 * var(--u));height:calc(232.906 * var(--u))" src={ellipses.src} width="928" height="233" alt="" loading="lazy" decoding="async" />
+      <h2 class="t-title absolute left-306 top-34 w-439 m-0 font-gotham font-medium text-f28 text-white capitalize text-center not-italic">Stories of Care and Recovery</h2>
+      <p class="t-sub absolute left-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">Hear from our patients as they share their journeys of recovery, care, and renewed independence.</p>
+    </div>
+
+    <div class="hscroll t-scroller absolute left-0 top-117 w-full h-231">
+      <div class="t-row relative h-231" style={`width:${u(1199)};margin-left:${u(-96)}`}>
+        <span class="absolute left-0 top-0 w-0 h-0" style="scroll-snap-align:start" aria-hidden="true"></span>
+        {cards.map((c) => (
+          <article class="t-card absolute top-0 w-185 h-231 overflow-hidden bg-white hair-card rounded-r15" style={`left:${u(c.x)};scroll-snap-align:start`}>
+            {c.order.map((k) => {
+              if (k === 'pat') return c.pats.map((p) => (
+                <div class="absolute left-0 top-116 w-107 h-115 overflow-hidden rounded-bl-r16" aria-hidden="true">
+                  <div class="pm absolute" style={`inset:${INSET[p]};--m:url(${patMask.src})`}>
+                    <img class="block w-full h-full" src={patFill.src} alt="" width="125" height="125" loading="lazy" decoding="async" />
+                  </div>
+                </div>
+              ));
+              if (k === 'quote') return <p class="absolute left-13 top-31 w-159 h-52 m-0 font-gotham font-normal text-f9 leading-13 text-navy-alt not-italic [word-break:break-word]">{c.quote}</p>;
+              if (k === 'name') return <p class="absolute left-13 top-88 w-159 h-16 m-0 font-gotham font-bold text-f9 leading-13 text-cyan not-italic">{c.name}</p>;
+              if (k === 'qi') return <img class="absolute left-13 top-9 w-12 h-12" src={quoteIcon.src} width="12" height="12" alt="" loading="lazy" decoding="async" />;
+              if (k === 'vec') return <img class="absolute left-137 top-186 w-53 h-53" style="transform:scaleX(-1)" src={cornerVector.src} width="53" height="53" alt="" loading="lazy" decoding="async" />;
+              if (k === 'photo') {
+                const ph = c.photo;
+                const box = `left:${u(ph.x)};top:${u(ph.y)};width:${u(ph.w)};height:${u(ph.h)}`;
+                if (ph.wrap) {
+                  const wp = ph.wrap;
+                  return (
+                    <div class="absolute overflow-hidden" style={`${box};border-bottom-right-radius:${u(wp.r)}`}>
+                      <Picture src={ph.src} formats={['avif']} fallbackFormat="webp" width={px(wp.iw)} height={Math.round(px(wp.iw) * 693 / 555)} widths={[px(wp.iw), px(wp.iw) * 2]} sizes={`${px(wp.iw)}px`} loading="lazy" decoding="async" alt={ph.alt}
+                        class="absolute block max-w-none" style={`height:${wp.h};left:${wp.l};top:${wp.t};width:${wp.w}`} />
+                    </div>
+                  );
+                }
+                return (
+                  <div class="absolute" style={box}>
+                    <Picture src={ph.src} formats={['avif']} fallbackFormat="webp" width={px(ph.w)} height={px(ph.h)} widths={[px(ph.w), px(ph.w) * 2]} sizes={`${px(ph.w)}px`} loading="lazy" decoding="async" alt={ph.alt}
+                      class="block w-full h-full object-cover" />
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <a href="#" class="t-btn absolute left-443 top-391 w-166 h-30 rounded-r7 bg-cyan">
+      <span class="t-btn-l absolute left-10 top-9 w-145 h-15 font-gotham font-medium text-f13 text-white text-center not-italic">View More Stories</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .pm {
+    -webkit-mask-image: var(--m); mask-image: var(--m);
+    mask-mode: alpha;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-size: calc(135.395 * var(--u)) calc(117.928 * var(--u)); mask-size: calc(135.395 * var(--u)) calc(117.928 * var(--u));
+    -webkit-mask-position: calc(-4.959 * var(--u)) calc(-7.656 * var(--u)); mask-position: calc(-4.959 * var(--u)) calc(-7.656 * var(--u));
+  }
+  .t-head { display: contents; }
+  .t-btn { text-decoration: none; }
+  @media (max-width: 1023.98px) {
+    .testi { padding: 24px 0; }
+    .t-head { display: block; position: relative; overflow: hidden; margin: 0 16px; padding: 28px 16px; background: #00b8ff; border-radius: calc(12.658 * var(--u)); }
+    .t-panel { display: none; }
+    .t-art { inset: 0; width: 100%; height: 100%; left: 0; top: 0; }
+    .t-title, .t-sub { position: relative; left: auto; top: auto; width: auto; }
+    .t-sub { margin-top: 8px; }
+    .t-scroller { position: static; width: 100%; height: auto; margin-top: 24px; }
+    .t-row { margin-left: 16px !important; }
+    .t-btn { position: relative; left: auto; top: auto; display: block; margin: 24px auto 0; }
+  }
+</style>

@@ -1,0 +1,494 @@
+{
+ "header": {
+  "line1": {
+   "file": "assets/header/line1.svg",
+   "figma_asset_id": "d8eeeaa4-199a-41ca-aed8-291f47926e3e"
+  },
+  "line2": {
+   "file": "assets/header/line2.svg",
+   "figma_asset_id": "27b3bf5c-d067-4716-a676-848c12bf90c3"
+  },
+  "vector": {
+   "file": "assets/header/vector.svg",
+   "figma_asset_id": "27956381-b55a-4ab3-b399-5fa8a4d24071"
+  },
+  "group": {
+   "file": "assets/header/group.svg",
+   "figma_asset_id": "ac9427ec-84b7-4c41-81ad-2c956f3f9d51"
+  },
+  "group1": {
+   "file": "assets/header/group1.svg",
+   "figma_asset_id": "7a03da40-42c6-4b4a-aa22-fe8cd0278cb0"
+  },
+  "group2": {
+   "file": "assets/header/group2.svg",
+   "figma_asset_id": "d6f9c1b2-c3b8-4618-8e5d-3587c6bf5b0f"
+  },
+  "group3": {
+   "file": "assets/header/group3.svg",
+   "figma_asset_id": "eb320a3c-481e-47e1-932c-c0c665b5cf70"
+  },
+  "group4": {
+   "file": "assets/header/group4.svg",
+   "figma_asset_id": "1899a370-eded-400e-8243-d92b26b83d14"
+  },
+  "group5": {
+   "file": "assets/header/group5.svg",
+   "figma_asset_id": "64f50eda-9da5-40f1-aa1e-57010a9dee99"
+  },
+  "group6": {
+   "file": "assets/header/group6.svg",
+   "figma_asset_id": "88b0c79e-081a-4dc3-a414-9b098afb3767"
+  },
+  "group7": {
+   "file": "assets/header/group7.svg",
+   "figma_asset_id": "264fa079-72b9-4a52-9112-801ccc536710"
+  },
+  "group8": {
+   "file": "assets/header/group8.svg",
+   "figma_asset_id": "f426b761-6781-4087-857e-a3309edd9c67"
+  },
+  "group9": {
+   "file": "assets/header/group9.svg",
+   "figma_asset_id": "294e6b89-063d-4e32-bd98-f08ba92f8c25"
+  },
+  "group10": {
+   "file": "assets/header/group10.svg",
+   "figma_asset_id": "0a1d4b42-0211-426b-ac48-8516b2c4bb71"
+  },
+  "group11": {
+   "file": "assets/header/group11.svg",
+   "figma_asset_id": "26a9112b-f941-4f79-9c22-605a204084b3"
+  },
+  "group12": {
+   "file": "assets/header/group12.svg",
+   "figma_asset_id": "5cef80b0-a0f8-4911-b875-5e7320e9f21c"
+  },
+  "group13": {
+   "file": "assets/header/group13.svg",
+   "figma_asset_id": "e192255b-936a-480e-bb2e-d006b3991b59"
+  },
+  "group14": {
+   "file": "assets/header/group14.svg",
+   "figma_asset_id": "5f8230e0-cf13-4fb4-9484-229ec177b5a3"
+  },
+  "group15": {
+   "file": "assets/header/group15.svg",
+   "figma_asset_id": "c92807a2-0e5a-4b79-b5e8-9a2818fbbb5a"
+  },
+  "group16": {
+   "file": "assets/header/group16.svg",
+   "figma_asset_id": "3c8599bc-d636-4db7-8efe-4fd1450de84c"
+  },
+  "group17": {
+   "file": "assets/header/group17.svg",
+   "figma_asset_id": "14c94c78-1822-4e5c-a3e9-3ea3b3132fff"
+  },
+  "group18": {
+   "file": "assets/header/group18.svg",
+   "figma_asset_id": "8761bc22-415b-47d3-872b-410308ad395c"
+  },
+  "group19": {
+   "file": "assets/header/group19.svg",
+   "figma_asset_id": "2d957edd-b8d7-4765-a9b8-cab2ab9f1275"
+  },
+  "group20": {
+   "file": "assets/header/group20.svg",
+   "figma_asset_id": "6e50220f-9963-4705-8219-340e557c2a88"
+  },
+  "group21": {
+   "file": "assets/header/group21.svg",
+   "figma_asset_id": "c36cb1e3-4240-41b0-a360-17c36a59f289"
+  },
+  "group22": {
+   "file": "assets/header/group22.svg",
+   "figma_asset_id": "ab71aa1e-c65b-43a1-b6db-a56b3593f454"
+  },
+  "group23": {
+   "file": "assets/header/group23.svg",
+   "figma_asset_id": "e6e84b2c-1db6-48fc-abe9-d2e1d4d46a98"
+  },
+  "group24": {
+   "file": "assets/header/group24.svg",
+   "figma_asset_id": "092a241e-3e60-41b2-8887-58ac01dcf166"
+  },
+  "group25": {
+   "file": "assets/header/group25.svg",
+   "figma_asset_id": "24b93975-123e-4684-9eb7-e2920e371bab"
+  },
+  "group26": {
+   "file": "assets/header/group26.svg",
+   "figma_asset_id": "469f6e08-5ab7-459d-981d-f57eddfe474e"
+  },
+  "group27": {
+   "file": "assets/header/group27.svg",
+   "figma_asset_id": "88df899e-c23a-41e0-a208-61420febb490"
+  },
+  "group28": {
+   "file": "assets/header/group28.svg",
+   "figma_asset_id": "ad91c0db-d072-4c88-b201-a71d88b090e6"
+  },
+  "group29": {
+   "file": "assets/header/group29.svg",
+   "figma_asset_id": "16ea4177-a2c1-44bc-8b05-b8a4176c35a2"
+  },
+  "group30": {
+   "file": "assets/header/group30.svg",
+   "figma_asset_id": "ecbc1446-ce01-49bd-a964-1d3a543a6201"
+  },
+  "group31": {
+   "file": "assets/header/group31.svg",
+   "figma_asset_id": "ce3a6e4c-c1c1-44e4-9f29-79fd093e469c"
+  },
+  "group32": {
+   "file": "assets/header/group32.svg",
+   "figma_asset_id": "c701ea0c-75e4-4fee-a33a-07263a098740"
+  },
+  "group33": {
+   "file": "assets/header/group33.svg",
+   "figma_asset_id": "8beaa337-96ec-4870-b8c1-afdcd659ab69"
+  },
+  "group34": {
+   "file": "assets/header/group34.svg",
+   "figma_asset_id": "75d105aa-0718-4205-9f01-5c8c54b94bb5"
+  },
+  "group35": {
+   "file": "assets/header/group35.svg",
+   "figma_asset_id": "be7be6b4-a922-4612-b08e-dec4d41c7dfe"
+  }
+ },
+ "hero": {
+  "banner3": {
+   "file": "assets/hero/banner3.png",
+   "figma_asset_id": "2bf8cc7c-aa44-416e-9856-7673e515e50d",
+   "node": "21:1426",
+   "box": "1052x500 @0,117 object-cover"
+  },
+  "rectangle2": {
+   "file": "assets/hero/rectangle2.png",
+   "figma_asset_id": "ea8bf2c7-d5ab-4e61-95b6-93e0864a05fb",
+   "node": "21:1431",
+   "box": "1052x159 @0,458 object-cover (bottom fade overlay)"
+  }
+ },
+ "cta": {
+  "calendar-clock": {
+   "file": "assets/cta/calendar-clock.svg",
+   "figma_asset_id": "64beab6a-47ef-40f6-88da-3696c6b24433",
+   "node": "21:1623"
+  },
+  "stethoscope": {
+   "file": "assets/cta/stethoscope.svg",
+   "figma_asset_id": "cecd49c9-e5ab-40d9-966b-efdd890b5e18",
+   "node": "21:1624"
+  },
+  "magnifer": {
+   "file": "assets/cta/magnifer.svg",
+   "figma_asset_id": "0d9101cb-fdc7-4dc7-b217-2cf5497faefa",
+   "node": "21:1625"
+  },
+  "message-square-share": {
+   "file": "assets/cta/message-square-share.svg",
+   "figma_asset_id": "ea31a0fe-75db-4112-9c3a-b65da0fe7f5c",
+   "node": "21:1626"
+  },
+  "line6": {
+   "file": "assets/cta/line6.svg",
+   "figma_asset_id": "dfe5a0a2-9388-4f8b-a29e-04bcd2e2239c",
+   "node": "21:1627-1629"
+  }
+ },
+ "doctors": {
+  "dr-ahmad": {
+   "file": "assets/doctors/dr-ahmad.png",
+   "figma_asset_id": "ed37c5f5-24c0-43da-b306-260667e0361f"
+  },
+  "dr-amjed": {
+   "file": "assets/doctors/dr-amjed.png",
+   "figma_asset_id": "d80b626e-fdca-423c-a2bf-20975f162bf8"
+  },
+  "dr-wael": {
+   "file": "assets/doctors/dr-wael.png",
+   "figma_asset_id": "8ecfacce-a70a-4679-b18d-6ec849eb25ec"
+  },
+  "dr-suhaila": {
+   "file": "assets/doctors/dr-suhaila.png",
+   "figma_asset_id": "e8465740-3430-449b-8651-cac3f6d6b5ad"
+  },
+  "dr-halawani": {
+   "file": "assets/doctors/dr-halawani.png",
+   "figma_asset_id": "77016775-f61f-4393-986d-5ae7efef8d91"
+  },
+  "dr-rober": {
+   "file": "assets/doctors/dr-rober.png",
+   "figma_asset_id": "3b98b92d-6b64-4011-b04c-e1780e6c1280"
+  },
+  "mask-group": {
+   "file": "assets/doctors/mask-group.svg",
+   "figma_asset_id": "c0560ba8-7dc8-407c-b1f5-12116da97e59"
+  },
+  "fill-group1": {
+   "file": "assets/doctors/fill-group1.svg",
+   "figma_asset_id": "6407a91a-c984-49f2-8a59-24743a5bdfe6"
+  },
+  "fill-group2": {
+   "file": "assets/doctors/fill-group2.svg",
+   "figma_asset_id": "67ab1ff2-892f-49ff-bc51-f690f47eebbd"
+  }
+ },
+ "facilities": {
+  "auh-new": {
+   "file": "assets/facilities/auh-new.png",
+   "figma_asset_id": "ad97e23e-a459-4a1f-a096-0dfec68b0c64"
+  },
+  "al-ain": {
+   "file": "assets/facilities/al-ain.png",
+   "figma_asset_id": "0964b6e4-975e-4e8a-bcd9-bc02db8d335f"
+  },
+  "dhahran": {
+   "file": "assets/facilities/dhahran.png",
+   "figma_asset_id": "520129eb-b995-4b35-b225-60edfd13c27b"
+  },
+  "al-khobar": {
+   "file": "assets/facilities/al-khobar.png",
+   "figma_asset_id": "06c03f9f-cd48-4dc7-8097-1af2d4870a0b"
+  },
+  "jeddah": {
+   "file": "assets/facilities/jeddah.png",
+   "figma_asset_id": "4e3f6388-3803-460d-960c-751a43cf8dfb"
+  },
+  "al-mudeef": {
+   "file": "assets/facilities/al-mudeef.png",
+   "figma_asset_id": "1f7980ea-9c18-414c-8a38-4bbbc6c73801"
+  },
+  "map-vector": {
+   "file": "assets/facilities/map-vector.svg",
+   "figma_asset_id": "724c05a3-49b9-4195-b037-583a4127650e"
+  },
+  "line9": {
+   "file": "assets/facilities/line9.svg",
+   "figma_asset_id": "ba022642-0200-401a-bffb-c7041e95944c"
+  },
+  "line8": {
+   "file": "assets/facilities/line8.svg",
+   "figma_asset_id": "bb6aec58-3c72-42e5-af12-1693b9a4d08d"
+  }
+ },
+ "calculators": {
+  "care": {
+   "file": "assets/calculators/care.png",
+   "figma_asset_id": "5c0f0aa3-5d2f-461e-8b4e-fcea24f696da",
+   "node": "67:4319",
+   "box": "463x444 @0,3553 object-cover"
+  }
+ },
+ "footer": {
+  "accredited": {
+   "file": "assets/footer/accredited.png",
+   "figma_asset_id": "eea2ee3a-fb04-4d6d-881a-b1b922804c12"
+  },
+  "line24": {
+   "file": "assets/footer/line24.svg",
+   "figma_asset_id": "b20e9e0f-6259-4754-aebc-8650595ffcc1"
+  },
+  "group53": {
+   "file": "assets/footer/group53.svg",
+   "figma_asset_id": "4e9befda-4aab-424c-bafa-d09ba32f7950"
+  },
+  "logo-vertical-negative": {
+   "file": "assets/footer/logo-vertical-negative.svg",
+   "figma_asset_id": "75a89c5b-4e91-40b5-bb41-e2682154cf83"
+  }
+ },
+ "services": {
+  "inpatient": {
+   "file": "assets/services/inpatient.png",
+   "figma_asset_id": "73901de4-c0f0-4968-8d5b-56db6584171f"
+  },
+  "outpatient": {
+   "file": "assets/services/outpatient.png",
+   "figma_asset_id": "fc2bd831-363d-4567-9ea3-252b6a809135"
+  },
+  "home-healthcare": {
+   "file": "assets/services/home-healthcare.png",
+   "figma_asset_id": "dba4054c-1e05-4e4a-94ec-0f874d70f895"
+  },
+  "in-school": {
+   "file": "assets/services/in-school.png",
+   "figma_asset_id": "e71eb6db-4857-408a-9185-b7d9fdb8b14c"
+  }
+ },
+ "care-support": {
+  "g67-3672-radiology-right": {
+   "file": "assets/care-support/g67-3672-radiology-right.svg",
+   "figma_asset_id": "fdeef22f-8786-49d1-9168-3b372184a2d1"
+  },
+  "g67-3676-first": {
+   "file": "assets/care-support/g67-3676-first.svg",
+   "figma_asset_id": "b2b59d42-a65a-4337-9ac6-155ba9d14bca"
+  },
+  "g67-3684-last": {
+   "file": "assets/care-support/g67-3684-last.svg",
+   "figma_asset_id": "0d7222cc-376d-4646-bd3f-1bd474d6f6ff"
+  },
+  "v67-3698": {
+   "file": "assets/care-support/v67-3698.svg",
+   "figma_asset_id": "4242dd8b-45c9-4495-bdfe-9178fea3bd71"
+  },
+  "g67-3699": {
+   "file": "assets/care-support/g67-3699.svg",
+   "figma_asset_id": "5e319746-3010-48b0-bd69-2e04b53fff71"
+  },
+  "g67-3703": {
+   "file": "assets/care-support/g67-3703.svg",
+   "figma_asset_id": "0b9952c4-1a2f-4aec-9685-557286cb6db2"
+  },
+  "g67-3706": {
+   "file": "assets/care-support/g67-3706.svg",
+   "figma_asset_id": "e43b7c9d-5cce-4beb-b4e5-fd70e919291a"
+  },
+  "g67-3710": {
+   "file": "assets/care-support/g67-3710.svg",
+   "figma_asset_id": "babd35e8-de9b-40e6-949f-86a70d00f70e"
+  },
+  "g67-3717": {
+   "file": "assets/care-support/g67-3717.svg",
+   "figma_asset_id": "4df09be4-893c-40b1-8203-a06d692b2379"
+  },
+  "g67-3721": {
+   "file": "assets/care-support/g67-3721.svg",
+   "figma_asset_id": "d42e739e-fe27-4c5c-bd7a-38df1f2f660b"
+  }
+ },
+ "testimonials": {
+  "patient-1": {
+   "file": "assets/testimonials/patient-1.png",
+   "figma_asset_id": "60bef721-7d2e-423c-a801-1d877102c6e2"
+  },
+  "patient-2": {
+   "file": "assets/testimonials/patient-2.png",
+   "figma_asset_id": "16d3e802-a027-4d3d-bbb6-59e6e19b56df"
+  },
+  "shamma": {
+   "file": "assets/testimonials/shamma.png",
+   "figma_asset_id": "257b866a-5165-4f5b-aac4-5b82ecaf0464"
+  },
+  "patient-4": {
+   "file": "assets/testimonials/patient-4.png",
+   "figma_asset_id": "a3e575b7-c16a-4bb5-8785-66842e8724cd"
+  },
+  "patient-5": {
+   "file": "assets/testimonials/patient-5.png",
+   "figma_asset_id": "52fdfd22-7da9-4f9b-983d-61bfc2e2ac67"
+  },
+  "patient-6": {
+   "file": "assets/testimonials/patient-6.png",
+   "figma_asset_id": "6d408847-b9ba-433b-91de-b6affffc0e34"
+  },
+  "bg-ellipses": {
+   "file": "assets/testimonials/bg-ellipses.svg",
+   "figma_asset_id": "24672674-7f5c-47be-b35e-2bb07949180b"
+  },
+  "pattern-mask": {
+   "file": "assets/testimonials/pattern-mask.svg",
+   "figma_asset_id": "17f2d1eb-418b-442d-8a3b-1aa1a09c80d7"
+  },
+  "pattern-fill": {
+   "file": "assets/testimonials/pattern-fill.svg",
+   "figma_asset_id": "11468460-4030-4a96-9104-d543c280bba1"
+  },
+  "corner-vector": {
+   "file": "assets/testimonials/corner-vector.svg",
+   "figma_asset_id": "8f05b710-da14-4888-a640-ab44678e931f"
+  },
+  "quote-icon": {
+   "file": "assets/testimonials/quote-icon.svg",
+   "figma_asset_id": "0ebe1bc3-a351-4a06-b07a-b7f0b6fdc9eb"
+  }
+ },
+ "recovery": {
+  "banner": {
+   "file": "assets/recovery/banner.svg",
+   "figma_asset_id": "b22ab447-58cb-4610-a54f-cc90ce86e1cf",
+   "node": "67:4268 (Rectangle 102)"
+  }
+ },
+ "news": {
+  "al-khobar-image": {
+   "file": "assets/news/al-khobar-image.png",
+   "figma_asset_id": "ee0a0cdc-a139-4af0-bb63-dca7e5dcb896"
+  },
+  "patient": {
+   "file": "assets/news/patient.png",
+   "figma_asset_id": "22e3d86d-682a-4da5-a3f1-b464ed057cd7"
+  },
+  "doctor": {
+   "file": "assets/news/doctor.png",
+   "figma_asset_id": "ea31a527-54d8-45f0-a34a-398e8bd04abc"
+  },
+  "line23": {
+   "file": "assets/news/line23.svg",
+   "figma_asset_id": "0c4054f1-299b-4ceb-bca6-527ad53172ae"
+  },
+  "divider-group622": {
+   "file": "assets/news/divider-group622.svg",
+   "figma_asset_id": "d43aaea3-30ed-47ff-bd6b-82bd5594a403"
+  },
+  "arrow-icon-group33": {
+   "file": "assets/news/arrow-icon-group33.svg",
+   "figma_asset_id": "1a869ac5-1ec6-44a3-afaa-976cfa4ba598"
+  }
+ },
+ "insurance": {
+  "thiqa": {
+   "file": "assets/insurance/thiqa.png",
+   "figma_asset_id": "74788a61-3587-443f-8abd-57c11df51e65"
+  },
+  "daman": {
+   "file": "assets/insurance/daman.png",
+   "figma_asset_id": "478dbaeb-3693-4781-b875-541a302903b4"
+  },
+  "layout-set": {
+   "file": "assets/insurance/layout-set.png",
+   "figma_asset_id": "715c61ce-987f-4d22-8fd8-dc4f64184775"
+  },
+  "neuron": {
+   "file": "assets/insurance/neuron.png",
+   "figma_asset_id": "e3485eee-a746-4810-ae13-14a4f1e360a7"
+  },
+  "logo-original": {
+   "file": "assets/insurance/logo-original.png",
+   "figma_asset_id": "a8f65e29-2af8-4b01-bb6b-6db7dbf7a503"
+  },
+  "saico": {
+   "file": "assets/insurance/saico.png",
+   "figma_asset_id": "5949abb8-f93d-4d25-9611-7f90ae900b27"
+  },
+  "images": {
+   "file": "assets/insurance/images.png",
+   "figma_asset_id": "386f17ba-b45b-4245-9edd-313d46cdd9be"
+  },
+  "line13": {
+   "file": "assets/insurance/line13.svg",
+   "figma_asset_id": "0652ebb4-2949-4756-8504-905434e39354"
+  }
+ },
+ "contact": {
+  "logo-pattern": {
+   "file": "assets/contact/logo-pattern.png",
+   "figma_asset_id": "ed791a21-faaf-4149-b3a5-ee4495655b21"
+  },
+  "social-icons": {
+   "file": "assets/contact/social-icons.svg",
+   "figma_asset_id": "7a0dbc76-3546-4237-a66f-347d061b3cf9"
+  },
+  "corner-mask": {
+   "file": "assets/contact/corner-mask.svg",
+   "figma_asset_id": "81bb3835-a7c7-4f7d-818a-bb7f8df58260"
+  },
+  "corner-fill": {
+   "file": "assets/contact/corner-fill.svg",
+   "figma_asset_id": "a953d24b-289f-4526-921c-701eb77faa58"
+  }
+ }
+}

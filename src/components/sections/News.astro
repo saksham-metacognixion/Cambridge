@@ -55,7 +55,7 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
       {pills.map((p) => (
         <button
           type="button"
-          class="hair-100 border-navy rounded-r12 bg-transparent p-0 pt-7 h-25 w-79 box-border font-gotham font-medium text-f10 leading-10 text-navy text-center not-italic cursor-pointer lg:absolute lg:top-51"
+          class="hit hair-100 border-navy rounded-r12 bg-transparent p-0 pt-7 h-25 w-79 box-border font-gotham font-medium text-f10 leading-10 text-navy text-center not-italic cursor-pointer lg:absolute lg:top-51"
           style={`--x:${p.x + F}`}
           data-x
         >{p.label}</button>
@@ -83,7 +83,7 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
           </div>
           <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-241 lg:w-289" style={`--lx:${c.hx - c.x}`}>{c.title}</h3>
           <p class="m-0 mt-10 font-normal text-f9 leading-11 text-body not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-320 lg:w-282 lg:h-44" style={`--lx:${c.ex - c.x}`}>{c.text}</p>
-          <a href={txt.readMore.href} aria-label={txt.readMore.label} class="block mt-10 lg:absolute lg:mt-0 lg:top-362" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
+          <a href={txt.readMore.href} aria-label={txt.readMore.label} class="hit block mt-10 lg:absolute lg:mt-0 lg:top-362" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
             <img src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block w-full h-full" />
           </a>
         </article>

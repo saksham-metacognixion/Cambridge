@@ -36,7 +36,7 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
       <ul class="toplinks">
         {topLinks.map((x) => (
           <li class="a" style={`--l:${x.l};--t:33;--w:${x.w};--ph:15`}>
-            <a href={x.href} class="block whitespace-nowrap text-f9 font-normal not-italic text-cyan">{x.label}</a>
+            <a href={x.href} class="hit block whitespace-nowrap text-f9 font-normal not-italic text-cyan">{x.label}</a>
           </li>
         ))}
       </ul>
@@ -44,11 +44,11 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
       <div class="chip a" style="--l:846;--t:26;--w:47;--ph:25"></div>
       <div class="pill a" style="--l:849;--t:30;--w:22;--ph:18"></div>
       <ul class="lang">
-        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href={enHref} hreflang={getEdition(edition.region, 'en').lang} lang="en" class="block text-f9 font-normal not-italic text-white">{c.lang.en}</a></li>
-        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="block text-f9 font-medium not-italic text-navy">{c.lang.ar}</a></li>
+        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href={enHref} hreflang={getEdition(edition.region, 'en').lang} lang="en" class="hit lang-hit block text-f9 font-normal not-italic text-white">{c.lang.en}</a></li>
+        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="hit lang-hit block text-f9 font-medium not-italic text-navy">{c.lang.ar}</a></li>
       </ul>
 
-      <a href={c.region.href} class="global a block whitespace-nowrap text-f9 font-medium not-italic text-navy" style="--l:932;--t:33;--w:38;--ph:15">{c.region.label}</a>
+      <a href={c.region.href} class="hit global a block whitespace-nowrap text-f9 font-medium not-italic text-navy" style="--l:932;--t:33;--w:38;--ph:15">{c.region.label}</a>
       <!-- TODO(figma): 112:13401 keyboard_arrow_down (18x18 @966,28) glyph missing (figma-cache/chevron-down.svg not exported). Empty slot on purpose. -->
       <span class="chev a deco" style="--l:966;--t:28;--w:18;--ph:18" aria-hidden="true"></span>
 
@@ -56,11 +56,11 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
 
       <ul class="mainnav a" style="--l:393;--t:81;--w:595;--ph:15">
         {mainLinks.map((x) => (
-          <li style={`--w:${x.w}`}><a href={x.href} class="block whitespace-nowrap text-f9 font-medium not-italic text-navy">{x.label}</a></li>
+          <li style={`--w:${x.w}`}><a href={x.href} class="hit block whitespace-nowrap text-f9 font-medium not-italic text-navy">{x.label}</a></li>
         ))}
       </ul>
 
-      <a href={c.book.href} class="book a" style="--l:755;--t:69;--w:138;--ph:30" aria-label={c.book.ariaLabel}></a>
+      <a href={c.book.href} class="hit book a" style="--l:755;--t:69;--w:138;--ph:30" aria-label={c.book.ariaLabel}></a>
       <span class="booklabel a text-f9 font-medium not-italic text-off-white" style="--l:766;--t:80;--w:118;--ph:15" aria-hidden="true">{c.book.label}</span>
 
       {vlines.map(([l, t]) => (
@@ -84,8 +84,10 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .mainnav { display: flex; gap: calc(11 * var(--u)); }
   .mainnav li { width: calc(var(--w) * var(--u)); height: calc(15 * var(--u)); }
   .burger { display: none; }
+  .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
+  .deco { pointer-events: none; } /* decorative lines must not swallow clicks meant for the links next to them */
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1200px) {
     .a { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
     .menu, .toplinks, .lang { display: contents; }
     .visit, .global, .booklabel { margin: 0; }
@@ -93,7 +95,9 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .logo img { height: 100%; }
   }
 
-  @media (max-width: 1023.98px) {
+  @media (max-width: 1199.98px) {
+    .stage { height: auto; overflow-x: visible; }
+    .menu a { --hit-h: calc(100% + 12 * var(--u)); }
     .stage { display: flex; align-items: center; justify-content: space-between; gap: calc(12 * var(--u)); padding: calc(15 * var(--u)) 16px; box-sizing: border-box; }
     .logo { display: block; width: calc(252 * var(--u)); max-width: calc(100% - 60px); flex: 0 1 auto; }
     .burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; align-items: center; cursor: pointer; flex: none; }

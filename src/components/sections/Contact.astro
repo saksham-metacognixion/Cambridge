@@ -48,7 +48,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
 
       <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
         <p class:list={[label, 'm-0 lg:absolute lg:start-54 lg:top-82 lg:w-31']}>{txt.emailLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="text-body no-underline">{txt.email}</a></p>
+        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="hit text-body no-underline">{txt.email}</a></p>
         <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-126']}>{txt.phoneLabel}</p>
         <p class:list={[value, 'lg:absolute lg:start-54 lg:top-144 lg:w-193 lg:h-30']}>{txt.phones[0]}<br />{txt.phones[1]}</p>
         <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>
@@ -70,7 +70,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
         <label for="contact-message" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-371 lg:top-97 lg:w-51']}>{txt.form.messageLabel}</label>
         <textarea id="contact-message" name="message" required placeholder={txt.form.messagePlaceholder} class="field area max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-113 lg:w-284 lg:h-140"></textarea>
 
-        <button type="submit" class="relative block border-0 p-0 m-0 bg-navy rounded-r8 h-26 max-lg:w-full max-lg:max-w-284 lg:w-284 cursor-pointer not-italic max-lg:mt-8 lg:absolute lg:start-371 lg:top-263">
+        <button type="submit" class="hit relative block border-0 p-0 m-0 bg-navy rounded-r8 h-26 max-lg:w-full max-lg:max-w-284 lg:w-284 cursor-pointer not-italic max-lg:mt-8 lg:absolute lg:start-371 lg:top-263">
           <span class="absolute block top-7 w-65 h-13 text-start max-lg:left-1/2 max-lg:-translate-x-1/2 lg:start-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">{txt.form.submit}</span>
         </button>
       </form>

@@ -36,7 +36,7 @@ const u = (n: number) => `calc(${n} * var(--u))`;
         <div class="c-card absolute w-218 h-125 bg-white hair-card rounded-r6 box-border" style={`inset-inline-start:${u(c.x)};top:${u(c.y)}`}>
           <h3 class="absolute start-30 top-37 h-15 m-0 font-gotham font-medium text-f13 text-navy not-italic" style={`width:${u(c.tw)}`}>{c.title}</h3>
           <p class="absolute start-30 top-55 w-138 h-19 m-0 font-gotham font-normal text-f9 leading-10 text-body not-italic">{c.desc}</p>
-          <a href={c.href} class="absolute top-85 w-74 h-17 rounded-r3 bg-navy" style={`inset-inline-start:${u(c.bx)}`} aria-label={`${t.cardButton}: ${c.title}`}>
+          <a href={c.href} class="hit absolute top-85 w-74 h-17 rounded-r3 bg-navy" style={`inset-inline-start:${u(c.bx)}`} aria-label={`${t.cardButton}: ${c.title}`}>
             <span class="absolute start-8 top-4 w-59 h-10 font-gotham font-medium text-f8 leading-10 text-white not-italic">{t.cardButton}</span>
           </a>
         </div>

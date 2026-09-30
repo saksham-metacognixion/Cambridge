@@ -21,6 +21,9 @@
 }
 
 @theme {
+  /* Full navigation from 1200px up, hamburger below (scope 2.8). Gives the nav: / max-nav: variants. */
+  --breakpoint-nav: 1200px;
+
   /* 1 spacing step = 1 Figma px, so  w-185  start-[-118]  top-1380  gap-11  are Figma values, scaled. */
   --spacing: var(--u);
 
@@ -118,6 +121,17 @@ body {
 .hair-card::after {
   content: ""; position: absolute; inset: 0; box-sizing: border-box; pointer-events: none;
   border: calc(var(--sw, 0.25) * var(--u)) solid var(--sc, var(--color-teal-border)); border-radius: inherit;
+}
+
+/* 44px touch targets (scope 2.8) without changing the look: an invisible hit layer centred on the control, at least
+   44x44 and never smaller than the control. Where neighbours are closer, cap it with --hit-w / --hit-h (use the
+   control's size + the gap, so two layers never overlap). Static elements get position:relative (zero specificity, so
+   any positioning class wins). Uses ::before because ::after is taken by .hair-card borders. Not possible on
+   <input>/<textarea> (no pseudo-elements). */
+@layer base { :where(.hit) { position: relative; } }  /* in a layer so Tailwind positioning utilities win */
+.hit::before {
+  content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: max(100%, var(--hit-w, 44px)); height: max(100%, var(--hit-h, 44px));
 }
 
 /* Horizontal row that overflows the frame on the right (Doctors, Care Support, Testimonials).

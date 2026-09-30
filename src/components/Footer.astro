@@ -32,17 +32,17 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
       <h2 id="ft-quick" class="hd text-f13 font-medium text-white">{c.quickLinks.heading}</h2>
       <ul class="links" style="--w:138">
         {quick.map((g) => (
-          <li>{g.map((x, i) => (<>{i > 0 && <br />}<a href={x.href}>{x.label}</a></>))}</li>
+          <li>{g.map((x, i) => (<>{i > 0 && <br />}<a href={x.href} class="hit dense">{x.label}</a></>))}</li>
         ))}
       </ul>
     </nav>
     <nav class="col c2 a" style="--l:452;--t:76;--w:148;--ph:193" aria-labelledby="ft-serv">
       <h2 id="ft-serv" class="hd text-f13 font-medium text-white">{c.services.heading}</h2>
-      <ul class="links">{services.map((s) => <li><a href={s.href}>{s.label}</a></li>)}</ul>
+      <ul class="links">{services.map((s) => <li><a href={s.href} class="hit dense">{s.label}</a></li>)}</ul>
     </nav>
     <nav class="col c3 a" style="--l:562;--t:76;--w:148;--ph:193" aria-labelledby="ft-hosp">
       <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">{c.hospitals.heading}</h2>
-      <ul class="links">{hospitals.map((s) => <li><a href={c.hospitals.href}>{s}</a></li>)}</ul>
+      <ul class="links">{hospitals.map((s) => <li><a href={c.hospitals.href} class="hit dense">{s}</a></li>)}</ul>
     </nav>
 
     <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">
@@ -58,7 +58,7 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
       <div class="box">
         <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
         <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" />
-        <button type="submit">{c.newsletter.submit}</button>
+        <button type="submit" class="hit">{c.newsletter.submit}</button>
       </div>
     </form>
 
@@ -66,7 +66,7 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
     <img class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24" src={group53.src} width="161" height="16.24" alt="" />
 
     <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">{c.copyright}</p>
-    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={c.legal.compliance.href}>{c.legal.compliance.label}</a><span class="gap">       </span><a href={c.legal.privacy.href}>{c.legal.privacy.label}</a></p>
+    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={c.legal.compliance.href} class="hit">{c.legal.compliance.label}</a><span class="gap">       </span><a href={c.legal.privacy.href} class="hit">{c.legal.privacy.label}</a></p>
   </div>
 </footer>
 
@@ -108,4 +108,6 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
     .bot { flex: 1 1 auto; white-space: pre-wrap; }
     .bot.right { text-align: start; }
   }
+  /* link lists are 12 Figma px apart: the hit layer can't grow taller than the line without overlapping */
+  .dense { --hit-h: 100%; }
 </style>

@@ -1,0 +1,42 @@
+---
+import { content, t } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { defaultState, matches } from '../../lib/doctor-filters';
+import { allDoctors } from '../../lib/doctors';
+import DoctorCard from './DoctorCard.astro';
+
+/*
+ * The list is rendered in the static HTML (all listed doctors, each with data-* for the filter). Cards that do not match the
+ * edition's default filter (e.g. KSA doctors on /ae) carry `hidden`, so the first paint and no-JS visitors see the right list;
+ * the island (src/scripts/doctor-filters.ts) then re-filters. Grid: 4 x 215 columns, 31.667 / 30.541 gaps (Figma 48,294,541,788 / 652,951,...).
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('doctors/page', edition.locale);
+const start = defaultState(edition.region);
+const items = allDoctors.map((d) => {
+  const name = t(d.name, edition.locale, 'doctors');
+  const fd = { slug: d.slug, name, country: d.country, hospital: d.hospital_id, specialties: d.specialties };
+  return { d, fd, show: matches(fd, start) };
+});
+---
+
+<ul class="grid" role="list" aria-label={c.results.listLabel} data-doctor-list>
+  {items.map(({ d, fd, show }) => (
+    <li hidden={!show} data-slug={fd.slug} data-name={fd.name} data-country={fd.country} data-hospital={fd.hospital} data-specialties={fd.specialties.join(' ')}>
+      <DoctorCard doctor={d} edition={edition} labels={c.card} />
+    </li>
+  ))}
+</ul>
+<p class="empty font-gotham font-normal text-body not-italic" data-doctor-empty hidden>{c.results.empty}</p>
+<p class="sr-only" role="status" aria-live="polite" data-doctor-status data-template={c.results.found}></p>
+
+<style>
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u)); }
+  .grid > li { display: flex; }
+  .grid > li[hidden] { display: none; }
+  .empty { margin: 0; padding: calc(40 * var(--u)) calc(16 * var(--u)); text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .empty[hidden] { display: none; }
+  @media (min-width: 1024px) {
+    .grid { width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; justify-content: start; grid-template-columns: repeat(4, calc(215 * var(--u))); column-gap: calc(31.667 * var(--u)); }
+  }
+</style>

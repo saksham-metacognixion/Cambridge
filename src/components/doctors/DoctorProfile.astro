@@ -1,0 +1,140 @@
+---
+import { Picture } from 'astro:assets';
+import { content, t } from '../../lib/content';
+import { img } from '../../lib/images';
+import { parsePath, urlFor } from '../../lib/editions';
+import { DOCTOR_PATHS, type Doctor } from '../../lib/doctors';
+import mask from '../../assets/doctor-profile/photo-mask.svg';
+import shape from '../../assets/doctor-profile/photo-shape.svg';
+import arrow from '../../assets/doctor-profile/arrow-icon.svg';
+import ruleTop from '../../assets/doctor-profile/rule-top.svg';
+import ruleSection from '../../assets/doctor-profile/rule-section.svg';
+
+/*
+ * Doctor profile, Figma 32:826 ("Doctor - Page"), 1052 wide. Page y values in the comments. FLOW layout: name/role/sub-specialities and
+ * the bio grow with the data; only the bars behind the photo are absolute. The profile shows exactly what Figma shows:
+ * breadcrumb, photo, name, role, Book an Appointment, sub specialities, professional summary (no hospital, languages or contact).
+ * Sections without data (no sub-specialities / no bio) are left out, not filled with invented text.
+ */
+interface Props { doctor: Doctor; }
+const { doctor: d } = Astro.props;
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('doctors/page', edition.locale).profile;
+const name = t(d.name, edition.locale, 'doctors');
+const role = t(d.title, edition.locale, 'doctors');
+const alt = (d.photo_alt && t(d.photo_alt, edition.locale, 'doctors')) || name;
+const photo = d.photo ? img(d.photo, edition.region) : null;
+const subs = d.sub_specialities.map((s) => t(s, edition.locale, 'doctors')).filter(Boolean);
+const bio = t(d.bio, edition.locale, 'doctors');
+---
+
+<!-- Breadcrumb band: navy, 1052 x 67 at page y 119; text 8px at x 94, y 148 -->
+<nav class="crumbs bg-navy-alt" aria-label={c.breadcrumbLabel}>
+  <div class="frame">
+  <ol class="crumbs-ol m-0 flex list-none flex-wrap p-0 font-gotham font-normal text-f8 text-white not-italic">
+    <li><a href={urlFor(edition, '')} class="hit text-white no-underline">{c.home}</a></li>
+    <li aria-hidden="true" class="sep">/</li>
+    <li><a href={urlFor(edition, DOCTOR_PATHS.list)} class="hit text-white no-underline">{c.list}</a></li>
+    <li aria-hidden="true" class="sep">/</li>
+    <li aria-current="page">{name}</li>
+  </ol>
+  </div>
+</nav>
+
+<div class="frame">
+<section class="intro" aria-labelledby="dr-name">
+  <!-- Photo card 244.577 x 215 at page (104, 240): border 0.288 #418ea2, radius 17.298 -->
+  <div class="card hair-card relative bg-white">
+    <div class="panel">
+      <div class="shape" aria-hidden="true" style={`--mask:url("${mask.src}")`}>
+        <img src={shape.src} alt="" width="222" height="225" loading="eager" decoding="async" />
+      </div>
+      {photo && (
+        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 240px, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+      )}
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="head">
+      <div>
+        <h1 id="dr-name" class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</h1>
+        <p class="role m-0 font-gotham font-normal not-italic">{role}</p>
+      </div>
+      <a href="#book-appointment" data-doctor={d.slug} class="book hit font-gotham font-medium no-underline">{c.book}</a>
+    </div>
+    <img class="rule-top" src={ruleTop.src} width="571" height="0.5" alt="" />
+    {subs.length > 0 && (
+      <>
+        <h2 class="sub-h m-0 font-gotham font-medium text-navy-alt not-italic">{c.subSpecialities}</h2>
+        <ul class="subs" role="list">
+          {subs.map((s) => (
+            <li><img src={arrow.src} width="10" height="10" alt="" /><span>{s}</span></li>
+          ))}
+        </ul>
+      </>
+    )}
+  </div>
+</section>
+
+{bio && (
+  <section class="summary" aria-labelledby="dr-summary">
+    <img class="rule-sec" src={ruleSection.src} width="857" height="0.5" alt="" />
+    <h2 id="dr-summary" class="m-0 font-gotham font-medium not-italic">{c.summary}</h2>
+    <div class="bio font-gotham font-normal not-italic" set:html={bio} />
+    <img class="rule-sec rule-end" src={ruleSection.src} width="857" height="0.5" alt="" />
+  </section>
+)}
+</div>
+
+<style>
+  .frame { width: 100%; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .crumbs { height: calc(67 * var(--u)); padding-top: calc(29 * var(--u)); box-sizing: border-box; }
+  .crumbs-ol { margin-inline-start: calc(94 * var(--u)); }
+  .crumbs .sep { padding-inline: calc(2 * var(--u)); }
+  .crumbs li { white-space: pre-wrap; }
+
+  .intro { display: flex; align-items: flex-start; margin-top: calc(54 * var(--u)); margin-inline-start: calc(104 * var(--u)); }
+  .card { flex: none; width: calc(244.577 * var(--u)); height: calc(215 * var(--u)); border-radius: calc(17.298 * var(--u)); box-sizing: border-box; --sw: .288; }
+  .panel { position: absolute; inset: calc(3.96 * var(--u)) auto auto calc(3.96 * var(--u)); width: calc(236.482 * var(--u)); height: calc(204.775 * var(--u)); border-radius: calc(17.298 * var(--u)); background: var(--color-veil); }
+  .shape { position: absolute; inset-inline-start: 0; top: 0; width: calc(240.613 * var(--u)); height: calc(204.222 * var(--u)); -webkit-mask: var(--mask) 0 0 / 100% 100% no-repeat; mask: var(--mask) 0 0 / 100% 100% no-repeat; mask-mode: alpha; pointer-events: none; }
+  .shape img { position: absolute; inset-inline-start: calc(8.811 * var(--u)); top: calc(4.689 * var(--u)); width: calc(222.49 * var(--u)); height: calc(225.461 * var(--u)); max-width: none; }
+  :global([dir='rtl']) .shape { scale: -1 1; }
+  /* photo: 174.182 high, natural width (153.433 for Ahmad), centred, bottom on the panel edge */
+  .photo { position: absolute; bottom: 0; inset-inline-start: calc(50% - 0.6 * var(--u)); translate: -50% 0; height: calc(174.182 * var(--u)); width: auto; max-width: none; }
+  :global([dir='rtl']) .photo { translate: 50% 0; inset-inline-start: calc(50% + 0.6 * var(--u)); }
+
+  .info { flex: 1 1 0; min-width: 0; margin-inline-start: calc(33.4 * var(--u)); padding-top: calc(10 * var(--u)); max-width: calc(573 * var(--u)); }
+  .head { display: flex; align-items: flex-start; justify-content: space-between; gap: calc(16 * var(--u)); }
+  .name { font-size: calc(20 * var(--u)); line-height: calc(25 * var(--u)); overflow-wrap: anywhere; }
+  .role { margin-top: calc(2 * var(--u)); font-size: calc(9.226 * var(--u)); line-height: calc(11.532 * var(--u)); color: #359446; overflow-wrap: anywhere; }
+  .book { flex: none; box-sizing: border-box; margin-top: calc(8 * var(--u)); width: calc(131 * var(--u)); min-height: calc(28 * var(--u)); padding: calc(9 * var(--u)) calc(6 * var(--u)) 0; border-radius: calc(5.766 * var(--u)); background: var(--color-navy); color: #fff; text-align: center; font-size: calc(9 * var(--u)); line-height: calc(11.532 * var(--u)); }
+  .rule-top { display: block; margin-top: calc(16.5 * var(--u)); margin-inline-start: calc(2 * var(--u)); width: calc(571 * var(--u)); height: calc(0.5 * var(--u)); max-width: none; }
+  .sub-h { margin-top: calc(11.5 * var(--u)); margin-inline-start: calc(2 * var(--u)); font-size: calc(12.75 * var(--u)); line-height: calc(16.337 * var(--u)); }
+  .subs { list-style: none; margin: calc(10.7 * var(--u)) 0 0; padding: 0 0 0 calc(20 * var(--u)); display: grid; grid-template-columns: calc(183 * var(--u)) calc(186 * var(--u)) 1fr; row-gap: calc(11.3 * var(--u)); }
+  :global([dir='rtl']) .subs { padding: 0 calc(20 * var(--u)) 0 0; }
+  .subs li { display: flex; align-items: flex-start; gap: calc(7 * var(--u)); padding-inline-end: calc(14 * var(--u)); min-width: 0; overflow-wrap: anywhere; font-family: var(--font-gotham); font-weight: 400; font-size: calc(11 * var(--u)); line-height: calc(20.7 * var(--u)); color: var(--color-body); text-align: justify; }
+  .subs img { flex: none; margin-top: calc(5 * var(--u)); width: calc(10 * var(--u)); height: calc(10 * var(--u)); max-width: none; }
+
+  .summary { margin-top: calc(22 * var(--u)); }
+  .rule-sec { display: block; margin-inline: auto; width: calc(857 * var(--u)); height: calc(0.5 * var(--u)); max-width: none; }
+  .summary h2 { margin-top: calc(23 * var(--u)); margin-inline-start: calc(100 * var(--u)); font-size: calc(13 * var(--u)); line-height: calc(16.362 * var(--u)); color: #133c4f; }
+  .bio { margin-top: calc(13 * var(--u)); margin-inline-start: calc(100 * var(--u)); width: calc(855 * var(--u)); max-width: calc(100% - 100 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(15.4 * var(--u)); color: var(--color-body); text-align: justify; overflow-wrap: anywhere; }
+  .bio :global(p) { margin: 0 0 calc(15.4 * var(--u)); }
+  .bio :global(p:last-child) { margin-bottom: 0; }
+  .rule-end { margin-top: calc(30.8 * var(--u)); }
+  @media (min-width: 1024px) { .rule-sec { margin-inline: calc(98 * var(--u)) 0; } }
+
+  @media (max-width: 1023.98px) {
+    .crumbs-ol { margin-inline: calc(24 * var(--u)); }
+    .intro { flex-direction: column; align-items: center; margin-inline: calc(16 * var(--u)); gap: calc(24 * var(--u)); }
+    .info { margin-inline-start: 0; padding-top: 0; width: 100%; max-width: calc(573 * var(--u)); }
+    .head { flex-wrap: wrap; }
+    .rule-top { margin-inline-start: 0; width: 100%; }
+    .sub-h { margin-inline-start: 0; }
+    .subs { grid-template-columns: repeat(auto-fill, minmax(calc(170 * var(--u)), 1fr)); padding: 0; }
+    :global([dir='rtl']) .subs { padding: 0; }
+    .rule-sec { width: calc(100% - 32 * var(--u)); }
+    .summary h2, .bio { margin-inline: calc(16 * var(--u)); width: auto; max-width: none; }
+  }
+</style>

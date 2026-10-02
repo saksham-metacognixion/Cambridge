@@ -1,0 +1,61 @@
+{
+  "$comment": "PLACEHOLDER: one specialty per distinct role title shown in the Figma Find a Doctor list (the dropdown options themselves are NOT in Figma). Replace with Pramod's export; doctors reference these ids in specialties[].",
+  "specialties": [
+    {
+      "id": "physical-medicine-rehab",
+      "name": {
+        "en": "Physical Medicine & Rehab Specialist",
+        "ar": ""
+      }
+    },
+    {
+      "id": "icu-anesthesia",
+      "name": {
+        "en": "ICU & Anesthesia Specialist",
+        "ar": ""
+      }
+    },
+    {
+      "id": "pediatrics",
+      "name": {
+        "en": "Pediatrician",
+        "ar": ""
+      }
+    },
+    {
+      "id": "general-practitioner",
+      "name": {
+        "en": "General Practitioner",
+        "ar": ""
+      }
+    },
+    {
+      "id": "general-physician",
+      "name": {
+        "en": "General Physician",
+        "ar": ""
+      }
+    },
+    {
+      "id": "general-practitioner-icu",
+      "name": {
+        "en": "General Practitioner ICU",
+        "ar": ""
+      }
+    },
+    {
+      "id": "internal-medicine",
+      "name": {
+        "en": "Internal medicine specialist",
+        "ar": ""
+      }
+    },
+    {
+      "id": "neuro",
+      "name": {
+        "en": "Neuro Specialist",
+        "ar": ""
+      }
+    }
+  ]
+}

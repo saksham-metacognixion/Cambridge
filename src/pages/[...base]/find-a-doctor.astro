@@ -1,0 +1,46 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { filterHospitals, DOCTOR_PATHS } from '../../lib/doctors';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import DoctorsHero from '../../components/doctors/DoctorsHero.astro';
+import DoctorFilters from '../../components/doctors/DoctorFilters.astro';
+import DoctorGrid from '../../components/doctors/DoctorGrid.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('doctors/page', edition.locale);
+
+/*
+ * Find a Doctor list template (Figma 62:179, drafts copy LJIRtzU...). Gaps (Figma px) between blocks:
+ * Hero ends 556 -> filters (boxes top 586) 30 | boxes end 621 -> grid top 652: 31 | last card row ends 1817.5 -> care box top 1867: 49.5 |
+ * care box ends 2135 -> footer top 2179: 44.
+ */
+---
+
+<BaseLayout edition={edition} path={DOCTOR_PATHS.list} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><DoctorsHero /></div>
+    <div data-doctor-filters data-region={edition.region} class="lg:mx-auto lg:max-w-[calc(var(--target-w)*1px)]">
+      <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(30 * var(--u))"><DoctorFilters /></div>
+      <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(31 * var(--u))"><DoctorGrid /></div>
+      <script type="application/json" data-hospitals set:html={JSON.stringify(filterHospitals)} />
+    </div>
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(49.5 * var(--u))">
+      <ContactRecovery content={c.recovery} />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
+    <Footer />
+  </div>
+  <script>
+    import '../../scripts/doctor-filters';
+  </script>
+</BaseLayout>

@@ -490,5 +490,93 @@
    "file": "assets/contact/corner-fill.svg",
    "figma_asset_id": "a953d24b-289f-4526-921c-701eb77faa58"
   }
+ },
+ "contact-page": {
+  "banner.png": {
+   "file": "assets/contact-page/banner.png",
+   "figma_node": "86:434 Banner3 1"
+  },
+  "map.png": {
+   "file": "assets/contact-page/map.png",
+   "figma_node": "86:807 Rectangle 32"
+  },
+  "select-chevron.svg": {
+   "file": "assets/contact-page/select-chevron.svg",
+   "figma_node": "86:787"
+  },
+  "checkbox.svg": {
+   "file": "assets/contact-page/checkbox.svg",
+   "figma_node": "86:800"
+  },
+  "icon-mail.svg": {
+   "file": "assets/contact-page/icon-mail.svg",
+   "figma_node": "86:811"
+  },
+  "icon-globe.svg": {
+   "file": "assets/contact-page/icon-globe.svg",
+   "figma_node": "86:817"
+  },
+  "icon-phone.svg": {
+   "file": "assets/contact-page/icon-phone.svg",
+   "figma_node": "86:819"
+  },
+  "card-corner-mask.svg": {
+   "file": "assets/contact-page/card-corner-mask.svg",
+   "figma_node": "86:825 mask"
+  },
+  "card-corner-fill.svg": {
+   "file": "assets/contact-page/card-corner-fill.svg",
+   "figma_node": "86:825 fill"
+  },
+  "cta-corner-mask.svg": {
+   "file": "assets/contact-page/cta-corner-mask.svg",
+   "figma_node": "86:851 mask"
+  },
+  "cta-corner-fill.svg": {
+   "file": "assets/contact-page/cta-corner-fill.svg",
+   "figma_node": "86:851 fill"
+  },
+  "cta-calendar-clock.svg": {
+   "file": "assets/contact-page/cta-calendar-clock.svg",
+   "figma_node": "86:872"
+  },
+  "cta-search.svg": {
+   "file": "assets/contact-page/cta-search.svg",
+   "figma_node": "86:876"
+  },
+  "cta-message-share.svg": {
+   "file": "assets/contact-page/cta-message-share.svg",
+   "figma_node": "86:877"
+  },
+  "cta-stethoscope.svg": {
+   "file": "assets/contact-page/cta-stethoscope.svg",
+   "figma_node": "86:878"
+  }
+ },
+ "doctor-profile": {
+  "dr-ahmad": {
+   "file": "assets/doctor-profile/dr-ahmad.png",
+   "figma_asset_id": "e9d12"
+  },
+  "rule-top": {
+   "file": "assets/doctor-profile/rule-top.svg",
+   "figma_asset_id": "9ef86"
+  },
+  "rule-section": {
+   "file": "assets/doctor-profile/rule-section.svg",
+   "figma_asset_id": "b8c56"
+  },
+  "arrow-icon": {
+   "file": "assets/doctor-profile/arrow-icon.svg",
+   "figma_asset_id": "bda00"
+  },
+  "photo-mask": {
+   "file": "assets/doctor-profile/photo-mask.svg",
+   "figma_asset_id": "d56b8"
+  },
+  "photo-shape": {
+   "file": "assets/doctor-profile/photo-shape.svg",
+   "figma_asset_id": "892cc"
+  }
  }
 }

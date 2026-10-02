@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "title": "Contact Us | Cambridge Hospital",
+    "description": "Contact the Cambridge Hospital care team: send an enquiry, call or email us."
+  },
+  "hero": {
+    "ariaLabel": "Contact Cambridge Hospital",
+    "banner": { "image": "contact-page/banner", "alt": "" },
+    "title": ["Speak with", "Our Care Team"],
+    "button": { "label": "Inquire Now", "href": "#contact-form" }
+  },
+  "heading": "Contact US",
+  "form": {
+    "ariaLabel": "Send an enquiry",
+    "nameLabel": "Full Name*",
+    "emailLabel": "E-mail*",
+    "hospitalLabel": "Hospital*",
+    "hospitalPlaceholder": "Select Hospital",
+    "subjectLabel": "Subject*",
+    "messagePlaceholder": "Type your Message*",
+    "consent": { "before": "I have read the ", "link": { "label": "Privacy policy", "href": "#" }, "after": " and I consent to the transfer and processing of", "line2": "my personal data." },
+    "submit": "SUBMIT"
+  },
+  "map": { "image": "contact-page/map", "alt": "" },
+  "details": {
+    "email": "info@cmrc.ae",
+    "web": "www.info@cmrc.ae",
+    "phone": "+971 8002672",
+    "phoneHref": "+9718002672"
+  },
+  "recovery": {
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "Your recovery matters to us,",
+    "emphasis": [" and we are with you every step of", "the journey."],
+    "tiles": [
+      { "label": "Book an Appointment", "href": "#book-appointment" },
+      { "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" },
+      { "label": "Refer a Patient", "href": "#" },
+      { "label": "Send an Inquiry", "href": "#send-inquiry" }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+---
+import { content } from '../../lib/content';
+import { parsePath, urlFor } from '../../lib/editions';
+import calendar from '../../assets/contact-page/cta-calendar-clock.svg';
+import search from '../../assets/contact-page/cta-search.svg';
+import message from '../../assets/contact-page/cta-message-share.svg';
+import stethoscope from '../../assets/contact-page/cta-stethoscope.svg';
+import cornerMask from '../../assets/contact-page/cta-corner-mask.svg';
+import cornerFill from '../../assets/contact-page/cta-corner-fill.svg';
+
+// Figma 86:842, page y 1271, h 268. Spec y values are page y minus 1271.
+// Layer order as in Figma: navy box, texts, tile 1, corner art, tiles 2-4, then labels and icons.
+const { edition } = parsePath(Astro.url.pathname);
+// Default content = Contact page; other pages (Find a Doctor) pass their own `content` (same layout, other tile labels).
+const c = Astro.props.content ?? content('contact/page', edition.locale).recovery;
+const icons = [
+  { src: calendar, size: 24, x: 82, y: 10 },
+  { src: stethoscope, size: 26, x: 84, y: 9 },
+  { src: search, size: 23, x: 83, y: 9 },
+  { src: message, size: 26, x: 84, y: 10 },
+];
+// Tile boxes (194x68) and label offsets inside the tile, in Figma px. Order = Book, Find a Doctor, Refer, Send.
+const tiles = [
+  { x: 527, y: 51, lx: 23, ly: 43 },
+  { x: 742, y: 51, lx: 18, ly: 43 },
+  { x: 527, y: 152, lx: 19, ly: 41 },
+  { x: 742, y: 152, lx: 23, ly: 41 },
+].map((d, i) => ({ ...d, ...c.tiles[i], href: c.tiles[i].path === undefined ? c.tiles[i].href : urlFor(edition, c.tiles[i].path), icon: icons[i] }));
+---
+
+<section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>
+  <div class="stage max-lg:px-[calc(16*var(--u))]">
+    <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-r15 max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
+      <h2 class="m-0 font-gotham text-f28 text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-52 lg:top-43 lg:w-331 lg:h-109">
+        <span class="font-normal leading-[normal]">{c.lead}</span><span class="font-medium leading-[normal]">{c.emphasis[0]}<br />{c.emphasis[1]}</span>
+      </h2>
+      <p class="m-0 font-gotham font-normal text-f12 leading-14 text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-53 lg:top-172 lg:w-324 lg:h-44">{c.text}</p>
+
+      <!-- Tile backgrounds (desktop): tile 1 sits under the corner art, the other three above it. -->
+      {tiles.map((t, i) => (
+        <div class:list={['hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-[calc(10*var(--u))]', i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
+      ))}
+      <div class="art hidden lg:block absolute z-[1] start-505 w-433 h-[calc(265.8*var(--u))] top-[calc(-4*var(--u))]" aria-hidden="true">
+        <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
+      </div>
+
+      <div class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
+        {tiles.map((t) => (
+          <a href={t.href} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-[calc(10*var(--u))] max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
+            <img class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
+            <span class="lbl block font-gotham font-medium text-f13 text-navy-alt text-center not-italic whitespace-nowrap max-lg:whitespace-normal">{t.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tile::after { border-radius: calc(10 * var(--u)); }
+  @media (min-width: 1024px) {
+    .tile { inset-inline-start: calc(var(--tx) * var(--u)); top: calc(var(--ty) * var(--u)); background: transparent; }
+    .tile .icon { position: absolute; inset-inline-start: calc(var(--ix) * var(--u)); top: calc(var(--iy) * var(--u)); }
+    .tile .lbl { position: absolute; inset-inline-start: calc(var(--lx) * var(--u)); top: calc(var(--ly) * var(--u)); width: calc(148 * var(--u)); height: calc(15 * var(--u)); }
+    .tile::after { display: none; }
+    /* the tile box (border + hit) is drawn by the background div; only icon, label and the link area live here */
+  }
+  .art { overflow: hidden; }
+  :global([dir='rtl']) .art { scale: -1 1; }
+  .art-fill {
+    position: absolute; left: calc(17.395 * var(--u)); top: calc(-127.28 * var(--u));
+    width: calc(439.223 * var(--u)); height: calc(445.086 * var(--u)); opacity: 0.3;
+    background-repeat: no-repeat; background-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: calc(433 * var(--u)) calc(266.622 * var(--u)); mask-size: calc(433 * var(--u)) calc(266.622 * var(--u));
+    -webkit-mask-position: calc(-17.395 * var(--u)) calc(127.28 * var(--u)); mask-position: calc(-17.395 * var(--u)) calc(127.28 * var(--u)); mask-mode: alpha;
+  }
+</style>

@@ -1,36 +1,114 @@
 {
-  "$comment": "Form definitions shared by the serverless function (functions/api/forms/[form].ts) and, later, the form UI. FIELD LISTS ARE PLACEHOLDERS until Pramod shares the real ones: only the Home contact section (name / email / message, from Figma) is known. `consent` (required checkbox + privacy link) is enforced on every form by the server; its UI is not built yet because it is not in Figma, so live submissions fail until it is.",
+  "$comment": "Form definitions shared by the serverless function (functions/api/forms/[form].ts) and, later, the form UI. FIELD LISTS ARE PLACEHOLDERS until Pramod shares the real ones: only the Home contact section (name / email / message, from Figma) is known. `consent` (required checkbox + privacy link) is enforced on every form by the server; its UI is not built yet because it is not in Figma, so live submissions fail until it is. book-appointment has an optional `doctor` field (the doctor slug) so the Book Now / Book an Appointment buttons on doctor pages can preselect a doctor once the form UI exists.",
   "forms": {
     "book-appointment": {
       "subject": "Book an Appointment",
       "fields": [
-        { "name": "name", "type": "text", "required": true, "max": 120 },
-        { "name": "email", "type": "email", "required": true, "max": 200 },
-        { "name": "message", "type": "textarea", "required": false, "max": 4000 }
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "doctor",
+          "type": "text",
+          "required": false,
+          "max": 160
+        },
+        {
+          "name": "message",
+          "type": "textarea",
+          "required": false,
+          "max": 4000
+        }
       ]
     },
     "send-enquiry": {
       "subject": "Send an Enquiry",
       "fields": [
-        { "name": "name", "type": "text", "required": true, "max": 120 },
-        { "name": "email", "type": "email", "required": true, "max": 200 },
-        { "name": "message", "type": "textarea", "required": true, "max": 4000 }
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "hospital",
+          "type": "text",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "subject",
+          "type": "text",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "message",
+          "type": "textarea",
+          "required": true,
+          "max": 4000
+        }
       ]
     },
     "refer-patient": {
       "subject": "Refer a Patient",
       "fields": [
-        { "name": "name", "type": "text", "required": true, "max": 120 },
-        { "name": "email", "type": "email", "required": true, "max": 200 },
-        { "name": "message", "type": "textarea", "required": false, "max": 4000 }
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "message",
+          "type": "textarea",
+          "required": false,
+          "max": 4000
+        }
       ]
     },
     "feedback": {
       "subject": "We are listening",
       "fields": [
-        { "name": "name", "type": "text", "required": true, "max": 120 },
-        { "name": "email", "type": "email", "required": true, "max": 200 },
-        { "name": "message", "type": "textarea", "required": true, "max": 4000 }
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "message",
+          "type": "textarea",
+          "required": true,
+          "max": 4000
+        }
       ]
     }
   }

@@ -1,11 +1,555 @@
 {
-  "$comment": "PLACEHOLDER: the 6 doctors shown on the Figma Home page, text exactly as in Figma. Replace with Pramod's export (keep or adapt these field names). photo = image key (src/lib/images.ts).",
+  "$comment": "PLACEHOLDER sample data. NAMES, ROLES and PHOTOS are exactly as in the Figma Find a Doctor list (14 cards) + the Home doctor row. COUNTRY, HOSPITAL, SPECIALTY ids and Ahmad's bio/sub-specialities are NOT assigned in Figma except Ahmad's profile text: country/hospital are invented test values so the filters can be exercised. Replace the whole file with Pramod's export. Schema: id, slug, old_url (current site URL, feeds the 301 map), name{en,ar}, title{en,ar}, specialties[] (ids in specialties.json), hospital_id (hospitals.json slug), country ae|sa, languages[], bio{en,ar} (HTML), sub_specialities[{en,ar}], photo (image key under src/assets), photo_alt{en,ar} (falls back to the name). DESIGN-ONLY extras for the sample: card_photo {size|h, dx} tunes the photo box inside the Figma card (Figma sizes each photo by hand; real data omits it and gets the default), home_photo (the Home row uses different crops), home_title, show_book_now (Figma shows a second 'Book Now' button on the first card only), listed=false hides a doctor from the list (Halawani is on Home only).",
   "doctors": [
-    { "slug": "amjad-abdelqader", "name": { "en": "Dr. Amjad Abdelqader", "ar": "" }, "title": { "en": "General Physician", "ar": "" }, "photo": "doctors/dr-amjed" },
-    { "slug": "ahmad-al-khayer", "name": { "en": "Dr. Ahmad Al Khayer", "ar": "" }, "title": { "en": "Physical Medicine & Rehab Specialist", "ar": "" }, "photo": "doctors/dr-ahmad" },
-    { "slug": "wael-sary", "name": { "en": "Dr. Wael Sary", "ar": "" }, "title": { "en": "ICU & Anesthesia Specialist", "ar": "" }, "photo": "doctors/dr-wael" },
-    { "slug": "suhaila-kallada", "name": { "en": "Dr. Suhaila Kallada", "ar": "" }, "title": { "en": "Physical Medicine & Rehab Specialist", "ar": "" }, "photo": "doctors/dr-suhaila" },
-    { "slug": "mohammed-halawani", "name": { "en": "Dr. Mohammed Halawani", "ar": "" }, "title": { "en": "Neuro Specialist", "ar": "" }, "photo": "doctors/dr-halawani" },
-    { "slug": "rober-hanna-kassab", "name": { "en": "Dr. Rober Hanna Kassab", "ar": "" }, "title": { "en": "Physical Medicine & Rehab Specialist", "ar": "" }, "photo": "doctors/dr-rober" }
+    {
+      "id": "dr-001",
+      "slug": "ahmad-al-khayer",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmad Al Khayer",
+        "ar": ""
+      },
+      "title": {
+        "en": "Physical Medicine & Rehab Specialist",
+        "ar": ""
+      },
+      "specialties": [
+        "physical-medicine-rehab"
+      ],
+      "hospital_id": "abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "<p>Dr. Ahmad Al Khayer serves as Chief Executive Officer and Chair of Rehabilitation Medicine at Cambridge Medical & Rehabilitation Center (CMRC) in the United Arab Emirates, bringing more than 25 years of international clinical and healthcare leadership experience across the full continuum of care.</p><p>A Consultant in Physical and Rehabilitation Medicine, Dr. Al Khayer completed his specialty training in the United Kingdom and pursued advanced fellowships in Pain Medicine and Spinal Disorders. He also holds postgraduate master's degrees in Orthopaedic Sciences and Business Administration, reflecting a strong integration of clinical expertise and executive leadership.<br>His professional career spans the UAE, the United Kingdom, Qatar, Saudi Arabia, the Republic of Ireland, and Syria, with a sustained focus on delivering high-quality, patient-centred rehabilitation and long-term care services.</p><p>Throughout his leadership journey, Dr. Al Khayer has guided large-scale transformation initiatives, including service expansion governance development, and implementation of comprehensive quality and safety systems. These efforts have advanced specialised rehabilitation services, strengthened patient experience, and supported sustainable organisational performance.</p><p>As CEO, he provides strategic oversight across CMRC UAE facilities, ensuring clinical excellence, operational performance, and <br>long-term growth while fostering multidisciplinary collaboration aligned with international best practices. He remains committed to delivering compassionate, comprehensive, and outcomes-driven care for patients and their families.</p>",
+        "ar": ""
+      },
+      "sub_specialities": [
+        {
+          "en": "Physical Rehabilitation",
+          "ar": ""
+        },
+        {
+          "en": "Spinal Cord Injury Care",
+          "ar": ""
+        },
+        {
+          "en": "Brain Injury Rehabilitation",
+          "ar": ""
+        },
+        {
+          "en": "Sports Injury Treatment",
+          "ar": ""
+        },
+        {
+          "en": "EMG & Nerve Studies",
+          "ar": ""
+        },
+        {
+          "en": "Pain Management",
+          "ar": ""
+        },
+        {
+          "en": "Acupuncture Therapy",
+          "ar": ""
+        }
+      ],
+      "photo": "doctors/dr-ahmad",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "w": 134.879,
+        "h": 153.118,
+        "dx": -0.6
+      },
+      "listed": true,
+      "home_photo": "doctors/dr-ahmad",
+      "show_book_now": true
+    },
+    {
+      "id": "dr-002",
+      "slug": "wael-sary",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Wael Sary",
+        "ar": ""
+      },
+      "title": {
+        "en": "ICU & Anesthesia Specialist",
+        "ar": ""
+      },
+      "specialties": [
+        "icu-anesthesia"
+      ],
+      "hospital_id": "abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/wael-sary",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 167.351,
+        "dx": 0.6
+      },
+      "listed": true,
+      "home_photo": "doctors/dr-wael"
+    },
+    {
+      "id": "dr-003",
+      "slug": "suhaila-kallada",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Suhaila Kallada",
+        "ar": ""
+      },
+      "title": {
+        "en": "Physical Medicine & Rehab Specialist",
+        "ar": ""
+      },
+      "specialties": [
+        "physical-medicine-rehab"
+      ],
+      "hospital_id": "al-ain",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/suhaila-kallada",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 169.676,
+        "dx": 2.9
+      },
+      "listed": true,
+      "home_photo": "doctors/dr-suhaila"
+    },
+    {
+      "id": "dr-004",
+      "slug": "rober-hanna-kassab",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Rober Hanna Kassab",
+        "ar": ""
+      },
+      "title": {
+        "en": "Physical Medicine & Rehab Specialist",
+        "ar": ""
+      },
+      "specialties": [
+        "physical-medicine-rehab"
+      ],
+      "hospital_id": "abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/rober-hanna-kassab",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 174.324,
+        "dx": 4.1
+      },
+      "listed": true,
+      "home_photo": "doctors/dr-rober"
+    },
+    {
+      "id": "dr-005",
+      "slug": "elsanosi-ali-babiker",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Elsanosi Ali Babiker",
+        "ar": ""
+      },
+      "title": {
+        "en": "Pediatrician",
+        "ar": ""
+      },
+      "specialties": [
+        "pediatrics"
+      ],
+      "hospital_id": "al-ain",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/elsanosi-ali-babiker",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 169,
+        "dx": 0
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-006",
+      "slug": "amjad-abdelqader",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Amjad Abdelqader",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner"
+      ],
+      "hospital_id": "abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/amjad-abdelqader",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 167.351,
+        "dx": -1.7
+      },
+      "listed": true,
+      "home_photo": "doctors/dr-amjed",
+      "home_title": {
+        "en": "General Physician",
+        "ar": ""
+      }
+    },
+    {
+      "id": "dr-007",
+      "slug": "sheema-jeelani",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Sheema Jeelani",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner"
+      ],
+      "hospital_id": "al-ain",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/sheema-jeelani",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 169,
+        "dx": -6
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-008",
+      "slug": "sami-al-amin",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Sami Al Amin",
+        "ar": ""
+      },
+      "title": {
+        "en": "Internal medicine specialist",
+        "ar": ""
+      },
+      "specialties": [
+        "internal-medicine"
+      ],
+      "hospital_id": "al-mudeef-abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/sami-al-amin",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 169,
+        "dx": 0
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-009",
+      "slug": "rao-muhammad-tariq",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Rao Muhammad Tariq",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner"
+      ],
+      "hospital_id": "abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/rao-muhammad-tariq",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 174.324,
+        "dx": 5.2
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-010",
+      "slug": "rasha-hassan",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Rasha Hassan",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Physician",
+        "ar": ""
+      },
+      "specialties": [
+        "general-physician"
+      ],
+      "hospital_id": "dhahran",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/rasha-hassan",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 160,
+        "dx": 4.5
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-011",
+      "slug": "wala-mohammed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Wala Mohammed",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner ICU",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner-icu"
+      ],
+      "hospital_id": "al-khobar",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/wala-mohammed",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 159,
+        "dx": 0
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-012",
+      "slug": "ebtihal-rahma-ahmed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ebtihal Rahma Ahmed",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner ICU",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner-icu"
+      ],
+      "hospital_id": "jeddah",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/ebtihal-rahma-ahmed",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 174.324,
+        "dx": 5.2
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-013",
+      "slug": "samuel-tesfaye",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Samuel Tesfaye",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner"
+      ],
+      "hospital_id": "dhahran",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/samuel-tesfaye",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 165,
+        "dx": 0
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-014",
+      "slug": "hasan-abu-eidah",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Hasan Abu Eidah",
+        "ar": ""
+      },
+      "title": {
+        "en": "General Practitioner",
+        "ar": ""
+      },
+      "specialties": [
+        "general-practitioner"
+      ],
+      "hospital_id": "al-khobar",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/list/hasan-abu-eidah",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 165,
+        "dx": 0
+      },
+      "listed": true
+    },
+    {
+      "id": "dr-015",
+      "slug": "mohammed-halawani",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohammed Halawani",
+        "ar": ""
+      },
+      "title": {
+        "en": "Neuro Specialist",
+        "ar": ""
+      },
+      "specialties": [
+        "neuro"
+      ],
+      "hospital_id": "abu-dhabi",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/dr-halawani",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "card_photo": {
+        "size": 174.324,
+        "dx": 0
+      },
+      "listed": false
+    }
   ]
 }

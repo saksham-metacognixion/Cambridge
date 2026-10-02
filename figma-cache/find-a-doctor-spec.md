@@ -1,0 +1,12 @@
+# Find a Doctor 62:179 (file LJIRtzU574JrA1BgK881Qm) -- SPARSE OUTLINE ONLY (no styles/assets). Frame 1052x2547 (page y offset 4965; values below are frame-relative).
+Header 112:15494 (same as landing) y0-119 | Hero 62:180 y119-556 (437h; bg "Banner3 1" 62:181; title "Find the Right Doctor for You" 62:184 @95,260 374x74; sub 62:185 @97,338 374x27; button rect 62:182 @98,384 164x30 + text "Book an Appointment" 62:183)
+Filters (y586-621): Group 14 62:186 "Search for Doctors by Name" box 311x35 @369 w/ chevron | Group 15 62:190 "Search for Specialities" box 311x35 @692 w/ chevron | Group 52 62:783 country pills ALL @48 / KSA @147 / UAE @248 (79x25, y591). NO hospital filter, no "search" button, no results count.
+Grid: 4 columns x (48, 294, 541, 788), card 215x268.46, row pitch ~299 (y 652, 951, 1250, 1549), 14 cards, last row has 2.
+ Card = same design as home (white, 0.25px #418ea2 border, grey inner panel 208x180, photo, name 172w, role, "See More" pill 82.5x15.1) -- Ahmad (62:310) ALSO has a "Book Now" pill 161:311 next to See More (likely stray/hover variant: ASK).
+ Cards in order: row1 Ahmad Al Khayer (Physical Medicine & Rehab Specialist) 62:310 | Wael Sary (ICU & Anesthesia Specialist) 62:194 | Suhaila Kallada (Physical Medicine & Rehab Specialist) 62:339 | Rober Hanna Kassab (Physical Medicine & Rehab Specialist) 62:223
+ row2 Elsanosi Ali Babiker (Pediatrician) 62:252 | Amjad Abdelqader (General Practitioner) 62:281 | Sheema Jeelani (General Practitioner) 62:571 | Sami Al Amin (Internal medicine specialist) 62:542
+ row3 Rao Muhammad Tariq (General Practitioner) 62:368 | Rasha Hassan (General Physician) 62:426 | Wala Mohammed (General Practitioner ICU) 62:484 | Ebtihal Rahma Ahmed (General Practitioner ICU) 62:397
+ row4 Samuel Tesfaye (General Practitioner) 62:455 | Hasan Abu Eidah (General Practitioner) 62:513
+ (Amjad's card has no visible "See More" text layer order but 62:309 exists.) Photos are all layers named "Dr.-<x> 1" (names unreliable). Photo sizes vary per card. No pagination, no load more, no empty state, no count in this frame.
+Care panel Group 55 62:1002 y1867-2135 (938x268 @57): text "Your recovery matters to us, and we are with you every step of the journey." + "Care at Cambridge Hospital is a connected journey..." + 4 tiles 194x68 (Book an Appointment / Find a Doctor / Search Conditions / Send an Inquiry, icons 62:1032,1036,1037,1038) + cyan-bars decorative image right (clip 62:1007). NOT YET FETCHED.
+Footer Group 670 112:11541 y2179-2547 (same as landing).

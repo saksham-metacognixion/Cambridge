@@ -32,7 +32,7 @@ const cards = design.map((d, i) => {
   const doc = doctorsData.doctors.find((x) => x.slug === c.doctors[i]);
   if (!doc) throw new Error(`home/doctors: unknown doctor slug "${c.doctors[i]}"`);
   const name = t(doc.name, edition.locale, 'doctors');
-  return { ...d, name, role: t(doc.title, edition.locale, 'doctors'), img: img(doc.photo, edition.region), alt: name, btn: c.buttons[i] as string };
+  return { ...d, name, role: t(doc.home_title ?? doc.title, edition.locale, 'doctors'), img: img(doc.home_photo ?? doc.photo, edition.region), alt: name, btn: c.buttons[i] as string };
 }).map((k) => ({
   ...k,
   shapeX: (k.clipL * ROOT_W) / 100 + MASK_DX - k.x, // card-relative
@@ -75,7 +75,7 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
 
 <style>
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
-  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
   .card { width: calc(185 * var(--u)); height: calc(231 * var(--u)); }
   .dpos img, img.dpos { max-width: none; }
   @media (max-width: 1023.98px) {

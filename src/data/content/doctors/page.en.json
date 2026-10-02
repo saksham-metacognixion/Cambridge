@@ -1,0 +1,90 @@
+{
+  "_note": "Texts marked (Figma) are exactly as in Figma. Texts marked (PLACEHOLDER) are NOT in Figma (SEO meta, screen-reader text, empty state) and wait for Pramod's wording.",
+  "meta": {
+    "title": "Find a Doctor | Cambridge Hospital",
+    "description": "Browse the Cambridge Hospital team of specialists and find the right doctor by country, specialty or name."
+  },
+  "hero": {
+    "ariaLabel": "Find a Doctor",
+    "banner": {
+      "image": "doctors-page/banner",
+      "alt": ""
+    },
+    "title": [
+      "Find the Right",
+      "Doctor for You"
+    ],
+    "text": "Browse our team of experienced specialists and find the right doctor based on your needs, location, and condition.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "filters": {
+    "ariaLabel": "Filter doctors",
+    "countryLabel": "Filter doctors by country",
+    "countries": [
+      {
+        "value": "all",
+        "label": "ALL"
+      },
+      {
+        "value": "sa",
+        "label": "KSA"
+      },
+      {
+        "value": "ae",
+        "label": "UAE"
+      }
+    ],
+    "nameLabel": "Search for Doctors by Name",
+    "specialtyLabel": "Search for Specialities"
+  },
+  "card": {
+    "seeMore": "See More",
+    "bookNow": "Book Now"
+  },
+  "results": {
+    "listLabel": "Doctors",
+    "found": "{n} doctors found",
+    "empty": "No doctors match your search."
+  },
+  "profile": {
+    "metaTitle": "{name} | Cambridge Hospital",
+    "metaDescription": "{name}, {title}. Book an appointment at Cambridge Hospital.",
+    "breadcrumbLabel": "Breadcrumb",
+    "home": "Home",
+    "list": "Find a Doctor",
+    "subSpecialities": "SUB SPECIALITIES",
+    "summary": "Professional Summary",
+    "book": "Book an Appointment"
+  },
+  "recovery": {
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "",
+    "emphasis": [
+      "Your recovery matters to us, and we are with you every step of",
+      "the journey."
+    ],
+    "tiles": [
+      {
+        "label": "Book an Appointment",
+        "href": "#book-appointment"
+      },
+      {
+        "label": "Find a Doctor",
+        "href": "#",
+        "path": "find-a-doctor"
+      },
+      {
+        "label": "Search Conditions",
+        "href": "#"
+      },
+      {
+        "label": "Send an Inquiry",
+        "href": "#send-inquiry"
+      }
+    ],
+    "ariaLabel": "Your recovery matters to us"
+  }
+}

@@ -1,0 +1,77 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { urlFor, type Edition } from '../../lib/editions';
+import { t } from '../../lib/content';
+import { DOCTOR_PATHS, type Doctor } from '../../lib/doctors';
+import mask from '../../assets/doctors-page/card-mask.svg';
+import fill from '../../assets/doctors-page/card-fill.svg';
+
+/*
+ * Doctor card, Figma 62:223 / 62:310 (215 x 268.459, radius 17.432). FLOW layout: the panel is fixed (180.135), the text
+ * under it grows with the name and role, the card grows with it. Absolute only for the decorative bars and the photo.
+ * All numbers below are Figma px (scaled by --u). Text sizes are the card's own (13.946 / 9.297), not the Home card's.
+ */
+interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; }
+const { doctor: d, edition, labels } = Astro.props;
+const name = t(d.name, edition.locale, 'doctors');
+const role = t(d.title, edition.locale, 'doctors');
+const alt = (d.photo_alt && t(d.photo_alt, edition.locale, 'doctors')) || name;
+const photo = d.photo ? img(d.photo, edition.region) : null;
+// Default photo box for real data (Pramod's JSON has no card_photo): 169 square, centred, bottom on the panel edge.
+const w = d.card_photo?.w ?? d.card_photo?.size ?? 169;
+const h = d.card_photo?.h ?? d.card_photo?.size ?? 169;
+const dx = d.card_photo?.dx ?? 0;
+const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
+---
+
+<article class="card hair-card relative flex flex-col bg-white" style="--sw:.291" aria-label={name}>
+  <div class="panel relative" aria-hidden={photo ? undefined : 'true'}>
+    <div class="shape" aria-hidden="true" style={`--mask:url("${mask.src}")`}>
+      <img src={fill.src} alt="" width="196" height="198" loading="lazy" decoding="async" />
+    </div>
+    {photo && (
+      <Picture
+        src={photo}
+        formats={['avif']}
+        fallbackFormat="webp"
+        width={px(w)}
+        height={px(h)}
+        widths={[px(w), px(w) * 2]}
+        sizes={`${px(w)}px`}
+        loading="lazy"
+        decoding="async"
+        alt={alt}
+        class="photo object-cover"
+        pictureAttributes={{ class: 'contents' }}
+        style={`--pw:${w};--ph:${h};--dx:${dx}`}
+      />
+    )}
+  </div>
+  <h2 class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</h2>
+  <p class="role m-0 font-gotham font-normal text-body not-italic">{role}</p>
+  <div class="actions">
+    <a href={href} class="btn btn-see hit font-gotham font-medium no-underline" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
+    {d.show_book_now && (
+      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book hit font-gotham font-normal no-underline" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
+    )}
+  </div>
+</article>
+
+<style>
+  .card { width: calc(215 * var(--u)); min-height: calc(268.459 * var(--u)); border-radius: calc(17.432 * var(--u)); padding-bottom: calc(18.59 * var(--u)); box-sizing: border-box; }
+  .panel { margin: calc(3.487 * var(--u)) calc(3.487 * var(--u)) 0; height: calc(180.135 * var(--u)); border-radius: calc(17.432 * var(--u)); background: var(--color-veil); flex: none; }
+  /* Decorative bars: the fill artwork is clipped by the panel-shaped mask (mask 208.027 x 179.576, art offset 6.589 / 4.052). */
+  .shape { position: absolute; inset-inline-start: 0; top: 0; width: calc(208.027 * var(--u)); height: calc(179.576 * var(--u)); -webkit-mask: var(--mask) 0 0 / 100% 100% no-repeat; mask: var(--mask) 0 0 / 100% 100% no-repeat; mask-mode: alpha; pointer-events: none; }
+  .shape img { position: absolute; inset-inline-start: calc(6.589 * var(--u)); top: calc(4.052 * var(--u)); width: calc(195.719 * var(--u)); height: calc(198.331 * var(--u)); max-width: none; }
+  :global([dir='rtl']) .shape { scale: -1 1; inset-inline-start: 0; }
+  .photo { position: absolute; bottom: 0; inset-inline-start: calc(50% + var(--dx) * var(--u)); translate: -50% 0; width: calc(var(--pw) * var(--u)); height: calc(var(--ph) * var(--u)); max-width: none; }
+  :global([dir='rtl']) .photo { translate: 50% 0; inset-inline-start: calc(50% - var(--dx) * var(--u)); }
+  .name { margin-top: calc(13.81 * var(--u)); margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); font-size: calc(13.946 * var(--u)); line-height: calc(17.432 * var(--u)); overflow-wrap: anywhere; }
+  .role { margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); min-height: calc(11.622 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); overflow-wrap: anywhere; }
+  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline-start: calc(17.43 * var(--u)); display: flex; gap: calc(7.06 * var(--u)); }
+  .btn { display: block; box-sizing: border-box; min-width: calc(82.514 * var(--u)); height: calc(15.108 * var(--u)); padding: calc(2.32 * var(--u)) calc(13.95 * var(--u)) 0 calc(16.27 * var(--u)); border-radius: calc(5.811 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); color: #fff; text-align: center; white-space: nowrap; }
+  .btn-see { background: var(--color-cyan); }
+  .btn-book { background: #21b573; }
+</style>

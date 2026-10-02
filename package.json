@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:functions": "node tests/functions.test.mjs"
+    "test:functions": "node tests/functions.test.mjs",
+    "test:filters": "node tests/doctor-filters.test.mjs",
+    "test": "npm run test:functions && npm run test:filters"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",

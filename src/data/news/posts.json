@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "first-patients-new-saudi-facility",
+    "old_url": "",
+    "title": "First Patients to Its New Saudi Facility",
+    "date": "2026-07-15",
+    "category": "press-releases",
+    "excerpt": "The 60-bed medical facility provides the most recent rehabilitation....",
+    "body": "",
+    "image": "news/first-patients-saudi-facility",
+    "image_alt": "",
+    "region": "sa",
+    "language": "en"
+  },
+  {
+    "slug": "diamond-sponsor-14th-seha",
+    "old_url": "",
+    "title": "The Diamond sponsor for the 14th version of SEHA",
+    "date": "2026-07-13",
+    "category": "events",
+    "excerpt": "Cambridge Medical and Rehabilitation Center has come forward....",
+    "body": "",
+    "image": "news/diamond-sponsor-seha",
+    "image_alt": "",
+    "region": "ae",
+    "language": "en",
+    "image_crop": { "h": "167.11%", "l": "-95.59%", "t": "-57.97%", "w": "240.94%" }
+  },
+  {
+    "slug": "eastern-province-ksa-fully-operational",
+    "old_url": "",
+    "title": "The Eastern Province of KSA, is fully operational",
+    "date": "2026-07-10",
+    "category": "press-releases",
+    "excerpt": "In Q2 2019, Cambridge Medical & Rehabilitation, the UAE’s leading....",
+    "body": "",
+    "image": "news/eastern-province-fully-operational",
+    "image_alt": "",
+    "region": "sa",
+    "language": "en"
+  }
+]

@@ -1,0 +1,44 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { content } from '../../lib/content';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+
+// Figma 46:7562, page y 119, h 437. Spec y values are page y minus 119.
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('media-hub/page', edition.locale).hero;
+const banner = img(c.banner.image, edition.region);
+---
+
+<section class="relative" style="--h: 437" aria-label={c.ariaLabel}>
+  <div class="stage max-lg:flex max-lg:min-h-[calc(437*var(--u))] max-lg:flex-col max-lg:items-start max-lg:justify-center max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(48*var(--u))]">
+    <!-- Banner PNG is 1052x500 and drawn 114.42% of the 437 box (top-left anchored), exactly as in Figma. -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <Picture
+        src={banner}
+        formats={['avif']}
+        fallbackFormat="webp"
+        width={px(1052)}
+        height={px(500)}
+        widths={[720, 1052]}
+        sizes="(min-width: 1440px) 1440px, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        alt={c.banner.alt}
+        class="absolute start-0 top-0 h-[114.42%] w-full max-w-none object-cover rtl:-scale-x-100"
+        pictureAttributes={{ class: 'contents' }}
+      />
+    </div>
+
+    <h1 class="relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-141 lg:w-494 lg:h-74">
+      <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
+    </h1>
+    <p class="relative m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] lg:absolute lg:start-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-374">{c.text}</p>
+
+    <a href={c.button.href} class="hit hair-card relative block rounded-r7 no-underline lg:absolute lg:start-98 lg:top-265 lg:w-164 lg:h-30 max-lg:h-30 max-lg:w-164" style="--sw:1;--sc:var(--color-cyan)">
+      <span class="absolute top-9 start-8 block w-145 h-15 font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
+    </a>
+  </div>
+</section>

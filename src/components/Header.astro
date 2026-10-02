@@ -16,9 +16,15 @@ const logo = img(c.logo.image, edition.region);
 
 // Design (positions/widths) zipped by index with the links from layout/header JSON.
 const topLinkBoxes = [ { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
-const topLinks = c.topLinks.map((x: { label: string; href: string }, i: number) => ({ ...x, ...topLinkBoxes[i] }));
+const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string }, i: number) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path), ...topLinkBoxes[i] }));
 const mainLinkWidths = [84, 41, 54, 62, 51];
-const mainLinks = c.mainLinks.map((x: { label: string; href: string }, i: number) => ({ ...x, w: mainLinkWidths[i] }));
+const mainLinks = c.mainLinks.map((x: { label: string; href: string; path?: string }, i: number) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path), w: mainLinkWidths[i] }));
+// Region switch: same page in the chosen region, same language (the language switch does the reverse).
+const regionOptions = c.region.options.map((o: { region: 'ae' | 'sa'; label: string }) => ({
+  label: o.label,
+  href: urlFor(getEdition(o.region, edition.locale), path),
+  lang: getEdition(o.region, edition.locale).lang,
+}));
 const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
 ---
 
@@ -48,9 +54,19 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
         <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="hit lang-hit block text-f9 font-medium not-italic text-navy">{c.lang.ar}</a></li>
       </ul>
 
-      <a href={c.region.href} class="hit global a block whitespace-nowrap text-f9 font-medium not-italic text-navy" style="--l:932;--t:33;--w:38;--ph:15">{c.region.label}</a>
-      <!-- TODO(figma): 112:13401 keyboard_arrow_down (18x18 @966,28) glyph missing (figma-cache/chevron-down.svg not exported). Empty slot on purpose. -->
-      <span class="chev a deco" style="--l:966;--t:28;--w:18;--ph:18" aria-hidden="true"></span>
+      <div class="region a" data-region style="--l:932;--t:33;--w:52;--ph:15">
+        <button type="button" class="hit region-btn font-medium not-italic text-f9 text-navy" aria-haspopup="true" aria-expanded="false" aria-controls="region-menu" aria-label={`${c.region.label}, ${c.region.menuLabel}`} data-region-btn>
+          <span class="region-label">{c.region.label}</span>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+        </button>
+        <div class="rmenu" id="region-menu" data-region-menu>
+          <ul class="rlist">
+            {regionOptions.map((o) => (
+              <li><a href={o.href} hreflang={o.lang} class="hit ritem block whitespace-nowrap text-f9 font-medium not-italic text-navy">{o.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
       <p class="visit a text-f9 not-italic text-navy" style="--l:932;--t:71;--w:111;--ph:32"><span class="font-normal">{c.visit.intro}</span><br /><span class="font-medium">{c.visit.lines[0]}<br />{c.visit.lines[1]}</span></p>
 
@@ -85,6 +101,16 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .mainnav li { width: calc(var(--w) * var(--u)); height: calc(15 * var(--u)); }
   .burger { display: none; }
   .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
+  .region { z-index: 60; }
+  .region-btn { display: flex; align-items: center; width: 100%; height: 100%; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; white-space: nowrap; }
+  .region-btn:focus-visible, .ritem:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
+  .chev { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-inline-start: calc(-4 * var(--u)); transition: transform .2s; }
+  .region[data-open] .chev { transform: rotate(180deg); }
+  .rmenu { visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(64 * var(--u)); }
+  .region[data-open] .rmenu { visibility: visible; opacity: 1; }
+  .rlist { background: #fff; border-radius: calc(5 * var(--u)); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(6 * var(--u)) calc(10 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
+  .ritem { --hit-h: calc(100% + 10 * var(--u)); }
+  .ritem:hover { color: #00b8ff; }
   .deco { pointer-events: none; } /* decorative lines must not swallow clicks meant for the links next to them */
 
   @media (min-width: 1200px) {
@@ -109,7 +135,13 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
 
     .menu { display: none; position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
     #nav-toggle:checked ~ .stage .menu { display: flex; }
-    .deco, .chip, .pill, .chev, .booklabel { display: none; }
+    .deco, .chip, .pill, .booklabel { display: none; }
+    .region { width: auto; height: auto; }
+    .region-btn { width: auto; min-height: 44px; gap: calc(4 * var(--u)); }
+    .rmenu { position: static; display: none; padding-top: 0; visibility: visible; opacity: 1; }
+    .region[data-open] .rmenu { display: block; }
+    .rlist { box-shadow: none; background: transparent; padding: 0 0 0 calc(10 * var(--u)); gap: 0; }
+    .ritem { display: flex; align-items: center; min-height: 44px; }
     .toplinks, .mainnav { display: flex; flex-direction: column; gap: calc(12 * var(--u)); }
     .mainnav li { width: auto; height: auto; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
@@ -121,3 +153,7 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .visit { margin: 0; }
   }
 </style>
+
+<script>
+  import '../scripts/region-menu';
+</script>

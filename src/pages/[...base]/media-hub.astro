@@ -1,0 +1,37 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MediaHero from '../../components/media-hub/MediaHero.astro';
+import ExploreMedia from '../../components/media-hub/ExploreMedia.astro';
+import LatestPosts from '../../components/media-hub/LatestPosts.astro';
+import Newsletter from '../../components/media-hub/Newsletter.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const page = content('media-hub/page', edition.locale).meta;
+
+/*
+ * Media Hub list template (Figma 100:5522, drafts copy). Posts come from src/data/news/posts.json.
+ * Vertical gaps between blocks are inside each component (Figma distances). Footer starts at Figma y 2273 = 53 below the
+ * newsletter card (included in the Newsletter section's bottom padding), so no extra gap here.
+ */
+---
+
+<BaseLayout edition={edition} path="media-hub" title={page.title} description={page.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <MediaHero />
+    <ExploreMedia />
+    <LatestPosts />
+    <Newsletter />
+  </main>
+  <div class="relative">
+    <Footer />
+  </div>
+</BaseLayout>

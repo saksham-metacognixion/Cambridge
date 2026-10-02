@@ -49,13 +49,22 @@
   --text-f9: calc(9 * var(--u));
   --text-f10: calc(10 * var(--u));
   --text-f12: calc(12 * var(--u));
+  --text-f11p689: calc(11.689 * var(--u));
+  --text-f12p61: calc(12.61 * var(--u));
   --text-f13: calc(13 * var(--u));
+  --text-f13p15: calc(13.15 * var(--u));
   --text-f14: calc(14 * var(--u));
+  --text-f14p173: calc(14.173 * var(--u));
+  --text-f15: calc(15 * var(--u));
   --text-f16: calc(16 * var(--u));
+  --text-f18p264: calc(18.264 * var(--u));
   --text-f19: calc(19 * var(--u));
+  --text-f20p26: calc(20.26 * var(--u));
   --text-f23: calc(23 * var(--u));
   --text-f28: calc(28 * var(--u));
+  --text-f29p076: calc(29.076 * var(--u));
   --text-f30: calc(30 * var(--u));
+  --text-f36: calc(36 * var(--u));
   --text-f39: calc(39 * var(--u));
 
   /* Radii used in Figma, scaled: rounded-r15 = 15 Figma px */
@@ -65,17 +74,25 @@
   --radius-r6: calc(6 * var(--u));
   --radius-r7: calc(7 * var(--u));
   --radius-r8: calc(8 * var(--u));
+  --radius-r10: calc(10 * var(--u));
   --radius-r12: calc(12 * var(--u));
   --radius-r15: calc(15 * var(--u));
   --radius-r16: calc(16 * var(--u));
   --radius-r18: calc(18 * var(--u));
+  --radius-r20: calc(20 * var(--u));
   --radius-r21: calc(21.9 * var(--u));
+  --radius-r5p044: calc(5.044 * var(--u));
+  --radius-r7p306: calc(7.306 * var(--u));
+  --radius-r19p725: calc(19.725 * var(--u));
   --radius-r30: calc(30 * var(--u));
   --radius-r12p6: calc(12.658 * var(--u));
 
   /* Shadows from Figma */
   --shadow-bar: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.06);
   --shadow-tile: 0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25);
+  --shadow-post: calc(7.306 * var(--u)) calc(7.306 * var(--u)) calc(21.917 * var(--u)) 0 rgba(0, 0, 0, 0.2);
+  --shadow-nl-card: calc(7.31 * var(--u)) calc(7.31 * var(--u)) calc(21.92 * var(--u)) calc(-6 * var(--u)) rgba(0, 0, 0, 0.25);
+  --shadow-nl-form: 0 calc(2.922 * var(--u)) calc(87.667 * var(--u)) 0 rgba(142, 131, 113, 0.15);
   --shadow-news: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13);
 }
 

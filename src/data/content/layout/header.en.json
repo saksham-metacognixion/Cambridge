@@ -4,20 +4,20 @@
   "menuLabel": "Main",
   "topLinks": [
     { "label": "Your Opinion Matters", "href": "#your-opinion" },
-    { "label": "Media Hub", "href": "#" },
+    { "label": "Media Hub", "href": "#", "path": "media-hub" },
     { "label": "Careers", "href": "#" },
     { "label": "Knowledge Center", "href": "#" },
     { "label": "FAQs", "href": "#" }
   ],
   "lang": { "en": "EN", "ar": "AR" },
-  "region": { "label": "Global", "href": "#" },
+  "region": { "label": "Global", "menuLabel": "Choose region", "options": [ { "region": "ae", "label": "UAE" }, { "region": "sa", "label": "KSA" } ] },
   "visit": { "intro": "Visit", "lines": ["Cambridge", "Health Group"] },
   "mainLinks": [
     { "label": "About Cambridge", "href": "#" },
     { "label": "Our Care", "href": "#" },
     { "label": "Patient Hub", "href": "#" },
     { "label": "Our Hospitals", "href": "#" },
-    { "label": "Contact Us", "href": "#" }
+    { "label": "Contact Us", "href": "#", "path": "contact" }
   ],
   "book": { "label": "BOOK AN APPOINTMENT", "ariaLabel": "Book an appointment", "href": "#book-appointment" }
 }

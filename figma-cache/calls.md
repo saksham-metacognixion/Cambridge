@@ -80,3 +80,17 @@ CORRECTION (forms session, 2 Oct): two sessions logged in parallel again. The "4
 (5 get_design_context + 2 use_figma), distinct from the Patient Hub session's "40."–"43." (2 get_metadata, 1 download_assets, 1 get_screenshot).
 Forms session total today: 13 (5 get_screenshot, 1 download_assets, 5 get_design_context, 2 use_figma) + whoami (free).
 Patient Hub session today: 4 (+ #34 earlier). Dev-seat calls today, both sessions: 17 + #34 = 18. Next free number: 50.
+
+## 2 Oct 2026 — batch-2 inventory session (10 frames)
+50. get_screenshot 40:318 Conditions & Specialities -> figma-cache/pages/conditions-40-318.png (1052x2547)
+51. get_screenshot 67:3070 "Accidents Rehabilitation" (2nd copy) -> pages/accidents-rehab-67-3070.png. NOTE: content is STROKE REHABILITATION, not Accidents.
+52. get_screenshot 59:14344 Refer a Patient -> pages/refer-patient-59-14344.png (1052x2705)
+53. get_screenshot 46:6844 Insurance Providers -> pages/insurance-46-6844.png (1052x1810)
+54. get_screenshot 54:9239 International Patients -> pages/international-54-9239.png (1052x1856)
+55. get_screenshot 62:2403 Patient Testimonials -> pages/testimonials-62-2403.png (1052x2328)
+56. get_screenshot 100:5509 FAQ -> pages/faq-100-5509.png (1052x1307)
+57. get_screenshot 41:2373 Accidents Rehabilitation (1st copy, the real one) -> pages/accidents-rehab-41-2373.png
+58. get_screenshot 83:226 Inpatient Care -> pages/inpatient-care-83-226.png (template check only)
+59. get_screenshot 41:1730 Post Acute Care -> pages/post-acute-41-1730.png (template check only)
+SUMMARY after 59: this session 10 get_screenshot. Dev-seat calls today (all sessions): 18 + 10 = 28. Next free number: 60.
+Built pages compared against the cached same-day screenshots of this file (#27 32:826, #31 62:179, #43 76:735): no re-fetch.

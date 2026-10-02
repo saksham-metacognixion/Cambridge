@@ -4,6 +4,7 @@
  * sitemaps and hreflang stay complete.
  */
 import { DOCTOR_PATHS, profileDoctors } from './doctors';
+import { PAGE_PATHS } from './paths';
 
 export interface PageRoute {
   key: string;
@@ -16,6 +17,7 @@ export function allRoutes(): PageRoute[] {
     { key: 'home', path: '' },
     { key: 'contact', path: 'contact' },
     { key: 'media-hub', path: 'media-hub' },
+    { key: 'patient-hub', path: PAGE_PATHS.patientHub },
     { key: 'find-a-doctor', path: DOCTOR_PATHS.list },
     ...profileDoctors.map((d) => ({ key: `doctor-${d.slug}`, path: DOCTOR_PATHS.profile(d.slug) })),
   ];

@@ -13,6 +13,10 @@ import cornerFill from '../../assets/contact-page/cta-corner-fill.svg';
 const { edition } = parsePath(Astro.url.pathname);
 // Default content = Contact page; other pages (Find a Doctor) pass their own `content` (same layout, other tile labels).
 const c = Astro.props.content ?? content('contact/page', edition.locale).recovery;
+// Heading top inside the box: 43 on Contact (86:845); 50 on Patient Hub (59:13956) and the Article layout. Other offsets are equal.
+const headTop = Astro.props.headTop ?? 43;
+// Heading line height: Figma says 'normal', and its 4 lines fill the 109 box (= 27.25 per line). Set explicitly so a
+// fallback font with taller 'normal' lines cannot push the heading into the paragraph below it.
 const icons = [
   { src: calendar, size: 24, x: 82, y: 10 },
   { src: stethoscope, size: 26, x: 84, y: 9 },
@@ -31,8 +35,8 @@ const tiles = [
 <section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>
   <div class="stage max-lg:px-[calc(16*var(--u))]">
     <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-r15 max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
-      <h2 class="m-0 font-gotham text-f28 text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-52 lg:top-43 lg:w-331 lg:h-109">
-        <span class="font-normal leading-[normal]">{c.lead}</span><span class="font-medium leading-[normal]">{c.emphasis[0]}<br />{c.emphasis[1]}</span>
+      <h2 class="m-0 font-gotham text-f28 leading-[calc(27.25*var(--u))] text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-52 lg:top-(--ht) lg:w-331 lg:h-109" style={`--ht:calc(${headTop} * var(--u))`}>
+        <span class="font-normal">{c.lead}</span><span class="font-medium">{c.emphasis[0]}<br />{c.emphasis[1]}</span>
       </h2>
       <p class="m-0 font-gotham font-normal text-f12 leading-14 text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-53 lg:top-172 lg:w-324 lg:h-44">{c.text}</p>
 

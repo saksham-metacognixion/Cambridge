@@ -6,8 +6,10 @@ import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
 
 // Figma 62:180 (Find a Doctor), page y 119, h 437. Spec y values below are page y minus 119.
+// Same hero on Patient Hub (59:13723): other image and text, passed as `content`, and other text positions as `pos`.
 const { edition } = parsePath(Astro.url.pathname);
-const c = content('doctors/page', edition.locale).hero;
+const c = Astro.props.content ?? content('doctors/page', edition.locale).hero;
+const pos = { titleTop: 141, titleW: 374, textTop: 219, textW: 374, buttonTop: 265, ...Astro.props.pos };
 const banner = img(c.banner.image, edition.region);
 ---
 
@@ -32,12 +34,12 @@ const banner = img(c.banner.image, edition.region);
       />
     </div>
 
-    <h1 class="relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-141 lg:w-374">
-      <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
+    <h1 class="relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-(--t) lg:w-(--w)" style={`--t:calc(${pos.titleTop} * var(--u));--w:calc(${pos.titleW} * var(--u))`}>
+      {c.title.map((line: string) => <span class="block">{line}</span>)}
     </h1>
-    <p class="relative m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic whitespace-normal [word-break:break-word] max-lg:max-w-[calc(374*var(--u))] lg:absolute lg:start-97 lg:top-219 lg:w-374">{c.text}</p>
+    <p class="relative m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic whitespace-normal [word-break:break-word] max-lg:max-w-(--w) lg:absolute lg:start-97 lg:top-(--t) lg:w-(--w)" style={`--t:calc(${pos.textTop} * var(--u));--w:calc(${pos.textW} * var(--u))`}>{c.text}</p>
 
-    <a href={c.button.href} class="hit hair-card relative block rounded-r7 no-underline lg:absolute lg:start-98 lg:top-265 lg:w-164 lg:h-30 max-lg:h-30 max-lg:w-164" style="--sw:1;--sc:var(--color-cyan)">
+    <a href={c.button.href} class="hit hair-card relative block rounded-r7 no-underline lg:absolute lg:start-98 lg:top-(--t) lg:w-164 lg:h-30 max-lg:h-30 max-lg:w-164" style={`--sw:1;--sc:var(--color-cyan);--t:calc(${pos.buttonTop} * var(--u))`}>
       <span class="absolute top-9 start-8 block w-145 h-15 font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
     </a>
   </div>

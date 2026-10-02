@@ -1,0 +1,51 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS, pagePath } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import DoctorsHero from '../../components/doctors/DoctorsHero.astro';
+import HubCards from '../../components/patient-hub/HubCards.astro';
+import HubDoctors from '../../components/patient-hub/HubDoctors.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('patient-hub/page', edition.locale);
+const recovery = { ...c.recovery, tiles: c.recovery.tiles.map((t: any) => (t.page ? { ...t, path: pagePath(t.page) } : t)) };
+
+/*
+ * Patient Hub template (Figma 76:735, file LJIRtzU...). Gaps (Figma px) between blocks:
+ * Hero 119-556 -> services H2 top 578: 22 | last card row ends 1605.32 -> recovery box 1673: 67.68 |
+ * box ends 1941 -> doctors H2 1994: 53 | cards end 2337.46 -> footer 2371: 33.54.
+ * Hero: same component as Find a Doctor; text positions from 59:13727/13728/13725 (page y minus 119).
+ */
+const sections = [
+  { id: 'services', C: HubCards, props: {}, mt: 22 },
+  { id: 'recovery', C: ContactRecovery, props: { content: recovery, headTop: 50 }, mt: 67.68 },
+  { id: 'doctors', C: HubDoctors, props: {}, mt: 53 },
+];
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.patientHub} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <DoctorsHero content={c.hero} pos={{ titleTop: 171, titleW: 422, textTop: 218, textW: 389, buttonTop: 268 }} />
+    </div>
+    {
+      sections.map(({ id, C, props, mt }) => (
+        <div id={id} class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+          <C {...props} />
+        </div>
+      ))
+    }
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(33.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

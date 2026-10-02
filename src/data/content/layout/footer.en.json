@@ -5,7 +5,7 @@
     "rows": [
       [{ "label": "Cambridge", "href": "#" }],
       [{ "label": "Our Care", "href": "#" }],
-      [{ "label": "Patient Hub", "href": "#" }],
+      [{ "label": "Patient Hub", "href": "#", "path": "patient-hub" }],
       [{ "label": "Our Hospitals", "href": "#" }],
       [{ "label": "Contact Us", "href": "#", "path": "contact" }],
       [{ "label": "Book an Appointment", "href": "#book-appointment" }],

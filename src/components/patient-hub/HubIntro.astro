@@ -1,0 +1,25 @@
+---
+/*
+ * Section heading + intro line of the Patient Hub (Figma 59:13951/59:13912 and 59:13952/59:13913).
+ * H2 Gotham Medium 28 #00415a @x56, box h33 (= line height); text Gotham Book 12/14 #6b6b6b @x58, w937.
+ * `gap` = Figma px between the H2 box bottom and the text top; `minH` = the text box height in Figma, kept as a
+ * minimum so the block below starts where Figma has it, while longer (Arabic) text can still grow.
+ */
+interface Props { id: string; heading: string; text: string; gap: number; minH: number; }
+const { id, heading, text, gap, minH } = Astro.props;
+---
+
+<h2 id={id} class="h m-0 font-gotham font-medium not-italic text-f28 text-navy-alt">{heading}</h2>
+<p class="t m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body" style={`--gap:${gap};--mh:${minH}`}>{text}</p>
+
+<style>
+  .h { line-height: calc(33 * var(--u)); overflow-wrap: anywhere; }
+  .t { margin-top: calc(var(--gap) * var(--u)); min-height: calc(var(--mh) * var(--u)); overflow-wrap: anywhere; }
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .t { min-height: 0; margin-top: calc(12 * var(--u)); }
+  }
+</style>

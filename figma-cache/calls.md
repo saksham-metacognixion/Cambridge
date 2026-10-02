@@ -45,3 +45,34 @@ SUMMARY after call 23: successful = 21 (17 context/vars + 4 use_figma); 2 failed
 24. get_design_context 100:5522 Media Hub (NEW file key LJIRtzU574JrA1BgK881Qm; previous key vCNWi... gave access error calls 22-23 above, failed) WITH screenshot -> media-hub-spec.md, assets/media-hub/* (17 files)
 25. get_design_context 170:839 Health Article Layout WITH screenshot -> article-layout-spec.md, assets/article/* (19 files)
 SUMMARY after call 25: successful get_design_context/vars = 19, use_figma = 4, failed = 2 (access). Account limit unknown (~20/month) -- do not make further calls without OK.
+NOTE (2 Oct): numbers 22-25 above were used twice by two parallel sessions; the last summary ("successful = 19") missed calls 26-33. Corrected running total BEFORE call 34: 26 get_design_context/get_variable_defs + 1 get_screenshot + 4 use_figma = 31 successful.
+34. get_design_context 76:735 Patient Hub (file LJIRtzU574JrA1BgK881Qm, WITH screenshot) -> FULL code + screenshot -> patient-hub-spec.md, patient-hub.png, assets/patient-hub/* (30 files; header logo groups not downloaded = cached)
+SUMMARY after 34: successful get_design_context/vars = 27, get_screenshot = 1, use_figma = 4 => 32 successful calls.
+
+## 2 Oct 2026 — paid Dev seat (Pro team plan): 200 calls/day, 10/min. Monthly budget no longer applies.
+- whoami (free) -> handle "dev mcx", seat Dev, tier pro.
+35. get_screenshot 76:196 Welcome Page -> figma-cache/forms/welcome-76-196.png (1060x650) [access check OK]
+36. get_screenshot 106:246 Book an Appointment -> forms/book-appointment-106-246.png
+37. get_screenshot 101:6336 Send an Inquiry -> forms/send-inquiry-101-6336.png
+38. get_screenshot 112:7878 Your Opinion Matters pop-up -> forms/your-opinion-112-7878.png (1060x658)
+39. get_screenshot 188:964 Patient Feedback Form -> forms/patient-feedback-188-964.png (973x2048 of 1052x2215)
+SUMMARY after 39: 39 successful calls total (today on the new seat: 5).
+40. download_assets 21:1426 hero Banner3 @3x png -> figma-cache/assets/hero/hires/ (export 3156x1500, raw1 1052x500 = same as cached banner3.png, raw2 263x125).
+    RESULT: the 3x export is a pure nearest-neighbour upscale (every 3x3 block identical; diff vs NEAREST resize 0.05/255).
+    The image uploaded in Figma is only 1052x500, so Figma cannot give a sharper hero. Not swapped in. Other landing rasters are
+    already the raw uploaded fills at native size, so re-exporting them can't add detail either. Need original photos from the designer.
+SUMMARY after 40: 40 successful calls (today on the new seat: 6).
+- whoami (free, this session) -> "dev mcx", seat Dev, tier pro. Confirmed.
+40. get_metadata (no node) -> pages list: single page 1:2 "Page 2"
+41. get_metadata 1:2 -> 760 KB XML; top-level frames extracted to figma-cache/frames.md
+42. download_assets 59:13724 (hero banner, scale 3) -> assets/patient-hub/hires/: export-3x.png 3156x1311 (UPSCALED), raw-1.png 1052x500 (= original source, same md5 as hero-banner.png), raw-2.png 263x125 (thumbnail). No higher-res original in Figma.
+43. get_screenshot 76:735 maxDimension 2739 -> figma-cache/patient-hub.png (1052x2739, replaces the 394px preview)
+SUMMARY after 43: successful calls = 41 (31 before #34, then #34-#43 = 10). Entry numbers are not success counts: 'SUMMARY after 39: 39' above should read 37. Today on the Dev seat: 9 calls (35-43) + whoami x2 (free).
+41. get_design_context 106:246 Book an Appointment Pop Up Option 1 (with screenshot) -> FULL -> forms-spec.md, assets/forms/* (note: an "Option 2" frame 106:510 also exists; not fetched)
+42. get_design_context 101:6336 Send an Inquiry Pop up -> FULL -> forms-spec.md, assets/forms/inquiry-*
+43. get_design_context 112:7878 Your Opinion Matters Pop up -> FULL -> forms-spec.md, assets/forms/opinion-face-*.svg (8)
+44. get_design_context 76:196 Welcome Page -> FULL -> forms-spec.md, assets/forms/welcome/*
+45. get_design_context 188:964 PATIENT FEEDBACK FORM -> FULL -> forms-spec.md, assets/forms/feedback-*
+46. use_figma READ-ONLY: effects/fills of overlays + panels; page sibling list (Page 2 = 1:2)
+47. use_figma READ-ONLY: full GLASS effect params; Welcome map mask radius 14.08
+SUMMARY after 47: 47 successful calls total (today on the new seat: 13).

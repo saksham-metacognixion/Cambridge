@@ -1,0 +1,53 @@
+---
+import { content } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { profileDoctors } from '../../lib/doctors';
+import DoctorCard from '../doctors/DoctorCard.astro';
+import HubIntro from './HubIntro.astro';
+
+/*
+ * "Expert Care, Trusted Doctors" (Figma 59:13952 + 4 cards 59:14048/13990/14077/14019), section top = H2 top (page y 1994).
+ * Same card as Find a Doctor (DoctorCard); columns at the exact Figma x 48 / 294 / 541 / 788 (gaps 31 / 32 / 32), 215 wide, "See More" only.
+ * Wael's role text is 8px/10 + capitalize in Figma; made identical to the other cards on purpose (user decision 2 Oct).
+ * Gaps: H2 box (h33) -> text 3; text box (h26) -> cards 13. Which doctors: slugs in patient-hub/page JSON.
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const d = content('patient-hub/page', edition.locale).doctors;
+const labels = content('doctors/page', edition.locale).card;
+const doctors = d.slugs.map((slug: string) => {
+  const doc = profileDoctors.find((x) => x.slug === slug);
+  if (!doc) throw new Error(`patient-hub doctors: unknown doctor slug "${slug}" (src/data/doctors.json)`);
+  return doc;
+});
+---
+
+<section class="docs" aria-labelledby="hub-doctors-heading">
+  <HubIntro id="hub-doctors-heading" heading={d.heading} text={d.text} gap={3} minH={26} />
+  <ul class="grid" role="list" aria-label={d.listLabel}>
+    {doctors.map((doc: any) => (
+      <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .docs { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .grid {
+    list-style: none; margin: calc(13 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center;
+    grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u));
+  }
+  .grid > li { display: flex; }
+  @media (min-width: 1024px) {
+    .grid {
+      width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); justify-content: start; column-gap: 0;
+      grid-template-columns: calc(215 * var(--u)) calc(31 * var(--u)) calc(215 * var(--u)) calc(32 * var(--u)) calc(215 * var(--u)) calc(32 * var(--u)) calc(215 * var(--u));
+    }
+    .grid > li:nth-child(4n + 1) { grid-column: 1; }
+    .grid > li:nth-child(4n + 2) { grid-column: 3; }
+    .grid > li:nth-child(4n + 3) { grid-column: 5; }
+    .grid > li:nth-child(4n) { grid-column: 7; }
+  }
+  @media (max-width: 1023.98px) {
+    .docs { padding-inline: 16px; }
+  }
+</style>

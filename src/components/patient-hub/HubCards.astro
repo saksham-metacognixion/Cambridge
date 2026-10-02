@@ -1,0 +1,102 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { content } from '../../lib/content';
+import { img } from '../../lib/images';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import HubIntro from './HubIntro.astro';
+
+/*
+ * "Everything You Need, In One Place" (Figma 59:13951 + cards 76:728-76:733), section top = H2 top (page y 578).
+ * FLOW layout. All six cards use the geometry of the first card 76:728 (user decision 2 Oct: Figma's 4-6px column and
+ * text-inset differences between cards are designer inaccuracies, normalised on purpose):
+ *   columns x 53 / 378 / 698.79 (gaps 28.79 / 24.58), card 296.21 wide, image 296.21 x 325.564 on top, overhanging the
+ *   white box (border .334 #418ea2, radius 20.014) by 4.01; text inset 22.68; rows 482.67 apart (image tops 674.33 / 1157).
+ *   Under the image: 16.016 -> title (Medium 20.014, box h20.014) -> 9.336 -> 2 lines (Book 12.008 / 13.343) -> 10.674 ->
+ *   button (#004059, 98.737 x 22.683, radius 4.003, label Medium 10.674/13.343 at 9.33 / 5.34) -> 17.351 -> box bottom.
+ * Text gaps: H2 box (h33) -> intro text 12; text box (h28) -> first image top 23.33.
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const s = content('patient-hub/page', edition.locale).services;
+const cards = s.cards.map((c: any) => ({ ...c, src: img(c.image, edition.region), href: urlFor(edition, pagePath(c.page)) }));
+---
+
+<section class="hub" aria-labelledby="hub-services-heading">
+  <HubIntro id="hub-services-heading" heading={s.heading} text={s.text} gap={12} minH={28} />
+  <ul class="grid" role="list">
+    {cards.map((c: any) => (
+      <li class="cell">
+        <article class="card">
+          <Picture
+            src={c.src}
+            formats={['avif']}
+            fallbackFormat="webp"
+            width={px(296.21)}
+            height={px(325.564)}
+            widths={[px(296.21), px(296.21) * 2]}
+            sizes={`(min-width: 1440px) ${px(296.21)}px, (min-width: 1024px) 28.16vw, ${px(296.21)}px`}
+            loading="lazy"
+            decoding="async"
+            alt={c.alt}
+            class="img"
+            pictureAttributes={{ class: 'contents' }}
+          />
+          <h3 class="title m-0 font-gotham font-medium not-italic text-navy">{c.title}</h3>
+          <p class="lines m-0 font-gotham font-normal not-italic text-body">{c.lines.map((l: string) => <span class="block">{l}</span>)}</p>
+          <a href={c.href} class="btn hit font-gotham font-medium not-italic no-underline">{c.button}</a>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .hub { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .grid { list-style: none; margin: calc(23.33 * var(--u)) 0 0; padding: 0; display: grid; }
+  .cell { display: flex; }
+  .card {
+    position: relative; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box;
+    width: 100%; padding-bottom: calc(17.351 * var(--u));
+  }
+  /* White box with the hairline border, starting 4.01 below the image top (the image overhangs it, as in Figma). */
+  .card::before {
+    content: ''; position: absolute; inset: calc(4.01 * var(--u)) 0 0; background: #fff; border-radius: calc(20.014 * var(--u));
+    box-shadow: inset 0 0 0 calc(0.334 * var(--u)) var(--color-teal-border);
+  }
+  /* Everything in the card paints above the box. The <img> sits inside <picture class="contents">, so it is styled via :global. */
+  .card > :global(*), .card :global(.img) { position: relative; }
+  .card :global(.img) {
+    display: block; width: 100%; height: auto; aspect-ratio: 296.21 / 325.564; object-fit: cover; max-width: none;
+    border-start-start-radius: calc(20.014 * var(--u)); border-start-end-radius: calc(20.014 * var(--u));
+  }
+  .title, .lines, .btn { margin-inline-start: calc(22.68 * var(--u)); }
+  .title, .lines { width: calc(100% - 22.68 * var(--u)); overflow-wrap: anywhere; }
+  .title { margin-top: calc(16.016 * var(--u)); font-size: calc(20.014 * var(--u)); line-height: calc(20.014 * var(--u)); }
+  .lines { margin-top: calc(9.336 * var(--u)); font-size: calc(12.008 * var(--u)); line-height: calc(13.343 * var(--u)); }
+  .btn {
+    display: block; box-sizing: border-box; margin-top: calc(10.674 * var(--u)); min-width: calc(98.737 * var(--u)); height: calc(22.683 * var(--u));
+    padding: calc(5.34 * var(--u)) calc(1.345 * var(--u)) 0 calc(9.33 * var(--u)); border-radius: calc(4.003 * var(--u));
+    background: var(--color-navy); color: #fff; font-size: calc(10.674 * var(--u)); line-height: calc(13.343 * var(--u)); white-space: nowrap;
+  }
+  :global([dir='rtl']) .btn { padding-inline: calc(9.33 * var(--u)) calc(1.345 * var(--u)); }
+  .btn::before { --hit-h: 44px; }
+
+  @media (min-width: 1024px) {
+    .grid {
+      margin-inline-start: calc(53 * var(--u)); row-gap: calc(34.346 * var(--u));
+      grid-template-columns: calc(296.21 * var(--u)) calc(28.79 * var(--u)) calc(296.21 * var(--u)) calc(24.58 * var(--u)) calc(296.21 * var(--u));
+    }
+    .cell:nth-child(3n + 1) { grid-column: 1; }
+    .cell:nth-child(3n + 2) { grid-column: 3; }
+    .cell:nth-child(3n) { grid-column: 5; }
+  }
+  @media (max-width: 1023.98px) {
+    .hub { padding-inline: 16px; }
+    .grid {
+      justify-content: center; gap: calc(24.58 * var(--u));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr));
+    }
+    .card { max-width: calc(296.21 * var(--u)); margin-inline: auto; }
+  }
+</style>

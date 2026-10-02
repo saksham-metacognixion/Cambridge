@@ -1,0 +1,43 @@
+{
+  "_note": "Patient Hub (Figma 76:735). All visible text is exactly as in Figma. meta.* and ariaLabel values are NOT in Figma (PLACEHOLDER, waiting for Pramod's wording). Link `page` keys resolve through PAGE_PATHS in src/lib/paths.ts (unconfirmed slugs).",
+  "meta": {
+    "title": "Patient Hub | Cambridge Hospital",
+    "description": "Everything you need for your care journey at Cambridge Hospital: find a doctor, refer a patient, insurance, international patients and patient stories."
+  },
+  "hero": {
+    "ariaLabel": "Patient Hub",
+    "banner": { "image": "patient-hub/banner", "alt": "" },
+    "title": ["Your Care, Simplified."],
+    "text": "Access everything you need for your care journey — from finding specialists to referrals, insurance support, and patient resources, all in one place.",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "services": {
+    "heading": "Everything You Need, In One Place",
+    "text": "Explore essential services and resources designed to support patients, families, and referring partners throughout every stage of care.",
+    "cards": [
+      { "image": "patient-hub/card-conditions", "alt": "", "title": "Conditions & Specialities", "lines": ["Explore conditions we treat", "Expert care across specialties"], "button": "Explore Care", "page": "conditions" },
+      { "image": "patient-hub/card-find-doctor", "alt": "", "title": "Find a Doctor", "lines": ["Find the right specialist", "Care tailored to your needs"], "button": "Find a Doctor", "page": "findDoctor" },
+      { "image": "patient-hub/card-refer", "alt": "", "title": "Refer a Patient", "lines": ["Simple referral process", "Connect patients to care"], "button": "Refer Now", "page": "referPatient" },
+      { "image": "patient-hub/card-international", "alt": "", "title": "International Patients", "lines": ["Care beyond borders", "Support for global patients"], "button": "Learn More", "page": "internationalPatients" },
+      { "image": "patient-hub/card-insurance", "alt": "", "title": "Insurance & Networks", "lines": ["Check your coverage", "Trusted insurance partners"], "button": "View Insurance", "page": "insuranceProviders" },
+      { "image": "patient-hub/card-testimonials", "alt": "", "title": "Patient Testimonials", "lines": ["Real patient experiences", "Stories of recovery & care"], "button": "View Stories", "page": "patientTestimonials" }
+    ]
+  },
+  "recovery": {
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "Your recovery matters to us,",
+    "emphasis": [" and we are with you every step of", "the journey."],
+    "tiles": [
+      { "label": "Book an Appointment", "href": "#book-appointment" },
+      { "label": "Find a Doctor", "href": "#", "page": "findDoctor" },
+      { "label": "Refer a Patient", "href": "#", "page": "referPatient" },
+      { "label": "Send an Inquiry", "href": "#send-inquiry" }
+    ]
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+  }
+}

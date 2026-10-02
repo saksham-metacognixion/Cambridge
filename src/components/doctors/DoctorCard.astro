@@ -13,8 +13,9 @@ import fill from '../../assets/doctors-page/card-fill.svg';
  * under it grows with the name and role, the card grows with it. Absolute only for the decorative bars and the photo.
  * All numbers below are Figma px (scaled by --u). Text sizes are the card's own (13.946 / 9.297), not the Home card's.
  */
-interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; }
-const { doctor: d, edition, labels } = Astro.props;
+/* `heading`: the name's level in the page outline (h2 on Find a Doctor, h3 under a section h2 elsewhere). `book`: false hides Book Now. */
+interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; heading?: 'h2' | 'h3'; book?: boolean; }
+const { doctor: d, edition, labels, heading: Name = 'h2', book = true } = Astro.props;
 const name = t(d.name, edition.locale, 'doctors');
 const role = t(d.title, edition.locale, 'doctors');
 const alt = (d.photo_alt && t(d.photo_alt, edition.locale, 'doctors')) || name;
@@ -49,11 +50,11 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
       />
     )}
   </div>
-  <h2 class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</h2>
+  <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</Name>
   <p class="role m-0 font-gotham font-normal text-body not-italic">{role}</p>
   <div class="actions">
     <a href={href} class="btn btn-see hit font-gotham font-medium no-underline" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
-    {d.show_book_now && (
+    {book && d.show_book_now && (
       <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book hit font-gotham font-normal no-underline" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
     )}
   </div>

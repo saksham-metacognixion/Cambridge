@@ -56,44 +56,17 @@ const tabs = [
   .card[hidden] { display: none; }
 
   /* Field layout inside the card (shared pf-* field styles in forms.css; Refer's own sizes as custom properties) */
-  .card :global(.rf) { --pf-dial-w: 76; --pf-flag-x: 6; --pf-flag-w: 16.5; --pf-dial-pad: 26; --pf-dial-chev-x: 5.76; --pf-dial-chev-w: 7.24; --pf-tel-gap: 10; --pf-px: 9; --pf-radio-box: 13; --pf-radio-w: 16.467; --pf-radio-h: 16.467; --pf-radio-off: 11; }
   .card :global(.rf-section) { margin-block-end: calc(15 * var(--u)); }                     /* label top -> first row: 33 */
   .card :global(.rf-area-label) { margin-block-end: calc(9 * var(--u)); }                   /* label top -> textarea: 27 */
-  .card :global(.rf-grid) { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: calc(19 * var(--u)); }
-  .card :global(.rf-grid + .rf-grid) { margin-block-start: calc(19 * var(--u)); }
   .card :global(.rf-block + .rf-block) { margin-block-start: calc(37 * var(--u)); }   /* after .rf-grid + .rf-grid: a block gap wins */
-  .card :global(.rf-grow) { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
-  .card :global(.rf-bold) { font-weight: 700; padding-block-start: calc(11 * var(--u)); line-height: calc(18 * var(--u)); }
-  .card :global(.rf-ph) { color: var(--color-body); }
-  .card :global(.rf-ph:has(option:checked:not([value='']))) { color: var(--color-navy); }
-  .card :global(.rf-sel-ref select) { padding-inline: calc(21 * var(--u)) calc(26 * var(--u)); }
-  .card :global(.rf-sel-ref .pf-chev) { inset-inline-end: calc(13 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7 * var(--u)); }
   .card :global(.rf-sel-req) { inline-size: 100%; }
   .card :global(.rf-sel-req select) { padding-inline: calc(15.51 * var(--u)) calc(26 * var(--u)); }
   .card :global(.rf-sel-req .pf-chev) { inset-inline-end: calc(11.76 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7.24 * var(--u)); }
-  .card :global(.rf-ph-in) { padding-inline-start: calc(14 * var(--u)); }
-  .card :global(.rf-date) { position: relative; }
-  .card :global(.rf-date-box) { inline-size: 100%; cursor: pointer; }
-  .card :global(.rf-date-box::-webkit-calendar-picker-indicator) { display: none; }
-  .card :global(.rf-date-box[data-empty]:not(:focus)) { color: transparent; }
-  .card :global(.rf-cal) { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(12.78 * var(--u)); inset-block-start: calc(5 * var(--u)); inline-size: calc(19.8 * var(--u)); block-size: calc(22 * var(--u)); }
-  .card :global(.rf-radio) { margin: 0; padding: 0; border: 0; min-inline-size: 0; display: flex; align-items: flex-start; flex-wrap: wrap; }
-  .card :global(.rf-legend) { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--u)); }
-  .card :global(.rf-opts) { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)) calc(29.5 * var(--u)); padding-block-start: calc(8 * var(--u)); }
-  .card :global(.rf-opt) { display: flex; align-items: center; gap: calc(8 * var(--u)); min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
-  .card :global(.rf-radio .f-err) { flex-basis: 100%; }
-  .card :global(.rf-area) { inline-size: 100%; block-size: calc(125 * var(--u)); padding: calc(13 * var(--u)) calc(14.19 * var(--u)); resize: none; line-height: calc(14 * var(--u)); }
-  .card :global(.rf-area::placeholder) { font-style: italic; }
   .card :global(.f-consent) { margin-inline-start: 0; }
 
-  @media (max-width: 767.98px) {
-    /* dial box + number side by side under the label (as on Patient Feedback) */
-    .card :global(.rf-tel-field .pf-row) { grid-template-columns: auto minmax(0, 1fr); }
-  }
   @media (min-width: 1024px) {
     .tablist { justify-content: flex-start; margin-inline-start: calc(391 * var(--u)); }
     .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(56 * var(--u)) calc(43 * var(--u)) calc(52 * var(--u)) calc(44 * var(--u)); }
-    .card :global(.rf-grid) { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }
     .card :global(.rf-sel-req) { inline-size: calc(410 * var(--u)); }
   }
 </style>

@@ -18,6 +18,8 @@ export interface RawField {
 export interface RawForm {
   subject?: string;
   inbox?: string;
+  /** env variable with the recipients, instead of FORM_TO_<INBOX> */
+  inboxEnv?: string;
   fields?: RawField[];
   variantOf?: string;
   omitGroups?: string[];
@@ -25,6 +27,7 @@ export interface RawForm {
 export interface ResolvedForm {
   subject: string;
   inbox: string;
+  inboxEnv?: string;
   fields: RawField[];
 }
 
@@ -32,7 +35,7 @@ export function resolveForms(forms: Record<string, RawForm>): Record<string, Res
   const out: Record<string, ResolvedForm> = {};
   for (const [id, f] of Object.entries(forms)) {
     if (!f.variantOf) {
-      out[id] = { subject: f.subject ?? id, inbox: f.inbox ?? id, fields: f.fields ?? [] };
+      out[id] = { subject: f.subject ?? id, inbox: f.inbox ?? id, ...(f.inboxEnv ? { inboxEnv: f.inboxEnv } : {}), fields: f.fields ?? [] };
       continue;
     }
     const base = forms[f.variantOf];
@@ -41,6 +44,7 @@ export function resolveForms(forms: Record<string, RawForm>): Record<string, Res
     out[id] = {
       subject: f.subject ?? base.subject ?? id,
       inbox: f.inbox ?? base.inbox ?? f.variantOf,
+      ...((f.inboxEnv ?? base.inboxEnv) ? { inboxEnv: f.inboxEnv ?? base.inboxEnv } : {}),
       fields: (base.fields ?? []).filter((x) => !omit.has(x.ui?.group ?? 'details')),
     };
   }

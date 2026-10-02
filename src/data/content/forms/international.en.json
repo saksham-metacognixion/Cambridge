@@ -1,0 +1,17 @@
+{
+  "_note": "International Patients inquiry form (Figma 54:9239). Labels exactly as in Figma (only 'Gender*' carries a star in Figma). Fields: src/data/forms.json 'international-enquiry'. The consent row is Figma's 'By proceeding you agree Terms & conditions' circle (made the required consent checkbox; link = the privacy policy link, flagged). ariaLabel is NOT in Figma.",
+  "ariaLabel": "International patient inquiry form",
+  "heading": "Submit Your Inquiry",
+  "section": "Patient Details:",
+  "fields": {
+    "name": { "label": "Name" },
+    "email": { "label": "E-mail" },
+    "mobile": { "label": "Mobile", "placeholder": "xx xxx xxxx" },
+    "age": { "label": "Age" },
+    "country": { "label": "Country", "placeholder": "Select Country" },
+    "gender": { "label": "Gender*", "options": { "male": "Male", "female": "Female" } },
+    "message": { "placeholder": "Query Details" }
+  },
+  "consent": { "before": "By proceeding you agree ", "link": "Terms & conditions" },
+  "submit": "SUBMIT"
+}

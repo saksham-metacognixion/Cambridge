@@ -20,8 +20,13 @@ interface Props {
   class?: string;
   /** Figma px between the last field and the consent row, and between consent and the button */
   gaps: { consent: number; submit: number };
+  /** Consent row drawn in the page's own Figma style (International Patients: a radio-style circle + "By proceeding you
+   *  agree Terms & conditions"); default = the Contact page style with the shared consent text. */
+  consent?: { before: string; link: string; after?: string; on: { src: string }; off: { src: string }; size: number };
+  /** Turnstile: 'interaction-only' (default, invisible unless a click is needed) or 'always' (where Figma draws a captcha). */
+  captcha?: 'interaction-only' | 'always';
 }
-const { id, edition, submit, button, ariaLabelledby, ariaLabel, class: cls, gaps } = Astro.props;
+const { id, edition, submit, button, ariaLabelledby, ariaLabel, class: cls, gaps, consent, captcha = 'interaction-only' } = Astro.props;
 const c = commonText(edition.locale);
 const consentId = fieldId(id, 'consent');
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
@@ -42,14 +47,22 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
   <div class="f-tail" style={`margin-block-start:calc(${gaps.consent} * var(--u))`}>
     <div data-field="consent">
-      <label class="f-consent">
-        <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
-        <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
-        <span class="txt">{c.consent.before}<a href={c.consent.link.href}>{c.consent.link.label}</a>{c.consent.after} {c.consent.line2}</span>
-      </label>
+      {consent ? (
+        <label class="f-consent f-consent-own" style={`--cs:${consent.size}`}>
+          <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
+          <span class="own" aria-hidden="true"><img class="off" src={consent.off.src} alt="" /><img class="on" src={consent.on.src} alt="" /></span>
+          <span class="txt">{consent.before}<a href={c.consent.link.href}>{consent.link}</a>{consent.after}</span>
+        </label>
+      ) : (
+        <label class="f-consent">
+          <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
+          <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
+          <span class="txt">{c.consent.before}<a href={c.consent.link.href}>{c.consent.link.label}</a>{c.consent.after} {c.consent.line2}</span>
+        </label>
+      )}
       <p id={`${consentId}-error`} class="f-err" hidden></p>
     </div>
-    {siteKey && <div class="ts-slot" data-sitekey={siteKey} data-language={edition.locale}></div>}
+    {siteKey && <div class="ts-slot" data-sitekey={siteKey} data-language={edition.locale} data-appearance={captcha}></div>}
     <p class="f-alert" role="alert" hidden></p>
     <button
       type="submit"

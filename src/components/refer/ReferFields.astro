@@ -17,8 +17,8 @@
 import { content } from '../../lib/content';
 import { fieldsIn, fieldId, sourceOptions, commonText } from '../../lib/forms';
 import type { Edition } from '../../lib/editions';
-import ReferField from './ReferField.astro';
-import chevSpec from '../../assets/refer/chevron-speciality.svg';
+import ReferField from '../forms/PageField.astro';
+import chevSpec from '../../assets/page-form/chevron-speciality.svg';
 
 interface Props { form: string; edition: Edition }
 const { form, edition } = Astro.props;
@@ -53,7 +53,7 @@ const id = (n: string) => fieldId(form, n);
   <div class="rf-block">
     <p class="pf-q rf-section">{c.sections.doctor}</p>
     {visible(blocks[0].rows).map((row) => (
-      <div class="rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} />)}</div>
+      <div class="rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} edition={edition} />)}</div>
     ))}
   </div>
 )}
@@ -81,11 +81,11 @@ const id = (n: string) => fieldId(form, n);
 <div class="rf-block">
   <p class="pf-q rf-section">{c.sections.patient}</p>
   {visible(blocks[1].rows).map((row) => (
-    <div class="rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} />)}</div>
+    <div class="rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} edition={edition} />)}</div>
   ))}
 </div>
 {visible(referralRows).map((row) => (
-  <div class="rf-block rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} />)}</div>
+  <div class="rf-block rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} edition={edition} />)}</div>
 ))}
 
 {[['diagnosis', 'info'], ['history', 'history']].filter(([n]) => has(n)).map(([n, section]) => (

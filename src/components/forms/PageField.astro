@@ -1,12 +1,16 @@
 ---
-/* One labelled field of the Refer a Patient form (layout values: see ReferFields.astro). */
-import { fieldId, splitStar, dialCodes, type FieldConfig, type Option } from '../../lib/forms';
-import flagUae from '../../assets/refer/flag-uae.svg';
-import chevDial from '../../assets/refer/chevron-dial.svg';
-import chevSel from '../../assets/refer/chevron-doctor.svg';
-import calendar from '../../assets/refer/calendar.svg';
-import radioOn from '../../assets/refer/radio-on.svg';
-import radioOff from '../../assets/refer/radio-off.svg';
+/*
+ * One labelled field of a page form in the grey-box Figma style (Refer a Patient 59:14344, International Patients 54:9239;
+ * layout values: ReferFields.astro / InternationalForm.astro). Selects take their options from `options` or a data `source`.
+ */
+import { fieldId, splitStar, dialCodes, sourceOptions, type FieldConfig, type Option } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import flagUae from '../../assets/page-form/flag-uae.svg';
+import chevDial from '../../assets/page-form/chevron-dial.svg';
+import chevSel from '../../assets/page-form/chevron-doctor.svg';
+import calendar from '../../assets/page-form/calendar.svg';
+import radioOn from '../../assets/page-form/radio-on.svg';
+import radioOff from '../../assets/page-form/radio-off.svg';
 
 interface Props {
   form: string;
@@ -15,12 +19,13 @@ interface Props {
   at: number;
   bold?: boolean;
   dialLabel: string;
+  edition: Edition;
 }
-const { form, f, text, at, bold, dialLabel } = Astro.props;
+const { form, f, text, at, bold, dialLabel, edition } = Astro.props;
 const id = fieldId(form, f.name);
 const err = `${id}-error`;
 const [label, star] = splitStar(text.label ?? '');
-const opts: Option[] = (f.options ?? []).map((o) => ({ value: o, label: text.options?.[o] ?? o }));
+const opts: Option[] = f.source ? sourceOptions(f.source, edition) : (f.options ?? []).map((o) => ({ value: o, label: text.options?.[o] ?? o }));
 ---
 
 {f.type === 'radio' ? (
@@ -54,7 +59,7 @@ const opts: Option[] = (f.options ?? []).map((o) => ({ value: o, label: text.opt
         </>
       ) : f.type === 'select' ? (
         <div class="pf-select rf-grow rf-sel-ref">
-          <select id={id} name={f.name} required={f.required} aria-describedby={err} class="pf-box rf-ph">
+          <select id={id} name={f.name} required={f.required} aria-describedby={err} data-source={f.source} class="pf-box rf-ph">
             <option value="" selected>{text.placeholder}</option>
             {opts.map((o) => <option value={o.value}>{o.label}</option>)}
           </select>

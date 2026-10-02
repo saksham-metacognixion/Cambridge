@@ -17,7 +17,7 @@ export const PAGE_PATHS = {
   conditions: 'conditions-specialities',
   /** Refer a Patient (Figma 59:14344) */
   referPatient: 'refer-a-patient',
-  /** not built (Figma 54:9239) */
+  /** International Patients (Figma 54:9239) */
   internationalPatients: 'international-patients',
   /** Insurance Providers (Figma 46:6844) */
   insuranceProviders: 'insurance-providers',

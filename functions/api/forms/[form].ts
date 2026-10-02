@@ -8,12 +8,13 @@
  * Response: JSON { ok: true } | { ok: false, error, fields?: { <name>: "required" | "invalid" | "too_long" } } when the
  * client asks for JSON (Accept: application/json); otherwise a 303 back to the page with ?form=sent|error, so the
  * form also works without JavaScript. The EN/AR messages for these codes live in src/data/content/forms/common.*.json.
- * Recipient: env FORM_TO_<INBOX> (e.g. FORM_TO_BOOK_APPOINTMENT), see .env.example.
+ * Recipient: env FORM_TO_<INBOX> (e.g. FORM_TO_BOOK_APPOINTMENT), or the form's own `inboxEnv` name, see .env.example.
  */
 import formsConfig from "../../../src/data/forms.json";
 import specialtiesData from "../../../src/data/specialties.json";
 import doctorsData from "../../../src/data/doctors.json";
 import hospitalsData from "../../../src/data/hospitals.json";
+import countriesData from "../../../src/data/countries.json";
 import type { PagesContext } from "../../_lib/types";
 import { verifyTurnstile } from "../../_lib/turnstile";
 import { sendMail } from "../../_lib/email";
@@ -30,7 +31,7 @@ type Field = {
 };
 const forms = resolveForms(
   formsConfig.forms as Record<string, RawForm>,
-) as Record<string, { subject: string; inbox: string; fields: Field[] }>;
+) as Record<string, { subject: string; inbox: string; inboxEnv?: string; fields: Field[] }>;
 const dialCodes = new Set(formsConfig.dialCodes.map((d) => d.code));
 const REGIONS = ["global", "ae", "sa"];
 const MAX_BODY = 32 * 1024;
@@ -47,6 +48,7 @@ const sources: Record<string, Map<string, string>> = {
   hospitals: new Map(
     hospitalsData.hospitals.map((h) => [h.slug, `${h.brand.en} ${h.city.en}`]),
   ),
+  countries: new Map(countriesData.countries.map((c) => [c.code, c.name.en])),
 };
 
 export const onRequestPost = async ({
@@ -119,7 +121,7 @@ export const onRequestPost = async ({
     ? edition.split("-")[0]
     : "global";
   const to = recipients(
-    env[`FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`],
+    env[form.inboxEnv ?? `FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`],
     region,
   );
   if (!to.length) return fail(500, "not_configured");

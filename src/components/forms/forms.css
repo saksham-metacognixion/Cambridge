@@ -113,6 +113,14 @@
 .f-consent input[aria-invalid='true'] ~ .box img { filter: drop-shadow(0 0 calc(0.6 * var(--u)) #ff4e4e); }
 .f-consent a { font-weight: 400; color: var(--color-navy); text-decoration: underline; text-decoration-thickness: from-font; text-underline-position: from-font; }
 .f-consent .txt { padding-block-start: calc(2 * var(--u)); }
+/* Page-specific consent look (FormShell `consent`): a radio-style circle (--cs Figma px box) with the Figma images */
+.f-consent-own .own { position: relative; display: grid; place-items: center; flex: none; inline-size: calc(var(--cs) * var(--u)); block-size: calc(var(--cs) * var(--u)); }
+.f-consent-own .own img { grid-area: 1 / 1; max-inline-size: none; inline-size: calc(16.467 * var(--u)); block-size: calc(16.467 * var(--u)); }
+.f-consent-own .own .on { opacity: 0; }
+.f-consent-own input:checked ~ .own .on { opacity: 1; }
+.f-consent-own input:checked ~ .own .off { opacity: 0; }
+.f-consent-own input:focus-visible ~ .own { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+.f-consent-own input { inset-inline-start: calc(var(--cs) / 2 * var(--u) - 22px); inset-block-start: calc(var(--cs) / 2 * var(--u) - 22px); }
 
 .f-alert { margin: calc(8 * var(--u)) 0 0; font-size: calc(9.917 * var(--u)); line-height: calc(12 * var(--u)); color: var(--color-navy); text-align: center; }
 .f-alert[hidden] { display: none; }
@@ -206,4 +214,36 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
   .pf-label { grid-column: 1 / -1; min-inline-size: 0; padding-block-end: 6px; }
   .pf-row > .pf-box, .pf-select { inline-size: 100%; }
   .pf-tel { inline-size: auto !important; }
+}
+
+/* ───────── Grey-box page form fields (Refer a Patient 59:14344, International Patients 54:9239): forms with class "rf" ─────────
+   Shared Figma sizes of both frames (dial box 76, flag 16.5, radios 13 / 11, ...). Row gap: --rf-row (Figma px). */
+.rf { --pf-dial-w: 76; --pf-flag-x: 6; --pf-flag-w: 16.5; --pf-dial-pad: 26; --pf-dial-chev-x: 5.76; --pf-dial-chev-w: 7.24; --pf-tel-gap: 10; --pf-px: 9; --pf-radio-box: 13; --pf-radio-w: 16.467; --pf-radio-h: 16.467; --pf-radio-off: 11; }
+.rf .rf-grid { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: calc(var(--rf-row, 19) * var(--u)); }
+.rf .rf-grid + .rf-grid { margin-block-start: calc(var(--rf-row, 19) * var(--u)); }
+.rf .rf-grow { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
+.rf .rf-bold { font-weight: 700; padding-block-start: calc(11 * var(--u)); line-height: calc(18 * var(--u)); }
+.rf .rf-ph { color: var(--color-body); }
+.rf .rf-ph:has(option:checked:not([value=''])) { color: var(--color-navy); }
+.rf .rf-sel-ref select { padding-inline: calc(21 * var(--u)) calc(26 * var(--u)); }
+.rf .rf-sel-ref .pf-chev { inset-inline-end: calc(13 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7 * var(--u)); }
+.rf .rf-ph-in { padding-inline-start: calc(14 * var(--u)); }
+.rf .rf-date { position: relative; }
+.rf .rf-date-box { inline-size: 100%; cursor: pointer; }
+.rf .rf-date-box::-webkit-calendar-picker-indicator { display: none; }
+.rf .rf-date-box[data-empty]:not(:focus) { color: transparent; }
+.rf .rf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(12.78 * var(--u)); inset-block-start: calc(5 * var(--u)); inline-size: calc(19.8 * var(--u)); block-size: calc(22 * var(--u)); }
+.rf .rf-radio { margin: 0; padding: 0; border: 0; min-inline-size: 0; display: flex; align-items: flex-start; flex-wrap: wrap; }
+.rf .rf-legend { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--u)); }
+.rf .rf-opts { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)) calc(29.5 * var(--u)); padding-block-start: calc(8 * var(--u)); }
+.rf .rf-opt { display: flex; align-items: center; gap: calc(8 * var(--u)); min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+.rf .rf-radio .f-err { flex-basis: 100%; }
+.rf .rf-area { inline-size: 100%; block-size: calc(125 * var(--u)); padding: calc(13 * var(--u)) calc(14.19 * var(--u)); resize: none; line-height: calc(14 * var(--u)); }
+.rf .rf-area::placeholder { font-style: italic; }
+@media (max-width: 767.98px) {
+  /* dial box + number side by side under the label (as on Patient Feedback) */
+  .rf .rf-tel-field .pf-row { grid-template-columns: auto minmax(0, 1fr); }
+}
+@media (min-width: 1024px) {
+  .rf .rf-grid { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }
 }

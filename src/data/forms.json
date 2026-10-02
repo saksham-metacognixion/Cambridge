@@ -1,5 +1,5 @@
 {
-  "$comment": "ONE config per form, shared by the serverless function (functions/api/forms/[form].ts) and the form UI. Fields are the ones in Figma until Pramod shares his list; apply his list here (name/type/required/max) and the layout follows. `inbox` picks the recipient env variable FORM_TO_<INBOX> (see .env.example), so two UIs of the same scope form (Contact page + pop-up) reach the same inbox. `label` is the English field name used in the email to staff. `ui.group` places a field in the form's Figma layout block; `ui.inputAt` is where the input box starts in its row (Figma px from the label start). `consent` (required checkbox + privacy link) is added to every form by the UI and enforced by the server. Selects with `source` take their options from src/data (specialties / doctors / hospitals). Fields of type `tel` also post `<name>_code` (one of dialCodes). A form may be a variant of another (`variantOf` + `omitGroups`: the same fields minus whole ui groups), resolved by src/lib/form-config.ts for the UI and the server. Refer a Patient: referral_type / referral_for options are NOT in Figma (empty until Pramod sends them); guardian_mobile is required because Figma marks it 'Mobile*' (flagged: probably only for paediatric cases).",
+  "$comment": "ONE config per form, shared by the serverless function (functions/api/forms/[form].ts) and the form UI. Fields are the ones in Figma until Pramod shares his list; apply his list here (name/type/required/max) and the layout follows. `inbox` picks the recipient env variable FORM_TO_<INBOX> (see .env.example), so two UIs of the same scope form (Contact page + pop-up) reach the same inbox. `label` is the English field name used in the email to staff. `ui.group` places a field in the form's Figma layout block; `ui.inputAt` is where the input box starts in its row (Figma px from the label start). `consent` (required checkbox + privacy link) is added to every form by the UI and enforced by the server. Selects with `source` take their options from src/data (specialties / doctors / hospitals). Fields of type `tel` also post `<name>_code` (one of dialCodes). A form may be a variant of another (`variantOf` + `omitGroups`: the same fields minus whole ui groups), resolved by src/lib/form-config.ts for the UI and the server. Refer a Patient: referral_type / referral_for options are NOT in Figma (empty until Pramod sends them); guardian_mobile is required because Figma marks it 'Mobile*' (flagged: probably only for paediatric cases). International Patients ('international-enquiry', a 5th form beyond the scope's 4, flagged): required = Figma's stars (Gender only, flagged); recipients in env INTERNATIONAL_INBOX (`inboxEnv`); country options = ISO 3166 country names (src/data/countries.json).",
   "dialCodes": [{ "code": "+971", "country": "ae" }],
   "forms": {
     "book-appointment": {
@@ -65,6 +65,20 @@
       "variantOf": "refer-patient",
       "omitGroups": ["doctor"],
       "subject": "Refer a Patient (other referrer)"
+    },
+    "international-enquiry": {
+      "subject": "International Patients: inquiry",
+      "inbox": "international",
+      "inboxEnv": "INTERNATIONAL_INBOX",
+      "fields": [
+        { "name": "name", "label": "Name", "type": "text", "required": false, "max": 120, "autocomplete": "name", "ui": { "group": "patient" } },
+        { "name": "email", "label": "E-mail", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "patient" } },
+        { "name": "mobile", "label": "Mobile", "type": "tel", "required": false, "max": 20, "autocomplete": "tel-national", "ui": { "group": "patient" } },
+        { "name": "age", "label": "Age", "type": "text", "required": false, "max": 3, "ui": { "group": "patient" } },
+        { "name": "country", "label": "Country", "type": "select", "source": "countries", "required": false, "ui": { "group": "patient" } },
+        { "name": "gender", "label": "Gender", "type": "radio", "options": ["male", "female"], "required": true, "ui": { "group": "patient" } },
+        { "name": "message", "label": "Query details", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "message" } }
+      ]
     },
     "feedback-popup": {
       "subject": "Your Opinion Matters",

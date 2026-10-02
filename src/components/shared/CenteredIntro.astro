@@ -5,20 +5,22 @@
  * Testimonials. The designer centres it slightly differently per page: `cx` / `tx` = Figma x of the H2 / text centre.
  * Text may be several paragraphs (an array), separated by one empty 14px line.
  */
-interface Props { id: string; heading: string; text: string | string[]; cx: number; tx: number; tw?: number; hw?: number }
-const { id, heading, text, cx, tx, tw = 577, hw = 430 } = Astro.props;
+interface Props { id: string; heading: string; text: string | string[]; cx: number; tx: number; tw?: number; hw?: number; lh?: number; gap?: number; alt?: boolean }
+// International Patients / Testimonials variant: H2 box w651, line 33, colour #00415a, text w937, 12 below (alt + values).
+const { id, heading, text, cx, tx, tw = 577, hw = 430, lh = 27, gap = 10, alt = false } = Astro.props;
 const paras = Array.isArray(text) ? text : [text];
 ---
 
-<div class="ci" style={`--cx:${cx};--tx:${tx};--tw:${tw};--hw:${hw}`}>
+<div class:list={['ci', alt && 'alt']} style={`--cx:${cx};--tx:${tx};--tw:${tw};--hw:${hw};--lh:${lh};--gap:${gap}`}>
   <h2 id={id} class="h">{heading}</h2>
   <div class="t">{paras.map((p) => <p>{p}</p>)}</div>
 </div>
 
 <style>
   .ci { font-family: var(--font-gotham); font-style: normal; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
-  .h { margin: 0 auto; max-width: calc(var(--hw) * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
-  .t { margin: calc(10 * var(--u)) auto 0; max-width: calc(var(--tw) * var(--u)); padding-inline: 16px; text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .h { margin: 0 auto; max-width: calc(var(--hw) * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(var(--lh) * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .alt .h { color: var(--color-navy-alt); }
+  .t { margin: calc(var(--gap) * var(--u)) auto 0; max-width: calc(var(--tw) * var(--u)); padding-inline: 16px; text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .t p { margin: 0; }
   .t p + p { margin-top: calc(14 * var(--u)); }
   @media (min-width: 1024px) {

@@ -112,3 +112,5 @@ SUMMARY after 63: batch-2 session 14. Dev-seat calls today (all sessions): 32.
 72. get_design_context 46:7497 Orient card (object-contain)
 73. download_assets 46:7198 Al Buhaira logo, svg export -> assets/insurance-page/svg/al-buhaira.svg (background rects removed in src copy)
 SUMMARY after 73: batch-2 session 24. Dev-seat calls today (all sessions): 42.
+74. get_design_context 54:9239 International Patients (no screenshot: #54 is the target) -> FULL -> international-spec.md, assets/international/* (11)
+SUMMARY after 74: batch-2 session 25. Dev-seat calls today (all sessions): 43.

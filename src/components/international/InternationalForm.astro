@@ -1,0 +1,90 @@
+---
+/*
+ * "Submit Your Inquiry" + form card of International Patients (Figma 54:9239), section top = the H3 top (page y 772).
+ * H3 52:9237 Gotham Medium 18 #00415a, centred on x 525.5 (box w651, h23) | 16 | card 48:8825 x 42, 968 wide, #F1F1F1,
+ * no shadow, radius 14.32 (top end 15). Card-relative Figma px: "Patient Details:" (Bold 15) at 44 / 48 | 20 below its line |
+ * field rows 35 high, 57 apart (Figma 57 / 59: normalised to the first) in two 410 columns 60 apart (labels 86 / 556 on the
+ * page). Label -> box: Name 85.42, E-mail 88, Mobile 88 (dial 76 + 10), Age 88 (Figma 85, normalised to the right column),
+ * Country 85.42 (select: placeholder 12 in, chevron 13 from the end), Gender 92 (circles as on Refer a Patient) |
+ * 35 | Query Details textarea 880 x 125 | 13 | consent row: Figma's "By proceeding you agree Terms & conditions" circle
+ * (13 box at x +15, text 11 after it; made the required consent checkbox) | 17.2 | captcha box 244 x 61.404 (Figma draws
+ * reCAPTCHA; the scope's Turnstile renders here, always visible) | 33.6 | SUBMIT 150 x 50, radius 25.935, at the field
+ * column start | 47 | card end. Posts to 'international-enquiry' (recipients: env INTERNATIONAL_INBOX).
+ */
+import FormShell from '../forms/FormShell.astro';
+import PageField from '../forms/PageField.astro';
+import { content } from '../../lib/content';
+import { fieldsIn, commonText, fieldId } from '../../lib/forms';
+import { parsePath } from '../../lib/editions';
+import consentOff from '../../assets/page-form/consent-off.svg';
+import consentOn from '../../assets/page-form/radio-on.svg';
+import '../forms/forms.css';
+
+const ID = 'international-enquiry';
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('forms/international', edition.locale);
+const dialLabel = commonText(edition.locale).dialCodeLabel;
+const f = Object.fromEntries(fieldsIn(ID, 'patient').concat(fieldsIn(ID, 'message')).map((x) => [x.name, x]));
+const rows: [string, number][][] = [
+  [['name', 85.42], ['email', 88]],
+  [['mobile', 88], ['age', 88]],
+  [['country', 85.42], ['gender', 92]],
+];
+const msg = f.message;
+const id = (n: string) => fieldId(ID, n);
+---
+
+<section class="intl" aria-labelledby="intl-form-heading">
+  <h2 id="intl-form-heading" class="h3">{c.heading}</h2>
+  <div class="card pf-card">
+    <FormShell
+      id={ID}
+      edition={edition}
+      submit={c.submit}
+      ariaLabel={c.ariaLabel}
+      button={{ w: 150, h: 50, r: 25.935, fs: 15, ty: 18 }}
+      gaps={{ consent: 13, submit: 33.6 }}
+      consent={{ before: c.consent.before, link: c.consent.link, on: consentOn, off: consentOff, size: 13 }}
+      captcha="always"
+      class="pf rf intl-form"
+    >
+      <p class="pf-q sec">{c.section}</p>
+      {rows.map((row) => (
+        <div class="rf-grid">
+          {row.filter(([n]) => f[n]).map(([n, at]) => (
+            <div class:list={[n === 'country' && 'rf-sel-ref intl-country']}>
+              <PageField form={ID} f={f[n]} text={c.fields[n]} at={at} dialLabel={dialLabel} edition={edition} />
+            </div>
+          ))}
+        </div>
+      ))}
+      {msg && (
+        <div class="pf-field area" data-field={msg.name}>
+          <label for={id(msg.name)} class="sr-only">{c.fields[msg.name].placeholder}</label>
+          <textarea id={id(msg.name)} name={msg.name} required={msg.required} maxlength={msg.max} placeholder={c.fields[msg.name].placeholder} aria-describedby={`${id(msg.name)}-error`} class="pf-box rf-area"></textarea>
+          <p id={`${id(msg.name)}-error`} class="f-err" hidden></p>
+        </div>
+      )}
+    </FormShell>
+  </div>
+</section>
+
+<style>
+  .intl { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; color: var(--color-navy); }
+  .h3 { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(18 * var(--u)); line-height: calc(23 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .card { margin: calc(16 * var(--u)) 16px 0; padding: 24px 16px; background: #f1f1f1; box-shadow: none; }
+  .card :global(.intl-form) { --rf-row: 22; }
+  .card :global(.sec) { margin-block-end: calc(20 * var(--u)); }
+  .card :global(.intl-country select) { padding-inline-start: calc(12 * var(--u)); }
+  .card :global(.area) { margin-block-start: calc(35 * var(--u)); }
+  .card :global(.f-consent-own) { margin-inline-start: calc(15 * var(--u)); gap: calc(11 * var(--u)); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+  .card :global(.f-consent-own .txt) { padding: 0; }
+  .card :global(.f-consent-own a) { font-weight: 400; color: inherit; text-decoration: none; }
+  .card :global(.f-consent-own a:hover), .card :global(.f-consent-own a:focus-visible) { text-decoration: underline; }
+  .card :global(.ts-slot) { justify-content: flex-start; min-height: calc(61.404 * var(--u)); margin-block-start: calc(17.2 * var(--u)); }
+  .card :global(.f-submit) { margin-inline: 0; }
+  @media (min-width: 1024px) {
+    .h3 { width: calc(651 * var(--u)); margin-inline-start: calc(200 * var(--u)); padding: 0; }
+    .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(48 * var(--u)) calc(43 * var(--u)) calc(47 * var(--u)) calc(44 * var(--u)); }
+  }
+</style>

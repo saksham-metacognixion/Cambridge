@@ -398,7 +398,7 @@ function renderTurnstile(form: HTMLFormElement) {
   void loadTurnstile().then(() => {
     slot.dataset.widget = window.turnstile!.render(slot, {
       sitekey: slot.dataset.sitekey,
-      appearance: "interaction-only",
+      appearance: slot.dataset.appearance ?? "interaction-only",
       language: slot.dataset.language,
       size: "flexible",
     });

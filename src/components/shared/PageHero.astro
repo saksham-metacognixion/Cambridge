@@ -16,7 +16,7 @@ import { parsePath } from '../../lib/editions';
  * title at x97 (w textW), button `buttonGap` below the text (or the title when there is no text) at x98, 164 x 30.
  * Button label: Gotham Medium 13 cyan, box `labelW` wide at `labelX` inside the button (Figma: 145 at 8; 153 at 5).
  */
-interface Pos { titleTop: number; titleW: number; textGap?: number; textW?: number; buttonGap: number; labelX?: number; labelW?: number }
+interface Pos { titleTop: number; titleW: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
 interface Props {
   content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button: { label: string; href: string } };
   pos: Pos;
@@ -27,7 +27,7 @@ interface Props {
 const { content: c, pos, h = 437, variant = 'banner' } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
-const p = { textGap: 0, textW: 374, labelX: 8, labelW: 145, ...pos };
+const p = { textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
 const imgH = variant === 'banner' ? 500 : 323;
 ---
 
@@ -51,7 +51,7 @@ const imgH = variant === 'banner' ? 500 : 323;
       />
     </div>
 
-    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--xg:${p.textGap};--xw:${p.textW};--bg:${p.buttonGap};--lx:${p.labelX};--lw:${p.labelW}`}>
+    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap};--lx:${p.labelX};--lw:${p.labelW}`}>
       <h1 class="title m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic">
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
@@ -72,7 +72,7 @@ const imgH = variant === 'banner' ? 500 : 323;
   @media (min-width: 1024px) {
     .copy { position: absolute; inset-inline-start: calc(95 * var(--u)); top: calc(var(--tt) * var(--u)); }
     .title { width: calc(var(--tw) * var(--u)); }
-    .text { width: calc(var(--xw) * var(--u)); margin-top: calc(var(--xg) * var(--u)); margin-inline-start: calc(2 * var(--u)); }
+    .text { width: calc(var(--xw) * var(--u)); margin-top: calc(var(--xg) * var(--u)); margin-inline-start: calc(var(--xx) * var(--u)); }
     .btn { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
   }
   @media (max-width: 1023.98px) {

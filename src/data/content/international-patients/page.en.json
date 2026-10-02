@@ -1,0 +1,22 @@
+{
+  "_note": "International Patients (Figma 54:9239). Visible text exactly as in Figma; meta.* = PLACEHOLDER. Form text: forms/international.*.json.",
+  "meta": {
+    "title": "International Patients | Cambridge Hospital",
+    "description": "International patient care at Cambridge Hospital: post-acute rehabilitation and long-term care with coordinated support before, during and after treatment."
+  },
+  "hero": {
+    "ariaLabel": "International Patients",
+    "banner": { "image": "international/banner", "alt": "" },
+    "title": ["International Patient Care", "at Cambridge"],
+    "text": "Comprehensive support for international patients seeking advanced post-acute rehabilitation and long-term care, with coordinated services before, during, and after treatment.",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "intro": {
+    "heading": "Comprehensive Care for Patients Worldwide",
+    "text": [
+      "Cambridge Hospital welcomes international patients seeking specialized post-acute rehabilitation, long-term care, and recovery support. With a multidisciplinary team of experts and a patient-centered approach, we provide coordinated care designed to improve outcomes and quality of life.",
+      "Our services are tailored to each patient’s needs, combining advanced medical expertise with comprehensive rehabilitation programs. From initial consultation to recovery and follow-up, our team ensures a seamless experience for patients and their families.",
+      "We offer dedicated support for international patients, including care coordination, treatment planning, and assistance throughout the entire care journey."
+    ]
+  }
+}

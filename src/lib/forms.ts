@@ -3,6 +3,7 @@ import { resolveForms, type RawForm } from "./form-config";
 import specialtiesData from "../data/specialties.json";
 import doctorsData from "../data/doctors.json";
 import hospitalsData from "../data/hospitals.json";
+import countriesData from "../data/countries.json";
 import { content, t } from "./content";
 import type { Edition, LocaleId } from "./editions";
 
@@ -26,7 +27,7 @@ export interface FieldConfig {
   required: boolean;
   max?: number;
   options?: string[];
-  source?: "specialties" | "doctors" | "hospitals";
+  source?: "specialties" | "doctors" | "hospitals" | "countries";
   autocomplete?: string;
   ui?: { group?: string; inputAt?: number; strong?: boolean };
 }
@@ -81,6 +82,10 @@ export function sourceOptions(
         value: h.slug,
         label: `${t(h.brand, loc, "hospitals")} ${t(h.city, loc, "hospitals")}`,
       }));
+  if (source === "countries")
+    return countriesData.countries
+      .map((c) => ({ value: c.code, label: t(c.name, loc, "countries") }))
+      .sort((a, b) => a.label.localeCompare(b.label, loc));
   return [];
 }
 

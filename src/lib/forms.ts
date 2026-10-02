@@ -38,7 +38,6 @@ export interface FormConfig {
 }
 
 const forms = resolveForms(config.forms as Record<string, RawForm>) as unknown as Record<string, FormConfig>;
-export const dialCodes = config.dialCodes;
 
 export function formConfig(id: string): FormConfig {
   const f = forms[id];

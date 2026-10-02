@@ -1,5 +1,4 @@
 ---
-import Turnstile from '../forms/Turnstile.astro';
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import pattern from '../../assets/contact/logo-pattern.png';
@@ -8,10 +7,14 @@ import cornerMask from '../../assets/contact/corner-mask.svg';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
+import { clientConfig, commonText } from '../../lib/forms';
+import checkbox from '../../assets/contact-page/checkbox.svg';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/contact', edition.locale);
 const social = img(txt.social.image, edition.region);
+const common = commonText(edition.locale);
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 const label = 'font-normal text-f9 leading-14 text-navy not-italic whitespace-normal [word-break:break-word]';
 const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespace-normal [word-break:break-word]';
@@ -43,8 +46,8 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       <div class="corner-art" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
     </div>
 
-    <div class="card relative bg-white max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:start-177 lg:top-35 lg:w-698 lg:h-318">
-      <h2 class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:start-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
+    <div class="card relative bg-white max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:start-177 lg:top-35 lg:w-698 lg:min-h-318">
+      <h2 id="home-contact-title" class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:start-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
 
       <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
         <p class:list={[label, 'm-0 lg:absolute lg:start-54 lg:top-82 lg:w-31']}>{txt.emailLabel}</p>
@@ -58,24 +61,50 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
         <img src={social.src} width={social.width} height={social.height} alt={txt.social.alt} class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))" />
       </div>
 
-      <!-- Sends through the serverless function (functions/api/forms/[form].ts). Mapped to "send-enquiry" until Pramod confirms which form this section is. -->
-      <form action="/api/forms/send-enquiry" method="POST" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
+      <!-- Own form id "home-contact" (fields = what Figma shows; src/data/forms.json), inbox FORM_TO_SEND_ENQUIRY.
+           Errors sit in the Figma gaps under each box; the consent row (no Figma design here: Contact page style) and the
+           button flow from the button's Figma top (263), so the white card grows by the consent row. -->
+      <form action="/api/forms/home-contact" method="POST" novalidate data-form="home-contact" data-config={clientConfig('home-contact', edition.locale)} aria-labelledby="home-contact-title" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
         <input type="hidden" name="edition" value={edition.id} />
 
-        <label for="contact-name" class:list={[label, 'lg:absolute lg:start-371 lg:top-47 lg:w-51']}>{txt.form.nameLabel}</label>
-        <input id="contact-name" name="name" type="text" required autocomplete="name" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-63 lg:w-125" />
+        <div data-field="name" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
+          <label for="contact-name" class:list={[label, 'lg:absolute lg:start-371 lg:top-47 lg:w-51']}>{txt.form.nameLabel}</label>
+          <input id="contact-name" name="name" type="text" required maxlength="120" autocomplete="name" aria-describedby="contact-name-error" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-63 lg:w-125" />
+          <p id="contact-name-error" class="f-err hc-err lg:absolute lg:start-371 lg:top-[calc(89.5*var(--u))] lg:w-140" hidden></p>
+        </div>
 
-        <label for="contact-email" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-515 lg:top-47 lg:w-76']}>{txt.form.emailLabel}</label>
-        <input id="contact-email" name="email" type="email" required autocomplete="email" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-515 lg:top-63 lg:w-140" />
+        <div data-field="email" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
+          <label for="contact-email" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-515 lg:top-47 lg:w-76']}>{txt.form.emailLabel}</label>
+          <input id="contact-email" name="email" type="email" required maxlength="200" autocomplete="email" aria-describedby="contact-email-error" class="field max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-515 lg:top-63 lg:w-140" />
+          <p id="contact-email-error" class="f-err hc-err lg:absolute lg:start-515 lg:top-[calc(89.5*var(--u))] lg:w-140" hidden></p>
+        </div>
 
-        <label for="contact-message" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-371 lg:top-97 lg:w-51']}>{txt.form.messageLabel}</label>
-        <textarea id="contact-message" name="message" required placeholder={txt.form.messagePlaceholder} class="field area max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-113 lg:w-284 lg:h-140"></textarea>
+        <div data-field="message" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
+          <label for="contact-message" class:list={[label, 'max-lg:mt-8 lg:absolute lg:start-371 lg:top-97 lg:w-51']}>{txt.form.messageLabel}</label>
+          <textarea id="contact-message" name="message" required maxlength="4000" placeholder={txt.form.messagePlaceholder} aria-describedby="contact-message-error" class="field area max-lg:w-full max-lg:max-w-284 lg:absolute lg:start-371 lg:top-113 lg:w-284 lg:h-140"></textarea>
+          <p id="contact-message-error" class="f-err hc-err lg:absolute lg:start-371 lg:top-[calc(253.5*var(--u))] lg:w-284" hidden></p>
+        </div>
 
-        <Turnstile locale={edition.locale} />
-        <button type="submit" class="hit relative block border-0 p-0 m-0 bg-navy rounded-r8 h-26 max-lg:w-full max-lg:max-w-284 lg:w-284 cursor-pointer not-italic max-lg:mt-8 lg:absolute lg:start-371 lg:top-263">
-          <span class="absolute block top-7 w-65 h-13 text-start max-lg:left-1/2 max-lg:-translate-x-1/2 lg:start-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">{txt.form.submit}</span>
-        </button>
+        <div class="tail relative max-lg:mt-8 max-lg:max-w-284 lg:ms-371 lg:pt-263 lg:pb-29 lg:w-284">
+          <div data-field="consent">
+            <label class="f-consent">
+              <input id="contact-consent" type="checkbox" name="consent" required aria-describedby="contact-consent-error" />
+              <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
+              <span class="txt">{common.consent.before}<a href={common.consent.link.href}>{common.consent.link.label}</a>{common.consent.after} {common.consent.line2}</span>
+            </label>
+            <p id="contact-consent-error" class="f-err hc-err" hidden></p>
+          </div>
+          {siteKey && <div class="ts-slot" data-sitekey={siteKey} data-language={edition.locale}></div>}
+          <p class="f-alert" role="alert" hidden></p>
+          <button type="submit" class="hit relative block border-0 p-0 m-0 mt-8 bg-navy rounded-r8 h-26 w-full cursor-pointer not-italic">
+            <span class="absolute block top-7 w-65 h-13 text-start max-lg:left-1/2 max-lg:-translate-x-1/2 lg:start-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">{txt.form.submit}</span>
+          </button>
+        </div>
       </form>
+      <div class="f-success max-lg:py-0 lg:absolute lg:start-371 lg:top-47 lg:w-284" data-success-for="home-contact" role="status" tabindex="-1" hidden>
+        <p class="s-title">{common.success.title}</p>
+        <p class="s-text">{common.success.text}</p>
+      </div>
     </div>
 
   </div>
@@ -95,6 +124,12 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
     color: var(--color-body);
   }
   .field:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
+  .field[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+  /* Errors in the 8 Figma px gaps under the boxes (desktop); normal size when the form is stacked */
+  /* The tail's top padding lies over the fields: let clicks through it. */
+  .tail { pointer-events: none; }
+  .tail > * { pointer-events: auto; }
+  @media (min-width: 1024px) { .hc-err { margin: 0; font-size: calc(6.5 * var(--u)); line-height: calc(8 * var(--u)); } }
   .area {
     height: calc(140 * var(--u)); resize: none;
     padding: calc(10 * var(--u)) calc(11 * var(--u));

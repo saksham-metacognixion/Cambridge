@@ -1,6 +1,5 @@
 {
-  "$comment": "ONE config per form, shared by the serverless function (functions/api/forms/[form].ts) and the form UI. Fields are the ones in Figma until Pramod shares his list; apply his list here (name/type/required/max) and the layout follows. `inbox` picks the recipient env variable FORM_TO_<INBOX> (see .env.example), so two UIs of the same scope form (Contact page + pop-up) reach the same inbox. `label` is the English field name used in the email to staff. `ui.group` places a field in the form's Figma layout block; `ui.inputAt` is where the input box starts in its row (Figma px from the label start). `consent` (required checkbox + privacy link) is added to every form by the UI and enforced by the server. Selects with `source` take their options from src/data (specialties / doctors / hospitals). Fields of type `tel` also post `<name>_code` (one of dialCodes). A form may be a variant of another (`variantOf` + `omitGroups`: the same fields minus whole ui groups), resolved by src/lib/form-config.ts for the UI and the server. Refer a Patient: referral_type / referral_for options are NOT in Figma (empty until Pramod sends them); guardian_mobile is required because Figma marks it 'Mobile*' (flagged: probably only for paediatric cases). International Patients ('international-enquiry', a 5th form beyond the scope's 4, flagged): required = Figma's stars (Gender only, flagged); recipients in env INTERNATIONAL_INBOX (`inboxEnv`); country options = ISO 3166 country names (src/data/countries.json).",
-  "dialCodes": [{ "code": "+971", "country": "ae" }],
+  "$comment": "ONE config per form, shared by the serverless function (functions/api/forms/[form].ts) and the form UI. Fields are the ones in Figma until Pramod shares his list; apply his list here (name/type/required/max) and the layout follows. `inbox` picks the recipient env variable FORM_TO_<INBOX> (see .env.example), so two UIs of the same scope form (Contact page + pop-up) reach the same inbox. `label` is the English field name used in the email to staff. `ui.group` places a field in the form's Figma layout block; `ui.inputAt` is where the input box starts in its row (Figma px from the label start). `consent` (required checkbox + privacy link) is added to every form by the UI and enforced by the server. Selects with `source` take their options from src/data (specialties / doctors / hospitals). Fields of type `tel` also post `<name>_code` (a code from src/data/dial-codes.json). A form may be a variant of another (`variantOf` + `omitGroups`: the same fields minus whole ui groups), resolved by src/lib/form-config.ts for the UI and the server. Refer a Patient: referral_type / referral_for options are NOT in Figma (empty until Pramod sends them); guardian_mobile is required because Figma marks it 'Mobile*' (flagged: probably only for paediatric cases). International Patients ('international-enquiry', a 5th form beyond the scope's 4, flagged): required = Figma's stars (Gender only, flagged); recipients in env INTERNATIONAL_INBOX (`inboxEnv`); country options = ISO 3166 country names (src/data/countries.json).",
   "forms": {
     "book-appointment": {
       "subject": "Book an Appointment",
@@ -35,6 +34,15 @@
         { "name": "mobile", "label": "Mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "details", "inputAt": 56.8 } },
         { "name": "email", "label": "E-mail", "type": "email", "required": true, "max": 200, "autocomplete": "email", "ui": { "group": "details", "inputAt": 56.8 } },
         { "name": "message", "label": "Message", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "details" } }
+      ]
+    },
+    "home-contact": {
+      "subject": "Get in touch with us (Home)",
+      "inbox": "send-enquiry",
+      "fields": [
+        { "name": "name", "label": "Your Name", "type": "text", "required": true, "max": 120, "autocomplete": "name" },
+        { "name": "email", "label": "Email Address", "type": "email", "required": true, "max": 200, "autocomplete": "email" },
+        { "name": "message", "label": "Message", "type": "textarea", "required": true, "max": 4000 }
       ]
     },
     "refer-patient": {

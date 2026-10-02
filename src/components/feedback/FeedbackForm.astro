@@ -7,14 +7,13 @@
  * as selected (a state sample): nothing is preselected; unselected circles use the grey of the matrix circles.
  */
 import FormShell from '../forms/FormShell.astro';
+import DialSelect from '../forms/DialSelect.astro';
 import { content } from '../../lib/content';
-import { commonText, fieldsIn, fieldId, sourceOptions, splitStar, dialCodes } from '../../lib/forms';
+import { commonText, fieldsIn, fieldId, sourceOptions, splitStar } from '../../lib/forms';
 import { parsePath } from '../../lib/editions';
 import radioOn from '../../assets/forms/feedback-radio-on.svg';
 import radioOff from '../../assets/forms/feedback-radio-off.svg';
-import chevDial from '../../assets/forms/feedback-chevron-dial.svg';
 import chevHospital from '../../assets/forms/feedback-chevron-hospital.svg';
-import flagUae from '../../assets/forms/feedback-flag-uae.svg';
 import '../forms/forms.css';
 
 const ID = 'feedback';
@@ -76,13 +75,7 @@ const cols = matrix[0]?.options ?? [];
           <div class="pf-field mobile" data-field="mobile">
             <div class="pf-row" style="--at:87.08">
               <label for={id('mobile')} class="pf-label">{lbl('mobile')[0]}<span aria-hidden="true">{lbl('mobile')[1]}</span></label>
-              <div class="pf-dial">
-                <select name="mobile_code" class="pf-box" aria-label={common.dialCodeLabel}>
-                  {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
-                </select>
-                <img src={flagUae.src} alt="" width="16.261" height="11" class="pf-flag" />
-                <img src={chevDial.src} alt="" width="7.135" height="4.207" class="pf-chev" />
-              </div>
+              <DialSelect name="mobile" edition={edition} label={common.dialCodeLabel} variant="page" />
               <input id={id('mobile')} name="mobile" type="tel" inputmode="tel" dir="ltr" required={contact.mobile.required} maxlength={contact.mobile.max} autocomplete="tel-national" placeholder={c.fields.mobile.placeholder} aria-describedby={`${id('mobile')}-error`} class="pf-box pf-tel" style="--w:232.587" />
             </div>
             <p id={`${id('mobile')}-error`} class="f-err" hidden></p>

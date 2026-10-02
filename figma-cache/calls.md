@@ -130,3 +130,7 @@ SUMMARY after 85: batch-2 session 36. Dev-seat calls today (all sessions): 54.
 SUMMARY after 86: batch-2 session 37. Dev-seat calls today (all sessions): 55.
 87. get_screenshot 32:826 Doctor - Page, full resolution (1052x1225) -> figma-cache/pages/doctor-profile-32-826.png (replaces the 880px preview for checks)
 SUMMARY after 87: batch-2 session 38 (11 get_screenshot, 25 get_design_context, 2 download_assets). Dev-seat calls today (all sessions): 56.
+
+NOTE (merge 2 Oct): the batch-2 session (above, #50-#87) and the forms session (below) numbered in parallel from 50/60; both lists are real calls.
+60. download_assets 76:431 Welcome Page vertical colour logo, format svg -> figma-cache/assets/forms/welcome/logo-vertical.svg (one flattened SVG, 67.9 KB; the per-layer list was truncated at 20, not needed).
+SUMMARY after 60: forms session today 14. Next free number: 61 (batch-2 session used 50-59).

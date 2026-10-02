@@ -1,0 +1,15 @@
+{
+  "$comment": "Country pop-up (Welcome Page, Figma 76:196; scope 2.3). OFF until Pramod confirms the flow: set enabled=true to ship it. Shown only on Global (EN + AR), only on a first visit, only when the visitor's detected country (Cloudflare, functions/_middleware.ts -> ch_geo cookie) has an entry under `countries`. Figma has the UAE version only, so other countries see nothing. Per country: `text` = key in src/data/content/forms/welcome.<locale>.json, `map` / `flag` = image keys under src/assets, `buttons[].target` = the edition region saved in the ch_edition cookie (window.chooseEdition). Targets for AE are an interpretation of the Figma text ('Continue Here' = the UAE website, 'Go to Global Website' = stay on Global): change them here once Pramod confirms. Closing with Esc saves 'global' (the visitor stays where they are) so it is not shown again.",
+  "enabled": false,
+  "countries": {
+    "AE": {
+      "text": "ae",
+      "map": "forms/welcome/map",
+      "flag": "forms/welcome/flag-uae-round",
+      "buttons": [
+        { "key": "continue", "style": "primary", "target": "ae" },
+        { "key": "global", "style": "secondary", "target": "global" }
+      ]
+    }
+  }
+}

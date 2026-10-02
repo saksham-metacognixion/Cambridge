@@ -3,10 +3,9 @@
  * One labelled field of a page form in the grey-box Figma style (Refer a Patient 59:14344, International Patients 54:9239;
  * layout values: ReferFields.astro / InternationalForm.astro). Selects take their options from `options` or a data `source`.
  */
-import { fieldId, splitStar, dialCodes, sourceOptions, type FieldConfig, type Option } from '../../lib/forms';
+import { fieldId, splitStar, sourceOptions, type FieldConfig, type Option } from '../../lib/forms';
+import DialSelect from './DialSelect.astro';
 import type { Edition } from '../../lib/editions';
-import flagUae from '../../assets/page-form/flag-uae.svg';
-import chevDial from '../../assets/page-form/chevron-dial.svg';
 import chevSel from '../../assets/page-form/chevron-doctor.svg';
 import calendar from '../../assets/page-form/calendar.svg';
 import radioOn from '../../assets/page-form/radio-on.svg';
@@ -48,13 +47,7 @@ const opts: Option[] = f.source ? sourceOptions(f.source, edition) : (f.options 
       <label for={id} class:list={['pf-label', bold && 'rf-bold']}>{label}<span aria-hidden="true">{star}</span></label>
       {f.type === 'tel' ? (
         <>
-          <div class="pf-dial">
-            <select name={`${f.name}_code`} class="pf-box" aria-label={dialLabel}>
-              {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
-            </select>
-            <img src={flagUae.src} alt="" width="16.5" height="11" class="pf-flag" />
-            <img src={chevDial.src} alt="" width="7.24" height="4.207" class="pf-chev" />
-          </div>
+          <DialSelect name={f.name} edition={edition} label={dialLabel} variant="page" />
           <input id={id} name={f.name} type="tel" inputmode="tel" dir="ltr" required={f.required} maxlength={f.max} autocomplete={f.autocomplete ?? 'off'} placeholder={text.placeholder} aria-describedby={err} class="pf-box pf-tel rf-grow" />
         </>
       ) : f.type === 'select' ? (

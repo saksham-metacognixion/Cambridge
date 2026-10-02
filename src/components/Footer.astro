@@ -24,6 +24,10 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
 ---
 
 <footer class="ft relative bg-navy rounded-t-r30 font-gotham">
+  <!-- Reveal as on the live site: fade in + slide up when the footer enters view. Armed here so no-JS stays visible.
+       The parent clips while the footer is offset (it is the last thing on the page, so the offset would add scroll),
+       and the clip is dropped once the slide ends. -->
+  <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e,o){e[0].isIntersecting&&(f.classList.add("is-visible"),o.disconnect())},{threshold:.15}).observe(f);f.addEventListener("transitionend",function d(e){e.target===f&&e.propertyName==="transform"&&(w.style.overflow="",f.classList.remove("ft-armed","is-visible"),f.removeEventListener("transitionend",d))})}(document.currentScript.parentElement)</script>
   <div class="stage" style="--h: 368">
     <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt={c.logo.alt} />
 
@@ -72,6 +76,8 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
 </footer>
 
 <style>
+  .ft-armed { opacity: 0; transform: translateY(60px); transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .ft-armed.is-visible { opacity: 1; transform: none; }
   .ft ul { margin: 0; padding: 0; list-style: none; }
   .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
   .ft h2.text-f13 { line-height: normal; }

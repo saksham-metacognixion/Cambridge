@@ -62,11 +62,11 @@ const cards = design.map((d, i) => ({
       <p class="t-sub absolute start-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{txt.subtitle}</p>
     </div>
 
-    <div class="hscroll t-scroller absolute start-0 top-117 w-full h-231">
-      <div class="t-row relative h-231" style={`width:${u(1199)};margin-inline-start:${u(-96)}`}>
+    <div data-autoscroll class="hscroll t-scroller absolute start-0 top-117 w-full h-231">
+      <div data-loop-row class="t-row relative h-231" style={`width:${u(1199)};margin-inline-start:${u(-96)}`}>
         <span class="absolute start-0 top-0 w-0 h-0" style="scroll-snap-align:start" aria-hidden="true"></span>
         {cards.map((c) => (
-          <article class="t-card absolute top-0 w-185 h-231 overflow-hidden bg-white hair-card rounded-r15" style={`inset-inline-start:${u(c.x)};scroll-snap-align:start`}>
+          <article data-loop-item class="t-card absolute top-0 w-185 h-231 overflow-hidden bg-white hair-card rounded-r15" style={`inset-inline-start:${u(c.x)};scroll-snap-align:start`}>
             {c.order.map((k) => {
               if (k === 'pat') return c.pats.map((p) => (
                 <div class="absolute start-0 top-116 w-107 h-115 overflow-hidden rounded-es-r16" aria-hidden="true">
@@ -110,6 +110,10 @@ const cards = design.map((d, i) => ({
     </a>
   </div>
 </section>
+
+<script>
+  import '../../scripts/autoscroll';
+</script>
 
 <style>
   .pm {

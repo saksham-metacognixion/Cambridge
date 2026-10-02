@@ -9,26 +9,37 @@ import dots from '../../assets/dots/dots-hero.svg';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('home/hero', edition.locale);
-const banner = img(c.banner.image, edition.region);
+// Cursor-follow needs the banner split in two: the people (subject, moves) and the background (stays).
+// The layers are only used when they belong to the same picture as this region's banner: if a region has its
+// own banner but no layers of its own yet, it gets its flat banner, never another region's layers.
+// The flat banner itself is not in src/assets (only its Figma copy in figma-cache), so it isn't shipped unused;
+// a region-specific flat banner (src/assets/regions/<ae|sa>/hero/banner3.*) is still picked up here.
+const find = (key: string, region?: typeof edition.region) => { try { return img(key, region); } catch { return null; } };
+const own = (key: string) => { const r = find(key, edition.region); return !!r && r !== find(key); };
+const L = c.banner.layers;
+const layers = L && (own(c.banner.image) ? own(L.background) && own(L.subject) : true)
+  ? { background: img(L.background, edition.region), subject: img(L.subject, edition.region) }
+  : null;
+const bannerProps = {
+  formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(500), widths: [720, 1080, px(1052)],
+  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async',
+  class: 'absolute start-0 top-0 h-full w-full object-cover', pictureAttributes: { class: 'contents' },
+} as const;
 ---
 <!-- Hero: page y 117, --h 500. Spec y values are page y minus 117. -->
 <section class="relative" style="--h: 500" aria-label={c.ariaLabel}>
   <div class="stage max-lg:flex max-lg:min-h-[calc(500*var(--u))] max-lg:flex-col max-lg:justify-center max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(48*var(--u))]">
-    <Picture
-      src={banner}
-      formats={['avif']}
-      fallbackFormat="webp"
-      width={px(1052)}
-      height={px(500)}
-      widths={[720, 1080, px(1052)]}
-      sizes="(min-width: 1440px) 1440px, 100vw"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-      alt={c.banner.alt}
-      class="absolute start-0 top-0 h-full w-full object-cover"
-      pictureAttributes={{ class: 'contents' }}
-    />
+    {layers ? (
+      <>
+        <Picture src={layers.background} alt="" {...bannerProps} />
+        <!-- The mother and baby drift with the cursor (scripts/hero-follow.ts); clipped to the hero box. -->
+        <div data-hero-follow class="absolute inset-0 overflow-hidden">
+          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" {...bannerProps} />
+        </div>
+      </>
+    ) : (
+      <Picture src={img(c.banner.image, edition.region)} alt={c.banner.alt} fetchpriority="high" {...bannerProps} />
+    )}
     <Picture
       src={overlay}
       formats={['avif']}
@@ -58,6 +69,9 @@ const banner = img(c.banner.image, edition.region);
     </div>
 
     <!-- Static decorative pager dots (78:759), no behaviour -->
-    <img src={dots.src} width={41} height={8.716} alt="" aria-hidden="true" class="absolute start-506 top-420 h-[calc(8.716*var(--u))] w-41 max-lg:inset-x-0 max-lg:mx-auto max-lg:top-auto max-lg:bottom-[calc(20*var(--u))]" />
   </div>
 </section>
+
+<script>
+  import '../../scripts/hero-follow';
+</script>

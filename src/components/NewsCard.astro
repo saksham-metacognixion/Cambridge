@@ -1,0 +1,56 @@
+---
+// One News card in a Figma slot (x positions from News.astro). The Figma posts keep their exact image crop;
+// any other post (tab filters) fills the same image box with object-cover.
+import { Picture } from 'astro:assets';
+import { px } from '../lib/scale';
+import arrow from '../assets/news/arrow-icon-group33.svg';
+
+export type Crop = { h: string; l: string; t: string; w: string; iw: number; ratio: number };
+export type Slot = { x: number; w: number; hx: number; ex: number; ax: number };
+type Props = {
+  slot: Slot; F: number; crop?: Crop;
+  src: any; alt: string; title: string; text: string; readMore: { label: string; href: string };
+};
+const { slot: c, F, crop, src, alt, title, text, readMore } = Astro.props;
+const iw = crop ? crop.iw : c.w;
+---
+
+<article class="relative w-full max-w-289 lg:absolute lg:top-113 lg:h-[calc(var(--u)*362)]" style={`--cx:${c.x + F}; --w:${c.w}`} data-card>
+  <div class="relative overflow-hidden rounded-r21 shadow-news aspect-[289/220] lg:aspect-auto lg:h-220 w-full">
+    {crop ? (
+      <Picture
+        src={src}
+        formats={['avif']}
+        fallbackFormat="webp"
+        width={px(iw)}
+        height={Math.round(px(iw) * crop.ratio)}
+        widths={[px(iw), px(iw) * 2]}
+        sizes="(min-width: 1440px) 461px, (min-width: 1024px) 32vw, 90vw"
+        loading="lazy"
+        decoding="async"
+        alt={alt}
+        class="absolute max-w-none"
+        style={`height:${crop.h};inset-inline-start:${crop.l};top:${crop.t};width:${crop.w}`}
+      />
+    ) : (
+      <Picture
+        src={src}
+        formats={['avif']}
+        fallbackFormat="webp"
+        width={px(iw)}
+        height={px(220)}
+        widths={[px(iw), px(iw) * 2]}
+        sizes="(min-width: 1440px) 396px, (min-width: 1024px) 28vw, 90vw"
+        loading="lazy"
+        decoding="async"
+        alt={alt}
+        class="absolute inset-0 block w-full h-full object-cover"
+      />
+    )}
+  </div>
+  <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-241 lg:w-289" style={`--lx:${c.hx - c.x}`}>{title}</h3>
+  <p class="m-0 mt-10 font-normal text-f9 leading-11 text-body not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-320 lg:w-282 lg:h-44" style={`--lx:${c.ex - c.x}`}>{text}</p>
+  <a href={readMore.href} aria-label={readMore.label} class="hit block mt-10 lg:absolute lg:mt-0 lg:top-362" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
+    <img src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block w-full h-full" />
+  </a>
+</article>

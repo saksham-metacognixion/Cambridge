@@ -1,7 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
-import arrow from '../../assets/news/arrow-icon-group33.svg';
+import NewsCard from '../NewsCard.astro';
 import dots from '../../assets/news/divider-group622.svg';
 import line from '../../assets/news/line23.svg';
 import { content, t } from '../../lib/content';
@@ -12,42 +10,50 @@ import news from '../../data/news.json';
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/news', edition.locale);
 
-// ratio = intrinsic height/width of the source file. Hardcoded on purpose: reading c.src.width/height
+// crop.ratio = intrinsic height/width of the source file. Hardcoded on purpose: reading c.src.width/height
 // makes Astro copy the full-size original into dist.
 // Frame-relative Figma px (frame x = 60 => page x = value + 60). Card article origin = its image box.
-// Design per card, zipped by index with the posts listed (by slug) in home/news JSON.
 const F = 60;
 const design = [
   {
-    x: 0, w: 289, hx: 0, ex: 0, ax: 238,
-    img: { h: '100.02%', l: '-12.39%', t: '-0.01%', w: '116.51%' }, iw: 289 * 1.1651, ratio: 706 / 1080, th: 73,
+    slot: { x: 0, w: 289, hx: 0, ex: 0, ax: 238 },
+    crop: { h: '100.02%', l: '-12.39%', t: '-0.01%', w: '116.51%', iw: 289 * 1.1651, ratio: 706 / 1080 },
   },
   {
-    x: 313, w: 289, hx: 313, ex: 313, ax: 565,
-    img: { h: '100.12%', l: '-10.73%', t: '-0.06%', w: '116.61%' }, iw: 289 * 1.1661, ratio: 832 / 1273, th: 35,
+    slot: { x: 313, w: 289, hx: 313, ex: 313, ax: 565 },
+    crop: { h: '100.12%', l: '-10.73%', t: '-0.06%', w: '116.61%', iw: 289 * 1.1661, ratio: 832 / 1273 },
   },
   {
-    x: 627, w: 288, hx: 626, ex: 626, ax: 878,
-    img: { h: '102.73%', l: '-0.04%', t: '-2.73%', w: '100.07%' }, iw: 288 * 1.0007, ratio: 832 / 1061, th: 73,
+    slot: { x: 627, w: 288, hx: 626, ex: 626, ax: 878 },
+    crop: { h: '102.73%', l: '-0.04%', t: '-2.73%', w: '100.07%', iw: 288 * 1.0007, ratio: 832 / 1061 },
   },
 ];
+type Post = (typeof news.posts)[number] & { category?: string };
+const card = (post: Post) => ({
+  src: img(post.image, edition.region),
+  alt: t(post.imageAlt, edition.locale, 'news'),
+  title: t(post.title, edition.locale, 'news'),
+  text: t(post.excerpt, edition.locale, 'news'),
+});
+// Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, with their Figma crops.
 const cards = design.map((d, i) => {
   const slug: string = txt.posts[i];
   const post = news.posts.find((n) => n.slug === slug);
   if (!post) throw new Error(`home/news: unknown post slug "${slug}"`);
-  return {
-    ...d,
-    src: img(post.image, edition.region),
-    alt: t(post.imageAlt, edition.locale, 'news'),
-    title: t(post.title, edition.locale, 'news'),
-    text: t(post.excerpt, edition.locale, 'news'),
-  };
+  return { ...d, ...card(post) };
 });
+// Tabs: filterCategories (home/news JSON) pairs each pill with a `category` value on the posts in news.json.
+// Each tab's first 3 posts are rendered into a <template>; a category with no posts yet gets no template and its
+// tab keeps the default cards.
 const pillX = [321, 420, 519];
-const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
+const pills = pillX.map((x, i) => {
+  const key: string = txt.filterCategories[i];
+  const posts = (news.posts as Post[]).filter((n) => n.category === key).slice(0, design.length);
+  return { label: txt.filters[i] as string, x, key, sets: posts.map((post, j) => ({ slot: design[j].slot, ...card(post) })) };
+});
 ---
 
-<section id="news" class="relative bg-white font-gotham" style="--h: 590">
+<section id="news" data-news class="relative bg-white font-gotham" style="--h: 590">
   <div class="stage max-lg:px-16 max-lg:py-30">
     <h2 class="m-0 font-medium text-f28 leading-27 text-navy text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-305 lg:top-0 lg:w-430 lg:h-27">{txt.title}</h2>
 
@@ -55,40 +61,24 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
       {pills.map((p) => (
         <button
           type="button"
-          class="hit hair-100 border-navy rounded-r12 bg-transparent p-0 pt-7 h-25 w-79 box-border font-gotham font-medium text-f10 leading-10 text-navy text-center not-italic cursor-pointer lg:absolute lg:top-51"
+          aria-pressed="false"
+          aria-controls="news-cards"
+          data-news-tab={p.key}
+          class="news-tab hit hair-100 border-navy rounded-r12 bg-transparent p-0 flex items-center justify-center h-25 w-79 box-border font-gotham font-medium text-f10 leading-10 text-navy text-center not-italic cursor-pointer lg:absolute lg:top-51"
           style={`--x:${p.x + F}`}
           data-x
         >{p.label}</button>
       ))}
     </div>
 
-    <div class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40 lg:contents">
-      {cards.map((c) => (
-        <article class="relative w-full max-w-289 lg:absolute lg:top-113 lg:h-[calc(var(--u)*362)]" style={`--cx:${c.x + F}; --w:${c.w}`} data-card>
-          <div class="relative overflow-hidden rounded-r21 shadow-news aspect-[289/220] lg:aspect-auto lg:h-220 w-full">
-            <Picture
-              src={c.src}
-              formats={['avif']}
-              fallbackFormat="webp"
-              width={px(c.iw)}
-              height={Math.round(px(c.iw) * c.ratio)}
-              widths={[px(c.iw), px(c.iw) * 2]}
-              sizes="(min-width: 1440px) 461px, (min-width: 1024px) 32vw, 90vw"
-              loading="lazy"
-              decoding="async"
-              alt={c.alt}
-              class="absolute max-w-none"
-              style={`height:${c.img.h};inset-inline-start:${c.img.l};top:${c.img.t};width:${c.img.w}`}
-            />
-          </div>
-          <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-241 lg:w-289" style={`--lx:${c.hx - c.x}`}>{c.title}</h3>
-          <p class="m-0 mt-10 font-normal text-f9 leading-11 text-body not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-320 lg:w-282 lg:h-44" style={`--lx:${c.ex - c.x}`}>{c.text}</p>
-          <a href={txt.readMore.href} aria-label={txt.readMore.label} class="hit block mt-10 lg:absolute lg:mt-0 lg:top-362" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
-            <img src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block w-full h-full" />
-          </a>
-        </article>
-      ))}
+    <div id="news-cards" data-news-cards class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40 lg:contents">
+      {cards.map((c) => <NewsCard F={F} readMore={txt.readMore} {...c} />)}
     </div>
+    {pills.filter((p) => p.sets.length).map((p) => (
+      <template data-news-set={p.key}>
+        {p.sets.map((c) => <NewsCard F={F} readMore={txt.readMore} {...c} />)}
+      </template>
+    ))}
 
     <img src={dots.src} width={dots.width} height={dots.height} alt="" class="hidden lg:block absolute start-506 top-544" style="width:calc(40.972 * var(--u));height:calc(8.716 * var(--u))" />
     <div class="hidden lg:block absolute start-60 -rotate-[0.31deg]" style="top:calc(587.375 * var(--u));width:calc(915.014 * var(--u));height:calc(0.25 * var(--u))">
@@ -97,10 +87,23 @@ const pills = pillX.map((x, i) => ({ label: txt.filters[i] as string, x }));
   </div>
 </section>
 
+<script>
+  import '../../scripts/news-tabs';
+</script>
+
 <style>
   @media (min-width: 1024px) {
     [data-x] { inset-inline-start: calc(var(--x) * var(--u)); }
-    [data-card] { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
-    [data-card] > :not(:first-child) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
+    [data-news] :global([data-card]) { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
+    [data-news] :global([data-card] > :not(:first-child)) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
+  }
+  /* Selected tab: the filled pill Figma uses in Care Support (navy, white text). The border stays, in navy, so the
+     label doesn't move by the border width. */
+  .news-tab[aria-pressed='true'] { background: var(--color-navy, #004059); border-color: var(--color-navy, #004059); color: #fff; }
+  /* Tab switch, as on the live site: cards fade out, the set swaps, cards fade back in (script below). */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-news] :global([data-card]) { transition: opacity 250ms ease; }
+    [data-news] :global([data-news-cards].is-fading [data-card]) { opacity: 0.15; }
+    [data-news] :global([data-card].is-entering) { opacity: 0; }
   }
 </style>

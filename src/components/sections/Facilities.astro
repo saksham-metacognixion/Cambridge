@@ -110,10 +110,11 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     </div>
 
     <!-- Stats -->
-    <div class="stats grid grid-cols-2 gap-x-6 gap-y-6 w-full max-w-[calc(360*var(--u))] lg:contents">
+    <div data-countup-group class="stats grid grid-cols-2 gap-x-6 gap-y-6 w-full max-w-[calc(360*var(--u))] lg:contents">
       {stats.map((s) => (
         <p class="dpos m-0 font-gotham font-medium text-white not-italic leading-[1.147] whitespace-normal [word-break:break-word]" style={`--x:${s.x};--y:${s.y - 2054};--w:${s.w}`}>
-          <span class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
+          <span class="sr-only">{s.n}</span>
+          <span data-countup aria-hidden="true" class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
           <span class="block text-f12">{s.l}</span>
         </p>
       ))}
@@ -124,6 +125,10 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     <span class="vline dpos" aria-hidden="true" style="--x:826;--y:694;--w:0.15;--h:38"><img src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
   </div>
 </section>
+
+<script>
+  import '../../scripts/countup';
+</script>
 
 <style>
   img { max-width: none; }

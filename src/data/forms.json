@@ -37,6 +37,15 @@
         { "name": "message", "label": "Message", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "details" } }
       ]
     },
+    "home-contact": {
+      "subject": "Get in touch with us (Home)",
+      "inbox": "send-enquiry",
+      "fields": [
+        { "name": "name", "label": "Your Name", "type": "text", "required": true, "max": 120, "autocomplete": "name" },
+        { "name": "email", "label": "Email Address", "type": "email", "required": true, "max": 200, "autocomplete": "email" },
+        { "name": "message", "label": "Message", "type": "textarea", "required": true, "max": 4000 }
+      ]
+    },
     "refer-patient": {
       "subject": "Refer a Patient",
       "inbox": "refer-patient",

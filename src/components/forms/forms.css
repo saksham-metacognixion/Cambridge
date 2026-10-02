@@ -13,7 +13,7 @@
   background: transparent; overflow: auto; overscroll-behavior: contain;
   font-family: var(--font-gotham); color: var(--color-navy);
 }
-.modal[open] { display: grid; place-items: center; }
+.modal[open] { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; }
 /* Backdrop = Figma "Rectangle 132": rgba(217,217,217,.2) + GLASS radius 8 (approximated as a background blur). */
 .modal::backdrop {
   background: rgba(217, 217, 217, 0.2);

@@ -1,0 +1,57 @@
+---
+/*
+ * Send an Inquiry pop-up — Figma 101:6336, spec figma-cache/forms-spec.md. Scope form "Send an Enquiry" (pop-up);
+ * posts to send-enquiry-popup, which reaches the same inbox as the Contact page form. Opened by every #send-inquiry link.
+ * Panel 321 wide; values are Figma px from the panel's top-left.
+ */
+import Modal from './Modal.astro';
+import FormShell from './FormShell.astro';
+import GlassField from './GlassField.astro';
+import { content } from '../../lib/content';
+import { commonText, fieldsIn } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+
+interface Props { edition: Edition }
+const { edition } = Astro.props;
+const ID = 'send-enquiry-popup';
+const c = content('forms/inquiry', edition.locale);
+const common = commonText(edition.locale);
+const area = { w: 256, h: 115.552, px: 13, py: 10.4, fs: 10 };
+---
+
+<Modal id={ID} titleId={`${ID}-title`} closeLabel={common.close} panelClass="p-inquiry">
+  <h2 id={`${ID}-title`} class="gf-title i-title">{c.title}</h2>
+  <hr class="i-divider" />
+  <FormShell
+    id={ID}
+    edition={edition}
+    submit={c.submit}
+    ariaLabelledby={`${ID}-title`}
+    button={{ w: 99.169, h: 33.056, r: 9.917, fs: 9.917, ty: 11.9 }}
+    gaps={{ consent: 14, submit: 22.34 }}
+  >
+    <div class="i-col">
+      {fieldsIn(ID, 'details').map((f) => (
+        <GlassField form={ID} edition={edition} dialLabel={common.dialCodeLabel} field={f} text={c.fields[f.name] ?? {}} area={f.type === 'textarea' ? area : undefined} />
+      ))}
+    </div>
+  </FormShell>
+</Modal>
+
+<style>
+  /* Panel 321 x 399 (grows by the consent row). Content column 256.037 wide, centred: x 32.48. */
+  :global(.p-inquiry) { inline-size: calc(321 * var(--u)); padding: calc(24 * var(--u)) calc(32.48 * var(--u)) calc(17.394 * var(--u)); }
+  :global(.p-inquiry .f-submit) { inset-inline-start: calc(0.58 * var(--u)); }   /* Figma: 0.58 right of centre */
+  /* Title top 24, centred 1 right; the divider line (0.5 white, round caps, 251 wide, 0.5 right of centre) at 51.05 */
+  .i-title { min-block-size: calc(27.05 * var(--u)); margin-inline-start: calc(2 * var(--u)); }
+  .i-divider {
+    box-sizing: border-box; block-size: calc(0.5 * var(--u)); inline-size: calc(251 * var(--u)); max-inline-size: 100%;
+    margin: 0; margin-inline-start: calc(3.02 * var(--u)); border: 0; border-radius: calc(0.25 * var(--u)); background: #fff;
+  }
+  /* Fields column top 73.55, gap 14; the Mobile row is 32 tall in Figma (boxes 31.554). */
+  .i-col { display: flex; flex-direction: column; gap: calc(14 * var(--u)); margin-block-start: calc(22 * var(--u)); }
+  .i-col > :global([data-field='mobile'] .gf-row) { min-block-size: calc(32 * var(--u)); }
+  @media (max-width: 1023.98px) {
+    .i-divider { inline-size: 100%; margin-inline-start: 0; }
+  }
+</style>

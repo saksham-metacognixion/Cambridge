@@ -1,0 +1,86 @@
+{
+  "_note": "Accidents Rehabilitation (Figma 41:2373). Text exactly as in Figma. Links: [label](href); '@path' = page inside the edition. Figma links point to cmrc.com: stroke / TBI mapped to this site's condition pages; 'Rehabilitation' (post-acute) and 'professional help' (meet the team) keep the Figma cmrc.com URLs until those pages exist (flagged). Only the first tab has content in Figma; the other 6 are pending. meta.* = PLACEHOLDER.",
+  "meta": {
+    "title": "Accidents Rehabilitation | Cambridge Hospital",
+    "description": "Rehabilitation after road traffic accidents and traumatic injuries at Cambridge Hospital: physical, occupational and speech therapy to restore function and independence."
+  },
+  "hero": {
+    "ariaLabel": "Accidents Rehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Accidents Rehabilitation"
+    ],
+    "text": "24/7 inpatient care with expert medical supervision, nursing support, and rehabilitation services tailored to your recovery.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 66,
+    "titleW": 385,
+    "textGap": 10,
+    "textW": 374,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Accidents can cause serious physical and emotional trauma requiring immediate care. After emergency treatment, patients benefit from specialized rehabilitation to regain function and overcome challenges."
+  ],
+  "tabs": {
+    "active": 0,
+    "items": [
+      {
+        "label": "What is Accident Rehabilitation?",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "[Rehabilitation](https://cmrc.com/inpatient-services/post-acute-rehabilitation/), or rehab, is a special form of care that enables people who have suffered a traumatic event or injury to regain their regular bodily and mental function. People go into rehab for a variety of reasons, including to recover from drug abuse, restore their mental health, regain their physical function after a [stroke](@conditions-specialities/stroke-rehabilitation) or other brain injuries, or to recover from a serious accident."
+          },
+          {
+            "type": "p",
+            "text": "After an accident, the victim must get the medical attention they need, especially if they have experienced a serious personal injury. Some more serious examples of injury include [traumatic brain injury (TBI)](@conditions-specialities/traumatic-brain-injury), penetrating head injury, a harsh blow to the head that can lead to more tedious medical conditions, skull fractures, or any other kind of traumatic damage to the brain which compromises their brain functions."
+          },
+          {
+            "type": "p",
+            "text": "A rehabilitation hospital can provide suitable medical care to patients who have experienced such traumatic brain injuries, traumatic events, and more. First, the patient will be taken to the emergency room (ER) in a hospital and may have to undergo an emergency medical procedure, like surgery."
+          },
+          {
+            "type": "p",
+            "text": "After the patient regains consciousness, they will need [professional help](https://cmrc.com/about-cmrc/meet-the-team/) in learning how to regain the ability to perform regular tasks, like walking, eating, talking, and bathing. This is especially true for patients who have experienced brain injuries or broken bones, which put them in a mentally and physically compromised state, respectively."
+          },
+          {
+            "type": "p",
+            "text": "When this happens, it is important to seek a trained rehab center with professionals who can teach them how to regain full mind and body consciousness and become a functioning member of society once again."
+          }
+        ]
+      },
+      {
+        "label": "How Trauma Affects the Brain?",
+        "blocks": []
+      },
+      {
+        "label": "Injury Rehabilitation Types",
+        "blocks": []
+      },
+      {
+        "label": "Occupational Rehabilitation Therapy",
+        "blocks": []
+      },
+      {
+        "label": "Physical Rehabilitation Therapy",
+        "blocks": []
+      },
+      {
+        "label": "Speech Therapy",
+        "blocks": []
+      },
+      {
+        "label": "Accident Rehabilitation: Restoring Hope",
+        "blocks": []
+      }
+    ]
+  }
+}

@@ -861,5 +861,10 @@
     "Vector sliders icon (67:2882)": "src/assets/conditions/sort.svg",
     "chevron 67:2878": "= src/assets/doctors-page/chevron.svg (identical bytes)",
     "recovery icons": "= src/assets/contact-page/cta-*.svg"
+  },
+  "condition-detail": {
+    "41:1732 PAR-inside 1 (Accidents)": "src/assets/conditions/accidents-rehabilitation.png (1052x323 only)",
+    "67:3071 PAR-inside 1 (Stroke)": "src/assets/conditions/stroke-rehabilitation.png (1052x323 only)",
+    "doctors/band icons": "= existing doctors-page / contact-page assets"
   }
 }

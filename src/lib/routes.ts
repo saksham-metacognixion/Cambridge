@@ -5,7 +5,7 @@
  */
 import { DOCTOR_PATHS, profileDoctors } from './doctors';
 import { PAGE_PATHS } from './paths';
-import { CONDITION_PATHS } from './conditions';
+import { CONDITION_PATHS, allDetailSlugs } from './conditions';
 
 export interface PageRoute {
   key: string;
@@ -22,6 +22,7 @@ export function allRoutes(): PageRoute[] {
     { key: 'patient-feedback', path: PAGE_PATHS.patientFeedback },
     { key: 'find-a-doctor', path: DOCTOR_PATHS.list },
     { key: 'conditions', path: CONDITION_PATHS.list },
+    ...allDetailSlugs.map((slug) => ({ key: `condition-${slug}`, path: CONDITION_PATHS.detail(slug) })),
     ...profileDoctors.map((d) => ({ key: `doctor-${d.slug}`, path: DOCTOR_PATHS.profile(d.slug) })),
   ];
 }

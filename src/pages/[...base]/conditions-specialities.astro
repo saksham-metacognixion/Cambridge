@@ -5,7 +5,7 @@ import { CONDITION_PATHS } from '../../lib/conditions';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import DoctorsHero from '../../components/doctors/DoctorsHero.astro';
+import PageHero from '../../components/shared/PageHero.astro';
 import ConditionList from '../../components/conditions/ConditionList.astro';
 import ContactRecovery from '../../components/contact/ContactRecovery.astro';
 
@@ -26,7 +26,7 @@ const c = content('conditions-specialities/page', edition.locale);
     <Header />
   </div>
   <main>
-    <div id="hero" class="relative"><DoctorsHero content={c.hero} /></div>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
     <div id="conditions" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))"><ConditionList /></div>
     <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(69 * var(--u))">
       <ContactRecovery content={c.recovery} headTop={50} />

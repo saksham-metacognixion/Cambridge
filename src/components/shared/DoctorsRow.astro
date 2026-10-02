@@ -3,26 +3,28 @@ import { content } from '../../lib/content';
 import { parsePath } from '../../lib/editions';
 import { profileDoctors } from '../../lib/doctors';
 import DoctorCard from '../doctors/DoctorCard.astro';
-import HubIntro from './HubIntro.astro';
+import SectionIntro from './SectionIntro.astro';
 
 /*
  * "Expert Care, Trusted Doctors" (Figma 59:13952 + 4 cards 59:14048/13990/14077/14019), section top = H2 top (page y 1994).
  * Same card as Find a Doctor (DoctorCard); columns at the exact Figma x 48 / 294 / 541 / 788 (gaps 31 / 32 / 32), 215 wide, "See More" only.
  * Wael's role text is 8px/10 + capitalize in Figma; made identical to the other cards on purpose (user decision 2 Oct).
- * Gaps: H2 box (h33) -> text 3; text box (h26) -> cards 13. Which doctors: slugs in patient-hub/page JSON.
+ * Gaps: H2 box (h33) -> text 3; text box (h26) -> cards 13. Identical on the condition detail pages (41:1924..41:2049) and
+ * Refer a Patient. Content (heading, text, listLabel, doctor slugs) comes from the page JSON via `content`.
  */
+interface Props { content: { heading: string; text: string; listLabel: string; slugs: string[] }; id?: string }
 const { edition } = parsePath(Astro.url.pathname);
-const d = content('patient-hub/page', edition.locale).doctors;
+const { content: d, id = 'doctors-heading' } = Astro.props;
 const labels = content('doctors/page', edition.locale).card;
 const doctors = d.slugs.map((slug: string) => {
   const doc = profileDoctors.find((x) => x.slug === slug);
-  if (!doc) throw new Error(`patient-hub doctors: unknown doctor slug "${slug}" (src/data/doctors.json)`);
+  if (!doc) throw new Error(`DoctorsRow: unknown doctor slug "${slug}" (src/data/doctors.json)`);
   return doc;
 });
 ---
 
-<section class="docs" aria-labelledby="hub-doctors-heading">
-  <HubIntro id="hub-doctors-heading" heading={d.heading} text={d.text} gap={3} minH={26} />
+<section class="docs" aria-labelledby={id}>
+  <SectionIntro id={id} heading={d.heading} text={d.text} gap={3} minH={26} />
   <ul class="grid" role="list" aria-label={d.listLabel}>
     {doctors.map((doc: any) => (
       <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>

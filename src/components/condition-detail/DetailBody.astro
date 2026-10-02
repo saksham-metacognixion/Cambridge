@@ -1,0 +1,107 @@
+---
+import RichText from '../shared/RichText.astro';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * Overview + topic tabs of the condition / service detail template (Figma 41:2373 Accidents = reference, 67:3070 Stroke).
+ * Section top = the "Overview" H2 top (page y 475 = hero end 441 + 34). Figma px:
+ *   H2 41:1922 Medium 28 #00415a at x56, box h33 | 12 | intro 41:1920 Book 12/14 #6b6b6b at x58, w937 (paragraphs
+ *   separated by one empty 14px line) | 33 | tabs at x56: 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25;
+ *   active #418ea2 white + text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059.
+ *   Panel at x385 (18 right of the tabs), 1 below the tabs top, w610, Book 12/14 #6b6b6b: empty 14px line between blocks;
+ *   sub-heading Medium #00415a; lead line #418ea2 (line 22, no gap after the heading or before its list); bullets 18 in,
+ *   first item line box 18.
+ * Normalised to Accidents (first frame): Stroke's intro->tabs gap 30 -> 33; first tab #f4f4f4/#00415a -> as the others;
+ *   active label Medium without shadow -> Book with shadow; label widths 237/265 -> 265; panel top +1; lead line 14 -> 22,
+ *   empty line between heading and lead removed. The section ends 34 above the navy band, below the taller column.
+ * Tabs: ARIA tabs (vertical): arrows / Home / End move between them; src/scripts/detail-tabs.ts. Without JS the
+ * selected topic stays visible.
+ */
+type Block =
+  | { type: 'p' | 'h' | 'lead'; text: string }
+  | { type: 'ul'; items: (string | string[])[] };
+interface Props {
+  edition: Edition;
+  heading: string;
+  overview: string[];
+  tabs?: { active: number; items: { label: string; blocks: Block[] }[] };
+  tabsLabel: string;
+  pendingTab?: string | null;
+}
+const { edition, heading, overview, tabs, tabsLabel, pendingTab } = Astro.props;
+const items = tabs?.items ?? [];
+const active = Math.min(tabs?.active ?? 0, Math.max(items.length - 1, 0));
+---
+
+<section class="detail" aria-labelledby="overview-heading">
+  <h2 id="overview-heading" class="h">{heading}</h2>
+  <div class="intro">
+    {overview.map((p) => <p><RichText text={p} edition={edition} /></p>)}
+  </div>
+
+  {items.length > 0 && (
+    <div class="topics" data-detail-tabs>
+      <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={tabsLabel}>
+        {items.map((t, i) => (
+          <button type="button" role="tab" id={`tab-${i}`} class="tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={`panel-${i}`} tabindex={i === active ? 0 : -1}>
+            <span class="tab-label">{t.label}</span>
+          </button>
+        ))}
+      </div>
+      <div class="panels">
+        {items.map((t, i) => (
+          <div role="tabpanel" id={`panel-${i}`} class="panel" aria-labelledby={`tab-${i}`} tabindex="0" hidden={i !== active}>
+            {t.blocks.length === 0 && pendingTab && <p class="pending">{pendingTab}</p>}
+            {t.blocks.map((b) =>
+              b.type === 'ul' ? (
+                <ul class="ul">
+                  {b.items.map((it) => (
+                    <li>{Array.isArray(it) ? it.map((line, k) => (k === 0 ? line : <><br />{line}</>)) : it}</li>
+                  ))}
+                </ul>
+              ) : b.type === 'h' ? (
+                <h3 class="sub">{b.text}</h3>
+              ) : (
+                <p class={b.type}><RichText text={b.text} edition={edition} /></p>
+              ),
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</section>
+
+<style>
+  .detail { max-width: calc(var(--target-w) * 1px); margin-inline: auto; padding-inline: calc(16 * var(--u)); box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .intro { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .intro p { margin: 0; overflow-wrap: anywhere; }
+  .intro p + p { margin-top: calc(14 * var(--u)); }
+  .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); margin-top: calc(33 * var(--u)); }
+  .tablist { display: flex; flex-direction: column; gap: calc(2 * var(--u)); }
+  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(63 * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(24 * var(--u)) calc(22 * var(--u)); border: 0; border-radius: 0; background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(13 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
+  .tab[aria-selected='true'] { background: var(--color-teal-border); color: #fff; text-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25); }
+  .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
+  .tab-label { max-width: calc(265 * var(--u)); overflow-wrap: anywhere; }
+  .panel { color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .panel:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(4 * var(--u)); }
+  .panel[hidden] { display: none; }
+  .panel > * { margin: calc(14 * var(--u)) 0 0; overflow-wrap: anywhere; }
+  .panel > :first-child { margin-top: 0; }
+  .panel > .sub + .lead, .panel > .lead + .ul { margin-top: 0; }
+  .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
+  .lead { color: var(--color-teal-border); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
+  .ul { list-style: disc; padding: 0; }
+  .ul li { margin-inline-start: calc(18 * var(--u)); }
+  .ul li:first-child { padding-block: calc(2 * var(--u)); } /* Figma: first line box 18 (14 + 2 + 2) */
+  .pending { font-style: italic; color: var(--color-body); }
+  @media (min-width: 1024px) {
+    .detail { padding-inline: 0; }
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .intro { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .topics { flex-direction: row; align-items: flex-start; gap: 0; margin-inline-start: calc(56 * var(--u)); }
+    .tablist { flex: none; width: calc(311 * var(--u)); }
+    .panels { flex: none; width: calc(610 * var(--u)); margin-top: calc(1 * var(--u)); margin-inline-start: calc(18 * var(--u)); }
+  }
+</style>

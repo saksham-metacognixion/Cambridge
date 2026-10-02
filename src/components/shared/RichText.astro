@@ -1,0 +1,21 @@
+---
+import { segments } from '../../lib/richtext';
+import type { Edition } from '../../lib/editions';
+
+/* Text with inline "[label](href)" links (src/lib/richtext.ts). Renders inline content only; the caller wraps it. */
+interface Props { text: string; edition: Edition }
+const { text, edition } = Astro.props;
+---
+
+{segments(text, edition).map((s) =>
+  s.href ? (
+    <a href={s.href} class="rt-link" {...(s.external ? { target: '_blank', rel: 'noopener' } : {})}>{s.text}</a>
+  ) : (
+    s.text
+  ),
+)}
+
+<style>
+  .rt-link { color: inherit; text-decoration: underline; text-decoration-skip-ink: none; text-underline-position: from-font; }
+  .rt-link:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(1 * var(--u)); }
+</style>

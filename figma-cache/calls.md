@@ -96,3 +96,6 @@ SUMMARY after 59: this session 10 get_screenshot. Dev-seat calls today (all sess
 Built pages compared against the cached same-day screenshots of this file (#27 32:826, #31 62:179, #43 76:735): no re-fetch.
 60. get_design_context 40:318 Conditions & Specialities (no screenshot: #50 is the target) -> FULL code (78k) -> figma-cache/raw/conditions-40-318.tsx, conditions-spec.md, assets/conditions/* (54)
 SUMMARY after 60: batch-2 session 11 (10 screenshots + 1 context). Dev-seat calls today (all sessions): 29.
+61. get_design_context 41:2373 Accidents Rehabilitation (no screenshot: #57 is the target) -> FULL -> raw/accidents-41-2373.tsx, assets/condition-accidents/* (62)
+62. get_design_context 67:3070 Stroke Rehabilitation (frame named "Accidents Rehabilitation") -> FULL -> raw/stroke-67-3070.tsx, assets/condition-stroke/* (62)
+SUMMARY after 62: batch-2 session 13. Dev-seat calls today (all sessions): 31.

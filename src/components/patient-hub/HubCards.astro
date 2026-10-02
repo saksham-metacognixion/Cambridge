@@ -5,7 +5,7 @@ import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
-import HubIntro from './HubIntro.astro';
+import SectionIntro from '../shared/SectionIntro.astro';
 
 /*
  * "Everything You Need, In One Place" (Figma 59:13951 + cards 76:728-76:733), section top = H2 top (page y 578).
@@ -23,7 +23,7 @@ const cards = s.cards.map((c: any) => ({ ...c, src: img(c.image, edition.region)
 ---
 
 <section class="hub" aria-labelledby="hub-services-heading">
-  <HubIntro id="hub-services-heading" heading={s.heading} text={s.text} gap={12} minH={28} />
+  <SectionIntro id="hub-services-heading" heading={s.heading} text={s.text} gap={12} minH={28} />
   <ul class="grid" role="list">
     {cards.map((c: any) => (
       <li class="cell">

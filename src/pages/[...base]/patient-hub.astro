@@ -5,9 +5,9 @@ import { PAGE_PATHS, pagePath } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import DoctorsHero from '../../components/doctors/DoctorsHero.astro';
+import PageHero from '../../components/shared/PageHero.astro';
 import HubCards from '../../components/patient-hub/HubCards.astro';
-import HubDoctors from '../../components/patient-hub/HubDoctors.astro';
+import DoctorsRow from '../../components/shared/DoctorsRow.astro';
 import ContactRecovery from '../../components/contact/ContactRecovery.astro';
 
 export const getStaticPaths = editionPaths;
@@ -25,7 +25,7 @@ const recovery = { ...c.recovery, tiles: c.recovery.tiles.map((t: any) => (t.pag
 const sections = [
   { id: 'services', C: HubCards, props: {}, mt: 22 },
   { id: 'recovery', C: ContactRecovery, props: { content: recovery, headTop: 50 }, mt: 67.68 },
-  { id: 'doctors', C: HubDoctors, props: {}, mt: 53 },
+  { id: 'doctors', C: DoctorsRow, props: { content: c.doctors, id: 'hub-doctors-heading' }, mt: 53 },
 ];
 ---
 
@@ -35,7 +35,7 @@ const sections = [
   </div>
   <main>
     <div id="hero" class="relative">
-      <DoctorsHero content={c.hero} pos={{ titleTop: 171, titleW: 422, textTop: 218, textW: 389, buttonTop: 268 }} />
+      <PageHero content={c.hero} pos={{ titleTop: 171, titleW: 422, textGap: 10, textW: 389, buttonGap: 8 }} />
     </div>
     {
       sections.map(({ id, C, props, mt }) => (

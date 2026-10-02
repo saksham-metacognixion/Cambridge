@@ -1,0 +1,33 @@
+{
+  "_note": "Shared parts of the condition / service detail template (Figma 41:2373 Accidents Rehabilitation, 67:3070 Stroke Rehabilitation). Visible text exactly as in Figma. pending.* and the generated-page defaults are NOT in Figma (PLACEHOLDER).",
+  "overviewHeading": "Overview",
+  "tabsLabel": "Topics",
+  "pending": {
+    "note": "Content pending: this page is generated from the condition card until the full text is supplied.",
+    "tab": "Content pending for this topic."
+  },
+  "generated": {
+    "_note": "Pages without a content file (src/data/content/conditions/<slug>.en.json): hero title = card title, overview = card summary. Hero image + button are PLACEHOLDERS (Accidents Rehabilitation image), flagged.",
+    "banner": { "image": "conditions/accidents-rehabilitation", "alt": "" },
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" },
+    "metaTitle": "{title} | Cambridge Hospital"
+  },
+  "recovery": {
+    "ariaLabel": "Your recovery matters to us",
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "Your recovery matters to us,",
+    "emphasis": [" and we are with you every step of", "the journey."],
+    "tiles": [
+      { "label": "Book an Appointment", "href": "#book-appointment" },
+      { "label": "Find a Doctor", "href": "#", "page": "findDoctor" },
+      { "label": "Search Conditions", "href": "#", "page": "conditions" },
+      { "label": "Send an Inquiry", "href": "#send-inquiry" }
+    ]
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+  }
+}

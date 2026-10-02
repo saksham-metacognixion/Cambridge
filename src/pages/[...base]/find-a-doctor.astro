@@ -5,7 +5,7 @@ import { filterHospitals, DOCTOR_PATHS } from '../../lib/doctors';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import DoctorsHero from '../../components/doctors/DoctorsHero.astro';
+import PageHero from '../../components/shared/PageHero.astro';
 import DoctorFilters from '../../components/doctors/DoctorFilters.astro';
 import DoctorGrid from '../../components/doctors/DoctorGrid.astro';
 import ContactRecovery from '../../components/contact/ContactRecovery.astro';
@@ -27,7 +27,7 @@ const c = content('doctors/page', edition.locale);
     <Header />
   </div>
   <main>
-    <div id="hero" class="relative"><DoctorsHero /></div>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
     <div data-doctor-filters data-region={edition.region} class="lg:mx-auto lg:max-w-[calc(var(--target-w)*1px)]">
       <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(30 * var(--u))"><DoctorFilters /></div>
       <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(31 * var(--u))"><DoctorGrid /></div>

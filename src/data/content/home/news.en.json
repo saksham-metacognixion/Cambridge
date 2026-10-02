@@ -1,6 +1,7 @@
 {
   "title": "News & Insights",
   "filters": ["Blogs", "News", "Events"],
+  "filterCategories": ["blog", "news", "event"],
   "posts": ["cambridge-hospital-al-khobar", "abdullah-success-story", "dr-robert-kassab-sabah-al-arabiya"],
   "readMore": { "label": "Read more", "href": "#" }
 }

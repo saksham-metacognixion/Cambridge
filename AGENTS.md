@@ -20,8 +20,10 @@ Read this file at the start of every session and follow it for all work.
   another font. If files are missing, keep the `font-family` rule and ask.
 - Animations as in Figma: hero image that follows the cursor, and the doctor animation. Smooth on laptop
   and mobile.
-- Doctors / Testimonials rows overflow the frame in Figma: CSS scroll-snap rows, swipe/scroll only,
-  no autoplay, no arrows or dots unless Figma shows them.
+- Doctors / Testimonials rows overflow the frame in Figma: CSS scroll-snap rows, swipe/scroll, no arrows or
+  dots unless Figma shows them. Exception (user decision, 2 Oct 2026, matching the live site): Testimonials and
+  Care Support rows auto-scroll in a slow seamless loop (`src/scripts/autoscroll.ts`) — pauses on hover/focus/touch,
+  off with prefers-reduced-motion, clones aria-hidden + inert. Doctors row: still no autoplay.
 - If exact Figma colours fail WCAG AA contrast on buttons/text, do NOT change them silently — flag it and ask.
 
 ## 3. Figma MCP usage

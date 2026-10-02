@@ -17,5 +17,5 @@ PATTERN BOX (107x115): children = masked elements. Each element: absolute with i
   insets: A "4.11% 3.42% -12.46% -20.43%" ; B "4.11% -186.3% -12.46% 169.29%" ; C "4.11% -376.02% -12.46% 359.01%" ; D "4.11% -185.36% -12.46% 168.36%"
   c0: A,B | c203: A,B | c406: A,B | c609: A,B,B,C | c812: A,B,B,C,D | c1014: A,B,B,C,D
 Button group 81:825: bg #00b8ff radius 7 166x30 @539,391 ; text "View More Stories" Gotham Medium 13px white centered cx621.5 top400 w145 h15 lh normal
-Interaction (user): CSS scroll-snap row, swipe/scroll only, no arrows/dots/autoplay.
+Interaction (user): CSS scroll-snap row, swipe/scroll, no arrows/dots. Auto-scroll loop added 2 Oct 2026 at the user's request (live-site behaviour, see src/scripts/autoscroll.ts).
 NOTE: introduces Gotham BOLD (700), a 4th weight -> tell user.

@@ -47,11 +47,11 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
       <button type="button" aria-pressed="false" class="hit pill bg-transparent text-navy hair-100 border-navy" style="--x:200">{c.filters[2]}</button>
     </div>
 
-    <div class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
-      <ul class="row flex gap-[calc(24*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0 m-0 list-none">
+    <div data-autoscroll class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
+      <ul data-loop-row class="row flex gap-[calc(24*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0 m-0 list-none">
         <li class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></li>
         {tiles.map((t) => (
-          <li class="tile relative shrink-0 snap-start" style={`--l:${t.x}`}>
+          <li data-loop-item class="tile relative shrink-0 snap-start" style={`--l:${t.x}`}>
             <div class="pos bg-cyan rounded-r5 shadow-tile" style="--x:0;--y:0;--w:89;--h:87"></div>
             <img class="pos max-w-none" src={t.icon.src} width={px(t.iw)} height={px(t.ih)} alt="" loading="lazy" decoding="async" style={`--x:${t.ix};--y:${t.iy};--w:${t.iw};--h:${t.ih}`} />
             <p class="pos m-0 font-gotham font-normal text-f10 leading-10 text-navy text-center not-italic whitespace-normal [word-break:break-word]" style={`--x:${t.lx};--y:100;--w:${t.w};--h:10`}>{t.label}</p>
@@ -62,9 +62,13 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
   </div>
 </section>
 
+<script>
+  import '../../scripts/autoscroll';
+</script>
+
 <style>
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
-  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(8 * var(--u)) 0 0; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
   .tile { width: calc(89 * var(--u)); height: calc(110 * var(--u)); }
   @media (max-width: 1023.98px) {
     .pill { position: relative; inset-inline-start: auto; }

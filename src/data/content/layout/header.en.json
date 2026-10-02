@@ -7,7 +7,7 @@
     { "label": "Media Hub", "href": "#", "path": "media-hub" },
     { "label": "Careers", "href": "#" },
     { "label": "Knowledge Center", "href": "#" },
-    { "label": "FAQs", "href": "#" }
+    { "label": "FAQs", "href": "#", "path": "faq" }
   ],
   "lang": { "en": "EN", "ar": "AR" },
   "region": { "label": "Global", "menuLabel": "Choose region", "options": [ { "region": "ae", "label": "UAE" }, { "region": "sa", "label": "KSA" } ] },

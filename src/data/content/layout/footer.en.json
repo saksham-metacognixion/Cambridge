@@ -12,7 +12,7 @@
       [{ "label": "Media Hub", "href": "#", "path": "media-hub" }],
       [{ "label": "Careers", "href": "#" }],
       [{ "label": "Knowledge Center", "href": "#" }],
-      [{ "label": "FAQs", "href": "#" }, { "label": "Your Opinion Matters", "href": "#your-opinion" }],
+      [{ "label": "FAQs", "href": "#", "path": "faq" }, { "label": "Your Opinion Matters", "href": "#your-opinion" }],
       [{ "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" }],
       [{ "label": "Search Conditions", "href": "#", "path": "conditions-specialities" }],
       [{ "label": "Send an Inquiry", "href": "#send-inquiry" }]

@@ -2,11 +2,28 @@
  * WAI-ARIA tabs for any [data-tabs] container (detail-page topics: vertical; Refer a Patient For Doctors / For Others:
  * horizontal). Click / Enter / Space selects; arrow keys move focus with automatic activation (Left/Right mirrored on
  * RTL pages), Home/End jump to the first / last tab. Roving tabindex. Panels = the tabs' aria-controls targets.
+ * Optional URL state: data-tabs-param="category" on the container + data-key on each tab -> ?category=<key> (the first
+ * tab = no parameter), one history entry per change, back/forward and shared links restore it (FAQ).
  */
 for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
   const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
   const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls') ?? ''));
   const rtl = getComputedStyle(root).direction === 'rtl';
+
+  const param = root.dataset.tabsParam;
+  const fromUrl = () => {
+    const k = param ? new URLSearchParams(location.search).get(param) : null;
+    const i = tabs.findIndex((t) => t.dataset.key === k);
+    return i < 0 ? 0 : i;
+  };
+  const push = (i: number) => {
+    if (!param) return;
+    const q = new URLSearchParams(location.search);
+    if (i === 0) q.delete(param);
+    else q.set(param, tabs[i].dataset.key ?? '');
+    const search = q.toString() ? `?${q}` : '';
+    if (search !== location.search) history.pushState(null, '', location.pathname + search + location.hash);
+  };
 
   const select = (i: number, focus = false) => {
     tabs.forEach((t, k) => {
@@ -19,7 +36,7 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
   };
 
   tabs.forEach((t, i) => {
-    t.addEventListener('click', () => select(i));
+    t.addEventListener('click', () => { select(i); push(i); });
     t.addEventListener('keydown', (e) => {
       const fwd = rtl ? 'ArrowLeft' : 'ArrowRight';
       const back = rtl ? 'ArrowRight' : 'ArrowLeft';
@@ -27,7 +44,13 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
       const next = keys[e.key];
       if (next === undefined) return;
       e.preventDefault();
-      select((next + tabs.length) % tabs.length, true);
+      const n = (next + tabs.length) % tabs.length;
+      select(n, true);
+      push(n);
     });
   });
+  if (param) {
+    window.addEventListener('popstate', () => select(fromUrl()));
+    if (fromUrl() !== 0) select(fromUrl());
+  }
 }

@@ -892,5 +892,9 @@
     "banner": "src/assets/testimonials-page/banner.png (1052x500 only)",
     "6 photos": "= src/assets/testimonials/{patient-1,patient-2,patient-4,patient-5,patient-6,shamma}.png (identical bytes; 555x693, below 2x for Shamma 1.85x and Patient-4 1.92x at 1440)",
     "pattern/quote/badge": "= src/assets/testimonials/{pattern-mask,pattern-fill,quote-icon,corner-vector}.svg (same shapes, landing scale)"
+  },
+  "faq-100-5509": {
+    "PAR-inside 1": "src/assets/faq/hero.png (1052x323 only)",
+    "chevrons": "src/assets/faq/chevron-open.svg (white), chevron-closed.svg (#21b5be, Q2)"
   }
 }

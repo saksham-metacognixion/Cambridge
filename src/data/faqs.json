@@ -1,0 +1,97 @@
+{
+  "$comment": "FAQ (Figma 100:5509). Categories = the 5 Figma tabs (id = URL value ?category=). Questions: only the 5 Inpatient questions exist in Figma and only the first has an answer (sample data); Pramod sends the full Q&A for all 5 categories. A question without an answer shows a staging-only 'answer pending' note and is left out of the FAQPage structured data. Text exactly as in Figma (the '01.' numbering is added by the page).",
+  "categories": [
+    {
+      "id": "inpatient",
+      "label": {
+        "en": "Inpatient Services",
+        "ar": ""
+      }
+    },
+    {
+      "id": "outpatient",
+      "label": {
+        "en": "Outpatient Services",
+        "ar": ""
+      }
+    },
+    {
+      "id": "home-health-care",
+      "label": {
+        "en": "Home Health Care",
+        "ar": ""
+      }
+    },
+    {
+      "id": "in-school-care",
+      "label": {
+        "en": "In School Care",
+        "ar": ""
+      }
+    },
+    {
+      "id": "general",
+      "label": {
+        "en": "General",
+        "ar": ""
+      }
+    }
+  ],
+  "questions": [
+    {
+      "category": "inpatient",
+      "question": {
+        "en": "What is inpatient services, and how does it differ from outpatient rehabilitation?",
+        "ar": ""
+      },
+      "answer": {
+        "en": "Inpatient services rehabilitation involves staying at a medical facility where patients receive continuous care and therapy, often for more intensive recovery needs. In contrast, outpatient rehabilitation allows patients to receive treatment during scheduled visits while living at home.",
+        "ar": ""
+      }
+    },
+    {
+      "category": "inpatient",
+      "question": {
+        "en": "How long do patients typically stay in an inpatient rehabilitation facility?",
+        "ar": ""
+      },
+      "answer": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "category": "inpatient",
+      "question": {
+        "en": "What types of rehabilitation services are available for patients in an inpatient setting?",
+        "ar": ""
+      },
+      "answer": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "category": "inpatient",
+      "question": {
+        "en": "Who provides care in an inpatient rehabilitation facility?",
+        "ar": ""
+      },
+      "answer": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "category": "inpatient",
+      "question": {
+        "en": "What conditions can benefit from inpatient rehabilitation services?",
+        "ar": ""
+      },
+      "answer": {
+        "en": "",
+        "ar": ""
+      }
+    }
+  ]
+}

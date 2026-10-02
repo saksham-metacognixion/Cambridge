@@ -24,15 +24,17 @@ Read this file at the start of every session and follow it for all work.
   no autoplay, no arrows or dots unless Figma shows them.
 - If exact Figma colours fail WCAG AA contrast on buttons/text, do NOT change them silently — flag it and ask.
 
-## 3. Figma MCP usage (strict budget)
-- Current account is on a limited plan (~20 read calls/month). Be economical:
-  - Check `figma-cache/` before ANY Figma call. Never fetch the same node twice.
-  - No get_metadata / get_screenshot / whoami unless asked.
-  - Before any batch of calls, state the plan and call count and wait for approval.
+## 3. Figma MCP usage
+- Account: Dev seat on a paid (Pro) plan — up to 200 calls/day, 10/minute. The old ~20/month budget no longer applies.
+  - Still check `figma-cache/` first. Never re-fetch the same node unless it changed or the cached data is insufficient.
+  - Stay under 10 calls per minute.
   - Log every call with a running total in `figma-cache/calls.md`.
+  - get_screenshot and download_assets are allowed (whoami too; it doesn't count).
+  - No need to ask before each batch, but state the plan for big jobs.
   - Download image/SVG URLs immediately after each call (they expire); map them in `figma-cache/assets.json`.
-  - If a call fails or hits the limit: stop and report. Never retry automatically.
-- Drafts file: `vCNWiFsepoBswUbksI4Tbi`. Landing Page = node `93:894` (NOT `64:2407`, which is a draft).
+  - If a call fails or hits a limit: stop and report. Never retry automatically.
+- Current file: `LJIRtzU574JrA1BgK881Qm` (node IDs from the old drafts file `vCNWiFsepoBswUbksI4Tbi` mostly preserved).
+  Landing Page = node `93:894` (NOT `64:2407`, which is a draft).
 
 ## 4. Stack and build
 - Static site. No WordPress, no database, no CMS, no admin panel.

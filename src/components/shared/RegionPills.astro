@@ -1,0 +1,22 @@
+---
+/*
+ * ALL / KSA / UAE pills (Find a Doctor 62:783, Insurance Providers 46:7186, Patient Testimonials): 79 x 25 at x 0 / 99 / 200
+ * inside a 279 box (Figma's gaps 20 / 22 kept), label Gotham Medium 10/10. Pressed = navy fill, others 1px navy outline
+ * (.ui-pill). Corner radius differs per frame (Find a Doctor 12, Insurance 10): `radius`. Buttons carry data-country and
+ * aria-pressed; the page's filter script does the rest (state in the URL ?country=).
+ */
+interface Props { options: { value: string; label: string }[]; active: string; label: string; radius?: number; class?: string }
+const { options, active, label, radius = 12, class: cls } = Astro.props;
+const pillX: Record<string, number> = { all: 0, sa: 99, ae: 200 };
+---
+
+<div class:list={['pills', cls]} role="group" aria-label={label} style={`--pill-r:${radius}`}>
+  {options.map((p) => (
+    <button type="button" data-country={p.value} aria-pressed={p.value === active ? 'true' : 'false'} class="pill ui-pill hit" style={`--x:${pillX[p.value]}`}>{p.label}</button>
+  ))}
+</div>
+
+<style>
+  .pills { position: relative; flex: none; width: calc(279 * var(--u)); height: calc(25 * var(--u)); }
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; border-radius: calc(var(--pill-r) * var(--u)); }
+</style>

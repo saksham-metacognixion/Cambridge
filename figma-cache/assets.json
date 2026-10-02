@@ -875,5 +875,10 @@
     "Group 171/172 selects": "drawn in CSS (.pf-box + chevron); SVGs in figma-cache/assets/refer/",
     "calendar Vector 46:8270": "src/assets/refer/calendar.svg",
     "radio Group 199 / Ellipse 43": "src/assets/refer/radio-on.svg / radio-off.svg"
+  },
+  "insurance-46-6844": {
+    "banner": "src/assets/insurance-page/banner.png (1052x500 only)",
+    "new logos": "src/assets/insurance/{cigna,dubai,orient,al-khazna,al-sagr,aafiya}.png, {al-buhaira,allianz,deutsche}.svg",
+    "reused (identical bytes)": "thiqa.jpg, daman.png, layout-set.png (ADNIC), neuron.png, logo-original.png (Almadallah), saico.jpg, images.png (Nextcare)"
   }
 }

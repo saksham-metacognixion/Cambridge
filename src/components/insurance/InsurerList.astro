@@ -1,0 +1,46 @@
+---
+import { content, t } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { insurersFor } from '../../lib/insurers';
+import CenteredIntro from '../shared/CenteredIntro.astro';
+import RegionPills from '../shared/RegionPills.astro';
+import InsurerCard from './InsurerCard.astro';
+
+/*
+ * "Accepted Insurance Providers" (Figma 46:7185 + cards), section top = H2 top (page y 606, 50 below the hero).
+ * H2 centred on x 529, text centred on 528.5 (CenteredIntro) | text box (2 lines) ends 671 | 40 | pills 46:7186 at x 389,
+ * radius 10 (Global only) | 57 | cards: 4 columns x 77 / 304 / 531 / 758 (pitch 227, card 194.77), rows from 793 at a
+ * 154 pitch (Figma 154 / 155 / 155 and a last card at x 759: normalised to the first). On /ae and /sa there are no pills
+ * and only that region's insurers are rendered; the cards then start where the pills would have been + 57.
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('insurance-providers/page', edition.locale);
+const list = insurersFor(edition.region);
+const global = edition.region === 'global';
+---
+
+<section class="ins" aria-labelledby="insurance-heading" data-region-filter>
+  <CenteredIntro id="insurance-heading" heading={c.intro.heading} text={c.intro.text} cx={529} tx={528.5} />
+  {global && <RegionPills options={c.filters.countries} active="all" label={c.filters.countryLabel} radius={10} class="ins-pills" />}
+  <ul class:list={['grid', !global && 'no-pills']} role="list" aria-label={c.results.listLabel}>
+    {list.map((i) => (
+      <li data-regions={i.regions.join(' ')}><InsurerCard name={t(i.name, edition.locale, 'insurers')} logo={i.logo} region={edition.region} /></li>
+    ))}
+  </ul>
+  <p class="ui-empty not-italic" data-region-empty hidden={list.length > 0}>{c.results.empty}</p>
+  <p class="sr-only" role="status" aria-live="polite" data-region-status data-template={c.results.found}></p>
+</section>
+
+<style>
+  .ins { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .ins :global(.ins-pills) { margin: calc(40 * var(--u)) auto 0; }
+  .grid { list-style: none; margin: calc(57 * var(--u)) 0 0; padding: 0 16px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(194.77 * var(--u))); column-gap: calc(32.23 * var(--u)); row-gap: calc(28.689 * var(--u)); }
+  .grid.no-pills { margin-top: calc(40 * var(--u)); }
+  .grid > li { display: flex; }
+  .grid > li[hidden] { display: none; }
+  @media (min-width: 1024px) {
+    .ins :global(.ins-pills) { margin-inline: calc(389 * var(--u)) 0; }
+    .grid { width: calc(875.77 * var(--u)); margin-inline-start: calc(77 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(4, calc(194.77 * var(--u))); }
+    .grid.no-pills { margin-top: calc(122 * var(--u)); } /* 40 + pills 25 + 57: cards stay at Figma y 793 */
+  }
+</style>

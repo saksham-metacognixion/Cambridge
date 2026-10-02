@@ -1,0 +1,28 @@
+---
+/*
+ * Centred section intro: H2 Gotham Medium 28 #004059 (box w430, line 27) + text Gotham Book 12/14 #6b6b6b (w577), 10 apart.
+ * Same block on Refer a Patient (59:14337/14336), Insurance Providers (46:7532/7531), International Patients and Patient
+ * Testimonials. The designer centres it slightly differently per page: `cx` / `tx` = Figma x of the H2 / text centre.
+ * Text may be several paragraphs (an array), separated by one empty 14px line.
+ */
+interface Props { id: string; heading: string; text: string | string[]; cx: number; tx: number; tw?: number; hw?: number }
+const { id, heading, text, cx, tx, tw = 577, hw = 430 } = Astro.props;
+const paras = Array.isArray(text) ? text : [text];
+---
+
+<div class="ci" style={`--cx:${cx};--tx:${tx};--tw:${tw};--hw:${hw}`}>
+  <h2 id={id} class="h">{heading}</h2>
+  <div class="t">{paras.map((p) => <p>{p}</p>)}</div>
+</div>
+
+<style>
+  .ci { font-family: var(--font-gotham); font-style: normal; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .h { margin: 0 auto; max-width: calc(var(--hw) * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .t { margin: calc(10 * var(--u)) auto 0; max-width: calc(var(--tw) * var(--u)); padding-inline: 16px; text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .t p { margin: 0; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
+  @media (min-width: 1024px) {
+    .h { width: calc(var(--hw) * var(--u)); margin-inline-start: calc((var(--cx) - var(--hw) / 2) * var(--u)); padding: 0; }
+    .t { width: calc(var(--tw) * var(--u)); margin-inline-start: calc((var(--tx) - var(--tw) / 2) * var(--u)); padding: 0; }
+  }
+</style>

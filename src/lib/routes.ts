@@ -22,6 +22,7 @@ export function allRoutes(): PageRoute[] {
     { key: 'patient-feedback', path: PAGE_PATHS.patientFeedback },
     { key: 'find-a-doctor', path: DOCTOR_PATHS.list },
     { key: 'refer-patient', path: PAGE_PATHS.referPatient },
+    { key: 'insurance-providers', path: PAGE_PATHS.insuranceProviders },
     { key: 'conditions', path: CONDITION_PATHS.list },
     ...allDetailSlugs.map((slug) => ({ key: `condition-${slug}`, path: CONDITION_PATHS.detail(slug) })),
     ...profileDoctors.map((d) => ({ key: `doctor-${d.slug}`, path: DOCTOR_PATHS.profile(d.slug) })),

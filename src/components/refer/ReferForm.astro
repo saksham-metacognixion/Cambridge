@@ -10,6 +10,7 @@
  */
 import FormShell from '../forms/FormShell.astro';
 import ReferFields from './ReferFields.astro';
+import CenteredIntro from '../shared/CenteredIntro.astro';
 import { content } from '../../lib/content';
 import { parsePath } from '../../lib/editions';
 import '../forms/forms.css';
@@ -24,8 +25,7 @@ const tabs = [
 ---
 
 <section class="refer" aria-labelledby="refer-heading">
-  <h2 id="refer-heading" class="h">{page.intro.heading}</h2>
-  <p class="t">{page.intro.text}</p>
+  <CenteredIntro id="refer-heading" heading={page.intro.heading} text={page.intro.text} cx={521} tx={520.5} />
 
   <div class="tabs" data-tabs>
     <div class="tablist" role="tablist" aria-label={c.tabsLabel}>
@@ -50,8 +50,6 @@ const tabs = [
 
 <style>
   .refer { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; color: var(--color-navy); }
-  .h { margin: 0 auto; max-width: calc(430 * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
-  .t { margin: calc(10 * var(--u)) auto 0; max-width: calc(577 * var(--u)); padding-inline: 16px; text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .tablist { display: flex; justify-content: center; gap: calc(15 * var(--u)); margin-top: calc(23 * var(--u)); }
   .pill { --pill-w: 125; --pill-on: var(--color-navy-alt); }
   .card { margin: calc(34 * var(--u)) 16px 0; padding: 24px 16px; }
@@ -93,8 +91,6 @@ const tabs = [
     .card :global(.rf-tel-field .pf-row) { grid-template-columns: auto minmax(0, 1fr); }
   }
   @media (min-width: 1024px) {
-    .h { margin-inline-start: calc(306 * var(--u)); padding: 0; }
-    .t { margin-inline-start: calc(232 * var(--u)); padding: 0; }
     .tablist { justify-content: flex-start; margin-inline-start: calc(391 * var(--u)); }
     .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(56 * var(--u)) calc(43 * var(--u)) calc(52 * var(--u)) calc(44 * var(--u)); }
     .card :global(.rf-grid) { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }

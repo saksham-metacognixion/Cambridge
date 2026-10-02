@@ -4,10 +4,12 @@ import { px } from '../../lib/scale';
 import line13 from '../../assets/insurance/line13.svg';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/insurance', edition.locale);
+const viewAll = txt.button.page ? urlFor(edition, pagePath(txt.button.page)) : txt.button.href;
 
 // Frame-relative Figma px (frame x = 30 => page x = value + 30)
 // Design per logo, zipped by index with the logos (image key + alt) in home/insurance JSON.
@@ -47,7 +49,7 @@ const dividers = [148, 273, 423, 568, 758, 864];
       </div>
     ))}
 
-    <a href={txt.button.href} class="hit relative block bg-navy-alt rounded-r7 w-118 h-30 not-italic max-lg:mt-30 lg:absolute lg:start-469 lg:top-177 no-underline">
+    <a href={viewAll} class="hit relative block bg-navy-alt rounded-r7 w-118 h-30 not-italic max-lg:mt-30 lg:absolute lg:start-469 lg:top-177 no-underline">
       <span class="absolute top-9 w-145 h-15 block text-center font-medium text-f13 leading-15 text-white whitespace-normal [word-break:break-word] lg:start-[calc(-15*var(--u))] max-lg:left-1/2 max-lg:-translate-x-1/2">{txt.button.label}</span>
     </a>
   </div>

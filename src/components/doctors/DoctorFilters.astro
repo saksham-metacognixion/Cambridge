@@ -4,6 +4,7 @@ import { parsePath } from '../../lib/editions';
 import { defaultCountry } from '../../lib/doctor-filters';
 import { allDoctors, specialties } from '../../lib/doctors';
 import chevron from '../../assets/doctors-page/chevron.svg';
+import RegionPills from '../shared/RegionPills.astro';
 
 /*
  * Filters row, Figma 62:783 (pills) + 62:186 / 62:190 (boxes). Page y 586..621, boxes 311 x 35, radius 10, 0.5px #418ea2.
@@ -15,16 +16,11 @@ import chevron from '../../assets/doctors-page/chevron.svg';
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('doctors/page', edition.locale).filters;
 const active = defaultCountry(edition.region);
-const pillX: Record<string, number> = { all: 0, sa: 99, ae: 200 }; // Figma x of ALL / KSA / UAE minus 48
 const names = allDoctors.map((d) => t(d.name, edition.locale, 'doctors'));
 ---
 
 <div class="filters" role="search" aria-label={c.ariaLabel}>
-  <div class="pills" role="group" aria-label={c.countryLabel}>
-    {c.countries.map((p: { value: string; label: string }) => (
-      <button type="button" data-country={p.value} aria-pressed={p.value === active ? 'true' : 'false'} class="pill ui-pill hit" style={`--x:${pillX[p.value]}`}>{p.label}</button>
-    ))}
-  </div>
+  <RegionPills options={c.countries} active={active} label={c.countryLabel} class="df-pills" />
 
   <div class="box ui-box">
     <label class="sr-only" for="df-name">{c.nameLabel}</label>
@@ -45,11 +41,9 @@ const names = allDoctors.map((d) => t(d.name, edition.locale, 'doctors'));
 
 <style>
   .filters { display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: calc(12 * var(--u)); padding-inline: calc(16 * var(--u)); }
-  .pills { position: relative; flex: none; width: calc(279 * var(--u)); height: calc(25 * var(--u)); }
-  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; }
   .box { width: calc(311 * var(--u)); }
   @media (min-width: 1024px) {
     .filters { flex-wrap: nowrap; justify-content: flex-start; gap: calc(12 * var(--u)); width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; padding-inline: 0; }
-    .pills { margin-inline-end: calc(30 * var(--u)); } /* 42 from the pills' right edge to the first box, minus the 12 flex gap */
+    .filters :global(.df-pills) { margin-inline-end: calc(30 * var(--u)); } /* 42 from the pills' right edge to the first box, minus the 12 flex gap */
   }
 </style>

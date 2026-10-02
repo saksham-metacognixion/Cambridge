@@ -19,7 +19,7 @@ export const PAGE_PATHS = {
   referPatient: 'refer-a-patient',
   /** not built (Figma 54:9239) */
   internationalPatients: 'international-patients',
-  /** not built (Figma 46:6844) */
+  /** Insurance Providers (Figma 46:6844) */
   insuranceProviders: 'insurance-providers',
   /** not built (Figma 62:2403) */
   patientTestimonials: 'patient-testimonials',

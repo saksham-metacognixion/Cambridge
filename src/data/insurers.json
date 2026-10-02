@@ -1,0 +1,292 @@
+{
+  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image.",
+  "insurers": [
+    {
+      "slug": "al-buhaira",
+      "name": {
+        "en": "Al Buhaira National Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/al-buhaira",
+        "w": 107.409,
+        "h": 26.37,
+        "x": 43.68,
+        "y": 35.8
+      }
+    },
+    {
+      "slug": "neuron",
+      "name": {
+        "en": "Neuron Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/neuron",
+        "w": 69.975,
+        "h": 27.288,
+        "x": 62.3,
+        "y": 37.24
+      }
+    },
+    {
+      "slug": "almadallah",
+      "name": {
+        "en": "Almadallah Healthcare Management",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/logo-original",
+        "w": 107.726,
+        "h": 32.129,
+        "x": 43.68,
+        "y": 31.51
+      }
+    },
+    {
+      "slug": "dubai-insurance",
+      "name": {
+        "en": "Dubai Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/dubai",
+        "w": 81.631,
+        "h": 44.396,
+        "x": 56.57,
+        "y": 26.49,
+        "crop": {
+          "w": "100%",
+          "h": "183.87%",
+          "left": "0%",
+          "top": "-41.94%"
+        }
+      }
+    },
+    {
+      "slug": "thiqa",
+      "name": {
+        "en": "Thiqa Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/thiqa",
+        "w": 85.921,
+        "h": 27.213,
+        "x": 54.42,
+        "y": 40.82
+      }
+    },
+    {
+      "slug": "al-khazna",
+      "name": {
+        "en": "Al Khazna Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/al-khazna",
+        "w": 107.225,
+        "h": 44.473,
+        "x": 43.68,
+        "y": 32.22
+      }
+    },
+    {
+      "slug": "adnic",
+      "name": {
+        "en": "Adu Dhabi National Insurance Company",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/layout-set",
+        "w": 79.709,
+        "h": 27.848,
+        "x": 58.0,
+        "y": 34.37
+      }
+    },
+    {
+      "slug": "aafiya",
+      "name": {
+        "en": "Aafiya TPA Services",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/aafiya",
+        "w": 115.286,
+        "h": 33.655,
+        "x": 40.1,
+        "y": 31.51
+      }
+    },
+    {
+      "slug": "cigna",
+      "name": {
+        "en": "Cigna International Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/cigna",
+        "w": 97.941,
+        "h": 37.296,
+        "x": 48.69,
+        "y": 25.06
+      }
+    },
+    {
+      "slug": "daman",
+      "name": {
+        "en": "Daman Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/daman",
+        "w": 61.425,
+        "h": 53.124,
+        "x": 66.59,
+        "y": 9.31,
+        "crop": {
+          "w": "180.37%",
+          "h": "100%",
+          "left": "-39.74%",
+          "top": "0%"
+        }
+      }
+    },
+    {
+      "slug": "nextcare",
+      "name": {
+        "en": "Nextcare Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/images",
+        "w": 79.241,
+        "h": 24.202,
+        "x": 58.0,
+        "y": 38.67
+      }
+    },
+    {
+      "slug": "saico",
+      "name": {
+        "en": "SAICO Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/saico",
+        "w": 38.788,
+        "h": 65.673,
+        "x": 78.05,
+        "y": 9.31
+      },
+      "$note": "Shown under UAE in Figma; SAICO is a Saudi insurer (probable Figma error). Region to be confirmed by Pramod."
+    },
+    {
+      "slug": "al-sagr",
+      "name": {
+        "en": "Al Sagr Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/al-sagr",
+        "w": 103.113,
+        "h": 51.557,
+        "x": 45.83,
+        "y": 25.78
+      }
+    },
+    {
+      "slug": "orient",
+      "name": {
+        "en": "Orient Insurance PJSC",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/orient",
+        "w": 103.113,
+        "h": 51.557,
+        "x": 45.0,
+        "y": 25.0,
+        "fit": "contain",
+        "ratio": 3.4289
+      }
+    },
+    {
+      "slug": "allianz",
+      "name": {
+        "en": "Allianz Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/allianz",
+        "w": 116,
+        "h": 28.771,
+        "x": 39.0,
+        "y": 37.0
+      }
+    },
+    {
+      "slug": "deutsche-assistance",
+      "name": {
+        "en": "DeutscheAssistance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logo": {
+        "image": "insurance/deutsche",
+        "w": 136,
+        "h": 11.137,
+        "x": 29.0,
+        "y": 47.0
+      }
+    }
+  ]
+}

@@ -101,3 +101,14 @@ SUMMARY after 60: batch-2 session 11 (10 screenshots + 1 context). Dev-seat call
 SUMMARY after 62: batch-2 session 13. Dev-seat calls today (all sessions): 31.
 63. get_design_context 59:14344 Refer a Patient (no screenshot: #52 is the target) -> FULL (61k) -> raw/refer-59-14344.tsx, refer-spec.md, assets/refer/* (66)
 SUMMARY after 63: batch-2 session 14. Dev-seat calls today (all sessions): 32.
+64. get_design_context 46:6844 Insurance Providers -> SPARSE outline (frame too large) -> insurance-page-spec.md
+65. get_design_context 46:7185 intro (H2, text, pills)
+66. get_design_context 46:7195 card 1 (Al Buhaira) -> card styles + 4 logo SVG parts
+67. get_design_context 46:7509 Allianz card -> allianz.svg
+68. get_design_context 46:7523 Deutsche card -> deutsche.svg
+69. download_assets 46:6844 -> 20 raw images (TRUNCATED at 20; all 13 raster logos + banner were among them) -> assets/insurance-page/raw/
+70. get_design_context 46:7485 Daman card (image fill crop)
+71. get_design_context 46:7455 Dubai card (image fill crop)
+72. get_design_context 46:7497 Orient card (object-contain)
+73. download_assets 46:7198 Al Buhaira logo, svg export -> assets/insurance-page/svg/al-buhaira.svg (background rects removed in src copy)
+SUMMARY after 73: batch-2 session 24. Dev-seat calls today (all sessions): 42.

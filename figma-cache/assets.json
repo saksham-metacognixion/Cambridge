@@ -853,5 +853,13 @@
       "file": "assets/forms/feedback-chevron-hospital.svg",
       "figma_call": 45
     }
+  },
+  "conditions-40-318": {
+    "banner (Banner3 1, 32:219)": "src/assets/conditions/banner.png (1052x500 only)",
+    "Rectangle 118 tag": "src/assets/conditions/tag.svg",
+    "Rectangle 131 corner": "src/assets/conditions/corner.svg",
+    "Vector sliders icon (67:2882)": "src/assets/conditions/sort.svg",
+    "chevron 67:2878": "= src/assets/doctors-page/chevron.svg (identical bytes)",
+    "recovery icons": "= src/assets/contact-page/cta-*.svg"
   }
 }

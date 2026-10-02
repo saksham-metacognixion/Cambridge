@@ -1,0 +1,41 @@
+{
+  "_note": "Conditions & Specialities (Figma 40:318). Visible text is exactly as in Figma. meta.*, ariaLabel/label texts and results.* (empty state + screen-reader status) are NOT in Figma (PLACEHOLDER, waiting for Pramod). The hero copy is identical to Find a Doctor in Figma (probable designer copy-paste, flagged). Cards come from src/data/conditions.json.",
+  "meta": {
+    "title": "Conditions & Specialities | Cambridge Hospital",
+    "description": "Explore the conditions we treat and our rehabilitation specialities at Cambridge Hospital, from stroke and brain injury to paediatric and post-surgical care."
+  },
+  "hero": {
+    "ariaLabel": "Conditions & Specialities",
+    "banner": { "image": "conditions/banner", "alt": "" },
+    "title": ["Find the Right", "Doctor for You"],
+    "text": "Browse our team of experienced specialists and find the right doctor based on your needs, location, and condition.",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "heading": "Our Specialities",
+  "filters": {
+    "ariaLabel": "Filter conditions",
+    "specialtyLabel": "Select speciality",
+    "conditionLabel": "Select condition",
+    "sortLabel": "A - Z",
+    "sortSpecialtyAria": "Sort A to Z",
+    "sortConditionAria": "Sort A to Z"
+  },
+  "card": { "button": "Read More" },
+  "results": {
+    "listLabel": "Conditions",
+    "empty": "No conditions match your selection.",
+    "found": "{n} conditions shown"
+  },
+  "recovery": {
+    "ariaLabel": "Your recovery matters to us",
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "",
+    "emphasis": ["Your recovery matters to us, and we are with you every step of", "the journey."],
+    "tiles": [
+      { "label": "Book an Appointment", "href": "#book-appointment" },
+      { "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" },
+      { "label": "Search Conditions", "href": "#", "page": "conditions" },
+      { "label": "Send an Inquiry", "href": "#send-inquiry" }
+    ]
+  }
+}

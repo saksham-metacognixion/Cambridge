@@ -22,39 +22,32 @@ const names = allDoctors.map((d) => t(d.name, edition.locale, 'doctors'));
 <div class="filters" role="search" aria-label={c.ariaLabel}>
   <div class="pills" role="group" aria-label={c.countryLabel}>
     {c.countries.map((p: { value: string; label: string }) => (
-      <button type="button" data-country={p.value} aria-pressed={p.value === active ? 'true' : 'false'} class="pill hit" style={`--x:${pillX[p.value]}`}>{p.label}</button>
+      <button type="button" data-country={p.value} aria-pressed={p.value === active ? 'true' : 'false'} class="pill ui-pill hit" style={`--x:${pillX[p.value]}`}>{p.label}</button>
     ))}
   </div>
 
-  <div class="box">
+  <div class="box ui-box">
     <label class="sr-only" for="df-name">{c.nameLabel}</label>
-    <input id="df-name" name="q" type="text" class="field" list="df-names" placeholder={c.nameLabel} autocomplete="off" enterkeyhint="search" />
+    <input id="df-name" name="q" type="text" class="ui-field" list="df-names" placeholder={c.nameLabel} autocomplete="off" enterkeyhint="search" />
     <datalist id="df-names">{names.map((n) => <option value={n} />)}</datalist>
-    <img class="chev" src={chevron.src} width="7" height="4.2" alt="" />
+    <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
   </div>
 
-  <div class="box">
+  <div class="box ui-box">
     <label class="sr-only" for="df-specialty">{c.specialtyLabel}</label>
-    <select id="df-specialty" name="specialty" class="field">
+    <select id="df-specialty" name="specialty" class="ui-field">
       <option value="">{c.specialtyLabel}</option>
       {specialties.map((s) => <option value={s.id}>{t(s.name, edition.locale, 'specialties')}</option>)}
     </select>
-    <img class="chev" src={chevron.src} width="7" height="4.2" alt="" />
+    <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
   </div>
 </div>
 
 <style>
   .filters { display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: calc(12 * var(--u)); padding-inline: calc(16 * var(--u)); }
   .pills { position: relative; flex: none; width: calc(279 * var(--u)); height: calc(25 * var(--u)); }
-  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(1 * var(--u)) 0 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
-  .pill[aria-pressed='true'] { background: var(--color-navy); color: #fff; border: 0; }
-  .box { position: relative; flex: none; width: calc(311 * var(--u)); max-width: 100%; height: calc(35 * var(--u)); }
-  .field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
-  .field::placeholder { color: var(--color-navy); opacity: 1; }
-  .field::-webkit-calendar-picker-indicator, .field::-webkit-list-button { display: none !important; opacity: 0; }
-  .field:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
-  .chev { position: absolute; inset-inline-end: calc(17 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); pointer-events: none; max-width: none; }
-  :global([dir='rtl']) .field { padding: 0 calc(15 * var(--u)) 0 calc(31 * var(--u)); }
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; }
+  .box { width: calc(311 * var(--u)); }
   @media (min-width: 1024px) {
     .filters { flex-wrap: nowrap; justify-content: flex-start; gap: calc(12 * var(--u)); width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; padding-inline: 0; }
     .pills { margin-inline-end: calc(30 * var(--u)); } /* 42 from the pills' right edge to the first box, minus the 12 flex gap */

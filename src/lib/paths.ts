@@ -13,7 +13,7 @@ export const PAGE_PATHS = {
   /** Patient Feedback Form (Figma 188:964). Slug UNCONFIRMED: the current site's URL could not be read. */
   patientFeedback: 'patient-feedback',
   findDoctor: DOCTOR_PATHS.list,
-  /** not built (Figma 40:318) */
+  /** Conditions & Specialities (Figma 40:318); detail pages = conditions-specialities/<slug> (src/lib/conditions.ts) */
   conditions: 'conditions-specialities',
   /** not built (Figma 59:14344) */
   referPatient: 'refer-a-patient',

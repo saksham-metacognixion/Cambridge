@@ -94,3 +94,5 @@ Patient Hub session today: 4 (+ #34 earlier). Dev-seat calls today, both session
 59. get_screenshot 41:1730 Post Acute Care -> pages/post-acute-41-1730.png (template check only)
 SUMMARY after 59: this session 10 get_screenshot. Dev-seat calls today (all sessions): 18 + 10 = 28. Next free number: 60.
 Built pages compared against the cached same-day screenshots of this file (#27 32:826, #31 62:179, #43 76:735): no re-fetch.
+60. get_design_context 40:318 Conditions & Specialities (no screenshot: #50 is the target) -> FULL code (78k) -> figma-cache/raw/conditions-40-318.tsx, conditions-spec.md, assets/conditions/* (54)
+SUMMARY after 60: batch-2 session 11 (10 screenshots + 1 context). Dev-seat calls today (all sessions): 29.

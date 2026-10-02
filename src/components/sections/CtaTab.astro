@@ -1,6 +1,7 @@
 ---
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import { content } from '../../lib/content';
 import line6 from '../../assets/cta/line6.svg';
 
@@ -15,7 +16,7 @@ const layout = [
   { size: 23, cx: 657, ix: 643, iy: 15 },
   { size: 26, cx: 921, ix: 905, iy: 14 },
 ];
-const items = layout.map((d, i) => ({ ...d, label: c.items[i].label, href: c.items[i].href, icon: img(c.items[i].icon, edition.region) }));
+const items = layout.map((d, i) => ({ ...d, label: c.items[i].label, href: c.items[i].page ? urlFor(edition, pagePath(c.items[i].page)) : c.items[i].href, icon: img(c.items[i].icon, edition.region) }));
 const dividers = [262, 524, 786];
 ---
 <!-- CTA Tab: page y 560, --h 82. Full-bleed white band, sits over the hero (parent handles stacking). -->

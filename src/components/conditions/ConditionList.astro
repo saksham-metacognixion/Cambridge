@@ -1,0 +1,95 @@
+---
+import { content, t } from '../../lib/content';
+import { parsePath, urlFor } from '../../lib/editions';
+import { conditions, CONDITION_PATHS } from '../../lib/conditions';
+import { specialties } from '../../lib/doctors';
+import ConditionCard from './ConditionCard.astro';
+import chevron from '../../assets/doctors-page/chevron.svg';
+import sortIcon from '../../assets/conditions/sort.svg';
+
+/*
+ * "Our Specialities" block of Conditions & Specialities (Figma 40:318), section top = H2 top (page y 598).
+ * H2 67:2873 Gotham Medium 28 #00415a, centred, w651, box h33 | 35 | filters row 67:2874 / 67:4623 (page y 666, h35):
+ *   [select 311] 14 [A-Z 92] 21 [select 311] 14 [A-Z 92] from x 97 | 56 | card grid (tag tops 757): 4 x 198.097, column gap
+ *   24.903 (pitch 223) from x 92, row pitch 210 = card 188 + 22 (Figma's 4th row sits 13px lower: normalised to 210).
+ * Selects: same box as Find a Doctor (.ui-box). A-Z button: sliders icon (sort.svg 21 x 17.327) at 9.95 / 9.97, "A - Z"
+ * Gotham Book 10/14 navy at x 56, y 12. Behaviour: src/scripts/condition-filters.ts (URL state, back button).
+ * Without JS the controls do nothing and all cards stay visible (Figma order).
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('conditions-specialities/page', edition.locale);
+const loc = edition.locale;
+const items = conditions.map((x) => ({
+  slug: x.slug,
+  title: t(x.title, loc, 'conditions'),
+  summary: t(x.summary, loc, 'conditions'),
+  specialties: x.specialties,
+  href: urlFor(edition, CONDITION_PATHS.detail(x.slug)),
+}));
+// Dropdown order = data order; the A-Z buttons sort the cards (see src/lib/condition-filters.ts).
+---
+
+<section class="list" aria-labelledby="conditions-heading" data-condition-filters data-locale={edition.lang}>
+  <h2 id="conditions-heading" class="h">{c.heading}</h2>
+
+  <div class="filters" role="search" aria-label={c.filters.ariaLabel}>
+    <div class="pair">
+      <div class="ui-box sel">
+        <label class="sr-only" for="cf-specialty">{c.filters.specialtyLabel}</label>
+        <select id="cf-specialty" name="specialty" class="ui-field">
+          <option value="">{c.filters.specialtyLabel}</option>
+          {specialties.map((s) => <option value={s.id}>{t(s.name, loc, 'specialties')}</option>)}
+        </select>
+        <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
+      </div>
+      <button type="button" class="az hit" data-sort aria-pressed="false" aria-label={c.filters.sortSpecialtyAria}>
+        <img class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
+        <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
+      </button>
+    </div>
+    <div class="pair">
+      <div class="ui-box sel">
+        <label class="sr-only" for="cf-condition">{c.filters.conditionLabel}</label>
+        <select id="cf-condition" name="condition" class="ui-field">
+          <option value="">{c.filters.conditionLabel}</option>
+          {items.map((x) => <option value={x.slug}>{x.title}</option>)}
+        </select>
+        <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
+      </div>
+      <button type="button" class="az hit" data-sort aria-pressed="false" aria-label={c.filters.sortConditionAria}>
+        <img class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
+        <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
+      </button>
+    </div>
+  </div>
+
+  <ul class="grid" role="list" aria-label={c.results.listLabel} data-condition-list>
+    {items.map((x) => (
+      <li data-slug={x.slug} data-title={x.title} data-specialties={x.specialties.join(' ')}>
+        <ConditionCard slug={x.slug} title={x.title} summary={x.summary} href={x.href} button={c.card.button} headingId={`cond-${x.slug}`} />
+      </li>
+    ))}
+  </ul>
+  <p class="ui-empty not-italic" data-condition-empty hidden>{c.results.empty}</p>
+  <p class="sr-only" role="status" aria-live="polite" data-condition-status data-template={c.results.found}></p>
+</section>
+
+<style>
+  .list { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: calc(16 * var(--u)); box-sizing: border-box; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(16 * var(--u)) calc(21 * var(--u)); margin-top: calc(35 * var(--u)); padding-inline: calc(16 * var(--u)); }
+  .pair { display: flex; gap: calc(14 * var(--u)); width: calc(417 * var(--u)); max-width: 100%; }
+  .sel { flex: 1 1 auto; min-width: 0; width: calc(311 * var(--u)); }
+  .az { flex: none; position: relative; display: flex; align-items: flex-start; box-sizing: border-box; width: calc(92 * var(--u)); height: calc(35 * var(--u)); margin: 0; padding: 0; padding-inline-start: calc(9.45 * var(--u)); /* + 0.5 border = Figma 9.95 */ background: transparent; border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); color: var(--color-navy); cursor: pointer; font: inherit; }
+  .az[aria-pressed='true'] { background: var(--color-chip); } /* no pressed state in Figma: subtle chip fill, flagged */
+  .az:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+  .az-icon { flex: none; width: calc(21 * var(--u)); height: calc(17.327 * var(--u)); margin-top: calc(9.47 * var(--u)); max-width: none; } /* + 0.5 border = 9.97 */
+  .az-label { margin-top: calc(11.5 * var(--u)); /* + 0.5 border = 12 */ margin-inline-start: calc(25.05 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(14 * var(--u)); white-space: nowrap; }
+  .grid { list-style: none; margin: calc(56 * var(--u)) 0 0; padding: 0 calc(16 * var(--u)); display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(198.097 * var(--u))); column-gap: calc(24.903 * var(--u)); row-gap: calc(22 * var(--u)); }
+  .grid > li { display: flex; }
+  .grid > li[hidden] { display: none; }
+  @media (min-width: 1024px) {
+    .filters { flex-wrap: nowrap; justify-content: flex-start; width: calc(855 * var(--u)); margin-inline-start: calc(97 * var(--u)); padding-inline: 0; }
+    .grid { width: calc(867.097 * var(--u)); margin-inline-start: calc(92 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(4, calc(198.097 * var(--u))); }
+  }
+</style>

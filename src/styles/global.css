@@ -169,3 +169,23 @@ body {
 /* Chrome rounds the initial RTL snap position of a row that overhangs the frame by 1px, which breaks the exact
    mirror at desktop widths. Desktop RTL rows scroll without snapping; mobile/tablet rows snap in both directions. */
 @media (min-width: 1024px) { [dir='rtl'] .hscroll { scroll-snap-type: none; } }
+
+/* ───────────── Shared filter controls (Figma 62:783 pills, 62:186 boxes; reused on Conditions, Insurance, Testimonials) ─────────────
+   .ui-pill: region pill 79 x 25, radius 12, 1px navy outline; pressed = navy fill. Place it with the parent's layout.
+   .ui-box > .ui-field + .ui-chev: 35 tall box, radius 10, 0.5px #418ea2, Gotham Book 10/14 navy, chevron 17 from the end.
+   Width of .ui-box: set by the page (311 on Find a Doctor / Conditions). */
+.ui-pill { width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(1 * var(--u)) 0 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
+.ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--color-navy); color: #fff; border: 0; }
+.ui-pill:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+.ui-box { position: relative; flex: none; max-width: 100%; height: calc(35 * var(--u)); }
+.ui-field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
+.ui-field::placeholder { color: var(--color-navy); opacity: 1; }
+.ui-field::-webkit-calendar-picker-indicator, .ui-field::-webkit-list-button { display: none !important; opacity: 0; }
+.ui-field:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+[dir='rtl'] .ui-field { padding: 0 calc(15 * var(--u)) 0 calc(31 * var(--u)); }
+.ui-chev { position: absolute; inset-inline-end: calc(17 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); pointer-events: none; max-width: none; }
+
+/* Empty result of a client-side filter (Find a Doctor, Conditions, ...). No Figma design: body text style, centred.
+   Wording + look flagged for Pramod's approval. */
+.ui-empty { margin: 0; padding: calc(40 * var(--u)) calc(16 * var(--u)); text-align: center; font: 400 calc(12 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+.ui-empty[hidden] { display: none; }

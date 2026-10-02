@@ -1,6 +1,7 @@
 ---
 import { content } from '../../lib/content';
 import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import calendar from '../../assets/contact-page/cta-calendar-clock.svg';
 import search from '../../assets/contact-page/cta-search.svg';
 import message from '../../assets/contact-page/cta-message-share.svg';
@@ -24,12 +25,15 @@ const icons = [
   { src: message, size: 26, x: 84, y: 10 },
 ];
 // Tile boxes (194x68) and label offsets inside the tile, in Figma px. Order = Book, Find a Doctor, Refer, Send.
+// Tile target: `page` (key in PAGE_PATHS) or `path` (path inside the edition) wins over the literal `href`.
+const tileHref = (t: { href: string; path?: string; page?: string }) =>
+  t.page !== undefined ? urlFor(edition, pagePath(t.page)) : t.path !== undefined ? urlFor(edition, t.path) : t.href;
 const tiles = [
   { x: 527, y: 51, lx: 23, ly: 43 },
   { x: 742, y: 51, lx: 18, ly: 43 },
   { x: 527, y: 152, lx: 19, ly: 41 },
   { x: 742, y: 152, lx: 23, ly: 41 },
-].map((d, i) => ({ ...d, ...c.tiles[i], href: c.tiles[i].path === undefined ? c.tiles[i].href : urlFor(edition, c.tiles[i].path), icon: icons[i] }));
+].map((d, i) => ({ ...d, ...c.tiles[i], href: tileHref(c.tiles[i]), icon: icons[i] }));
 ---
 
 <section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>

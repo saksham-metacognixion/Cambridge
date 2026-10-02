@@ -1,0 +1,265 @@
+{
+  "$comment": "Conditions shown on Conditions & Specialities (Figma 40:318), in Figma order (rows left to right). title/summary = exact Figma text (Pediatric Neurological keeps Figma's no-break space). specialties = ids from specialties.json: the speciality-to-condition MAPPING IS NOT IN FIGMA and waits for Pramod (empty = shown only when no speciality is selected). Detail pages: conditions with a file in src/data/content/conditions/<slug>.<locale>.json use it; the others are generated from title + summary and marked 'content pending' on staging.",
+  "conditions": [
+    {
+      "slug": "stroke-rehabilitation",
+      "figma": "67:2892",
+      "title": {
+        "en": "Stroke Rehabilitation",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Restoring mobility, speech, and independence following stroke.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "traumatic-brain-injury",
+      "figma": "67:2901",
+      "title": {
+        "en": "Traumatic Brain Injury",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Supporting recovery of cognitive, physical, and functional abilities after brain injury.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "spinal-cord-injury",
+      "figma": "67:2910",
+      "title": {
+        "en": "Spinal Cord Injury",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Enhancing mobility and independence through specialized spinal rehabilitation.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "parkinsons-disease",
+      "figma": "67:2919",
+      "title": {
+        "en": "Parkinson’s Disease",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Managing movement, balance, and daily function through targeted therapy.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "multiple-sclerosis",
+      "figma": "67:2929",
+      "title": {
+        "en": "Multiple Sclerosis",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Supporting strength, coordination, and long-term functional ability.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "back-pain",
+      "figma": "67:2938",
+      "title": {
+        "en": "Back Pain",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Relieving pain and restoring movement through structured therapy.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "neck-pain",
+      "figma": "67:2947",
+      "title": {
+        "en": "Neck Pain",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Improving mobility and reducing discomfort with targeted rehabilitation.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "joint-replacement-recovery",
+      "figma": "67:2956",
+      "title": {
+        "en": "Joint Replacement Recovery",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Optimizing recovery, strength, and mobility after joint surgery.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "sports-injury-rehabilitation",
+      "figma": "67:2966",
+      "title": {
+        "en": "Sports Injury Rehabilitation",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Restoring performance and preventing re-injury through guided therapy.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "fracture-recovery",
+      "figma": "67:2975",
+      "title": {
+        "en": "Fracture Recovery",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Supporting healing, strength, and safe return to daily activities.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "cerebral-palsy",
+      "figma": "67:2984",
+      "title": {
+        "en": "Cerebral Palsy",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Improving movement, coordination, and functional independence in children.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "developmental-delay",
+      "figma": "67:2993",
+      "title": {
+        "en": "Developmental Delay",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Supporting developmental milestones through early intervention and therapy.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "pediatric-neurological-conditions",
+      "figma": "67:3004",
+      "title": {
+        "en": "Pediatric Neurological Conditions",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Enhancing function and quality of life for children with neurological needs.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "ventilator-dependent-care",
+      "figma": "67:3013",
+      "title": {
+        "en": "Ventilator-Dependent Care",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Providing specialized support for patients requiring long-term ventilation.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "long-term-care-management",
+      "figma": "67:3022",
+      "title": {
+        "en": "Long-Term Care Management",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Delivering continuous medical and supportive care for complex conditions.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "post-acute-recovery",
+      "figma": "67:3031",
+      "title": {
+        "en": "Post-Acute Recovery",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Supporting transition from hospital to structured rehabilitation and recovery.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "mobility-impairment",
+      "figma": "67:3041",
+      "title": {
+        "en": "Mobility Impairment",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Improving movement and independence through targeted rehabilitation.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "balance-disorders",
+      "figma": "67:3050",
+      "title": {
+        "en": "Balance Disorders",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Enhancing stability and reducing fall risk through specialized therapy.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "chronic-pain-management",
+      "figma": "67:3059",
+      "title": {
+        "en": "Chronic Pain Management",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Reducing pain and improving daily function through multidisciplinary care.",
+        "ar": ""
+      },
+      "specialties": []
+    },
+    {
+      "slug": "post-surgical-rehabilitation",
+      "figma": "67:3068",
+      "title": {
+        "en": "Post-Surgical Rehabilitation",
+        "ar": ""
+      },
+      "summary": {
+        "en": "Supporting recovery, strength, and function after surgery.",
+        "ar": ""
+      },
+      "specialties": []
+    }
+  ]
+}

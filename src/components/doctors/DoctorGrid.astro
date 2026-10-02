@@ -27,15 +27,13 @@ const items = allDoctors.map((d) => {
     </li>
   ))}
 </ul>
-<p class="empty font-gotham font-normal text-body not-italic" data-doctor-empty hidden>{c.results.empty}</p>
+<p class="ui-empty not-italic" data-doctor-empty hidden>{c.results.empty}</p>
 <p class="sr-only" role="status" aria-live="polite" data-doctor-status data-template={c.results.found}></p>
 
 <style>
   .grid { list-style: none; margin: 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u)); }
   .grid > li { display: flex; }
   .grid > li[hidden] { display: none; }
-  .empty { margin: 0; padding: calc(40 * var(--u)) calc(16 * var(--u)); text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
-  .empty[hidden] { display: none; }
   @media (min-width: 1024px) {
     .grid { width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; justify-content: start; grid-template-columns: repeat(4, calc(215 * var(--u))); column-gap: calc(31.667 * var(--u)); }
   }

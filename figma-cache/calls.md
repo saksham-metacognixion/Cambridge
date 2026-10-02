@@ -128,3 +128,5 @@ SUMMARY after 74: batch-2 session 25. Dev-seat calls today (all sessions): 43.
 SUMMARY after 85: batch-2 session 36. Dev-seat calls today (all sessions): 54.
 86. get_design_context 100:5509 FAQ (no screenshot: #56 is the target) -> FULL -> faq-spec.md, assets/faq/* (hero + 3 chevrons)
 SUMMARY after 86: batch-2 session 37. Dev-seat calls today (all sessions): 55.
+87. get_screenshot 32:826 Doctor - Page, full resolution (1052x1225) -> figma-cache/pages/doctor-profile-32-826.png (replaces the 880px preview for checks)
+SUMMARY after 87: batch-2 session 38 (11 get_screenshot, 25 get_design_context, 2 download_assets). Dev-seat calls today (all sessions): 56.

@@ -1,0 +1,263 @@
+---
+/*
+ * Patient Feedback Form — Figma 188:964 (intro text + white card), spec figma-cache/forms-spec.md. Scope form
+ * "Contact / Feedback"; posts to `feedback` (inbox FORM_TO_FEEDBACK). Values are Figma px from the card's top-left
+ * (card = page x 53, y 599). Every question is a radio group (fieldset + legend); the satisfaction rows are announced
+ * as "<statement>, <column>" (the column headers are drawn once, visually). Figma draws all five "recommend" options
+ * as selected (a state sample): nothing is preselected; unselected circles use the grey of the matrix circles.
+ */
+import FormShell from '../forms/FormShell.astro';
+import { content } from '../../lib/content';
+import { commonText, fieldsIn, fieldId, sourceOptions, splitStar, dialCodes } from '../../lib/forms';
+import { parsePath } from '../../lib/editions';
+import radioOn from '../../assets/forms/feedback-radio-on.svg';
+import radioOff from '../../assets/forms/feedback-radio-off.svg';
+import chevDial from '../../assets/forms/feedback-chevron-dial.svg';
+import chevHospital from '../../assets/forms/feedback-chevron-hospital.svg';
+import flagUae from '../../assets/forms/feedback-flag-uae.svg';
+import '../forms/forms.css';
+
+const ID = 'feedback';
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('forms/feedback', edition.locale);
+const common = commonText(edition.locale);
+const id = (n: string) => fieldId(ID, n);
+const contact = Object.fromEntries(fieldsIn(ID, 'contact').map((f) => [f.name, f]));
+const recommend = fieldsIn(ID, 'recommend')[0];
+const matrix = fieldsIn(ID, 'matrix');
+const message = fieldsIn(ID, 'message')[0];
+const hospitals = sourceOptions('hospitals', edition);
+const lbl = (name: string) => splitStar(c.fields[name].label);
+const cols = matrix[0]?.options ?? [];
+---
+
+<section class="fb" aria-labelledby="feedback-title">
+  <div class="intro font-gotham font-normal text-f12 text-body not-italic">
+    {c.intro.map((line: string) => <p>{line}</p>)}
+  </div>
+
+  <div class="card">
+    <FormShell
+      id={ID}
+      edition={edition}
+      submit={c.submit}
+      ariaLabel={c.ariaLabel}
+      button={{ w: 147.831, h: 50, r: 15, fs: 15, ty: 20 }}
+      gaps={{ consent: 16, submit: 16 }}
+      class="pf"
+    >
+      <!-- Name / Hospital / Mobile / Email: rows at 69 and 123, columns at 47 and 512 -->
+      <div class="contact">
+        {contact.name && (
+          <div class="pf-field" data-field="name">
+            <div class="pf-row" style="--at:84.55">
+              <label for={id('name')} class="pf-label">{lbl('name')[0]}<span aria-hidden="true">{lbl('name')[1]}</span></label>
+              <input id={id('name')} name="name" type="text" required={contact.name.required} maxlength={contact.name.max} autocomplete="name" aria-describedby={`${id('name')}-error`} class="pf-box" style="--w:319.889" />
+            </div>
+            <p id={`${id('name')}-error`} class="f-err" hidden></p>
+          </div>
+        )}
+        {contact.hospital && (
+          <div class="pf-field" data-field="hospital">
+            <div class="pf-row" style="--at:84.55">
+              <label for={id('hospital')} class="pf-label">{lbl('hospital')[0]}<span aria-hidden="true">{lbl('hospital')[1]}</span></label>
+              <div class="pf-select" style="--w:319.889">
+                <select id={id('hospital')} name="hospital" required={contact.hospital.required} aria-describedby={`${id('hospital')}-error`} class="pf-box">
+                  <option value="" selected></option>
+                  {hospitals.map((h) => <option value={h.value}>{h.label}</option>)}
+                </select>
+                <img src={chevHospital.src} alt="" width="7.24" height="4.207" class="pf-chev" />
+              </div>
+            </div>
+            <p id={`${id('hospital')}-error`} class="f-err" hidden></p>
+          </div>
+        )}
+        {contact.mobile && (
+          <div class="pf-field mobile" data-field="mobile">
+            <div class="pf-row" style="--at:87.08">
+              <label for={id('mobile')} class="pf-label">{lbl('mobile')[0]}<span aria-hidden="true">{lbl('mobile')[1]}</span></label>
+              <div class="pf-dial">
+                <select name="mobile_code" class="pf-box" aria-label={common.dialCodeLabel}>
+                  {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
+                </select>
+                <img src={flagUae.src} alt="" width="16.261" height="11" class="pf-flag" />
+                <img src={chevDial.src} alt="" width="7.135" height="4.207" class="pf-chev" />
+              </div>
+              <input id={id('mobile')} name="mobile" type="tel" inputmode="tel" dir="ltr" required={contact.mobile.required} maxlength={contact.mobile.max} autocomplete="tel-national" placeholder={c.fields.mobile.placeholder} aria-describedby={`${id('mobile')}-error`} class="pf-box pf-tel" style="--w:232.587" />
+            </div>
+            <p id={`${id('mobile')}-error`} class="f-err" hidden></p>
+          </div>
+        )}
+        {contact.email && (
+          <div class="pf-field" data-field="email">
+            <div class="pf-row" style="--at:87.13">
+              <label for={id('email')} class="pf-label">{lbl('email')[0]}<span aria-hidden="true">{lbl('email')[1]}</span></label>
+              <input id={id('email')} name="email" type="email" required={contact.email.required} maxlength={contact.email.max} autocomplete="email" aria-describedby={`${id('email')}-error`} class="pf-box" style="--w:316.489" />
+            </div>
+            <p id={`${id('email')}-error`} class="f-err" hidden></p>
+          </div>
+        )}
+      </div>
+
+      {recommend && (
+        <fieldset class="recommend" data-field={recommend.name} aria-describedby={`${id(recommend.name)}-error`}>
+          <legend class="pf-q">{c.fields[recommend.name].label}</legend>
+          <div class="nps">
+            {recommend.options!.map((o) => (
+              <label class="nps-opt">
+                <input class="sr-only" type="radio" name={recommend.name} value={o} required={recommend.required} />
+                <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
+                <span>{c.fields[recommend.name].options[o]}</span>
+              </label>
+            ))}
+          </div>
+          <p id={`${id(recommend.name)}-error`} class="f-err" hidden></p>
+        </fieldset>
+      )}
+
+      {matrix.length > 0 && (
+        <div class="matrix">
+          <p class="pf-q q2">{c.matrix.label}</p>
+          <div class="m-head" aria-hidden="true">
+            <span></span>
+            {cols.map((o) => <span class="m-col">{c.matrix.columns[o].map((l: string) => <span class="block">{l}</span>)}</span>)}
+          </div>
+          {matrix.map((f) => (
+            <fieldset class="m-row" data-field={f.name} aria-describedby={`${id(f.name)}-error`}>
+              <legend class="m-legend">{c.fields[f.name].label.map((l: string) => <span class="block">{l}</span>)}</legend>
+              <div class="m-cells">
+                {f.options!.map((o) => (
+                  <label class="m-cell">
+                    <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
+                    <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
+                    <span class="m-name">{c.matrix.columns[o].join(' ')}</span>
+                  </label>
+                ))}
+              </div>
+              <p id={`${id(f.name)}-error`} class="f-err" hidden></p>
+            </fieldset>
+          ))}
+        </div>
+      )}
+
+      {message && (
+        <div class="improve" data-field={message.name}>
+          <label for={id(message.name)} class="pf-q q3">{c.fields[message.name].label}</label>
+          <textarea id={id(message.name)} name={message.name} required={message.required} maxlength={message.max} placeholder={c.fields[message.name].placeholder} aria-describedby={`${id(message.name)}-error`} class="pf-box pf-area"></textarea>
+          <p id={`${id(message.name)}-error`} class="f-err" hidden></p>
+        </div>
+      )}
+    </FormShell>
+  </div>
+</section>
+
+<style>
+  /* Intro: 3 lines centred on page x 530, top 502 (61 below the hero); card at 599 */
+  .fb { box-sizing: border-box; max-inline-size: calc(var(--target-w) * 1px); margin-inline: auto; padding-block-start: calc(61 * var(--u)); }
+  .intro { min-block-size: calc(97 * var(--u)); line-height: calc(14 * var(--u)); text-align: center; position: relative; inset-inline-start: calc(4 * var(--u)); }
+  .intro p { margin: 0; }
+  .card {
+    position: relative; inset-inline-start: calc(4 * var(--u)); box-sizing: border-box;
+    inline-size: calc(954 * var(--u)); max-inline-size: calc(100% - 32px); margin-inline: auto;
+    min-block-size: calc(1179 * var(--u)); background: #fff;
+    border-radius: calc(14.32 * var(--u)); border-start-end-radius: calc(15 * var(--u));
+    box-shadow: 0 0 calc(15.696 * var(--u)) rgba(0, 0, 0, 0.25);
+    padding: calc(69 * var(--u)) calc(37.6 * var(--u)) calc(49 * var(--u)) calc(47 * var(--u));
+  }
+  .card :global(.pf) { color: var(--color-navy); }
+  /* SUBMIT centred on the card (page x 529.92); the content box is centred 4.78 to its right */
+  .card :global(.f-submit) { inset-inline-start: calc(-4.78 * var(--u)); }
+
+  /* Fields: fill rgba(217,217,217,.5), radius 10.754, h 35; labels Gotham Book 15 / 18.82, text 8 below the box top */
+  .contact { display: grid; grid-template-columns: calc(465 * var(--u)) minmax(0, 1fr); row-gap: calc(19 * var(--u)); align-items: start; }
+  .pf-row { position: relative; display: flex; align-items: flex-start; }
+  .pf-label { flex: none; box-sizing: border-box; min-inline-size: calc(var(--at) * var(--u)); padding-block-start: calc(8 * var(--u)); padding-inline-end: calc(4 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); white-space: nowrap; }
+  .mobile .pf-row { margin-inline-start: calc(1 * var(--u)); }
+  .pf-box {
+    box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
+    inline-size: calc(var(--w, 319.889) * var(--u)); max-inline-size: 100%; block-size: calc(35 * var(--u)); padding: 0 calc(9.17 * var(--u));
+    border-radius: calc(10.754 * var(--u)); background: rgba(217, 217, 217, 0.5);
+    font-family: var(--font-gotham); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); color: var(--color-navy);
+  }
+  .pf-box::placeholder { color: var(--color-body); opacity: 1; }
+  .pf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
+  .pf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+  .pf-select { position: relative; inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; }
+  .pf-select select { inline-size: 100%; padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
+  .pf-select .pf-chev { inset-inline-end: calc(16.2 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7.24 * var(--u)); }
+  .pf-chev, .pf-flag { position: absolute; pointer-events: none; max-inline-size: none; block-size: auto; }
+  .pf-dial { position: relative; flex: none; inline-size: calc(74.901 * var(--u)); }
+  .pf-dial select { inline-size: 100%; padding-inline: calc(25.62 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+  .pf-flag { inset-inline-start: calc(5.91 * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(16.261 * var(--u)); block-size: calc(11 * var(--u)); }
+  .pf-dial .pf-chev { inset-inline-end: calc(5.68 * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(7.135 * var(--u)); }
+  .pf-tel { margin-inline-start: calc(9.85 * var(--u)); flex: 0 1 auto; min-inline-size: 0; }
+
+  /* Questions: Gotham Bold 15 navy */
+  .pf-q { display: block; margin: 0; padding: 0; font-weight: 700; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); }
+  fieldset { margin: 0; padding: 0; border: 0; min-inline-size: 0; }
+  /* Recommend: question at 221 (63 below the contact rows), options from 269, every 28 */
+  .recommend { margin-block-start: calc(63 * var(--u)); }
+  .recommend > legend { float: inline-start; inline-size: calc(543 * var(--u)); max-inline-size: 100%; min-block-size: calc(48 * var(--u)); }
+  .nps { clear: both; display: flex; flex-direction: column; gap: calc(9.18 * var(--u)); }
+  .nps-opt { display: flex; align-items: center; gap: calc(8.19 * var(--u)); inline-size: max-content; min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+  .pf-radio { display: grid; place-items: center; flex: none; inline-size: calc(12.812 * var(--u)); block-size: calc(13 * var(--u)); }
+  .pf-radio img { grid-area: 1 / 1; max-inline-size: none; inline-size: calc(16.279 * var(--u)); block-size: calc(16.467 * var(--u)); }
+  .pf-radio .on { opacity: 0; }
+  label:has(input:checked) .pf-radio .on { opacity: 1; }
+  label:has(input:checked) .pf-radio .off { opacity: 0; }
+  label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+
+  /* Satisfaction: question at 433 (33.18 below the last option); header row 491; rows at 539 + 58n; label x 50.
+     Columns (from x 50): label 236 | cells 96 wide centred on 284 / 424 / 549 / 657 / 765 */
+  .matrix { margin-block-start: calc(33.18 * var(--u)); --cols: calc(236 * var(--u)) calc(96 * var(--u)) calc(44 * var(--u)) calc(96 * var(--u)) calc(29 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)); }
+  .q2 { inline-size: calc(612 * var(--u)); max-inline-size: 100%; min-block-size: calc(58 * var(--u)); }
+  .m-head { display: grid; grid-template-columns: var(--cols); align-items: center; min-block-size: calc(37.64 * var(--u)); margin-inline-start: calc(3 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); text-align: center; }
+  .m-head > :nth-child(2) { grid-column: 2; } .m-head > :nth-child(3) { grid-column: 4; } .m-head > :nth-child(4) { grid-column: 6; } .m-head > :nth-child(5) { grid-column: 8; } .m-head > :nth-child(6) { grid-column: 10; }
+  .m-row { margin-block-start: calc(10.36 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+  .m-row + .m-row { margin-block-start: calc(20.36 * var(--u)); }
+  .m-legend { float: inline-start; box-sizing: border-box; inline-size: calc(236 * var(--u)); min-block-size: calc(37.64 * var(--u)); padding: 0; padding-inline-end: calc(21 * var(--u));   /* Figma text box 215 */ font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+  .m-cells { display: flex; padding-block-start: calc(9 * var(--u)); }
+  .m-cell { display: flex; justify-content: center; inline-size: calc(96 * var(--u)); min-block-size: calc(13 * var(--u)); cursor: pointer; }
+  .m-cell:nth-child(2) { margin-inline-start: calc(44 * var(--u)); } .m-cell:nth-child(3) { margin-inline-start: calc(29 * var(--u)); }
+  .m-cell:nth-child(4), .m-cell:nth-child(5) { margin-inline-start: calc(12 * var(--u)); }
+  .m-name { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .m-cell { position: relative; }
+  .m-cell::before { content: ''; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; translate: -50% -50%; inline-size: 44px; block-size: 44px; }   /* 44px hit area */
+  :global([dir='rtl']) .m-cell::before { translate: 50% -50%; }
+  .m-row .f-err { clear: both; }
+
+  /* Improve: label at 831 (22.36 below the last row), textarea (50, 870) 797x194 radius 8, placeholder Book 11 at (18, 17) */
+  .improve { margin-block-start: calc(22.36 * var(--u)); }
+  .q3 { min-block-size: calc(39 * var(--u)); }
+  .pf-area { inline-size: calc(797 * var(--u)); block-size: calc(194 * var(--u)); margin-inline-start: calc(3 * var(--u)); border-radius: calc(8 * var(--u)); padding: calc(17 * var(--u)) calc(18 * var(--u)); resize: none; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
+  .card :global(.f-consent) { margin-inline-start: calc(3 * var(--u)); }
+
+  /* Below 1024: one column; the satisfaction rows show each column name under its circle */
+  @media (max-width: 1023.98px) {
+    .card { inline-size: auto; inset-inline-start: 0; padding: 24px 16px; min-block-size: 0; }
+    .intro { inset-inline-start: 0; padding-inline: 16px; min-block-size: 0; margin-block-end: 24px; }
+    .contact { grid-template-columns: minmax(0, 1fr); }
+    .pf-row { align-items: center; }
+    .pf-label { padding-block-start: 0; }
+    .pf-box { min-block-size: 44px; }
+    .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
+    .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }
+    .m-head { display: none; }
+    .q2, .recommend > legend { inline-size: auto; min-block-size: 0; margin-block-end: 12px; }
+    .m-row, .m-row + .m-row { margin-block-start: 20px; margin-inline-start: 0; }
+    .m-legend { float: none; inline-size: auto; min-block-size: 0; margin-block-end: 8px; }
+    .m-cells { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 0; }
+    .m-cell, .m-cell:nth-child(n) { margin: 0; inline-size: auto; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; min-block-size: 44px; }
+    .m-name { position: static; inline-size: auto; block-size: auto; clip-path: none; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: calc(8 * var(--u)); line-height: 1.2; }
+    .m-cell::before { display: none; }
+    .pf-area, .card :global(.f-consent) { margin-inline-start: 0; inline-size: 100%; }
+  }
+  @media (max-width: 767.98px) {
+    .pf-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+    .mobile .pf-row { grid-template-columns: auto minmax(0, 1fr); margin-inline-start: 0; }
+    .pf-label { grid-column: 1 / -1; min-inline-size: 0; padding-block-end: 6px; }
+    .pf-row > .pf-box, .pf-select { inline-size: 100%; }
+    .pf-tel { inline-size: auto !important; }
+    .card :global(.f-submit) { inset-inline-start: 0; }
+  }
+</style>

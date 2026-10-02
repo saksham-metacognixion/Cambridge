@@ -18,6 +18,7 @@ export function allRoutes(): PageRoute[] {
     { key: 'contact', path: 'contact' },
     { key: 'media-hub', path: 'media-hub' },
     { key: 'patient-hub', path: PAGE_PATHS.patientHub },
+    { key: 'patient-feedback', path: PAGE_PATHS.patientFeedback },
     { key: 'find-a-doctor', path: DOCTOR_PATHS.list },
     ...profileDoctors.map((d) => ({ key: `doctor-${d.slug}`, path: DOCTOR_PATHS.profile(d.slug) })),
   ];

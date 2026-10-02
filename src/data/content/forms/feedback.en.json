@@ -4,7 +4,7 @@
     "description": "Thank you for choosing us for your medical needs. Please provide feedback on your visit so we can continue improving our services."
   },
   "hero": {
-    "title": "Your Opinion Matters",
+    "title": ["Your Opinion", "Matters"],
     "image": "forms/feedback-hero",
     "button": { "label": "Consult for a Care Plan", "href": "#book-appointment" }
   },
@@ -37,7 +37,7 @@
       "dissatisfied": ["Dissatisfied"],
       "neutral": ["Neutral"],
       "satisfied": ["Satisfied"],
-      "very-satisfied": ["Very Satisfied"]
+      "very-satisfied": ["Very", "Satisfied"]
     }
   },
   "submit": "SUBMIT"

@@ -1,0 +1,54 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { content } from '../../lib/content';
+import { img } from '../../lib/images';
+import { parsePath } from '../../lib/editions';
+
+// Figma 188:964 hero: image "PAR-inside 1" 1052x323 at page y 118 (1 under the header). Values: page y minus 118.
+// Title (95,100) Gotham Medium 39 / 37 (the line height the other heroes use), w 385 | button (98,180) 164x30, label top 9.
+// The image in Figma is only 1052x323 (no larger original), and there is no KSA (red ghutra) version yet:
+// add one as src/assets/regions/sa/forms/feedback-hero.png and it is used on /sa automatically.
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('forms/feedback', edition.locale).hero;
+const banner = img(c.image, edition.region);
+---
+
+<section class="hero relative" aria-labelledby="feedback-title">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <Picture
+      src={banner}
+      formats={['avif']}
+      fallbackFormat="webp"
+      width={px(1052)}
+      height={px(323)}
+      widths={[720, 1052]}
+      sizes="(min-width: 1440px) 1440px, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      alt=""
+      class="absolute start-0 top-0 h-full w-full max-w-none object-cover object-[100%_0] rtl:-scale-x-100"
+      pictureAttributes={{ class: 'contents' }}
+    />
+  </div>
+  <div class="inner relative">
+    <h1 id="feedback-title" class="title m-0 font-gotham font-medium text-f39 text-navy not-italic">{c.title.map((line: string) => <span class="block">{line}</span>)}</h1>
+    <a href={c.button.href} class="btn hit hair-card relative block rounded-r7 no-underline" style="--sw:1;--sc:var(--color-cyan)">
+      <span class="block font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero { min-block-size: calc(323 * var(--u)); margin-block-start: calc(-1 * var(--u)); }
+  .inner { box-sizing: border-box; max-inline-size: calc(var(--target-w) * 1px); margin-inline: auto; padding-block: calc(100 * var(--u)) calc(24 * var(--u)); padding-inline-start: calc(95 * var(--u)); }
+  .title { inline-size: calc(385 * var(--u)); max-inline-size: 100%; min-block-size: calc(80 * var(--u)); line-height: calc(37 * var(--u)); overflow-wrap: break-word; }
+  .btn { box-sizing: border-box; inline-size: calc(164 * var(--u)); block-size: calc(30 * var(--u)); margin-inline-start: calc(3 * var(--u)); padding-block-start: calc(9 * var(--u)); }
+  .btn span { line-height: normal; }
+  @media (max-width: 1023.98px) {
+    .inner { padding-inline: calc(24 * var(--u)); padding-block-start: calc(64 * var(--u)); }
+    .title { inline-size: auto; max-inline-size: 85%; }
+    .btn { margin-block-start: 12px; }
+  }
+</style>

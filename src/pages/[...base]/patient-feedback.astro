@@ -1,0 +1,33 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FeedbackHero from '../../components/feedback/FeedbackHero.astro';
+import FeedbackForm from '../../components/feedback/FeedbackForm.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('forms/feedback', edition.locale);
+
+/*
+ * Patient Feedback Form template (Figma 188:964, file LJIRtzU...). Header 0-119 | hero 118-441 | intro 502 |
+ * card 599-1778 (+ the consent row Figma doesn't draw) | footer 1850 (72 below the card).
+ */
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.patientFeedback} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <FeedbackHero />
+    <FeedbackForm />
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(72 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

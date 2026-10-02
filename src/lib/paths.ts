@@ -10,6 +10,8 @@ import { DOCTOR_PATHS } from './doctors';
  */
 export const PAGE_PATHS = {
   patientHub: 'patient-hub',
+  /** Patient Feedback Form (Figma 188:964). Slug UNCONFIRMED: the current site's URL could not be read. */
+  patientFeedback: 'patient-feedback',
   findDoctor: DOCTOR_PATHS.list,
   /** not built (Figma 40:318) */
   conditions: 'conditions-specialities',

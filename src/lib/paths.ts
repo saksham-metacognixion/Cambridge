@@ -23,6 +23,11 @@ export const PAGE_PATHS = {
   insuranceProviders: 'insurance-providers',
   /** not built (Figma 62:2403) */
   patientTestimonials: 'patient-testimonials',
+  /**
+   * not built (Legal templates, scope 2.5). Still linked as "#" until the page exists: the consent row on every form
+   * (src/data/content/forms/common.*.json -> consent.link.href) and the footer "Privacy Policy". Point both here then.
+   */
+  privacyPolicy: 'privacy-policy',
 } as const;
 
 export type PageKey = keyof typeof PAGE_PATHS;

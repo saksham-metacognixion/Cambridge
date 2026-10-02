@@ -167,6 +167,15 @@ function preselect(form: HTMLFormElement, slug?: string) {
   filterDoctors(form);
 }
 
+/* ───────── Dial code box: shows the code (Figma "+971") and the flag Figma has (UAE only) ───────── */
+function syncDial(sel: HTMLSelectElement) {
+  const box = sel.closest('[data-dial]');
+  const opt = sel.selectedOptions[0];
+  const code = box?.querySelector<HTMLElement>('.dial-code');
+  if (code && opt) code.textContent = opt.dataset.code ?? '';
+  box?.querySelectorAll<HTMLImageElement>('img[data-flag-for]').forEach((img) => (img.hidden = img.dataset.flagFor !== opt?.value));
+}
+
 /* ───────── Forms ───────── */
 export function initForm(form: HTMLFormElement) {
   if (form.dataset.ready) return;
@@ -202,6 +211,7 @@ export function initForm(form: HTMLFormElement) {
     e.preventDefault();
     void submit(form);
   });
+  form.querySelectorAll<HTMLSelectElement>('[data-dial] select').forEach((sel) => sel.addEventListener('change', () => syncDial(sel)));
   renderTurnstile(form);
 }
 
@@ -341,6 +351,7 @@ function success(form: HTMLFormElement) {
     `[data-success-for="${form.dataset.form}"]`,
   );
   form.reset();
+  form.querySelectorAll<HTMLSelectElement>('[data-dial] select').forEach(syncDial);
   form
     .querySelectorAll<HTMLInputElement>('input[type="date"]')
     .forEach((d) => d.toggleAttribute("data-empty", true));

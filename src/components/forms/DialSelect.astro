@@ -1,0 +1,33 @@
+---
+/*
+ * Country calling code box of a Mobile field (all forms). Figma draws a box with the UAE flag, "+971" and a chevron.
+ * The open list shows country names (src/data/dial-codes.json); the closed box shows only the code, as in Figma, via
+ * the overlay (`.dial-code`), kept in sync by src/scripts/forms.ts. Only the UAE flag exists in Figma: for other
+ * countries the flag slot stays empty. Posts the ISO country (unique; several countries share a code).
+ */
+import dial from '../../data/dial-codes.json';
+import { t } from '../../lib/content';
+import type { Edition } from '../../lib/editions';
+import flagUaePopup from '../../assets/forms/flag-uae.svg';
+import flagUaePage from '../../assets/forms/feedback-flag-uae.svg';
+import chevPopup from '../../assets/forms/chevron-dial.svg';
+import chevPage from '../../assets/forms/feedback-chevron-dial.svg';
+
+interface Props { name: string; edition: Edition; label: string; variant: 'popup' | 'page' }
+const { name, edition, label, variant } = Astro.props;
+const preset = (dial.defaults as Record<string, string>)[edition.region] ?? 'AE';
+const current = dial.countries.find((c) => c.iso === preset)!;
+const flags: Record<string, ImageMetadata> = { AE: variant === 'popup' ? flagUaePopup : flagUaePage };
+const flag = flags.AE;
+const chev = variant === 'popup' ? chevPopup : chevPage;
+const box = variant === 'popup' ? 'gf-box' : 'pf-box';
+---
+
+<div class:list={[variant === 'popup' ? 'gf-dial' : 'pf-dial', 'dial']} data-dial>
+  <select name={`${name}_code`} class:list={[box, 'dial-select']} aria-label={label}>
+    {dial.countries.map((c) => <option value={c.iso} data-code={c.code} selected={c.iso === preset}>{`${t(c.name, edition.locale, 'dial-codes')} (${c.code})`}</option>)}
+  </select>
+  <span class="dial-code" aria-hidden="true">{current.code}</span>
+  <img src={flag.src} alt="" class={variant === 'popup' ? 'gf-flag' : 'pf-flag'} width={variant === 'popup' ? 14.875 : 16.261} height={variant === 'popup' ? 9.917 : 11} data-flag-for="AE" hidden={preset !== 'AE'} />
+  <img src={chev.src} alt="" class={variant === 'popup' ? 'gf-chev' : 'pf-chev'} width={variant === 'popup' ? 6.527 : 7.135} height={variant === 'popup' ? 3.793 : 4.207} />
+</div>

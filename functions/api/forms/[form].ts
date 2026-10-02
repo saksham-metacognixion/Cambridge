@@ -14,6 +14,7 @@ import formsConfig from "../../../src/data/forms.json";
 import specialtiesData from "../../../src/data/specialties.json";
 import doctorsData from "../../../src/data/doctors.json";
 import hospitalsData from "../../../src/data/hospitals.json";
+import dialData from "../../../src/data/dial-codes.json";
 import type { PagesContext } from "../../_lib/types";
 import { verifyTurnstile } from "../../_lib/turnstile";
 import { sendMail } from "../../_lib/email";
@@ -31,7 +32,8 @@ const forms = formsConfig.forms as Record<
   string,
   { subject: string; inbox: string; fields: Field[] }
 >;
-const dialCodes = new Set(formsConfig.dialCodes.map((d) => d.code));
+// Mobile fields post `<name>_code` = ISO country (src/data/dial-codes.json); the email shows its calling code.
+const dialCodes = new Map(dialData.countries.map((c) => [c.iso, c.code]));
 const REGIONS = ["global", "ae", "sa"];
 const MAX_BODY = 32 * 1024;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -181,8 +183,10 @@ function check(f: Field, v: string, data: FormData): string | undefined {
 /** Value as staff read it in the email. */
 function display(f: Field, v: string, data: FormData): string {
   if (!v) return "";
-  if (f.type === "tel")
-    return `${String(data.get(`${f.name}_code`) ?? "")} ${v}`;
+  if (f.type === "tel") {
+    const iso = String(data.get(`${f.name}_code`) ?? "");
+    return `${dialCodes.get(iso) ?? ""} ${v} (${iso})`;
+  }
   if (f.type === "select" && f.source) return sources[f.source]?.get(v) ?? v;
   return v;
 }

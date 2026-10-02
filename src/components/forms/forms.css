@@ -75,6 +75,13 @@
 .gf-flag { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-start: calc(5.41 * var(--u)); inset-block-start: calc(9.91 * var(--u)); inline-size: calc(14.875 * var(--u)); block-size: calc(9.917 * var(--u)); }
 .gf-dial .gf-chev { inset-inline-end: calc(5.19 * var(--u)); inset-block-start: calc(13.52 * var(--u)); inline-size: calc(6.527 * var(--u)); }
 .gf-tel { margin-inline-start: calc(8.113 * var(--u)); }
+/* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971"). */
+.dial-select { color: transparent !important; }
+.dial-select option { color: var(--color-navy); }
+.dial-code { position: absolute; pointer-events: none; white-space: nowrap; color: var(--color-body); font-weight: 400; }
+.gf-dial .dial-code { inset-inline-start: calc(23.44 * var(--u)); inset-block-start: calc(7.21 * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
+.pf-dial .dial-code { inset-inline-start: calc(25.62 * var(--u)); inset-block-start: calc(8 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+.dial img[hidden] { display: none; }
 
 .gf-area {
   block-size: calc(var(--h) * var(--u)); inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; resize: none;
@@ -135,7 +142,7 @@
   .gf-label { padding-block-start: 0; }
   .gf-cal { inset-block-start: 50%; translate: 0 -50%; }
   .gf-select .gf-chev, .gf-dial .gf-chev { inset-block-start: 50%; translate: 0 -50%; }
-  .gf-flag { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-flag, .gf-dial .dial-code { inset-block-start: 50%; translate: 0 -50%; }
 }
 
 /* ───────── Below 1024: same design, one column, full width; below 768: full screen ───────── */

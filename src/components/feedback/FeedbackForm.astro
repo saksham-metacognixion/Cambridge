@@ -7,14 +7,13 @@
  * as selected (a state sample): nothing is preselected; unselected circles use the grey of the matrix circles.
  */
 import FormShell from '../forms/FormShell.astro';
+import DialSelect from '../forms/DialSelect.astro';
 import { content } from '../../lib/content';
-import { commonText, fieldsIn, fieldId, sourceOptions, splitStar, dialCodes } from '../../lib/forms';
+import { commonText, fieldsIn, fieldId, sourceOptions, splitStar } from '../../lib/forms';
 import { parsePath } from '../../lib/editions';
 import radioOn from '../../assets/forms/feedback-radio-on.svg';
 import radioOff from '../../assets/forms/feedback-radio-off.svg';
-import chevDial from '../../assets/forms/feedback-chevron-dial.svg';
 import chevHospital from '../../assets/forms/feedback-chevron-hospital.svg';
-import flagUae from '../../assets/forms/feedback-flag-uae.svg';
 import '../forms/forms.css';
 
 const ID = 'feedback';
@@ -76,13 +75,7 @@ const cols = matrix[0]?.options ?? [];
           <div class="pf-field mobile" data-field="mobile">
             <div class="pf-row" style="--at:87.08">
               <label for={id('mobile')} class="pf-label">{lbl('mobile')[0]}<span aria-hidden="true">{lbl('mobile')[1]}</span></label>
-              <div class="pf-dial">
-                <select name="mobile_code" class="pf-box" aria-label={common.dialCodeLabel}>
-                  {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
-                </select>
-                <img src={flagUae.src} alt="" width="16.261" height="11" class="pf-flag" />
-                <img src={chevDial.src} alt="" width="7.135" height="4.207" class="pf-chev" />
-              </div>
+              <DialSelect name="mobile" edition={edition} label={common.dialCodeLabel} variant="page" />
               <input id={id('mobile')} name="mobile" type="tel" inputmode="tel" dir="ltr" required={contact.mobile.required} maxlength={contact.mobile.max} autocomplete="tel-national" placeholder={c.fields.mobile.placeholder} aria-describedby={`${id('mobile')}-error`} class="pf-box pf-tel" style="--w:232.587" />
             </div>
             <p id={`${id('mobile')}-error`} class="f-err" hidden></p>
@@ -185,11 +178,11 @@ const cols = matrix[0]?.options ?? [];
   .pf-select { position: relative; inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; }
   .pf-select select { inline-size: 100%; padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
   .pf-select .pf-chev { inset-inline-end: calc(16.2 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7.24 * var(--u)); }
-  .pf-chev, .pf-flag { position: absolute; pointer-events: none; max-inline-size: none; block-size: auto; }
-  .pf-dial { position: relative; flex: none; inline-size: calc(74.901 * var(--u)); }
-  .pf-dial select { inline-size: 100%; padding-inline: calc(25.62 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
-  .pf-flag { inset-inline-start: calc(5.91 * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(16.261 * var(--u)); block-size: calc(11 * var(--u)); }
-  .pf-dial .pf-chev { inset-inline-end: calc(5.68 * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(7.135 * var(--u)); }
+  .pf-chev, :global(.pf-dial .pf-chev), :global(.pf-flag) { position: absolute; pointer-events: none; max-inline-size: none; block-size: auto; }
+  :global(.pf-dial) { position: relative; flex: none; inline-size: calc(74.901 * var(--u)); }
+  :global(.pf-dial select) { inline-size: 100%; padding-inline: calc(25.62 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+  :global(.pf-flag) { inset-inline-start: calc(5.91 * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(16.261 * var(--u)); block-size: calc(11 * var(--u)); }
+  :global(.pf-dial .pf-chev) { inset-inline-end: calc(5.68 * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(7.135 * var(--u)); }
   .pf-tel { margin-inline-start: calc(9.85 * var(--u)); flex: 0 1 auto; min-inline-size: 0; }
 
   /* Questions: Gotham Bold 15 navy */
@@ -241,7 +234,7 @@ const cols = matrix[0]?.options ?? [];
     .pf-label { padding-block-start: 0; }
     .pf-box { min-block-size: 44px; }
     .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
-    .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }
+    .pf-select .pf-chev, .pf-dial :global(.pf-chev), .pf-dial :global(.pf-flag), .pf-dial :global(.dial-code) { inset-block-start: 50%; translate: 0 -50%; }
     .m-head { display: none; }
     .q2, .recommend > legend { inline-size: auto; min-block-size: 0; margin-block-end: 12px; }
     .m-row, .m-row + .m-row { margin-block-start: 20px; margin-inline-start: 0; }

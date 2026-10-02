@@ -36,7 +36,6 @@ export interface FormConfig {
 }
 
 const forms = config.forms as Record<string, FormConfig>;
-export const dialCodes = config.dialCodes;
 
 export function formConfig(id: string): FormConfig {
   const f = forms[id];

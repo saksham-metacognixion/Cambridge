@@ -4,13 +4,12 @@
  * Row = visible label + box, the box starting at the field's Figma `inputAt`. Selects and textareas have no label in
  * Figma: their placeholder text is the visible label (also given as aria-label).
  */
-import { fieldId, sourceOptions, splitStar, dialCodes, type FieldConfig } from '../../lib/forms';
+import { fieldId, sourceOptions, splitStar, type FieldConfig } from '../../lib/forms';
+import DialSelect from './DialSelect.astro';
 import type { Edition } from '../../lib/editions';
 import calendar from '../../assets/forms/calendar.svg';
-import dialChevron from '../../assets/forms/chevron-dial.svg';
 import chevSpeciality from '../../assets/forms/book-chevron-speciality.svg';
 import chevDoctor from '../../assets/forms/book-chevron-doctor.svg';
-import flagUae from '../../assets/forms/flag-uae.svg';
 
 interface Props {
   form: string;
@@ -25,8 +24,6 @@ const { form, field: f, text, edition, dialLabel, area } = Astro.props;
 const id = fieldId(form, f.name);
 const err = `${id}-error`;
 const [label, star] = splitStar(text.label ?? '');
-const flags: Record<string, ImageMetadata> = { ae: flagUae };
-const dial = dialCodes[0];
 // Figma: speciality text starts 13.99 in and its chevron at 234.4 (15.11 from the end); the doctor select 10.82 / 235.3 (14.426 from the end) (6.311 wide chevron).
 const isDoctor = f.source === 'doctors';
 const options = f.type === 'select' ? sourceOptions(f.source, edition) : [];
@@ -71,13 +68,7 @@ const options = f.type === 'select' ? sourceOptions(f.source, edition) : [];
   <div class="gf" data-field={f.name}>
     <div class="gf-row" style={`--at:${f.ui?.inputAt ?? 56.8}`}>
       <label for={id} class="gf-label">{label}{star && <span aria-hidden="true">{star}</span>}</label>
-      <div class="gf-dial">
-        <select name={`${f.name}_code`} class="gf-box" aria-label={dialLabel}>
-          {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
-        </select>
-        <img src={(flags[dial.country] ?? flagUae).src} alt="" class="gf-flag" width="14.875" height="9.917" />
-        <img src={dialChevron.src} alt="" class="gf-chev" width="6.527" height="3.793" />
-      </div>
+      <DialSelect name={f.name} edition={edition} label={dialLabel} variant="popup" />
       <input id={id} name={f.name} type="tel" inputmode="tel" dir="ltr" required={f.required} maxlength={f.max} autocomplete={f.autocomplete} placeholder={text.placeholder} aria-describedby={err} class="gf-box gf-tel" />
     </div>
     <p id={err} class="f-err" hidden></p>

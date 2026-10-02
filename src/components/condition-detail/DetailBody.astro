@@ -14,7 +14,7 @@ import type { Edition } from '../../lib/editions';
  * Normalised to Accidents (first frame): Stroke's intro->tabs gap 30 -> 33; first tab #f4f4f4/#00415a -> as the others;
  *   active label Medium without shadow -> Book with shadow; label widths 237/265 -> 265; panel top +1; lead line 14 -> 22,
  *   empty line between heading and lead removed. The section ends 34 above the navy band, below the taller column.
- * Tabs: ARIA tabs (vertical): arrows / Home / End move between them; src/scripts/detail-tabs.ts. Without JS the
+ * Tabs: ARIA tabs (vertical): arrows / Home / End move between them; src/scripts/tabs.ts. Without JS the
  * selected topic stays visible.
  */
 type Block =
@@ -40,7 +40,7 @@ const active = Math.min(tabs?.active ?? 0, Math.max(items.length - 1, 0));
   </div>
 
   {items.length > 0 && (
-    <div class="topics" data-detail-tabs>
+    <div class="topics" data-tabs>
       <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={tabsLabel}>
         {items.map((t, i) => (
           <button type="button" role="tab" id={`tab-${i}`} class="tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={`panel-${i}`} tabindex={i === active ? 0 : -1}>

@@ -1,4 +1,5 @@
 import config from "../data/forms.json";
+import { resolveForms, type RawForm } from "./form-config";
 import specialtiesData from "../data/specialties.json";
 import doctorsData from "../data/doctors.json";
 import hospitalsData from "../data/hospitals.json";
@@ -35,7 +36,7 @@ export interface FormConfig {
   fields: FieldConfig[];
 }
 
-const forms = config.forms as Record<string, FormConfig>;
+const forms = resolveForms(config.forms as Record<string, RawForm>) as unknown as Record<string, FormConfig>;
 export const dialCodes = config.dialCodes;
 
 export function formConfig(id: string): FormConfig {

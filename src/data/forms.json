@@ -1,5 +1,5 @@
 {
-  "$comment": "ONE config per form, shared by the serverless function (functions/api/forms/[form].ts) and the form UI. Fields are the ones in Figma until Pramod shares his list; apply his list here (name/type/required/max) and the layout follows. `inbox` picks the recipient env variable FORM_TO_<INBOX> (see .env.example), so two UIs of the same scope form (Contact page + pop-up) reach the same inbox. `label` is the English field name used in the email to staff. `ui.group` places a field in the form's Figma layout block; `ui.inputAt` is where the input box starts in its row (Figma px from the label start). `consent` (required checkbox + privacy link) is added to every form by the UI and enforced by the server. Selects with `source` take their options from src/data (specialties / doctors / hospitals). Fields of type `tel` also post `<name>_code` (one of dialCodes).",
+  "$comment": "ONE config per form, shared by the serverless function (functions/api/forms/[form].ts) and the form UI. Fields are the ones in Figma until Pramod shares his list; apply his list here (name/type/required/max) and the layout follows. `inbox` picks the recipient env variable FORM_TO_<INBOX> (see .env.example), so two UIs of the same scope form (Contact page + pop-up) reach the same inbox. `label` is the English field name used in the email to staff. `ui.group` places a field in the form's Figma layout block; `ui.inputAt` is where the input box starts in its row (Figma px from the label start). `consent` (required checkbox + privacy link) is added to every form by the UI and enforced by the server. Selects with `source` take their options from src/data (specialties / doctors / hospitals). Fields of type `tel` also post `<name>_code` (one of dialCodes). A form may be a variant of another (`variantOf` + `omitGroups`: the same fields minus whole ui groups), resolved by src/lib/form-config.ts for the UI and the server. Refer a Patient: referral_type / referral_for options are NOT in Figma (empty until Pramod sends them); guardian_mobile is required because Figma marks it 'Mobile*' (flagged: probably only for paediatric cases).",
   "dialCodes": [{ "code": "+971", "country": "ae" }],
   "forms": {
     "book-appointment": {
@@ -38,13 +38,33 @@
       ]
     },
     "refer-patient": {
-      "subject": "Refer a Patient",
+      "subject": "Refer a Patient (doctor referral)",
       "inbox": "refer-patient",
       "fields": [
-        { "name": "name", "label": "Name", "type": "text", "required": true, "max": 120 },
-        { "name": "email", "label": "E-mail", "type": "email", "required": true, "max": 200 },
-        { "name": "message", "label": "Message", "type": "textarea", "required": false, "max": 4000 }
+        { "name": "doctor_name", "label": "Referring doctor: name", "type": "text", "required": true, "max": 120, "autocomplete": "name", "ui": { "group": "doctor" } },
+        { "name": "doctor_specialty", "label": "Referring doctor: speciality", "type": "text", "required": false, "max": 120, "ui": { "group": "doctor" } },
+        { "name": "doctor_mobile", "label": "Referring doctor: mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "doctor" } },
+        { "name": "doctor_email", "label": "Referring doctor: e-mail", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "doctor" } },
+        { "name": "specialty", "label": "Requested speciality", "type": "select", "source": "specialties", "required": false, "ui": { "group": "requested" } },
+        { "name": "doctor", "label": "Requested doctor", "type": "select", "source": "doctors", "required": false, "ui": { "group": "requested" } },
+        { "name": "name", "label": "Patient name", "type": "text", "required": true, "max": 120, "ui": { "group": "patient" } },
+        { "name": "email", "label": "Patient e-mail", "type": "email", "required": false, "max": 200, "ui": { "group": "patient" } },
+        { "name": "dob", "label": "Patient date of birth", "type": "date", "required": true, "ui": { "group": "patient" } },
+        { "name": "mobile", "label": "Patient mobile", "type": "tel", "required": true, "max": 20, "ui": { "group": "patient" } },
+        { "name": "gender", "label": "Patient gender", "type": "radio", "options": ["male", "female"], "required": true, "ui": { "group": "patient" } },
+        { "name": "eid", "label": "EID / Passport No", "type": "text", "required": false, "max": 40, "ui": { "group": "patient" } },
+        { "name": "referral_type", "label": "Referral type", "type": "select", "options": [], "required": false, "ui": { "group": "patient" } },
+        { "name": "referral_for", "label": "Referral for", "type": "select", "options": [], "required": false, "ui": { "group": "patient" } },
+        { "name": "guardian_name", "label": "Paediatrics: guardian name", "type": "text", "required": false, "max": 120, "ui": { "group": "patient" } },
+        { "name": "guardian_mobile", "label": "Paediatrics: guardian mobile", "type": "tel", "required": true, "max": 20, "ui": { "group": "patient" } },
+        { "name": "diagnosis", "label": "Diagnosis (ICD code if available)", "type": "textarea", "required": true, "max": 4000, "ui": { "group": "info" } },
+        { "name": "history", "label": "Brief history", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "info" } }
       ]
+    },
+    "refer-patient-other": {
+      "variantOf": "refer-patient",
+      "omitGroups": ["doctor"],
+      "subject": "Refer a Patient (other referrer)"
     },
     "feedback-popup": {
       "subject": "Your Opinion Matters",

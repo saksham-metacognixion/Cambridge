@@ -1,0 +1,36 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import ReferForm from '../../components/refer/ReferForm.astro';
+import DoctorsRow from '../../components/shared/DoctorsRow.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('refer-patient/page', edition.locale);
+
+/*
+ * Refer a Patient template (Figma 59:14344, file LJIRtzU...). Scope 2.7 "Refer a Patient" form (both tabs post to the
+ * Pages Function, inbox FORM_TO_REFER_PATIENT). Gaps (Figma px): hero 119-556 (Find a Doctor text positions) |
+ * 35 | form H2 591 | ... card ends (Figma 1917) | 32 | doctors H2 1949 | cards end 2292.46 | 44.54 | footer 2337.
+ */
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.referPatient} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
+    <div id="referral" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(35 * var(--u))"><ReferForm /></div>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(32 * var(--u))"><DoctorsRow content={c.doctors} /></div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

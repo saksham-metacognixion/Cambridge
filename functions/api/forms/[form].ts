@@ -1,5 +1,5 @@
 /*
- * POST /api/forms/<form>  — Book an Appointment, Send an Enquiry (page + pop-up), Refer a Patient, Your Opinion Matters
+ * POST /api/forms/<form>  — Book an Appointment, Send an Enquiry (page + pop-up), Refer a Patient (doctor / other), Your Opinion Matters
  * (pop-up + Patient Feedback page). Validate -> verify Turnstile -> send ONE email -> answer. Nothing is stored: no
  * database, no KV, no logs of submissions (errors are logged by type only, never with field values).
  *
@@ -17,6 +17,7 @@ import hospitalsData from "../../../src/data/hospitals.json";
 import type { PagesContext } from "../../_lib/types";
 import { verifyTurnstile } from "../../_lib/turnstile";
 import { sendMail } from "../../_lib/email";
+import { resolveForms, type RawForm } from "../../../src/lib/form-config";
 
 type Field = {
   name: string;
@@ -27,10 +28,9 @@ type Field = {
   options?: string[];
   source?: string;
 };
-const forms = formsConfig.forms as Record<
-  string,
-  { subject: string; inbox: string; fields: Field[] }
->;
+const forms = resolveForms(
+  formsConfig.forms as Record<string, RawForm>,
+) as Record<string, { subject: string; inbox: string; fields: Field[] }>;
 const dialCodes = new Set(formsConfig.dialCodes.map((d) => d.code));
 const REGIONS = ["global", "ae", "sa"];
 const MAX_BODY = 32 * 1024;
@@ -173,7 +173,8 @@ function check(f: Field, v: string, data: FormData): string | undefined {
     case "rating":
       return f.options?.includes(v) ? undefined : "invalid";
     case "select":
-      return f.source && !sources[f.source]?.has(v) ? "invalid" : undefined;
+      if (f.source) return sources[f.source]?.has(v) ? undefined : "invalid";
+      return f.options && !f.options.includes(v) ? "invalid" : undefined;
   }
   return undefined;
 }

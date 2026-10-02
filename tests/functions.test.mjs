@@ -30,6 +30,7 @@ const post = (form, fields, { json = true, origin = 'https://site.test' } = {}) 
 };
 const good = { name: 'A Patient', email: 'a@b.test', hospital: 'abu-dhabi', subject: 'Question', message: 'Hello <b>there</b>', consent: 'on', 'cf-turnstile-response': 't', edition: 'ae-en' };
 const book = { specialty: 'pediatrics', doctor: 'ahmad-al-khayer', name: 'A Patient', email: '', dob: '1990-05-01', mobile_code: '+971', mobile: '50 123 4567', gender: 'female', message: '', consent: 'on', 'cf-turnstile-response': 't', edition: 'sa-ar' };
+const refer = { doctor_name: 'Dr A', doctor_mobile_code: '+971', doctor_mobile: '50 111 2222', name: 'A Patient', dob: '1990-05-01', mobile_code: '+971', mobile: '50 123 4567', gender: 'male', guardian_mobile_code: '+971', guardian_mobile: '50 999 8888', diagnosis: 'Stroke', consent: 'on', 'cf-turnstile-response': 't', edition: 'ae-en' };
 const cases = [
   ['valid (JSON)', () => post('send-enquiry', good), (r, b) => r.status === 200 && b.ok && sent.length === 1 && sent[0].to[0] === 'ae@x.test' && sent[0].html.includes('&lt;b&gt;') && sent[0].reply_to === 'a@b.test'],
   ['missing consent', () => post('send-enquiry', { ...good, consent: '' }), (r, b) => r.status === 422 && b.fields.consent === 'required'],
@@ -44,7 +45,10 @@ const cases = [
   ['book: bad option, future dob, unknown dial code, bad doctor', () => post('book-appointment', { ...book, gender: 'x', dob: '2999-01-01', mobile_code: '+1', doctor: 'nobody' }), (r, b) => r.status === 422 && b.fields.gender === 'invalid' && b.fields.dob === 'invalid' && b.fields.mobile === 'invalid' && b.fields.doctor === 'invalid'],
   ['feedback page: valid with ratings', () => post('feedback', { name: 'A', mobile_code: '+971', mobile: '501234567', recommend: 'likely', quality: 'satisfied', hospital: 'jeddah', consent: 'on', 'cf-turnstile-response': 't', edition: 'global-en' }), (r, b) => r.status === 200 && sent.at(-1).to[0] === 'fb@x.test' && sent.at(-1).text.includes('Hospital: Cambridge Hospital Jeddah')],
   ['feedback pop-up: invalid rating value', () => post('feedback-popup', { name: 'A', mobile_code: '+971', mobile: '501234567', overall: 'great', consent: 'on', 'cf-turnstile-response': 't' }), (r, b) => r.status === 422 && b.fields.overall === 'invalid'],
-  ['inbox not configured', () => post('refer-patient', { name: 'A', email: 'a@b.test', consent: 'on', 'cf-turnstile-response': 't' }), (r, b) => r.status === 500 && b.error === 'not_configured'],
+  ['inbox not configured', () => post('refer-patient', refer), (r, b) => r.status === 500 && b.error === 'not_configured'],
+  ['refer (doctor): referring-doctor + patient + diagnosis required', () => post('refer-patient', { ...refer, doctor_name: '', diagnosis: '', guardian_mobile: '' }), (r, b) => r.status === 422 && b.fields.doctor_name === 'required' && b.fields.diagnosis === 'required' && b.fields.guardian_mobile === 'required'],
+  ['refer (other) = variant without the doctor block, same inbox', () => { env.FORM_TO_REFER_PATIENT = 'ref@x.test'; return post('refer-patient-other', { ...refer, doctor_name: '', doctor_mobile: '' }); }, (r, b) => { delete env.FORM_TO_REFER_PATIENT; return r.status === 200 && sent.at(-1).to[0] === 'ref@x.test' && !sent.at(-1).text.includes('Referring doctor') && sent.at(-1).text.includes('Diagnosis (ICD code if available): Stroke'); }],
+  ['refer: select with an options list rejects other values', () => post('refer-patient', { ...refer, referral_type: 'anything' }), (r, b) => r.status === 422 && b.fields.referral_type === 'invalid'],
   ['prototype key is not a form', () => post('constructor', good), (r, b) => r.status === 404],
   ['GET not allowed', async () => onRequest(), (r) => r.status === 405],
 ];

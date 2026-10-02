@@ -866,5 +866,14 @@
     "41:1732 PAR-inside 1 (Accidents)": "src/assets/conditions/accidents-rehabilitation.png (1052x323 only)",
     "67:3071 PAR-inside 1 (Stroke)": "src/assets/conditions/stroke-rehabilitation.png (1052x323 only)",
     "doctors/band icons": "= existing doctors-page / contact-page assets"
+  },
+  "refer-59-14344": {
+    "Banner3 1 (46:8024)": "src/assets/refer/banner.png (1052x500 only)",
+    "Rectangle 107 card": "drawn in CSS (.pf-card); SVG kept in figma-cache/assets/refer/imgRectangle107.svg",
+    "UAE flag": "src/assets/refer/flag-uae.svg",
+    "chevrons": "src/assets/refer/chevron-{dial,speciality,doctor}.svg",
+    "Group 171/172 selects": "drawn in CSS (.pf-box + chevron); SVGs in figma-cache/assets/refer/",
+    "calendar Vector 46:8270": "src/assets/refer/calendar.svg",
+    "radio Group 199 / Ellipse 43": "src/assets/refer/radio-on.svg / radio-off.svg"
   }
 }

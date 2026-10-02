@@ -153,3 +153,57 @@
   .modal-panel { max-inline-size: none; min-block-size: 100%; border-radius: 0; padding-block: 24px !important; }
   .modal-close { inset-block-start: 12px; inset-inline-end: 12px; }
 }
+
+/* ───────── Page forms ("pf"): Patient Feedback (188:964), Refer a Patient (59:14344), International Patients (54:9239) ─────────
+   Fields: fill rgba(217,217,217,.5), radius 10.754, h 35; labels Gotham Book 15 / 18.82 navy, text 8 below the box top.
+   Geometry that differs per Figma frame is a custom property; defaults = Patient Feedback. A row's label column is --at
+   (Figma px from the label start to its box), a box's width --w. */
+.pf-row { position: relative; display: flex; align-items: flex-start; }
+.pf-label { flex: none; box-sizing: border-box; min-inline-size: calc(var(--at) * var(--u)); padding-block-start: calc(8 * var(--u)); padding-inline-end: calc(4 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); white-space: nowrap; }
+.pf-box {
+  box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
+  inline-size: calc(var(--w, 319.889) * var(--u)); max-inline-size: 100%; block-size: calc(35 * var(--u)); padding: 0 calc(var(--pf-px, 9.17) * var(--u));
+  border-radius: calc(10.754 * var(--u)); background: rgba(217, 217, 217, 0.5);
+  font-family: var(--font-gotham); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); color: var(--color-navy);
+}
+.pf-box::placeholder { color: var(--color-body); opacity: 1; }
+.pf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
+.pf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+.pf-select { position: relative; inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; }
+.pf-select select { inline-size: 100%; padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
+.pf-select .pf-chev { inset-inline-end: calc(var(--pf-sel-chev-x, 16.2) * var(--u)); inset-block-start: calc(var(--pf-sel-chev-y, 18) * var(--u)); inline-size: calc(var(--pf-sel-chev-w, 7.24) * var(--u)); }
+.pf-chev, .pf-flag { position: absolute; pointer-events: none; max-inline-size: none; block-size: auto; }
+.pf-dial { position: relative; flex: none; inline-size: calc(var(--pf-dial-w, 74.901) * var(--u)); }
+.pf-dial select { inline-size: 100%; padding-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+.pf-flag { inset-inline-start: calc(var(--pf-flag-x, 5.91) * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(var(--pf-flag-w, 16.261) * var(--u)); block-size: calc(11 * var(--u)); }
+.pf-dial .pf-chev { inset-inline-end: calc(var(--pf-dial-chev-x, 5.68) * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(var(--pf-dial-chev-w, 7.135) * var(--u)); }
+.pf-tel { margin-inline-start: calc(var(--pf-tel-gap, 9.85) * var(--u)); flex: 0 1 auto; min-inline-size: 0; }
+
+/* White form card (Patient Feedback 188:964, Refer a Patient 46:8029 "Rectangle 107"): radius 14.32 (top end 15),
+   drop shadow 0 0 15.696 rgba(0,0,0,.25). Size and padding: the page. */
+.pf-card { position: relative; box-sizing: border-box; background: #fff; border-radius: calc(14.32 * var(--u)); border-start-end-radius: calc(15 * var(--u)); box-shadow: 0 0 calc(15.696 * var(--u)) rgba(0, 0, 0, 0.25); }
+
+/* Questions / section labels: Gotham Bold 15 navy */
+.pf-q { display: block; margin: 0; padding: 0; font-weight: 700; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); }
+
+.pf-radio { display: grid; place-items: center; flex: none; inline-size: calc(var(--pf-radio-box, 12.812) * var(--u)); block-size: calc(13 * var(--u)); }
+.pf-radio img { grid-area: 1 / 1; max-inline-size: none; inline-size: calc(var(--pf-radio-w, 16.279) * var(--u)); block-size: calc(var(--pf-radio-h, 16.467) * var(--u)); }
+.pf-radio .off { inline-size: calc(var(--pf-radio-off, var(--pf-radio-w, 16.279)) * var(--u)); block-size: calc(var(--pf-radio-off, var(--pf-radio-h, 16.467)) * var(--u)); }
+.pf-radio .on { opacity: 0; }
+label:has(input:checked) .pf-radio .on { opacity: 1; }
+label:has(input:checked) .pf-radio .off { opacity: 0; }
+label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+
+@media (max-width: 1023.98px) {
+  .pf-row { align-items: center; }
+  .pf-label { padding-block-start: 0; }
+  .pf-box { min-block-size: 44px; }
+  .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
+  .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }
+}
+@media (max-width: 767.98px) {
+  .pf-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .pf-label { grid-column: 1 / -1; min-inline-size: 0; padding-block-end: 6px; }
+  .pf-row > .pf-box, .pf-select { inline-size: 100%; }
+  .pf-tel { inline-size: auto !important; }
+}

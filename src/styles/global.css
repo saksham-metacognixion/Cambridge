@@ -174,8 +174,8 @@ body {
    .ui-pill: region pill 79 x 25, radius 12, 1px navy outline; pressed = navy fill. Place it with the parent's layout.
    .ui-box > .ui-field + .ui-chev: 35 tall box, radius 10, 0.5px #418ea2, Gotham Book 10/14 navy, chevron 17 from the end.
    Width of .ui-box: set by the page (311 on Find a Doctor / Conditions). */
-.ui-pill { width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(1 * var(--u)) 0 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
-.ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--color-navy); color: #fff; border: 0; }
+.ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(1 * var(--u)) 0 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
+.ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--pill-on, var(--color-navy)); color: #fff; border: 0; }
 .ui-pill:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
 .ui-box { position: relative; flex: none; max-width: 100%; height: calc(35 * var(--u)); }
 .ui-field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }

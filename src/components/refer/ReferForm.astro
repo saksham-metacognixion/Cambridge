@@ -1,0 +1,103 @@
+---
+/*
+ * "Patient Referral Form" block of Refer a Patient (Figma 59:14344), section top = H2 top (page y 591, 35 below the hero).
+ * H2 59:14337 Medium 28 #004059 centred on x 521 (w430, box h27) | 10 | text 59:14336 Book 12/14 #6b6b6b centred on
+ * x 520.5 (w577) | 23 | pills 59:14338/14339 125 x 25 radius 12 at x 391 and 531 (selected #00415a fill, other 1px
+ * #004059 outline; label Medium 10/10) | 34 | card 46:8029 x 42, 968 wide (Figma h 1179), padding top 56 / start 44 /
+ * end 43 / bottom 52 below SUBMIT (150 x 50, radius 15, Bold 15, label top 18).
+ * The pills switch two forms (ARIA tabs, src/scripts/tabs.ts): For Doctors = Figma; For Others = the same form without
+ * the referring-doctor block (NOT in Figma, flagged for Pramod). Without JS the For Doctors form works.
+ */
+import FormShell from '../forms/FormShell.astro';
+import ReferFields from './ReferFields.astro';
+import { content } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import '../forms/forms.css';
+
+const { edition } = parsePath(Astro.url.pathname);
+const page = content('refer-patient/page', edition.locale);
+const c = content('forms/refer', edition.locale);
+const tabs = [
+  { key: 'doctor', form: 'refer-patient' },
+  { key: 'other', form: 'refer-patient-other' },
+];
+---
+
+<section class="refer" aria-labelledby="refer-heading">
+  <h2 id="refer-heading" class="h">{page.intro.heading}</h2>
+  <p class="t">{page.intro.text}</p>
+
+  <div class="tabs" data-tabs>
+    <div class="tablist" role="tablist" aria-label={c.tabsLabel}>
+      {tabs.map((t, i) => (
+        <button type="button" role="tab" id={`refer-tab-${t.key}`} aria-controls={`refer-panel-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} class="ui-pill hit pill">{c.tabs[t.key]}</button>
+      ))}
+    </div>
+  </div>
+
+  {tabs.map((t, i) => (
+    <div class="card pf-card" role="tabpanel" id={`refer-panel-${t.key}`} aria-labelledby={`refer-tab-${t.key}`} hidden={i !== 0}>
+      <FormShell id={t.form} edition={edition} submit={c.submit} ariaLabel={c.ariaLabel[t.key]} button={{ w: 150, h: 50, r: 15, fs: 15, ty: 18 }} gaps={{ consent: 37, submit: 22 }} class="pf rf">
+        <ReferFields form={t.form} edition={edition} />
+      </FormShell>
+    </div>
+  ))}
+</section>
+
+<script>
+  import '../../scripts/tabs';
+</script>
+
+<style>
+  .refer { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; color: var(--color-navy); }
+  .h { margin: 0 auto; max-width: calc(430 * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .t { margin: calc(10 * var(--u)) auto 0; max-width: calc(577 * var(--u)); padding-inline: 16px; text-align: center; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .tablist { display: flex; justify-content: center; gap: calc(15 * var(--u)); margin-top: calc(23 * var(--u)); }
+  .pill { --pill-w: 125; --pill-on: var(--color-navy-alt); }
+  .card { margin: calc(34 * var(--u)) 16px 0; padding: 24px 16px; }
+  .card[hidden] { display: none; }
+
+  /* Field layout inside the card (shared pf-* field styles in forms.css; Refer's own sizes as custom properties) */
+  .card :global(.rf) { --pf-dial-w: 76; --pf-flag-x: 6; --pf-flag-w: 16.5; --pf-dial-pad: 26; --pf-dial-chev-x: 5.76; --pf-dial-chev-w: 7.24; --pf-tel-gap: 10; --pf-px: 9; --pf-radio-box: 13; --pf-radio-w: 16.467; --pf-radio-h: 16.467; --pf-radio-off: 11; }
+  .card :global(.rf-section) { margin-block-end: calc(15 * var(--u)); }                     /* label top -> first row: 33 */
+  .card :global(.rf-area-label) { margin-block-end: calc(9 * var(--u)); }                   /* label top -> textarea: 27 */
+  .card :global(.rf-grid) { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: calc(19 * var(--u)); }
+  .card :global(.rf-grid + .rf-grid) { margin-block-start: calc(19 * var(--u)); }
+  .card :global(.rf-block + .rf-block) { margin-block-start: calc(37 * var(--u)); }   /* after .rf-grid + .rf-grid: a block gap wins */
+  .card :global(.rf-grow) { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
+  .card :global(.rf-bold) { font-weight: 700; padding-block-start: calc(11 * var(--u)); line-height: calc(18 * var(--u)); }
+  .card :global(.rf-ph) { color: var(--color-body); }
+  .card :global(.rf-ph:has(option:checked:not([value='']))) { color: var(--color-navy); }
+  .card :global(.rf-sel-ref select) { padding-inline: calc(21 * var(--u)) calc(26 * var(--u)); }
+  .card :global(.rf-sel-ref .pf-chev) { inset-inline-end: calc(13 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7 * var(--u)); }
+  .card :global(.rf-sel-req) { inline-size: 100%; }
+  .card :global(.rf-sel-req select) { padding-inline: calc(15.51 * var(--u)) calc(26 * var(--u)); }
+  .card :global(.rf-sel-req .pf-chev) { inset-inline-end: calc(11.76 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7.24 * var(--u)); }
+  .card :global(.rf-ph-in) { padding-inline-start: calc(14 * var(--u)); }
+  .card :global(.rf-date) { position: relative; }
+  .card :global(.rf-date-box) { inline-size: 100%; cursor: pointer; }
+  .card :global(.rf-date-box::-webkit-calendar-picker-indicator) { display: none; }
+  .card :global(.rf-date-box[data-empty]:not(:focus)) { color: transparent; }
+  .card :global(.rf-cal) { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(12.78 * var(--u)); inset-block-start: calc(5 * var(--u)); inline-size: calc(19.8 * var(--u)); block-size: calc(22 * var(--u)); }
+  .card :global(.rf-radio) { margin: 0; padding: 0; border: 0; min-inline-size: 0; display: flex; align-items: flex-start; flex-wrap: wrap; }
+  .card :global(.rf-legend) { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--u)); }
+  .card :global(.rf-opts) { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)) calc(29.5 * var(--u)); padding-block-start: calc(8 * var(--u)); }
+  .card :global(.rf-opt) { display: flex; align-items: center; gap: calc(8 * var(--u)); min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+  .card :global(.rf-radio .f-err) { flex-basis: 100%; }
+  .card :global(.rf-area) { inline-size: 100%; block-size: calc(125 * var(--u)); padding: calc(13 * var(--u)) calc(14.19 * var(--u)); resize: none; line-height: calc(14 * var(--u)); }
+  .card :global(.rf-area::placeholder) { font-style: italic; }
+  .card :global(.f-consent) { margin-inline-start: 0; }
+
+  @media (max-width: 767.98px) {
+    /* dial box + number side by side under the label (as on Patient Feedback) */
+    .card :global(.rf-tel-field .pf-row) { grid-template-columns: auto minmax(0, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(306 * var(--u)); padding: 0; }
+    .t { margin-inline-start: calc(232 * var(--u)); padding: 0; }
+    .tablist { justify-content: flex-start; margin-inline-start: calc(391 * var(--u)); }
+    .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(56 * var(--u)) calc(43 * var(--u)) calc(52 * var(--u)) calc(44 * var(--u)); }
+    .card :global(.rf-grid) { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }
+    .card :global(.rf-sel-req) { inline-size: calc(410 * var(--u)); }
+  }
+</style>

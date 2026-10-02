@@ -1,0 +1,97 @@
+---
+/*
+ * Fields of one Refer a Patient form (Figma 59:14344, card 46:8029), rendered from src/data/forms.json: "refer-patient"
+ * (For Doctors, all blocks) or "refer-patient-other" (same without the referring-doctor block). Figma px, card-relative
+ * (card x 42, y 738), after normalising the designer's inconsistent offsets to the first item of each kind:
+ *   columns 410 wide at x 44 and 514 (labels 86 / 556 on the page; Figma also has 85 and 87 / 557);
+ *   field rows 35 high, 19 apart (pitch 54 = the doctor rows; Figma's patient rows are 57 / 59 apart); a section label
+ *   (Gotham Bold 15) is 33 above its first row (Figma 33 / 39 / 38); a block ends 37 above the next section label (all
+ *   Figma blocks); textarea labels 27 above the box (Figma 27 / 22).
+ *   Label -> box (--at): text 85.42 (left) / 88 (right), mobile 88 (dial box 76, then 10), gender options 92, EID 158,
+ *   Referral Type 124, Referral For 112, Paediatrics Cases 149; boxes run to the column end. Bold row labels sit 11
+ *   below the box top, regular labels 8. Selects: placeholder 15.51 in (Requested) / 21 in (Referral), chevron 11.76 /
+ *   13 from the end, 18 from the top. DOB: calendar icon 12.78 from the end, 5 from the top. Gender: selected 13px
+ *   circle, unselected 11px circle (both centred in 13), text 8 after the circle, 29.5 between the options.
+ * Error lines (no Figma design) and the consent row are the shared form ones (forms.css / FormShell).
+ */
+import { content } from '../../lib/content';
+import { fieldsIn, fieldId, sourceOptions, commonText } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import ReferField from './ReferField.astro';
+import chevSpec from '../../assets/refer/chevron-speciality.svg';
+
+interface Props { form: string; edition: Edition }
+const { form, edition } = Astro.props;
+const c = content('forms/refer', edition.locale);
+const dialLabel = commonText(edition.locale).dialCodeLabel;
+const fields = Object.fromEntries(['doctor', 'requested', 'patient', 'info'].flatMap((g) => fieldsIn(form, g).map((f) => [f.name, f])));
+const has = (n: string) => n in fields;
+const specialties = sourceOptions('specialties', edition);
+const doctors = sourceOptions('doctors', edition);
+
+type Cell = { name: string; at: number; bold?: boolean };
+const blocks: { section: string; rows: Cell[][]; rowsGap?: number }[] = [
+  { section: 'doctor', rows: [
+    [{ name: 'doctor_name', at: 85.42 }, { name: 'doctor_specialty', at: 88 }],
+    [{ name: 'doctor_mobile', at: 88 }, { name: 'doctor_email', at: 88 }],
+  ] },
+  { section: 'patient', rows: [
+    [{ name: 'name', at: 85.42 }, { name: 'email', at: 88 }],
+    [{ name: 'dob', at: 85.42 }, { name: 'mobile', at: 88 }],
+    [{ name: 'gender', at: 92 }, { name: 'eid', at: 158 }],
+  ] },
+];
+const referralRows: Cell[][] = [
+  [{ name: 'referral_type', at: 124, bold: true }, { name: 'referral_for', at: 112, bold: true }],
+  [{ name: 'guardian_name', at: 149, bold: true }, { name: 'guardian_mobile', at: 88 }],
+];
+const visible = (rows: Cell[][]) => rows.map((r) => r.filter((x) => has(x.name))).filter((r) => r.length);
+const id = (n: string) => fieldId(form, n);
+---
+
+{visible(blocks[0].rows).length > 0 && (
+  <div class="rf-block">
+    <p class="pf-q rf-section">{c.sections.doctor}</p>
+    {visible(blocks[0].rows).map((row) => (
+      <div class="rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} />)}</div>
+    ))}
+  </div>
+)}
+
+{has('specialty') && (
+  <div class="rf-block">
+    <p class="pf-q rf-section">{c.sections.requested}</p>
+    <div class="rf-grid">
+      {['specialty', 'doctor'].filter(has).map((n) => (
+        <div class="pf-field" data-field={n}>
+          <div class="pf-select rf-sel-req">
+            <select id={id(n)} name={n} required={fields[n].required} aria-label={c.fields[n].placeholder} aria-describedby={`${id(n)}-error`} data-source={fields[n].source} class="pf-box rf-ph">
+              <option value="" selected>{c.fields[n].placeholder}</option>
+              {(n === 'doctor' ? doctors : specialties).map((o) => <option value={o.value} data-specialties={o.specialties} data-region={o.region}>{o.label}</option>)}
+            </select>
+            <img src={chevSpec.src} alt="" width="7.24" height="4.207" class="pf-chev" />
+          </div>
+          <p id={`${id(n)}-error`} class="f-err" hidden></p>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+<div class="rf-block">
+  <p class="pf-q rf-section">{c.sections.patient}</p>
+  {visible(blocks[1].rows).map((row) => (
+    <div class="rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} />)}</div>
+  ))}
+</div>
+{visible(referralRows).map((row) => (
+  <div class="rf-block rf-grid">{row.map((x) => <ReferField form={form} f={fields[x.name]} text={c.fields[x.name]} at={x.at} bold={x.bold} dialLabel={dialLabel} />)}</div>
+))}
+
+{[['diagnosis', 'info'], ['history', 'history']].filter(([n]) => has(n)).map(([n, section]) => (
+  <div class="rf-block pf-field" data-field={n}>
+    <label for={id(n)} class="pf-q rf-section rf-area-label">{c.sections[section]}</label>
+    <textarea id={id(n)} name={n} required={fields[n].required} maxlength={fields[n].max} placeholder={c.fields[n].placeholder} aria-describedby={`${id(n)}-error`} class="pf-box rf-area"></textarea>
+    <p id={`${id(n)}-error`} class="f-err" hidden></p>
+  </div>
+))}

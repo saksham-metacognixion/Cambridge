@@ -1,0 +1,74 @@
+---
+/* One labelled field of the Refer a Patient form (layout values: see ReferFields.astro). */
+import { fieldId, splitStar, dialCodes, type FieldConfig, type Option } from '../../lib/forms';
+import flagUae from '../../assets/refer/flag-uae.svg';
+import chevDial from '../../assets/refer/chevron-dial.svg';
+import chevSel from '../../assets/refer/chevron-doctor.svg';
+import calendar from '../../assets/refer/calendar.svg';
+import radioOn from '../../assets/refer/radio-on.svg';
+import radioOff from '../../assets/refer/radio-off.svg';
+
+interface Props {
+  form: string;
+  f: FieldConfig;
+  text: { label?: string; placeholder?: string; options?: Record<string, string> };
+  at: number;
+  bold?: boolean;
+  dialLabel: string;
+}
+const { form, f, text, at, bold, dialLabel } = Astro.props;
+const id = fieldId(form, f.name);
+const err = `${id}-error`;
+const [label, star] = splitStar(text.label ?? '');
+const opts: Option[] = (f.options ?? []).map((o) => ({ value: o, label: text.options?.[o] ?? o }));
+---
+
+{f.type === 'radio' ? (
+  <fieldset class="pf-field rf-radio" data-field={f.name} aria-describedby={err} style={`--at:${at}`}>
+    <legend class="pf-label rf-legend">{label}<span aria-hidden="true">{star}</span></legend>
+    <div class="rf-opts">
+      {opts.map((o) => (
+        <label class="rf-opt">
+          <input class="sr-only" type="radio" name={f.name} value={o.value} required={f.required} />
+          <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="11" height="11" /><img class="on" src={radioOn.src} alt="" width="16.467" height="16.467" /></span>
+          <span>{o.label}</span>
+        </label>
+      ))}
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </fieldset>
+) : (
+  <div class:list={['pf-field', f.type === 'tel' && 'rf-tel-field']} data-field={f.name}>
+    <div class="pf-row" style={`--at:${at}`}>
+      <label for={id} class:list={['pf-label', bold && 'rf-bold']}>{label}<span aria-hidden="true">{star}</span></label>
+      {f.type === 'tel' ? (
+        <>
+          <div class="pf-dial">
+            <select name={`${f.name}_code`} class="pf-box" aria-label={dialLabel}>
+              {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
+            </select>
+            <img src={flagUae.src} alt="" width="16.5" height="11" class="pf-flag" />
+            <img src={chevDial.src} alt="" width="7.24" height="4.207" class="pf-chev" />
+          </div>
+          <input id={id} name={f.name} type="tel" inputmode="tel" dir="ltr" required={f.required} maxlength={f.max} autocomplete={f.autocomplete ?? 'off'} placeholder={text.placeholder} aria-describedby={err} class="pf-box pf-tel rf-grow" />
+        </>
+      ) : f.type === 'select' ? (
+        <div class="pf-select rf-grow rf-sel-ref">
+          <select id={id} name={f.name} required={f.required} aria-describedby={err} class="pf-box rf-ph">
+            <option value="" selected>{text.placeholder}</option>
+            {opts.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+          <img src={chevSel.src} alt="" width="7" height="4.207" class="pf-chev" />
+        </div>
+      ) : f.type === 'date' ? (
+        <div class="rf-date rf-grow">
+          <input id={id} name={f.name} type="date" data-past data-empty required={f.required} aria-describedby={err} class="pf-box rf-date-box" />
+          <img src={calendar.src} alt="" width="19.8" height="22" class="rf-cal" />
+        </div>
+      ) : (
+        <input id={id} name={f.name} type={f.type === 'email' ? 'email' : 'text'} required={f.required} maxlength={f.max} autocomplete={f.autocomplete ?? (f.type === 'email' ? 'email' : 'off')} placeholder={text.placeholder} aria-describedby={err} class:list={['pf-box rf-grow', text.placeholder && 'rf-ph-in']} />
+      )}
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </div>
+)}

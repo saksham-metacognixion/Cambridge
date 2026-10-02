@@ -35,7 +35,7 @@
     "tiles": [
       { "label": "Book an Appointment", "href": "#book-appointment" },
       { "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" },
-      { "label": "Refer a Patient", "href": "#" },
+      { "label": "Refer a Patient", "href": "#", "page": "referPatient" },
       { "label": "Send an Inquiry", "href": "#send-inquiry" }
     ]
   }

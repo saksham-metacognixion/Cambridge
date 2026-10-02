@@ -15,7 +15,7 @@ export const PAGE_PATHS = {
   findDoctor: DOCTOR_PATHS.list,
   /** Conditions & Specialities (Figma 40:318); detail pages = conditions-specialities/<slug> (src/lib/conditions.ts) */
   conditions: 'conditions-specialities',
-  /** not built (Figma 59:14344) */
+  /** Refer a Patient (Figma 59:14344) */
   referPatient: 'refer-a-patient',
   /** not built (Figma 54:9239) */
   internationalPatients: 'international-patients',

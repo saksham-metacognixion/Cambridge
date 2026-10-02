@@ -1,0 +1,34 @@
+{
+  "_note": "Refer a Patient form (Figma 59:14344). Labels exactly as in Figma (incl. 'Breif History:', a typo kept until Pramod's edit list says otherwise). Fields: src/data/forms.json 'refer-patient' (For Doctors) and 'refer-patient-other' (For Others = no referring-doctor block; NOT in Figma, flagged). ariaLabel / tabsLabel / *Aria texts are NOT in Figma (screen readers only).",
+  "tabsLabel": "Who is referring",
+  "tabs": { "doctor": "For Doctors", "other": "For Others" },
+  "ariaLabel": { "doctor": "Patient referral form for doctors", "other": "Patient referral form" },
+  "sections": {
+    "doctor": "Referring Doctor Details:",
+    "requested": "Requested Speciality:",
+    "patient": "Patient Details:",
+    "info": "Referral Information:",
+    "history": "Breif History:"
+  },
+  "fields": {
+    "doctor_name": { "label": "Name*" },
+    "doctor_specialty": { "label": "Speciality" },
+    "doctor_mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
+    "doctor_email": { "label": "E-mail" },
+    "specialty": { "placeholder": "Select Speciality" },
+    "doctor": { "placeholder": "Select a Doctor (Optional)" },
+    "name": { "label": "Name*" },
+    "email": { "label": "E-mail" },
+    "dob": { "label": "DOB*" },
+    "mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
+    "gender": { "label": "Gender*", "options": { "male": "Male", "female": "Female" } },
+    "eid": { "label": "EID / Passport No:" },
+    "referral_type": { "label": "Referral Type", "placeholder": "Select Option", "options": {} },
+    "referral_for": { "label": "Referral For", "placeholder": "Select Option", "options": {} },
+    "guardian_name": { "label": "Paediatrics Cases", "placeholder": "Guardian Name" },
+    "guardian_mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
+    "diagnosis": { "placeholder": "Diagnosis (ICD Code if available)*:" },
+    "history": { "placeholder": "Please share relevant information...." }
+  },
+  "submit": "SUBMIT"
+}

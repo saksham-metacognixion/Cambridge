@@ -99,3 +99,5 @@ SUMMARY after 60: batch-2 session 11 (10 screenshots + 1 context). Dev-seat call
 61. get_design_context 41:2373 Accidents Rehabilitation (no screenshot: #57 is the target) -> FULL -> raw/accidents-41-2373.tsx, assets/condition-accidents/* (62)
 62. get_design_context 67:3070 Stroke Rehabilitation (frame named "Accidents Rehabilitation") -> FULL -> raw/stroke-67-3070.tsx, assets/condition-stroke/* (62)
 SUMMARY after 62: batch-2 session 13. Dev-seat calls today (all sessions): 31.
+63. get_design_context 59:14344 Refer a Patient (no screenshot: #52 is the target) -> FULL (61k) -> raw/refer-59-14344.tsx, refer-spec.md, assets/refer/* (66)
+SUMMARY after 63: batch-2 session 14. Dev-seat calls today (all sessions): 32.

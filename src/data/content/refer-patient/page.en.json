@@ -1,0 +1,24 @@
+{
+  "_note": "Refer a Patient (Figma 59:14344). Visible text exactly as in Figma; meta.* = PLACEHOLDER. Form text: forms/refer.*.json.",
+  "meta": {
+    "title": "Refer a Patient | Cambridge Hospital",
+    "description": "Refer a patient to Cambridge Hospital: share the patient and referral details and our team will coordinate the next steps of care."
+  },
+  "hero": {
+    "ariaLabel": "Refer a Patient",
+    "banner": { "image": "refer/banner", "alt": "" },
+    "title": ["Refer a Patient with Confidence"],
+    "text": "Share patient and referral details, and our team will handle the coordination of care.",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "intro": {
+    "heading": "Patient Referral Form",
+    "text": "Please complete the form below to refer a patient. Our team will review and coordinate the next steps promptly."
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+  }
+}

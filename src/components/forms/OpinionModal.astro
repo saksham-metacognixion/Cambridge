@@ -1,0 +1,132 @@
+---
+/*
+ * Your Opinion Matters pop-up — Figma 112:7878, spec figma-cache/forms-spec.md. Scope form "Contact / Feedback";
+ * posts to feedback-popup (inbox FORM_TO_FEEDBACK). Opened by every #your-opinion link (header top bar, footer).
+ * Panel 586 wide; values are Figma px from the panel's top-left. Each rating row is a radio group (fieldset + legend);
+ * Figma shows one selected face per row as a colour sample, so nothing is preselected.
+ */
+import Modal from './Modal.astro';
+import FormShell from './FormShell.astro';
+import GlassField from './GlassField.astro';
+import { content } from '../../lib/content';
+import { commonText, fieldsIn, fieldId } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import excellent from '../../assets/forms/opinion-face-excellent.svg';
+import excellentOn from '../../assets/forms/opinion-face-excellent-selected.svg';
+import good from '../../assets/forms/opinion-face-good.svg';
+import goodOn from '../../assets/forms/opinion-face-good-selected.svg';
+import medium from '../../assets/forms/opinion-face-medium.svg';
+import mediumOn from '../../assets/forms/opinion-face-medium-selected.svg';
+import poor from '../../assets/forms/opinion-face-poor.svg';
+import poorOn from '../../assets/forms/opinion-face-poor-selected.svg';
+
+interface Props { edition: Edition }
+const { edition } = Astro.props;
+const ID = 'feedback-popup';
+const c = content('forms/opinion', edition.locale);
+const common = commonText(edition.locale);
+const shared = { form: ID, edition, dialLabel: common.dialCodeLabel };
+const faces: Record<string, { off: ImageMetadata; on: ImageMetadata; size: number }> = {
+  excellent: { off: excellent, on: excellentOn, size: 19.443 },
+  good: { off: good, on: goodOn, size: 19.443 },
+  medium: { off: medium, on: mediumOn, size: 19.443 },
+  poor: { off: poor, on: poorOn, size: 21.211 },
+};
+---
+
+<Modal id={ID} titleId={`${ID}-title`} closeLabel={common.close} panelClass="p-opinion">
+  <h2 id={`${ID}-title`} class="gf-title o-title">{c.title}</h2>
+  <FormShell
+    id={ID}
+    edition={edition}
+    submit={c.submit}
+    ariaLabelledby={`${ID}-title`}
+    button={{ w: 116, h: 33, r: 9.917, fs: 9.917, ty: 14 }}
+    gaps={{ consent: 13.52, submit: 16.99 }}
+  >
+    <div class="f-split o-split">
+      <div class="o-left">
+        <div class="o-choose">
+          {fieldsIn(ID, 'choose').map((f) => <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} />)}
+        </div>
+        <p class="gf-section o-section">{c.section}</p>
+        <div class="o-details">
+          {fieldsIn(ID, 'details').map((f) => <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} />)}
+        </div>
+      </div>
+      <div class="o-card">
+        {fieldsIn(ID, 'ratings').map((f) => {
+          const err = `${fieldId(ID, f.name)}-error`;
+          return (
+            <fieldset class="o-rate" data-field={f.name} aria-describedby={err}>
+              <legend class="o-legend">{c.fields[f.name].label}</legend>
+              <div class="o-opts">
+                {f.options!.map((o) => (
+                  <label class="o-opt hit">
+                    <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
+                    <span class="o-ico" aria-hidden="true">
+                      <img class="off" src={faces[o].off.src} alt="" width={faces[o].size} height={faces[o].size} style={`--s:${faces[o].size}`} />
+                      <img class="on" src={faces[o].on.src} alt="" width={faces[o].size} height={faces[o].size} style={`--s:${faces[o].size}`} />
+                    </span>
+                    <span class="o-txt">{c.ratingOptions[o]}</span>
+                  </label>
+                ))}
+              </div>
+              <p id={err} class="f-err" hidden></p>
+            </fieldset>
+          );
+        })}
+      </div>
+    </div>
+    {fieldsIn(ID, 'message').map((f) => (
+      <div class="o-message">
+        <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} area={{ w: 499, h: 100.009, px: 13.4, py: 15.82, fs: 10 }} />
+      </div>
+    ))}
+  </FormShell>
+</Modal>
+
+<style>
+  /* Panel 586 x 564 (grows by the consent row). Content box x 32..531 (textarea); left column at 36, card at 326. */
+  :global(.p-opinion) { inline-size: calc(586 * var(--u)); padding: calc(30 * var(--u)) calc(55 * var(--u)) calc(24 * var(--u)) calc(32 * var(--u)); }
+  :global(.p-opinion .f-submit) { inset-inline-start: calc(11.5 * var(--u)); }   /* centred on the panel (293), not the content box */
+  /* Title top 30, centred on the panel; the columns start at 84 */
+  .o-title { min-block-size: calc(54 * var(--u)); margin-inline: calc(-32 * var(--u)) calc(-55 * var(--u)); }
+  .o-split { display: grid; grid-template-columns: calc(270 * var(--u)) calc(205.04 * var(--u)); column-gap: calc(24 * var(--u)); align-items: start; }
+  .o-left { padding-inline-start: calc(4 * var(--u)); }
+  /* Selects centred in their 83 tall Figma box (first at 88.08); "Your Details:" at 184; details from 211.59, gap 11.72 */
+  .o-choose { display: flex; flex-direction: column; gap: calc(11.72 * var(--u)); padding-block-start: calc(4.085 * var(--u)); }
+  .o-section { margin-block-start: calc(21.09 * var(--u)); min-block-size: calc(27.59 * var(--u)); }
+  .o-details { display: flex; flex-direction: column; gap: calc(11.72 * var(--u)); }
+  .o-details > :global([data-field='visit_date'] .gf-row) { min-block-size: calc(32 * var(--u)); }
+  .o-details > :global([data-field='visit_date'] .gf-box) { block-size: calc(32 * var(--u)); }
+  /* Textarea top 390 (16.59 below the last details row), x 32 */
+  .o-message { margin-block-start: calc(16.59 * var(--u)); }
+
+  /* Rating card: white, radius 15.07, rows every 65.4 from 22.09; content origin x 27.4 */
+  .o-card { box-sizing: border-box; min-block-size: calc(289 * var(--u)); border-radius: calc(15.07 * var(--u)); background: #fff; padding: calc(22.09 * var(--u)) 0 calc(22.435 * var(--u)) calc(27.4 * var(--u)); }
+  .o-rate { margin: 0; padding: 0; border: 0; min-inline-size: 0; inline-size: calc(151.6 * var(--u)); }
+  .o-rate + .o-rate { margin-block-start: calc(17.125 * var(--u)); }
+  /* Title centred on x 72.91; faces start 16.79 below the title's top */
+  .o-legend { float: inline-start; box-sizing: border-box; inline-size: 100%; min-block-size: calc(16.79 * var(--u)); padding: 0; padding-inline-end: calc(5.78 * var(--u)); text-align: center; font-weight: 500; font-size: calc(8.838 * var(--u)); line-height: calc(11.155 * var(--u)); color: var(--color-navy); }
+  .o-opts { clear: both; display: flex; }
+  /* Option columns 30.05 wide centred on 15.03 / 54.92 / 94.82 / 136.49 */
+  .o-opt { display: flex; flex-direction: column; align-items: center; flex: none; inline-size: calc(30.05 * var(--u)); cursor: pointer; }
+  .o-opt:nth-child(2) { margin-inline-start: calc(9.845 * var(--u)); }
+  .o-opt:nth-child(3) { margin-inline-start: calc(9.85 * var(--u)); }
+  .o-opt:nth-child(4) { margin-inline-start: calc(11.62 * var(--u)); }
+  .o-ico { display: grid; place-items: center; inline-size: calc(17.676 * var(--u)); block-size: calc(17.676 * var(--u)); }
+  .o-ico img { grid-area: 1 / 1; max-inline-size: none; inline-size: calc(var(--s) * var(--u)); block-size: calc(var(--s) * var(--u)); }
+  .o-ico .on { opacity: 0; }
+  .o-opt input:checked + .o-ico .on { opacity: 1; }
+  .o-opt input:checked + .o-ico .off { opacity: 0; }
+  .o-opt input:focus-visible + .o-ico { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+  .o-txt { margin-block-start: calc(2.654 * var(--u)); font-weight: 300; font-size: calc(6.187 * var(--u)); line-height: calc(11.155 * var(--u)); color: var(--color-navy); white-space: nowrap; }
+
+  @media (max-width: 1023.98px) {
+    .o-left { padding-inline-start: 0; }
+    .o-title { margin-inline: 0; }
+    .o-card { justify-self: center; inline-size: calc(205.04 * var(--u)); }
+    :global(.p-opinion .f-submit) { inset-inline-start: 0; }
+  }
+</style>

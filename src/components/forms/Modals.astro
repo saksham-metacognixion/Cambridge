@@ -8,6 +8,7 @@
 import './forms.css';
 import BookAppointmentModal from './BookAppointmentModal.astro';
 import InquiryModal from './InquiryModal.astro';
+import OpinionModal from './OpinionModal.astro';
 import type { Edition } from '../../lib/editions';
 
 interface Props { edition: Edition }
@@ -16,6 +17,7 @@ const { edition } = Astro.props;
 
 <BookAppointmentModal edition={edition} />
 <InquiryModal edition={edition} />
+<OpinionModal edition={edition} />
 
 <script>
   // #hash in links -> id of the <dialog>.

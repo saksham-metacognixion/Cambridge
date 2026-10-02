@@ -144,7 +144,7 @@
   .modal-panel { inline-size: 100% !important; max-inline-size: calc(586 * var(--u)); padding-inline: 16px !important; }
   .modal .f-grid { grid-template-columns: minmax(0, 1fr) !important; }
   .modal .gf-row, .modal .gf-select, .modal .gf-area { inline-size: 100% !important; }
-  .modal .f-split { display: flex !important; flex-direction: column; gap: calc(16 * var(--u)) !important; }
+  .modal .f-split { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: calc(16 * var(--u)) !important; }
   .modal .f-split > * { margin: 0 !important; }
 }
 @media (max-width: 767.98px) {

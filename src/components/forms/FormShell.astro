@@ -1,0 +1,64 @@
+---
+/*
+ * Wraps one form: posts to the Pages Function (works without JS too: 303 back with ?form=sent|error), carries the
+ * edition, and adds what scope 2.7 requires on every form but Figma doesn't draw: the consent checkbox (Figma Contact
+ * page style), the Turnstile widget (invisible unless Cloudflare needs a click), the error line and the success message.
+ * src/scripts/forms.ts adds validation in EN/AR and the JSON submit.
+ */
+import { clientConfig, commonText, fieldId } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import checkbox from '../../assets/contact-page/checkbox.svg';
+
+interface Props {
+  id: string;
+  edition: Edition;
+  submit: string;
+  /** submit button box (Figma px): width, height, radius, font size, label top */
+  button: { w: number; h: number; r: number; fs: number; ty: number };
+  ariaLabelledby?: string;
+  ariaLabel?: string;
+  class?: string;
+  /** Figma px between the last field and the consent row, and between consent and the button */
+  gaps: { consent: number; submit: number };
+}
+const { id, edition, submit, button, ariaLabelledby, ariaLabel, class: cls, gaps } = Astro.props;
+const c = commonText(edition.locale);
+const consentId = fieldId(id, 'consent');
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<form
+  action={`/api/forms/${id}`}
+  method="POST"
+  novalidate
+  data-form={id}
+  data-config={clientConfig(id, edition.locale)}
+  aria-labelledby={ariaLabelledby}
+  aria-label={ariaLabel}
+  class={cls}
+>
+  <input type="hidden" name="edition" value={edition.id} />
+  <slot />
+
+  <div class="f-tail" style={`margin-block-start:calc(${gaps.consent} * var(--u))`}>
+    <div data-field="consent">
+      <label class="f-consent">
+        <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
+        <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
+        <span class="txt">{c.consent.before}<a href={c.consent.link.href}>{c.consent.link.label}</a>{c.consent.after} {c.consent.line2}</span>
+      </label>
+      <p id={`${consentId}-error`} class="f-err" hidden></p>
+    </div>
+    {siteKey && <div class="ts-slot" data-sitekey={siteKey} data-language={edition.locale}></div>}
+    <p class="f-alert" role="alert" hidden></p>
+    <button
+      type="submit"
+      class="f-submit"
+      style={`margin-block-start:calc(${gaps.submit} * var(--u));--bw:${button.w};--bh:${button.h};--br:${button.r};--bfs:${button.fs};--bty:${button.ty}`}
+    ><span>{submit}</span></button>
+  </div>
+</form>
+<div class="f-success" data-success-for={id} role="status" tabindex="-1" hidden>
+  <p class="s-title">{c.success.title}</p>
+  <p class="s-text">{c.success.text}</p>
+</div>

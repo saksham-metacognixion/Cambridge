@@ -7,8 +7,12 @@ export interface Env {
   EMAIL_API_KEY?: string;
   /** Sender, e.g. "Cambridge Hospital Website <no-reply@cambridgehospital.com>" */
   MAIL_FROM?: string;
-  /** JSON: { "<form>": { "global": "a@x", "ae": "b@x", "sa": "c@x" } } — the inbox for each form in each region. */
-  FORM_RECIPIENTS?: string;
+  /**
+   * Inbox per form type (scope 2.7), one variable each: FORM_TO_BOOK_APPOINTMENT, FORM_TO_SEND_ENQUIRY, FORM_TO_FEEDBACK,
+   * FORM_TO_REFER_PATIENT (the form's `inbox` in src/data/forms.json, upper-cased). Value: "a@x, b@x" for every region,
+   * or JSON { "global": "a@x", "ae": "b@x", "sa": "c@x" } for a different inbox per region.
+   */
+  [key: `FORM_TO_${string}`]: string | undefined;
   /** Comma-separated origins allowed to post (defaults to the request's own origin). */
   ALLOWED_ORIGINS?: string;
 }

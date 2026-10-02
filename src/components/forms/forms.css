@@ -1,0 +1,155 @@
+/*
+ * Forms (scope 2.7): pop-up dialogs (Figma 106:246, 101:6336, 112:7878) and the Patient Feedback page (188:964).
+ * Every length is Figma px x --u (1 Figma px). Flow layout: a block's min-block-size is the Figma distance from its top
+ * to the next block's top, so with the Figma content every top lands where Figma has it, and longer text (Arabic,
+ * error messages) pushes the rest down instead of overlapping. Logical properties only (RTL).
+ */
+
+/* ───────── Dialog shell ───────── */
+.modal {
+  position: fixed; inset: 0; z-index: 100;
+  box-sizing: border-box; width: 100%; max-width: none; height: 100%; max-height: none;
+  margin: 0; padding: calc(16 * var(--u)) 16px; border: 0;
+  background: transparent; overflow: auto; overscroll-behavior: contain;
+  font-family: var(--font-gotham); color: var(--color-navy);
+}
+.modal[open] { display: grid; place-items: center; }
+/* Backdrop = Figma "Rectangle 132": rgba(217,217,217,.2) + GLASS radius 8 (approximated as a background blur). */
+.modal::backdrop {
+  background: rgba(217, 217, 217, 0.2);
+  -webkit-backdrop-filter: blur(calc(4 * min(100vw, 1440px) / 1052));
+  backdrop-filter: blur(calc(4 * min(100vw, 1440px) / 1052));
+}
+/* Panel = Figma "Rectangle 4304": white 10% + GLASS radius 100 (approximated: background blur + light rim). */
+.modal-panel {
+  position: relative; box-sizing: border-box;
+  border-radius: calc(17.051 * var(--u));
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(calc(50 * var(--u))) saturate(1.1);
+  backdrop-filter: blur(calc(50 * var(--u))) saturate(1.1);
+  box-shadow: inset 0 0 0 calc(0.6 * var(--u)) rgba(255, 255, 255, 0.55);
+}
+/* Close button: NOT in Figma (needed for keyboard/touch users). Navy like the field labels. */
+.modal-close {
+  position: absolute; inset-block-start: calc(12 * var(--u)); inset-inline-end: calc(12 * var(--u));
+  display: grid; place-items: center; width: calc(18 * var(--u)); height: calc(18 * var(--u));
+  margin: 0; padding: 0; border: 0; background: none; color: var(--color-navy); cursor: pointer; border-radius: 50%;
+}
+.modal-close svg { width: calc(9 * var(--u)); height: calc(9 * var(--u)); }
+.modal-close:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(1 * var(--u)); }
+
+/* ───────── Pop-up fields ("gf" = glass field) ───────── */
+.gf { --row: 256.037; min-inline-size: 0; }
+.gf-row { position: relative; display: flex; align-items: flex-start; inline-size: calc(var(--row) * var(--u)); max-inline-size: 100%; }
+.gf-label {
+  flex: none; box-sizing: border-box; min-inline-size: calc(var(--at, 0) * var(--u)); padding-block-start: calc(7.21 * var(--u)); padding-inline-end: calc(4 * var(--u));
+  font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy); white-space: nowrap;
+}
+.gf-box {
+  box-sizing: border-box; display: block; flex: 1 1 auto; min-inline-size: 0; block-size: calc(31.554 * var(--u)); margin: 0;
+  border: 0; border-radius: calc(9.695 * var(--u)); outline: 0; appearance: none; -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.5);
+  padding-block: 0; padding-inline: calc(8.24 * var(--u));
+  font-family: var(--font-gotham); font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy);
+}
+.gf-box.strong { background: rgba(255, 255, 255, 0.7); }           /* Figma: the Name box is 70% white, the others 50% */
+.gf-box::placeholder { color: var(--color-body); opacity: 1; }
+.gf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: 0; }
+.gf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+
+/* Selects with the placeholder as their visible label (Select Speciality / Select a Doctor) */
+.gf-select { position: relative; inline-size: calc(256.037 * var(--u)); max-inline-size: 100%; }
+.gf-select select { inline-size: 100%; padding-inline: calc(var(--tx, 13.99) * var(--u)) calc(24 * var(--u)); color: var(--color-body); cursor: pointer; text-overflow: ellipsis; }
+.gf-select select:has(option:checked:not([value=''])) { color: var(--color-navy); }
+.gf-chev { position: absolute; pointer-events: none; max-inline-size: none; inset-block-start: calc(16.23 * var(--u)); inset-inline-end: calc(var(--ce) * var(--u)); block-size: calc(3.793 * var(--u)); }
+
+/* Date: native picker, Figma calendar icon; the native "mm/dd/yyyy" text is hidden while empty (Figma shows an empty box). */
+.gf-date::-webkit-calendar-picker-indicator { display: none; }
+.gf-date { cursor: pointer; }
+.gf-date[data-empty]:not(:focus) { color: transparent; }
+.gf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(16.407 * var(--u)); inset-block-start: calc(4.51 * var(--u)); inline-size: calc(17.85 * var(--u)); block-size: calc(19.834 * var(--u)); }
+
+/* Mobile: dial-code box + number box */
+.gf-dial { position: relative; flex: none; inline-size: calc(68.517 * var(--u)); }
+.gf-dial select { inline-size: 100%; padding-inline: calc(23.44 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+.gf-flag { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-start: calc(5.41 * var(--u)); inset-block-start: calc(9.91 * var(--u)); inline-size: calc(14.875 * var(--u)); block-size: calc(9.917 * var(--u)); }
+.gf-dial .gf-chev { inset-inline-end: calc(5.19 * var(--u)); inset-block-start: calc(13.52 * var(--u)); inline-size: calc(6.527 * var(--u)); }
+.gf-tel { margin-inline-start: calc(8.113 * var(--u)); }
+
+.gf-area {
+  block-size: calc(var(--h) * var(--u)); inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; resize: none;
+  padding-block: calc(var(--py) * var(--u)) calc(8 * var(--u)); padding-inline: calc(var(--px) * var(--u));
+  font-size: calc(var(--fs, 13.523) * var(--u)); line-height: calc(12.622 * var(--u));
+}
+.gf-area::placeholder { font-style: italic; color: var(--color-body); }
+
+/* Error under a field (no Figma design: Gotham Book in the label navy; the box gets a thin red line, Figma red #ff4e4e) */
+.f-err { margin: calc(3 * var(--u)) 0 0; font-weight: 400; font-size: calc(9.917 * var(--u)); line-height: calc(12 * var(--u)); color: var(--color-navy); }
+.f-err::before { content: ''; display: inline-block; inline-size: calc(5 * var(--u)); block-size: calc(5 * var(--u)); margin-inline-end: calc(4 * var(--u)); border-radius: 50%; background: #ff4e4e; vertical-align: middle; }
+.f-err[hidden] { display: none; }
+
+/* Title + section labels */
+.gf-title { margin: 0; font-weight: 700; font-size: calc(13.523 * var(--u)); line-height: normal; color: var(--color-navy-alt); text-align: center; }
+.gf-section { margin: 0; font-weight: 700; font-size: calc(11.72 * var(--u)); line-height: normal; color: var(--color-navy); }
+
+/* Submit buttons */
+.f-submit {
+  position: relative; display: block; box-sizing: border-box; margin: 0 auto; padding: 0; border: 0; cursor: pointer;
+  inline-size: calc(var(--bw) * var(--u)); block-size: calc(var(--bh) * var(--u)); border-radius: calc(var(--br) * var(--u));
+  background: var(--color-cyan); color: #fff; font-family: var(--font-gotham); font-weight: 700; font-size: calc(var(--bfs) * var(--u)); line-height: normal; white-space: nowrap;
+}
+.f-submit > span { position: absolute; inset-inline: 0; inset-block-start: calc(var(--bty) * var(--u)); text-align: center; }
+.f-submit:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+.f-submit[aria-disabled='true'] { cursor: progress; }
+
+/* Consent (Figma Contact page 86:799: circle 15.47 + Gotham Light 9.87 / 10.5 navy, link Gotham Book underlined) */
+.f-consent { position: relative; display: flex; align-items: flex-start; gap: calc(8.5 * var(--u)); cursor: pointer; font-weight: 300; font-size: calc(9.87 * var(--u)); line-height: calc(10.5 * var(--u)); color: var(--color-navy); }
+.f-consent input { position: absolute; z-index: 1; margin: 0; opacity: 0; inline-size: 44px; block-size: 44px; inset-inline-start: calc(7.73 * var(--u) - 22px); inset-block-start: calc(7.73 * var(--u) - 22px); cursor: pointer; }
+.f-consent .box { position: relative; flex: none; inline-size: calc(15.4667 * var(--u)); block-size: calc(15.4667 * var(--u)); }
+.f-consent .box img { display: block; inline-size: 100%; block-size: 100%; max-inline-size: none; }
+.f-consent .dot { position: absolute; inset-inline-start: calc(4.867 * var(--u)); inset-block-start: calc(4.867 * var(--u)); inline-size: calc(5.733 * var(--u)); block-size: calc(5.733 * var(--u)); border-radius: 50%; background: var(--color-navy); opacity: 0; }
+.f-consent input:checked ~ .box .dot { opacity: 1; }
+.f-consent input:focus-visible ~ .box { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+.f-consent input[aria-invalid='true'] ~ .box img { filter: drop-shadow(0 0 calc(0.6 * var(--u)) #ff4e4e); }
+.f-consent a { font-weight: 400; color: var(--color-navy); text-decoration: underline; text-decoration-thickness: from-font; text-underline-position: from-font; }
+.f-consent .txt { padding-block-start: calc(2 * var(--u)); }
+
+.f-alert { margin: calc(8 * var(--u)) 0 0; font-size: calc(9.917 * var(--u)); line-height: calc(12 * var(--u)); color: var(--color-navy); text-align: center; }
+.f-alert[hidden] { display: none; }
+.ts-slot:empty { display: none; }
+.ts-slot { display: flex; justify-content: center; margin-block-start: calc(8 * var(--u)); }
+
+/* Success (no Figma design: title in the form-title style, text in the label style) */
+.f-success { text-align: center; padding-block: calc(24 * var(--u)); }
+.f-success:focus { outline: 0; }
+.f-success[hidden] { display: none; }
+.f-success .s-title { margin: 0 0 calc(8 * var(--u)); font-weight: 700; font-size: calc(13.523 * var(--u)); color: var(--color-navy-alt); }
+.f-success .s-text { margin: 0; font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy); }
+
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* Touch screens and narrow windows: every control at least 44px tall without changing its look on desktop (scope 2.8). */
+@media (pointer: coarse), (max-width: 1023.98px) {
+  .gf-box, .gf-select select, .gf-dial select { min-block-size: 44px; }
+  .gf-row { align-items: center; }
+  .gf-label { padding-block-start: 0; }
+  .gf-cal { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-select .gf-chev, .gf-dial .gf-chev { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-flag { inset-block-start: 50%; translate: 0 -50%; }
+}
+
+/* ───────── Below 1024: same design, one column, full width; below 768: full screen ───────── */
+@media (max-width: 1023.98px) {
+  .modal { padding: 16px; }
+  .modal-panel { inline-size: 100% !important; max-inline-size: calc(586 * var(--u)); padding-inline: 16px !important; }
+  .modal .f-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .modal .gf-row, .modal .gf-select, .modal .gf-area { inline-size: 100% !important; }
+  .modal .f-split { display: flex !important; flex-direction: column; gap: calc(16 * var(--u)) !important; }
+  .modal .f-split > * { margin: 0 !important; }
+}
+@media (max-width: 767.98px) {
+  .modal { padding: 0; }
+  .modal[open] { place-items: stretch; }
+  .modal-panel { max-inline-size: none; min-block-size: 100%; border-radius: 0; padding-block: 24px !important; }
+  .modal-close { inset-block-start: 12px; inset-inline-end: 12px; }
+}

@@ -1,0 +1,53 @@
+---
+/*
+ * The site's pop-up forms, once per page (BaseLayout). Closed <dialog>s render nothing, so they cost no layout.
+ * Every link to #book-appointment / #send-inquiry / #your-opinion (header, footer, CTA band, hero, doctor cards,
+ * hospital rows, ...) opens its pop-up; a direct URL with that hash opens it on load. The form script
+ * (src/scripts/forms.ts) is fetched only then, or on first focus in a page form.
+ */
+import './forms.css';
+import BookAppointmentModal from './BookAppointmentModal.astro';
+import type { Edition } from '../../lib/editions';
+
+interface Props { edition: Edition }
+const { edition } = Astro.props;
+---
+
+<BookAppointmentModal edition={edition} />
+
+<script>
+  // #hash in links -> id of the <dialog>.
+  const MODALS: Record<string, string> = { '#book-appointment': 'book-appointment', '#send-inquiry': 'send-enquiry-popup', '#your-opinion': 'feedback-popup' };
+  let mod: Promise<typeof import('../../scripts/forms')> | undefined;
+  const load = () => (mod ??= import('../../scripts/forms'));
+  const modalFor = (hash: string) => (MODALS[hash] && document.getElementById(MODALS[hash]) ? MODALS[hash] : null);
+
+  document.addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = (e.target as Element).closest?.('a[href]') as HTMLAnchorElement | null;
+    if (!a) return;
+    const url = new URL(a.href, location.href);
+    const id = url.origin === location.origin && url.pathname === location.pathname ? modalFor(url.hash) : null;
+    if (!id) return;
+    e.preventDefault();
+    void load().then((m) => m.openModal(id, a));
+  });
+  const fromHash = () => {
+    const id = modalFor(location.hash);
+    if (id) void load().then((m) => m.openModal(id, null));
+  };
+  addEventListener('hashchange', fromHash);
+  fromHash();
+
+  // Page forms (e.g. Patient Feedback): load on first focus; a submit before that waits for the script.
+  document.addEventListener('focusin', (e) => {
+    const f = (e.target as Element).closest?.('form[data-form]') as HTMLFormElement | null;
+    if (f && !f.closest('dialog')) void load().then((m) => m.initForm(f));
+  });
+  document.addEventListener('submit', (e) => {
+    const f = e.target as HTMLFormElement;
+    if (!f.matches?.('form[data-form]') || f.dataset.ready) return;
+    e.preventDefault();
+    void load().then((m) => { m.initForm(f); f.requestSubmit(); });
+  }, true);
+</script>

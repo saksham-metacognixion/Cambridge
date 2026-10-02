@@ -1,0 +1,29 @@
+{
+  "$comment": "Shared form text. Figma has no design or copy for the close button, errors or success message: these strings are NOT from Figma and need Pramod's approval (English) and his Arabic text. The consent text is the Figma Contact page consent (86:799).",
+  "close": "Close",
+  "dialCodeLabel": "Country code",
+  "consent": {
+    "before": "I have read the ",
+    "link": { "label": "Privacy policy", "href": "#" },
+    "after": " and I consent to the transfer and processing of",
+    "line2": "my personal data."
+  },
+  "errors": {
+    "summary": "Please check the highlighted fields.",
+    "required": "This field is required.",
+    "invalid": "Please enter a valid value.",
+    "invalid_email": "Please enter a valid email address.",
+    "invalid_tel": "Please enter a valid mobile number.",
+    "invalid_date": "Please enter a valid date.",
+    "too_long": "This is too long.",
+    "consent": "Please accept the privacy policy to continue.",
+    "turnstile": "Please complete the security check and try again.",
+    "send_failed": "Sorry, your message could not be sent. Please try again later.",
+    "network": "Sorry, your message could not be sent. Please check your connection and try again."
+  },
+  "success": {
+    "title": "Thank you",
+    "text": "Your message has been sent. Our team will contact you soon."
+  },
+  "sending": "Sending…"
+}

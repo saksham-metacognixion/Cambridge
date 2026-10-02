@@ -1,0 +1,98 @@
+---
+/*
+ * Book an Appointment pop-up — Figma 106:246 ("Pop Up - Option 1"), spec figma-cache/forms-spec.md.
+ * Panel 586 wide; values are Figma px from the panel's top-left. Opened by every #book-appointment link; a link with
+ * data-doctor="<slug>" (doctor cards, profile) preselects that doctor and its speciality.
+ */
+import Modal from './Modal.astro';
+import FormShell from './FormShell.astro';
+import GlassField from './GlassField.astro';
+import { content } from '../../lib/content';
+import { commonText, fieldsIn, fieldId, splitStar } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import radioOn from '../../assets/forms/radio-on.svg';
+import radioOff from '../../assets/forms/radio-off.svg';
+
+interface Props { edition: Edition }
+const { edition } = Astro.props;
+const ID = 'book-appointment';
+const c = content('forms/book', edition.locale);
+const common = commonText(edition.locale);
+const shared = { form: ID, edition, dialLabel: common.dialCodeLabel };
+const radios = fieldsIn(ID, 'gender');
+---
+
+<Modal id={ID} titleId={`${ID}-title`} closeLabel={common.close} panelClass="p-book">
+  <h2 id={`${ID}-title`} class="gf-title b-title">{c.title}</h2>
+  <FormShell
+    id={ID}
+    edition={edition}
+    submit={c.submit}
+    ariaLabelledby={`${ID}-title`}
+    button={{ w: 99.169, h: 33.056, r: 9.917, fs: 9.917, ty: 11.9 }}
+    gaps={{ consent: 13.52, submit: 13.52 }}
+  >
+    <div class="f-grid b-choose">
+      {fieldsIn(ID, 'choose').map((f) => <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} />)}
+    </div>
+    <p class="gf-section b-section">{c.section}</p>
+    <div class="f-grid b-details">
+      {fieldsIn(ID, 'details').map((f) => <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} />)}
+    </div>
+    {radios.map((f) => {
+      const t = c.fields[f.name];
+      const [label, star] = splitStar(t.label);
+      const err = `${fieldId(ID, f.name)}-error`;
+      return (
+        <fieldset class="b-radios" data-field={f.name} aria-describedby={err}>
+          <legend class="gf-label b-legend">{label}{star && <span aria-hidden="true">{star}</span>}</legend>
+          <div class="b-opts">
+            {f.options!.map((o, i) => (
+              <label class="b-opt hit">
+                <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
+                <span class="b-ico" aria-hidden="true">
+                  <img class="on" src={radioOn.src} alt="" width="14.845" height="14.845" />
+                  <img class="off" src={radioOff.src} alt="" width="9.917" height="9.917" />
+                </span>
+                <span class="b-txt" style={`--gap:${i === 0 ? 7.21 : 4.96}`}>{t.options[o]}</span>
+              </label>
+            ))}
+          </div>
+          <p id={err} class="f-err" hidden></p>
+        </fieldset>
+      );
+    })}
+    {fieldsIn(ID, 'message').map((f) => (
+      <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} area={{ w: 523.794, h: 64.009, px: 9.34, py: 11.72, fs: 13.523 }} />
+    ))}
+  </FormShell>
+</Modal>
+
+<style>
+  /* Panel 586 x 399.38 (grows by the consent row, which Figma doesn't draw). Content x 31.55..555.34. */
+  :global(.p-book) { inline-size: calc(586 * var(--u)); padding: calc(21.64 * var(--u)) calc(30.656 * var(--u)) calc(14.72 * var(--u)) calc(31.55 * var(--u)); }
+  /* Title centred 3.4 left of the panel centre: top 21.64, next block at 54.09. */
+  /* SUBMIT is centred on the panel (293), the content box is centred 0.45 to its right. */
+  :global(.p-book .f-submit) { inset-inline-start: calc(-0.45 * var(--u)); }
+  .b-title { min-block-size: calc(32.45 * var(--u)); margin-inline-end: calc(7.694 * var(--u)); }
+  .b-choose { display: grid; grid-template-columns: repeat(2, calc(256.037 * var(--u))); column-gap: calc(11.72 * var(--u)); }
+  /* "Patient Details:" top 105.48 (19.836 below the selects), next row at 136.13 */
+  .b-section { margin-block-start: calc(19.836 * var(--u)); min-block-size: calc(30.65 * var(--u)); }
+  .b-details { display: grid; grid-template-columns: repeat(2, calc(256.037 * var(--u))); column-gap: calc(11.72 * var(--u)); row-gap: calc(19.836 * var(--u)); align-items: start; }
+
+  /* Gender row: text top 238.91 (19.836 below the last field row), textarea at 274.07 */
+  .b-radios { margin: calc(19.836 * var(--u)) 0 0; padding: 0; border: 0; min-inline-size: 0; min-block-size: calc(35.16 * var(--u)); }
+  .b-legend { float: inline-start; padding: 0; margin-inline-start: calc(0.91 * var(--u)); min-inline-size: calc(84.74 * var(--u)); }
+  .b-opts { display: flex; align-items: center; block-size: calc(16.967 * var(--u)); }
+  .b-opt { display: inline-flex; align-items: center; cursor: pointer; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy); white-space: nowrap; }
+  .b-opt:first-child { min-inline-size: calc(76.18 * var(--u)); }      /* Female's circle starts at 161.83 */
+  .b-ico { display: grid; place-items: center; flex: none; inline-size: calc(11.72 * var(--u)); block-size: calc(11.72 * var(--u)); }
+  .b-ico img { grid-area: 1 / 1; max-inline-size: none; }
+  .b-ico .on { inline-size: calc(14.845 * var(--u)); block-size: calc(14.845 * var(--u)); opacity: 0; }
+  .b-ico .off { inline-size: calc(9.917 * var(--u)); block-size: calc(9.917 * var(--u)); }
+  .b-opt input:checked + .b-ico .on { opacity: 1; }
+  .b-opt input:checked + .b-ico .off { opacity: 0; }
+  .b-opt input:focus-visible + .b-ico { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+  .b-txt { margin-inline-start: calc(var(--gap) * var(--u)); }
+  .b-radios .f-err { clear: both; }
+</style>

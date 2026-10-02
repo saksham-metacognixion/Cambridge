@@ -5,6 +5,7 @@ import { DESIGN_W, TARGET_W } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
+import Modals from '../components/forms/Modals.astro';
 
 interface Props {
   edition: Edition;
@@ -24,7 +25,7 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
 ---
 
 <!doctype html>
-<html lang={edition.lang} dir={edition.dir}>
+<html lang={edition.lang} dir={edition.dir} data-region={edition.region}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -51,6 +52,7 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
   <body>
     <div class="page">
       <slot />
+      <Modals edition={edition} />
     </div>
     <CountryPopupLogic />
   </body>

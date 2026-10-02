@@ -1,0 +1,102 @@
+---
+/*
+ * One field of a pop-up form (Figma 106:246 / 101:6336 / 112:7878), rendered from its src/data/forms.json entry.
+ * Row = visible label + box, the box starting at the field's Figma `inputAt`. Selects and textareas have no label in
+ * Figma: their placeholder text is the visible label (also given as aria-label).
+ */
+import { fieldId, sourceOptions, splitStar, dialCodes, type FieldConfig } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import calendar from '../../assets/forms/calendar.svg';
+import dialChevron from '../../assets/forms/chevron-dial.svg';
+import chevSpeciality from '../../assets/forms/book-chevron-speciality.svg';
+import chevDoctor from '../../assets/forms/book-chevron-doctor.svg';
+import flagUae from '../../assets/forms/flag-uae.svg';
+
+interface Props {
+  form: string;
+  field: FieldConfig;
+  text: { label?: string; placeholder?: string };
+  edition: Edition;
+  dialLabel: string;
+  /** textarea box (Figma px): w, h, padding x/y, font size */
+  area?: { w: number; h: number; px: number; py: number; fs: number };
+}
+const { form, field: f, text, edition, dialLabel, area } = Astro.props;
+const id = fieldId(form, f.name);
+const err = `${id}-error`;
+const [label, star] = splitStar(text.label ?? '');
+const flags: Record<string, ImageMetadata> = { ae: flagUae };
+const dial = dialCodes[0];
+// Figma: speciality text starts 13.99 in and its chevron at 234.4 (15.11 from the end); the doctor select 10.82 / 235.3 (14.426 from the end) (6.311 wide chevron).
+const isDoctor = f.source === 'doctors';
+const options = f.type === 'select' ? sourceOptions(f.source, edition) : [];
+---
+
+{f.type === 'select' && (
+  <div class="gf" data-field={f.name}>
+    <div class="gf-select" style={`--tx:${isDoctor ? 10.82 : 13.99};--ce:${isDoctor ? 14.426 : 15.11}`}>
+      <select id={id} name={f.name} class="gf-box" aria-label={text.placeholder} required={f.required} aria-describedby={err} data-source={f.source}>
+        <option value="" selected>{text.placeholder}</option>
+        {options.map((o) => <option value={o.value} data-specialties={o.specialties} data-region={o.region}>{o.label}</option>)}
+      </select>
+      <img src={isDoctor ? chevDoctor.src : chevSpeciality.src} alt="" class="gf-chev" width={isDoctor ? 6.311 : 6.527} height="3.793" style={`inline-size:calc(${isDoctor ? 6.311 : 6.527} * var(--u))`} />
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </div>
+)}
+
+{(f.type === 'text' || f.type === 'email' || f.type === 'date') && (
+  <div class="gf" data-field={f.name}>
+    <div class="gf-row" style={`--at:${f.ui?.inputAt ?? 56.8}`}>
+      <label for={id} class="gf-label">{label}{star && <span aria-hidden="true">{star}</span>}</label>
+      <input
+        id={id}
+        name={f.name}
+        type={f.type}
+        required={f.required}
+        maxlength={f.type === 'date' ? undefined : f.max}
+        autocomplete={f.autocomplete}
+        aria-describedby={err}
+        class:list={['gf-box', { strong: f.ui?.strong, 'gf-date': f.type === 'date' }]}
+        data-empty={f.type === 'date' ? '' : undefined}
+        data-past={f.name === 'dob' ? '' : undefined}
+      />
+      {f.type === 'date' && <img src={calendar.src} alt="" class="gf-cal" width="17.85" height="19.834" />}
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </div>
+)}
+
+{f.type === 'tel' && (
+  <div class="gf" data-field={f.name}>
+    <div class="gf-row" style={`--at:${f.ui?.inputAt ?? 56.8}`}>
+      <label for={id} class="gf-label">{label}{star && <span aria-hidden="true">{star}</span>}</label>
+      <div class="gf-dial">
+        <select name={`${f.name}_code`} class="gf-box" aria-label={dialLabel}>
+          {dialCodes.map((d) => <option value={d.code}>{d.code}</option>)}
+        </select>
+        <img src={(flags[dial.country] ?? flagUae).src} alt="" class="gf-flag" width="14.875" height="9.917" />
+        <img src={dialChevron.src} alt="" class="gf-chev" width="6.527" height="3.793" />
+      </div>
+      <input id={id} name={f.name} type="tel" inputmode="tel" dir="ltr" required={f.required} maxlength={f.max} autocomplete={f.autocomplete} placeholder={text.placeholder} aria-describedby={err} class="gf-box gf-tel" />
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </div>
+)}
+
+{f.type === 'textarea' && area && (
+  <div class="gf" data-field={f.name}>
+    <textarea
+      id={id}
+      name={f.name}
+      required={f.required}
+      maxlength={f.max}
+      aria-label={text.placeholder}
+      placeholder={text.placeholder}
+      aria-describedby={err}
+      class="gf-box gf-area"
+      style={`--w:${area.w};--h:${area.h};--px:${area.px};--py:${area.py};--fs:${area.fs}`}
+    ></textarea>
+    <p id={err} class="f-err" hidden></p>
+  </div>
+)}

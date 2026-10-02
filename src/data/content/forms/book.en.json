@@ -1,0 +1,15 @@
+{
+  "title": "Book an Appointment",
+  "section": "Patient Details:",
+  "fields": {
+    "specialty": { "placeholder": "Select Speciality" },
+    "doctor": { "placeholder": "Select a Doctor (Optional)" },
+    "name": { "label": "Name*" },
+    "email": { "label": "E-mail" },
+    "dob": { "label": "DOB*" },
+    "mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
+    "gender": { "label": "Gender*", "options": { "male": "Male", "female": "Female" } },
+    "message": { "placeholder": "Other details...." }
+  },
+  "submit": "SUBMIT"
+}

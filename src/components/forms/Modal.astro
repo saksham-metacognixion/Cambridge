@@ -1,0 +1,19 @@
+---
+/*
+ * Accessible pop-up shell (native <dialog> opened with showModal(): role dialog + aria-modal, page behind made inert,
+ * Esc closes). src/scripts/forms.ts adds: Tab/Shift+Tab kept inside, close on the button and outside the panel,
+ * focus back to the opener, page scroll locked, and opening from #hash links. Nothing is shown until opened, so the
+ * page has no layout shift. Labelled by the form title (`titleId`).
+ */
+interface Props { id: string; titleId: string; closeLabel: string; panelClass: string }
+const { id, titleId, closeLabel, panelClass } = Astro.props;
+---
+
+<dialog id={id} class="modal" aria-labelledby={titleId} aria-modal="true" data-modal>
+  <div class:list={['modal-panel', panelClass]} data-panel>
+    <slot />
+    <button type="button" class="modal-close hit" data-close aria-label={closeLabel}>
+      <svg viewBox="0 0 9 9" aria-hidden="true"><path d="M1 1l7 7M8 1L1 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none" /></svg>
+    </button>
+  </div>
+</dialog>

@@ -1,0 +1,10 @@
+{
+  "title": "Send an Inquiry",
+  "fields": {
+    "name": { "label": "Name*" },
+    "mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
+    "email": { "label": "E-mail*" },
+    "message": { "placeholder": "Tell us how we can help…" }
+  },
+  "submit": "SUBMIT"
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Your Opinion Matters",
+  "section": "Your Details:",
+  "fields": {
+    "specialty": { "placeholder": "Select Speciality" },
+    "doctor": { "placeholder": "Select a Doctor (Optional)" },
+    "name": { "label": "Name*" },
+    "email": { "label": "E-mail" },
+    "visit_date": { "label": "Date of Visit" },
+    "mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
+    "overall": { "label": "Overall Experience" },
+    "staff": { "label": "Staff Friendliness" },
+    "wait": { "label": "Wait Time" },
+    "communication": { "label": "Communication" },
+    "message": { "placeholder": "Share your opinion in detail....." }
+  },
+  "ratingOptions": { "excellent": "Excellent", "good": "Good", "medium": "Medium", "poor": "Poor" },
+  "submit": "SUBMIT FEEDBACK"
+}

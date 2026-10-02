@@ -80,3 +80,5 @@ CORRECTION (forms session, 2 Oct): two sessions logged in parallel again. The "4
 (5 get_design_context + 2 use_figma), distinct from the Patient Hub session's "40."–"43." (2 get_metadata, 1 download_assets, 1 get_screenshot).
 Forms session total today: 13 (5 get_screenshot, 1 download_assets, 5 get_design_context, 2 use_figma) + whoami (free).
 Patient Hub session today: 4 (+ #34 earlier). Dev-seat calls today, both sessions: 17 + #34 = 18. Next free number: 50.
+60. download_assets 76:431 Welcome Page vertical colour logo, format svg -> figma-cache/assets/forms/welcome/logo-vertical.svg (one flattened SVG, 67.9 KB; the per-layer list was truncated at 20, not needed).
+SUMMARY after 60: forms session today 14. Next free number: 61 (batch-2 session used 50-59).

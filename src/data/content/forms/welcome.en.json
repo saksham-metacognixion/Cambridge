@@ -1,0 +1,11 @@
+{
+  "$comment": "Text exactly as in Figma 76:196 (UAE version). No KSA or other-country version exists in Figma.",
+  "logoAlt": "Cambridge Hospital",
+  "ae": {
+    "title": "You’re on Our UAE Website",
+    "chip": "UAE",
+    "continue": "Continue Here",
+    "or": "OR",
+    "global": "Go to Global Website"
+  }
+}

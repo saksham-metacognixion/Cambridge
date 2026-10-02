@@ -852,6 +852,10 @@
     "feedback-chevron-hospital.svg": {
       "file": "assets/forms/feedback-chevron-hospital.svg",
       "figma_call": 45
+    },
+    "welcome/logo-vertical.svg": {
+      "file": "assets/forms/welcome/logo-vertical.svg",
+      "figma_call": 60
     }
   }
 }

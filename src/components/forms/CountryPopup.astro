@@ -1,0 +1,122 @@
+---
+/*
+ * Country pop-up = Figma "Welcome Page" 76:196 (scope 2.3), spec figma-cache/forms-spec.md. ONE component, one
+ * <dialog> per detected country in src/data/country-popup.json (text, map, flag, the two buttons and their targets).
+ * Global editions only. Rendered (and its script shipped) only when the config flag `enabled` is true, or when
+ * PUBLIC_COUNTRY_POPUP=on is set for a staging preview. When/whether to open comes from the existing logic:
+ * functions/_middleware.ts (Cloudflare country -> ch_geo cookie) + CountryPopupLogic.astro (first visit only,
+ * html[data-country-popup], window.chooseEdition saves ch_edition for a year). Values: Figma px from the card's
+ * top-left (card 400 x 287.324 at frame 326,177).
+ */
+import { Picture } from 'astro:assets';
+import config from '../../data/country-popup.json';
+import { content } from '../../lib/content';
+import { img } from '../../lib/images';
+import { px } from '../../lib/scale';
+import type { Edition } from '../../lib/editions';
+import logo from '../../assets/forms/welcome/logo-vertical.svg';
+import pinLine from '../../assets/forms/welcome/pin-line.svg';
+import pinDot from '../../assets/forms/welcome/pin-dot.svg';
+
+interface Props { edition: Edition }
+const { edition } = Astro.props;
+const on = config.enabled || import.meta.env.PUBLIC_COUNTRY_POPUP === 'on';
+const c = content('forms/welcome', edition.locale);
+const countries = Object.entries(config.countries) as [string, (typeof config.countries)['AE']][];
+---
+
+{on && edition.region === 'global' && (
+  <>
+    {countries.map(([iso, v]) => {
+      const t = c[v.text];
+      const map = img(v.map);
+      const flag = img(v.flag);
+      const titleId = `country-popup-${iso}-title`;
+      return (
+        <dialog id={`country-popup-${iso}`} class="modal cp" aria-labelledby={titleId} aria-modal="true" data-country-dialog={iso}>
+          <div class="cp-card" data-panel>
+            <div class="cp-left">
+              <img class="cp-logo" src={logo.src} width="114" height="64" alt={c.logoAlt} />
+              <p id={titleId} class="cp-title">{t.title}</p>
+              {v.buttons.map((b, i) => (
+                <>
+                  {i === 1 && <p class="cp-or" aria-hidden="true">{t.or}</p>}
+                  <button type="button" class:list={['cp-btn hit', b.style]} data-target={b.target}>{t[b.key]}</button>
+                </>
+              ))}
+            </div>
+            <div class="cp-map" aria-hidden="true">
+              <Picture src={map} formats={['avif']} fallbackFormat="webp" width={px(253.119)} height={px(276.861)} widths={[px(253.119), px(253.119) * 2]} sizes="347px" loading="lazy" decoding="async" alt="" class="cp-map-img" pictureAttributes={{ class: 'contents' }} />
+              <img class="cp-pin" src={pinLine.src} width="0.805" height="34.205" alt="" />
+              <span class="cp-chip"><img src={flag.src} width="16.901" height="16.901" alt="" /><span>{t.chip}</span></span>
+              <img class="cp-dot" src={pinDot.src} width="3.219" height="3.219" alt="" />
+            </div>
+          </div>
+        </dialog>
+      );
+    })}
+    <script>
+      // Opens the detected country's pop-up on a first Global visit (html[data-country-popup] = ISO country, set by
+      // CountryPopupLogic.astro from the edge cookie). No dialog for that country = nothing shown.
+      const open = (iso?: string) => {
+        const dlg = iso ? (document.getElementById(`country-popup-${iso}`) as HTMLDialogElement | null) : null;
+        if (!dlg || dlg.open) return;
+        const choose = (region: string) => (window as unknown as { chooseEdition?: (r: string) => void }).chooseEdition?.(region);
+        dlg.querySelectorAll<HTMLButtonElement>('[data-target]').forEach((b) => b.addEventListener('click', () => { choose(b.dataset.target!); dlg.close(); }));
+        // Esc: the visitor stays where they are; saved so the pop-up does not come back.
+        dlg.addEventListener('cancel', () => choose('global'));
+        dlg.showModal();
+        dlg.querySelector<HTMLButtonElement>('[data-target]')?.focus();
+      };
+      open(document.documentElement.dataset.countryPopup);
+      document.addEventListener('ch:country-popup', (e) => open((e as CustomEvent<{ country: string }>).detail.country));
+    </script>
+  </>
+)}
+
+<style>
+  /* Card = Figma "Rectangle 4304": rgba(219,214,209,.2), radius 18.913, GLASS 60 (approximated: blur + light rim) */
+  .cp-card {
+    position: relative; box-sizing: border-box; display: grid; grid-template-columns: calc(157.34 * var(--u)) calc(238.229 * var(--u));
+    inline-size: calc(400 * var(--u)); min-block-size: calc(287.324 * var(--u));
+    padding: calc(5.95 * var(--u)) calc(4.431 * var(--u)) calc(5.72 * var(--u)) 0;
+    border-radius: calc(18.913 * var(--u)); background: rgba(219, 214, 209, 0.2);
+    -webkit-backdrop-filter: blur(calc(30 * var(--u))); backdrop-filter: blur(calc(30 * var(--u)));
+    box-shadow: inset 0 0 0 calc(0.6 * var(--u)) rgba(255, 255, 255, 0.55);
+    font-family: var(--font-gotham); color: var(--color-navy-alt);
+  }
+  /* Left column: everything centred on x 81 (logo 24..138); tops: logo 59, text 145, buttons 167 / 205, OR 193 */
+  .cp-left { display: flex; flex-direction: column; align-items: center; padding-inline-start: calc(4.66 * var(--u)); padding-block-start: calc(53.05 * var(--u)); }
+  .cp-logo { display: block; inline-size: calc(114 * var(--u)); block-size: calc(63.26 * var(--u)); max-inline-size: none; margin-block-end: calc(22.74 * var(--u)); }
+  .cp-title { margin: 0; min-block-size: calc(22 * var(--u)); font-weight: 700; font-size: calc(9.066 * var(--u)); line-height: normal; text-align: center; margin-inline-start: calc(-1 * var(--u)); }
+  .cp-btn {
+    box-sizing: border-box; display: block; inline-size: calc(98.994 * var(--u)); block-size: calc(19.316 * var(--u)); margin: 0; padding: 0;
+    border-radius: calc(11.871 * var(--u)); border: 0; cursor: pointer;
+    font-family: var(--font-gotham); font-weight: 400; font-size: calc(7.054 * var(--u)); line-height: normal; text-align: center;
+  }
+  .cp-btn.primary { background: var(--color-navy-alt); color: #fff; }
+  .cp-btn.secondary { background: #f2f2f2; color: var(--color-navy-alt); box-shadow: inset 0 0 0 calc(0.402 * var(--u)) var(--color-navy-alt); }
+  .cp-btn:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+  .cp-or { box-sizing: border-box; margin: calc(6.684 * var(--u)) 0 0; min-block-size: calc(12 * var(--u)); font-weight: 700; font-size: calc(4.829 * var(--u)); line-height: normal; }
+
+  /* Map: rounded 14.085 clip 238.229 x 275.654; image 253.119 x 276.861 offset (-7.243, -0.805). Pin + chip in map px. */
+  .cp-map { position: relative; overflow: hidden; inline-size: calc(238.229 * var(--u)); block-size: calc(275.654 * var(--u)); border-radius: calc(14.085 * var(--u)); }
+  .cp-map :global(.cp-map-img) { position: absolute; max-inline-size: none; inset-inline-start: calc(-7.243 * var(--u)); inset-block-start: calc(-0.805 * var(--u)); inline-size: calc(253.119 * var(--u)); block-size: calc(276.861 * var(--u)); object-fit: cover; }
+  .cp-pin { position: absolute; max-inline-size: none; inset-inline-start: calc(105.84 * var(--u)); inset-block-start: calc(98.59 * var(--u)); inline-size: calc(0.805 * var(--u)); block-size: calc(34.205 * var(--u)); }
+  .cp-chip {
+    position: absolute; box-sizing: border-box; display: flex; align-items: center; gap: calc(7.649 * var(--u));
+    inset-inline-start: calc(94.17 * var(--u)); inset-block-start: calc(89.74 * var(--u)); inline-size: calc(64.789 * var(--u)); block-size: calc(23.742 * var(--u));
+    padding-inline-start: calc(3.62 * var(--u)); border-radius: calc(11.871 * var(--u)); background: #d8d8d8;
+    font-family: 'Gotham', var(--font-gotham); font-weight: 900; font-size: calc(10.272 * var(--u)); line-height: normal; color: var(--color-navy-alt);
+  }
+  .cp-chip img { display: block; inline-size: calc(16.901 * var(--u)); block-size: calc(16.901 * var(--u)); max-inline-size: none; }
+  .cp-dot { position: absolute; max-inline-size: none; inset-inline-start: calc(104.63 * var(--u)); inset-block-start: calc(131.59 * var(--u)); inline-size: calc(3.219 * var(--u)); block-size: calc(3.219 * var(--u)); }
+  /* The map is geography: it is not mirrored in RTL (only the layout is). */
+  :global([dir='rtl']) .cp-map > * { direction: ltr; }
+
+  @media (max-width: 599.98px) {
+    .cp-card { grid-template-columns: minmax(0, 1fr); align-content: start; inline-size: 100%; padding: 16px; gap: 24px; }
+    .cp-left { padding: 0; order: 2; }
+    .cp-map { order: 1; justify-self: center; }
+  }
+</style>

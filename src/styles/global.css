@@ -134,10 +134,21 @@ body {
 
 /* Card outline drawn as an overlay so it never shifts the card's children (Chrome draws any border as at least 1 device px,
    which would push absolutely-positioned content ~1px; Figma's 0.25px stroke doesn't). Host must be positioned. */
+/* Sub-pixel strokes: Chrome paints a border thinner than 1 device px as a FULL-colour device pixel, while Figma
+   antialiases it (a 0.25px #418ea2 stroke renders as ~25% teal). So the stroke is never thinner than 1 device px and its
+   colour is faded by the stroke's coverage as Figma renders it (Figma px x device pixel ratio, capped at 1): --sw .25 =
+   25% teal on a 1x screen, as in the Figma render. Strokes of 1 Figma px or more (buttons, --sw:1) keep their full colour.
+   A colour fade, not opacity, so the card content is unaffected. User decision 2 Oct 2026. */
+:root { --hair-dpr: 1; }
+@media (min-resolution: 2dppx) { :root { --hair-dpr: 2; } }
+@media (min-resolution: 3dppx) { :root { --hair-dpr: 3; } }
 .hair-card { border: 0; }   /* optional: --sw (Figma px, default .25) and --sc (colour, default teal) */
 .hair-card::after {
   content: ""; position: absolute; inset: 0; box-sizing: border-box; pointer-events: none;
-  border: calc(var(--sw, 0.25) * var(--u)) solid var(--sc, var(--color-teal-border)); border-radius: inherit;
+  --hair-cover: min(1, var(--sw, 0.25) * var(--hair-dpr));
+  border: max(1px / var(--hair-dpr), calc(var(--sw, 0.25) * var(--u))) solid
+    color-mix(in srgb, var(--sc, var(--color-teal-border)) calc(var(--hair-cover) * 100%), transparent);
+  border-radius: inherit;
 }
 
 /* 44px touch targets (scope 2.8) without changing the look: an invisible hit layer centred on the control, at least

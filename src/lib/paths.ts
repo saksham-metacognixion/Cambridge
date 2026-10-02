@@ -21,7 +21,7 @@ export const PAGE_PATHS = {
   internationalPatients: 'international-patients',
   /** Insurance Providers (Figma 46:6844) */
   insuranceProviders: 'insurance-providers',
-  /** not built (Figma 62:2403) */
+  /** Patient Testimonials (Figma 62:2403) */
   patientTestimonials: 'patient-testimonials',
 } as const;
 

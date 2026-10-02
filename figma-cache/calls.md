@@ -114,3 +114,15 @@ SUMMARY after 63: batch-2 session 14. Dev-seat calls today (all sessions): 32.
 SUMMARY after 73: batch-2 session 24. Dev-seat calls today (all sessions): 42.
 74. get_design_context 54:9239 International Patients (no screenshot: #54 is the target) -> FULL -> international-spec.md, assets/international/* (11)
 SUMMARY after 74: batch-2 session 25. Dev-seat calls today (all sessions): 43.
+75. get_design_context 62:2403 Patient Testimonials -> SPARSE outline
+76. get_design_context 62:2398 card 1 (Mohamed Al Menhali)
+77. get_design_context 62:2404 intro text (2 paragraphs)
+78. get_design_context 62:1657 pill (radius 10)
+79. get_design_context 62:2397 card (Tamam's Mother)
+80. get_design_context 62:2396 card (Shamma's Mother: crop, pieces A,B,B,C)
+81. get_design_context 62:2399 card (Mohamed Salem Al Bloushi)
+82. get_design_context 62:2400 card (Salem Bin Saleh: crop, pieces A-D)
+83. get_design_context 62:2401 card (Nujood Saeed)
+84. get_design_context 62:1050 hero section -> banner
+85. get_design_context 62:2405 H2 style
+SUMMARY after 85: batch-2 session 36. Dev-seat calls today (all sessions): 54.

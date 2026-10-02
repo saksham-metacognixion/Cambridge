@@ -1,0 +1,251 @@
+{
+  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403), Figma order (rows left to right). name/quote = exact Figma text. regions: editions where the story is shown; Figma shows all 6 under the UAE pill, so all are 'ae' until Pramod confirms each one's region. photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop (the Figma image fill inside the box; ratio = image width/height); pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. The landing page's Testimonials section (home/testimonials JSON) shows the same 6 stories: switch it to this file when the other session's landing changes are merged.",
+  "testimonials": [
+    {
+      "slug": "mohamed-al-menhali",
+      "name": {
+        "en": "Mohamed Al Menhali",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Alhamdulillah, I regained my ability to walk in about 4 months with their help.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-6",
+        "alt": {
+          "en": "Mohamed Al Menhali",
+          "ar": ""
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "tamams-mother",
+      "name": {
+        "en": "Tamam’s Mother",
+        "ar": ""
+      },
+      "quote": {
+        "en": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-2",
+        "alt": {
+          "en": "Tamam’s Mother",
+          "ar": ""
+        },
+        "w": 176.601,
+        "h": 220.512,
+        "x": 66.87,
+        "y": 101.7
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "qi",
+        "pat",
+        "photo",
+        "quote",
+        "name",
+        "badge"
+      ]
+    },
+    {
+      "slug": "shammas-mother",
+      "name": {
+        "en": "Shamma’s Mother",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Shamma’s ability to communicate has improved remarkably and significantly, thanks to Cambridge.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/shamma",
+        "alt": {
+          "en": "Shamma’s Mother",
+          "ar": ""
+        },
+        "w": 218.716,
+        "h": 243.792,
+        "x": 39.01,
+        "y": 78.01,
+        "r": 22.29,
+        "crop": {
+          "w": "100%",
+          "h": "112.02%",
+          "left": "0%",
+          "top": "-0.01%"
+        },
+        "ratio": 0.8009
+      },
+      "pattern": [
+        "A",
+        "B",
+        "B",
+        "C"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "qi",
+        "name",
+        "badge"
+      ]
+    },
+    {
+      "slug": "mohamed-salem-al-bloushi",
+      "name": {
+        "en": "Mohamed Salem Al Bloushi",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-1",
+        "alt": {
+          "en": "Mohamed Salem Al Bloushi",
+          "ar": ""
+        },
+        "w": 158.62,
+        "h": 198.061,
+        "x": 80.8,
+        "y": 123.99
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "photo",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "salem-bin-saleh",
+      "name": {
+        "en": "Salem Bin Saleh",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-4",
+        "alt": {
+          "en": "Salem Bin Saleh",
+          "ar": ""
+        },
+        "w": 183.889,
+        "h": 220.109,
+        "x": 73.83,
+        "y": 101.7,
+        "r": 25.076,
+        "crop": {
+          "w": "114.67%",
+          "h": "119.62%",
+          "left": "-0.14%",
+          "top": "0%"
+        },
+        "ratio": 0.8009
+      },
+      "pattern": [
+        "A",
+        "B",
+        "B",
+        "C",
+        "D"
+      ],
+      "layers": [
+        "qi",
+        "name",
+        "pat",
+        "photo",
+        "badge",
+        "quote"
+      ]
+    },
+    {
+      "slug": "nujood-saeed",
+      "name": {
+        "en": "Nujood Saeed",
+        "ar": ""
+      },
+      "quote": {
+        "en": "With God’s grace and the team’s support, I was walking again in nearly 4 months.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-5",
+        "alt": {
+          "en": "Nujood Saeed",
+          "ar": ""
+        },
+        "w": 172.837,
+        "h": 215.813,
+        "x": 91.85,
+        "y": 105.88
+      },
+      "pattern": [
+        "A",
+        "B",
+        "B",
+        "C",
+        "D"
+      ],
+      "layers": [
+        "pat",
+        "qi",
+        "photo",
+        "quote",
+        "name",
+        "badge"
+      ]
+    }
+  ]
+}

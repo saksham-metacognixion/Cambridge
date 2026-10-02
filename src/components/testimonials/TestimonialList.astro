@@ -1,0 +1,49 @@
+---
+import { content, t } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { testimonialsFor } from '../../lib/testimonials';
+import CenteredIntro from '../shared/CenteredIntro.astro';
+import RegionPills from '../shared/RegionPills.astro';
+import TestimonialCard from './TestimonialCard.astro';
+
+/*
+ * Intro + pills + stories of Patient Testimonials (Figma 62:2403), section top = H2 top (page y 598, 42 below the hero).
+ * H2 62:2405 (w651, line 33, #00415a, centred 525.5) | 12 | text 62:2404 (w705, centred 515.5, 2 paragraphs) ends 741 |
+ * 41 | pills at x 375, radius 10 (Global only) | 43.57 | cards: 3 columns from x 102.84 at a 289.76 pitch, rows from
+ * 850.57 at a 370.43 pitch (= card 1; Figma's other cards sit at y 845 and row 2 starts at x 98.66: normalised).
+ * A static grid in Figma (no slider, no controls). On /ae and /sa: no pills, only that region's stories.
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('patient-testimonials/page', edition.locale);
+const list = testimonialsFor(edition.region);
+const global = edition.region === 'global';
+const loc = edition.locale;
+---
+
+<section class="ts" aria-labelledby="testimonials-heading" data-region-filter>
+  <CenteredIntro id="testimonials-heading" heading={c.intro.heading} text={c.intro.text} cx={525.5} tx={515.5} hw={651} tw={705} lh={33} gap={12} alt />
+  {global && <RegionPills options={c.filters.countries} active="all" label={c.filters.countryLabel} radius={10} class="ts-pills" />}
+  <ul class:list={['grid', !global && 'no-pills']} role="list" aria-label={c.results.listLabel}>
+    {list.map((x) => (
+      <li data-regions={x.regions.join(' ')}>
+        <TestimonialCard name={t(x.name, loc, 'testimonials')} quote={t(x.quote, loc, 'testimonials')} photo={{ ...x.photo, alt: t(x.photo.alt, loc, 'testimonials') }} pattern={x.pattern} layers={x.layers} region={edition.region} />
+      </li>
+    ))}
+  </ul>
+  <p class="ui-empty not-italic" data-region-empty hidden={list.length > 0}>{c.results.empty}</p>
+  <p class="sr-only" role="status" aria-live="polite" data-region-status data-template={c.results.found}></p>
+</section>
+
+<style>
+  .ts { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .ts :global(.ts-pills) { margin: calc(41 * var(--u)) auto 0; }
+  .grid { list-style: none; margin: calc(43.57 * var(--u)) 0 0; padding: 0 16px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(257.723 * var(--u))); column-gap: calc(32.037 * var(--u)); row-gap: calc(48.625 * var(--u)); }
+  .grid.no-pills { margin-top: calc(41 * var(--u)); }
+  .grid > li { display: flex; }
+  .grid > li[hidden] { display: none; }
+  @media (min-width: 1024px) {
+    .ts :global(.ts-pills) { margin-inline: calc(375 * var(--u)) 0; }
+    .grid { width: calc(837.243 * var(--u)); margin-inline-start: calc(102.84 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(3, calc(257.723 * var(--u))); }
+    .grid.no-pills { margin-top: calc(109.57 * var(--u)); } /* 41 + pills 25 + 43.57: cards stay at Figma y 850.57 */
+  }
+</style>

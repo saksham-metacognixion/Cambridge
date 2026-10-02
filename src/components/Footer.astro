@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { px } from '../lib/scale';
 import line24 from '../assets/footer/line24.svg';
 import group53 from '../assets/footer/group53.svg';
-import { parsePath } from '../lib/editions';
+import { parsePath, urlFor } from '../lib/editions';
 import { content, t } from '../lib/content';
 import { img } from '../lib/images';
 import hospitalData from '../data/hospitals.json';
@@ -12,8 +12,8 @@ const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
 const logo = img(c.logo.image, edition.region);
 const accredited = img(c.accreditations.image, edition.region);
-type Link = { label: string; href: string };
-const quick: Link[][] = c.quickLinks.rows;
+type Link = { label: string; href: string; path?: string };
+const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) })));
 const services: Link[] = c.services.links;
 // Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
 const hospitals = (c.hospitals.slugs as string[]).map((slug) => {

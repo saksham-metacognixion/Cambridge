@@ -16,9 +16,14 @@ interface Props {
   ogImage?: string;
   /** edition ids where this page exists, when not all 6 (hospital pages: Global + own region) */
   editionsWithPage?: string[];
+  /** false = no hreflang links (404 page) */
+  alternates?: boolean;
+  /** robots directive for this page (404: "noindex, nofollow"); staging adds noindex everywhere anyway */
+  robots?: string;
 }
 
-const { edition, path, title, description, ogImage, editionsWithPage } = Astro.props;
+const { edition, path, title, description, ogImage, editionsWithPage, alternates: withAlternates = true, robots } = Astro.props;
+const robotsContent = !INDEXABLE ? 'noindex, nofollow' : robots;
 const canonical = absolute(urlFor(edition, path));
 const ogImageUrl = ogImage ? absolute(ogImage) : undefined;
 
@@ -33,9 +38,9 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
+    {robotsContent && <meta name="robots" content={robotsContent} />}
     <link rel="canonical" href={canonical} />
-    {alternates(path, editionsWithPage).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {withAlternates && alternates(path, editionsWithPage).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
 
@@ -56,6 +61,9 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
       <slot />
       <Modals edition={edition} />
     </div>
+    <!-- Cookie consent banner mounts here once the analytics decision is made (docs/open-decisions.md B9); nothing is built yet.
+         The legal pages (privacy, cookies) are at PAGE_PATHS.privacyPolicy / cookiePolicy. -->
+    <div id="consent-banner" hidden></div>
     <CountryPopupLogic />
   </body>
 </html>

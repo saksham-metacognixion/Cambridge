@@ -1,0 +1,8 @@
+{
+  "$comment": "Legal pages (scope 2.5: privacy, cookies, others). NO Figma frame: one template with the Article layout's typography (docs/open-decisions.md L1). One entry per page: slug = key in PAGE_PATHS (src/lib/paths.ts), text in src/data/content/legal/<slug>.<locale>.json ({ title, updated: 'YYYY-MM-DD' | '', body: HTML }). Empty body = 'Content pending' on staging (B10). Add a page: an entry here + a PAGE_PATHS key + the content file.",
+  "pages": [
+    { "slug": "privacy-policy", "page": "privacyPolicy" },
+    { "slug": "cookie-policy", "page": "cookiePolicy" },
+    { "slug": "compliance", "page": "compliance" }
+  ]
+}

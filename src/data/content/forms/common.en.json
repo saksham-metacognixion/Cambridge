@@ -1,10 +1,13 @@
 {
-  "$comment": "Shared form text. Figma has no design or copy for the close button, errors or success message: these strings are NOT from Figma and need Pramod's approval (English) and his Arabic text. The consent text is the Figma Contact page consent (86:799).",
+  "$comment": "Shared form text. Figma has no design or copy for the close button, errors or success message: these strings are NOT from Figma and need Pramod's approval (English) and his Arabic text. The consent text is the Figma Contact page consent (86:799). consent.link.page = key in PAGE_PATHS (the Privacy Policy page), resolved per edition by FormShell.",
   "close": "Close",
   "dialCodeLabel": "Country code",
   "consent": {
     "before": "I have read the ",
-    "link": { "label": "Privacy policy", "href": "#" },
+    "link": {
+      "label": "Privacy policy",
+      "page": "privacyPolicy"
+    },
     "after": " and I consent to the transfer and processing of",
     "line2": "my personal data."
   },

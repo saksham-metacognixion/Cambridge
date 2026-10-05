@@ -15,16 +15,18 @@
  */
 interface Props {
   heading: string;
+  /** h1 on the legal pages (no hero), h2 on the articles (the post title is the hero H1) */
+  headingTag?: 'h1' | 'h2';
   date?: { iso: string; text: string; label: string } | null;
   intro: string[];
   html: string;
   pending?: string | null;
 }
-const { heading, date, intro, html, pending } = Astro.props;
+const { heading, headingTag: H = 'h2', date, intro, html, pending } = Astro.props;
 ---
 
 <section class="art" aria-labelledby="overview-heading">
-  <h2 id="overview-heading" class="h">{heading}</h2>
+  <H id="overview-heading" class="h">{heading}</H>
   <div class="intro">
     {date && <p class="date"><time datetime={date.iso} aria-label={`${date.label}: ${date.text}`}>{date.text}</time></p>}
     {intro.map((p) => <p>{p}</p>)}

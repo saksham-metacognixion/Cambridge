@@ -4,7 +4,8 @@
  * sitemaps and hreflang stay complete.
  */
 import { DOCTOR_PATHS, profileDoctors } from "./doctors";
-import { PAGE_PATHS } from "./paths";
+import { PAGE_PATHS, pagePath } from "./paths";
+import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
@@ -62,6 +63,10 @@ function routes(): PageRoute[] {
     { key: "international-patients", path: PAGE_PATHS.internationalPatients },
     { key: "patient-testimonials", path: PAGE_PATHS.patientTestimonials },
     { key: "faq", path: PAGE_PATHS.faq },
+    ...legal.pages.map((p) => ({
+      key: `legal-${p.slug}`,
+      path: pagePath(p.page),
+    })),
     { key: "conditions", path: CONDITION_PATHS.list },
     ...allDetailSlugs.map((slug) => ({
       key: `condition-${slug}`,

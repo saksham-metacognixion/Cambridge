@@ -18,6 +18,8 @@ type Link = { label: string; href: string; path?: string; care?: string };
 const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) })));
 // Services column: each entry links to its service page (`care` = slug in src/data/care.json -> our-care/<slug>).
 const services: Link[] = c.services.links.map((x: Link) => ({ ...x, href: x.care ? urlFor(edition, CARE_PATHS.service(x.care)) : x.href }));
+// Legal links (bottom right): `path` = the legal pages (src/data/legal.json), edition-aware.
+const legal = { compliance: { ...c.legal.compliance, href: c.legal.compliance.path ? urlFor(edition, c.legal.compliance.path) : c.legal.compliance.href }, privacy: { ...c.legal.privacy, href: c.legal.privacy.path ? urlFor(edition, c.legal.privacy.path) : c.legal.privacy.href } };
 // Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
 // Each links to its detail page (in this edition, or in the hospital's own region when this edition has no page for it).
 const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
@@ -75,7 +77,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     <img class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24" src={group53.src} width="161" height="16.24" alt="" />
 
     <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">{c.copyright}</p>
-    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={c.legal.compliance.href} class="hit">{c.legal.compliance.label}</a><span class="gap">       </span><a href={c.legal.privacy.href} class="hit">{c.legal.privacy.label}</a></p>
+    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={legal.compliance.href} class="hit">{legal.compliance.label}</a><span class="gap">       </span><a href={legal.privacy.href} class="hit">{legal.privacy.label}</a></p>
   </div>
 </footer>
 

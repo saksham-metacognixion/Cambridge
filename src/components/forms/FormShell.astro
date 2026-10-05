@@ -6,7 +6,8 @@
  * src/scripts/forms.ts adds validation in EN/AR and the JSON submit.
  */
 import { clientConfig, commonText, fieldId } from '../../lib/forms';
-import type { Edition } from '../../lib/editions';
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import checkbox from '../../assets/contact-page/checkbox.svg';
 
 interface Props {
@@ -30,6 +31,8 @@ const { id, edition, submit, button, ariaLabelledby, ariaLabel, class: cls, gaps
 const c = commonText(edition.locale);
 const consentId = fieldId(id, 'consent');
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+// Privacy policy link of the consent row: a page key (PAGE_PATHS, edition-aware) or a literal href.
+const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.link.page)) : c.consent.link.href;
 ---
 
 <form
@@ -51,13 +54,13 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         <label class="f-consent f-consent-own" style={`--cs:${consent.size}`}>
           <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
           <span class="own" aria-hidden="true"><img class="off" src={consent.off.src} alt="" /><img class="on" src={consent.on.src} alt="" /></span>
-          <span class="txt">{consent.before}<a href={c.consent.link.href}>{consent.link}</a>{consent.after}</span>
+          <span class="txt">{consent.before}<a href={privacyHref}>{consent.link}</a>{consent.after}</span>
         </label>
       ) : (
         <label class="f-consent">
           <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
           <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
-          <span class="txt">{c.consent.before}<a href={c.consent.link.href}>{c.consent.link.label}</a>{c.consent.after} {c.consent.line2}</span>
+          <span class="txt">{c.consent.before}<a href={privacyHref}>{c.consent.link.label}</a>{c.consent.after} {c.consent.line2}</span>
         </label>
       )}
       <p id={`${consentId}-error`} class="f-err" hidden></p>

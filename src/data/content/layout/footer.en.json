@@ -153,11 +153,13 @@
   "legal": {
     "compliance": {
       "label": "Compliance",
-      "href": "#"
+      "href": "#",
+      "path": "compliance"
     },
     "privacy": {
       "label": "Privacy Policy",
-      "href": "#"
+      "href": "#",
+      "path": "privacy-policy"
     }
   }
 }

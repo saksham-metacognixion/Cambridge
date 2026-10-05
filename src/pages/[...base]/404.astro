@@ -1,0 +1,48 @@
+---
+import { editionFromBase, editionPaths, urlFor } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS, pagePath } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import OutlineButton from '../../components/shared/OutlineButton.astro';
+
+export const getStaticPaths = editionPaths;
+
+/*
+ * 404 page (scope 2.5), one per edition: /404.html, /ae/404.html, /ae/ar/404.html ... The host serves the nearest one up the
+ * path (Cloudflare Pages rule; nginx: error_page per prefix in deploy/nginx), so an unknown URL under /sa/ar shows the Arabic
+ * KSA page with its own header and footer. NO Figma frame: title = the inner-page hero title style (Medium 39 #004059 at x95),
+ * text = Book 12/14 #6b6b6b, links = the inner-page outline buttons (164 x 30, cyan). Flagged for Padmavathi (NF1).
+ * Not indexed, not in the sitemaps, no hreflang.
+ */
+const edition = editionFromBase(Astro.params.base);
+const c = content('not-found/page', edition.locale);
+const links = (c.links as { label: string; page: string }[]).map((l) => ({ label: l.label, href: l.page === 'home' ? urlFor(edition) : urlFor(edition, pagePath(l.page)) }));
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.notFound} title={c.meta.title} description={c.meta.description} robots="noindex, nofollow" alternates={false}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main class="nf">
+    <h1 class="h">{c.title}</h1>
+    <p class="t">{c.text}</p>
+    <nav class="links" aria-label={c.linksLabel}>
+      {links.map((l) => <OutlineButton href={l.href} label={l.label} />)}
+    </nav>
+  </main>
+  <div class="relative">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .nf { max-width: calc(var(--target-w) * 1px); margin-inline: auto; box-sizing: border-box; padding: calc(60 * var(--u)) calc(16 * var(--u)) calc(80 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(39 * var(--u)); line-height: calc(37 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .t { margin: calc(12 * var(--u)) 0 0; max-width: calc(577 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .links { display: flex; flex-wrap: wrap; gap: calc(16 * var(--u)); margin-top: calc(24 * var(--u)); }
+  @media (min-width: 1024px) {
+    .nf { padding-inline: calc(95 * var(--u)); }
+  }
+</style>

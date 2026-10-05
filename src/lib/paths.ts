@@ -46,6 +46,7 @@ export const PAGE_PATHS = {
    * The consent row on every form (src/data/content/forms/common.*.json -> consent.link) and the footer legal links point here.
    */
   privacyPolicy: "privacy-policy",
+  cookiePolicy: "cookie-policy",
   compliance: "compliance",
   /** 404 page (scope 2.5, no Figma frame): /404, /ae/404, ... = the file each prefix serves for an unknown URL. Cards whose slug has no page link here. */
   notFound: "404",

@@ -1,0 +1,88 @@
+---
+import { getImage } from 'astro:assets';
+import { editions, editionFromBase } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { allPostSlugs, postFor, badgeDate, NEWS_PATHS } from '../../../lib/news';
+import { sanitizeHtml } from '../../../lib/sanitize';
+import { img } from '../../../lib/images';
+import { showPendingNote } from '../../../lib/conditions';
+import { INDEXABLE } from '../../../lib/seo';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import ArticleBody from '../../../components/article/ArticleBody.astro';
+import DoctorsRow from '../../../components/shared/DoctorsRow.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+
+/*
+ * Article template (Health Article Layout, Figma 170:839): one page per post slug in every edition (src/data/news/posts.json,
+ * the edition's language record or the English one). The frame shows a condition page, so its blocks are filled from the post:
+ * hero (cover image = post image, H1 = title, 1 line of 39/37 at top 99; button 6 below as on 67:3070) | 34 | Overview H2 +
+ * intro (excerpt) + body HTML (ArticleBody) | 48 | "Expert Care, Trusted Doctors" H2 (1593) + cards (1668) | 51.54 |
+ * CTA band (1988, heading top 50) | 68 | footer (2324). Doctors BEFORE the CTA band here (the condition pages have the reverse).
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) => allPostSlugs.map((slug) => ({ params: { base: e.base || undefined, slug } })));
+}
+
+const edition = editionFromBase(Astro.params.base);
+const { slug } = Astro.params as { slug: string };
+const post = postFor(slug, edition);
+if (!post) throw new Error(`Article "${slug}": no record in posts.json`);
+const c = content('article/page', edition.locale);
+const loc = edition.locale;
+
+const title = c.meta.title.replace('{title}', post.title);
+const description = post.excerpt || c.meta.descriptionFallback.replace('{title}', post.title);
+const html = sanitizeHtml(post.body);
+const pending = !html && showPendingNote(INDEXABLE) ? c.pending.body : null;
+const date = c.date.show ? { iso: post.date, text: badgeDate(post.date, loc).full, label: c.date.label } : null;
+
+// Hero image = the post image (object-cover inside the 322 stage, like the condition pages' 1052x323 PNG).
+let image = '';
+let ogImage: string | undefined;
+try {
+  image = post.image;
+  img(image, edition.region);
+  ogImage = (await getImage({ src: img(image, edition.region), width: 1200, format: 'webp' })).src;
+} catch {
+  console.warn(`[news] ${slug}: image "${post.image}" not found in src/assets; the hero shows no photo`);
+  image = '';
+}
+const hero = {
+  ariaLabel: post.title,
+  banner: { image, alt: post.image_alt || '' },
+  title: [post.title],
+  button: c.hero.button,
+};
+const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
+---
+
+<BaseLayout edition={edition} path={NEWS_PATHS.article(slug)} title={title} description={description} ogImage={ogImage}>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={post.date} />
+  </Fragment>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <article>
+      <div id="hero" class="relative">
+        {image ? <PageHero content={hero} pos={pos} h={322} variant="cover" mirror={false} /> : <PageHero content={{ ...hero, banner: { image: 'conditions/accidents-rehabilitation', alt: '' } }} pos={pos} h={322} variant="cover" />}
+      </div>
+      <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
+        <ArticleBody heading={c.overviewHeading} date={date} intro={post.excerpt ? [post.excerpt] : []} html={html} pending={pending} />
+      </div>
+    </article>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">
+      <DoctorsRow content={c.doctors} />
+    </div>
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(51.54 * var(--u))">
+      <ContactRecovery content={c.recovery} headTop={50} />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(68 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

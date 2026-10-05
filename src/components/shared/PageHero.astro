@@ -27,8 +27,10 @@ interface Props {
   /** Our Hospitals (101:6247): white text on the dark banner (desktop only: below 1024px the text sits on white under the photo) and a filled cyan button (white label) */
   tone?: 'navy' | 'white';
   button?: 'outline' | 'fill';
+  /** RTL: Figma hero art is mirrored with the layout (default). false = a photo with real content (news post image) is never flipped. */
+  mirror?: boolean;
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline' } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
 const p = { textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
@@ -50,7 +52,7 @@ const imgH = variant === 'banner' ? 500 : 323;
         fetchpriority="high"
         decoding="async"
         alt={c.banner.alt}
-        class:list={['absolute start-0 w-full max-w-none object-cover rtl:-scale-x-100', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover']}
+        class:list={['absolute start-0 w-full max-w-none object-cover', mirror && 'rtl:-scale-x-100', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover']}
         pictureAttributes={{ class: 'contents' }}
       />
     </div>

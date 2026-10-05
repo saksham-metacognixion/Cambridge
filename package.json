@@ -12,8 +12,9 @@
     "astro": "astro",
     "test:functions": "node tests/functions.test.mjs",
     "test:filters": "node tests/doctor-filters.test.mjs",
-    "test": "npm run test:functions && npm run test:filters && npm run test:conditions",
-    "test:conditions": "node tests/condition-filters.test.mjs"
+    "test": "npm run test:functions && npm run test:filters && npm run test:conditions && npm run test:sanitize",
+    "test:conditions": "node tests/condition-filters.test.mjs",
+    "test:sanitize": "node tests/sanitize.test.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -22,5 +23,8 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0"
   }
 }

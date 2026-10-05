@@ -4,11 +4,17 @@ import dots from '../../assets/news/divider-group622.svg';
 import line from '../../assets/news/line23.svg';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { hasPost, NEWS_PATHS } from '../../lib/news';
+import { PAGE_PATHS } from '../../lib/paths';
 import news from '../../data/news.json';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/news', edition.locale);
+// "Read more" -> the post's article page (media-hub/<slug>). The 3 Figma placeholder posts of this section live in
+// news.json only (not in src/data/news/posts.json), so until the export arrives their link goes to the 404 page
+// (docs/open-decisions.md AR5). readMore.href in home/news JSON is the fallback for a slug that is nowhere.
+const articleHref = (slug: string) => (hasPost(slug) ? urlFor(edition, NEWS_PATHS.article(slug)) : urlFor(edition, PAGE_PATHS.notFound));
 
 // crop.ratio = intrinsic height/width of the source file. Hardcoded on purpose: reading c.src.width/height
 // makes Astro copy the full-size original into dist.
@@ -34,6 +40,7 @@ const card = (post: Post) => ({
   alt: t(post.imageAlt, edition.locale, 'news'),
   title: t(post.title, edition.locale, 'news'),
   text: t(post.excerpt, edition.locale, 'news'),
+  readMore: { label: txt.readMore.label, href: articleHref(post.slug) },
 });
 // Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, with their Figma crops.
 const cards = design.map((d, i) => {
@@ -72,11 +79,11 @@ const pills = pillX.map((x, i) => {
     </div>
 
     <div id="news-cards" data-news-cards class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40 lg:contents">
-      {cards.map((c) => <NewsCard F={F} readMore={txt.readMore} {...c} />)}
+      {cards.map((c) => <NewsCard F={F} {...c} />)}
     </div>
     {pills.filter((p) => p.sets.length).map((p) => (
       <template data-news-set={p.key}>
-        {p.sets.map((c) => <NewsCard F={F} readMore={txt.readMore} {...c} />)}
+        {p.sets.map((c) => <NewsCard F={F} {...c} />)}
       </template>
     ))}
 

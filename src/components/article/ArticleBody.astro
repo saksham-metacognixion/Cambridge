@@ -1,0 +1,78 @@
+---
+/*
+ * Article body (Health Article Layout, Figma 170:839), section top = the "Overview" H2 top (page y 475 = hero end 441 + 34).
+ * Figma px: H2 Medium 28 #00415a at x56 (box 33) | 12 | intro Book 12/14 #6b6b6b at x58, w937 | 33 | body.
+ * Body typography = the "How It's Managed at Cambridge" block of the frame:
+ *   h2  Medium 28/33 #00415a at x56; 33 above, 9 below (H2 867 -> para 909)
+ *   p   Book 12/14 #6b6b6b at x58, w937; one empty 14px line between paragraphs
+ *   h3  Medium 16 #00415a (box 19) at x58; 40 above (para end 951 -> H3 991), 3 below (-> list 1013)
+ *   ul/ol at x78 (20 in), w610: item lead line (li > strong:first-child, "Patient-Centered Care:") Book 12/22 #418ea2,
+ *       item text Book 12/18 #6b6b6b; 22 below a list (list end 1227 -> H3 1249); the frame's items carry no bullet marker
+ *       because each starts with a lead line; plain items keep the disc marker of the condition tabs (41:2373)
+ *   closing p 14 below a list (1503 -> 1517)
+ * No Figma design for: date line (AR3, intro style), blockquote (lead-line style), images (column width, flagged AR4).
+ * The HTML comes sanitized from src/lib/sanitize.ts (allow-list), so set:html is safe here.
+ */
+interface Props {
+  heading: string;
+  date?: { iso: string; text: string; label: string } | null;
+  intro: string[];
+  html: string;
+  pending?: string | null;
+}
+const { heading, date, intro, html, pending } = Astro.props;
+---
+
+<section class="art" aria-labelledby="overview-heading">
+  <h2 id="overview-heading" class="h">{heading}</h2>
+  <div class="intro">
+    {date && <p class="date"><time datetime={date.iso} aria-label={`${date.label}: ${date.text}`}>{date.text}</time></p>}
+    {intro.map((p) => <p>{p}</p>)}
+  </div>
+  {html && <div class="body" set:html={html} />}
+  {!html && pending && <p class="pending" role="note">{pending}</p>}
+</section>
+
+<style>
+  .art { max-width: calc(var(--target-w) * 1px); margin-inline: auto; padding-inline: calc(16 * var(--u)); box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .intro { margin-top: calc(12 * var(--u)); }
+  .intro p { margin: 0; overflow-wrap: anywhere; }
+  .intro p + p { margin-top: calc(14 * var(--u)); }
+  .pending { margin: calc(33 * var(--u)) 0 0; font-style: italic; }
+  .body { margin-top: calc(33 * var(--u)); overflow-wrap: anywhere; }
+  .body :global(> *) { margin: 0; }
+  .body :global(> * + *) { margin-top: calc(14 * var(--u)); }
+  .body :global(h2) { font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); }
+  .body :global(> * + h2) { margin-top: calc(33 * var(--u)); }
+  .body :global(h2 + *) { margin-top: calc(9 * var(--u)); }
+  .body :global(h3), .body :global(h4) { font-weight: 500; font-size: calc(16 * var(--u)); line-height: calc(19 * var(--u)); color: var(--color-navy-alt); }
+  .body :global(> * + h3), .body :global(> * + h4) { margin-top: calc(40 * var(--u)); }
+  .body :global(h3 + *), .body :global(h4 + *) { margin-top: calc(3 * var(--u)); }
+  .body :global(ul), .body :global(ol) { padding: 0; margin-inline-start: calc(20 * var(--u)); max-width: calc(610 * var(--u)); line-height: calc(18 * var(--u)); }
+  .body :global(ul) { list-style: disc; }
+  .body :global(li) { margin-inline-start: calc(18 * var(--u)); }
+  .body :global(li:has(> strong:first-child)) { list-style: none; margin-inline-start: 0; }
+  .body :global(li > strong:first-child) { display: block; font-weight: 400; line-height: calc(22 * var(--u)); color: var(--color-teal-border); }
+  .body :global(li > strong:first-child + br) { display: none; } /* the lead line already breaks */
+  .body :global(ul + *), .body :global(ol + *) { margin-top: calc(22 * var(--u)); }
+  .body :global(ul + p), .body :global(ol + p) { margin-top: calc(14 * var(--u)); }
+  .body :global(strong) { font-weight: 500; }
+  .body :global(a) { color: inherit; text-decoration: underline; text-decoration-skip-ink: none; text-underline-position: from-font; }
+  .body :global(a:focus-visible) { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(1 * var(--u)); }
+  .body :global(blockquote) { margin-inline: calc(20 * var(--u)) 0; max-width: calc(610 * var(--u)); color: var(--color-teal-border); line-height: calc(22 * var(--u)); }
+  .body :global(blockquote > *) { margin: 0; }
+  .body :global(figure) { margin: calc(14 * var(--u)) 0 0; }
+  .body :global(img) { display: block; max-width: 100%; height: auto; }
+  .body :global(figcaption) { margin-top: calc(6 * var(--u)); }
+  .body :global(table) { border-collapse: collapse; max-width: 100%; }
+  .body :global(th), .body :global(td) { padding: calc(4 * var(--u)) calc(8 * var(--u)); border: calc(0.5 * var(--u)) solid var(--color-teal-border); text-align: start; vertical-align: top; }
+  .body :global(th) { font-weight: 500; color: var(--color-navy-alt); }
+  @media (min-width: 1024px) {
+    .art { padding-inline: 0; }
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .intro, .pending { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .body { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .body :global(h2) { margin-inline-start: calc(-2 * var(--u)); }
+  }
+</style>

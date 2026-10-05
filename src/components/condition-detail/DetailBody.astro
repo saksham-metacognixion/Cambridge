@@ -1,5 +1,6 @@
 ---
 import RichText from '../shared/RichText.astro';
+import Tabs from '../shared/Tabs.astro';
 import type { Edition } from '../../lib/editions';
 
 /*
@@ -40,34 +41,8 @@ const active = Math.min(tabs?.active ?? 0, Math.max(items.length - 1, 0));
   </div>
 
   {items.length > 0 && (
-    <div class="topics" data-tabs>
-      <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={tabsLabel}>
-        {items.map((t, i) => (
-          <button type="button" role="tab" id={`tab-${i}`} class="tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={`panel-${i}`} tabindex={i === active ? 0 : -1}>
-            <span class="tab-label">{t.label}</span>
-          </button>
-        ))}
-      </div>
-      <div class="panels">
-        {items.map((t, i) => (
-          <div role="tabpanel" id={`panel-${i}`} class="panel" aria-labelledby={`tab-${i}`} tabindex="0" hidden={i !== active}>
-            {t.blocks.length === 0 && pendingTab && <p class="pending">{pendingTab}</p>}
-            {t.blocks.map((b) =>
-              b.type === 'ul' ? (
-                <ul class="ul">
-                  {b.items.map((it) => (
-                    <li>{Array.isArray(it) ? it.map((line, k) => (k === 0 ? line : <><br />{line}</>)) : it}</li>
-                  ))}
-                </ul>
-              ) : b.type === 'h' ? (
-                <h3 class="sub">{b.text}</h3>
-              ) : (
-                <p class={b.type}><RichText text={b.text} edition={edition} /></p>
-              ),
-            )}
-          </div>
-        ))}
-      </div>
+    <div class="topics-wrap">
+      <Tabs edition={edition} label={tabsLabel} items={items} active={active} pending={pendingTab} />
     </div>
   )}
 </section>
@@ -78,30 +53,11 @@ const active = Math.min(tabs?.active ?? 0, Math.max(items.length - 1, 0));
   .intro { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
   .intro p { margin: 0; overflow-wrap: anywhere; }
   .intro p + p { margin-top: calc(14 * var(--u)); }
-  .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); margin-top: calc(33 * var(--u)); }
-  .tablist { display: flex; flex-direction: column; gap: calc(2 * var(--u)); }
-  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(63 * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(24 * var(--u)) calc(22 * var(--u)); border: 0; border-radius: 0; background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(13 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
-  .tab[aria-selected='true'] { background: var(--color-teal-border); color: #fff; text-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25); }
-  .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
-  .tab-label { max-width: calc(265 * var(--u)); overflow-wrap: anywhere; }
-  .panel { color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
-  .panel:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(4 * var(--u)); }
-  .panel[hidden] { display: none; }
-  .panel > * { margin: calc(14 * var(--u)) 0 0; overflow-wrap: anywhere; }
-  .panel > :first-child { margin-top: 0; }
-  .panel > .sub + .lead, .panel > .lead + .ul { margin-top: 0; }
-  .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
-  .lead { color: var(--color-teal-border); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
-  .ul { list-style: disc; padding: 0; }
-  .ul li { margin-inline-start: calc(18 * var(--u)); }
-  .ul li:first-child { padding-block: calc(2 * var(--u)); } /* Figma: first line box 18 (14 + 2 + 2) */
-  .pending { font-style: italic; color: var(--color-body); }
+  .topics-wrap { margin-top: calc(33 * var(--u)); }
   @media (min-width: 1024px) {
     .detail { padding-inline: 0; }
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .intro { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
-    .topics { flex-direction: row; align-items: flex-start; gap: 0; margin-inline-start: calc(56 * var(--u)); }
-    .tablist { flex: none; width: calc(311 * var(--u)); }
-    .panels { flex: none; width: calc(610 * var(--u)); margin-top: calc(1 * var(--u)); margin-inline-start: calc(18 * var(--u)); }
+    .topics-wrap { margin-inline-start: calc(56 * var(--u)); }
   }
 </style>

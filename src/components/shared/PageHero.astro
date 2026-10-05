@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
+import OutlineButton from './OutlineButton.astro';
 
 /*
  * Inner-page hero (one component for every inner page; was DoctorsHero). Stage = page y 119 (under the header) to 119 + h.
@@ -51,14 +52,12 @@ const imgH = variant === 'banner' ? 500 : 323;
       />
     </div>
 
-    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap};--lx:${p.labelX};--lw:${p.labelW}`}>
+    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
       <h1 class="title m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic">
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
       {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
-      <a href={c.button.href} class="btn hit hair-card relative block rounded-r7 no-underline" style="--sw:1;--sc:var(--color-cyan)">
-        <span class="label absolute block h-15 font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
-      </a>
+      <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" />
     </div>
   </div>
 </section>
@@ -67,13 +66,11 @@ const imgH = variant === 'banner' ? 500 : 323;
   .cover { top: calc(-1 * var(--u)); height: calc(323 * var(--u)); }
   .copy { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
   .title, .text { overflow-wrap: anywhere; }
-  .btn { width: calc(164 * var(--u)); height: calc(30 * var(--u)); flex: none; }
-  .label { top: calc(9 * var(--u)); inset-inline-start: calc(var(--lx) * var(--u)); width: calc(var(--lw) * var(--u)); }
   @media (min-width: 1024px) {
     .copy { position: absolute; inset-inline-start: calc(95 * var(--u)); top: calc(var(--tt) * var(--u)); }
     .title { width: calc(var(--tw) * var(--u)); }
     .text { width: calc(var(--xw) * var(--u)); margin-top: calc(var(--xg) * var(--u)); margin-inline-start: calc(var(--xx) * var(--u)); }
-    .btn { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+    .copy :global(.btn) { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
     .hero { display: flex; min-height: calc(var(--mh) * var(--u)); flex-direction: column; align-items: flex-start; justify-content: center; padding: calc(48 * var(--u)) calc(24 * var(--u)); box-sizing: border-box; }

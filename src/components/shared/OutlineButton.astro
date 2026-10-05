@@ -1,0 +1,18 @@
+---
+/*
+ * Outline button used on every inner-page hero and on Careers: 164 x 30, radius 7, 1px cyan outline, label Gotham Medium 13
+ * cyan centred in a box `labelW` wide at `labelX` inside the button, 9 below its top (Figma 108:6678 / 108:6679: 145 at 8;
+ * Find a Doctor / FAQ hero: 153 at 5). Touch target 44px via .hit. Layout (margins) is the caller's: pass `class`.
+ */
+interface Props { href: string; label: string; labelX?: number; labelW?: number; class?: string }
+const { href, label, labelX = 8, labelW = 145, class: cls } = Astro.props;
+---
+
+<a href={href} class:list={['btn hit hair-card relative block rounded-r7 no-underline', cls]} style={`--sw:1;--sc:var(--color-cyan);--lx:${labelX};--lw:${labelW}`}>
+  <span class="label absolute block h-15 font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{label}</span>
+</a>
+
+<style>
+  .btn { width: calc(164 * var(--u)); height: calc(30 * var(--u)); flex: none; }
+  .label { top: calc(9 * var(--u)); inset-inline-start: calc(var(--lx) * var(--u)); width: calc(var(--lw) * var(--u)); }
+</style>

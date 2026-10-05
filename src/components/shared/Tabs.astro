@@ -1,0 +1,99 @@
+---
+import RichText from '../shared/RichText.astro';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * Reusable ARIA tabs (WAI-ARIA tablist / tab / tabpanel, vertical): used by the detail-page topics (Figma 41:2373) and
+ * both lists on Careers (112:7295). Behaviour: src/scripts/tabs.ts (arrow keys / Home / End, roving tabindex, Left/Right
+ * mirrored on RTL). Without JS the default tab's panel is visible (the others carry `hidden`).
+ * Look (Figma px): tabs 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25; active #418ea2, white text with
+ * text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059. The panel sits `gap` right of the tabs
+ * (18 on detail pages, 24 on Careers), `top` below the tabs top (1 / 27), `width` wide (610 / 529 / 441), Book 12/14 #6b6b6b.
+ * Block types: p (paragraph) | h (sub-heading, Medium) | lead (teal line, 22) | note (teal line, 14) | ul (bullets) |
+ * lines (several lines, line breaks kept). One empty 14px line between blocks.
+ * `pending`: the text shown in an empty panel (staging only; the caller passes null in production).
+ */
+export type Block =
+  | { type: 'p' | 'h' | 'lead' | 'note'; text: string }
+  | { type: 'lines'; lines: string[] }
+  | { type: 'ul'; items: (string | string[])[] };
+interface Props {
+  edition: Edition;
+  label: string;
+  items: { label: string; blocks: Block[] }[];
+  active?: number;
+  /** id prefix: two tab lists on one page need different ids */
+  idPrefix?: string;
+  pending?: string | null;
+  /** Figma px */
+  gap?: number;
+  top?: number;
+  width?: number;
+}
+const { edition, label, items, active: activeIn = 0, idPrefix = '', pending, gap = 18, top = 1, width = 610 } = Astro.props;
+const active = Math.min(activeIn, Math.max(items.length - 1, 0));
+const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
+---
+
+<div class="topics" data-tabs style={`--pg:${gap};--pt:${top};--pw:${width}`}>
+  <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={label}>
+    {items.map((t, i) => (
+      <button type="button" role="tab" id={id('tab', i)} class="tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={id('panel', i)} tabindex={i === active ? 0 : -1}>
+        <span class="tab-label">{t.label}</span>
+      </button>
+    ))}
+  </div>
+  <div class="panels">
+    {items.map((t, i) => (
+      <div role="tabpanel" id={id('panel', i)} class="panel" aria-labelledby={id('tab', i)} tabindex="0" hidden={i !== active}>
+        {t.blocks.length === 0 && pending && <p class="pending">{pending}</p>}
+        {t.blocks.map((b) =>
+          b.type === 'ul' ? (
+            <ul class="ul">
+              {b.items.map((it) => (
+                <li>{Array.isArray(it) ? it.map((line, k) => (k === 0 ? line : <><br />{line}</>)) : it}</li>
+              ))}
+            </ul>
+          ) : b.type === 'lines' ? (
+            <p class="lines">{b.lines.map((line, k) => (k === 0 ? line : <><br />{line}</>))}</p>
+          ) : b.type === 'h' ? (
+            <h3 class="sub">{b.text}</h3>
+          ) : (
+            <p class={b.type}><RichText text={b.text} edition={edition} /></p>
+          ),
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  import '../../scripts/tabs';
+</script>
+
+<style>
+  .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
+  .tablist { display: flex; flex-direction: column; gap: calc(2 * var(--u)); }
+  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(63 * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(24 * var(--u)) calc(22 * var(--u)); border: 0; border-radius: 0; background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(13 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
+  .tab[aria-selected='true'] { background: var(--color-teal-border); color: #fff; text-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25); }
+  .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
+  .tab-label { max-width: calc(265 * var(--u)); overflow-wrap: anywhere; }
+  .panel { color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .panel:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(4 * var(--u)); }
+  .panel[hidden] { display: none; }
+  .panel > * { margin: calc(14 * var(--u)) 0 0; overflow-wrap: anywhere; }
+  .panel > :first-child { margin-top: 0; }
+  .panel > .sub + .lead, .panel > .lead + .ul { margin-top: 0; }
+  .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
+  .lead { color: var(--color-teal-border); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
+  .note { color: var(--color-teal-border); }
+  .ul { list-style: disc; padding: 0; }
+  .ul li { margin-inline-start: calc(18 * var(--u)); }
+  .ul li:first-child { padding-block: calc(2 * var(--u)); } /* Figma: first line box 18 (14 + 2 + 2) */
+  .pending { font-style: italic; color: var(--color-body); }
+  @media (min-width: 1024px) {
+    .topics { flex-direction: row; align-items: flex-start; gap: 0; }
+    .tablist { flex: none; width: calc(311 * var(--u)); }
+    .panels { flex: none; width: calc(var(--pw) * var(--u)); margin-top: calc(var(--pt) * var(--u)); margin-inline-start: calc(var(--pg) * var(--u)); }
+  }
+</style>

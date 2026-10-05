@@ -162,6 +162,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     .pm:is(span) { font-size: calc(10 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
+    .stats { margin-inline: auto; padding-inline: 16px; box-sizing: border-box; }
     .dpos2 { position: static; }
     .mapbox { position: relative; }
     .list > .dpos2:first-child { width: calc(149 * var(--u)); height: calc(40 * var(--u)); display: flex; align-items: center; justify-content: center; }

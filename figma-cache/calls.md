@@ -138,3 +138,8 @@ SUMMARY after 60: forms session today 14. Next free number: 61 (batch-2 session 
 62. get_screenshot 112:7295 Career (maxDimension 4570; returned 1052x3339) -> figma-cache/pages/career-112-7295.png (comparison reference)
 63. get_design_context 112:7295 Career -> FULL -> careers-spec.md, assets/careers/* (7 assets curled from the returned URLs at once)
 SUMMARY careers session: 3 calls (2 get_screenshot, 1 get_design_context) + the earlier get_screenshot (#61). No use_figma, get_metadata or download_assets needed. Next free number: 64.
+64. get_screenshot 93:894 Landing Page (1052x5664) -> pages/home-93-894.png (mobile review reference)
+65. get_screenshot 86:431 Contact us (1052x1955) -> pages/contact-86-431.png
+66. get_screenshot 100:5522 Media Hub (1052x2641) -> pages/media-hub-100-5522.png
+67. get_screenshot 170:839 Health Article Layout (1052x2692) -> pages/article-170-839.png (the article TEMPLATE is not built yet)
+SUMMARY: careers session now 7 calls (6 get_screenshot, 1 get_design_context). Next free number: 68.

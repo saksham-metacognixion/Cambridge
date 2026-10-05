@@ -10,7 +10,7 @@ import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
 import { CARE_PATHS, services } from "./care";
-import type { Edition } from "./editions";
+import { urlFor, type Edition } from "./editions";
 
 export interface PageRoute {
   key: string;
@@ -77,4 +77,16 @@ function routes(): PageRoute[] {
       path: DOCTOR_PATHS.profile(d.slug),
     })),
   ];
+}
+
+/**
+ * Language / region switch target: the same page path in the other edition when it exists there, else the nearest
+ * ancestor that does (a KSA hospital page seen from /ae -> /ae/our-hospitals), else the edition home. Keeps the switches
+ * from landing on a 404 (scope 2.2: "same page in the other language / region where it exists").
+ */
+export function switchHref(target: Edition, path: string): string {
+  const paths = new Set(allRoutes(target).map((r) => r.path));
+  let p = path.replace(/^\/+|\/+$/g, "");
+  while (p && !paths.has(p)) p = p.includes("/") ? p.slice(0, p.lastIndexOf("/")) : "";
+  return urlFor(target, p);
 }

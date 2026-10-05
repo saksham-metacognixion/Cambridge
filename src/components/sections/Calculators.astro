@@ -2,7 +2,8 @@
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import { content } from '../../lib/content';
 
 const { edition } = parsePath(Astro.url.pathname);
@@ -16,7 +17,7 @@ const layout = [
   { x: 532, y: 245, tw: 148, bx: 30 },
   { x: 768, y: 245, tw: 157, bx: 31 },
 ];
-const cards = layout.map((d, i) => ({ ...d, title: t.cards[i].title, desc: t.cards[i].desc, href: t.cards[i].href }));
+const cards = layout.map((d, i) => ({ ...d, title: t.cards[i].title, desc: t.cards[i].desc, href: t.cards[i].page ? urlFor(edition, pagePath(t.cards[i].page)) : t.cards[i].href })); // `page` = key in PAGE_PATHS: the calculators have no page of their own (docs/open-decisions.md LA4)
 const u = (n: number) => `calc(${n} * var(--u))`;
 ---
 

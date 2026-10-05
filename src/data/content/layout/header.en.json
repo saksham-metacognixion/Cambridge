@@ -28,7 +28,9 @@
     },
     {
       "label": "Knowledge Center",
-      "href": "#"
+      "href": "#",
+      "path": "media-hub",
+      "query": "?category=health-articles#latest"
     },
     {
       "label": "FAQs",

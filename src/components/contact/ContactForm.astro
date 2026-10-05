@@ -3,7 +3,8 @@ import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import hospitalData from '../../data/hospitals.json';
 import Turnstile from '../forms/Turnstile.astro';
 import chevron from '../../assets/contact-page/select-chevron.svg';
@@ -69,7 +70,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
             <span class="dot"></span>
           </span>
           <span class="font-gotham font-light text-[calc(9.87*var(--u))] leading-10.5 text-navy not-italic lg:absolute lg:start-147 lg:top-452 lg:whitespace-nowrap">
-            <span class="block">{f.consent.before}<a href={f.consent.link.href} class="hit font-normal underline decoration-from-font [text-underline-position:from-font] text-navy">{f.consent.link.label}</a>{f.consent.after}</span>
+            <span class="block">{f.consent.before}<a href={f.consent.link.page ? urlFor(edition, pagePath(f.consent.link.page)) : f.consent.link.href} class="hit font-normal underline decoration-from-font [text-underline-position:from-font] text-navy">{f.consent.link.label}</a>{f.consent.after}</span>
             <span class="block">{f.consent.line2}</span>
           </span>
         </label>

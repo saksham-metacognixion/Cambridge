@@ -1,10 +1,27 @@
 {
   "ariaLabel": "Hero",
-  "banner": { "image": "hero/banner3", "alt": "", "layers": { "background": "hero/banner3-bg", "subject": "hero/banner3-subject" } },
-  "title": ["Restoring Hope,", "Enabling Life."],
+  "banner": {
+    "image": "hero/banner3",
+    "alt": "",
+    "layers": {
+      "background": "hero/banner3-bg",
+      "subject": "hero/banner3-subject"
+    }
+  },
+  "title": [
+    "Restoring Hope,",
+    "Enabling Life."
+  ],
   "text": "Supporting every step of your recovery journey with compassionate care and clinical excellence.",
   "buttons": [
-    { "label": "Get in Touch", "href": "#contact" },
-    { "label": "Learn More", "href": "#" }
+    {
+      "label": "Get in Touch",
+      "href": "#contact"
+    },
+    {
+      "label": "Learn More",
+      "href": "#",
+      "page": "about"
+    }
   ]
 }

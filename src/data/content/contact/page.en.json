@@ -5,9 +5,18 @@
   },
   "hero": {
     "ariaLabel": "Contact Cambridge Hospital",
-    "banner": { "image": "contact-page/banner", "alt": "" },
-    "title": ["Speak with", "Our Care Team"],
-    "button": { "label": "Inquire Now", "href": "#contact-form" }
+    "banner": {
+      "image": "contact-page/banner",
+      "alt": ""
+    },
+    "title": [
+      "Speak with",
+      "Our Care Team"
+    ],
+    "button": {
+      "label": "Inquire Now",
+      "href": "#contact-form"
+    }
   },
   "heading": "Contact US",
   "form": {
@@ -18,10 +27,21 @@
     "hospitalPlaceholder": "Select Hospital",
     "subjectLabel": "Subject*",
     "messagePlaceholder": "Type your Message*",
-    "consent": { "before": "I have read the ", "link": { "label": "Privacy policy", "href": "#" }, "after": " and I consent to the transfer and processing of", "line2": "my personal data." },
+    "consent": {
+      "before": "I have read the ",
+      "link": {
+        "label": "Privacy policy",
+        "page": "privacyPolicy"
+      },
+      "after": " and I consent to the transfer and processing of",
+      "line2": "my personal data."
+    },
     "submit": "SUBMIT"
   },
-  "map": { "image": "contact-page/map", "alt": "" },
+  "map": {
+    "image": "contact-page/map",
+    "alt": ""
+  },
   "details": {
     "email": "info@cmrc.ae",
     "web": "www.info@cmrc.ae",
@@ -31,12 +51,29 @@
   "recovery": {
     "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
     "lead": "Your recovery matters to us,",
-    "emphasis": [" and we are with you every step of", "the journey."],
+    "emphasis": [
+      " and we are with you every step of",
+      "the journey."
+    ],
     "tiles": [
-      { "label": "Book an Appointment", "href": "#book-appointment" },
-      { "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" },
-      { "label": "Refer a Patient", "href": "#", "page": "referPatient" },
-      { "label": "Send an Inquiry", "href": "#send-inquiry" }
+      {
+        "label": "Book an Appointment",
+        "href": "#book-appointment"
+      },
+      {
+        "label": "Find a Doctor",
+        "href": "#",
+        "path": "find-a-doctor"
+      },
+      {
+        "label": "Refer a Patient",
+        "href": "#",
+        "page": "referPatient"
+      },
+      {
+        "label": "Send an Inquiry",
+        "href": "#send-inquiry"
+      }
     ]
   }
 }

@@ -2,12 +2,46 @@
   "title": "Stories of Care and Recovery",
   "subtitle": "Hear from our patients as they share their journeys of recovery, care, and renewed independence.",
   "items": [
-    { "name": "Mohamed Al Menhali", "quote": "Alhamdulillah, I regained my ability to walk in about 4 months with their help.", "photo": "testimonials/patient-6", "photoAlt": "Mohamed Al Menhali" },
-    { "name": "Mohamed Salem Al Bloushi", "quote": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.", "photo": "testimonials/patient-1", "photoAlt": "Mohamed Salem Al Bloushi" },
-    { "name": "Tamam’s Mother", "quote": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities.", "photo": "testimonials/patient-2", "photoAlt": "Tamam’s Mother" },
-    { "name": "Shamma’s Mother", "quote": "Shamma’s ability to communicate has improved remarkably and significantly, thanks to Cambridge.", "photo": "testimonials/shamma", "photoAlt": "Shamma’s Mother" },
-    { "name": "Salem Bin Saleh", "quote": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.", "photo": "testimonials/patient-4", "photoAlt": "Salem Bin Saleh" },
-    { "name": "Nujood Saeed", "quote": "With God’s grace and the team’s support, I was walking again in nearly 4 months.", "photo": "testimonials/patient-5", "photoAlt": "Nujood Saeed" }
+    {
+      "name": "Mohamed Al Menhali",
+      "quote": "Alhamdulillah, I regained my ability to walk in about 4 months with their help.",
+      "photo": "testimonials/patient-6",
+      "photoAlt": "Mohamed Al Menhali"
+    },
+    {
+      "name": "Mohamed Salem Al Bloushi",
+      "quote": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.",
+      "photo": "testimonials/patient-1",
+      "photoAlt": "Mohamed Salem Al Bloushi"
+    },
+    {
+      "name": "Tamam’s Mother",
+      "quote": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities.",
+      "photo": "testimonials/patient-2",
+      "photoAlt": "Tamam’s Mother"
+    },
+    {
+      "name": "Shamma’s Mother",
+      "quote": "Shamma’s ability to communicate has improved remarkably and significantly, thanks to Cambridge.",
+      "photo": "testimonials/shamma",
+      "photoAlt": "Shamma’s Mother"
+    },
+    {
+      "name": "Salem Bin Saleh",
+      "quote": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.",
+      "photo": "testimonials/patient-4",
+      "photoAlt": "Salem Bin Saleh"
+    },
+    {
+      "name": "Nujood Saeed",
+      "quote": "With God’s grace and the team’s support, I was walking again in nearly 4 months.",
+      "photo": "testimonials/patient-5",
+      "photoAlt": "Nujood Saeed"
+    }
   ],
-  "button": { "label": "View More Stories", "href": "#" }
+  "button": {
+    "label": "View More Stories",
+    "href": "#",
+    "page": "patientTestimonials"
+  }
 }

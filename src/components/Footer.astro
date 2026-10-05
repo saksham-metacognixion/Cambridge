@@ -14,8 +14,8 @@ const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
 const logo = img(c.logo.image, edition.region);
 const accredited = img(c.accreditations.image, edition.region);
-type Link = { label: string; href: string; path?: string; care?: string };
-const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) })));
+type Link = { label: string; href: string; path?: string; query?: string; care?: string };
+const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) + (x.query ?? '') })));
 // Services column: each entry links to its service page (`care` = slug in src/data/care.json -> our-care/<slug>).
 const services: Link[] = c.services.links.map((x: Link) => ({ ...x, href: x.care ? urlFor(edition, CARE_PATHS.service(x.care)) : x.href }));
 // Legal links (bottom right): `path` = the legal pages (src/data/legal.json), edition-aware.

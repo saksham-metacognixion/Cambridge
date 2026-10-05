@@ -6,11 +6,13 @@ import { parsePath, getEdition, urlFor } from '../lib/editions';
 import { content } from '../lib/content';
 import { img } from '../lib/images';
 import { weAreListeningHref } from '../lib/nav';
+import { switchHref } from '../lib/routes';
 
-// Current edition and page path, so the language switch lands on the same page in the other language.
+// Current edition and page path, so the language switch lands on the same page in the other language (or the nearest
+// page that exists there, src/lib/routes.ts switchHref: never a 404).
 const { edition, path } = parsePath(Astro.url.pathname);
-const enHref = urlFor(getEdition(edition.region, 'en'), path);
-const arHref = urlFor(getEdition(edition.region, 'ar'), path);
+const enHref = switchHref(getEdition(edition.region, 'en'), path);
+const arHref = switchHref(getEdition(edition.region, 'ar'), path);
 const homeHref = urlFor(edition);
 const c = content('layout/header', edition.locale);
 const logo = img(c.logo.image, edition.region);
@@ -18,13 +20,15 @@ const logo = img(c.logo.image, edition.region);
 // Design (positions/widths) zipped by index with the links from layout/header JSON.
 // First box = "We are listening" (scope 2.5; not in the Figma header, flagged for Padmavathi): placed in the free space between the logo (ends 293) and the Opinion icon (394), same font and colour as its neighbours.
 const topLinkBoxes = [ { l: 305, w: 72 }, { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
-const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string; nav?: string }, i: number) => ({ ...x, href: x.nav === 'weAreListeningTarget' ? weAreListeningHref(edition) : x.path === undefined ? x.href : urlFor(edition, x.path), ...topLinkBoxes[i] }));
+// `path` = page inside the edition (+ optional `query`, e.g. Knowledge Center -> Media Hub health articles, docs/open-decisions.md LA1).
+const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string; query?: string; nav?: string }, i: number) => ({ ...x, href: x.nav === 'weAreListeningTarget' ? weAreListeningHref(edition) : x.path === undefined ? x.href : urlFor(edition, x.path) + (x.query ?? ''), ...topLinkBoxes[i] }));
 const mainLinkWidths = [84, 41, 54, 62, 51];
 const mainLinks = c.mainLinks.map((x: { label: string; href: string; path?: string }, i: number) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path), w: mainLinkWidths[i] }));
-// Region switch: same page in the chosen region, same language (the language switch does the reverse).
+// Region switch: same page in the chosen region, same language (the language switch does the reverse); a page that does
+// not exist there (hospital of another region) lands on its nearest existing parent.
 const regionOptions = c.region.options.map((o: { region: 'ae' | 'sa'; label: string }) => ({
   label: o.label,
-  href: urlFor(getEdition(o.region, edition.locale), path),
+  href: switchHref(getEdition(o.region, edition.locale), path),
   lang: getEdition(o.region, edition.locale).lang,
 }));
 const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];

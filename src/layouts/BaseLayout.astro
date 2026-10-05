@@ -14,9 +14,11 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  /** edition ids where this page exists, when not all 6 (hospital pages: Global + own region) */
+  editionsWithPage?: string[];
 }
 
-const { edition, path, title, description, ogImage } = Astro.props;
+const { edition, path, title, description, ogImage, editionsWithPage } = Astro.props;
 const canonical = absolute(urlFor(edition, path));
 const ogImageUrl = ogImage ? absolute(ogImage) : undefined;
 
@@ -33,7 +35,7 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <meta name="description" content={description} />
     {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    {alternates(path).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {alternates(path, editionsWithPage).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
 

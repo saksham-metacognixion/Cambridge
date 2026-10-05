@@ -188,3 +188,5 @@ SUMMARY: About + Why + Accreditations total 40 calls (#68-107). Next free number
 SUMMARY: Our Hospitals session 12 calls (#108-119). Running total since #68: 52. Next free number: 120.
 120. use_figma READ-ONLY 101:6247: map group geometry (vector, 6 pins, 5 labels), Line 28 stroke, Care 1 + banner crop transforms, heading colour segments
 SUMMARY: Our Hospitals session 13 calls (#108-120). Running total since #68: 53. Next free number: 121.
+121. get_design_context 112:7721 Hospital detail template (excludeScreenshot; screenshot cached as pages/hospitals2-112-7721.png) -> FULL -> raw/hospital-detail-112-7721.tsx, hospital-detail-spec.md
+SUMMARY: Hospital detail session 1 call (#121). Running total since #68: 54. Next free number: 122.

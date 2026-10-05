@@ -1,0 +1,52 @@
+{
+  "_note": "Shared parts of the hospital detail template (Figma 112:7721, content = Abu Dhabi). Visible text exactly as in Figma. meta.*, alt texts, aria labels, generated.* and pending.* are PLACEHOLDERS (not in Figma). Per-hospital text: <slug>.en.json (Abu Dhabi only today); hospitals without a file get a page generated from hospitals.json (generated.*). {name} = brand + city, {city} = city.",
+  "meta": {
+    "title": "{name} | Cambridge Hospital",
+    "description": "{name}: specialized rehabilitation and long-term care. Location, map and how to book an appointment."
+  },
+  "hero": {
+    "ariaLabel": "{name}",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "generated": {
+    "_note": "Hospitals without a content file: hero title from the Figma pattern 'Advanced Care / in <city>', the Abu Dhabi banner as a placeholder (flagged HD1), no hero text, no video / environment / gallery sections.",
+    "title": ["Advanced Care ", "in {city}"],
+    "banner": { "image": "hospital-detail/banner-abu-dhabi", "alt": "" }
+  },
+  "environment": {
+    "ariaLabel": "Experience the Environment of Care",
+    "heading": "Experience the Environment of Care",
+    "video": { "poster": "about/video-thumbnail", "alt": "", "playLabel": "Play the video" },
+    "tour": { "label": "Take a Tour", "href": "#hospital-video" }
+  },
+  "healing": {
+    "heading": "A Healing Environment, Thoughtfully Designed",
+    "selectLabel": "Choose an area",
+    "galleryLabel": "Photos of {area}",
+    "slideLabel": "Photo {n} of {total}",
+    "showSlide": "Show photo {n} of {total}"
+  },
+  "map": {
+    "ariaLabel": "Find us",
+    "lead": "Find Us in ",
+    "button": "Open in Google Maps",
+    "phoneLabel": "Phone",
+    "hoursLabel": "Opening hours",
+    "addressLabel": "Address"
+  },
+  "care": {
+    "heading": "Delivering Excellence Across Every Stage of Care",
+    "text": "At Cambridge Hospital, we are committed to delivering advanced, patient-centered care with clinical excellence, providing a full spectrum of services designed around your individual needs.",
+    "listLabel": "Our services",
+    "button": "Start Your Care"
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+  },
+  "pending": {
+    "note": "Content pending: this hospital page is generated from the hospital data until its text, video and photos are supplied."
+  }
+}

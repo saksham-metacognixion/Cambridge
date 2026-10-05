@@ -56,6 +56,12 @@ export function openModal(id: string, trigger: HTMLElement | null) {
   if (form) {
     initForm(form);
     preselect(form, trigger?.dataset.doctor);
+    // Hidden context fields (forms.json ui.group "hidden"), e.g. the hospital whose page / row opened the pop-up.
+    form
+      .querySelectorAll<HTMLInputElement>("input[data-preselect]")
+      .forEach((i) => {
+        i.value = trigger?.dataset[i.dataset.preselect!] ?? "";
+      });
   }
   lockScroll(true);
   dlg.showModal();
@@ -169,11 +175,13 @@ function preselect(form: HTMLFormElement, slug?: string) {
 
 /* ───────── Dial code box: shows the code (Figma "+971") and the flag Figma has (UAE only) ───────── */
 function syncDial(sel: HTMLSelectElement) {
-  const box = sel.closest('[data-dial]');
+  const box = sel.closest("[data-dial]");
   const opt = sel.selectedOptions[0];
-  const code = box?.querySelector<HTMLElement>('.dial-code');
-  if (code && opt) code.textContent = opt.dataset.code ?? '';
-  box?.querySelectorAll<HTMLImageElement>('img[data-flag-for]').forEach((img) => (img.hidden = img.dataset.flagFor !== opt?.value));
+  const code = box?.querySelector<HTMLElement>(".dial-code");
+  if (code && opt) code.textContent = opt.dataset.code ?? "";
+  box
+    ?.querySelectorAll<HTMLImageElement>("img[data-flag-for]")
+    .forEach((img) => (img.hidden = img.dataset.flagFor !== opt?.value));
 }
 
 /* ───────── Forms ───────── */
@@ -211,7 +219,9 @@ export function initForm(form: HTMLFormElement) {
     e.preventDefault();
     void submit(form);
   });
-  form.querySelectorAll<HTMLSelectElement>('[data-dial] select').forEach((sel) => sel.addEventListener('change', () => syncDial(sel)));
+  form
+    .querySelectorAll<HTMLSelectElement>("[data-dial] select")
+    .forEach((sel) => sel.addEventListener("change", () => syncDial(sel)));
   renderTurnstile(form);
 }
 
@@ -351,7 +361,9 @@ function success(form: HTMLFormElement) {
     `[data-success-for="${form.dataset.form}"]`,
   );
   form.reset();
-  form.querySelectorAll<HTMLSelectElement>('[data-dial] select').forEach(syncDial);
+  form
+    .querySelectorAll<HTMLSelectElement>("[data-dial] select")
+    .forEach(syncDial);
   form
     .querySelectorAll<HTMLInputElement>('input[type="date"]')
     .forEach((d) => d.toggleAttribute("data-empty", true));
@@ -379,13 +391,23 @@ function loadTurnstile() {
   tsLoading ??= new Promise<void>((resolve) => {
     if (window.turnstile) return resolve();
     // Another form on the page (e.g. the Contact section) may already have added the script: wait for it.
-    if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
-      const t = setInterval(() => { if (window.turnstile) { clearInterval(t); resolve(); } }, 100);
+    if (
+      document.querySelector(
+        'script[src*="challenges.cloudflare.com/turnstile"]',
+      )
+    ) {
+      const t = setInterval(() => {
+        if (window.turnstile) {
+          clearInterval(t);
+          resolve();
+        }
+      }, 100);
       return;
     }
     window.__tsReady = () => resolve();
-    const s = document.createElement('script');
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__tsReady';
+    const s = document.createElement("script");
+    s.src =
+      "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__tsReady";
     s.async = true;
     document.head.appendChild(s);
   });
@@ -393,12 +415,12 @@ function loadTurnstile() {
 }
 /** Resolves when the form's Turnstile token is ready (or after a timeout: the server then answers "turnstile"). */
 async function turnstileToken(form: HTMLFormElement, ms = 8000) {
-  const slot = form.querySelector<HTMLElement>('.ts-slot');
+  const slot = form.querySelector<HTMLElement>(".ts-slot");
   if (!slot) return;
   const end = Date.now() + ms;
   while (Date.now() < end) {
     const id = slot.dataset.widget;
-    if (id && id !== 'pending' && window.turnstile?.getResponse(id)) return;
+    if (id && id !== "pending" && window.turnstile?.getResponse(id)) return;
     await new Promise((r) => setTimeout(r, 150));
   }
 }

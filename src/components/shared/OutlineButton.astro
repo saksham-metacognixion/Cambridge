@@ -5,11 +5,12 @@
  * Find a Doctor / FAQ hero: 153 at 5). Touch target 44px via .hit. Layout (margins) is the caller's: pass `class`.
  */
 /* `fill`: the filled variant (Our Hospitals hero 81:1444): #00b8ff background, white label, no outline. */
-interface Props { href: string; label: string; labelX?: number; labelW?: number; class?: string; fill?: boolean }
-const { href, label, labelX = 8, labelW = 145, class: cls, fill = false } = Astro.props;
+/* Any other attribute (data-hospital, target, rel ...) goes onto the <a>. */
+interface Props { href: string; label: string; labelX?: number; labelW?: number; class?: string; fill?: boolean; [k: string]: unknown }
+const { href, label, labelX = 8, labelW = 145, class: cls, fill = false, ...rest } = Astro.props;
 ---
 
-<a href={href} class:list={['btn hit relative block rounded-r7 no-underline', fill ? 'bg-cyan' : 'hair-card', cls]} style={`--sw:1;--sc:var(--color-cyan);--lx:${labelX};--lw:${labelW}`}>
+<a href={href} class:list={['btn hit relative block rounded-r7 no-underline', fill ? 'bg-cyan' : 'hair-card', cls]} style={`--sw:1;--sc:var(--color-cyan);--lx:${labelX};--lw:${labelW}`} {...rest}>
   <span class:list={["label absolute block h-15 font-gotham font-medium text-f13 text-center not-italic whitespace-nowrap", fill ? "text-white" : "text-cyan"]}>{label}</span>
 </a>
 

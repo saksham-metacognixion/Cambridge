@@ -11,6 +11,7 @@ import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
 import hospitalsData from '../../data/hospitals.json';
+import { hospitalHref } from '../../lib/hospitals';
 
 // Section page-y origin = 2054. Map group origin (page) = (454, 2226).
 const { edition } = parsePath(Astro.url.pathname);
@@ -49,7 +50,8 @@ const rows = rowPos.map((d, i) => {
   if (!h) throw new Error(`home/facilities: unknown hospital slug "${c.hospitals[i]}"`);
   const brand = t(h.brand, edition.locale, 'hospitals');
   const city = t(h.city, edition.locale, 'hospitals');
-  return { ...d, img: img(h.photo, edition.region), name: `${brand} `, city, alt: `${brand} ${city}` };
+  // "Visit Page" -> the hospital's detail page (Figma 112:7721); "Book Appointment" opens the pop-up with the hospital noted.
+  return { ...d, img: img(h.photo, edition.region), name: `${brand} `, city, alt: `${brand} ${city}`, slug: h.slug, visitHref: hospitalHref(h.slug, edition) };
 });
 const dividerY = [2242, 2355, 2468, 2581, 2694];
 const cy = (y: number) => y - 2124; // card-relative y
@@ -99,8 +101,8 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
                 <span class="block text-f10 leading-16 text-body">{r.city}</span>
               </h3>
               <div class="actions lg:contents">
-                <a href={c.book.href} class="hit dpos2 book bg-cyan rounded-r3 flex items-center justify-center ps-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`}>{c.book.label}</a>
-                <a href={c.visit.href} class="hit dpos2 visit rounded-r4 flex items-center justify-center ps-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>{c.visit.label}</a>
+                <a href={c.book.href} data-hospital={r.slug} class="hit dpos2 book bg-cyan rounded-r3 flex items-center justify-center ps-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`} aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
+                <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="hit dpos2 visit rounded-r4 flex items-center justify-center ps-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>{c.visit.label}</a>
               </div>
             </div>
             {i < 5 && <img class="dpos2 divider" src={line9.src} width={px(350)} height={px(1)} alt="" loading="lazy" decoding="async" style={`--x:0;--y:${cy(dividerY[i])};--w:350;--h:1`} />}

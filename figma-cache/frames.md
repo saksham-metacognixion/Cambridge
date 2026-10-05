@@ -28,7 +28,7 @@ All frames are 1052 wide. Loose layers on the canvas (stray rects/texts/vectors)
 | 62:2403 | Patient Testimonials | 1052x2328 | screenshot pages/ |
 | 100:5509 | FAQ | 1052x1307 | screenshot pages/ |
 | 101:6247 | Our Hospitals | 1052x3169 | cached (hospitals-spec.md, pages/hospitals-101-6247.png) — BUILT 5 Oct |
-| 112:7721 | Our Hospitals (second version) = HOSPITAL DETAIL template ("Advanced Care in Abu Dhabi") | 1052x3900 | screenshot pages/hospitals2-112-7721.png |
+| 112:7721 | Our Hospitals (second version) = HOSPITAL DETAIL template ("Advanced Care in Abu Dhabi") | 1052x3900 | cached (hospital-detail-spec.md, raw/, assets/hospital-detail/, pages/hospitals2-112-7721.png) — BUILT 5 Oct |
 | 100:5522 | Media Hub | 1052x2641 | cached |
 | 170:839 | Health Article Layout (content = a condition page) | 1052x2692 | cached (article-layout-spec.md, pages/article-170-839.png) — BUILT 5 Oct as the news article template |
 | 86:431 | Contact us | 1052x1955 | cached |

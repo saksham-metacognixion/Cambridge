@@ -7,6 +7,7 @@ import { parsePath, urlFor } from '../lib/editions';
 import { content, t } from '../lib/content';
 import { img } from '../lib/images';
 import hospitalData from '../data/hospitals.json';
+import { hospitalHref } from '../lib/hospitals';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
@@ -16,10 +17,11 @@ type Link = { label: string; href: string; path?: string };
 const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) })));
 const services: Link[] = c.services.links;
 // Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
+// Each links to its detail page (in this edition, or in the hospital's own region when this edition has no page for it).
 const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
   const h = hospitalData.hospitals.find((x) => x.slug === slug);
   if (!h) throw new Error(`Footer: unknown hospital slug "${slug}"`);
-  return t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals');
+  return { name: t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals'), href: hospitalHref(slug, edition) };
 });
 ---
 
@@ -45,7 +47,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     </nav>
     <nav class="col c3 a" style="--l:562;--t:76;--w:148;--ph:193" aria-labelledby="ft-hosp">
       <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">{c.hospitals.heading}</h2>
-      <ul class="links">{hospitals.map((s) => <li><a href={c.hospitals.href} class="hit dense">{s}</a></li>)}</ul>
+      <ul class="links">{hospitals.map((s) => <li><a href={s.href} class="hit dense">{s.name}</a></li>)}</ul>
     </nav>
 
     <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">

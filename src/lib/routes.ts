@@ -7,20 +7,37 @@ import { DOCTOR_PATHS, profileDoctors } from "./doctors";
 import { PAGE_PATHS } from "./paths";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
+import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
+import type { Edition } from "./editions";
 
 export interface PageRoute {
   key: string;
   /** path inside the edition, "" = edition home */
   path: string;
+  /** edition ids that have the page; absent = all 6 */
+  editions?: string[];
 }
 
-export function allRoutes(): PageRoute[] {
+/** Every route; with an edition, only the routes that exist in it. */
+export function allRoutes(edition?: Edition): PageRoute[] {
+  const all = routes();
+  return edition
+    ? all.filter((r) => !r.editions || r.editions.includes(edition.id))
+    : all;
+}
+
+function routes(): PageRoute[] {
   return [
     { key: "home", path: "" },
     { key: "about", path: PAGE_PATHS.about },
     { key: "why-cambridge", path: PAGE_PATHS.whyCambridge },
     { key: "accreditations", path: PAGE_PATHS.accreditations },
     { key: "hospitals", path: PAGE_PATHS.hospitals },
+    ...hospitals.map((h) => ({
+      key: `hospital-${h.slug}`,
+      path: HOSPITAL_PATHS.detail(h.slug),
+      editions: hospitalEditions(h),
+    })),
     { key: "contact", path: PAGE_PATHS.contact },
     { key: "careers", path: PAGE_PATHS.careers },
     { key: "media-hub", path: NEWS_PATHS.list },

@@ -2,7 +2,8 @@
 /*
  * Book an Appointment pop-up — Figma 106:246 ("Pop Up - Option 1"), spec figma-cache/forms-spec.md.
  * Panel 586 wide; values are Figma px from the panel's top-left. Opened by every #book-appointment link; a link with
- * data-doctor="<slug>" (doctor cards, profile) preselects that doctor and its speciality.
+ * data-doctor="<slug>" (doctor cards, profile) preselects that doctor and its speciality; data-hospital="<slug>" (hospital pages,
+ * Home facility rows) fills the hidden `hospital` field so the email names the hospital (docs/open-decisions.md HD5).
  */
 import Modal from './Modal.astro';
 import FormShell from './FormShell.astro';
@@ -65,6 +66,7 @@ const radios = fieldsIn(ID, 'gender');
     {fieldsIn(ID, 'message').map((f) => (
       <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} area={{ w: 523.794, h: 64.009, px: 9.34, py: 11.72, fs: 13.523 }} />
     ))}
+    {fieldsIn(ID, 'hidden').map((f) => <input type="hidden" name={f.name} value="" data-preselect={f.name} />)}
   </FormShell>
 </Modal>
 

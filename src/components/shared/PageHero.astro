@@ -29,8 +29,10 @@ interface Props {
   button?: 'outline' | 'fill';
   /** RTL: Figma hero art is mirrored with the layout (default). false = a photo with real content (news post image) is never flipped. */
   mirror?: boolean;
+  /** extra attributes for the button link, e.g. { 'data-hospital': slug } so the Book pop-up knows the hospital */
+  buttonAttrs?: Record<string, string>;
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, buttonAttrs = {} } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
 const p = { textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
@@ -62,7 +64,7 @@ const imgH = variant === 'banner' ? 500 : 323;
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
       {c.text && <p class:list={["text m-0 font-gotham font-normal text-f12 leading-14 not-italic", tone === "white" ? "text-body lg:text-white" : "text-body"]}>{c.text}</p>}
-      <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" fill={button === "fill"} />
+      <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" fill={button === "fill"} {...buttonAttrs} />
     </div>
     <slot name="art" />
   </div>

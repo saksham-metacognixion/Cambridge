@@ -1,5 +1,5 @@
 {
-  "$comment": "PLACEHOLDER: the 6 facilities shown on the Figma Home page and footer, text exactly as in Figma. Replace with Pramod's export. Full name = brand + ' ' + city. region = edition that lists it. address + listPhoto (Our Hospitals page, Figma 101:6247; the list photos differ from the Home 'photo' ones). Al Mudeef's card title is 'Al Mudeef Center' only in Figma (listTitleCityless).",
+  "$comment": "PLACEHOLDER: the 6 facilities shown on the Figma Home page and footer, text exactly as in Figma. Replace with Pramod's export. Full name = brand + ' ' + city. region = edition that lists it. address + listPhoto (Our Hospitals page, Figma 101:6247; the list photos differ from the Home 'photo' ones). Al Mudeef's card title is 'Al Mudeef Center' only in Figma (listTitleCityless). Detail pages (Figma 112:7721): phone (click-to-call, international format), hours ({en, ar}) and mapUrl are NOT in Figma and wait for Pramod (empty = not shown; empty mapUrl = Google Maps search for the address).",
   "hospitals": [
     {
       "slug": "abu-dhabi",
@@ -17,7 +17,13 @@
         "en": "Shakbout City, Abu Dhabi - UAE",
         "ar": ""
       },
-      "listPhoto": "hospitals/abu-dhabi"
+      "listPhoto": "hospitals/abu-dhabi",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": ""
     },
     {
       "slug": "al-ain",
@@ -35,7 +41,13 @@
         "en": "Al Khabisi, Al Ain - UAE",
         "ar": ""
       },
-      "listPhoto": "hospitals/al-ain"
+      "listPhoto": "hospitals/al-ain",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": ""
     },
     {
       "slug": "dhahran",
@@ -53,7 +65,13 @@
         "en": "Al Doha Al Janubia, Dhahran - KSA",
         "ar": ""
       },
-      "listPhoto": "hospitals/dhahran"
+      "listPhoto": "hospitals/dhahran",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": ""
     },
     {
       "slug": "al-khobar",
@@ -71,7 +89,13 @@
         "en": "Al Tahliyah, Al Khobar - KSA",
         "ar": ""
       },
-      "listPhoto": "hospitals/al-khobar"
+      "listPhoto": "hospitals/al-khobar",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": ""
     },
     {
       "slug": "jeddah",
@@ -89,7 +113,13 @@
         "en": "Al Ruwais, Jeddah - KSA",
         "ar": ""
       },
-      "listPhoto": "hospitals/jeddah"
+      "listPhoto": "hospitals/jeddah",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": ""
     },
     {
       "slug": "al-mudeef-abu-dhabi",
@@ -108,7 +138,13 @@
         "ar": ""
       },
       "listPhoto": "hospitals/al-mudeef-abu-dhabi",
-      "listTitleCityless": true
+      "listTitleCityless": true,
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": ""
     }
   ]
 }

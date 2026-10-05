@@ -3,9 +3,8 @@ import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { t } from '../../lib/content';
-import { urlFor, type Edition } from '../../lib/editions';
-import { pagePath } from '../../lib/paths';
-import { hospitals } from '../../lib/doctors';
+import type { Edition } from '../../lib/editions';
+import { hospitals, viewHospitalHref } from '../../lib/hospitals';
 import config from '../../data/hospitals-page.json';
 import SectionIntro from '../shared/SectionIntro.astro';
 
@@ -27,7 +26,7 @@ const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.f
   city: (h as any).listTitleCityless ? '' : t(h.city, edition.locale, 'hospitals'),
   address: t((h as any).address, edition.locale, 'hospitals'),
   src: img((h as any).listPhoto, edition.region),
-  href: urlFor(edition, pagePath((config.viewHospital as any).page)),
+  href: viewHospitalHref(h.slug, edition),
 }));
 ---
 

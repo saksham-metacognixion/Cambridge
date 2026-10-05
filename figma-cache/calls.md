@@ -196,3 +196,4 @@ SUMMARY: Hospital detail session 1 call (#121). Running total since #68: 54. Nex
 125. get_design_context 41:1730 Post Acute Care (excludeScreenshot; screenshot cached) -> FULL -> raw/post-acute-41-1730.tsx
 126. download_assets 40:1467 Post Acute card 1 icon group (svg export, the design context split it into 4 vectors) -> assets/post-acute/icon-neuro-group-40-1467.svg
 SUMMARY: Our Care / Inpatient / Post Acute session 5 calls (#122-126). Running total since #68: 59. Next free number: 127.
+SUMMARY (final build phase, 5 Oct): 6 calls = #121-126 (4 get_design_context, 1 get_screenshot, 1 download_assets). Running total since #68: 59; total logged in this file: 126. Next free number: 127.

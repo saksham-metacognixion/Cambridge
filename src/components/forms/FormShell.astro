@@ -23,7 +23,7 @@ interface Props {
   gaps: { consent: number; submit: number };
   /** Consent row drawn in the page's own Figma style (International Patients: a radio-style circle + "By proceeding you
    *  agree Terms & conditions"); default = the Contact page style with the shared consent text. */
-  consent?: { before: string; link: string; after?: string; on: { src: string }; off: { src: string }; size: number };
+  consent?: { before: string; link: string; after?: string; on: { src: string; width: number; height: number }; off: { src: string; width: number; height: number }; size: number };
   /** Turnstile: 'interaction-only' (default, invisible unless a click is needed) or 'always' (where Figma draws a captcha). */
   captcha?: 'interaction-only' | 'always';
 }
@@ -53,7 +53,7 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
       {consent ? (
         <label class="f-consent f-consent-own" style={`--cs:${consent.size}`}>
           <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
-          <span class="own" aria-hidden="true"><img class="off" src={consent.off.src} alt="" /><img class="on" src={consent.on.src} alt="" /></span>
+          <span class="own" aria-hidden="true"><img class="off" src={consent.off.src} width={consent.off.width} height={consent.off.height} alt="" /><img class="on" src={consent.on.src} width={consent.on.width} height={consent.on.height} alt="" /></span>
           <span class="txt">{consent.before}<a href={privacyHref}>{consent.link}</a>{consent.after}</span>
         </label>
       ) : (

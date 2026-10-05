@@ -5,8 +5,8 @@ import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
+import { clientConfig, commonText } from '../../lib/forms';
 import hospitalData from '../../data/hospitals.json';
-import Turnstile from '../forms/Turnstile.astro';
 import chevron from '../../assets/contact-page/select-chevron.svg';
 import checkbox from '../../assets/contact-page/checkbox.svg';
 import mailIcon from '../../assets/contact-page/icon-mail.svg';
@@ -19,6 +19,10 @@ import cornerFill from '../../assets/contact-page/card-corner-fill.svg';
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('contact/page', edition.locale);
 const f = c.form;
+// Shared form behaviour (src/scripts/forms.ts): EN/AR validation, JSON submit, success message. Field rules = forms.json 'send-enquiry'.
+const common = commonText(edition.locale);
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const err = 'f-err cf-err lg:absolute lg:start-205 lg:w-322';
 const map = img(c.map.image, edition.region);
 // Hospital options come from hospitals.json (one spelling everywhere): the region's own hospitals, all of them on Global.
 const hospitals = hospitalData.hospitals
@@ -36,18 +40,20 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     <div class="card max-lg:w-full max-lg:max-w-[calc(859*var(--u))] max-lg:rounded-[calc(22.056*var(--u))] max-lg:bg-white max-lg:p-[calc(24*var(--u))] max-lg:flex max-lg:flex-col max-lg:gap-[calc(32*var(--u))] lg:contents">
       <div class="hidden lg:block absolute start-67 top-96 w-859 h-463 bg-white rounded-[calc(22.056*var(--u))]" aria-hidden="true"></div>
 
-      <form action="/api/forms/send-enquiry" method="POST" aria-label={f.ariaLabel} class="max-lg:flex max-lg:flex-col max-lg:gap-[calc(14*var(--u))] lg:contents">
+      <form action="/api/forms/send-enquiry" method="POST" novalidate data-form="send-enquiry" data-config={clientConfig('send-enquiry', edition.locale)} aria-label={f.ariaLabel} class="max-lg:flex max-lg:flex-col max-lg:gap-[calc(14*var(--u))] lg:contents">
         <input type="hidden" name="edition" value={edition.id} />
 
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="name">
           <label for="cf-name" class:list={[label, 'lg:absolute lg:start-117 lg:top-134 lg:w-88']}>{f.nameLabel}</label>
-          <input id="cf-name" name="name" type="text" required autocomplete="name" class="field lg:absolute lg:start-205 lg:top-126" />
+          <input id="cf-name" name="name" type="text" required autocomplete="name" class="field lg:absolute lg:start-205 lg:top-126" aria-describedby="cf-name-error" />
+          <p id="cf-name-error" class:list={[err, 'lg:top-[calc(162*var(--u))]']} hidden></p>
         </div>
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="email">
           <label for="cf-email" class:list={[label, 'lg:absolute lg:start-117 lg:top-189']}>{f.emailLabel}</label>
-          <input id="cf-email" name="email" type="email" required autocomplete="email" class="field lg:absolute lg:start-205 lg:top-181" />
+          <input id="cf-email" name="email" type="email" required autocomplete="email" class="field lg:absolute lg:start-205 lg:top-181" aria-describedby="cf-email-error" />
+          <p id="cf-email-error" class:list={[err, 'lg:top-[calc(217*var(--u))]']} hidden></p>
         </div>
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="hospital">
           <label for="cf-hospital" class:list={[label, 'lg:absolute lg:start-117 lg:top-244']}>{f.hospitalLabel}</label>
           <div class="relative max-lg:w-full lg:contents">
             <select id="cf-hospital" name="hospital" required class="field select lg:absolute lg:start-205 lg:top-236">
@@ -56,15 +62,21 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
             </select>
             <img src={chevron.src} width="7" height="4.207" alt="" class="chev pointer-events-none absolute max-w-none end-[calc(11*var(--u))] top-[calc(15*var(--u))] lg:end-auto lg:start-302 lg:top-254" style="width:calc(7*var(--u));height:calc(4.207*var(--u))" />
           </div>
+          <p id="cf-hospital-error" class:list={[err, 'lg:top-[calc(272*var(--u))]']} hidden></p>
         </div>
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="subject">
           <label for="cf-subject" class:list={[label, 'lg:absolute lg:start-117 lg:top-299']}>{f.subjectLabel}</label>
-          <input id="cf-subject" name="subject" type="text" required class="field lg:absolute lg:start-205 lg:top-291" />
+          <input id="cf-subject" name="subject" type="text" required class="field lg:absolute lg:start-205 lg:top-291" aria-describedby="cf-subject-error" />
+          <p id="cf-subject-error" class:list={[err, 'lg:top-[calc(327*var(--u))]']} hidden></p>
         </div>
-        <textarea id="cf-message" name="message" required aria-label={f.messagePlaceholder} placeholder={f.messagePlaceholder} class="field area lg:absolute lg:start-117 lg:top-346"></textarea>
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="message">
+          <textarea id="cf-message" name="message" required aria-label={f.messagePlaceholder} placeholder={f.messagePlaceholder} aria-describedby="cf-message-error" class="field area lg:absolute lg:start-117 lg:top-346"></textarea>
+          <p id="cf-message-error" class="f-err cf-err lg:absolute lg:start-117 lg:top-[calc(434*var(--u))] lg:w-410" hidden></p>
+        </div>
 
+        <div data-field="consent" class="lg:contents">
         <label class="consent max-lg:flex max-lg:items-start max-lg:gap-[calc(10*var(--u))] lg:contents">
-          <input type="checkbox" name="consent" required class="consent-input" />
+          <input type="checkbox" name="consent" required class="consent-input" aria-describedby="cf-consent-error" />
           <span class="box pointer-events-none max-lg:relative max-lg:shrink-0 max-lg:mt-[calc(-1.7*var(--u))] max-lg:ms-[calc(-1.7*var(--u))] lg:absolute lg:start-[calc(122.267*var(--u))] lg:top-[calc(454.267*var(--u))]" aria-hidden="true">
             <img src={checkbox.src} width="15.4667" height="15.4667" alt="" class="block max-w-none" style="width:calc(15.4667*var(--u));height:calc(15.4667*var(--u))" />
             <span class="dot"></span>
@@ -74,12 +86,19 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
             <span class="block">{f.consent.line2}</span>
           </span>
         </label>
+        <p id="cf-consent-error" class="f-err cf-err lg:absolute lg:start-147 lg:top-[calc(475*var(--u))] lg:w-410" hidden></p>
+        </div>
 
-        <Turnstile locale={edition.locale} />
+        {siteKey && <div class="ts-slot lg:absolute lg:start-117 lg:top-[calc(536*var(--u))]" data-sitekey={siteKey} data-language={edition.locale} data-appearance="interaction-only"></div>}
+        <p class="f-alert cf-err lg:absolute lg:start-[calc(234*var(--u))] lg:top-[calc(503*var(--u))] lg:w-[calc(293*var(--u))] lg:text-start" role="alert" hidden></p>
         <button type="submit" class="hit relative block border-0 p-0 m-0 bg-cyan not-italic cursor-pointer rounded-[calc(18.673*var(--u))] w-108 h-36 lg:absolute lg:start-117 lg:top-493">
           <span class="absolute block start-[calc(32.4*var(--u))] top-[calc(9.96*var(--u))] font-gotham font-bold text-[calc(10.8*var(--u))] text-white not-italic whitespace-nowrap">{f.submit}</span>
         </button>
       </form>
+      <div class="f-success max-lg:py-0 lg:absolute lg:start-117 lg:top-[calc(240*var(--u))] lg:w-[calc(410*var(--u))]" data-success-for="send-enquiry" role="status" tabindex="-1" hidden>
+        <p class="s-title">{common.success.title}</p>
+        <p class="s-text">{common.success.text}</p>
+      </div>
 
       <!-- Navy panel is drawn above the card (and past its right edge), then the map and the corner art, as in Figma. -->
       <div class="hidden lg:block absolute start-[calc(682.2*var(--u))] top-96 w-302 h-463 bg-navy rounded-e-[calc(19.409*var(--u))]" aria-hidden="true"></div>
@@ -141,6 +160,8 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     .area { width: calc(410 * var(--u)); }
   }
 
+  /* Error lines (no Figma design: the shared form error style, P2) sit under their field on desktop. */
+  .cf-err { margin: 0; }
   /* Consent: the real checkbox is invisible but keeps its 44px hit area; the circle is the Figma SVG, the dot is the checked state. */
   .consent { position: relative; cursor: pointer; }
   .consent-input { position: absolute; margin: 0; opacity: 0; width: 44px; height: 44px; inset-inline-start: calc(130 * var(--u) - 22px); top: calc(462 * var(--u) - 22px); cursor: pointer; z-index: 1; }

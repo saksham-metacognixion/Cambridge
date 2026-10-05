@@ -6,6 +6,7 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 
 const port = Number(process.argv[2] ?? 4400);
 const root = path.resolve(process.argv[3] ?? 'dist');
@@ -13,6 +14,18 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 
 
 const file = (p) => { try { return fs.statSync(p).isFile() ? p : null; } catch { return null; } };
 const within = (p) => path.resolve(p).startsWith(root);
+// gzip for text types, like nginx (gzip on) and Cloudflare do; cache headers like the nginx config, so Lighthouse measures the real thing
+const TEXT = new Set(['.html', '.css', '.js', '.mjs', '.json', '.xml', '.txt', '.svg']);
+function send(req, res, hit, status = 200) {
+  const ext = path.extname(hit);
+  const headers = { 'Content-Type': TYPES[ext] ?? 'application/octet-stream' };
+  if (hit.includes('/_astro/') || hit.includes('/fonts/')) headers['Cache-Control'] = 'public, max-age=31536000, immutable';
+  const gz = TEXT.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '');
+  if (gz) { headers['Content-Encoding'] = 'gzip'; headers['Vary'] = 'Accept-Encoding'; }
+  res.writeHead(status, headers);
+  const s = fs.createReadStream(hit);
+  (gz ? s.pipe(zlib.createGzip()) : s).pipe(res);
+}
 
 http.createServer((req, res) => {
   const url = new URL(req.url, 'http://x');
@@ -21,15 +34,12 @@ http.createServer((req, res) => {
   const abs = path.join(root, p);
   if (!within(abs)) { res.writeHead(400); return res.end(); }
   const hit = p === '/' ? file(path.join(root, 'index.html')) : file(abs) ?? file(abs + '.html') ?? file(path.join(abs, 'index.html'));
-  if (hit) {
-    res.writeHead(200, { 'Content-Type': TYPES[path.extname(hit)] ?? 'application/octet-stream' });
-    return fs.createReadStream(hit).pipe(res);
-  }
+  if (hit) return send(req, res, hit);
   // nearest 404.html up the path
   let dir = path.dirname(abs);
   while (within(dir)) {
     const nf = file(path.join(dir, '404.html'));
-    if (nf) { res.writeHead(404, { 'Content-Type': TYPES['.html'] }); return fs.createReadStream(nf).pipe(res); }
+    if (nf) return send(req, res, nf, 404);
     if (dir === root) break;
     dir = path.dirname(dir);
   }

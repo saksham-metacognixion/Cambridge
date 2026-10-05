@@ -34,7 +34,7 @@ const dividers = [262, 524, 786];
       ))}
     </ul>
     {dividers.map((x) => (
-      <img src={line6.src} alt="" aria-hidden="true" class="pointer-events-none absolute max-lg:hidden" style={`width:calc(82 * var(--u));height:calc(0.15 * var(--u));inset-inline-start:calc(${x - 41} * var(--u));top:calc(40.925 * var(--u));transform:rotate(90deg)`} />
+      <img src={line6.src} width={line6.width} height={line6.height} alt="" aria-hidden="true" class="pointer-events-none absolute max-lg:hidden" style={`width:calc(82 * var(--u));height:calc(0.15 * var(--u));inset-inline-start:calc(${x - 41} * var(--u));top:calc(40.925 * var(--u));transform:rotate(90deg)`} />
     ))}
   </div>
 </section>

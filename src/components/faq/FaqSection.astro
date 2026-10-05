@@ -71,6 +71,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
   .tab[aria-selected='true'] { padding-top: calc(8.97 * var(--u)); background: #15adbf; color: #fff; font-size: calc(12 * var(--u)); }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .panel[hidden] { display: none; }
+  @media (max-width: 1023.98px) { .tab { min-height: 44px; } } /* tap target */
   .qa { position: relative; }
   .qa + .qa { margin-top: calc(17.255 * var(--u)); }
   .qa[open] + .qa { margin-top: calc(10 * var(--u)); }

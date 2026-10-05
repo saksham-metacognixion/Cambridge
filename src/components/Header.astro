@@ -142,7 +142,10 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .region[data-open] .rmenu { display: block; }
     .rlist { box-shadow: none; background: transparent; padding: 0 0 0 calc(10 * var(--u)); gap: 0; }
     .ritem { display: flex; align-items: center; min-height: 44px; }
-    .toplinks, .mainnav { display: flex; flex-direction: column; gap: calc(12 * var(--u)); }
+    .toplinks, .mainnav { display: flex; flex-direction: column; gap: 0; }
+    /* Tap targets: every menu row is at least 44px high (rows touch, so the hit area is the row itself). */
+    .menu .toplinks a, .menu .mainnav a { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; }
+    .menu a.lang-hit { --hit-w: 44px; --hit-h: 44px; }
     .mainnav li { width: auto; height: auto; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
     .lang li:first-child a { background: #00415a; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }

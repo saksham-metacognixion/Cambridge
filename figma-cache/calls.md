@@ -154,3 +154,25 @@ SUMMARY (About session, 5 Oct): 4 calls so far (all get_screenshot). Next free n
 SUMMARY (About session, 5 Oct): 7 calls (4 get_screenshot, 2 get_design_context, 1 get_metadata). No download_assets: asset URLs of the design-context responses were downloaded with curl. Next free number: 75.
 75. get_screenshot 307:494 About Cambridge second version, full resolution (1052x2655) -> pages/about2-307-494.png (replaces the 951x2400 preview of #69; used to check the timeline)
 SUMMARY (About session): 8 calls. Next free number: 76.
+76. get_design_context 116:311 Why Cambridge -> SPARSE (58 KB node list, no code): used as the node map (loose layers on the frame)
+77. use_figma READ-ONLY 116:311: geometry, fills, strokes, radii, shadows and full text styles of every layer (output cut at 20 KB by the map-art vectors)
+78. use_figma READ-ONLY 116:311 again without vectors/header/footer/CTA -> FULL data for every section -> why-spec.md
+79. download_assets 46:6348 Banner3 1 (hero) -> raw 1052x500 PNG
+80. download_assets 97:5493 Facilies-wireframe 1 -> raw 4096x2048 PNG
+81. download_assets 55:10344 Pioneer 3 -> raw 1080x1350
+82. download_assets 55:10013 Pioneer 1 -> raw 1080x1350
+83. download_assets 116:309 Tream 1 -> raw 1788x922
+84. download_assets 93:892 Accreditation 1 -> raw
+85. download_assets 55:9578 Region 1 (map art, svg export)
+86. download_assets 97:5463 Group 627 (pill bars, svg)
+87. download_assets 55:11489 Pattern Full 4 (svg)
+88. get_screenshot 116:311 Why Cambridge, full resolution (1052x4488) -> pages/why-116-311-full.png
+SUMMARY (About + Why session, 5 Oct): 21 calls = #68-88 (6 get_screenshot, 3 get_design_context (1 sparse), 1 get_metadata, 2 use_figma read-only, 9 download_assets). Next free number: 89.
+89. download_assets 97:5493 Facilies-wireframe 1 at scale 2 (png) -> 2104x444 cropped render (the node uses a CROP fill; the render has the exact crop)
+90. download_assets 93:892 Accreditation 1 at scale 2 (png) -> 1276x798 cropped render
+SUMMARY: Why session 12 calls (#79-90 incl. 2 get_*); About + Why total 23 (#68-90). Next free number: 91.
+91. use_figma READ-ONLY 116:311: SVG export strings + positions of the 11 loose pill-bar vectors behind the handshake photo (93:5382-5397); layer order checked (below Accreditation 1)
+92-102. download_assets (svg) 93:5382, 5383, 5386, 5387, 5388, 5389, 5390, 5393, 5394, 5396, 5397 -> assets/why/bars/*.svg (assembled into src/assets/why/accreditation-bars.svg)
+SUMMARY: Why session 24 calls (#79-102); About + Why total 35 (#68-102). Next free number: 103.
+103. use_figma READ-ONLY: image fill crop transforms of 97:5493 (wireframe: crop y .5779-1, x 0-1), 93:892 (accreditation: x .1762-.8299, y .5791-1), 46:6348 (hero) and 116:309 (team, FILL). The scale-2 renders (#89, #90) are flattened on #F5F5F5, so both images are re-cut from the transparent originals with these crops.
+SUMMARY: Why session 25 calls (#79-103); About + Why total 36 (#68-103). Next free number: 104.

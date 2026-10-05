@@ -1,0 +1,71 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import type { Edition } from '../../lib/editions';
+import pattern from '../../assets/why/pattern.svg';
+import Band from '../careers/Band.astro';
+
+/*
+ * The three "Why Cambridge" blocks (Figma Group 202 + 55:10340...), page y 1994-2941. Card 214.9 x 268.3 (white, radius 17.3,
+ * shadow 0 1 4 rgba(0,0,0,.13)) with the photo 208 x 262 (radius 17.3) inset by (4, 3) / (3, 3) / (4, 3). Cards at x156 / 154 / 154 (the first block,
+ * with its text, sits 2 right of the other two in Figma, kept), text column 25.1 right of the card. Title Gotham Medium 29 / 32 #00415a at
+ * card top +45 / +33 / +45, copy Book 16 / 18 #6b6b6b 8 / 6 / 8 below the title. The pill-stripe pattern (234 x 239) sits at x69,
+ * card top +15 / +14 / +16, under the card. Rows: block 1 top 1994, block 2 +325, hairline (707 x .5 #bcbcbc, x158) 42.7 below block 2,
+ * block 3 43 below the hairline.
+ */
+interface Props { edition: Edition; c: any }
+const { edition, c } = Astro.props;
+// Design only (Figma px), zipped by index with the JSON.
+const design = [
+  { shift: 2, photoX: 4, titleTop: 45, titleW: 500, gap: 8, patternTop: 15 },
+  { shift: 0, photoX: 3, titleTop: 33, titleW: 484, gap: 6, patternTop: 14, svg: true },
+  { shift: 0, photoX: 4, titleTop: 45, titleW: 500, gap: 8, patternTop: 16 },
+];
+const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img(x.image, edition.region), key: i }));
+---
+
+<Band label={c.ariaLabel}>
+  <div class="list">
+    {items.map((x: any, i: number) => (
+      <>
+        {i === 2 && <hr class="rule" />}
+        <article class:list={['row', i === 0 && 'first', i === 1 && 'second', i === 2 && 'third']} style={`--shift:${x.shift};--px:${x.photoX};--tt:${x.titleTop};--tw:${x.titleW};--g:${x.gap};--pt:${x.patternTop}`}>
+          <img src={pattern.src} width="234" height="239" alt="" class="pattern" loading="lazy" decoding="async" />
+          <div class="card">
+            {x.svg
+              ? <img src={x.src.src} width="208" height="262" alt={x.alt} class="photo" loading="lazy" decoding="async" />
+              : <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(208)} height={px(262)} widths={[px(208), px(208) * 2]} sizes={`(min-width: 1440px) ${px(208)}px, 208px`} loading="lazy" decoding="async" alt={x.alt} class="photo" pictureAttributes={{ class: 'contents' }} />}
+          </div>
+          <div class="txt">
+            <h2 class="t">{x.title.map((l: string) => <span class="block">{l}</span>)}</h2>
+            <p class="p">{x.text}</p>
+          </div>
+        </article>
+      </>
+    ))}
+  </div>
+</Band>
+
+<style>
+  .list { display: flex; flex-direction: column; gap: calc(40 * var(--u)); }
+  .row { position: relative; display: flex; flex-direction: column; gap: calc(24 * var(--u)); font-style: normal; }
+  .pattern { display: none; }
+  .card { position: relative; flex: none; box-sizing: border-box; width: calc(214.9 * var(--u)); height: calc(268.3 * var(--u)); background: #fff; border-radius: calc(17.3 * var(--u)); box-shadow: 0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13); }
+  .card :global(.photo) { position: absolute; inset-inline-start: calc(var(--px) * var(--u)); top: calc(3 * var(--u)); width: calc(208 * var(--u)); height: calc(262 * var(--u)); object-fit: cover; max-width: none; border-radius: calc(17.3 * var(--u)); display: block; }
+  .t { margin: 0; font-weight: 500; font-size: calc(29 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .p { margin: calc(var(--g) * var(--u)) 0 0; font-weight: 400; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .rule { margin: 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid #bcbcbc; }
+  @media (min-width: 1024px) {
+    .list { gap: 0; }
+    .row { flex-direction: row; align-items: flex-start; gap: 0; }
+    .first { margin-top: calc(68 * var(--u)); }
+    .second { margin-top: calc(56.7 * var(--u)); }
+    .third { margin-top: calc(43 * var(--u)); }
+    .pattern { display: block; position: absolute; inset-inline-start: calc(69 * var(--u)); top: calc(var(--pt) * var(--u)); width: calc(234 * var(--u)); height: calc(239 * var(--u)); max-width: none; }
+    .card { margin-inline-start: calc((154 + var(--shift)) * var(--u)); }
+    .txt { margin-inline-start: calc(25.1 * var(--u)); margin-top: calc(var(--tt) * var(--u)); width: calc(var(--tw) * var(--u)); }
+    .p { width: calc(488 * var(--u)); }
+    .rule { margin-top: calc(42.7 * var(--u)); margin-inline-start: calc(158 * var(--u)); width: calc(707 * var(--u)); }
+  }
+</style>

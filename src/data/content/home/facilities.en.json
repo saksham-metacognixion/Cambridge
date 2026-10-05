@@ -8,11 +8,11 @@
   "book": { "label": "Book Appointment", "href": "#book-appointment" },
   "visit": { "label": "Visit Page", "href": "#" },
   "stats": [
-    { "number": "300,000+", "label": "Unique OPD Visits" },
-    { "number": "5,000+", "label": "Improved Impatients" },
-    { "number": "30,000+", "label": "Homecare Visits" },
-    { "number": "1200+", "label": "Healthcare Professionals" },
-    { "number": "720", "label": "Operational Beds" },
-    { "number": "6", "label": "Care Presence" }
+    { "number": "300,000+", "label": "Unique OPD Visits", "key": "opd" },
+    { "number": "5,000+", "label": "Improved Impatients", "key": "inpatients" },
+    { "number": "30,000+", "label": "Homecare Visits", "key": "homecare" },
+    { "number": "1200+", "label": "Healthcare Professionals", "key": "professionals" },
+    { "number": "720", "label": "Operational Beds", "key": "beds" },
+    { "number": "6", "label": "Care Presence", "key": "presence" }
   ]
 }

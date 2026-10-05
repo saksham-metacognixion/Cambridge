@@ -17,6 +17,7 @@ export function allRoutes(): PageRoute[] {
   return [
     { key: 'home', path: '' },
     { key: 'about', path: PAGE_PATHS.about },
+    { key: 'why-cambridge', path: PAGE_PATHS.whyCambridge },
     { key: 'contact', path: PAGE_PATHS.contact },
     { key: 'careers', path: PAGE_PATHS.careers },
     { key: 'media-hub', path: 'media-hub' },

@@ -1,0 +1,67 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import { resolveStats } from '../../lib/stats';
+import Band from '../careers/Band.astro';
+
+/*
+ * "Multidisciplinary Professionals" (Figma 86:418, navy #004059 box x41 w976, radius 30). The first 50px of the box (page y 1202-1252)
+ * are covered by the grey band above, so the visible box runs 1252-1926 (h674) with square top corners and radius 30 at the bottom.
+ * Positions below are relative to that visible box (page x minus 41, page y minus 1252): title (49, 54) w572 Gotham Medium 37 / 42 white;
+ * copy (49, 151) w479 Book 14 / 17 white; Read More (49, 349) 118 x 30 #00b8ff radius 7; stats (680, 68) (677, 132) (675, 213) (675, 274),
+ * number Medium 35, label Medium 12, line height 133.7 %; team photo 700.8 x 361.4 at (115, 312), bottom aligned with the box.
+ */
+interface Props { edition: Edition; c: any }
+const { edition, c } = Astro.props;
+const stats = resolveStats(edition, c.stats);
+// Design only (Figma px, relative to the box): position and text width of each stat, zipped by index with the JSON.
+const statBoxes = [{ x: 680, y: 68, w: 193 }, { x: 677, y: 132, w: 123 }, { x: 675, y: 213, w: 193 }, { x: 675, y: 274, w: 215 }];
+const items = stats.map((s, i) => ({ ...s, ...statBoxes[i] }));
+const photo = img(c.photo.image, edition.region);
+const more = urlFor(edition, pagePath(c.button.page));
+---
+
+<Band label={c.ariaLabel}>
+  <div class="nv">
+    <div class="copy">
+      <h2 class="title">{c.title.map((l: string) => <span class="block">{l}</span>)}</h2>
+      <p class="text">{c.text}</p>
+      <a href={more} class="btn">{c.button.label}</a>
+    </div>
+    <ul class="stats" role="list">
+      {items.map((s) => (
+        <li class="stat" style={`--x:${s.x};--y:${s.y};--w:${s.w}`}>
+          <span class="n">{s.number}</span>
+          <span class="l">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(700.8)} height={px(361.4)} widths={[px(700.8), 1788]} sizes={`(min-width: 1440px) ${px(700.8)}px, 90vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+  </div>
+</Band>
+
+<style>
+  .nv { position: relative; box-sizing: border-box; background: var(--color-navy); color: #fff; font-style: normal; padding: calc(32 * var(--u)) calc(24 * var(--u)) 0; border-radius: 0 0 calc(30 * var(--u)) calc(30 * var(--u)); overflow: hidden; }
+  /* below 1024px the long word 'Multidisciplinary' would overflow at the full 37 Figma px, so the size steps down with the width (BUILD.md: only where text would overflow) */
+  .title { margin: 0; overflow-wrap: anywhere; font-weight: 500; font-size: min(calc(37 * var(--u)), 7.6vw); line-height: 1.14; }
+  @media (min-width: 1024px) { .title { line-height: calc(42 * var(--u)); } }
+  .text { margin: calc(13 * var(--u)) 0 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); overflow-wrap: anywhere; }
+  .btn { display: flex; align-items: center; justify-content: center; margin-top: calc(11 * var(--u)); width: calc(118 * var(--u)); height: calc(30 * var(--u)); border-radius: calc(7 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(13 * var(--u)); text-decoration: none; white-space: nowrap; }
+  .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
+  .stat { font-weight: 500; padding-top: calc(3 * var(--u)); }
+  .n { display: block; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  .l { display: block; font-size: calc(12 * var(--u)); line-height: calc(12 * var(--u)); }
+  .nv :global(.photo) { display: block; width: 100%; max-width: calc(700.8 * var(--u)); height: auto; aspect-ratio: 1788 / 922; margin: calc(24 * var(--u)) auto 0; object-fit: cover; }
+  @media (min-width: 1024px) {
+    .nv { margin-inline-start: calc(41 * var(--u)); width: calc(976 * var(--u)); height: calc(674 * var(--u)); padding: 0; }
+    .copy { position: absolute; inset-inline-start: calc(49 * var(--u)); top: calc(54 * var(--u)); width: calc(572 * var(--u)); }
+    .text { width: calc(479 * var(--u)); min-height: calc(187 * var(--u)); }
+    .btn { margin-top: calc(11 * var(--u)); }
+    .stats { display: block; margin: 0; }
+    .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); }
+    .nv :global(.photo) { position: absolute; inset-inline-start: calc(115 * var(--u)); top: calc(312 * var(--u)); width: calc(700.8 * var(--u)); height: calc(361.4 * var(--u)); max-width: none; margin: 0; }
+  }
+</style>

@@ -1,0 +1,76 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import { resolveStats } from '../../lib/stats';
+import Band from '../careers/Band.astro';
+import wireframe from '../../assets/why/wireframe.png';
+import pills from '../../assets/why/pills.svg';
+
+/*
+ * "The Specialized Post-Acute Provider in UAE & KSA" (Figma 116:311, nodes 97:5502 ...), page y 559-1252 (h 693), three below the hero.
+ * Band rgba(231,231,231,.5) full width. Title x98 (Gotham 37 / 42 #00415a: line 1 Book, lines 2-3 Medium), copy x502 (w495,
+ * Book 14 / 17 #6b6b6b), 12 lower / 12 higher than each other (title top 638, copy top 626). Stats (Medium 35 / 12, line height 133.7 %,
+ * #00415a) at x149 / 318 / 518 / 720, y823 (Figma x are irregular, kept as drawn). "Our Hospitals" button 118 x 30 at x481, y921
+ * (border #00415a, radius 7, label Medium 13). Art: building drawing 1052 x 222 at the band bottom (page y1030), pill bars 346.6 x 356
+ * at x361 y989 (under the drawing, cut at the band end, as in Figma).
+ */
+interface Props { edition: Edition; c: any }
+const { edition, c } = Astro.props;
+const stats = resolveStats(edition, c.stats);
+// Design only (Figma px): x of each stat and its text width, zipped by index with the JSON.
+const statBoxes = [{ x: 149, w: 136 }, { x: 318, w: 136 }, { x: 518, w: 193 }, { x: 720, w: 182 }];
+const items = stats.map((s, i) => ({ ...s, ...statBoxes[i] }));
+const hospitals = urlFor(edition, pagePath(c.button.page));
+---
+
+<Band bg="rgba(231,231,231,0.5)" label={c.ariaLabel}>
+  <div class="sp">
+    <div class="top">
+      <h2 class="title"><span class="light">{c.titleLight}</span>{c.titleBold.map((l: string) => <span class="block">{l}</span>)}</h2>
+      <p class="text">{c.text}</p>
+    </div>
+    <ul class="stats" role="list">
+      {items.map((s) => (
+        <li class="stat" style={`--x:${s.x};--w:${s.w}`}>
+          <span class="n">{s.number}</span>
+          <span class="l">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+    <a href={hospitals} class="btn">{c.button.label}</a>
+    <img src={pills.src} width="346.6" height="356" alt="" class="pills" loading="lazy" decoding="async" />
+    <Picture src={wireframe} formats={['avif']} fallbackFormat="webp" width={px(1052)} height={px(222)} widths={[px(1052), 2104]} sizes="(min-width: 1440px) 1440px, 100vw" loading="lazy" decoding="async" alt={c.art.wireframeAlt} class="wire" pictureAttributes={{ class: 'contents' }} />
+  </div>
+</Band>
+
+<style>
+  .sp { position: relative; min-height: calc(693 * var(--u)); padding-top: calc(67 * var(--u)); box-sizing: border-box; overflow: hidden; }
+  .top { display: flex; flex-direction: column; gap: calc(20 * var(--u)); }
+  .title { margin: 0; overflow-wrap: anywhere; font-weight: 500; font-style: normal; font-size: calc(37 * var(--u)); line-height: calc(42 * var(--u)); color: var(--color-navy-alt); }
+  .title .light { display: block; font-weight: 400; }
+  .text { margin: 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
+  .stat { color: var(--color-navy-alt); font-weight: 500; font-style: normal; padding-top: calc(3 * var(--u)); }
+  .n { display: block; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  .l { display: block; font-size: calc(12 * var(--u)); line-height: calc(12 * var(--u)); }
+  .btn { display: flex; align-items: center; justify-content: center; margin-top: calc(32 * var(--u)); width: calc(118 * var(--u)); height: calc(30 * var(--u)); box-sizing: border-box; border: calc(1 * var(--u)) solid var(--color-navy-alt); border-radius: calc(7 * var(--u)); color: var(--color-navy-alt); font-weight: 500; font-size: calc(13 * var(--u)); text-decoration: none; white-space: nowrap; }
+  .btn::before { content: ''; position: absolute; }
+  .wire { position: absolute; inset-inline: 0; bottom: 0; width: 100%; height: calc(222 * var(--u)); object-fit: cover; max-width: none; pointer-events: none; }
+  .pills { position: absolute; width: calc(346.6 * var(--u)); height: calc(356 * var(--u)); top: calc(430 * var(--u)); inset-inline-start: calc(361 * var(--u)); max-width: none; pointer-events: none; }
+  @media (min-width: 1024px) {
+    .sp { padding-top: calc(67 * var(--u)); }
+    .top { flex-direction: row; gap: 0; min-height: calc(153 * var(--u)); }
+    .title { flex: none; width: calc(404 * var(--u)); margin-inline-start: calc(98 * var(--u)); margin-top: calc(12 * var(--u)); }
+    .text { flex: none; width: calc(495 * var(--u)); }
+    .stats { display: block; position: relative; height: calc(62 * var(--u)); margin-top: calc(44 * var(--u)); }
+    .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(var(--w) * var(--u)); }
+    .btn { margin-top: calc(36 * var(--u)); margin-inline-start: calc(481 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .sp { padding-bottom: calc(240 * var(--u)); }
+    .pills { display: none; }
+  }
+</style>

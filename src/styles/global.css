@@ -1,12 +1,27 @@
 @import "tailwindcss";
 
-/* ───────────── Fonts (self-hosted; drop the woff2 files into public/fonts/) ─────────────
-   Gotham licence is being checked with the client, so the files are NOT in the repo yet.
-   Until they are added, the fallback stack below is used (no other brand font is substituted). */
+/* ───────────── Fonts (self-hosted from public/fonts/) ─────────────
+   Light / Book / Medium woff2 = the client's own files from the live site (5 Oct 2026); the web licence for the new
+   domain is still being confirmed (docs/open-decisions.md B1). No Bold file exists (D18). If a file is missing the
+   metric-matched fallback below renders (no other brand font is substituted). */
 @font-face { font-family: "Gotham"; font-weight: 300; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Light.woff2") format("woff2"); }
 @font-face { font-family: "Gotham"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Book.woff2") format("woff2"); }
 @font-face { font-family: "Gotham"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Medium.woff2") format("woff2"); }
-@font-face { font-family: "Gotham"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); }
+/* No Bold file exists (the live site has Light / Book / Medium only; docs/open-decisions.md D18). Without a 700 face
+   here, weight 700 resolves to Gotham Medium with synthetic bold and stays Gotham; a declared-but-missing face would
+   make the browser skip to the fallback family for bold text. Add the face back when Gotham-Bold.woff2 arrives:
+   @font-face { font-family: "Gotham"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); } */
+
+/* Metric-matched fallback (bug 002). Until the Gotham files arrive the system font renders, and its vertical metrics
+   differ from Gotham's: Figma lays Gotham out with ascent ~0.69em / descent ~0.26em (measured on the Landing Page:
+   39px headings sit on 37px lines, 28px on 27px, caps touching the line top), while Segoe UI / Helvetica / SF carry
+   ~1.0em ascent, so every heading sinks ~0.2em in its line box and the gap to the paragraph below closes up.
+   These faces are the SAME system fonts the stack would pick anyway (Windows / macOS / Android), with Gotham's
+   metrics applied, so text sits where Figma puts it on every OS. They do nothing once "Gotham" itself loads. */
+@font-face { font-family: "Gotham Fallback"; font-weight: 300; font-style: normal; src: local("Segoe UI Light"), local("HelveticaNeue-Light"), local("Helvetica Neue Light"), local("Roboto Light"); ascent-override: 69.5%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham Fallback"; font-weight: 400; font-style: normal; src: local("Segoe UI"), local("HelveticaNeue"), local("Helvetica Neue"), local("Roboto"), local("Arial"); ascent-override: 69.5%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham Fallback"; font-weight: 500; font-style: normal; src: local("Segoe UI Semibold"), local("HelveticaNeue-Medium"), local("Helvetica Neue Medium"), local("Roboto Medium"), local("Arial"); ascent-override: 69.5%; descent-override: 25.5%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham Fallback"; font-weight: 700; font-style: normal; src: local("Segoe UI Bold"), local("HelveticaNeue-Bold"), local("Helvetica Neue Bold"), local("Roboto Bold"), local("Arial Bold"); ascent-override: 69.5%; descent-override: 25.5%; line-gap-override: 0%; }
 
 /* ───────────── Scale ─────────────
    --design-w / --target-w come from src/lib/scale.ts (injected by BaseLayout).
@@ -41,7 +56,7 @@
   --color-dot-light: #f9f9f9;
   --color-dot-grey: #d9d9d9;
 
-  --font-gotham: "Gotham", ui-sans-serif, system-ui, sans-serif;
+  --font-gotham: "Gotham", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif;
 
   /* Font sizes used in Figma, scaled: text-f13 = 13 Figma px */
   --text-f7: calc(7 * var(--u));
@@ -186,9 +201,11 @@ body {
 
 /* ───────────── Shared filter controls (Figma 62:783 pills, 62:186 boxes; reused on Conditions, Insurance, Testimonials) ─────────────
    .ui-pill: region pill 79 x 25, radius 12, 1px navy outline; pressed = navy fill. Place it with the parent's layout.
+   ONE rule for every ALL / KSA / UAE pill and tab (Home Doctors / Care Support / News, Find a Doctor, Conditions,
+   Insurance, Testimonials, Refer tabs): no padding or offset, the label is centred by flex (bug 003).
    .ui-box > .ui-field + .ui-chev: 35 tall box, radius 10, 0.5px #418ea2, Gotham Book 10/14 navy, chevron 17 from the end.
    Width of .ui-box: set by the page (311 on Find a Doctor / Conditions). */
-.ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(1 * var(--u)) 0 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
+.ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
 .ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--pill-on, var(--color-navy)); color: #fff; border: 0; }
 .ui-pill:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
 .ui-box { position: relative; flex: none; max-width: 100%; height: calc(35 * var(--u)); }

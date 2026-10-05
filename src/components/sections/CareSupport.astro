@@ -42,9 +42,9 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:221;--y:82;--w:577;--h:27">{c.intro[0]}<br class="max-lg:hidden" />{c.intro[1]}</p>
 
     <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label={c.filterLabel} style="--x:371;--y:132;--w:279;--h:25">
-      <button type="button" aria-pressed="true" class="hit pill bg-navy text-white border-0" style="--x:0">{c.filters[0]}</button>
-      <button type="button" aria-pressed="false" class="hit pill bg-transparent text-navy hair-100 border-navy" style="--x:99">{c.filters[1]}</button>
-      <button type="button" aria-pressed="false" class="hit pill bg-transparent text-navy hair-100 border-navy" style="--x:200">{c.filters[2]}</button>
+      <button type="button" aria-pressed="true" class="hit ui-pill pill" style="--x:0">{c.filters[0]}</button>
+      <button type="button" aria-pressed="false" class="hit ui-pill pill" style="--x:99">{c.filters[1]}</button>
+      <button type="button" aria-pressed="false" class="hit ui-pill pill" style="--x:200">{c.filters[2]}</button>
     </div>
 
     <div data-autoscroll class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
@@ -68,7 +68,8 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 
 <style>
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
-  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; }
+  /* Look (size, outline, pressed fill, centred label) = the shared .ui-pill rule in global.css; only the position is local. */
+  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; }
   .tile { width: calc(89 * var(--u)); height: calc(110 * var(--u)); }
   @media (max-width: 1023.98px) {
     .pill { position: relative; inset-inline-start: auto; }

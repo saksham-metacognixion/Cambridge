@@ -18,11 +18,11 @@ Last updated: 5 Oct 2026, final build phase (Health Article, Hospital detail, Ou
 ## Blocking for go-live (cannot be defaulted)
 | # | Item | Status | Confirms |
 |---|---|---|---|
-| B1 | **Gotham web font files (Light 300, Book 400, Medium 500, and Bold 700 / Italic used in Figma) and their web licence.** Without them the `font-family` rule stays but a fallback font renders. | open | Manager (licence cost), Padmavathi |
+| B1 | **Gotham web font files (Light 300, Book 400, Medium 500, and Bold 700 / Italic used in Figma) and their web licence.** Without them the `font-family` rule stays but a fallback font renders. **Update 5 Oct 2026:** Light / Book / Medium woff2 taken from the live site (cambridgehospital.com `wp-content/uploads/2026/06/`, the client's own self-hosted files) are in `public/fonts/`; the staging renders real Gotham. Decision 5 Oct 2026 (user): no confirmation will come from the client; the site ships with these files (same licence holder, same brand site). Only a Bold file (D18) remains open. Before that, the fallback was metric-matched (`"Gotham Fallback"` in `src/styles/global.css`: the system font with Gotham's ascent / descent as Figma lays it out), so heading-to-paragraph spacing matches Figma on Windows and macOS; letter widths and weight still differ, so line breaks and the look only become exact with the real files (bug 002). | open | Manager (licence cost), Padmavathi |
 | B2 | **Email provider and the form inboxes.** Route: SMTP relay on the client's mail system, or a provider with content retention off ("nothing stored"). Inboxes: `FORM_TO_BOOK_APPOINTMENT`, `FORM_TO_SEND_ENQUIRY`, `FORM_TO_FEEDBACK`, `FORM_TO_REFER_PATIENT`, `INTERNATIONAL_INBOX`, plus `CAREERS_INBOX` only if an apply form is ever wanted. | open | Pratik, Manager |
 | B3 | **Real data JSON:** doctors, hospitals, specialties, news (~259 posts), FAQ answers, testimonials, conditions mapping. Today these are Figma samples or placeholders. | open | Pratik |
 | B4 | **Arabic text for every page and form** (labels, errors, success, country names). All `*.ar.json` files are empty by design (no translating). | open | Pratik |
-| B5 | **Welcome / country pop-up flow** (scope 2.3 says Global only, offering Global / UAE / KSA; Figma has only the UAE version). | open | Pratik, Padmavathi |
+| B5 | **Welcome / country pop-up flow** (scope 2.3 says Global only, offering Global / UAE / KSA; Figma has only the UAE version). Bug 005 (5 Oct 2026) asks for it "on the first visit, until the visitor clicks a button"; the user decision of 5 Oct keeps it in every new tab / window (`remember: "tab"`); `"forever"` in `src/data/country-popup.json` gives the first-visit-only behaviour. Confirm which. | open | Pratik, Padmavathi |
 | B6 | **Production domain, hosting target (Cloudflare Pages assumed) and URL patterns** (current site returns 403 to scripts, so Arabic and page slugs are guesses). Needed for canonical, hreflang, sitemaps and 301 redirects. | open | Pratik, Manager |
 | B7 | **Original full-size photos and KSA image sets.** Figma images are 1052 px wide (soft at 1440 and on retina). People images need KSA versions (e.g. red ghutra) for `/sa`. | open | Padmavathi, Pratik |
 | B8 | **Turnstile site and secret keys**, and the Cloudflare account for the Pages Functions. | open | Manager |
@@ -52,7 +52,7 @@ Last updated: 5 Oct 2026, final build phase (Health Article, Hospital detail, Ou
 | D15 | **Region of data:** news / testimonials / hospitals / insurers shown by region (e.g. SAICO listed under UAE in Figma, probably an error). | Show all in every edition; `region` fields ready. | `region` in each data JSON. | open |
 | D16 | **Condition to specialty mapping** for Conditions & Specialities. | Figma order, no filtering rule beyond what Figma shows. | `src/data/conditions.json` / `condition-filters.ts` config. | open |
 | D17 | **Page titles and meta descriptions** (placeholders on the pages built from Figma). | Invented from the page name, flagged `meta.* = PLACEHOLDER`. | `meta` in each page JSON. | open |
-| D18 | **Gotham Bold / Italic:** used in Figma (headings, textarea placeholders) but outside the three weights in CLAUDE.md. | Rendered as Bold 700 / Italic from the same family. | Font files in `public/fonts/`. | open |
+| D18 | **Gotham Bold / Italic:** used in Figma (headings, textarea placeholders) but outside the three weights in CLAUDE.md; the live site has no Bold file either. | Weight 700 renders as Gotham Medium with synthetic bold (no 700 face declared, so bold text stays Gotham); italic is synthesised. | Add `Gotham-Bold.woff2` to `public/fonts/` and restore the 700 `@font-face` (commented in `src/styles/global.css`). | open |
 | D19 | **Health Article template (Figma 170:839).** | **Built 5 Oct 2026** (see AR1-AR7 below): one page per post in every edition from `src/data/news/posts.json`. | n/a | closed |
 
 ### Health Article template (built 5 Oct 2026 from Figma 170:839)
@@ -182,11 +182,12 @@ The folder is the source of truth for page text and page URLs (user instruction,
 | P5 | **People images needing KSA versions:** Home hero, Find a Doctor hero, Patient Hub hero, International, Insurance, Testimonials, Refer cards, Feedback hero (red ghutra), **Careers hero (Emirati doctor), "Be Part of a Purpose" (two women: hijab version), National Talent Development (Emirati couple)**. | UAE / Global images used on every edition for now. | Add region image keys in the content JSON (`img()` region lookup). | open |
 | P6 | **Images available only at 1x** (hero banners 1052x500, Careers photos): soft at 1440 and retina. | Shipped at the Figma resolution. | Replace the source files (B7). | open |
 | P7 | **Hero text over the photo on phones** (Find a Doctor, Patient Hub, Careers). | Text stacked over the photo with a readable column. | Content/props. | open |
+| P8 | **Home hero below 1024px** (bug 004, 5 Oct 2026; no Figma frame). | Stacked: heading (28/27, the Figma section-heading size, two lines at 360px), paragraph, buttons, then the mother and baby as their own block aligned to the end (phones: layer 162% wide so the people fill the width; 640-1023px: full banner width), the light gradient behind everything, the pill art of the background cropped away as on the other small-screen layouts. Nothing covers the people. | `subjectMobile` / the `max-lg:` classes in `src/components/sections/Hero.astro`. | open (Padmavathi) |
 
 ### Cost items (Manager)
 | # | Question | Default | If different | Status |
 |---|---|---|---|---|
-| M1 | Gotham web licence (B1) | Fallback font until files arrive | Add woff2 to `public/fonts/` | open |
+| M1 | Gotham web licence (B1) | The live site's Light / Book / Medium files are in `public/fonts/` since 5 Oct 2026; shipping with them (user decision 5 Oct 2026, no client confirmation expected) | Supply Bold (D18) | resolved |
 | M2 | Email provider with retention off, or client SMTP (B2) | Provider adapter behind an env variable, `EMAIL_PROVIDER=none` locally | Env + adapter | open |
 | M3 | Cloudflare Pages / Functions plan and Turnstile (B6, B8) | Cloudflare assumed | `deploy/` config | open |
 | M4 | Figma Dev seat | Paid Dev seat in use (200 calls/day, 10/min) | n/a | confirmed |

@@ -23,25 +23,37 @@ const L = c.banner.layers;
 const layers = L && (own(c.banner.image) ? own(L.background) && own(L.subject) : true)
   ? { background: img(L.background, edition.region), subject: img(L.subject, edition.region) }
   : null;
+// Paragraph: Figma breaks it after "journey with" (374 wide box); `text` may be a string or the lines of that break
+// (kept on the canvas layout only; below 1024px it wraps to the viewport).
+const textLines: string[] = Array.isArray(c.text) ? c.text : [c.text];
 const bannerProps = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(500), widths: [720, 1080, px(1052)],
-  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async',
-  class: 'absolute start-0 top-0 h-full w-full object-cover', pictureAttributes: { class: 'contents' },
+  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
+const cover = 'absolute start-0 top-0 h-full w-full object-cover';
+// Below 1024px (no Figma frame: docs/open-decisions.md P1 / HM1) the hero is stacked: text first, then the mother and
+// baby as their own block under it, never covered by the heading. The subject layer is the 1052 x 500 banner with the
+// people in its right half (opaque x 494-984), so the layer is drawn wider than the viewport and aligned to the end:
+// 162% wide at phone widths shows banner x 402-1052 at 390px (people 92px from the edge); from 640px the whole banner
+// width fits (people 361-718 at 768px). The static background keeps covering the whole hero, anchored to its plain
+// gradient side: the pill art of its right half is decoration the small-screen layouts hide (docs/mobile-review).
+// The photo is not mirrored in RTL (desktop keeps the people on the right there too). In LTR the overflowing layer is
+// pulled left so its right edge meets the viewport's; in RTL the block already starts at the right and overflows left.
+const subjectMobile = 'max-lg:relative max-lg:inset-auto max-lg:h-auto max-lg:max-w-none max-lg:w-[162%] max-lg:left-[-62%] max-lg:rtl:left-0 sm:max-lg:w-full sm:max-lg:left-0';
 ---
 <!-- Hero: page y 117, --h 500. Spec y values are page y minus 117. -->
 <section class="relative" style="--h: 500" aria-label={c.ariaLabel}>
-  <div class="stage max-lg:flex max-lg:min-h-[calc(500*var(--u))] max-lg:flex-col max-lg:justify-center max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(48*var(--u))]">
+  <div class="stage max-lg:flex max-lg:flex-col max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:pt-[calc(32*var(--u))]">
     {layers ? (
       <>
-        <Picture src={layers.background} alt="" {...bannerProps} />
+        <Picture src={layers.background} alt="" class={`${cover} max-lg:object-left`} {...bannerProps} />
         <!-- The mother and baby drift with the cursor (scripts/hero-follow.ts); clipped to the hero box. -->
-        <div data-hero-follow class="absolute inset-0 overflow-hidden">
-          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" {...bannerProps} />
+        <div data-hero-follow class="absolute inset-0 overflow-hidden max-lg:relative max-lg:inset-auto max-lg:order-last max-lg:mt-[calc(8*var(--u))] max-lg:-mx-[calc(24*var(--u))]">
+          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" class={`${cover} ${subjectMobile}`} {...bannerProps} />
         </div>
       </>
     ) : (
-      <Picture src={img(c.banner.image, edition.region)} alt={c.banner.alt} fetchpriority="high" {...bannerProps} />
+      <Picture src={img(c.banner.image, edition.region)} alt={c.banner.alt} fetchpriority="high" class={`${cover} max-lg:object-right`} {...bannerProps} />
     )}
     <Picture
       src={overlay}
@@ -54,13 +66,15 @@ const bannerProps = {
       loading="lazy"
       decoding="async"
       alt=""
-      class="absolute start-0 top-341 h-159 w-full object-cover max-lg:top-auto max-lg:bottom-0"
+      class="absolute start-0 top-341 h-159 w-full object-cover max-lg:top-auto max-lg:bottom-0 max-lg:h-[calc(100*var(--u))]"
       pictureAttributes={{ class: 'contents' }}
     />
 
-    <h1 class="relative font-gotham font-medium not-italic text-f39 leading-37 text-navy lg:absolute lg:start-95 lg:top-141 lg:w-374 lg:h-74 whitespace-normal [word-break:break-word]">{c.title[0]}<br />{c.title[1]}</h1>
+    <!-- Figma: Gotham Medium 39 on 37px lines (box 258..332), paragraph box at 336 = 4px under it. Below 1024px the
+         heading steps down to 28/27 (the Figma section-heading size) so it stays on two lines at 360px. -->
+    <h1 class="relative m-0 font-gotham font-medium not-italic text-f39 leading-37 max-lg:text-f28 max-lg:leading-27 text-navy lg:absolute lg:start-95 lg:top-141 lg:w-374 lg:h-74 whitespace-normal [word-break:break-word]">{c.title[0]}<br />{c.title[1]}</h1>
 
-    <p class="relative font-gotham font-normal not-italic text-f12 leading-14 text-body lg:absolute lg:start-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">{c.text}</p>
+    <p class="relative m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body lg:absolute lg:start-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">{textLines.map((line, i) => (<>{i > 0 && <><br class="max-lg:hidden" />{' '}</>}{line}</>))}</p>
 
     <div class="relative flex flex-wrap gap-[calc(14*var(--u))] lg:contents">
       <a href={target(c.buttons[0])} style="--sw:1;--sc:var(--color-cyan)" class="hit relative block h-30 w-138 rounded-r7 hair-card text-center lg:absolute lg:start-98 lg:top-265">

@@ -71,7 +71,7 @@ const pills = pillX.map((x, i) => {
           aria-pressed="false"
           aria-controls="news-cards"
           data-news-tab={p.key}
-          class="news-tab hit hair-100 border-navy rounded-r12 bg-transparent p-0 flex items-center justify-center h-25 w-79 box-border font-gotham font-medium text-f10 leading-10 text-navy text-center not-italic cursor-pointer lg:absolute lg:top-51"
+          class="news-tab hit ui-pill lg:absolute lg:top-51"
           style={`--x:${p.x + F}`}
           data-x
         >{p.label}</button>
@@ -104,9 +104,7 @@ const pills = pillX.map((x, i) => {
     [data-news] :global([data-card]) { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
     [data-news] :global([data-card] > :not(:first-child)) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
   }
-  /* Selected tab: the filled pill Figma uses in Care Support (navy, white text). The border stays, in navy, so the
-     label doesn't move by the border width. */
-  .news-tab[aria-pressed='true'] { background: var(--color-navy, #004059); border-color: var(--color-navy, #004059); color: #fff; }
+  /* Tabs: the shared .ui-pill rule (global.css); selected = the filled navy pill Figma uses in Care Support. */
   /* Tab switch, as on the live site: cards fade out, the set swaps, cards fade back in (script below). */
   @media (prefers-reduced-motion: no-preference) {
     [data-news] :global([data-card]) { transition: opacity 250ms ease; }

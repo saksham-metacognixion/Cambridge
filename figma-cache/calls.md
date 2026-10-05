@@ -134,3 +134,4 @@ SUMMARY after 87: batch-2 session 38 (11 get_screenshot, 25 get_design_context, 
 NOTE (merge 2 Oct): the batch-2 session (above, #50-#87) and the forms session (below) numbered in parallel from 50/60; both lists are real calls.
 60. download_assets 76:431 Welcome Page vertical colour logo, format svg -> figma-cache/assets/forms/welcome/logo-vertical.svg (one flattened SVG, 67.9 KB; the per-layer list was truncated at 20, not needed).
 SUMMARY after 60: forms session today 14. Next free number: 61 (batch-2 session used 50-59).
+61. get_screenshot 112:7295 Career (maxDimension 2400, 757x2400 preview of 1052x3339) -> inspected only (careers session, 5 Oct 2026)

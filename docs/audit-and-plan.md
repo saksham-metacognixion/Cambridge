@@ -154,24 +154,5 @@ public/ fonts/  _redirects  _headers
 
 **C. Needs Pramod:** everything in §7.
 
-## 7. Questions for Pramod
-1. **Arabic URLs:** what is the Arabic URL pattern on the current site?
-2. **Hosting and email:** confirm Cloudflare Pages, choose the email route (SMTP relay or a provider with retention off), and give the recipient inbox for each form in each edition.
-3. **Form details:** send the field lists for the 4 forms. Say which form the Home contact section is, and what happens to the newsletter form.
-4. **Missing designs:** consent checkbox, error and success states (Figma, or OK to style from existing tokens).
-5. **Contrast:** decide on the cyan contrast failures (§2).
-6. **Copy:** send the edit list for §3.
-7. **Hero:** is the hero a slider? Where are the region frames and motion specs?
-8. **Fonts:** Gotham Bold 700 (used in Figma) and the font files.
-9. **Figma budget:** resolved 2 Oct 2026 (paid Dev seat, see CLAUDE.md §3).
-10. **Analytics:** Google Analytics with a consent banner, or none?
-11. **Welcome / country pop-up (scope 2.3):** Figma has only "You’re on Our UAE Website" (Continue Here / Go to Global Website). The scope says Global only, offering Global, UAE and KSA. Which flow is correct? Is there a KSA version (map, text, flag)? Do visitors from other countries see a pop-up? (Built from the UAE design, switched off in `src/data/country-popup.json`. Current reading: Continue Here = UAE site, Go to Global = stay; Esc = stay.)
-12. **Book an Appointment:** Option 1 (106:246, built) or Option 2 (106:510): which is final?
-13. **"We are listening" link (scope 2.5, 2.7):** the Your Opinion Matters pop-up or the Patient Feedback page? (Now: header opens the pop-up, footer goes to the page at the placeholder URL `/patient-feedback`.)
-14. **Dial codes:** confirm the country list and order for the Mobile fields (now all countries; default +971 on Global and UAE, +966 on KSA). Figma has only the UAE flag: send flag artwork, or OK to show no flag for other countries.
-15. **Forms:** field lists for all forms, the recipient inbox per form type (`FORM_TO_BOOK_APPOINTMENT`, `FORM_TO_SEND_ENQUIRY`, `FORM_TO_FEEDBACK`, `FORM_TO_REFER_PATIENT`; the Home contact section uses the Send an Enquiry inbox), and all Arabic text (labels, errors, success, country names).
-16. **Built without a Figma design, for approval:** close ×, error style (navy text, red dot, thin red line on the field), success message and its wording, the consent row (Contact page style, placed above each submit button; forms grow by that row), unselected radio circles on the feedback page.
-17. **Spelling:** Inquiry / Enquiry, Speciality / Specialty, E-mail / Email. Which one, everywhere?
-18. **Contrast fails:** white on cyan 2.26:1 (buttons), cyan text on white 2.26:1 ("Consult for a Care Plan"), grey radios 1.24:1. Keep the Figma colours, or approve darker versions?
-19. **Photos:** the original full-size photos. The home hero and the feedback hero are only 1052 px wide in Figma (soft at 1440 and on retina), and the feedback hero needs a KSA (red ghutra) version.
-20. **Missing pages already linked:** Privacy policy (consent row on every form + footer) is still "#" until the Legal pages are built.
+## 7. Open questions
+Moved to [open-decisions.md](open-decisions.md) (5 Oct 2026): every question has a default decision, who confirms it, and what changes if the answer differs.

@@ -140,6 +140,10 @@ body {
    25% teal on a 1x screen, as in the Figma render. Strokes of 1 Figma px or more (buttons, --sw:1) keep their full colour.
    A colour fade, not opacity, so the card content is unaffected. User decision 2 Oct 2026. */
 :root { --hair-dpr: 1; }
+/* Consent link ("Privacy policy" / "Terms & conditions") inside a form: inline text, so its tap area is extended with padding
+   (inline padding does not change the line layout). */
+@media (max-width: 1023.98px) { [data-field='consent'] a { padding-block: 15px; } }
+
 /* Hero on phones / tablets (no Figma frame): the banner photo is its own block above the text, so no word is drawn over the
    photo or the navy pill bars. `.hero-media` = the photo wrapper, `.hero-copy` = title + text + button (display:contents from
    1024px, where Figma's absolute layout applies). */

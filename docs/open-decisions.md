@@ -68,7 +68,7 @@ Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge, Accreditations & Partn
 | A8 | **Images.** Hero banner (one flattened PNG 1052x500), the four card photos (888 x 976) and the video poster (429 x 264, 1x only, soft at 1440 and retina). People images need KSA versions (hero banner, all four cards). Card 2's photo is 1 Figma px higher than the others in Figma (1122 vs 1123): kept per card (`imageTop`). "Inpatient 3" in Figma (d3f04) is hidden under the handshake photo and is not used. | UAE / Global images on every edition. | Add `src/assets/regions/sa/about/*` (see P5, P6, B7). | open |
 
 **Missing pages (linked but not built):** Hospital detail pages (Figma 112:7721, see H2). Every link on these pages now reaches a built page.
-**Fixed on the way:** the Book an Appointment link's tap layer covered the whole mobile menu, so no menu link could be tapped (mobile review M11).
+**Fixed on the way:** the Book an Appointment link's tap layer covered the whole mobile menu, so no menu link could be tapped (mobile review M11). The header region menu (Global > UAE / KSA) never opened on any page: its script matched `<html data-region="...">` instead of the menu, so the UAE / KSA links could not be clicked (fixed in `src/scripts/region-menu.ts`; present on every branch since the region menu was added).
 
 ### Why Cambridge (built 5 Oct 2026 from Figma 116:311)
 | # | Question | Default used and why | If the answer differs | Status |

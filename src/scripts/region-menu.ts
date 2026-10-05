@@ -2,8 +2,10 @@
 // Escape or a click outside closes it (Escape returns focus to the button). Menu links are visibility:hidden
 // while closed, so they are only reachable by Tab when it is open.
 
-const root = document.querySelector<HTMLElement>('[data-region]');
-const btn = root?.querySelector<HTMLButtonElement>('[data-region-btn]');
+// Found from the button: <html data-region="..."> (edition, set by BaseLayout) also matches [data-region], so a bare
+// querySelector('[data-region]') toggled data-open on <html> and the menu never opened.
+const btn = document.querySelector<HTMLButtonElement>('[data-region-btn]');
+const root = btn?.closest<HTMLElement>('[data-region]') ?? null;
 if (root && btn) {
   const hover = matchMedia('(hover: hover) and (min-width: 1200px)');
   let pinned = false; // opened by click/keyboard, so mouse-leave must not close it

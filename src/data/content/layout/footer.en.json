@@ -3,7 +3,7 @@
   "quickLinks": {
     "heading": "QUICK LINKS",
     "rows": [
-      [{ "label": "Cambridge", "href": "#" }],
+      [{ "label": "Cambridge", "href": "#", "path": "about" }],
       [{ "label": "Our Care", "href": "#" }],
       [{ "label": "Patient Hub", "href": "#", "path": "patient-hub" }],
       [{ "label": "Our Hospitals", "href": "#" }],

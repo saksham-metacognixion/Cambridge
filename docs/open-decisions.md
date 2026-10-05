@@ -2,7 +2,7 @@
 
 Replaces the old "Pramod list" (docs/audit-and-plan.md §7). Pramod is unavailable, so every open question has a **default we built with** and a note on **what changes if the answer differs**. Every default can be changed by editing config or JSON only, never code.
 
-Last updated: 5 Oct 2026 (Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
+Last updated: 5 Oct 2026 (About Cambridge page, Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
 
 ## Default rules (apply everywhere)
 | Situation | Default |
@@ -28,6 +28,7 @@ Last updated: 5 Oct 2026 (Careers page, mobile/tablet review). Confirmers: **Pra
 | B8 | **Turnstile site and secret keys**, and the Cloudflare account for the Pages Functions. | open | Manager |
 | B9 | **Analytics decision** (Google Analytics + cookie consent banner, or none). Room is left for a banner; nothing is built. | open | Pratik |
 | B10 | **Legal pages content** (privacy policy, cookies, others). The consent row on every form and the footer link to "#" until they exist. | open | Pratik |
+| B11 | **"We are listening" section is missing from every About frame** (45:4982, 307:494, 46:5841, 116:311). Scope 2.5 and 2.9 require the section on About, its link in the navigation, and the Contact/Feedback form (2.7). Nothing was invented: the header link exists and opens the Your Opinion Matters pop-up (the feedback form) until the section is designed. No "We are here to listen" text exists in any frame, so the one approved copy edit (2.9) had nothing to change. | open | Pratik (design), Padmavathi |
 
 ## Decisions to confirm
 
@@ -53,6 +54,21 @@ Last updated: 5 Oct 2026 (Careers page, mobile/tablet review). Confirmers: **Pra
 | D17 | **Page titles and meta descriptions** (placeholders on the pages built from Figma). | Invented from the page name, flagged `meta.* = PLACEHOLDER`. | `meta` in each page JSON. | open |
 | D18 | **Gotham Bold / Italic:** used in Figma (headings, textarea placeholders) but outside the three weights in CLAUDE.md. | Rendered as Bold 700 / Italic from the same family. | Font files in `public/fonts/`. | open |
 | D19 | **Health Article template (Figma 170:839) is not built yet**, so the Media Hub posts have no article page, and it is not in the mobile review. Needs the ~259 posts (B3) before it is useful. | Not built; the Figma frame and spec (`figma-cache/article-layout-spec.md`) are cached and ready. | Build as the next template; post URL pattern needs D7. | open |
+
+### About Cambridge (built 5 Oct 2026 from Figma 45:4982; Why Cambridge 116:311 is next)
+| # | Question | Default used and why | If the answer differs | Status |
+|---|---|---|---|---|
+| A1 | **Which About frame is final: 45:4982 or 307:494?** 307:494 (second version) is identical plus a "Journey of Excellence" timeline (2012, 2014, 2015, 2016 cards with two arrows). Neither frame says which is newer. | Built 45:4982. The timeline is built as its own section and switched OFF: `src/data/about.json` -> `showTimeline: false`. Checked against 307:494 at 1440, 390, 768 and in RTL. | Set `showTimeline` to `true`. Nothing else changes (the Explore band moves down 338 Figma px on its own). | open (Pratik / Padmavathi) |
+| A2 | **Header link "We are listening"** (not in the Figma header): approve the addition and its position. | Added as the first link of the top row, same Gotham Book 9 cyan as the other top links, in the free space between the logo and the Opinion icon (x305, 72 wide, 9 Figma px from the logo). Also first in the mobile menu. Fits from 1200px up (checked 1200 to 1920). Target = the Your Opinion Matters pop-up (scope 2.7 form), from `src/data/nav.json` -> `weAreListeningTarget`. | When the About section exists, set `weAreListeningTarget` to `{ "page": "about", "hash": "we-are-listening" }` (= `/about#we-are-listening`). Text: `topLinks[0].label` in `layout/header.en.json`. Move it: `topLinkBoxes[0]` in `Header.astro`. | open (Padmavathi) |
+| A3 | **Intro video: source and host** (YouTube, Vimeo or self-hosted). Figma shows only a poster and a play button. | Poster + play button exactly as in Figma. `src/data/about.json` -> `video: { host, id }` is empty, so the button does nothing. When filled, the player (iframe or `<video>`) is created only on click, no third-party request on page load. | Fill `host` (`youtube`, `vimeo` or `file`) and `id` (video id, or the file URL for `file`). | open (Pratik) |
+| A4 | **"Who We Are" (46:5841): older About draft, or a separate page?** It repeats the About hero, then has an intro text, six stats ("Six Hospitals. Two Countries. One Standard Care."), "Our Foundation of Care" tabs (Mission / Vision / Values) and "Expanding Services to Communities Regionally". No About card links to it. | Not built. | If it is a page: add a route and a card/menu link, build from the saved screenshot (`figma-cache/pages/who-we-are-46-5841.png`). | open (Pratik) |
+| A5 | **About card destinations.** | "About Cambridge" = this page, "Careers Hub" = `/careers`, "Why Choose Cambridge" = `why-cambridge` (Figma 116:311, built next), "Accreditations & Partnerships" = `accreditations-partnerships` (Figma 55:12215, **not built yet**: planned next, listed in the missing pages below). Slugs are placeholders (`src/lib/paths.ts`). | Change the three keys in `PAGE_PATHS`; add 301s. | open |
+| A6 | **About URL and footer link.** | `/about` (+ edition prefixes). Header "About Cambridge" and the footer's first Quick Link ("Cambridge", see D8) both point to it. | `PAGE_PATHS.about`; `layout/footer.en.json` first quick link. | open |
+| A7 | **Numbers and spelling conflicts.** | None on this page: it has no stats or facility names beyond the shared header/footer. (Stats appear in Who We Are / Why Cambridge: 715 beds, 1200+ professionals, 85% discharge rate, 13+ years: compare with the landing page when Why Cambridge is built.) Typos kept as in Figma: "Lear more about how we deliver care" (Explore sub), "Facility Go LIve" (timeline, OFF). | Edit `content/about/page.en.json`. | open (D8 list) |
+| A8 | **Images.** Hero banner (one flattened PNG 1052x500), the four card photos (888 x 976) and the video poster (429 x 264, 1x only, soft at 1440 and retina). People images need KSA versions (hero banner, all four cards). Card 2's photo is 1 Figma px higher than the others in Figma (1122 vs 1123): kept per card (`imageTop`). "Inpatient 3" in Figma (d3f04) is hidden under the handshake photo and is not used. | UAE / Global images on every edition. | Add `src/assets/regions/sa/about/*` (see P5, P6, B7). | open |
+
+**Missing pages (linked but not built):** Why Cambridge (`why-cambridge`, next), Accreditations & Partnerships (`accreditations-partnerships`). The links return 404 until they exist.
+**Fixed on the way:** the Book an Appointment link's tap layer covered the whole mobile menu, so no menu link could be tapped (mobile review M11).
 
 ### Design and QC (Padmavathi)
 | # | Question | Default used and why | If the answer differs | Status |

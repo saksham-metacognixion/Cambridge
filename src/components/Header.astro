@@ -5,6 +5,7 @@ import vector from '../assets/header/vector.svg';
 import { parsePath, getEdition, urlFor } from '../lib/editions';
 import { content } from '../lib/content';
 import { img } from '../lib/images';
+import { weAreListeningHref } from '../lib/nav';
 
 // Current edition and page path, so the language switch lands on the same page in the other language.
 const { edition, path } = parsePath(Astro.url.pathname);
@@ -15,8 +16,9 @@ const c = content('layout/header', edition.locale);
 const logo = img(c.logo.image, edition.region);
 
 // Design (positions/widths) zipped by index with the links from layout/header JSON.
-const topLinkBoxes = [ { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
-const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string }, i: number) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path), ...topLinkBoxes[i] }));
+// First box = "We are listening" (scope 2.5; not in the Figma header, flagged for Padmavathi): placed in the free space between the logo (ends 293) and the Opinion icon (394), same font and colour as its neighbours.
+const topLinkBoxes = [ { l: 305, w: 72 }, { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
+const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string; nav?: string }, i: number) => ({ ...x, href: x.nav === 'weAreListeningTarget' ? weAreListeningHref(edition) : x.path === undefined ? x.href : urlFor(edition, x.path), ...topLinkBoxes[i] }));
 const mainLinkWidths = [84, 41, 54, 62, 51];
 const mainLinks = c.mainLinks.map((x: { label: string; href: string; path?: string }, i: number) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path), w: mainLinkWidths[i] }));
 // Region switch: same page in the chosen region, same language (the language switch does the reverse).
@@ -150,7 +152,7 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .lang { display: flex; gap: calc(12 * var(--u)); }
     .lang li:first-child a { background: #00415a; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
     .lang li:last-child a { background: #ededed; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
-    .book { position: static; display: flex; align-items: center; justify-content: center; width: calc(138 * var(--u)); height: calc(30 * var(--u)); }
+    .book { position: relative; display: flex; align-items: center; justify-content: center; width: calc(138 * var(--u)); height: calc(30 * var(--u)); }
     .book::after { content: "BOOK AN APPOINTMENT"; font-size: calc(9 * var(--u)); font-weight: 500; color: #fffdfd; white-space: nowrap; }
     .book { width: calc(158 * var(--u)); }
     .visit { margin: 0; }

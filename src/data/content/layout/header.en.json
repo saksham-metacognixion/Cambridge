@@ -3,6 +3,7 @@
   "logo": { "image": "header/logo", "alt": "Cambridge Hospital", "homeLabel": "Cambridge Hospital home" },
   "menuLabel": "Main",
   "topLinks": [
+    { "label": "We are listening", "href": "#", "nav": "weAreListeningTarget" },
     { "label": "Your Opinion Matters", "href": "#your-opinion" },
     { "label": "Media Hub", "href": "#", "path": "media-hub" },
     { "label": "Careers", "href": "#", "path": "careers" },
@@ -13,7 +14,7 @@
   "region": { "label": "Global", "menuLabel": "Choose region", "options": [ { "region": "ae", "label": "UAE" }, { "region": "sa", "label": "KSA" } ] },
   "visit": { "intro": "Visit", "lines": ["Cambridge", "Health Group"] },
   "mainLinks": [
-    { "label": "About Cambridge", "href": "#" },
+    { "label": "About Cambridge", "href": "#", "path": "about" },
     { "label": "Our Care", "href": "#" },
     { "label": "Patient Hub", "href": "#", "path": "patient-hub" },
     { "label": "Our Hospitals", "href": "#" },

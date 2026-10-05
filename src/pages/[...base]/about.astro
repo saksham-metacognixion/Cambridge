@@ -1,0 +1,56 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
+import about from '../../data/about.json';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import Intro from '../../components/about/Intro.astro';
+import Timeline from '../../components/about/Timeline.astro';
+import Explore from '../../components/about/Explore.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('about/page', edition.locale);
+const showTimeline = about.showTimeline;
+
+/*
+ * About Cambridge template (Figma 45:4982, file LJIRtzU...). Gaps (Figma px) between blocks:
+ * Hero 119-556 -> intro (video / copy top 636): 80 | intro ends 900 -> grey "Explore" band 974: 74 |
+ * band 974-1537 -> "Your recovery matters" box 1603: 66 | box ends 1871 -> footer 1937: 66.
+ * With the timeline ON (frame 307:494): intro ends 900 -> timeline heading 991: 91; cards end 1220 -> band 1312: 92.
+ * Hero = shared PageHero: title top 217 - 119 = 98 (w385), text 342 (14 below the 3 title lines), button 384 (15 below the text).
+ * Not in Figma: the "We are listening" section (scope 2.5), see docs/open-decisions.md A2 (blocking).
+ */
+const sections = [
+  { id: 'intro', C: Intro, props: { edition, c: c.intro }, mt: 80 },
+  ...(showTimeline ? [{ id: 'journey', C: Timeline, props: { c: c.timeline }, mt: 91 }] : []),
+  { id: 'explore', C: Explore, props: { edition, c: c.explore }, mt: showTimeline ? 92 : 74 },
+  { id: 'recovery', C: ContactRecovery, props: {}, mt: 66 },
+];
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.about} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={c.hero} pos={{ titleTop: 98, titleW: 385, textGap: 14, textW: 374, textX: 97, buttonGap: 15 }} />
+    </div>
+    {
+      sections.map(({ id, C, props, mt }) => (
+        <div id={id} class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+          <C {...props} />
+        </div>
+      ))
+    }
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(66 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

@@ -1,0 +1,129 @@
+{
+  "_note": "About Cambridge (Figma 45:4982; timeline = 307:494, switched off by src/data/about.json showTimeline). Visible text exactly as in Figma (typos kept: 'Lear more', 'Go LIve'); meta.*, alt texts and aria labels are NOT in Figma (PLACEHOLDER). Card links: page = key in PAGE_PATHS. 'Your recovery matters' CTA = the shared Contact page block (contact/page recovery), identical in Figma.",
+  "meta": {
+    "title": "About Cambridge | Cambridge Hospital",
+    "description": "Cambridge Hospital is a specialized hospital for rehabilitation and long-term care in the GCC region, a leader in post-acute and rehabilitation care."
+  },
+  "hero": {
+    "ariaLabel": "From treatment to recovery, all in one place",
+    "banner": {
+      "image": "about/banner",
+      "alt": ""
+    },
+    "title": [
+      "From treatment to",
+      "recovery, all in one",
+      "place"
+    ],
+    "text": "From hospital care to rehabilitation and home support, we deliver care that is continuous and personalized.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "intro": {
+    "ariaLabel": "About Cambridge Hospital",
+    "video": {
+      "poster": "about/video-thumbnail",
+      "alt": "",
+      "playLabel": "Play video"
+    },
+    "title": "Cambridge Hospital",
+    "subtitle": "A Leader in Post-Acute and Rehabilitation Care",
+    "lead": "We are a specialized hospital for rehabilitation and long-term care in the GCC region.",
+    "text": [
+      "At Cambridge Hospital, we provide comprehensive medical care and advanced rehabilitation services for patients requiring short-term recovery as well as long-term support for chronic conditions and complex injuries.",
+      "We deliver personalized care tailored to each patient’s needs, focusing on recovery, independence, and improved quality of life. We also encourage active involvement of family members as an integral part of the care journey."
+    ]
+  },
+  "timeline": {
+    "ariaLabel": "Journey of Excellence",
+    "heading": "Journey of Excellence",
+    "prevLabel": "Previous",
+    "nextLabel": "Next",
+    "items": [
+      {
+        "year": "2012",
+        "title": [
+          "Group was",
+          "Established"
+        ],
+        "text": "Holding company incorporated with mandate to launch LTC facilities in Region"
+      },
+      {
+        "year": "2014",
+        "title": [
+          "Abu Dhabi & Al Ain",
+          "Facility Go LIve"
+        ],
+        "text": "Phase I Abu Dhabi launched June 2014, Phase II January 2015, and Al Ain - April 2015"
+      },
+      {
+        "year": "2015",
+        "title": [
+          "Launch of TVU",
+          "Program"
+        ],
+        "text": "Launched 1st program for Transitional Vent Unit “TVU” for mechanical ventilated patients"
+      },
+      {
+        "year": "2016",
+        "title": [
+          "UAE & KSA",
+          "Expansion"
+        ],
+        "text": "CMRC Saudi Arabia secured its SAGIA license, and Al Ain Facility Phase II became fully operational"
+      }
+    ]
+  },
+  "explore": {
+    "ariaLabel": "Explore Our Care, Expertise, and Opportunities",
+    "heading": "Explore Our Care, Expertise, and Opportunities",
+    "text": "Lear more about how we deliver care, what sets us apart, and the opportunities we offer.",
+    "cards": [
+      {
+        "title": [
+          "About",
+          "Cambridge"
+        ],
+        "button": "Learn More",
+        "page": "about",
+        "image": "about/card-about",
+        "alt": "",
+        "imageTop": -3
+      },
+      {
+        "title": [
+          "Why Choose",
+          "Cambridge"
+        ],
+        "button": "Discover More",
+        "page": "whyCambridge",
+        "image": "about/card-why",
+        "alt": "",
+        "imageTop": -4
+      },
+      {
+        "title": [
+          "Accreditations &",
+          "Partnerships"
+        ],
+        "button": "View Details",
+        "page": "accreditations",
+        "image": "about/card-accreditations",
+        "alt": "",
+        "imageTop": -3
+      },
+      {
+        "title": [
+          "Careers Hub"
+        ],
+        "button": "Explore Careers",
+        "page": "careers",
+        "image": "about/card-careers",
+        "alt": "",
+        "imageTop": -3
+      }
+    ]
+  }
+}

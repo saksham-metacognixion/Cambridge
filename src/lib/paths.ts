@@ -9,6 +9,12 @@ import { DOCTOR_PATHS } from './doctors';
  * so they enter the sitemaps and hreflang.
  */
 export const PAGE_PATHS = {
+  /** About Cambridge (Figma 45:4982). Slug UNCONFIRMED (docs/open-decisions.md A6). */
+  about: 'about',
+  /** Why Cambridge (Figma 116:311), built after About. Slug UNCONFIRMED. */
+  whyCambridge: 'why-cambridge',
+  /** Accreditations & Partnerships (Figma 55:12215), NOT BUILT yet (linked from the About cards; missing-pages list). Slug UNCONFIRMED. */
+  accreditations: 'accreditations-partnerships',
   /** Contact Us (Figma 86:431) */
   contact: 'contact',
   /** Careers (Figma 112:7295). Slug and scope UNCONFIRMED (docs/open-decisions.md D1, D2). */

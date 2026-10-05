@@ -143,3 +143,14 @@ SUMMARY careers session: 3 calls (2 get_screenshot, 1 get_design_context) + the 
 66. get_screenshot 100:5522 Media Hub (1052x2641) -> pages/media-hub-100-5522.png
 67. get_screenshot 170:839 Health Article Layout (1052x2692) -> pages/article-170-839.png (the article TEMPLATE is not built yet)
 SUMMARY: careers session now 7 calls (6 get_screenshot, 1 get_design_context). Next free number: 68.
+68. get_screenshot 45:4982 About Cambridge (1052x2309) -> pages/about-45-4982.png
+69. get_screenshot 307:494 About Cambridge second version (downscaled to 951x2400 preview) -> pages/about2-307-494.png
+70. get_screenshot 46:5841 Who We Are (downscaled 888x2400 preview) -> pages/who-we-are-46-5841.png
+71. get_screenshot 116:311 Why Cambridge (downscaled 563x2400 preview) -> pages/why-116-311.png
+SUMMARY (About session, 5 Oct): 4 calls so far (all get_screenshot). Next free number: 72.
+72. get_design_context 45:4982 About Cambridge (with screenshot) -> FULL -> about-spec.md, assets/about/* (banner, 4 card photos, video-thumbnail, play.svg); "Inpatient 3" (d3f04) = identical to services/inpatient.png, hidden under Home-Healthcare 1 on the Accreditations card, not used
+73. get_metadata 307:494 About Cambridge (second version) -> node list; timeline layers are loose on the frame (no group): 294:764/295:334/295:338/295:339 cards, 295:348 heading, 295:347 Line 33, 297:670/297:675 arrows
+74. get_design_context 307:494 About Cambridge (second version, with screenshot) -> FULL -> about-spec.md (Journey of Excellence), assets/about/timeline-arrow.svg, timeline-line33.svg
+SUMMARY (About session, 5 Oct): 7 calls (4 get_screenshot, 2 get_design_context, 1 get_metadata). No download_assets: asset URLs of the design-context responses were downloaded with curl. Next free number: 75.
+75. get_screenshot 307:494 About Cambridge second version, full resolution (1052x2655) -> pages/about2-307-494.png (replaces the 951x2400 preview of #69; used to check the timeline)
+SUMMARY (About session): 8 calls. Next free number: 76.

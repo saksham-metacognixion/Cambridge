@@ -102,9 +102,9 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .burger { display: none; }
   .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
   .region { z-index: 60; }
-  .region-btn { display: flex; align-items: center; width: 100%; height: 100%; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; white-space: nowrap; }
+  .region-btn { display: flex; align-items: center; width: 100%; height: 100%; padding: 0; border: 0; background: none; font-family: inherit; cursor: pointer; white-space: nowrap; } /* size, weight and colour come from the element's own classes (text-f9 font-medium text-navy) */
   .region-btn:focus-visible, .ritem:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
-  .chev { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-inline-start: calc(-4 * var(--u)); transition: transform .2s; }
+  .chev { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-inline-start: calc(5 * var(--u)); transition: transform .2s; }
   .region[data-open] .chev { transform: rotate(180deg); }
   .rmenu { visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(64 * var(--u)); }
   .region[data-open] .rmenu { visibility: visible; opacity: 1; }

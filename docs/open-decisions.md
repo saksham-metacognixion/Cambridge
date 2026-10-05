@@ -2,7 +2,7 @@
 
 Replaces the old "Pramod list" (docs/audit-and-plan.md §7). Pramod is unavailable, so every open question has a **default we built with** and a note on **what changes if the answer differs**. Every default can be changed by editing config or JSON only, never code.
 
-Last updated: 5 Oct 2026 (Careers page). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
+Last updated: 5 Oct 2026 (Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
 
 ## Default rules (apply everywhere)
 | Situation | Default |
@@ -52,11 +52,12 @@ Last updated: 5 Oct 2026 (Careers page). Confirmers: **Pratik** = scope and cont
 | D16 | **Condition to specialty mapping** for Conditions & Specialities. | Figma order, no filtering rule beyond what Figma shows. | `src/data/conditions.json` / `condition-filters.ts` config. | open |
 | D17 | **Page titles and meta descriptions** (placeholders on the pages built from Figma). | Invented from the page name, flagged `meta.* = PLACEHOLDER`. | `meta` in each page JSON. | open |
 | D18 | **Gotham Bold / Italic:** used in Figma (headings, textarea placeholders) but outside the three weights in CLAUDE.md. | Rendered as Bold 700 / Italic from the same family. | Font files in `public/fonts/`. | open |
+| D19 | **Health Article template (Figma 170:839) is not built yet**, so the Media Hub posts have no article page, and it is not in the mobile review. Needs the ~259 posts (B3) before it is useful. | Not built; the Figma frame and spec (`figma-cache/article-layout-spec.md`) are cached and ready. | Build as the next template; post URL pattern needs D7. | open |
 
 ### Design and QC (Padmavathi)
 | # | Question | Default used and why | If the answer differs | Status |
 |---|---|---|---|---|
-| P1 | **Approve mobile / tablet layouts** (docs/mobile-review). Figma has no small-screen frames, so they are our adaptation. | Stack columns, hamburger below 1200 px, same colours, fonts and text. | New Figma frames replace our adaptation and are built with the same exact-match process. | open |
+| P1 | **Approve mobile / tablet layouts** (docs/mobile-review/index.html: 15 pages, 3 pop-ups, the open menu, 10 bugs found and fixed). Figma has no small-screen frames, so they are our adaptation. Points to look at: hero photo shown above the text below 1024 px (text no longer sits over the photo); text sizes do not step down on phones; footer is one long column with 44 px link rows. | Stack columns, hamburger below 1200 px, same colours, fonts and text. | New Figma frames replace our adaptation and are built with the same exact-match process. | open |
 | P2 | **Elements built without a Figma design:** form close "×", error style (navy text, red dot, thin red line), success message and wording, consent row (Contact page style, above each submit button), unselected radio circles on the feedback page, FAQ empty/pending states, Careers "Content pending" state. | Built in the Figma style. | Styles in `forms.css` / tokens. | open |
 | P3 | **Contrast fails:** white on cyan `#00b8ff` 2.26:1 (buttons), cyan text on white 2.26:1 (header links, outline buttons, "Consult for a Care Plan", Careers outline buttons and cyan sub-heading), grey radios 1.24:1. Keep Figma colours or approve darker versions? | Figma colours kept. | Change the `--color-cyan` token (or add a dark-cyan token) in `src/styles/global.css`. | open |
 | P4 | **Country pop-up glass effect, unselected defaults, 70% Name box:** approved by the client contact on 2 Oct; Padmavathi to confirm at QC. | As approved. | `forms.css`. | open |

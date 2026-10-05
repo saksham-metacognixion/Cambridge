@@ -34,7 +34,7 @@ const imgH = variant === 'banner' ? 500 : 323;
 
 <section class="relative" style={`--h: ${h}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${h}`}>
-    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <Picture
         src={banner}
         formats={['avif']}
@@ -73,8 +73,8 @@ const imgH = variant === 'banner' ? 500 : 323;
     .copy :global(.btn) { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
-    .hero { display: flex; min-height: calc(var(--mh) * var(--u)); flex-direction: column; align-items: flex-start; justify-content: center; padding: calc(48 * var(--u)) calc(24 * var(--u)); box-sizing: border-box; }
-    .copy { gap: calc(16 * var(--u)); }
+    .cover { top: 0; height: 100%; }
+    .copy { gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
     .text { max-width: calc(var(--xw) * var(--u)); }
   }
 </style>

@@ -15,7 +15,7 @@ const banner = img(c.image, edition.region);
 ---
 
 <section class="hero relative" aria-labelledby="feedback-title">
-  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+  <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <Picture
       src={banner}
       formats={['avif']}
@@ -42,13 +42,14 @@ const banner = img(c.image, edition.region);
 
 <style>
   .hero { min-block-size: calc(323 * var(--u)); margin-block-start: calc(-1 * var(--u)); }
+  @media (max-width: 1023.98px) { .hero { min-block-size: 0; } }
   .inner { box-sizing: border-box; max-inline-size: calc(var(--target-w) * 1px); margin-inline: auto; padding-block: calc(100 * var(--u)) calc(24 * var(--u)); padding-inline-start: calc(95 * var(--u)); }
   .title { inline-size: calc(385 * var(--u)); max-inline-size: 100%; min-block-size: calc(80 * var(--u)); line-height: calc(37 * var(--u)); overflow-wrap: break-word; }
   .btn { box-sizing: border-box; inline-size: calc(164 * var(--u)); block-size: calc(30 * var(--u)); margin-inline-start: calc(3 * var(--u)); padding-block-start: calc(9 * var(--u)); }
   .btn span { line-height: normal; }
   @media (max-width: 1023.98px) {
-    .inner { padding-inline: calc(24 * var(--u)); padding-block-start: calc(64 * var(--u)); }
-    .title { inline-size: auto; max-inline-size: 85%; }
+    .inner { padding-inline: calc(24 * var(--u)); padding-block: calc(28 * var(--u)) calc(40 * var(--u)); }
+    .title { inline-size: auto; max-inline-size: 100%; }
     .btn { margin-block-start: 12px; }
   }
 </style>

@@ -4,8 +4,8 @@
  * <dialog> per detected country in src/data/country-popup.json (text, map, flag, the two buttons and their targets).
  * Global editions only. Rendered (and its script shipped) only when the config flag `enabled` is true, or when
  * PUBLIC_COUNTRY_POPUP=on is set for a staging preview. When/whether to open comes from the existing logic:
- * functions/_middleware.ts (Cloudflare country -> ch_geo cookie) + CountryPopupLogic.astro (first visit only,
- * html[data-country-popup], window.chooseEdition saves ch_edition for a year). Values: Figma px from the card's
+ * functions/_middleware.ts (Cloudflare country -> ch_geo cookie) + CountryPopupLogic.astro (html[data-country-popup],
+ * window.chooseEdition saves the choice for as long as country-popup.json `remember` says; default: per tab). Values: Figma px from the card's
  * top-left (card 400 x 287.324 at frame 326,177).
  */
 import { Picture } from 'astro:assets';
@@ -56,14 +56,14 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
       );
     })}
     <script>
-      // Opens the detected country's pop-up on a first Global visit (html[data-country-popup] = ISO country, set by
+      // Opens the detected country's pop-up on a Global visit (html[data-country-popup] = ISO country, set by
       // CountryPopupLogic.astro from the edge cookie). No dialog for that country = nothing shown.
       const open = (iso?: string) => {
         const dlg = iso ? (document.getElementById(`country-popup-${iso}`) as HTMLDialogElement | null) : null;
         if (!dlg || dlg.open) return;
         const choose = (region: string) => (window as unknown as { chooseEdition?: (r: string) => void }).chooseEdition?.(region);
         dlg.querySelectorAll<HTMLButtonElement>('[data-target]').forEach((b) => b.addEventListener('click', () => { choose(b.dataset.target!); dlg.close(); }));
-        // Esc: the visitor stays where they are; saved so the pop-up does not come back.
+        // Esc: the visitor stays where they are (remembered like a choice, see CountryPopupLogic).
         dlg.addEventListener('cancel', () => choose('global'));
         dlg.showModal();
         dlg.querySelector<HTMLButtonElement>('[data-target]')?.focus();

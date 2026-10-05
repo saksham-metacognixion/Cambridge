@@ -121,5 +121,5 @@ Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge, Accreditations & Partn
 
 ## Resolved
 - Figma budget: paid Dev seat since 2 Oct 2026 (confirmed).
-- Country pop-up: switched ON for UAE visitors only (user decision 2 Oct 2026); KSA and other countries wait for B5.
+- Country pop-up: switched ON for UAE visitors only (user decision 2 Oct 2026); KSA and other countries wait for B5. It appears every time the site is opened = in every new tab / window (user decision 5 Oct 2026, `remember: "tab"` in `src/data/country-popup.json`; `forever` = the scope's first-visit-only behaviour). In production it still shows only to visitors Cloudflare places in the UAE; on a local dev server `devCountry` (AE) is assumed.
 - Testimonials and Care Support rows auto-scroll in a slow loop (user decision 2 Oct 2026, matches the live site).

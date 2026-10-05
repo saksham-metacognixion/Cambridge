@@ -58,8 +58,10 @@ Read this file at the start of every session and follow it for all work.
 - Language switch keeps the visitor on the same page in the other language.
 
 ### Country pop-up (Global only)
-- First visit to Global: detect country at the edge (Cloudflare country header or middleware), show the
-  Figma pop-up (Global / UAE / KSA), save choice in a cookie, never show again. No pop-up on `/ae` or `/sa`.
+- On Global: detect country at the edge (Cloudflare country header or middleware), show the Figma pop-up
+  (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. Exception (user decision, 5 Oct 2026): the pop-up appears
+  every time the website is opened (every new tab / window; `remember: "tab"` in `src/data/country-popup.json`),
+  not only on the first visit; `remember: "forever"` restores the original one-year cookie.
 
 ### Arabic (RTL)
 - `dir="rtl"` on Arabic pages; full mirror of logo, navigation, icons, arrows.

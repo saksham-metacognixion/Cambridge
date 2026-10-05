@@ -1,35 +1,53 @@
 ---
 /*
- * Country pop-up, browser part (scope 2.3), Global editions only. NO UI yet: the Figma pop-up design has not
- * been fetched. This decides WHEN it must show and how the choice is saved; the pop-up component will listen
- * for the `ch:country-popup` event (or read `document.documentElement.dataset.countryPopup`).
- *   - shows only on Global, only if no `ch_edition` cookie exists (first visit), never again after a choice
- *   - detected country comes from the `ch_geo` cookie set by functions/_middleware.ts ("XX" if unknown)
- *   - window.chooseEdition('global' | 'ae' | 'sa') saves the choice for a year and goes to that edition's
- *     same-language home (the pop-up's buttons call it)
+ * Country pop-up, browser part (scope 2.3), Global editions only. Decides WHEN the pop-up must show and how the choice
+ * is saved; the pop-up itself (src/components/forms/CountryPopup.astro) listens for `ch:country-popup` / reads
+ * html[data-country-popup]. Config: src/data/country-popup.json.
+ *   - detected country = the `ch_geo` cookie set by functions/_middleware.ts ("XX" if unknown); on a local dev server
+ *     (no Cloudflare) `devCountry` is assumed so the pop-up can be seen
+ *   - `remember` says how long a choice is kept (user decision 5 Oct 2026: the pop-up appears every time the site is
+ *     opened, so the default is 'tab' = sessionStorage, which a new tab or window does not share):
+ *       tab      -> sessionStorage ch_edition: back in every new tab / window, not on the next page in the same tab
+ *       session  -> session cookie: back after the browser is closed
+ *       forever  -> cookie for a year (the original "first visit only")
+ *       never    -> no memory: on every page load
+ *   - window.chooseEdition('global' | 'ae' | 'sa') saves the choice and goes to that edition's same-language home
+ *     (the pop-up's buttons call it; Esc = 'global')
  */
 import { parsePath, editions, urlFor } from '../lib/editions';
+import config from '../data/country-popup.json';
 
 const { edition } = parsePath(Astro.url.pathname);
 const homes = Object.fromEntries(
   editions.filter((e) => e.locale === edition.locale).map((e) => [e.region, urlFor(e)]),
 );
+const remember = (config as { remember?: string }).remember ?? 'forever';
+const devCountry = import.meta.env.DEV ? ((config as { devCountry?: string }).devCountry ?? '') : '';
 ---
 
 {edition.region === 'global' && (
-  <script is:inline define:vars={{ homes }}>
+  <script is:inline define:vars={{ homes, remember, devCountry }}>
     (function () {
       var c = document.cookie;
       function read(n) { var m = c.match(new RegExp('(?:^|;\\s*)' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+      function saved() {
+        try { if (remember === 'tab') return sessionStorage.getItem('ch_edition'); } catch (e) { return null; }
+        if (remember === 'never') return null;
+        return read('ch_edition');
+      }
       window.chooseEdition = function (region) {
         if (!homes[region]) return;
-        document.cookie = 'ch_edition=' + region + '; Path=/; Max-Age=31536000; SameSite=Lax; Secure';
-        document.cookie = 'ch_geo=; Path=/; Max-Age=0';
+        if (remember === 'tab') { try { sessionStorage.setItem('ch_edition', region); } catch (e) {} }
+        else if (remember === 'session') document.cookie = 'ch_edition=' + region + '; Path=/; SameSite=Lax; Secure';
+        else if (remember === 'forever') {
+          document.cookie = 'ch_edition=' + region + '; Path=/; Max-Age=31536000; SameSite=Lax; Secure';
+          document.cookie = 'ch_geo=; Path=/; Max-Age=0';
+        }
         if (region !== 'global') location.href = homes[region];
         else document.documentElement.removeAttribute('data-country-popup');
       };
-      if (read('ch_edition')) return;
-      var country = read('ch_geo') || 'XX';
+      if (saved()) return;
+      var country = read('ch_geo') || devCountry || 'XX';
       document.documentElement.dataset.countryPopup = country;
       document.dispatchEvent(new CustomEvent('ch:country-popup', { detail: { country: country } }));
     })();

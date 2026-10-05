@@ -5,8 +5,10 @@
  * x 520.5 (w577) | 23 | pills 59:14338/14339 125 x 25 radius 12 at x 391 and 531 (selected #00415a fill, other 1px
  * #004059 outline; label Medium 10/10) | 34 | card 46:8029 x 42, 968 wide (Figma h 1179), padding top 56 / start 44 /
  * end 43 / bottom 52 below SUBMIT (150 x 50, radius 15, Bold 15, label top 18).
- * The pills switch two forms (ARIA tabs, src/scripts/tabs.ts): For Doctors = Figma; For Others = the same form without
- * the referring-doctor block (NOT in Figma, flagged for Pramod). Without JS the For Doctors form works.
+ * The pills switch three forms (ARIA tabs, src/scripts/tabs.ts), the tabs named in the client's Refer a Patient document
+ * (5 Oct 2026): For Healthcare Professionals = the Figma form; For You, Family or friends and For Corporate or Organisations =
+ * the same form without the referring-doctor block (their field lists are not in the document, docs/open-decisions.md CT11).
+ * The third pill sits 15 to the right of the second (Figma pitch); below 1024px the pills wrap. Without JS the first form works.
  */
 import FormShell from '../forms/FormShell.astro';
 import ReferFields from './ReferFields.astro';
@@ -21,6 +23,7 @@ const c = content('forms/refer', edition.locale);
 const tabs = [
   { key: 'doctor', form: 'refer-patient' },
   { key: 'other', form: 'refer-patient-other' },
+  { key: 'corporate', form: 'refer-patient-corporate' },
 ];
 ---
 
@@ -50,8 +53,8 @@ const tabs = [
 
 <style>
   .refer { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; color: var(--color-navy); }
-  .tablist { display: flex; justify-content: center; gap: calc(15 * var(--u)); margin-top: calc(23 * var(--u)); }
-  .pill { --pill-w: 125; --pill-on: var(--color-navy-alt); }
+  .tablist { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(15 * var(--u)); margin-top: calc(23 * var(--u)); }
+  .pill { --pill-w: 160; --pill-on: var(--color-navy-alt); } /* Figma 125: the client's longer labels ("For Corporate or Organisations") need 160 */
   .card { margin: calc(34 * var(--u)) 16px 0; padding: 24px 16px; }
   .card[hidden] { display: none; }
 
@@ -65,7 +68,7 @@ const tabs = [
   .card :global(.f-consent) { margin-inline-start: 0; }
 
   @media (min-width: 1024px) {
-    .tablist { justify-content: flex-start; margin-inline-start: calc(391 * var(--u)); }
+    .tablist { justify-content: flex-start; margin-inline-start: calc(268 * var(--u)); } /* three 160 pills + 2 gaps = 510, centred on the Figma pill centre 523 */
     .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(56 * var(--u)) calc(43 * var(--u)) calc(52 * var(--u)) calc(44 * var(--u)); }
     .card :global(.rf-sel-req) { inline-size: calc(410 * var(--u)); }
   }

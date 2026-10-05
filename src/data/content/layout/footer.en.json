@@ -10,35 +10,35 @@
         {
           "label": "Cambridge",
           "href": "#",
-          "path": "about"
+          "page": "about"
         }
       ],
       [
         {
           "label": "Our Care",
           "href": "#",
-          "path": "our-care"
+          "page": "ourCare"
         }
       ],
       [
         {
           "label": "Patient Hub",
           "href": "#",
-          "path": "patient-hub"
+          "page": "patientHub"
         }
       ],
       [
         {
           "label": "Our Hospitals",
           "href": "#",
-          "path": "our-hospitals"
+          "page": "hospitals"
         }
       ],
       [
         {
           "label": "Contact Us",
           "href": "#",
-          "path": "contact"
+          "page": "contact"
         }
       ],
       [
@@ -51,48 +51,48 @@
         {
           "label": "Media Hub",
           "href": "#",
-          "path": "media-hub"
+          "page": "mediaHub"
         }
       ],
       [
         {
-          "label": "Careers",
+          "label": "Career Hub",
           "href": "#",
-          "path": "careers"
+          "page": "careers"
         }
       ],
       [
         {
-          "label": "Knowledge Center",
+          "label": "Knowledge Centre",
           "href": "#",
-          "path": "media-hub",
-          "query": "?category=health-articles#latest"
+          "query": "?category=health-articles#latest",
+          "page": "mediaHub"
         }
       ],
       [
         {
           "label": "FAQs",
           "href": "#",
-          "path": "faq"
+          "page": "faq"
         },
         {
           "label": "Your Opinion Matters",
           "href": "#your-opinion",
-          "path": "patient-feedback"
+          "page": "patientFeedback"
         }
       ],
       [
         {
           "label": "Find a Doctor",
           "href": "#",
-          "path": "find-a-doctor"
+          "page": "findDoctor"
         }
       ],
       [
         {
           "label": "Search Conditions",
           "href": "#",
-          "path": "conditions-specialities"
+          "page": "conditions"
         }
       ],
       [
@@ -109,20 +109,20 @@
       {
         "label": "Inpatient Care",
         "href": "#",
-        "care": "inpatient-care"
+        "care": "inpatient"
       },
       {
         "label": "Outpatient Care",
         "href": "#",
-        "care": "outpatient-care"
+        "care": "outpatient"
       },
       {
-        "label": "Home Health Care",
+        "label": "Home Care",
         "href": "#",
-        "care": "home-health-care"
+        "care": "home-care"
       },
       {
-        "label": "In School Care",
+        "label": "In-School Care",
         "href": "#",
         "care": "in-school-care"
       }
@@ -156,12 +156,13 @@
     "compliance": {
       "label": "Compliance",
       "href": "#",
-      "path": "compliance"
+      "page": "compliance"
     },
     "privacy": {
       "label": "Privacy Policy",
       "href": "#",
-      "path": "privacy-policy"
+      "page": "privacyPolicy"
     }
-  }
+  },
+  "_note": "Footer text (Figma). Quick link labels: 'Career Hub', 'Knowledge Centre' (site map, 5 Oct 2026); services = the four Our Care services ('Home Care', 'In-School Care' as in the documents; `care` = service slug in src/data/care.json). Links: `page` = key in PAGE_PATHS, `href` = literal (pop-ups). Facility names come from hospitals.json."
 }

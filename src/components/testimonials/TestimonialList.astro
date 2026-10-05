@@ -26,7 +26,7 @@ const loc = edition.locale;
   <ul class:list={['grid', !global && 'no-pills']} role="list" aria-label={c.results.listLabel}>
     {list.map((x) => (
       <li data-regions={x.regions.join(' ')}>
-        <TestimonialCard name={t(x.name, loc, 'testimonials')} quote={t(x.quote, loc, 'testimonials')} photo={{ ...x.photo, alt: t(x.photo.alt, loc, 'testimonials') }} pattern={x.pattern} layers={x.layers} region={edition.region} />
+        <TestimonialCard name={t(x.name, loc, 'testimonials')} quote={t(x.quote, loc, 'testimonials')} photo={x.photo ? { ...x.photo, alt: t(x.photo.alt, loc, 'testimonials') } : undefined} pattern={x.pattern} layers={x.layers} region={edition.region} />
       </li>
     ))}
   </ul>

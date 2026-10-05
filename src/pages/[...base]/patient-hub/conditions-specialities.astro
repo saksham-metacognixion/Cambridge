@@ -1,0 +1,41 @@
+---
+import { editionFromBase, editionPaths } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { CONDITION_PATHS } from '../../../lib/conditions';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import ConditionList from '../../../components/conditions/ConditionList.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('conditions-specialities/page', edition.locale);
+
+/*
+ * Conditions & Specialities template (Figma 40:318, file LJIRtzU...). Gaps (Figma px) between blocks:
+ * Hero 119-556 (same component + text positions as Find a Doctor) -> H2 top 598: 42 | last card row ends 1798 ->
+ * recovery box 1867: 69 | box ends 2135 -> footer 2179: 44. Recovery heading top in the box: 50 (36:4985 at 1917).
+ */
+---
+
+<BaseLayout edition={edition} path={CONDITION_PATHS.list} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
+    <div id="conditions" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))"><ConditionList /></div>
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(69 * var(--u))">
+      <ContactRecovery content={c.recovery} headTop={50} />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
+    <Footer />
+  </div>
+  <script>
+    import '../../../scripts/condition-filters';
+  </script>
+</BaseLayout>

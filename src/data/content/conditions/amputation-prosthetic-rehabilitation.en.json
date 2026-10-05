@@ -1,0 +1,32 @@
+{
+  "_note": "Amputation & Prosthetic Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Amputation & Prosthetic Rehabilitation | Cambridge Hospital",
+    "description": "Building strength, balance and confidence for life with a prosthesis."
+  },
+  "hero": {
+    "ariaLabel": "Amputation & Prosthetic Rehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Amputation &",
+      "Prosthetic",
+      "Rehabilitation"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Life after amputation demands structured physical rehabilitation alongside significant emotional adjustment.",
+    "At Cambridge Hospital, we support patients from the early post-operative phase through stump conditioning, prosthetic fitting and training, gait relearning and adaptive techniques for daily living. Occupational therapists and physiotherapists work together from the first days post-amputation through to community reintegration, with home care services continuing support in the patient’s own environment."
+  ]
+}

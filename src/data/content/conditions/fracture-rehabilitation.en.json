@@ -1,0 +1,31 @@
+{
+  "_note": "Fracture Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Fracture Rehabilitation | Cambridge Hospital",
+    "description": "Restoring strength, motion and function as bones heal."
+  },
+  "hero": {
+    "ariaLabel": "Fracture Rehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Fracture",
+      "Rehabilitation"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Recovering from a fracture requires more than waiting for the bone to heal – muscles weaken, joints stiffen and normal movement patterns are disrupted.",
+    "At Cambridge Hospital, our fracture rehabilitation services across inpatient, outpatient and home care settings help to restore strength, mobility and confidence following fractures of the upper and lower limbs, pelvis and spine. Physiotherapy begins as soon as clinically appropriate and is progressed systematically to ensure a safe and full return to function."
+  ]
+}

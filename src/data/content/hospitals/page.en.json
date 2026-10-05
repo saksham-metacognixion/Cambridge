@@ -1,8 +1,8 @@
 {
-  "_note": "Our Hospitals list (Figma 101:6247). Visible text exactly as in Figma; meta.*, alt texts and aria labels PLACEHOLDER. Hospital names, addresses and photos: src/data/hospitals.json. Stats {shared} = landing page numbers (src/lib/stats.ts); '715 Operational Beds' (no +) and '13+ Years of Experience' are this page's own (docs/open-decisions.md H3). Config: src/data/hospitals-page.json.",
+  "_note": "Our Hospitals list (Figma 101:6247). Text = Website Content - Suhad/Our Hospitals/EN - Our Hospitals Main Page.md (5 Oct 2026). The document says the stats need review (docs/open-decisions.md CT13): numbers unchanged. Hospital names, addresses and photos: src/data/hospitals.json (listTitle / listButton). Stats {shared} = landing page numbers (src/lib/stats.ts). Config: src/data/hospitals-page.json.",
   "meta": {
     "title": "Our Hospitals | Cambridge Hospital",
-    "description": "Six locations, one standard of care: Cambridge Hospital's network of specialized facilities across the UAE and KSA."
+    "description": "Access Cambridge Hospital’s network of specialised facilities across the UAE and KSA, delivering consistent, high-quality care across every location."
   },
   "hero": {
     "ariaLabel": "Six Locations. One Standard of Care.",
@@ -14,7 +14,7 @@
       "Six Locations. ",
       "One Standard of Care."
     ],
-    "text": "Access Cambridge Hospital’s network of specialized facilities across the UAE and KSA, delivering consistent, high-quality care wherever you are.",
+    "text": "Access Cambridge Hospital’s network of specialised facilities across the UAE and KSA, delivering consistent, high-quality care across every location.",
     "button": {
       "label": "Book an Appointment",
       "href": "#book-appointment"
@@ -52,7 +52,7 @@
   },
   "list": {
     "heading": "Find Care Near You",
-    "text": "Our facilities combine the comfort of a welcoming environment with advanced medical technology, ensuring patients receive specialized care in spaces designed for recovery, dignity, and peace of mind.",
+    "text": "Each Cambridge Hospital facility combines a welcoming environment with advanced medical technology and specialist expertise, creating spaces designed to support recovery, dignity and peace of mind.",
     "listLabel": "Our hospitals",
     "button": "View Hospital",
     "empty": "No hospitals in this region yet."

@@ -8,6 +8,7 @@
  */
 import FormShell from '../forms/FormShell.astro';
 import DialSelect from '../forms/DialSelect.astro';
+import CenteredIntro from '../shared/CenteredIntro.astro';
 import { content } from '../../lib/content';
 import { commonText, fieldsIn, fieldId, sourceOptions, splitStar } from '../../lib/forms';
 import { parsePath } from '../../lib/editions';
@@ -31,8 +32,9 @@ const cols = matrix[0]?.options ?? [];
 ---
 
 <section class="fb" aria-labelledby="feedback-title">
-  <div class="intro font-gotham font-normal text-f12 text-body not-italic">
-    {c.intro.map((line: string) => <p>{line}</p>)}
+  <!-- Intro: the client's "We’re Listening" heading + one line (5 Oct 2026) in the shared centred intro block (H2 Medium 28 + Book 12/14), centred on the card. -->
+  <div class="intro">
+    <CenteredIntro id="feedback-intro" heading={c.intro.heading} text={c.intro.text} cx={530} tx={530} />
   </div>
 
   <div class="card pf-card">
@@ -92,22 +94,6 @@ const cols = matrix[0]?.options ?? [];
         )}
       </div>
 
-      {recommend && (
-        <fieldset class="recommend" data-field={recommend.name} aria-describedby={`${id(recommend.name)}-error`}>
-          <legend class="pf-q">{c.fields[recommend.name].label}</legend>
-          <div class="nps">
-            {recommend.options!.map((o) => (
-              <label class="nps-opt">
-                <input class="sr-only" type="radio" name={recommend.name} value={o} required={recommend.required} />
-                <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
-                <span>{c.fields[recommend.name].options[o]}</span>
-              </label>
-            ))}
-          </div>
-          <p id={`${id(recommend.name)}-error`} class="f-err" hidden></p>
-        </fieldset>
-      )}
-
       {matrix.length > 0 && (
         <div class="matrix">
           <p class="pf-q q2">{c.matrix.label}</p>
@@ -133,6 +119,22 @@ const cols = matrix[0]?.options ?? [];
         </div>
       )}
 
+      {recommend && (
+        <fieldset class="recommend" data-field={recommend.name} aria-describedby={`${id(recommend.name)}-error`}>
+          <legend class="pf-q">{c.fields[recommend.name].label}</legend>
+          <div class="nps">
+            {recommend.options!.map((o) => (
+              <label class="nps-opt">
+                <input class="sr-only" type="radio" name={recommend.name} value={o} required={recommend.required} />
+                <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
+                <span>{c.fields[recommend.name].options[o]}</span>
+              </label>
+            ))}
+          </div>
+          <p id={`${id(recommend.name)}-error`} class="f-err" hidden></p>
+        </fieldset>
+      )}
+
       {message && (
         <div class="improve" data-field={message.name}>
           <label for={id(message.name)} class="pf-q q3">{c.fields[message.name].label}</label>
@@ -145,10 +147,9 @@ const cols = matrix[0]?.options ?? [];
 </section>
 
 <style>
-  /* Intro: 3 lines centred on page x 530, top 502 (61 below the hero); card at 599 */
+  /* Intro: heading + line centred on page x 530, top 502 (61 below the hero); card at 599 (the intro box keeps its 97 height) */
   .fb { box-sizing: border-box; max-inline-size: calc(var(--target-w) * 1px); margin-inline: auto; padding-block-start: calc(61 * var(--u)); }
-  .intro { min-block-size: calc(97 * var(--u)); line-height: calc(14 * var(--u)); text-align: center; position: relative; inset-inline-start: calc(4 * var(--u)); }
-  .intro p { margin: 0; }
+  .intro { min-block-size: calc(97 * var(--u)); position: relative; inset-inline-start: calc(4 * var(--u)); }
   .card {
     position: relative; inset-inline-start: calc(4 * var(--u)); box-sizing: border-box;
     inline-size: calc(954 * var(--u)); max-inline-size: calc(100% - 32px); margin-inline: auto;
@@ -164,15 +165,17 @@ const cols = matrix[0]?.options ?? [];
   .mobile .pf-row { margin-inline-start: calc(1 * var(--u)); }
 
   fieldset { margin: 0; padding: 0; border: 0; min-inline-size: 0; }
-  /* Recommend: question at 221 (63 below the contact rows), options from 269, every 28 */
-  .recommend { margin-block-start: calc(63 * var(--u)); }
+  /* Order (client's form, 5 Oct 2026): satisfaction matrix first, then the recommend question, then "Tell us more".
+     Matrix question 63 below the contact rows (the Figma gap after them); recommend question 33.18 below the last matrix row
+     (the Figma gap between the two groups); options from +48, every 28 */
+  .recommend { margin-block-start: calc(33.18 * var(--u)); }
   .recommend > legend { float: inline-start; inline-size: calc(543 * var(--u)); max-inline-size: 100%; min-block-size: calc(48 * var(--u)); }
   .nps { clear: both; display: flex; flex-direction: column; gap: calc(9.18 * var(--u)); }
   .nps-opt { display: flex; align-items: center; gap: calc(8.19 * var(--u)); inline-size: max-content; min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
 
   /* Satisfaction: question at 433 (33.18 below the last option); header row 491; rows at 539 + 58n; label x 50.
      Columns (from x 50): label 236 | cells 96 wide centred on 284 / 424 / 549 / 657 / 765 */
-  .matrix { margin-block-start: calc(33.18 * var(--u)); --cols: calc(236 * var(--u)) calc(96 * var(--u)) calc(44 * var(--u)) calc(96 * var(--u)) calc(29 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)); }
+  .matrix { margin-block-start: calc(63 * var(--u)); --cols: calc(236 * var(--u)) calc(96 * var(--u)) calc(44 * var(--u)) calc(96 * var(--u)) calc(29 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)); }
   .q2 { inline-size: calc(612 * var(--u)); max-inline-size: 100%; min-block-size: calc(58 * var(--u)); }
   .m-head { display: grid; grid-template-columns: var(--cols); align-items: center; min-block-size: calc(37.64 * var(--u)); margin-inline-start: calc(3 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); text-align: center; }
   .m-head > :nth-child(2) { grid-column: 2; } .m-head > :nth-child(3) { grid-column: 4; } .m-head > :nth-child(4) { grid-column: 6; } .m-head > :nth-child(5) { grid-column: 8; } .m-head > :nth-child(6) { grid-column: 10; }
@@ -189,7 +192,7 @@ const cols = matrix[0]?.options ?? [];
   :global([dir='rtl']) .m-cell::before { translate: 50% -50%; }
   .m-row .f-err { clear: both; }
 
-  /* Improve: label at 831 (22.36 below the last row), textarea (50, 870) 797x194 radius 8, placeholder Book 11 at (18, 17) */
+  /* Tell us more: label 22.36 below the last option, textarea (50, +39) 797x194 radius 8, placeholder Book 11 at (18, 17) */
   .improve { margin-block-start: calc(22.36 * var(--u)); }
   .q3 { min-block-size: calc(39 * var(--u)); }
   .pf-area { inline-size: calc(797 * var(--u)); block-size: calc(194 * var(--u)); margin-inline-start: calc(3 * var(--u)); border-radius: calc(8 * var(--u)); padding: calc(17 * var(--u)) calc(18 * var(--u)); resize: none; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
@@ -198,7 +201,7 @@ const cols = matrix[0]?.options ?? [];
   /* Below 1024: one column; the satisfaction rows show each column name under its circle */
   @media (max-width: 1023.98px) {
     .card { inline-size: auto; inset-inline-start: 0; padding: 24px 16px; min-block-size: 0; }
-    .intro { inset-inline-start: 0; padding-inline: 16px; min-block-size: 0; margin-block-end: 24px; }
+    .intro { inset-inline-start: 0; min-block-size: 0; margin-block-end: 24px; }
     .contact { grid-template-columns: minmax(0, 1fr); }
     .m-head { display: none; }
     .q2, .recommend > legend { inline-size: auto; min-block-size: 0; margin-block-end: 12px; }

@@ -1,0 +1,26 @@
+{
+  "_note": "Jeddah Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - KSA Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "hero": {
+    "title": [
+      "Jeddah Hospital"
+    ],
+    "text": "Integrated rehabilitation and ongoing care, combining clinical expertise, dedicated therapies and coordinated support for complex patient needs.",
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
+  },
+  "video": {
+    "host": "",
+    "id": ""
+  },
+  "environment": {
+    "text": [
+      "At Cambridge Hospital Jeddah, we bring together clinical expertise, rehabilitation and compassionate care within an environment designed to support patients throughout their recovery. Comfortable surroundings, dedicated therapy spaces and coordinated medical and nursing care provide the foundation for personalised treatment and rehabilitation.",
+      "Our teams work closely with patients and their families to understand their individual needs and support meaningful progress throughout their stay. Care plans are regularly reviewed as patients develop greater strength, function and independence, helping them move towards their individual recovery goals and the next stage of their care journey."
+    ]
+  },
+  "healing": {
+    "areas": []
+  }
+}

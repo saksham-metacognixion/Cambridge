@@ -3,43 +3,44 @@ import { DOCTOR_PATHS } from "./doctors";
 /**
  * Page paths inside an edition, in ONE place (URL = urlFor(edition, path)). Content JSON names a page by key
  * (`"page": "referPatient"`), never by slug.
- * Slugs follow the Figma frame names (figma-cache/frames.md). UNCONFIRMED with Pramod: cambridgehospital.com answers
- * automated requests with 403, so the current site's paths could not be read. Change them here only.
- * Pages marked "not built" are linked already; add them to allRoutes() (src/lib/routes.ts) when their template exists,
- * so they enter the sitemaps and hreflang.
+ * Slugs = the current site's URL structure (CLAUDE.md 5), read from the page URLs quoted in the client's content documents
+ * ('Website Content - Suhad', 5 Oct 2026): /about/, /about/accreditations-partnerships/, /about/careers/, /care/, /hospitals/,
+ * /patient-hub/conditions-specialities/, /patient-hub/refer-a-patient/, /patient-hub/international-patients/,
+ * /patient-hub/testimonials/, /media-hub/, /your-opinion-matters/; Arabic = /ar/ prefix. Pages without a quoted URL keep the
+ * Figma-derived slug (marked UNCONFIRMED). Change them here only (docs/open-decisions.md CT1).
  */
 export const PAGE_PATHS = {
-  /** About Cambridge (Figma 45:4982). Slug UNCONFIRMED (docs/open-decisions.md A6). */
+  /** About Cambridge (Figma 45:4982); live URL /about/ */
   about: "about",
-  /** Why Cambridge (Figma 116:311), built after About. Slug UNCONFIRMED. */
-  whyCambridge: "why-cambridge",
-  /** Accreditations & Partnerships (Figma 55:12215). Slug UNCONFIRMED. */
-  accreditations: "accreditations-partnerships",
-  /** Our Hospitals list (Figma 101:6247). Slug UNCONFIRMED. Hospital DETAIL pages (Figma 112:7721) are not built yet. */
-  hospitals: "our-hospitals",
+  /** Why Cambridge (Figma 116:311). Slug UNCONFIRMED (no URL in the documents; the site map lists it under About). */
+  whyCambridge: "about/why-cambridge",
+  /** Accreditations & Partnerships (Figma 55:12215); live URL /about/accreditations-partnerships/ */
+  accreditations: "about/accreditations-partnerships",
+  /** Our Hospitals list (Figma 101:6247); live URL /hospitals/. Detail pages = hospitals/<path> (src/lib/hospitals.ts) */
+  hospitals: "hospitals",
   /** Contact Us (Figma 86:431) */
   contact: "contact",
-  /** Careers (Figma 112:7295). Slug and scope UNCONFIRMED (docs/open-decisions.md D1, D2). */
-  careers: "careers",
+  /** Career Hub (Figma 112:7295); live URL /about/careers/ */
+  careers: "about/careers",
   patientHub: "patient-hub",
-  /** Patient Feedback Form (Figma 188:964). Slug UNCONFIRMED: the current site's URL could not be read. */
-  patientFeedback: "patient-feedback",
+  /** Your Opinion Matters / Patient Feedback Form (Figma 188:964); live URL /your-opinion-matters/ */
+  patientFeedback: "your-opinion-matters",
   findDoctor: DOCTOR_PATHS.list,
-  /** Conditions & Specialities (Figma 40:318); detail pages = conditions-specialities/<slug> (src/lib/conditions.ts) */
-  conditions: "conditions-specialities",
-  /** Refer a Patient (Figma 59:14344) */
-  referPatient: "refer-a-patient",
-  /** International Patients (Figma 54:9239) */
-  internationalPatients: "international-patients",
-  /** Insurance Providers (Figma 46:6844) */
-  insuranceProviders: "insurance-providers",
+  /** Conditions & Specialities (Figma 40:318); live URL /patient-hub/conditions-specialities/; detail pages = <this>/<slug> (src/lib/conditions.ts) */
+  conditions: "patient-hub/conditions-specialities",
+  /** Refer a Patient (Figma 59:14344); live URL /patient-hub/refer-a-patient/ */
+  referPatient: "patient-hub/refer-a-patient",
+  /** International Patients (Figma 54:9239); live URL /patient-hub/international-patients/ */
+  internationalPatients: "patient-hub/international-patients",
+  /** Insurance Providers (Figma 46:6844). Slug UNCONFIRMED (no URL in the documents; a Patient Hub page like its siblings). */
+  insuranceProviders: "patient-hub/insurance-providers",
   /** FAQ (Figma 100:5509) */
   faq: "faq",
-  /** Patient Testimonials (Figma 62:2403) */
-  patientTestimonials: "patient-testimonials",
-  /** Our Care hub (Figma 36:5631); services = our-care/<service>, sub-services = our-care/<service>/<sub> (CARE_PATHS in src/lib/care.ts). Slug UNCONFIRMED (OC2). */
-  ourCare: "our-care",
-  /** Media Hub list (Figma 100:5522); articles = media-hub/<slug> (NEWS_PATHS in src/lib/news.ts) */
+  /** Patient Testimonials (Figma 62:2403); live URL /patient-hub/testimonials/ */
+  patientTestimonials: "patient-hub/testimonials",
+  /** Our Care hub (Figma 36:5631); live URL /care/; services and programmes = care/<service>/... (CARE_PATHS in src/lib/care.ts) */
+  ourCare: "care",
+  /** Media Hub list (Figma 100:5522); live URL /media-hub/; articles = media-hub/<slug> (NEWS_PATHS in src/lib/news.ts) */
   mediaHub: "media-hub",
   /**
    * Legal templates (scope 2.5, no Figma frame): one template, content pending (docs/open-decisions.md B10, L1).

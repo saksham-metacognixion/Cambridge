@@ -1,24 +1,37 @@
 {
-  "_note": "Refer a Patient (Figma 59:14344). Visible text exactly as in Figma; meta.* = PLACEHOLDER. Form text: forms/refer.*.json.",
+  "_note": "Refer a Patient (Figma 59:14344). Text = Website Content - Suhad/Patient Hub/EN - Refer a patient.md (5 Oct 2026). meta.description from the document. Form text: forms/refer.*.json.",
   "meta": {
     "title": "Refer a Patient | Cambridge Hospital",
-    "description": "Refer a patient to Cambridge Hospital: share the patient and referral details and our team will coordinate the next steps of care."
+    "description": "Share the patient’s details with our team and we will coordinate the referral and help arrange the appropriate care."
   },
   "hero": {
     "ariaLabel": "Refer a Patient",
-    "banner": { "image": "refer/banner", "alt": "" },
-    "title": ["Refer a Patient with Confidence"],
-    "text": "Share patient and referral details, and our team will handle the coordination of care.",
-    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+    "banner": {
+      "image": "refer/banner",
+      "alt": ""
+    },
+    "title": [
+      "Refer a Patient with Confidence"
+    ],
+    "text": "Share the patient’s details with our team and we will coordinate the referral and help arrange the appropriate care.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
   },
   "intro": {
-    "heading": "Patient Referral Form",
-    "text": "Please complete the form below to refer a patient. Our team will review and coordinate the next steps promptly."
+    "heading": "Patient Referral",
+    "text": "Please complete the form below to refer a patient. Our team will review the referral and get back to you promptly to coordinate the next steps."
   },
   "doctors": {
     "heading": "Expert Care, Trusted Doctors",
     "text": "Our specialists are committed to providing the right care at every stage of your journey.",
     "listLabel": "Our doctors",
-    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-hanna-kassab"
+    ]
   }
 }

@@ -6,31 +6,31 @@
       "image": "services/inpatient",
       "alt": "Inpatient care ward",
       "title": "Inpatient Care",
-      "desc": "24/7 hospital care for patients needing continuous support.",
-      "care": "inpatient-care"
+      "desc": "24/7 Specialised medical and rehabilitation care",
+      "care": "inpatient"
     },
     {
       "image": "services/outpatient",
       "alt": "Outpatient consultation",
       "title": "Outpatient Care",
-      "desc": "Consultations, diagnostics, and treatments without admission.",
-      "care": "outpatient-care"
+      "desc": "Comprehensive consultations, diagnostics and treatments without admission",
+      "care": "outpatient"
     },
     {
       "image": "services/home-healthcare",
       "alt": "Home health care visit",
-      "title": "Home Health Care",
-      "desc": "Quality medical care delivered at home.",
-      "care": "home-health-care"
+      "title": "Home Care",
+      "desc": "Personalised medical and rehabilitation care delivered at home",
+      "care": "home-care"
     },
     {
       "image": "services/in-school",
       "alt": "In-school care",
-      "title": "In School Care",
-      "desc": "On-site care to support student health and safety.",
+      "title": "In-School Care",
+      "desc": "Specialist therapy and medical support delivered at school",
       "care": "in-school-care"
     }
   ],
   "cardButton": "Start Your Care",
-  "_note": "Home Services section (Figma). The same four cards are reused on the Our Care hub and on every hospital page. care = service slug in src/data/care.json: the card links to that service page (our-care/<slug>)."
+  "_note": "Home Services section (Figma). The same four cards are reused on the Our Care hub and on every hospital page. Card titles and text = the client's documents (Our Care main page + hospital pages, 5 Oct 2026: 'Home Care', 'In-School Care', new one-line descriptions); photos as in Figma. care = service slug in src/data/care.json: the card links to that service page (care/<slug>)."
 }

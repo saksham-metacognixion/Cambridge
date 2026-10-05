@@ -1,0 +1,77 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/Neurorehabilitation/EN-Stroke Rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Stroke Rehabilitation",
+    "title": [
+      "Stroke",
+      "Rehabilitation"
+    ],
+    "text": "For patients recovering from stroke, to restore strength, mobility, communication and greater independence."
+  },
+  "overview": [
+    "Stroke rehabilitation is specialised care for patients whose movement, speech, cognition or daily function has been affected by a stroke. At Cambridge Hospital, our stroke rehabilitation programme supports recovery through a structured pathway that combines medication management with physical, occupational, speech and cognitive therapies",
+    "Care is delivered by an interdisciplinary team focused on personalised, measurable goals, helping patients regain independence, improve daily function and rebuild confidence. Family education and emotional support are integrated throughout the programme to support recovery and ease the transition back to everyday life."
+  ],
+  "topics": [
+    {
+      "label": "What Is Stroke Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Stroke rehabilitation is the process of helping patients recover abilities that have been lost or affected by a stroke. It focuses on restoring movement, communication, thinking skills and independence through structured therapy and medical support."
+        },
+        {
+          "type": "p",
+          "text": "Rehabilitation supports the brain’s ability to adapt and relearn essential functions affected by stroke. This may include improving strength and mobility, rebuilding daily living skills, enhancing speech and cognition and supporting emotional wellbeing."
+        },
+        {
+          "type": "p",
+          "text": "The goal is to help each patient achieve the greatest possible level of function and quality of life after a stroke."
+        }
+      ]
+    },
+    {
+      "label": "Our Inpatient Stroke Rehabilitation Programme",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our programme delivers comprehensive, multidisciplinary care with 24/7 support, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Complex medical management** - managing post-stroke complications under full clinical supervision",
+            "**Physical rehabilitation** - tailored to each patient’s needs, from mild motor impairment to severe physical disability",
+            "**Cognitive and communicative recovery** - rebuilding thinking, memory and communication",
+            "**Psychosocial support** – providing emotional support for patients and families",
+            "**Continuous care** – supporting the transition across inpatient, outpatient and home-based care"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "The Rehabilitation Journey",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "On admission, our interdisciplinary team carries out a holistic assessment that becomes the foundation of a personalised care plan."
+        },
+        {
+          "type": "lead",
+          "text": "Each patient’s rehabilitation programme may combine:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Medication management** - treating the effects of stroke and reduce the risk of recurrent stroke, under clinical supervision",
+            "**Physiotherapy** – rebuilding coordination, movement, balance and strength",
+            "**Occupational therapy** – relearning everyday activities and self-care",
+            "**Speech and language therapy** – recovering speech, communication and swallowing",
+            "**Cognitive therapy** – improving memory, thinking, problem-solving and other cognitive functions",
+            "**Family and emotional support** – supporting patients’ emotional wellbeing and helping families understand and participate in the rehabilitation process"
+          ]
+        }
+      ]
+    }
+  ]
+}

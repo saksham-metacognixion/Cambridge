@@ -1,0 +1,118 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/EN- ICU and Critical Care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "ICU and Critical Care",
+    "title": [
+      "ICU and Critical",
+      "Care"
+    ],
+    "text": "For critically ill patients whose condition requires close monitoring and advanced support, to manage complex medical needs and accelerate recovery."
+  },
+  "overview": [
+    "Critically ill patients need more than treatment; they need constant monitoring and specialist attention. At Cambridge Hospital, our intensive care unit brings together intensivists, critical care nurses, respiratory therapists and rehabilitation specialists to stabilise, support and guide patients through the most critical stage of their illness and recovery."
+  ],
+  "topics": [
+    {
+      "label": "What is ICU & Critical Care",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Intensive care, also called critical care, is the highest level of monitoring and medical support a provided in a hospital. It is for patients whose vital functions, such as breathing, circulation, or consciousness, are unstable, failing or at serious risk."
+        },
+        {
+          "type": "p",
+          "text": "Unlike patients in a general ward, those in the ICU require continuous observation rather than periodic checks. Heart rhythm, oxygen levels, blood pressure, breathing and other vital functions are tracked around the clock, with specialist medical teams and life-support technology available to respond promptly when a patient’s condition changes."
+        },
+        {
+          "type": "p",
+          "text": "This close supervision allows the body to be supported through a critical illness while treatment addresses the underlying cause and recovery begins."
+        }
+      ]
+    },
+    {
+      "label": "When Critical Care Is Needed",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Patients are cared for in the ICU when a serious illness, injury, or major procedure leaves their condition too unstable for a general ward."
+        },
+        {
+          "type": "p",
+          "text": "Common reasons include respiratory failure or severe breathing difficulties, serious infection and sepsis, the effects of a stroke or other neurological injury, dysfunction of one or more organs, recovery from major or high-risk surgery, and other medically complex conditions that require continuous monitoring and rapid intervention."
+        },
+        {
+          "type": "p",
+          "text": "Patients who depend on a ventilator to breathe can also be cared for in the ICU, where their respiratory support can be closely monitored and adjusted according to their condition."
+        }
+      ]
+    },
+    {
+      "label": "Continuous Monitoring and Life Support",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "What sets critical care apart is the combination of continuous monitoring, advanced medical technology and specialist clinical expertise."
+        },
+        {
+          "type": "p",
+          "text": "Continuous monitoring tracks each patient’s heart, lungs, circulation and other vital functions in real time, while equipment such as ventilators, infusion pumps and dialysis machines can support or take over functions that are not working adequately."
+        },
+        {
+          "type": "p",
+          "text": "At Cambridge Hospital, our critical care team reviews these measurements and adjusts treatment according to each patient’s condition and response to care. This close monitoring allows changes to be identified promptly and the level of support to be adjusted as the patient’s needs evolve."
+        }
+      ]
+    },
+    {
+      "label": "Mechanical Ventilation and Weaning",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Breathing support is one of the most important aspects of critical care, and one of Cambridge Hospital’s core strengths."
+        },
+        {
+          "type": "p",
+          "text": "Our teams manage patients on both short- and long-term mechanical ventilation, including those with a tracheostomy, and specialise in the careful process of weaning - gradually reducing ventilator support as the patient’s condition improves and their ability to breathe independently is assessed."
+        },
+        {
+          "type": "p",
+          "text": "By combining a structured, protocol-based approach and a dedicated respiratory therapy team, we work towards reducing ventilator dependence whenever clinically possible. Where ventilation remains necessary, our focus is providing appropriate respiratory support while maintaining patient comfort and stability."
+        }
+      ]
+    },
+    {
+      "label": "Intermediate and Step-Down Care",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Recovery from critical illness is a gradual process, and moving directly from intensive care to a general ward can be a significant transition."
+        },
+        {
+          "type": "p",
+          "text": "Our intermediate (step-down) care provides a bridge, offering a level of close, patient-focused monitoring and multidisciplinary support for patients who are improving but still need a higher level of care."
+        },
+        {
+          "type": "p",
+          "text": "This continuity allows patients to progress as their condition improves, with coordinated support that adapts to their changing needs."
+        }
+      ]
+    },
+    {
+      "label": "Early Rehabilitation In the ICU",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Prolonged critical illness and bed rest can lead to significant weakness and loss of function. At Cambridge Hospital, rehabilitation can begin early, often while the patient is still in intensive care."
+        },
+        {
+          "type": "p",
+          "text": "Working alongside the medical team, physiotherapists use gentle, carefully graded movement, positioning, and chest care to maintain muscle strength, support respiratory function and reduce the effects of prolonged immobility."
+        },
+        {
+          "type": "p",
+          "text": "Starting rehabilitation early can help provide a stronger foundation for the rehabilitation that follows, supporting a more connected journey from critical illness through to recovery."
+        }
+      ]
+    }
+  ]
+}

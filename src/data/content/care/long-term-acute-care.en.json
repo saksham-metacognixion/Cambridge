@@ -1,0 +1,119 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Long term acute care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Long-Term Acute Care",
+    "title": [
+      "Long-Term Acute",
+      "Care"
+    ],
+    "text": "For clinically complex patients who need specialist medical care, intensive coordination and longer recovery - bridging the gap between intensive care and home."
+  },
+  "overview": [
+    "Some patients are past the immediate crisis but still too medically complex for a general ward or home. Long-term acute care at Cambridge Hospital provides intensive, specialist-led management for these clinically complex patients who need more time, closer oversight and carefully coordinated care to recover.",
+    "Here, high-dependency medicine is delivered in a calmer and more personal environment. Every patient is treated as an individual, with a coordinated team working around a single shared plan, allowing recovery to continue at a pace appropriate to the patient’s condition and needs."
+  ],
+  "topics": [
+    {
+      "label": "What Is Long-Term Acute Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Long-term acute care (LTAC) is for patients who remain seriously ill or medically fragile after the acute phase of their illness and who need hospital-level care for an extended period."
+        },
+        {
+          "type": "p",
+          "text": "These are patients whose needs are too complex for a standard ward. They may require prolonged respiratory support, complex wound care, intensive medication management or coordination of several conditions at once."
+        },
+        {
+          "type": "p",
+          "text": "LTAC provides the sustained specialist attention and coordinated care that a longer and more complex recovery demands."
+        }
+      ]
+    },
+    {
+      "label": "When Long-Term Acute Care Is Needed",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Patients may benefit from long-term acute care when a serious illness, injury or complication leaves them stable enough to leave intensive care but still dependent on close medical management."
+        },
+        {
+          "type": "p",
+          "text": "This may include patients recovering from prolonged critical illness, those undergoing ventilator weaning, patients with complex or non-healing wounds or patients managing multiple serious conditions at the same time."
+        },
+        {
+          "type": "p",
+          "text": "The common thread is medical complexity that requires time and specialist expertise to manage, with care tailored to each patient’s condition, needs and progress."
+        }
+      ]
+    },
+    {
+      "label": "Beyond the ICU: A Place to Continue Recovery",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "For many complex patients, the intensive care unit should not be the end of the road."
+        },
+        {
+          "type": "p",
+          "text": "Once the immediate emergency has passed, a medically stable patient can often continue their recovery in a specialised setting designed for longer stays, offering close clinical monitoring in a more comfortable and less intensive environment."
+        },
+        {
+          "type": "p",
+          "text": "Moving to long-term acute care gives patients more space and time to focus on recovery, while providing families with the reassurance of continued specialist care and support throughout the process."
+        }
+      ]
+    },
+    {
+      "label": "Specialist-Led and Intensively Coordinated Care",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Complex patients need close coordination across multiple areas of care."
+        },
+        {
+          "type": "p",
+          "text": "At Cambridge Hospital, physicians lead an interdisciplinary team of specialist nurses, respiratory therapists, physiotherapists, occupational therapists, dietitians and pharmacists who work together around a shared care plan."
+        },
+        {
+          "type": "p",
+          "text": "This coordinated approach ensures that each aspect of a complex patient’s care is carefully managed carefully and that the different elements of treatment work comprehensively towards the patient’s recovery."
+        }
+      ]
+    },
+    {
+      "label": "Ventilator Weaning and Respiratory Support",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Respiratory care is one of Cambridge Hospital’s core strengths."
+        },
+        {
+          "type": "p",
+          "text": "Our teams manage patients on short and long-term mechanical ventilation, including those with a tracheostomy, and use a structured, protocol-based approach to weaning - gradually and safely reducing ventilator dependence where clinically appropriate so patients can breathe independently again where possible."
+        },
+        {
+          "type": "p",
+          "text": "Where full independence from the ventilator isn’t possible, our focus remains on maintaining respiratory stability and supporting the patient’s comfort and quality of life."
+        }
+      ]
+    },
+    {
+      "label": "Complex Wounds, Nutrition and Multi-System Care",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Long-term acute illness can involve several complex needs at the same time."
+        },
+        {
+          "type": "p",
+          "text": "Our teams manage complex and slow-healing wounds, nutritional and feeding needs and the careful management of multiple medical conditions and medications."
+        },
+        {
+          "type": "p",
+          "text": "By treating the whole patient rather than a single problem, we help reduce complications and establish the foundation for steady, lasting progress - supporting patients not only medically, but in achieving the greatest possible level of comfort, function and independence."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Geriatric care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Geriatric Care",
+    "title": [
+      "Geriatric Care"
+    ],
+    "text": "For older adults with complex or age-related health needs, to support stability, mobility, wellbeing, independence and quality of life with dignity."
+  },
+  "overview": [
+    "Growing older often means managing more than one health condition at the same time and recovering more slowly from health setbacks. Geriatric care at Cambridge Hospital takes a comprehensive approach, looking beyond a single diagnosis to bring together medical management, rehabilitation and day-to-day support in one coordinated, compassionate programme.",
+    "Our goal is to help older patients maintain their health, mobility and independence for as long as possible, while protecting their comfort, dignity and quality of life throughout their care."
+  ],
+  "topics": [
+    {
+      "label": "What Is Geriatric Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Geriatric care is specialised care for older adults whose health needs are often more complex and interconnected than those of younger patients."
+        },
+        {
+          "type": "p",
+          "text": "It looks beyond any single illness to consider the whole person, including their medical conditions, mobility, memory, mood, nutrition and independence, bringing these needs together in one coordinated care plan."
+        },
+        {
+          "type": "p",
+          "text": "The aim is not only to treat illness, but also to help older adults live as fully and comfortably as their health allows."
+        }
+      ]
+    },
+    {
+      "label": "Caring for the Whole Older Adult",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Older patients frequently live with several conditions at the same time, including heart disease, diabetes, high blood pressure, joint or bone problems, and the after-effects of a stroke or a fall."
+        },
+        {
+          "type": "p",
+          "text": "Managing these conditions in isolation can sometimes create additional challenges. Our team takes an integrated approach, carefully balancing each condition and medication to ensure that treatment is coordinated around the patient’s overall needs."
+        }
+      ]
+    },
+    {
+      "label": "Multidisciplinary Care Team",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Geriatric care requires a coordinated, multidisciplinary team. Depending on each patient’s needs, their care may involve:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Neurologist / Neurosurgeon** - diagnosis and medical management of the nervous system",
+            "**Physiatrist (Rehabilitation Physician)** - directing the rehabilitation plan",
+            "**Physiotherapist** - restoring movement, strength and mobility",
+            "**Occupational Therapist** - rebuilding the skills needed for daily living",
+            "**Speech and Language Therapist** - supporting speech, communication and swallowing",
+            "**Neuropsychologist / Psychiatrist** - supporting cognition, mood and behaviour, where needed",
+            "**Case Manager** - coordinating the care journey and discharge planning"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "As needed, the team may also include a social worker, recreational therapist, vocational counsellor or chaplain."
+        }
+      ]
+    },
+    {
+      "label": "Medical Stability and Complex Condition Management",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Maintaining stability is the foundation of good geriatric care."
+        },
+        {
+          "type": "p",
+          "text": "Our physicians and nurses monitor chronic conditions closely, review medications regularly and adjust where appropriate. They also monitor for changes in a patient’s condition and respond promptly when additional assessment or treatment is needed."
+        },
+        {
+          "type": "p",
+          "text": "This proactive approach supports ongoing medical stability and can help reduce the need for avoidable hospital visits."
+        }
+      ]
+    },
+    {
+      "label": "Mobility, Strength and Recovery",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Maintaining mobility is one of the most important factors in an older adult’s independence and wellbeing."
+        },
+        {
+          "type": "p",
+          "text": "Our physiotherapists and occupational therapists work on strength, balance and safe movement, and support recovery after falls, fractures or a stroke. Where appropriate, therapy may include gentle, conservative approaches suited to the individual patient."
+        },
+        {
+          "type": "p",
+          "text": "Regaining strength and confidence to move safely can make a meaningful difference to daily life."
+        }
+      ]
+    },
+    {
+      "label": "Memory, Mood and Emotional Wellbeing",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Later life can bring cognitive and emotional challenges alongside physical ones."
+        },
+        {
+          "type": "p",
+          "text": "Our team is attentive to memory changes, low mood, anxiety and the isolation that can accompany illness, and cares for patients with patience and sensitivity."
+        },
+        {
+          "type": "p",
+          "text": "We create calm, familiar routines and a supportive environment that respects each patient’s dignity and helps them feel secure and valued."
+        }
+      ]
+    },
+    {
+      "label": "A Home-Like Environment and Family Involvement",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Older patients thrive in surroundings that feel warm and familiar, with their loved ones close by."
+        },
+        {
+          "type": "p",
+          "text": "We keep families closely involved in care and decisions, welcome their presence and support them in caring for their loved one."
+        },
+        {
+          "type": "p",
+          "text": "Our aim is to create a warm, welcoming environment that provides comfort, dignity and a sense of familiarity throughout the patient’s stay."
+        }
+      ]
+    }
+  ]
+}

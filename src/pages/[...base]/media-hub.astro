@@ -1,6 +1,7 @@
 ---
 import { editionFromBase, editionPaths } from '../../lib/editions';
 import { content } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -21,7 +22,7 @@ const page = content('media-hub/page', edition.locale).meta;
  */
 ---
 
-<BaseLayout edition={edition} path="media-hub" title={page.title} description={page.description}>
+<BaseLayout edition={edition} path={PAGE_PATHS.mediaHub} title={page.title} description={page.description}>
   <div class="relative" style="z-index:14">
     <Header />
   </div>

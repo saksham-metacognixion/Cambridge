@@ -11,11 +11,11 @@ import type { Edition } from '../../lib/editions';
  * "Cambridge Hospital / A Leader in Post-Acute and Rehabilitation Care" (Figma 45:4982, nodes 42:3734/3735/3739/3815), page y 636-900.
  * Video poster 429 x 264 at x93 (PNG 429x264: 1x only, soft at 1440, flagged B7/P6) with the 44 x 44 play icon at (195, 102) inside it.
  * Copy column x552 (video end 522 + 30), width 407, top = poster top. Title Gotham Medium 28 (line 32), subtitle Book 23 with
- * line 1 = 28 and line 2 = 24 (Figma line heights, ::first-line), lead Book 15 cyan (lines 22 / 18), body Book 12 / 14 #6b6b6b,
- * paragraphs separated by one empty 14px line.
+ * line 1 = 28 and line 2 = 24 (Figma line heights, ::first-line), lead Book 15 cyan (lines 22 / 18; empty in the client's text,
+ * 5 Oct 2026: not rendered), body Book 12 / 14 #6b6b6b, paragraphs separated by one empty 14px line.
  * The player is NOT loaded here: src/scripts/video-facade.ts creates it on click (config src/data/about.json -> video).
  */
-interface Props { edition: Edition; c: { ariaLabel: string; video: { poster: string; alt: string; playLabel: string }; title: string; subtitle: string; lead: string; text: string[] } }
+interface Props { edition: Edition; c: { ariaLabel: string; video: { poster: string; alt: string; playLabel: string }; title: string; subtitle: string; lead?: string; text: string[] } }
 const { edition, c } = Astro.props;
 const poster = img(c.video.poster, edition.region);
 const hasVideo = Boolean(about.video.host && about.video.id);
@@ -35,7 +35,7 @@ const hasVideo = Boolean(about.video.host && about.video.id);
         <span class="t2">{c.subtitle}</span>
       </h2>
       <div class="body">
-        <p class="lead">{c.lead}</p>
+        {c.lead && <p class="lead">{c.lead}</p>}
         {c.text.map((p) => <p>{p}</p>)}
       </div>
     </div>

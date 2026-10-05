@@ -1,0 +1,111 @@
+---
+import { content, t } from '../../lib/content';
+import { careContent, CARE_PATHS, type CarePath } from '../../lib/care';
+import { showPendingNote } from '../../lib/conditions';
+import { INDEXABLE } from '../../lib/seo';
+import { urlFor, type Edition } from '../../lib/editions';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import PageHero from '../shared/PageHero.astro';
+import SubServiceGrid from './SubServiceGrid.astro';
+import DetailBody from '../condition-detail/DetailBody.astro';
+import ConditionCards from './ConditionCards.astro';
+import ContactRecovery from '../contact/ContactRecovery.astro';
+import DoctorsRow from '../shared/DoctorsRow.astro';
+
+/*
+ * One template for every page under /care (src/data/care.json tree, content in src/data/content/care/<slug>.<locale>.json).
+ * The blocks follow the three Figma frames of the family and the client's documents (5 Oct 2026):
+ *  - service (depth 1, Figma 83:226 Inpatient Care): banner hero 437 (title top 171, text 15 below, button 15 below) | 22 |
+ *    intro H2 + text + the children as photo cards (SubServiceGrid) | 55.86 | CTA band | 41 | doctors | 36.54 | footer.
+ *  - section / programme (depth 2+, Figma 41:1730 Post Acute Care + 41:2373 detail topics): cover hero 322 (title top 100,
+ *    text 13 below, button 17 below) | 34 | "Overview" + topic tabs (DetailBody) | 30 | programme cards (ConditionCards, heading
+ *    from the document) | 51 | CTA band | 59 | doctors | 36.54 | footer.
+ * Children with a photo for every card (the six Inpatient sections, Figma) use the photo cards; otherwise the text cards.
+ * Pages without a content file (Paediatric Care, CT3) are generated: title from care.json, overview = the card text, their
+ * children as cards, "Content pending" on staging only.
+ */
+interface Props { edition: Edition; path: CarePath }
+const { edition, path } = Astro.props;
+const { node, trail } = path;
+const loc = edition.locale;
+const depth = trail.length;
+const shared = content('care/shared', loc);
+const own = careContent(node.slug, loc, edition.region);
+const title = t(node.title, loc, 'care');
+const fill = (s: string) => s.replace('{title}', title);
+const isService = depth === 1;
+// Services with an intro + children (Inpatient, Outpatient) use the card layout; a service whose document is Overview + topics
+// (Home Care, In-School Care) uses the section / programme layout under its banner hero.
+const hasIntro = Boolean(own?.intro);
+const hero = {
+  ariaLabel: own?.hero.ariaLabel ?? title,
+  banner: own?.hero.banner ?? (isService ? shared.generated.serviceBanner : shared.generated.subBanner),
+  title: own?.hero.title ?? [title],
+  text: own?.hero.text ?? (isService ? undefined : t(node.desc, loc, 'care')),
+  button: shared.heroButton,
+};
+const pos = isService
+  ? { titleTop: 171, titleW: 385, textGap: 15, textW: 374, textX: 97, buttonGap: 15 }
+  : { titleTop: 100, titleW: 385, textGap: 13, textW: 374, textX: 97, buttonGap: 17 };
+const pending = !own && showPendingNote(INDEXABLE) ? (isService ? shared.pending.service : shared.pending.sub) : null;
+// Overview: the document's Overview paragraphs, else (generated page) the card text
+const overview: string[] = own?.overview ?? (isService && node.children.length > 0 ? [] : [t(node.desc, loc, 'care')]);
+const topics = own?.topics?.length ? { active: 0, items: own.topics } : undefined;
+// Children cards: photo cards when every child has a photo (Figma 83:226), else text cards (Figma 41:1730 look)
+const kids = node.children;
+const photoCards = kids.length > 0 && kids.every((k) => k.image);
+const cards = kids.map((k) => ({
+  title: t(k.cardTitle ?? k.title, loc, 'care'),
+  text: t(k.desc, loc, 'care'),
+  href: urlFor(edition, CARE_PATHS.of([...trail, k.slug])),
+}));
+const cardsHeading = own?.cardsHeading ?? fill(shared.sub.cardsHeading);
+const meta = { title: own?.meta?.title ?? fill(shared.meta.title), description: own?.meta?.description ?? (own?.hero.text ?? fill(shared.meta.description)) };
+---
+
+<BaseLayout edition={edition} path={CARE_PATHS.of(trail)} title={meta.title} description={meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      {isService ? <PageHero content={hero} pos={pos} /> : <PageHero content={hero} pos={pos} h={322} variant="cover" />}
+    </div>
+    {pending && <p class="pending-note" role="note">{pending}</p>}
+    {isService && (hasIntro || kids.length > 0) && (
+      <div id="services" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(22 * var(--u))">
+        {photoCards ? (
+          <SubServiceGrid edition={edition} trail={trail} nodes={kids} heading={own?.intro.heading ?? title} text={own?.intro.text ?? []} listLabel={shared.service.cardsLabel} button={shared.service.button} />
+        ) : (
+          <ConditionCards edition={edition} heading={own?.intro.heading ?? title} text={own?.intro.text ?? []} listLabel={shared.service.cardsLabel} button={shared.sub.button} cards={cards} />
+        )}
+      </div>
+    )}
+    {!(isService && hasIntro) && (overview.length > 0 || topics) && (
+      <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
+        <DetailBody edition={edition} heading={shared.sub.overviewHeading} overview={overview} tabs={topics} tabsLabel={shared.sub.topicsLabel} />
+      </div>
+    )}
+    {!isService && kids.length > 0 && (
+      <div id="programmes" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(30 * var(--u))">
+        <ConditionCards edition={edition} heading={cardsHeading} listLabel={shared.sub.conditionsLabel} button={shared.sub.button} cards={cards} />
+      </div>
+    )}
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${isService ? 55.86 : 51} * var(--u))`}>
+      <ContactRecovery content={shared.recovery} headTop={50} />
+    </div>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${isService ? 41 : 59} * var(--u))`}>
+      <DoctorsRow content={shared.doctors} id="care-doctors-heading" />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(36.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Staging-only marker (PUBLIC_SHOW_PENDING_NOTE): not part of the design, never rendered in production. */
+  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+</style>

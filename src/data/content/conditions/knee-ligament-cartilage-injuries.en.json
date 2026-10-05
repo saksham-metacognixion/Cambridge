@@ -1,0 +1,31 @@
+{
+  "_note": "Knee Ligament & Cartilage Injuries (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Knee Ligament & Cartilage Injuries | Cambridge Hospital",
+    "description": "Restoring knee stability and mobility for a confident return to activity."
+  },
+  "hero": {
+    "ariaLabel": "Knee Ligament & Cartilage Injuries",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Knee Ligament &",
+      "Cartilage Injuries"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Knee ligament injuries, including ACL, PCL and MCL tears, and cartilage damage require carefully structured rehabilitation to restore stability, strength and full range of motion.",
+    "At Cambridge Hospital, our outpatient knee rehabilitation programme delivers progressive strengthening, neuromuscular retraining, proprioceptive exercises and sport-specific conditioning. Both conservative and post-operative pathways are managed by experienced physiotherapists with clear milestones throughout recovery."
+  ]
+}

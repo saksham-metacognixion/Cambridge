@@ -1,0 +1,32 @@
+{
+  "_note": "Hip & Knee Replacement Recovery (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Hip & Knee Replacement Recovery | Cambridge Hospital",
+    "description": "Restoring movement and strength for a safe return to daily life."
+  },
+  "hero": {
+    "ariaLabel": "Hip & Knee Replacement Recovery",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Hip & Knee",
+      "Replacement",
+      "Recovery"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Hip and knee replacements are among the most commonly performed orthopaedic procedures, yet post-operative rehabilitation is a critical factor in determining how fully a patient recovers.",
+    "At Cambridge Hospital, our joint-replacement programme guides patients from first mobilisation through gait retraining, strengthening, stair practice and return to daily activities. Outpatient sessions and home care physiotherapy continue progress after discharge, minimising recovery time and maximising long-term function."
+  ]
+}

@@ -35,7 +35,12 @@ function warn(where: string) {
 }
 
 function merge(en: any, loc: any, where: string): any {
-  if (Array.isArray(en)) return en.map((v, i) => merge(v, loc?.[i], where));
+  // An Arabic array replaces the English one with ITS length (an Arabic text can have a different number of paragraphs /
+  // title lines); each element still falls back element-wise.
+  if (Array.isArray(en)) {
+    if (Array.isArray(loc) && loc.length) return loc.map((v, i) => merge(en[i] ?? en[en.length - 1] ?? '', v, where));
+    return en.map((v, i) => merge(v, loc?.[i], where));
+  }
   if (en && typeof en === 'object') {
     const out: any = {};
     for (const k of Object.keys(en)) out[k] = merge(en[k], loc?.[k], where);

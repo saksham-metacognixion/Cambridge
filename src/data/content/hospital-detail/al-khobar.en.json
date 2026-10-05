@@ -1,0 +1,26 @@
+{
+  "_note": "Al Khobar Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - KSA Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "hero": {
+    "title": [
+      "Al Khobar Hospital"
+    ],
+    "text": "Comprehensive rehabilitation and long-term care, supported by coordinated medical and therapeutic services within a structured care environment.",
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
+  },
+  "video": {
+    "host": "",
+    "id": ""
+  },
+  "environment": {
+    "text": [
+      "At Cambridge Hospital Al Khobar, patients receive coordinated medical care, nursing support and rehabilitation within a comfortable and welcoming environment. Our multidisciplinary teams combine clinical expertise with personalised care, creating a supportive setting where patients can focus on recovery while remaining connected to their families.",
+      "Our approach is centred on each patient’s individual condition, needs and goals. Through ongoing assessment, structured rehabilitation and close clinical support, we help patients restore function, develop greater independence and build confidence in their everyday abilities as they progress towards returning home or continuing their care."
+    ]
+  },
+  "healing": {
+    "areas": []
+  }
+}

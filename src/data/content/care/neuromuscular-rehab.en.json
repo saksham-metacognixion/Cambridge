@@ -1,0 +1,134 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Neuromuscular.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Paediatric Neuromuscular Rehabilitation",
+    "title": [
+      "Paediatric",
+      "Neuromuscular",
+      "Rehabilitation"
+    ],
+    "text": "For children with neuromuscular conditions affecting movement and muscle control, to build strength, improve function and support greater independence."
+  },
+  "overview": [
+    "The neuromuscular system, comprising the nerves and muscles, is vital to movement and function. In infants and young children, it is still developing, making these early years particularly important for healthy neuromuscular development. Certain conditions can affect this system during this time, and a weak or dysfunctional system can cause serious difficulties and may lead to long-term complications.",
+    "Early treatment, combined with a structured, long-term rehabilitation programme, can make a significant difference, equipping children with the skills to manage their condition and improving their quality of life."
+  ],
+  "topics": [
+    {
+      "label": "What Is Paediatric Neuromuscular Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Paediatric neuromuscular rehabilitation is specialised therapy that helps children improve muscle strength, coordination and movement affected by neurological or muscular conditions."
+        },
+        {
+          "type": "p",
+          "text": "It focuses on building functional skills through individualised exercises and supportive care, empowering each child to move more freely, gain confidence and participate more fully in everyday activities."
+        }
+      ]
+    },
+    {
+      "label": "Conditions We Support",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our paediatric neuromuscular rehabilitation programme supports children with a range of conditions, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cerebral palsy - one of the most common causes of motor disability in childhood, affecting movement, balance and posture",
+            "Dystrophin-related muscle diseases",
+            "Myopathies - often congenital or genetic conditions affecting muscle groups, which can cause muscle weakness and low muscle tone (hypotonia)",
+            "Hypotonia (low muscle tone)"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Spasticity Management",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Spasticity is one of the most common concerns in children with cerebral palsy and can be challenging to manage, particularly with medication, as some treatments used in adults may not be suitable for infants and young children."
+        },
+        {
+          "type": "p",
+          "text": "For this reason we recommend a long-term, individualised programme, allowing therapies and medications to be tailored to the child’s age and the severity of their condition. Left unmanaged, spasticity can lead to complications including contractures, joint subluxation or dislocation, movement and posture difficulties, muscle pain, reduced muscle growth and stiffening of the soft tissues."
+        },
+        {
+          "type": "lead",
+          "text": "Approaches to spasticity management may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Botulinum toxin injections - to help manage focal (localised) spasticity by reducing muscle contraction in targeted areas",
+            "Intrathecal baclofen - an FDA-approved treatment for spasticity in children with cerebral palsy, delivered through a surgically implanted system that releases medication into the fluid surrounding the spinal cord.",
+            "Selective dorsal rhizotomy - a neurosurgical option that has shown promise in appropriate cases"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Rehabilitation is a critical part of recovery following any such procedure, and therapeutic services form a central, ongoing part of care."
+        },
+        {
+          "type": "p",
+          "text": "Both physiotherapy and occupational therapy can be valuable, and parents are often shown how to safely carry out certain therapies at home, including stretching exercises that help reduce muscle tightness, and other techniques recommended by the care team."
+        }
+      ]
+    },
+    {
+      "label": "Supporting Cognition, Learning and Communication",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cerebral palsy can affect more than physical function. Some children also experience cognitive impairment, ranging from mild to severe, which can affect behaviour, communication, learning, literacy, memory, and sensory processing."
+        },
+        {
+          "type": "p",
+          "text": "Our programme assesses whether cognitive impairments are present and seeks to understand exactly how a child is affected, so appropriate support can be put in place."
+        },
+        {
+          "type": "lead",
+          "text": "This may include access to specialist therapists and practical strategies such as:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Visual cards to help children understand basic words",
+            "Consistent, repeated exposure to lessons and information to support retention",
+            "Audio programmes parents can play back to the child at home",
+            "Sensory aids for children with sensory difficulties, such as clear acoustics at an ideal volume, suitable lighting and glasses to support vision"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Care for Myopathy and Hypotonia",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "For infants with congenital myopathies, a neuromuscular specialist forms part of the rehabilitation team. Regular follow-up is important, typically every quarter for infants under one year, and at least twice a year for children over one year old."
+        },
+        {
+          "type": "p",
+          "text": "During these reviews, the specialist watches for signs of swallowing difficulties, respiratory problems and challenges with early speech development. Parents play a vital role: they are encouraged to keep notes on their child’s progress and any notable issues, and to recognise when an earlier follow-up may be needed rather than waiting for a scheduled appointment."
+        }
+      ]
+    },
+    {
+      "label": "Why Early Long-Term Care Matters",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Neuromuscular disorders can have lasting effects on a growing child. Cognitive impairment can lead to learning difficulties, and conditions like cerebral palsy can affect mobility."
+        },
+        {
+          "type": "p",
+          "text": "Recognising potential neuromuscular conditions early is critical, and long-term rehabilitation programmes have been shown to deliver positive results for infants, toddlers and young children living with these disorders."
+        }
+      ]
+    }
+  ]
+}

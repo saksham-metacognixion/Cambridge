@@ -1,0 +1,14 @@
+---
+import { editions, editionFromBase } from '../../../../../../lib/editions';
+import { careNodesAtDepth, type CarePath } from '../../../../../../lib/care';
+import CarePage from '../../../../../../components/care/CarePage.astro';
+
+/* Our Care pages at depth 4 under /care (src/data/care.json), every edition. One template: components/care/CarePage.astro. */
+export function getStaticPaths() {
+  return editions.flatMap((e) => careNodesAtDepth(4).map((p) => ({ params: { base: e.base || undefined, a: p.trail[0], b: p.trail[1], c: p.trail[2], d: p.trail[3] }, props: { path: p } })));
+}
+const { path } = Astro.props as { path: CarePath };
+const edition = editionFromBase(Astro.params.base);
+---
+
+<CarePage edition={edition} path={path} />

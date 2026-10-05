@@ -1,0 +1,141 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Occupational.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Occupational Therapy",
+    "title": [
+      "Occupational",
+      "Therapy"
+    ],
+    "text": "For patients who need support with movement and daily activities, to restore functional skills, build independence and manage everyday life with greater confidently."
+  },
+  "overview": [
+    "Occupational therapy helps patients overcome the physical, cognitive and practical challenges that can make everyday activities more difficult, from preparing a meal and managing medication to caring for themselves and their families. Rather than asking patients to adapt to the task, our occupational therapists adapt the task and the environment to suit each patient, equipping them with the skills, strategies and confidence to manage daily life more independently."
+  ],
+  "topics": [
+    {
+      "label": "What Is Occupational Therapy",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Occupational therapy supports patients in rebuilding the skills they need for everyday living. It helps them move with confidence, manage daily tasks more easily and maintain their independence at home and in the community."
+        },
+        {
+          "type": "p",
+          "text": "By tailoring activities and environments to each patient’s abilities, our therapists make daily life safer, more comfortable and more meaningful, so patients can focus on what matters most to them."
+        }
+      ]
+    },
+    {
+      "label": "Who It’s For",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Occupational therapy supports patients of all ages living with physical, neurological or psychological challenges. It may help patients with:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Stroke, brain injury or spinal cord injury",
+            "Persistent pain and arthritis",
+            "Replaced or affected joints",
+            "Balance difficulties",
+            "Multiple sclerosis",
+            "Metabolic conditions such as diabetes",
+            "Visual impairment",
+            "Behavioural difficulties",
+            "Conditions such as Alzheimer’s disease"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "In Children"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "ADHD",
+            "Autism",
+            "Birth defects",
+            "Serious injuries",
+            "Arthritis"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Our Approach",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Care is collaborative - our therapists observe, plan and work closely with each patient to develop the most appropriate approach, which may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Assessing hand-eye coordination, motor skills and mental wellbeing",
+            "Reviewing the patient’s home for hazards and advising on ways to create a safer environment for recovery",
+            "Evaluating social factors, including available support from family",
+            "Planning practical strategies, activities and adaptive techniques for home, work or school"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Activities may include fine-motor exercises, memory games and adaptive strategies that compensate for specific impairments."
+        }
+      ]
+    },
+    {
+      "label": "Assistive Devices",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "After assessment, our therapists may recommend assistive devices and guide patients in choosing, using and maintaining them correctly. These may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Mobility aids such as walkers, wheelchairs and crutches",
+            "Hearing aids",
+            "Vision aids",
+            "Bathroom and toilet aids",
+            "Environmental management aids"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Occupational Therapy for Children",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Early support can make a meaningful difference to a child’s development. For children with disabilities or at risk of developing them, early-intervention therapy can support sensory processing, cognitive, motor and social skills, helping to minimise the impact of developmental delays while building confidence and wellbeing."
+        },
+        {
+          "type": "lead",
+          "text": "Children with conditions such as autism or Down syndrome can benefit, and every session is tailored to the individual child, with the family playing a key role in their progress. We commonly support:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Dyspraxia (coordination):** Targeted activities, from using tweezers to pick up small objects to obstacle courses and jumping exercises, to improve hand dominance and fine-motor skills.",
+            "**Sensory processing difficulties:** Tailored exercises and, where appropriate, dietary strategies to support healthy sensory input.",
+            "**Dysgraphia, dyslexia and visual difficulties:** Support for these and other challenges that can make everyday tasks more difficult."
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Why It Matters",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Occupational therapy helps people of every age relearn the everyday activities and overcome physical, learning or mental health barriers."
+        },
+        {
+          "type": "p",
+          "text": "The goal is to achieve the greatest possible level of independence – helping patients participate more fully in family life, work and their community, while adapting to their environment with greater confidence and ease."
+        }
+      ]
+    }
+  ]
+}

@@ -1,30 +1,50 @@
 {
-  "_note": "Shared parts of the hospital detail template (Figma 112:7721, content = Abu Dhabi). Visible text exactly as in Figma. meta.*, alt texts, aria labels, generated.* and pending.* are PLACEHOLDERS (not in Figma). Per-hospital text: <slug>.en.json (Abu Dhabi only today); hospitals without a file get a page generated from hospitals.json (generated.*). {name} = brand + city, {city} = city.",
+  "_note": "Shared parts of the hospital detail template (Figma 112:7721). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md + EN - KSA Hospitals.md (5 Oct 2026): the 'Designed for Comfort, Recovery and Wellbeing' heading + text (same for all six, healing.*) and the four care cards (care.*). Per-hospital text: <slug>.en.json (all six). meta.*, alt texts, aria labels and pending.* are PLACEHOLDERS. {name} = brand + city, {city} = city. The documents say the stats need review (CT13).",
   "meta": {
     "title": "{name} | Cambridge Hospital",
-    "description": "{name}: specialized rehabilitation and long-term care. Location, map and how to book an appointment."
+    "description": "{name}: specialised rehabilitation and long-term care. Location, map and how to book an appointment."
   },
   "hero": {
     "ariaLabel": "{name}",
-    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
   },
   "generated": {
-    "_note": "Hospitals without a content file: hero title from the Figma pattern 'Advanced Care / in <city>', the Abu Dhabi banner as a placeholder (flagged HD1), no hero text, no video / environment / gallery sections.",
-    "title": ["Advanced Care ", "in {city}"],
-    "banner": { "image": "hospital-detail/banner-abu-dhabi", "alt": "" }
+    "_note": "Every hospital has a content file since 5 Oct 2026 (the client's documents); kept for a future hospital without one: hero title from the Figma pattern 'Advanced Care / in <city>', the Abu Dhabi banner as a placeholder (flagged HD1), no hero text, no video / environment / gallery sections.",
+    "title": [
+      "Advanced Care ",
+      "in {city}"
+    ],
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
   },
   "environment": {
     "ariaLabel": "Experience the Environment of Care",
     "heading": "Experience the Environment of Care",
-    "video": { "poster": "about/video-thumbnail", "alt": "", "playLabel": "Play the video" },
-    "tour": { "label": "Take a Tour", "href": "#hospital-video" }
+    "video": {
+      "poster": "about/video-thumbnail",
+      "alt": "",
+      "playLabel": "Play the video"
+    },
+    "tour": {
+      "label": "Take a Tour",
+      "href": "#hospital-video"
+    }
   },
   "healing": {
-    "heading": "A Healing Environment, Thoughtfully Designed",
+    "heading": "Designed for Comfort, Recovery and Wellbeing",
     "selectLabel": "Choose an area",
     "galleryLabel": "Photos of {area}",
     "slideLabel": "Photo {n} of {total}",
-    "showSlide": "Show photo {n} of {total}"
+    "showSlide": "Show photo {n} of {total}",
+    "text": [
+      "Across Cambridge Hospital’s facilities, thoughtfully designed spaces support patients throughout their care and rehabilitation journey. Our comfortable indoor environments provide a calm and welcoming setting for treatment, rest and time with family, while landscaped outdoor areas offer opportunities to relax, enjoy fresh air and benefit from natural light.",
+      "Purpose designed rehabilitation gyms provide dedicated spaces for therapy, movement and functional training, supporting patients as they work towards their individual rehabilitation goals. Together, the indoor environments, outdoor spaces and rehabilitation facilities create a balanced care setting designed to support clinical recovery, comfort, wellbeing and daily function."
+    ]
   },
   "map": {
     "ariaLabel": "Find us",
@@ -36,7 +56,7 @@
   },
   "care": {
     "heading": "Delivering Excellence Across Every Stage of Care",
-    "text": "At Cambridge Hospital, we are committed to delivering advanced, patient-centered care with clinical excellence, providing a full spectrum of services designed around your individual needs.",
+    "text": "At Cambridge Hospitals, we are committed to delivering advanced, patient-centric care with clinical excellence, providing a full spectrum of services designed around each patient’s individual needs.",
     "listLabel": "Our services",
     "button": "Start Your Care"
   },
@@ -44,7 +64,12 @@
     "heading": "Expert Care, Trusted Doctors",
     "text": "Our specialists are committed to providing the right care at every stage of your journey.",
     "listLabel": "Our doctors",
-    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-hanna-kassab"
+    ]
   },
   "pending": {
     "note": "Content pending: this hospital page is generated from the hospital data until its text, video and photos are supplied."

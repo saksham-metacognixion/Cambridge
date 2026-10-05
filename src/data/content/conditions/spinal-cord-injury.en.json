@@ -1,0 +1,30 @@
+{
+  "_note": "Spinal Cord Injury (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Spinal Cord Injury | Cambridge Hospital",
+    "description": "Maximising mobility, independence and function through specialised rehabilitation."
+  },
+  "hero": {
+    "ariaLabel": "Spinal Cord Injury",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Spinal Cord Injury"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Spinal cord injuries, whether complete or incomplete, require long-term and highly coordinated rehabilitation to maximise recovery and prevent secondary complications.",
+    "At Cambridge Hospital, our spinal cord injury rehabilitation programme supports patients through acute inpatient rehabilitation, progressive mobilisation, bowel and bladder management, respiratory physiotherapy, pressure injury prevention and psychological counselling. Our home care team extends care into the patient’s home environment, enabling safe community reintegration and sustained independence."
+  ]
+}

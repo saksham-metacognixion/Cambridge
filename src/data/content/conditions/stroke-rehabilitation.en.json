@@ -1,8 +1,8 @@
 {
-  "_note": "Stroke Rehabilitation (Figma 67:3070, frame named 'Accidents Rehabilitation' in Figma). Text exactly as in Figma (incl. the two leading spaces of the lead lines). Figma shows the SECOND tab selected (the only one with content): active = 1. Tabs 1, 3, 4 pending. meta.* = PLACEHOLDER.",
+  "_note": "Stroke Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the Figma Stroke Rehabilitation photo.",
   "meta": {
     "title": "Stroke Rehabilitation | Cambridge Hospital",
-    "description": "Stroke rehabilitation at Cambridge Hospital: a multidisciplinary team and personalised treatment plans to restore mobility, speech and independence after a stroke."
+    "description": "Restoring movement, speech and independence after stroke."
   },
   "hero": {
     "ariaLabel": "Stroke Rehabilitation",
@@ -15,105 +15,17 @@
       "Rehabilitation"
     ],
     "button": {
-      "label": "Consult for a Care Plan",
+      "label": "Book an Appointment",
       "href": "#book-appointment"
     }
   },
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 6,
-    "labelX": 5,
-    "labelW": 153
+    "buttonGap": 16
   },
   "overview": [
-    "Stroke rehabilitation at Cambridge Hospital is designed to support patients through structured recovery, helping restore function, improve mobility, and enhance independence following a stroke.",
-    "Our multidisciplinary approach ensures each patient receives personalized care tailored to their condition, recovery stage, and long-term goals."
-  ],
-  "tabs": {
-    "active": 1,
-    "items": [
-      {
-        "label": "Understanding Stroke Recovery",
-        "blocks": []
-      },
-      {
-        "label": "Our Approach to Stroke Rehabilitation",
-        "blocks": [
-          {
-            "type": "p",
-            "text": "At Cambridge Hospital, stroke rehabilitation is delivered through a coordinated care model that combines medical oversight with intensive therapy programs."
-          },
-          {
-            "type": "h",
-            "text": "Multidisciplinary Care"
-          },
-          {
-            "type": "lead",
-            "text": "  Patients are supported by a team of:"
-          },
-          {
-            "type": "ul",
-            "items": [
-              "Physical Medicine & Rehabilitation Physicians",
-              "Physiotherapists",
-              "Occupational Therapists",
-              "Speech & Language Therapists",
-              "Nursing Teams"
-            ]
-          },
-          {
-            "type": "h",
-            "text": "Personalized Treatment Plans"
-          },
-          {
-            "type": "lead",
-            "text": "  Each rehabilitation plan is tailored to:"
-          },
-          {
-            "type": "ul",
-            "items": [
-              "Mobility and strength recovery",
-              "Speech and communication improvement",
-              "Cognitive rehabilitation",
-              "Daily living independence"
-            ]
-          },
-          {
-            "type": "h",
-            "text": "Care Settings Available"
-          },
-          {
-            "type": "lead",
-            "text": "  Stroke rehabilitation is provided across multiple care settings:"
-          },
-          {
-            "type": "ul",
-            "items": [
-              [
-                "Inpatient Rehabilitation",
-                "For intensive, medically supervised recovery"
-              ],
-              [
-                "Outpatient Therapy",
-                "For continued rehabilitation post-discharge"
-              ],
-              [
-                "Home-Based Rehabilitation",
-                "For patients requiring ongoing support at home"
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "label": "Expected Outcomes",
-        "blocks": []
-      },
-      {
-        "label": "Why Choose Cambridge Hospital",
-        "blocks": []
-      }
-    ]
-  }
+    "A stroke can change a person’s life in an instant, affecting movement, speech, swallowing, cognition and emotional well-being. Timely, intensive rehabilitation is the single most important factor in how much function a patient regains.",
+    "At Cambridge Hospital, we run a structured post-stroke pathway that begins as soon as a patient is medically stable, progressing through inpatient rehabilitation, outpatient therapy and home care follow-up. Our programme combines gait and balance training, repetitive task-specific exercises, speech and language therapy, swallowing assessments and occupational therapy, with family education integrated throughout so that gains made in therapy carry over into daily life."
+  ]
 }

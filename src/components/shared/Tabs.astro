@@ -14,7 +14,8 @@ import type { Edition } from '../../lib/editions';
  * (18 on detail pages, 24 on Careers), `top` below the tabs top (1 / 27), `width` wide (610 / 529 / 441), Book 12/14 #6b6b6b.
  * Block types: p (paragraph) | h (sub-heading, Medium) | sec (sub-heading, Book, #00415a: Accreditations) | lead (teal line, 22) |
  * note (teal line, 14) | ul (bullets) | lines (several lines, line breaks kept) | bullets (lines starting with a literal bullet,
- * first line 19 tall: Accreditations). One empty 14px line between blocks.
+ * first line 19 tall: Accreditations). One empty 14px line between blocks. Text goes through RichText ("[label](href)" links,
+ * "**bold**" lead-ins).
  * `look` (Accreditations 55:12215: tabs 311 x 78, pitch 80.43, label Book 17 (active Bold) centred vertically, no text shadow):
  * overrides the tab geometry; defaults = the values above. `item.image` = a picture placed inside the panel (page px x, y).
  * `pending`: the text shown in an empty panel (staging only; the caller passes null in production).
@@ -66,15 +67,15 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
           b.type === 'ul' ? (
             <ul class="ul">
               {b.items.map((it) => (
-                <li>{Array.isArray(it) ? it.map((line, k) => (k === 0 ? line : <><br />{line}</>)) : it}</li>
+                <li>{Array.isArray(it) ? it.map((line, k) => (k === 0 ? <RichText text={line} edition={edition} /> : <><br /><RichText text={line} edition={edition} /></>)) : <RichText text={it} edition={edition} />}</li>
               ))}
             </ul>
           ) : b.type === 'lines' ? (
-            <p class="lines">{b.lines.map((line, k) => (k === 0 ? line : <><br />{line}</>))}</p>
+            <p class="lines">{b.lines.map((line, k) => (k === 0 ? <RichText text={line} edition={edition} /> : <><br /><RichText text={line} edition={edition} /></>))}</p>
           ) : b.type === 'bullets' ? (
             <p class="bullets"><span class="b1">{b.lines[0]}</span>{b.lines.slice(1).map((line) => <><br />{line}</>)}</p>
           ) : b.type === 'h' ? (
-            <h3 class="sub">{b.text}</h3>
+            <h3 class="sub"><RichText text={b.text} edition={edition} /></h3>
           ) : (
             <p class={b.type}><RichText text={b.text} edition={edition} /></p>
           ),

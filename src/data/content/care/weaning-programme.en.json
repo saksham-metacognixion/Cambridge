@@ -1,0 +1,74 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Ventilated Patients/EN-Weaning.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Weaning Programme",
+    "title": [
+      "Weaning Programme"
+    ],
+    "text": "For patients who require mechanical ventilation, to help reduce ventilator dependence and manage long-term respiratory needs."
+  },
+  "overview": [
+    "Ventilator weaning is the carefully managed process of gradually reducing a patient’s reliance on mechanical ventilation, with the goal of restoring independent breathing.",
+    "At Cambridge Hospital, our ventilation and weaning programme combines expert respiratory management with a structured, patient-centred approach to support each patient’s respiratory health, optimising comfort and safety, and, wherever possible, guiding them towards independent breathing."
+  ],
+  "topics": [
+    {
+      "label": "How Weaning Works at Cambridge Hospital",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Because the lungs and respiratory muscles can become accustomed to relying on mechanical ventilation, ventilator support is rarely stopped suddenly. Instead, as a patient’s condition improves, a structured weaning process gradually reduces ventilator support while spontaneous breathing is assessed and monitored."
+        },
+        {
+          "type": "lead",
+          "text": "The level of ventilatory support may be reduced and spontaneous breathing assessed through approaches such as:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Pressure-support trials",
+            "A T-piece (T-tube) test",
+            "Synchronized Intermittent Mandatory Ventilation (SIMV) - the ventilator delivers a set number of breaths, then pauses to assess spontaneous breathing, resuming support as needed so the patient can gradually regain independent breathing"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Where a patient is not yet ready, weaning continues gradually. Our specialised team identifies the specific factors contributing to ventilator dependence and addresses them to support progress towards independent breathing."
+        }
+      ]
+    },
+    {
+      "label": "Preparing for Successful Weaning",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Before weaning can begin, a patient typically needs to meet the criteria for two assessments:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**A Wean Screen** - carried out daily to review the patient’s weaning parameters and determine whether they are ready to begin reducing ventilator support. The underlying lung condition must be stable, with key respiratory measurements within an appropriate range.",
+            "**A Weaning Performance Trial** - assesses how well the patient can cope with reduced ventilator support. Patients with stable haemodynamics (stable blood pressure and heart function), adequate neuromuscular function (sufficient strength and coordination of the muscles and nerves involved in breathing) and the ability to breathe spontaneously are more likely to pass the trial."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Building respiratory strength is an important part of preparation. Patients benefit from good nutrition, including a diet rich in essential nutrients, vitamins and minerals, and from avoiding, where clinically appropriate, medications that can contribute to muscle weakness."
+        },
+        {
+          "type": "p",
+          "text": "Throughout the process, our team also addresses factors such as cardiac function, anaemia and acid-base balance to optimise oxygen-carrying capacity, with the goal of helping patients breathe comfortably without becoming exhausted."
+        }
+      ]
+    },
+    {
+      "label": "Our Specialised Team",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Caring for ventilator-dependent patients requires specialised expertise, advanced equipment and a coordinated team. Our respiratory specialists, physicians, nurses and therapists work together to deliver expert ventilation care and structured weaning - supporting each patient’s comfort, safety and progress towards greater independence."
+        }
+      ]
+    }
+  ]
+}

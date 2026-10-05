@@ -3,6 +3,7 @@ import line1 from '../assets/header/line1.svg';
 import line2 from '../assets/header/line2.svg';
 import vector from '../assets/header/vector.svg';
 import { parsePath, getEdition, urlFor } from '../lib/editions';
+import { pagePath } from '../lib/paths';
 import { content } from '../lib/content';
 import { img } from '../lib/images';
 import { weAreListeningHref } from '../lib/nav';
@@ -21,9 +22,11 @@ const logo = img(c.logo.image, edition.region);
 // First box = "We are listening" (scope 2.5; not in the Figma header, flagged for Padmavathi): placed in the free space between the logo (ends 293) and the Opinion icon (394), same font and colour as its neighbours.
 const topLinkBoxes = [ { l: 305, w: 72 }, { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
 // `path` = page inside the edition (+ optional `query`, e.g. Knowledge Center -> Media Hub health articles, docs/open-decisions.md LA1).
-const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string; query?: string; nav?: string }, i: number) => ({ ...x, href: x.nav === 'weAreListeningTarget' ? weAreListeningHref(edition) : x.path === undefined ? x.href : urlFor(edition, x.path) + (x.query ?? ''), ...topLinkBoxes[i] }));
+// `page` = key in PAGE_PATHS (preferred), `path` = literal path inside the edition.
+const target = (x: { href: string; path?: string; page?: string; query?: string }) => (x.page !== undefined ? urlFor(edition, pagePath(x.page)) : x.path !== undefined ? urlFor(edition, x.path) : x.href) + (x.query ?? '');
+const topLinks = c.topLinks.map((x: { label: string; href: string; path?: string; page?: string; query?: string; nav?: string }, i: number) => ({ ...x, href: x.nav === 'weAreListeningTarget' ? weAreListeningHref(edition) : target(x), ...topLinkBoxes[i] }));
 const mainLinkWidths = [84, 41, 54, 62, 51];
-const mainLinks = c.mainLinks.map((x: { label: string; href: string; path?: string }, i: number) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path), w: mainLinkWidths[i] }));
+const mainLinks = c.mainLinks.map((x: { label: string; href: string; path?: string; page?: string }, i: number) => ({ ...x, href: target(x), w: mainLinkWidths[i] }));
 // Region switch: same page in the chosen region, same language (the language switch does the reverse); a page that does
 // not exist there (hospital of another region) lands on its nearest existing parent.
 const regionOptions = c.region.options.map((o: { region: 'ae' | 'sa'; label: string }) => ({

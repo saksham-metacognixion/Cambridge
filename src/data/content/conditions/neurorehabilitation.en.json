@@ -1,0 +1,30 @@
+{
+  "_note": "Neurorehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Neurorehabilitation | Cambridge Hospital",
+    "description": "Restoring movement, independence and quality of life after neurological injury."
+  },
+  "hero": {
+    "ariaLabel": "Neurorehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Neurorehabilitation"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "At Cambridge Hospital, our neurology and neurorehabilitation service supports adults and children living with conditions affecting the brain, spinal cord and nervous system.",
+    "A consultant-led interdisciplinary team - including neurologists, rehabilitation physicians, physiotherapists, occupational therapists, speech and language therapists and clinical psychologists - builds individualised programmes focused on restoring function, protecting independence and improving quality of life across inpatient, outpatient and home care settings."
+  ]
+}

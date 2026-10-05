@@ -1,0 +1,30 @@
+{
+  "_note": "Multiple Sclerosis (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Multiple Sclerosis | Cambridge Hospital",
+    "description": "Managing symptoms and maintaining mobility and daily function."
+  },
+  "hero": {
+    "ariaLabel": "Multiple Sclerosis",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Multiple Sclerosis"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Multiple sclerosis affects the protective coating of nerves in the brain and spinal cord, producing symptoms ranging from fatigue and weakness to problems with vision, balance and cognition.",
+    "At Cambridge Hospital, rehabilitation focuses on managing relapses, preserving mobility, building energy-conservation strategies and supporting emotional well-being. Supervised physiotherapy, occupational therapy, speech and swallowing assessment, and psychological support are delivered across inpatient and outpatient settings."
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Ventilated Patients/EN-Long term ventilated.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Long-Term Ventilated Care",
+    "title": [
+      "Long-Term",
+      "Ventilated Care"
+    ],
+    "text": "For patients who require long-term mechanical ventilation, to provide ongoing medical support and help them achieve the greatest possible comfort, stability and independence."
+  },
+  "overview": [
+    "For most patients, mechanical ventilation is temporary. But for those facing critical illness or serious, long-term respiratory conditions, short-term support is not enough - they need sustained and specialised care until their condition stabilises.",
+    "That is exactly what Cambridge Hospital’s Long-Term Ventilated (LTV) programme is designed to provide: continuous management and comprehensive care for patients who require long-term ventilation, including those who remain dependent on a ventilator at home."
+  ],
+  "topics": [
+    {
+      "label": "What Is Long-Term Ventilated Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our Long-Term Ventilated Programme provides continuous and specialised care for patients who rely on a ventilator for extended periods. It supports individuals who cannot breathe independently due to serious illness, neurological conditions or complex respiratory failure."
+        },
+        {
+          "type": "p",
+          "text": "The programme is designed to make life safer and more manageable for ventilator-dependent patients - whether they are in hospital or transitioning back home."
+        }
+      ]
+    },
+    {
+      "label": "What the LTV Programme Offers",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "The programme has two key goals: to provide optimal respiratory care and to support patients and families in managing complex long-term health needs. Patients and families can expect:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Airway clearance and respiratory therapies",
+            "Inpatient and outpatient consultation",
+            "Caregiver training in the safe use of ventilator equipment at home",
+            "Support in coordinating the transition between home care and intensive care",
+            "Collaboration with surgical and medical specialists",
+            "Consistent follow-up for patients receiving care at home"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Throughout the programme, rehabilitation plays a central role in helping patients regain health and function impacted by their respiratory condition, supporting them as they work towards breathing independently as soon as possible."
+        }
+      ]
+    },
+    {
+      "label": "Length of Stay",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The length of hospital stay varies for every patient, depending on how long they have required mechanical ventilation and the nature of their respiratory condition. Patients who have been ventilated for shorter periods generally have shorter ICU stays, while those requiring long-term ventilation typically need longer and more intensive support."
+        },
+        {
+          "type": "p",
+          "text": "Prolonged ventilation can be associated with a higher likelihood of readmission, which is why our LTV programme emphasises structured respiratory care and careful follow-up. Specific respiratory therapy protocols, along with spontaneous breathing trials (SBTs), can help reduce ventilator days and address ventilator dependence, potentially making a patient a candidate for weaning."
+        }
+      ]
+    },
+    {
+      "label": "Weaning for Ventilated Patients",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "The aim of ventilator management is to help patients come off the ventilator as safely and as soon as clinically appropriate. Weaning is the gradual process of reducing and eventually removing ventilator support, and the experience is different for every patient. Clinicians generally classify weaning according to how long the process takes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Simple Weaning** - successful on the first attempt, soon after ventilator support is removed",
+            "**Difficult Weaning** - achieved over a longer period, typically within two to seven days of the initial assessment",
+            "**Prolonged Weaning** - for patients with more serious respiratory complications, taking more than seven days after the initial assessment"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Each patient is carefully assessed against specific criteria before weaning is attempted, and our teams proceed only when the patient is ready. Where weaning is not yet successful, our teams identify and address the specific factors involved as part of a personalised care plan."
+        }
+      ]
+    },
+    {
+      "label": "Specialised LTV Care at Cambridge",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "For patients with critical respiratory conditions, mechanical ventilation can be a vital, often life-sustaining therapy. Our teams manage the impact of respiratory failure and supporting weakened respiratory muscles as patients work towards recovery."
+        },
+        {
+          "type": "p",
+          "text": "Every patient’s journey is unique, and outcomes depend on the patient’s condition. For those on the path to recovery, the goal remains clear: to wean from ventilation wherever possible and regain greater independence."
+        }
+      ]
+    }
+  ]
+}

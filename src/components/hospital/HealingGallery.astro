@@ -10,15 +10,19 @@ import dots from '../../assets/media-hub/divider-group620.svg';
  * "A Healing Environment, Thoughtfully Designed" (Figma 112:7721, page y 1260-1941). Section top = the H2 top.
  * H2 Medium 28 #00415a (box 27) at x206, w677 | 16 | area dropdown = shared .ui-box 311 x 35 centred (x371), Book 10/14 navy,
  * chevron 7 x 4.207 at 17 from the end | 22 | text Book 12/14 #6b6b6b centred w539 (2 paragraphs, 14 apart... Figma: no extra gap)
- * | 42 | gallery 397.648 tall: active photo 646.178 x 397.648 r17.148 shadow 0 4.573 4.573 3 rgba(0,0,0,.2) at x203.41;
+ * (text = the client's shared "Designed for Comfort" paragraphs, 5 Oct 2026) | 42 | gallery 397.648 tall: active photo 646.178 x 397.648 r17.148 shadow 0 4.573 4.573 3 rgba(0,0,0,.2) at x203.41;
  * neighbours 270 x 166.154 r7.165 at x97 / x682 (opacity .75) and x-187 / x965 (opacity .5), vertically centred (Figma: left pair
  * 10 higher, normalised), BEHIND the active photo | 21.63 | 3-dot divider (shared media-hub asset) 40.972 x 8.716 centred.
  * Figma shows no arrows or dots for the gallery: the photos are the controls (click / tap a side photo, arrow keys, swipe;
  * src/scripts/hospital-gallery.ts). The dropdown switches the area (text + photos). One area ("Outdoor Spaces") in Figma.
  */
-interface Area { key: string; label: string; text: string[]; active?: number; images: { image: string; alt: string }[] }
-interface Props { edition: Edition; c: { heading: string; selectLabel: string; galleryLabel: string; slideLabel: string; showSlide: string }; areas: Area[] }
+interface Area { key: string; label: string; active?: number; images: { image: string; alt: string }[] }
+interface Props { edition: Edition; c: { heading: string; text: string[]; selectLabel: string; galleryLabel: string; slideLabel: string; showSlide: string }; text?: string[]; areas: Area[] }
 const { edition, c, areas } = Astro.props;
+// Section text: the client's "Designed for Comfort, Recovery and Wellbeing" paragraphs (same for every hospital, shared JSON; a
+// hospital file may override it). Photos per area only where they exist (Abu Dhabi, Figma); the other hospitals show the text alone.
+const text: string[] = Astro.props.text ?? c.text;
+const hasPhotos = areas.some((a) => a.images.length > 0);
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ''));
 const n = (len: number, i: number) => ((i % len) + len) % len;
 // position of slide i relative to the active one: 0 active, -1/1 neighbours, -2/2 far, else hidden (wraps around)
@@ -36,7 +40,9 @@ const pos = (len: number, active: number, i: number) => {
 <section class="heal" aria-labelledby="healing-heading" data-gallery>
   <h2 id="healing-heading" class="h">{c.heading}</h2>
 
-  {areas.length > 1 ? (
+  {!hasPhotos && <div class="text solo">{text.map((p) => <p>{p}</p>)}</div>}
+
+  {!hasPhotos ? null : areas.length > 1 ? (
     <div class="ui-box pick">
       <label for="hospital-area" class="sr-only">{c.selectLabel}</label>
       <select id="hospital-area" class="ui-field" data-gallery-select>
@@ -55,7 +61,7 @@ const pos = (len: number, active: number, i: number) => {
     const active = Math.min(a.active ?? 0, a.images.length - 1);
     return (
       <div class="area" data-gallery-area={a.key} hidden={ai !== 0}>
-        <div class="text">{a.text.map((p) => <p>{p}</p>)}</div>
+        <div class="text">{text.map((p) => <p>{p}</p>)}</div>
         <ul class="slides" data-slides data-active={active} role="list" aria-label={fill(c.galleryLabel, { area: a.label })}>
           {a.images.map((im, i) => (
             <li class="slide" data-slide data-pos={pos(a.images.length, active, i)}>
@@ -86,6 +92,7 @@ const pos = (len: number, active: number, i: number) => {
   .area { display: contents; }
   .area[hidden] { display: none; }
   .text { margin-top: calc(22 * var(--u)); width: calc(539 * var(--u)); max-width: calc(100% - 32px); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); text-align: center; }
+  .text.solo { margin-top: calc(16 * var(--u)); } /* no area dropdown: the text sits where the dropdown's top was */
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(14 * var(--u)); }
   .slides { position: relative; list-style: none; margin: calc(42 * var(--u)) 0 0; padding: 0; align-self: stretch; height: calc(397.648 * var(--u)); overflow: hidden; touch-action: pan-y; }

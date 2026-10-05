@@ -4,27 +4,81 @@
     "description": "Explore the latest updates, medical insights, and key developments from Cambridge Hospital and beyond."
   },
   "hero": {
-    "ariaLabel": "Media Hub",
-    "banner": { "image": "media-hub/banner", "alt": "" },
-    "title": ["Stay Informed ", "with Cambridge"],
+    "ariaLabel": "Stay Informed",
+    "banner": {
+      "image": "media-hub/banner",
+      "alt": ""
+    },
+    "title": [
+      "Stay Informed"
+    ],
     "text": "Explore the latest updates, medical insights, and key developments from Cambridge Hospital and beyond.",
-    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
   },
   "explore": {
     "title": "Explore Our Media",
-    "text": "Browse articles, events, conferences, and press releases to stay updated with our latest activities and insights.",
-    "select": { "label": "Browse all categories" },
+    "text": "",
+    "select": {
+      "label": "Browse all categories"
+    },
     "categories": [
-      { "key": "health-articles", "label": "Health Articles" },
-      { "key": "events", "label": "Events" },
-      { "key": "conferences", "label": "Conferences" },
-      { "key": "press-releases", "label": "Press Releases" }
+      {
+        "key": "events",
+        "label": "Events"
+      },
+      {
+        "key": "conferences",
+        "label": "Conferences"
+      },
+      {
+        "key": "press-releases",
+        "label": "Press Releases"
+      },
+      {
+        "key": "health-articles",
+        "label": "Health Articles"
+      }
     ],
     "tiles": [
-      { "category": "health-articles", "title": "Lateral Epicondylitis", "image": "media-hub/tile-health-articles", "alt": "", "crop": { "h": "99.92%", "l": "-177.49%", "t": "0%", "w": "314.41%" } },
-      { "category": "events", "title": "Pre-Maturity Awareness Day", "image": "media-hub/tile-events", "alt": "" },
-      { "category": "conferences", "title": "1st Fujairah ICU Symposium", "image": "media-hub/tile-conferences", "alt": "", "crop": { "h": "100%", "l": "-94.87%", "t": "0.14%", "w": "314.66%" } },
-      { "category": "press-releases", "title": "Newborn Brachial Plexus Injuries", "image": "media-hub/tile-press-releases", "alt": "" }
+      {
+        "category": "events",
+        "title": "Pre-Maturity Awareness Day",
+        "image": "media-hub/tile-events",
+        "alt": ""
+      },
+      {
+        "category": "conferences",
+        "title": "1st Fujairah ICU Symposium",
+        "image": "media-hub/tile-conferences",
+        "alt": "",
+        "crop": {
+          "h": "100%",
+          "l": "-94.87%",
+          "t": "0.14%",
+          "w": "314.66%"
+        }
+      },
+      {
+        "category": "press-releases",
+        "title": "Newborn Brachial Plexus Injuries",
+        "image": "media-hub/tile-press-releases",
+        "alt": ""
+      },
+      {
+        "category": "health-articles",
+        "title": "Lateral Epicondylitis",
+        "image": "media-hub/tile-health-articles",
+        "alt": "",
+        "crop": {
+          "h": "99.92%",
+          "l": "-177.49%",
+          "t": "0%",
+          "w": "314.41%"
+        }
+      }
     ]
   },
   "latest": {
@@ -34,10 +88,14 @@
   },
   "newsletter": {
     "ariaLabel": "Newsletter",
-    "heading": ["Subscribe to ", "Our Newsletter"],
-    "text": "Sign up for free, and stay up to date on research advancements, health tips and more!",
+    "heading": [
+      "Subscribe to ",
+      "Our Newsletter"
+    ],
+    "text": "Sign up to receive our newsletter and stay up to date with our latest news and more!",
     "emailLabel": "Email",
     "emailPlaceholder": "youremail123@gmail.com",
     "submit": "SUBSCRIBE"
-  }
+  },
+  "_note": "Media Hub (Figma 100:5522). Text = Website Content - Suhad/Navigation Bar/EN - Media Hub.md (5 Oct 2026): hero 'Stay Informed' (one line), 'Explore Our Media' without a description, categories in the recommended order (Events, Conferences, Press Releases, Health Articles; the four Figma tiles follow that order), newsletter text. meta.* PLACEHOLDER."
 }

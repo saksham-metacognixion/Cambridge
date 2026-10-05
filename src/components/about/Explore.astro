@@ -23,7 +23,7 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
 <Band bg="rgba(231,231,231,0.5)" labelledby="about-explore-heading">
   <div class="wrap">
     <h2 id="about-explore-heading" class="h">{c.heading}</h2>
-    <p class="sub">{c.text}</p>
+    {c.text && <p class="sub">{c.text}</p>}
     <ul class="grid" role="list">
       {cards.map((x) => (
         <li class="cell">
@@ -44,7 +44,9 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
   .wrap { padding-block: calc(55 * var(--u)) calc(69 * var(--u)); }
   .h { margin: 0; width: calc(664 * var(--u)); max-width: 100%; margin-inline: auto; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
   .sub { margin: calc(5 * var(--u)) auto 0; width: calc(528 * var(--u)); max-width: 100%; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); }
-  .grid { list-style: none; margin: calc(47 * var(--u)) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(222 * var(--u)), calc(222 * var(--u)))); justify-content: center; gap: calc(40 * var(--u)) calc(20 * var(--u)); }
+  .grid { list-style: none; margin: calc(47 * var(--u)) 0 0; } /* 47 below the sub box; without a sub line (client text) the sub's 5 + 18 are added so the cards keep their Figma y */
+  .h + .grid { margin-top: calc(70 * var(--u)); }
+  .grid { padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(222 * var(--u)), calc(222 * var(--u)))); justify-content: center; gap: calc(40 * var(--u)) calc(20 * var(--u)); }
   .cell { display: flex; }
   .card { position: relative; box-sizing: border-box; width: calc(222 * var(--u)); min-height: calc(342 * var(--u)); padding: calc(260 * var(--u)) calc(24 * var(--u)) calc(17 * var(--u)); background: #fff; border-radius: calc(15 * var(--u)); }
   .card :global(.img) { position: absolute; inset-inline-start: 0; top: calc(var(--it) * var(--u)); width: 100%; height: calc(244 * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: calc(15 * var(--u)); border-start-end-radius: calc(15 * var(--u)); }

@@ -1,0 +1,30 @@
+{
+  "_note": "Tennis Elbow (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Tennis Elbow | Cambridge Hospital",
+    "description": "Easing pain and rebuilding elbow strength through structured rehabilitation."
+  },
+  "hero": {
+    "ariaLabel": "Tennis Elbow",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Tennis Elbow"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Tennis elbow is a painful condition caused by overuse or repetitive strain of the forearm muscles and tendons, causing pain and tenderness on the outside of the elbow. Despite the name, it affects far more non-athletes than tennis players.",
+    "At Cambridge Hospital, our outpatient physiotherapy team assesses the underlying biomechanical cause and delivers targeted treatment that includes manual therapy, eccentric strengthening exercises, load management education and activity modification to ease pain and prevent recurrence."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Long term cardiac anomalies.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Long-Term Cardiac Anomalies Rehabilitation",
+    "title": [
+      "Long-Term Cardiac",
+      "Anomalies",
+      "Rehabilitation"
+    ],
+    "text": "For children with congenital or acquired heart conditions, to support recovery, manage symptoms and promote healthy growth and development."
+  },
+  "overview": [
+    "Many children with a cardiac anomaly, often a congenital heart condition present from birth, need long-term care to help manage complications and support healthy growth and development. Our paediatric long-term cardiac anomalies rehabilitation programme supports these children and their families through different stages of care, from diagnosis and recovery after heart surgery to ongoing management and rehabilitation."
+  ],
+  "topics": [
+    {
+      "label": "What Is Long Term Cardiac Anomalies Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Longterm cardiac anomalies rehabilitation provides ongoing, specialised care for children living with congenital or acquired heart conditions. It supports their recovery after surgery, helps manage symptoms and strengthens their overall health through continuous monitoring and guided therapy."
+        },
+        {
+          "type": "p",
+          "text": "This programme focuses on helping each child grow and develop safely, with care plans tailored to their needs and families closely involved throughout their care."
+        }
+      ]
+    },
+    {
+      "label": "How Our Programme Helps",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Care is tailored to each child following diagnosis, and may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Diagnosis support** - an echocardiogram is a valuable tool for detecting heart defects early. It is routinely used for infants with Down syndrome, who have a higher prevalence of cardiac defects, and is equally useful for other infants.",
+            "**Recovery after heart surgery** - where surgical restoration of a cardiac defect has been carried out, rehabilitation during an inpatient stay provides occupational and physiotherapy support.",
+            "**Continuous care at home** - once recovery is on track, many infants go home with ongooing care and frequent paediatric check ups, where the care provider watches for any concerning symptoms and acts early.",
+            "**Long-term inpatient care** - for more serious cases, including those involving children with Down syndrome, needing specialised care and continuous supervision may be needed when this cannot always be provided at home",
+            "**Partnership with parents** - our programme works closely with families so they remain active in their child’s care and treatment plan"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Why a Dedicated Care Facility Helps",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Parents may feel unsure about long-term care for an infant with a cardiac anomaly. A dedicated facility can provide specialised care, technology, and equipment beyond what’s possible at home, making care more comprehensive, particularly for children experiencing serious effects from a defect or recovering after heart surgery."
+        }
+      ]
+    }
+  ]
+}

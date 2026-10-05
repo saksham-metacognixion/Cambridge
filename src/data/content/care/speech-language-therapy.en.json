@@ -1,0 +1,100 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Speech and language.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Speech and Language Therapy",
+    "title": [
+      "Speech and Language",
+      "Therapy"
+    ],
+    "text": "For children and adults with difficulties affecting speech, language, voice or swallowing, to improve communication and confidence."
+  },
+  "overview": [
+    "Communication is fundamental to how we connect with others, and when it becomes difficult, it can lead to frustration, isolation and a loss of confidence. Speech and language therapy helps patients overcome communication difficulties, express their needs, thoughts and emotions, and participate more confidently in everyday life.",
+    "Our speech and language therapists provide personalised therapy for each patient’s individual needs and challenges, helping children and adults develop language skills, improve articulation and communicate with greater confidence and ease."
+  ],
+  "topics": [
+    {
+      "label": "What Is Speech and Language Therapy?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Speech and language therapy supports clearer communication and safer swallowing through targeted, evidence-based techniques and exercises."
+        },
+        {
+          "type": "p",
+          "text": "It helps patients strengthen their speech, develop language skills and improve feeding and swallowing abilities, giving them the skills and tools they need to connect, express themselves and participate more confidently in daily life."
+        }
+      ]
+    },
+    {
+      "label": "Who It’s For",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Therapy supports children and adults across a wide range of needs, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Speech and articulation difficulties",
+            "Language delays or comprehension difficulties",
+            "Voice disorders",
+            "Feeding and swallowing difficulties",
+            "Communication challenges following stroke or traumatic injury",
+            "Hearing impairments",
+            "Autism and difficulties with motor planning",
+            "Weakness of the oral muscles",
+            "Delays in intellectual development and cognitive skills"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Whatever the cause, our therapists help each patient establish the most effective form of communication, whether verbal, written or assisted."
+        }
+      ]
+    },
+    {
+      "label": "Therapies and Techniques",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "**Articulation Therapy:** Shaping pronunciation so patients can produce speech sounds more clearly and improve the clarity and fluency of their speech, building confidence along the way.",
+            "**Language Comprehension Therapy:** Supporting patients with developmental difficulties or language delays, including those following a stroke or other conditions, who can communicate but may struggle to do so effectively.",
+            "**Oral, Swallowing and Feeding Therapy:** Targeted facial, jaw, lip and tongue exercises to strengthen the muscles used in eating and drinking and improve swallowing control."
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Supporting Children",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Children develop communication skills at different paces, and some may need additional support with listening, understanding or speaking. Therapy can help children build these skills, sometimes using playful tools such as communication boards and games to support early language development"
+        },
+        {
+          "type": "p",
+          "text": "Because early intervention can be highly effective, treatment is best started early, often before the age of five. Older children can still make meaningful progress, although changing established patterns may take more time. We also support children with language-based learning disabilities."
+        },
+        {
+          "type": "p",
+          "text": "**Learning Disabilities:** We identify each child’s strengths and areas for development, then build targeted strategies to improve motor skills, writing and reading comprehension, alongside cognitive and social development."
+        }
+      ]
+    },
+    {
+      "label": "Our Approach",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "We work closely with families to create personalised plans that support communication from an early age - a proactive approach that helps reduce future challenges in academic and social settings."
+        },
+        {
+          "type": "p",
+          "text": "We also believe in holistic rehabilitation. Our speech and language therapists collaborate with occupational therapists, physiotherapists and other professionals to provide coordinated support, monitor progress and adjust treatment plans as each patient’s needs evolve."
+        }
+      ]
+    }
+  ]
+}

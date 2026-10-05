@@ -1,0 +1,32 @@
+{
+  "_note": "Shoulder Injury & Rotator Cuff Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Shoulder Injury & Rotator Cuff Rehabilitation | Cambridge Hospital",
+    "description": "Relieving pain and restoring shoulder mobility through targeted therapy."
+  },
+  "hero": {
+    "ariaLabel": "Shoulder Injury & Rotator Cuff Rehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Shoulder Injury &",
+      "Rotator Cuff",
+      "Rehabilitation"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Shoulder injuries, including rotator cuff tears, impingement and post-surgical recovery can significantly restrict upper limb function and daily activities.",
+    "At Cambridge Hospital, our shoulder rehabilitation programme combines manual therapy, targeted strengthening, range-of-motion exercises, and functional retraining to restore full shoulder function. Both conservative management and post-operative rehabilitation are available through our outpatient physiotherapy clinics."
+  ]
+}

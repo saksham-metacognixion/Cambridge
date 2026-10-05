@@ -1,0 +1,77 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/Neurorehabilitation/EN-Traumatic Brain Injury.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Traumatic Brain Injury Rehabilitation",
+    "title": [
+      "Traumatic Brain",
+      "Injury",
+      "Rehabilitation"
+    ],
+    "text": "For patients recovering from traumatic brain injury, to restore physical, behavioural and cognitive function, leading to greater independence."
+  },
+  "overview": [
+    "A traumatic brain injury (TBI) occurs when a sudden impact, blow or jolt to the head disrupts normal brain function. Depending on the severity, a TBI can affect movement, cognition, behaviour, speech and emotional regulation. Symptoms may appear immediately or develop over time, ranging from headaches and confusion to significant physical, cognitive or behavioural changes."
+  ],
+  "topics": [
+    {
+      "label": "What Is Traumatic Brain Injury Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Traumatic Brain Injury rehabilitation is specialised care for patients whose movement, cognition, behaviour, speech or daily function has been affected by a head injury. At Cambridge Hospital, our TBI rehabilitation programme supports recovery after mild, moderate and severe brain injuries caused by falls, accidents or other traumatic events."
+        },
+        {
+          "type": "p",
+          "text": "Care is delivered by a coordinated, interdisciplinary team working within one structured pathway, combining medical management with physiotherapy, occupational therapy, speech and language therapy and cognitive rehabilitation."
+        },
+        {
+          "type": "p",
+          "text": "Each programme is built around personalised, measurable goals, helping patients regain independence, improve daily function and rebuild confidence."
+        }
+      ]
+    },
+    {
+      "label": "Our TBI Rehabilitation Programme",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our rehabilitation programme addresses physical, cognitive and emotional recovery through a coordinated approach:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Physiotherapy** - building strength, balance, flexibility and coordination",
+            "**Occupational therapy** - relearning daily activities such as feeding, dressing, bathing, using the toilet and moving safely",
+            "**Speech and language therapy** - supporting speech, language, cognition and safe swallowing",
+            "**Cognitive therapy** - improves memory, attention, judgment, planning, perception, thinking and learning",
+            "**Psychological counselling** - building coping skills, strengthening emotional wellbeing and rebuilding relationships"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "The Rehabilitation Journey",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Rehabilitation is an important part of recovery for patients following traumatic brain injury. Once a patient is medically stable and ready to leave acute hospital care, the next stage of care depends on their individual medical, functional and rehabilitation needs."
+        },
+        {
+          "type": "lead",
+          "text": "Depending on the patient’s specific condition, there are two primary pathways for post-hospital care:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Long-term care facilities:** For patients who are medically stable but continue to require ongoing medical support, nursing care or mechanical ventilation.",
+            "**Rehabilitation centres:** For patients who are medically stable and able to participate in rehabilitation but require support to regain physical, cognitive, communication or daily living skills."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "The rehabilitation team assesses each patient’s needs and develops an individualised care plan, with the level and intensity of support adjusted as recovery progresses."
+        }
+      ]
+    }
+  ]
+}

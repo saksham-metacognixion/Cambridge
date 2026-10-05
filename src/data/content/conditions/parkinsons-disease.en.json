@@ -1,0 +1,30 @@
+{
+  "_note": "Parkinson's Disease (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Parkinson's Disease | Cambridge Hospital",
+    "description": "Improving movement and independence through targeted rehabilitation."
+  },
+  "hero": {
+    "ariaLabel": "Parkinson's Disease",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Parkinson's Disease"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Parkinson’s disease progressively affects movement, balance, speech and daily function. While it cannot be cured, the right combination of therapy and medical management can significantly slow its impact.",
+    "At Cambridge Hospital, our rehabilitation services support patients with Parkinson’s disease by bringing together neurology, physiotherapy, occupational therapy and speech and language therapy in one coordinated plan, addressing gait, posture, fall prevention, voice, swallowing and home adaptations. Outpatient and home care options ensure continuity as symptoms evolve."
+  ]
+}

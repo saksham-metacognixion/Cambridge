@@ -1,0 +1,26 @@
+{
+  "_note": "Dhahran Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - KSA Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "hero": {
+    "title": [
+      "Dhahran Hospital"
+    ],
+    "text": "Specialised rehabilitation and long-term care, delivered through structured clinical pathways and multidisciplinary expertise.",
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
+  },
+  "video": {
+    "host": "",
+    "id": ""
+  },
+  "environment": {
+    "text": [
+      "At Cambridge Hospital Dhahran, we provide a supportive care environment that combines advanced medical technology, clinical expertise and dedicated rehabilitation facilities with a comfortable and welcoming setting. Our multidisciplinary team delivers compassionate, personalised care, working closely with patients and their families throughout their stay.",
+      "We focus on helping patients regain function, build confidence and achieve greater independence as they progress through their recovery. Each care plan is tailored to the patient’s needs and goals, with medical care, nursing support and rehabilitation working together to support progress and prepare patients for a safe return home or transition to the next stage of care."
+    ]
+  },
+  "healing": {
+    "areas": []
+  }
+}

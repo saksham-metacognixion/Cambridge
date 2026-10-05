@@ -1,82 +1,209 @@
 {
-  "_note": "Careers (Figma 112:7295). Visible text exactly as in Figma; meta.*, pendingTab and the alt texts are NOT in Figma (PLACEHOLDER). Button destinations: src/data/careers.json. Tab panels with empty blocks have no content in Figma ('Content pending' on staging only).",
+  "_note": "Career Hub (Figma 112:7295). Text = Website Content - Suhad/Navigation Bar/EN - Career Hub.md (5 Oct 2026): hero, Be Part of a Purpose (3 paragraphs), Life at Cambridge Hospital (3 paragraphs), 'What Sets Us Apart' (4 tabs, all with content), National Talent Development (UAE / KSA paragraphs). The document says the 'Why Cambridge Hospital' section isn't needed: removed (no `why` key). Button destinations: src/data/careers.json (D3/D4 still open; the document notes the live site's vacancy buttons don't work). meta.*, pendingTab and alt texts are PLACEHOLDER.",
   "meta": {
-    "title": "Careers | Cambridge Hospital",
-    "description": "Careers at Cambridge Hospital: join a team shaping recovery, restoring lives and redefining care across the United Arab Emirates and the Kingdom of Saudi Arabia."
+    "title": "Career Hub | Cambridge Hospital",
+    "description": "Careers at Cambridge Hospital: join a team shaping recovery, restoring lives and redefining care across the region."
   },
   "pendingTab": "Content pending",
   "hero": {
     "ariaLabel": "Careers at Cambridge Hospital",
-    "banner": { "image": "careers/banner", "alt": "" },
-    "title": ["Careers at", "Cambridge", "Hospital"],
-    "text": "Join a team shaping recovery, restoring lives, and redefining care across the region.",
-    "button": { "label": "Join our Team" }
+    "banner": {
+      "image": "careers/banner",
+      "alt": ""
+    },
+    "title": [
+      "Careers at",
+      "Cambridge",
+      "Hospital"
+    ],
+    "text": "Join a team shaping recovery, restoring lives and redefining care across the region.",
+    "button": {
+      "label": "Join our Team"
+    }
   },
   "intro": {
     "ariaLabel": "Be part of a purpose that transforms lives",
-    "image": { "image": "careers/nurse", "alt": "Two Cambridge Hospital clinicians standing back to back" },
-    "heading": ["Be Part of a", "Purpose That", "Transforms Lives"],
+    "image": {
+      "image": "careers/nurse",
+      "alt": "Two Cambridge Hospital clinicians standing back to back"
+    },
+    "heading": [
+      "Be Part of a",
+      "Purpose That",
+      "Transforms Lives"
+    ],
     "text": [
-      "At Cambridge Hospital, being part of the team means contributing to something greater, supporting patients through recovery journeys that restore independence, wellbeing, and quality of life.",
-      "Across the United Arab Emirates and the Kingdom of Saudi Arabia, our teams work within a unified healthcare system built on collaboration, clinical excellence, and purpose-driven care."
+      "At Cambridge Hospital, our people come together around a shared purpose: to make a meaningful difference in the lives of patients and their families.",
+      "We are committed to clinical excellence and meaningful human impact, helping patients recover, regain function, maintain dignity and achieve a better quality of life. Being part of Cambridge Hospital means contributing to a healthcare system where the work you do has a tangible and lasting impact on the people and communities we serve.",
+      "Across the United Arab Emirates and the Kingdom of Saudi Arabia, our growing network provides opportunities to be part of a healthcare organisation that is helping shape the future of rehabilitation, long-term care and recovery across the region."
     ]
   },
   "life": {
-    "heading": "Life at Cambridge",
-    "sub": ["At Cambridge Hospital, ", "our people are at the heart of everything we do."],
-    "text": "We foster a collaborative, multidisciplinary environment where clinical expertise, compassion, and innovation come together to deliver meaningful patient outcomes. Every team member plays a role in shaping recovery journeys — from physicians and therapists to nursing teams and operational support functions.",
-    "join": { "label": "Join our Team" },
-    "openRoles": { "label": "View Open Roles" }
+    "heading": "Life at Cambridge Hospital",
+    "sub": [
+      "Our people are at the heart of everything we do."
+    ],
+    "text": [
+      "At Cambridge Hospital, we value the expertise our people bring and create opportunities for them to develop, contribute and progress.",
+      "Working alongside experienced clinicians, healthcare specialists and professionals across disciplines, you will have the opportunity to gain exposure to different perspectives, learn from others, develop your expertise and grow in your career.",
+      "As part of a growing team, you will be encouraged to bring your knowledge and ideas to the workplace, take on new challenges and build meaningful professional relationships, while being part of a workplace where people support one another and take pride in the impact they make."
+    ],
+    "join": {
+      "label": "Join our Team"
+    },
+    "openRoles": {
+      "label": "View Open Roles"
+    }
   },
   "multi": {
-    "heading": "A Multidisciplinary Environment",
-    "sub": "Our teams span across:",
-    "tabsLabel": "Our teams",
+    "heading": "What Sets Us Apart",
+    "tabsLabel": "What sets us apart",
     "active": 0,
     "tabs": [
       {
-        "label": "Physical Medicine & Rehabilitation",
+        "label": "A Multidisciplinary Environment",
         "blocks": [
           {
-            "type": "lines",
-            "lines": [
-              "- Nursing & Ventilator Care Units",
-              "- Pediatric & Developmental Care",
-              "- Case Management",
-              "- Patient Experience",
-              "- Customer Service",
-              "- Admissions & Clinical Liaison",
-              "- Business Development & Operations",
-              "- Marketing & Communications",
-              "- Facility Management"
+            "type": "lead",
+            "text": "Our teams bring together a diverse range of clinical, specialist and professional expertise, including:"
+          },
+          {
+            "type": "ul",
+            "items": [
+              "Nursing and Ventilator Care",
+              "Paediatric and Developmental Care",
+              "Case Management",
+              "Patient Experience",
+              "Customer Service",
+              "Admissions and Clinical Liaison",
+              "Business Development and Operations",
+              "Marketing and Communications",
+              "Facility Management"
             ]
           },
-          { "type": "note", "text": "Each function contributes to a unified model of care designed to support patients at every stage of recovery." }
+          {
+            "type": "p",
+            "text": "Each function contributes to a unified model of care designed to support patients and their families at every stage of recovery."
+          }
         ]
       },
-      { "label": "Growth & Development", "blocks": [] },
-      { "label": "Purpose - Driven Work ", "blocks": [] },
-      { "label": "Our People, One Team", "blocks": [] },
-      { "label": "Regional Presence", "blocks": [] }
+      {
+        "label": "Growth and Development",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Cambridge Hospital is designed not only to deliver care, but to develop the people who make that care possible."
+          },
+          {
+            "type": "lead",
+            "text": "Professional development is supported through:"
+          },
+          {
+            "type": "ul",
+            "items": [
+              "Exposure to multidisciplinary practice and collaboration",
+              "Structured clinical environments",
+              "Ongoing service and facility expansion",
+              "Participation in evolving care models across the region"
+            ]
+          },
+          {
+            "type": "p",
+            "text": "For clinicians and healthcare specialists, this means opportunities to deepen their expertise in specialised rehabilitation and long-term care."
+          },
+          {
+            "type": "p",
+            "text": "For non-clinical professionals, it means developing their expertise while contributing to a healthcare system with tangible regional impact and increasing operational sophistication."
+          },
+          {
+            "type": "p",
+            "text": "Development at Cambridge Hospital is about more than career progression. It is about growing through meaningful contribution, greater responsibility and increasing professional exposure."
+          }
+        ]
+      },
+      {
+        "label": "Purpose-Driven Work",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Purpose is central to the Cambridge Hospital employer identity."
+          },
+          {
+            "type": "p",
+            "text": "People do not join this organisation simply to fill a role. They join to contribute to recovery, dignity, function and the long-term well-being of patients and their families."
+          },
+          {
+            "type": "lead",
+            "text": "That purpose is reflected across every area of the organisation, whether a team member is:"
+          },
+          {
+            "type": "ul",
+            "items": [
+              "Delivering therapy",
+              "Coordinating discharge",
+              "Supporting patient experience",
+              "Facilitating admissions",
+              "Ensuring safety and continuity behind the scenes"
+            ]
+          },
+          {
+            "type": "p",
+            "text": "This gives the workplace a different kind of value. The work is not abstract; its impact is visible, personal and deeply meaningful."
+          }
+        ]
+      },
+      {
+        "label": "Regional Presence",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Cambridge Hospital operates across multiple facilities in the United Arab Emirates and the Kingdom of Saudi Arabia."
+          },
+          {
+            "type": "lead",
+            "text": "Being part of this regional network means contributing to:"
+          },
+          {
+            "type": "ul",
+            "items": [
+              "A growing healthcare platform",
+              "An integrated and standardised care model",
+              "A network with multi-site capability and long-term expansion potential"
+            ]
+          },
+          {
+            "type": "p",
+            "text": "It also means that work at Cambridge Hospital is connected to broader healthcare transformation across the region, particularly in areas of rehabilitation, long-term care and recovery support."
+          }
+        ]
+      }
     ]
   },
   "talent": {
     "ariaLabel": "National Talent Development",
     "heading": "National Talent Development",
-    "text": "We are committed to building sustainable healthcare capabilities by investing in national talent across both markets.",
-    "photo": { "image": "careers/pioneer", "alt": "An Emirati woman and man, Cambridge Hospital clinicians" },
+    "text": "At Cambridge Hospital, we are committed to developing national talent and building sustainable healthcare capabilities in both the United Arab Emirates and the Kingdom of Saudi Arabia.",
+    "photo": {
+      "image": "careers/pioneer",
+      "alt": "An Emirati woman and man, Cambridge Hospital clinicians"
+    },
     "blocks": [
       {
         "heading": "United Arab Emirates",
-        "lead": "Cambridge Hospital actively supports the development of Emirati healthcare ",
-        "text": "professionals through structured training, academic partnerships, and career pathways.",
-        "more": "Our collaboration with institutions such as Fatima College of Health Sciences reflects our commitment to nurturing the next generation of nursing and healthcare talent in the UAE."
+        "paragraphs": [
+          "In the United Arab Emirates, Cambridge Hospital actively supports Emiratisation through structured pathways that help Emirati professionals enter, develop and progress within the healthcare sector.",
+          "This commitment reflects more than compliance with workforce priorities. It reflects the organisation’s belief that strong healthcare systems must also contribute to national capability-building by developing talent across the full spectrum of healthcare professions and specialities.",
+          "By supporting Emirati talent across medical, nursing, allied health, rehabilitation, clinical specialist, healthcare delivery and operational roles, Cambridge Hospital contributes to long-term system resilience while creating meaningful opportunities for Emirati professionals to build their expertise and advance their careers.",
+          "The organisation’s engagement with institutions such as Fatima College of Health Sciences reflects this broader commitment to nurturing future healthcare talent and creating pathways for Emirati professionals."
+        ]
       },
       {
         "heading": "Kingdom of Saudi Arabia",
-        "lead": "In Saudi Arabia, Cambridge Hospital continues to support national workforce ",
-        "text": "development across its facilities in Dhahran, Al Khobar, and Jeddah.",
-        "more": "Through structured career pathways, clinical training, and integration into multidisciplinary teams, we contribute to strengthening local healthcare capabilities in alignment with national priorities."
+        "paragraphs": [
+          "In the Kingdom of Saudi Arabia, Cambridge Hospital actively supports Saudisation by developing local talent across its facilities and functions, strengthening national participation across the full spectrum of clinical, specialist, healthcare and non-clinical roles.",
+          "This commitment is especially important in a regional context where healthcare growth must be matched by sustainable local workforce development and the continued development of Saudi healthcare professionals across a broad range of specialities.",
+          "Through structured opportunities, multidisciplinary exposure and participation in specialised care environments, Cambridge Hospital contributes to healthcare capability-building in line with Saudi Arabia’s priorities and long-term sector development."
+        ]
       }
     ]
   },
@@ -84,21 +211,11 @@
     "ariaLabel": "Start your career journey",
     "heading": "Start Your Career Journey with Us!",
     "text": "Explore open roles across our network and become part of a team dedicated to delivering exceptional care and meaningful impact.",
-    "openRoles": { "label": "View Open Roles" },
-    "apply": { "label": "Apply Now" }
-  },
-  "why": {
-    "heading": "Why Cambridge Hospital?",
-    "tabsLabel": "Why Cambridge Hospital",
-    "active": 0,
-    "tabs": [
-      {
-        "label": "Supportive Environment",
-        "blocks": [{ "type": "note", "text": "A collaborative culture where your contributions are valued and your growth is supported." }]
-      },
-      { "label": "Professional Development", "blocks": [] },
-      { "label": "Meaningful Impact", "blocks": [] },
-      { "label": "Innovation & Excellence", "blocks": [] }
-    ]
+    "openRoles": {
+      "label": "View Open Roles"
+    },
+    "apply": {
+      "label": "Apply Now"
+    }
   }
 }

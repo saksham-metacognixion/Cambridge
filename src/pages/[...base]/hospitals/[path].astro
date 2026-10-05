@@ -1,0 +1,92 @@
+---
+import { editions, editionFromBase } from '../../../lib/editions';
+import { content, t } from '../../../lib/content';
+import { hospitalsIn, hospitalEditions, hospitalName, detailContent, HOSPITAL_PATHS, type Hospital } from '../../../lib/hospitals';
+import { showPendingNote } from '../../../lib/conditions';
+import { INDEXABLE } from '../../../lib/seo';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import EnvironmentBand from '../../../components/hospital/EnvironmentBand.astro';
+import HealingGallery from '../../../components/hospital/HealingGallery.astro';
+import MapBand from '../../../components/hospital/MapBand.astro';
+import CareCards from '../../../components/hospital/CareCards.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+import DoctorsRow from '../../../components/shared/DoctorsRow.astro';
+
+/*
+ * Hospital detail template (Figma 112:7721, spec figma-cache/hospital-detail-spec.md), URL hospitals/<path> (live site URLs): one page per hospital on Global and on
+ * the hospital's own region, both languages (src/lib/hospitals.ts). Blocks and the Figma gaps between them (Figma px):
+ * hero 119-556 | 31 | video + environment band (ends 1206) | 54 | healing gallery (ends 1941) | 36 | map band 262 | 66 |
+ * care cards (end 2773) | 48 | CTA band (heading top 50) | 58 | doctors | 41.54 | footer.
+ * Content: shared text in content/hospital-detail/shared.en.json; per-hospital text in <slug>.en.json (all six since 5 Oct 2026,
+ * from the client's documents; photos only for Abu Dhabi = the Figma frame). A hospital without a file would get a generated hero
+ * (title pattern + placeholder banner), no video / gallery sections and a staging note.
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) => hospitalsIn(e).map((h) => ({ params: { base: e.base || undefined, path: h.path }, props: { hospital: h } })));
+}
+
+const { hospital: h } = Astro.props as { hospital: Hospital };
+const edition = editionFromBase(Astro.params.base);
+const loc = edition.locale;
+const shared = content('hospital-detail/shared', loc);
+const own = detailContent(h.slug, loc);
+const name = hospitalName(h, loc);
+const city = t(h.city, loc, 'hospitals');
+const fill = (s: string) => s.replace('{name}', name).replace('{city}', city);
+
+const hero = {
+  ariaLabel: fill(shared.hero.ariaLabel),
+  banner: own?.hero.banner ?? shared.generated.banner,
+  title: (own?.hero.title ?? shared.generated.title).map(fill),
+  text: own?.hero.text ?? undefined,
+  button: shared.hero.button,
+};
+const pos = { titleTop: 124, titleW: 422, textGap: 11, textW: 389, textX: 97, buttonGap: 15 };
+const pending = !own && showPendingNote(INDEXABLE) ? shared.pending.note : null;
+const careText = { ...shared.care };
+---
+
+<BaseLayout edition={edition} path={HOSPITAL_PATHS.detail(h.slug)} title={fill(shared.meta.title)} description={fill(shared.meta.description)} editionsWithPage={hospitalEditions(h)}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={hero} pos={pos} buttonAttrs={{ 'data-hospital': h.slug }} />
+    </div>
+    {pending && <p class="pending-note" role="note">{pending}</p>}
+    {own && (
+      <div id="environment" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(31 * var(--u))">
+        <EnvironmentBand edition={edition} c={shared.environment} text={own.environment.text} video={own.video} />
+      </div>
+    )}
+    {own && (
+      <div id="healing" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(54 * var(--u))">
+        <HealingGallery edition={edition} c={shared.healing} text={own.healing.text} areas={own.healing.areas} />
+      </div>
+    )}
+    <div id="map" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${own ? 36 : 31} * var(--u))`}>
+      <MapBand c={shared.map} hospital={h} city={city} locale={loc} />
+    </div>
+    <div id="care" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(66 * var(--u))">
+      <CareCards edition={edition} c={careText} listLabel={shared.care.listLabel} button={shared.care.button} />
+    </div>
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">
+      <ContactRecovery headTop={50} />
+    </div>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(58 * var(--u))">
+      <DoctorsRow content={shared.doctors} id="hospital-doctors-heading" />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(41.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Staging-only marker (PUBLIC_SHOW_PENDING_NOTE): not part of the design, never rendered in production. */
+  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+</style>

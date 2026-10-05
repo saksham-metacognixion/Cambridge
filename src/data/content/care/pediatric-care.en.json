@@ -1,0 +1,82 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Paediatric.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Paediatric Care",
+    "title": [
+      "Paediatric Care"
+    ],
+    "text": "For children with developmental, neurological or physical concerns, to assess their individual needs, provide appropriate therapy and support their progress and development."
+  },
+  "overview": [
+    "A paediatric consultation is where a child’s care begins. Our paediatrician assesses the child and determines the most appropriate care programme based on their individual needs. This may include physiotherapy, occupational therapy, speech and language therapy, or our cerebral palsy programme, with the paediatrician remaining involved through follow-up reviews as therapy progresses."
+  ],
+  "topics": [
+    {
+      "label": "What is Paediatric Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A paediatric consultation is an appointment with a paediatrician who assesses the child and determines what type of therapy, if any, will help. It is the first step before physiotherapy, occupational therapy or speech and language therapy - the point where each child’s needs are identified and matched to the right care programme."
+        },
+        {
+          "type": "p",
+          "text": "Children are referred to us for many reasons. Some may not yet be reaching expected developmental milestones or may have difficulties with movement, coordination, speech or everyday activities. Others may already have a diagnosis and need a clear plan for the therapy that follows. The consultation serves both purposes: it helps assess the child’s condition and translates that assessment into a clear course of treatment."
+        },
+        {
+          "type": "p",
+          "text": "Our paediatricians work closely with our specialist therapy teams within the same hospital, creating a connected approach to assessment and treatment. When a child is referred for therapy, they are referred to a team working alongside the paediatrician and drawing on the same assessment. This approach helps ensure that assessment, treatment and follow-up remain closely connected throughout the child’s care journey."
+        }
+      ]
+    },
+    {
+      "label": "When to Book a Consultation",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Book a consultation if:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Your child is not yet reaching expected milestones such as sitting, crawling, walking or speaking",
+            "You have concerns about their movement, coordination, posture, balance or muscle tone",
+            "They have difficulty with speech, language, feeding or swallowing",
+            "They struggle with everyday tasks such as dressing, eating, playing or handwriting compared with other children their age",
+            "They have a diagnosis, such as cerebral palsy, and need a therapy plan",
+            "They have been discharged from hospital and need therapy to continue at home",
+            "They are already under our care and are due for a review"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "If you are unsure whether therapy is what your child needs, that is exactly what the consultation is for."
+        }
+      ]
+    },
+    {
+      "label": "Therapies a Child May Be Referred To",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "After assessment, our paediatrician refers the child to the programme that best meets their needs. All four programmes are delivered at Cambridge Hospital by specialist teams working alongside the paediatrician."
+        },
+        {
+          "type": "p",
+          "text": "**Physiotherapy:** For difficulties with movement, strength, balance, posture or gait - whether after injury or surgery, or due to conditions affecting muscle tone and coordination. It is typically recommended when a child’s challenges are primarily physical."
+        },
+        {
+          "type": "p",
+          "text": "**Occupational Therapy:** For difficulties with everyday activities such as dressing, eating, playing, handwriting and participating at school, as well as sensory and coordination difficulties. It is typically recommended when a child struggles with everyday activities rather than movement itself."
+        },
+        {
+          "type": "p",
+          "text": "**Speech & Language Therapy:** For communication, as well as feeding and swallowing - covering expressive and receptive language, articulation, and difficulties associated with developmental conditions or brain injury. It is typically recommended when a child has difficulty understanding or using language, being understood or swallowing safely."
+        },
+        {
+          "type": "p",
+          "text": "**Cerebral Palsy Programme:** Intensive neurorehabilitation using the Kozyavkin Method, the first programme of its kind in the GCC. It is designed for children with cerebral palsy who need a structured, dedicated pathway rather than a single therapy."
+        }
+      ]
+    }
+  ]
+}

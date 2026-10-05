@@ -13,7 +13,7 @@ import { chromium } from 'playwright-core';
 const base = process.argv[2] ?? 'http://localhost:4400';
 const out = process.argv[3] ?? 'docs/qc/browser.json';
 const WIDTHS = [360, 390, 414, 768, 1024, 1200, 1280, 1366, 1440, 1536, 1920];
-const TEMPLATES = ['/', '/about', '/why-cambridge', '/accreditations-partnerships', '/careers', '/our-care', '/our-care/inpatient-care', '/our-care/inpatient-care/post-acute-care', '/conditions-specialities', '/conditions-specialities/accidents-rehabilitation', '/patient-hub', '/find-a-doctor', '/find-a-doctor/ahmad-al-khayer', '/our-hospitals', '/our-hospitals/abu-dhabi', '/our-hospitals/al-ain', '/media-hub', '/media-hub/first-patients-new-saudi-facility', '/contact', '/patient-feedback', '/refer-a-patient', '/international-patients', '/insurance-providers', '/patient-testimonials', '/faq', '/privacy-policy', '/404', '/ar', '/sa/ar/our-hospitals/al-khobar', '/ae/ar/find-a-doctor'];
+const TEMPLATES = ['/', '/about', '/about/why-cambridge', '/about/accreditations-partnerships', '/about/careers', '/care', '/care/inpatient', '/care/inpatient/post-acute-rehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation/stroke-rehabilitation', '/care/outpatient', '/care/home-care', '/sa/care/home-care', '/care/in-school-care', '/patient-hub/conditions-specialities', '/patient-hub/conditions-specialities/stroke-rehabilitation', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation', '/patient-hub', '/find-a-doctor', '/find-a-doctor/ahmad-al-khayer', '/hospitals', '/hospitals/cambridge-hospital-abu-dhabi', '/hospitals/cambridge-hospital-al-ain', '/media-hub', '/media-hub/first-patients-new-saudi-facility', '/contact', '/your-opinion-matters', '/patient-hub/refer-a-patient', '/patient-hub/international-patients', '/patient-hub/insurance-providers', '/patient-hub/testimonials', '/faq', '/privacy-policy', '/404'];
 
 const results = { responsive: [], doctors: [], forms: [], keyboard: [] };
 const ok = (list, name, pass, note = '') => { list.push({ name, pass, note }); console.log(`${pass ? 'PASS' : 'FAIL'} ${name}${note ? ' - ' + note : ''}`); };
@@ -100,9 +100,9 @@ const FORMS = [
   { url: '/', form: '#book-appointment form[data-form]', open: 'a[href="#book-appointment"]', name: 'Book an Appointment pop-up' },
   { url: '/', form: '#send-enquiry-popup form[data-form]', open: 'a[href="#send-inquiry"]', name: 'Send an Inquiry pop-up' },
   { url: '/', form: '#feedback-popup form[data-form]', open: 'a[href="#your-opinion"]', name: 'Your Opinion Matters pop-up' },
-  { url: '/patient-feedback', form: 'form[data-form="feedback"]', open: null, name: 'Patient Feedback page' },
-  { url: '/refer-a-patient', form: 'form[data-form="refer-patient"]', open: null, name: 'Refer a Patient (For Doctors)' },
-  { url: '/international-patients', form: 'form[data-form="international-enquiry"]', open: null, name: 'International Patients' },
+  { url: '/your-opinion-matters', form: 'form[data-form="feedback"]', open: null, name: 'Patient Feedback page' },
+  { url: '/patient-hub/refer-a-patient', form: 'form[data-form="refer-patient"]', open: null, name: 'Refer a Patient (For Healthcare Professionals)' },
+  { url: '/patient-hub/international-patients', form: 'form[data-form="international-enquiry"]', open: null, name: 'International Patients' },
 ];
 async function formChecks(locale) {
   for (const f of FORMS) {
@@ -175,7 +175,7 @@ await formChecks('ar');
   const restored = await page.evaluate(() => document.activeElement?.getAttribute('href') === '#book-appointment');
   ok(results.keyboard, 'Book pop-up: Enter opens, focus inside, Tab trapped, Escape closes and restores focus', inside1 && inside2 && closed && restored, `inside=${inside1}/${inside2} closed=${closed} restored=${restored}`);
   // tabs: arrow keys on the condition detail topics
-  await page.goto(base + '/conditions-specialities/accidents-rehabilitation', { waitUntil: 'load' });
+  await page.goto(base + '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', { waitUntil: 'load' });
   await page.focus('[data-tabs] [role="tab"][aria-selected="true"]');
   await page.keyboard.press('ArrowDown');
   const t2 = await page.evaluate(() => ({ sel: [...document.querySelectorAll('[data-tabs] [role="tab"]')].findIndex((t) => t.getAttribute('aria-selected') === 'true'), foc: [...document.querySelectorAll('[data-tabs] [role="tab"]')].indexOf(document.activeElement) }));

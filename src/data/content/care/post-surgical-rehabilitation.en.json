@@ -1,0 +1,62 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Post Surgical Rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Post-Surgical Rehabilitation",
+    "title": [
+      "Post-Surgical",
+      "Rehabilitation"
+    ],
+    "text": "For patients recovering from surgery, to restore mobility, rebuild strength and support a safe return to everyday activities."
+  },
+  "overview": [
+    "Postsurgical rehabilitation is a guided recovery pathway designed to help patients regain strength, mobility and independence after an operation. It bridges the gap between the surgical procedure and a safe return to daily life, ensuring healing happens in a controlled, progressive and functional way."
+  ],
+  "topics": [
+    {
+      "label": "What Is Post Surgical Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Post-surgical rehabilitation is a structured recovery programme that begins after a major operation. Its purpose is to help the body as it heals, rebuild function and help patients adapt safely as they return to daily to everyday activities."
+        },
+        {
+          "type": "p",
+          "text": "Surgery is often essential for conditions affecting the joints, bones, muscles and internal organs. A well-designed rehabilitation programme afterwards can support healing, restore movement and strength, and reduce the risk of complications."
+        }
+      ]
+    },
+    {
+      "label": "Surgeries We Support Recovery From",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our post-surgical rehabilitation programme supports recovery after a range of procedures, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Neurological and spinal surgery** - including disc repair, spinal fusion, disc replacement and brain surgery",
+            "**Orthopaedic surgery** -including joint, bone, and muscle repair and replacement",
+            "**Gynaecological and obstetric surgery** - including hysterectomy, postnatal recovery and gynaecological repairs",
+            "**Thoracic surgery** - operations involving internal organs such as the heart, lungs and liver",
+            "**Breast surgery** - procedures to treat cysts and other conditions",
+            "**Urological surgery** - including procedures involving the prostate and bladder"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Our Specialised Recovery Programmes",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Hip replacement rehabilitation",
+            "Knee replacement rehabilitation",
+            "Shoulder rehabilitation"
+          ]
+        }
+      ]
+    }
+  ]
+}

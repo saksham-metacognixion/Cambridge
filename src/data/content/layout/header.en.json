@@ -19,23 +19,23 @@
     {
       "label": "Media Hub",
       "href": "#",
-      "path": "media-hub"
+      "page": "mediaHub"
     },
     {
-      "label": "Careers",
+      "label": "Career Hub",
       "href": "#",
-      "path": "careers"
+      "page": "careers"
     },
     {
-      "label": "Knowledge Center",
+      "label": "Knowledge Centre",
       "href": "#",
-      "path": "media-hub",
-      "query": "?category=health-articles#latest"
+      "query": "?category=health-articles#latest",
+      "page": "mediaHub"
     },
     {
       "label": "FAQs",
       "href": "#",
-      "path": "faq"
+      "page": "faq"
     }
   ],
   "lang": {
@@ -67,32 +67,33 @@
     {
       "label": "About Cambridge",
       "href": "#",
-      "path": "about"
+      "page": "about"
     },
     {
       "label": "Our Care",
       "href": "#",
-      "path": "our-care"
+      "page": "ourCare"
     },
     {
       "label": "Patient Hub",
       "href": "#",
-      "path": "patient-hub"
+      "page": "patientHub"
     },
     {
       "label": "Our Hospitals",
       "href": "#",
-      "path": "our-hospitals"
+      "page": "hospitals"
     },
     {
       "label": "Contact Us",
       "href": "#",
-      "path": "contact"
+      "page": "contact"
     }
   ],
   "book": {
     "label": "BOOK AN APPOINTMENT",
     "ariaLabel": "Book an appointment",
     "href": "#book-appointment"
-  }
+  },
+  "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Career Hub', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target."
 }

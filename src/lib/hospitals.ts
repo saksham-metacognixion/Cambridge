@@ -12,7 +12,8 @@ import { content, t, type Localized } from "./content";
 
 /*
  * Hospitals (src/data/hospitals.json, Pramod's export later) and their detail pages (one template, Figma 112:7721).
- * URL pattern in ONE place: our-hospitals/<slug>. UNCONFIRMED with Pramod (docs/open-decisions.md HD2).
+ * URL pattern in ONE place: hospitals/<path> (the live site's URLs quoted in the client's documents, e.g.
+ * /ae/hospitals/cambridge-hospital-abu-dhabi/; `path` per hospital in hospitals.json, the internal `slug` is unchanged).
  * Editions: a hospital's page exists on Global (all six) and on its own region (/ae: the UAE three, /sa: the KSA three),
  * in both languages (scope 2.5 "filtered by region"; H1 / HD3).
  * Full page content (Figma has Abu Dhabi only): src/data/content/hospital-detail/<slug>.<locale>.json; a hospital without
@@ -21,6 +22,8 @@ import { content, t, type Localized } from "./content";
  */
 export interface Hospital {
   slug: string;
+  /** URL segment under hospitals/ (live site URL) */
+  path: string;
   brand: Localized;
   city: Localized;
   region: "ae" | "sa";
@@ -36,21 +39,21 @@ export interface Hospital {
   mapUrl?: string;
 }
 
-export const HOSPITAL_PATHS = {
-  list: PAGE_PATHS.hospitals,
-  detail: (slug: string) => `${PAGE_PATHS.hospitals}/${slug}`,
-};
-
 export const hospitals = hospitalData.hospitals as Hospital[];
 
-export const hospital = (slug: string): Hospital => {
+export const HOSPITAL_PATHS = {
+  list: PAGE_PATHS.hospitals,
+  detail: (slug: string) => `${PAGE_PATHS.hospitals}/${hospital(slug).path}`,
+};
+
+export function hospital(slug: string): Hospital {
   const h = hospitals.find((x) => x.slug === slug);
   if (!h)
     throw new Error(
       `Unknown hospital slug "${slug}" (src/data/hospitals.json)`,
     );
   return h;
-};
+}
 
 /** Hospitals that have a page in an edition: all on Global, the region's own elsewhere. */
 export const hospitalsIn = (edition: Edition) =>

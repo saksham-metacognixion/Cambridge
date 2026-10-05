@@ -1,0 +1,84 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Central Nervous system.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Central Nervous System Anomalies Rehabilitation",
+    "title": [
+      "Central Nervous",
+      "System Anomalies",
+      "Rehabilitation"
+    ],
+    "text": "For children affected by neurological and developmental conditions, to help manage symptoms, support development and improve quality of life"
+  },
+  "overview": [
+    "The central nervous system (CNS), primarily the brain and spinal cord, underpins nearly every process in a child’s body, from movement and sensation to thought, memory and awareness. In newborns it is still developing, and anomalies can arise that affect development or lead to long-term complications. Our paediatric CNS rehabilitation programme supports children living with these conditions, whether congenital or acquired, providing early, expert and long-term care designed to reduce symptoms, support development and improve quality of life."
+  ],
+  "topics": [
+    {
+      "label": "What Is Central Nervous System Anomalies Rehabilitation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Central nervous system anomalies rehabilitation at Cambridge Hospital is a specialised paediatric programme that supports children whose brain or spinal cord development has been affected by congenital conditions, illness, or injury."
+        },
+        {
+          "type": "p",
+          "text": "Our team provides expert, familycentred care that helps children build strength, improve function and achieve important developmental milestones."
+        }
+      ]
+    },
+    {
+      "label": "Conditions We Support",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "We care for children with a range of congenital and acquired central nervous system conditions, affecting either the spinal cord or the brain, including but not limited to:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Spina bifida",
+            "Hydrocephalus",
+            "Neural tube defects",
+            "Spinal muscular atrophy",
+            "Effects of traumatic brain or spinal cord injury."
+          ]
+        }
+      ]
+    },
+    {
+      "label": "How our CNS Programme Works",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A physiatrist (a physical medicine and rehabilitation physician) typically leads the process, carrying out a full assessment, considering the child’s symptoms, and ordering appropriate tests before designing an individualised plan."
+        },
+        {
+          "type": "lead",
+          "text": "The child’s age is always a priority, since options suitable for newborns are more limited than those for older children. Care usually combines several methods over the long term:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Inpatient rehabilitation -** the child is admitted for treatment and rehabilitation; for more severe anomalies this includes 24/7 monitoring by nursing staff experienced in caring for infants and toddlers and skilled at identifying emerging issues early",
+            "**Physiotherapy for babies, and occupational therapy and related strategies for older children** - to support recovery and develop functional abilities",
+            "**Recovery support after surgery** - where a procedure has been needed, rehabilitation supports the child’s recovery and helps restore function",
+            "**A home programme** - many children return home, where therapists guide parents through specific exercises and activities, with regular check-ups and scheduled therapy sessions throughout."
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Why Early Care Matters",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A healthy central nervous system supports better learning, thinking and awareness, while anomalies can interfere with early development and sometimes have effects that persist beyond childhood."
+        },
+        {
+          "type": "p",
+          "text": "Beginning rehabilitation at the time of diagnosis allows for early treatment, and a continuous programme of care and support can help improve a child’s quality of life and overall functioning."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Physical Medicine Care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Physical Medicine and Rehabilitation Care",
+    "title": [
+      "Physical Medicine",
+      "and Rehabilitation",
+      "Care"
+    ],
+    "text": "For patients with non-surgical conditions affecting movement, function or independence, to assess, manage and treat their condition and support improved physical function and quality of life."
+  },
+  "overview": [
+    "Physical medicine and rehabilitation (PM&R) is the medical specialty focused on restoring function and quality of life after injury, illness or disability, without the need for surgery.",
+    "Every recovery begins with a thorough specialist assessment, where our PM&R physicians identify the underlying cause of the patient’s pain or limited movement, then lead a personalised treatment plan delivered by our interdisciplinary outpatient team."
+  ],
+  "topics": [
+    {
+      "label": "What is PM&R Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Physical medicine and rehabilitation, also known as physiatry, is a medical specialty focused on restoring movement, strength, and independence for people affected by injury, illness, or disability."
+        },
+        {
+          "type": "p",
+          "text": "Unlike a therapist, a physiatrist is a qualified doctor who can diagnose the patient’s condition, prescribe treatment and lead the medical aspects of their recovery."
+        },
+        {
+          "type": "p",
+          "text": "At Cambridge Hospital, this specialist care provides a starting point for patients whose recovery requires physician-led management, while seamlessly connecting with physiotherapy, occupational therapy and speech and language therapy delivered by the same team."
+        }
+      ]
+    },
+    {
+      "label": "Assessment & Consultation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Each patient’s care starts with a comprehensive consultation. Our physiatrists review the patient’s medical history, examine how their condition affects their movement and daily life, and arrange any diagnostic tests needed to reach a clear and accurate diagnosis."
+        },
+        {
+          "type": "p",
+          "text": "This initial assessment is where the whole recovery plan is shaped. It identifies not just the injury or symptoms, but also how the condition affects the patient’s independence, work and quality of life. The patient leaves the consultation with a clear understanding of their diagnosis, treatment options and the next steps in their care."
+        }
+      ]
+    },
+    {
+      "label": "Conditions We Treat",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our specialists diagnose and manage a broad range of conditions on an outpatient basis, including chronic back and neck pain, arthritis and joint disorders, sports and work-related injuries, nerve and neuropathic conditions, spasticity, and the functional effects of stroke, brain injury and spinal cord injury."
+        },
+        {
+          "type": "p",
+          "text": "They also guide patients through a safe and structured recovery following orthopaedic and other surgeries, helping restore strength and movement as part of a coordinated rehabilitation plan."
+        }
+      ]
+    },
+    {
+      "label": "Personalised Treatment Plans",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "No two recoveries are the same, so no two treatment plans are either. Once the assessment is complete, our physiatrist designs a treatment plan around the patient’s specific goals - whether that means returning to sport, going back to work or simply moving with less pain."
+        },
+        {
+          "type": "p",
+          "text": "Our physiatrists lead a coordinated team of therapists, reviewing each patient’s progress at each stage of their recovery and adjusting treatment as their needs evolve. Every element of care is connected, helping keep rehabilitation focused and consistent."
+        }
+      ]
+    }
+  ]
+}

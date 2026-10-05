@@ -20,9 +20,10 @@ import patMask from '../../assets/testimonials/pattern-mask.svg';
  * Layer order per story = Figma's (data `layers`). Alt text: the photo shows the person named in the card.
  */
 interface Photo { image: string; alt: string; w: number; h: number; x: number; y: number; r?: number; ratio?: number; crop?: { w: string; h: string; left: string; top: string } }
-interface Props { name: string; quote: string; photo: Photo; pattern: string[]; layers: string[]; region: RegionId; s?: number; eager?: boolean }
+interface Props { name: string; quote: string; photo?: Photo; pattern: string[]; layers: string[]; region: RegionId; s?: number; eager?: boolean }
 const { name, quote, photo, pattern, layers, region, s = 1 } = Astro.props;
-const src = img(photo.image, region);
+// Stories without a photo yet (six of the client's twelve, 5 Oct 2026): the card renders without the photo layer (CT12).
+const src = photo ? img(photo.image, region) : null;
 const INSET: Record<string, string> = {
   A: '4.11% 3.42% -12.46% -20.43%',
   B: '4.11% -186.3% -12.46% 169.29%',
@@ -33,8 +34,8 @@ const logical = (v: string) => { const [t, r, b, l] = v.split(' '); return `inse
 const z = (k: string) => layers.indexOf(k) + 1;
 const pct = (v: string) => parseFloat(v) / 100;
 // Rendered photo size (Figma px at s = 1): the crop's share of the box, or the box itself.
-const iw = photo.crop ? photo.w * pct(photo.crop.w) : photo.w;
-const ih = photo.crop ? photo.w * pct(photo.crop.w) / (photo.ratio ?? 1) : photo.h;
+const iw = photo ? (photo.crop ? photo.w * pct(photo.crop.w) : photo.w) : 0;
+const ih = photo ? (photo.crop ? photo.w * pct(photo.crop.w) / (photo.ratio ?? 1) : photo.h) : 0;
 ---
 
 <article class="tcard hair-card" style={`--s:${s};--sw:${0.348 * s}`}>
@@ -50,10 +51,12 @@ const ih = photo.crop ? photo.w * pct(photo.crop.w) / (photo.ratio ?? 1) : photo
     <p class="quote" style={`z-index:${z('quote')}`}>{quote}</p>
     <p class="name" style={`z-index:${z('name')}`}>{name}</p>
   </div>
-  <div class="photo" style={`--w:${photo.w};--h:${photo.h};--x:${photo.x};--y:${photo.y};--r:${photo.r ?? 0};z-index:${z('photo')}`}>
-    <Picture src={src} formats={['avif']} fallbackFormat="webp" width={px(iw * s)} height={px(ih * s)} widths={[px(iw * s), px(iw * s) * 2]} sizes={`${px(iw * s)}px`} loading="lazy" decoding="async" alt={photo.alt}
-      class:list={[photo.crop ? 'crop' : 'cover']} style={photo.crop ? `width:${photo.crop.w};height:${photo.crop.h};inset-inline-start:${photo.crop.left};top:${photo.crop.top}` : undefined} />
-  </div>
+  {photo && src && (
+    <div class="photo" style={`--w:${photo.w};--h:${photo.h};--x:${photo.x};--y:${photo.y};--r:${photo.r ?? 0};z-index:${z('photo')}`}>
+      <Picture src={src} formats={['avif']} fallbackFormat="webp" width={px(iw * s)} height={px(ih * s)} widths={[px(iw * s), px(iw * s) * 2]} sizes={`${px(iw * s)}px`} loading="lazy" decoding="async" alt={photo.alt}
+        class:list={[photo.crop ? 'crop' : 'cover']} style={photo.crop ? `width:${photo.crop.w};height:${photo.crop.h};inset-inline-start:${photo.crop.left};top:${photo.crop.top}` : undefined} />
+    </div>
+  )}
   <img class="badge" src={cornerVector.src} width="53" height="53" alt="" loading="lazy" decoding="async" style={`z-index:${z('badge')}`} />
 </article>
 

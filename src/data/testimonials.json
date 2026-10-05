@@ -1,5 +1,5 @@
 {
-  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403), Figma order (rows left to right). name/quote = exact Figma text. regions: editions where the story is shown; Figma shows all 6 under the UAE pill, so all are 'ae' until Pramod confirms each one's region. photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop (the Figma image fill inside the box; ratio = image width/height); pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. The landing page's Testimonials section (home/testimonials JSON) shows the same 6 stories: switch it to this file when the other session's landing changes are merged.",
+  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403). name/quote = Website Content - Suhad/Patient Hub/EN-Patient Testimonials.md (12 stories, document order, 5 Oct 2026). The first six keep their Figma photos and card geometry; the other six have NO photo yet (card without the photo layer, docs/open-decisions.md CT12). regions: editions where the story is shown; all 'ae' until Pramod confirms each one's region (D15). photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop; pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. The landing page's Testimonials section (home/testimonials JSON) shows the same first six stories.",
   "testimonials": [
     {
       "slug": "mohamed-al-menhali",
@@ -8,7 +8,7 @@
         "ar": ""
       },
       "quote": {
-        "en": "Alhamdulillah, I regained my ability to walk in about 4 months with their help.",
+        "en": "With the help of God, and then Cambridge Hospital, I was able to return to my normal life, stronger and more determined than ever.",
         "ar": ""
       },
       "regions": [
@@ -39,36 +39,39 @@
       ]
     },
     {
-      "slug": "tamams-mother",
+      "slug": "nujood-saeed",
       "name": {
-        "en": "Tamam’s Mother",
+        "en": "Nujood Saeed",
         "ar": ""
       },
       "quote": {
-        "en": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities.",
+        "en": "I recommend that anyone facing a medical problem always hold on to hope and never lose faith in recovery, even during difficult times.",
         "ar": ""
       },
       "regions": [
         "ae"
       ],
       "photo": {
-        "image": "testimonials/patient-2",
+        "image": "testimonials/patient-5",
         "alt": {
-          "en": "Tamam’s Mother",
+          "en": "Nujood Saeed",
           "ar": ""
         },
-        "w": 176.601,
-        "h": 220.512,
-        "x": 66.87,
-        "y": 101.7
+        "w": 172.837,
+        "h": 215.813,
+        "x": 91.85,
+        "y": 105.88
       },
       "pattern": [
         "A",
-        "B"
+        "B",
+        "B",
+        "C",
+        "D"
       ],
       "layers": [
-        "qi",
         "pat",
+        "qi",
         "photo",
         "quote",
         "name",
@@ -82,7 +85,7 @@
         "ar": ""
       },
       "quote": {
-        "en": "Shamma’s ability to communicate has improved remarkably and significantly, thanks to Cambridge.",
+        "en": "Shamma’s ability to communicate improved remarkably thanks to Cambridge Hospital, and we are deeply grateful.",
         "ar": ""
       },
       "regions": [
@@ -123,13 +126,50 @@
       ]
     },
     {
-      "slug": "mohamed-salem-al-bloushi",
+      "slug": "tamams-mother",
       "name": {
-        "en": "Mohamed Salem Al Bloushi",
+        "en": "Tamam’s Mother",
         "ar": ""
       },
       "quote": {
-        "en": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.",
+        "en": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities over time.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-2",
+        "alt": {
+          "en": "Tamam’s Mother",
+          "ar": ""
+        },
+        "w": 176.601,
+        "h": 220.512,
+        "x": 66.87,
+        "y": 101.7
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "qi",
+        "pat",
+        "photo",
+        "quote",
+        "name",
+        "badge"
+      ]
+    },
+    {
+      "slug": "mohamed-al-bloushi",
+      "name": {
+        "en": "Mohamed Al Bloushi",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Thank God, I was able to get back to walking within almost four months, with God’s will and the help of the team at Cambridge Hospital.",
         "ar": ""
       },
       "regions": [
@@ -138,7 +178,7 @@
       "photo": {
         "image": "testimonials/patient-1",
         "alt": {
-          "en": "Mohamed Salem Al Bloushi",
+          "en": "Mohamed Al Bloushi",
           "ar": ""
         },
         "w": 158.62,
@@ -166,7 +206,7 @@
         "ar": ""
       },
       "quote": {
-        "en": "Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.",
+        "en": "Previously, my daughter would walk three or four steps and then fall. Now, thank God, she walks without relying on anyone, covering thirty to forty metres.",
         "ar": ""
       },
       "regions": [
@@ -208,43 +248,153 @@
       ]
     },
     {
-      "slug": "nujood-saeed",
+      "slug": "amani",
       "name": {
-        "en": "Nujood Saeed",
+        "en": "Amani",
         "ar": ""
       },
       "quote": {
-        "en": "With God’s grace and the team’s support, I was walking again in nearly 4 months.",
+        "en": "At Cambridge Hospital, I regained my strength and hope, returning to my normal life, stronger and more determined than ever.",
         "ar": ""
       },
       "regions": [
         "ae"
       ],
-      "photo": {
-        "image": "testimonials/patient-5",
-        "alt": {
-          "en": "Nujood Saeed",
-          "ar": ""
-        },
-        "w": 172.837,
-        "h": 215.813,
-        "x": 91.85,
-        "y": 105.88
-      },
       "pattern": [
         "A",
-        "B",
-        "B",
-        "C",
-        "D"
+        "B"
       ],
       "layers": [
         "pat",
-        "qi",
-        "photo",
         "quote",
         "name",
-        "badge"
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "abdullah-jayoul",
+      "name": {
+        "en": "Abdullah Jayoul",
+        "ar": ""
+      },
+      "quote": {
+        "en": "After three months of care at Cambridge Hospital, I was able to come off the ventilator and breathe normally again.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "yousef-al-mobbed",
+      "name": {
+        "en": "Yousef Al Mobbed",
+        "ar": ""
+      },
+      "quote": {
+        "en": "After my stroke, Cambridge Hospital helped me recover through specialised rehabilitation and regain my independence.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "mohamed-ghafil",
+      "name": {
+        "en": "Mohamed Ghafil",
+        "ar": ""
+      },
+      "quote": {
+        "en": "After suffering from a neurological disease, Cambridge Hospital helped me recover through rehabilitation and regain my independence.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "naeema-al-blooshi",
+      "name": {
+        "en": "Naeema Al Blooshi",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Cambridge Hospital helped my wife recover from a rare neurological disease through specialised rehabilitation and regain her independence.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "ahmed-al-shamsi",
+      "name": {
+        "en": "Ahmed Al Shamsi",
+        "ar": ""
+      },
+      "quote": {
+        "en": "Ahmed Al Shamsi suffered a thigh fracture, causing left-side weakness and diabetes, but now lives normally with his family.",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "badge",
+        "qi"
       ]
     }
   ]

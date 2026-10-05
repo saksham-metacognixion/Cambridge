@@ -1,0 +1,124 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Neurorehabilitation main.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Neurorehabilitation",
+    "title": [
+      "Neurorehabilitation"
+    ],
+    "text": "For patients recovering from neurological conditions or injury to restore movement, function and regain greater independence."
+  },
+  "overview": [
+    "Neurorehabilitation is specialised rehabilitation for patients whose movement, cognition, balance, speech or daily function has been affected by a neurological condition or injury. At Cambridge Hospital, our neurorehabilitation programme supports patients recovering from stroke, traumatic brain injury, spinal cord injury, multiple sclerosis and other neurological and neurodegenerative conditions.",
+    "Care is delivered by a coordinated, interdisciplinary team working within one structured rehabilitation pathway, combining medical management with physiotherapy, occupational therapy and speech and language therapy. Each programme is built around personalised, measurable goals, helping patients regain as much independence and function as possible and rebuild confidence in daily life."
+  ],
+  "cardsHeading": "Specialised Rehabilitation Programmes",
+  "topics": [
+    {
+      "label": "What Is Neurorehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Neurorehabilitation helps the nervous system recover after neurological injury or disease. The brain and nervous system have the ability to adapt and reorganise through neuroplasticity, allowing the brain to form new connections that can help compensate for areas affected by injury or disease."
+        },
+        {
+          "type": "p",
+          "text": "Intensive, structured rehabilitation uses this ability to retrain movement, speech, cognition and the skills needed for daily living."
+        },
+        {
+          "type": "p",
+          "text": "At Cambridge Hospital, neurorehabilitation brings medical care and specialist therapies together within one coordinated programme, allowing progress in different areas of rehabilitation to be addressed as part of the patient’s overall recovery."
+        }
+      ]
+    },
+    {
+      "label": "Conditions We Support",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our neurorehabilitation programme supports recovery across a wide range of neurological conditions, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Stroke** – including ischaemic and haemorrhagic stroke and transient ischemic attack (TIA)",
+            "**Traumatic brain injury (TBI) and spinal cord injury (SCI)**",
+            "**Multiple sclerosis (MS) and other demyelinating conditions**",
+            "**Neurodegenerative conditions** - including Parkinson’s disease, Alzheimer’s disease and Huntington’s disease",
+            "**Neuromuscular and neurodevelopmental disorders** - including Bell’s palsy, peripheral neuropathy, muscular dystrophy, myasthenia gravis, Guillain-Barré syndrome, cervical spondylosis and carpal tunnel syndrome",
+            "**Neurological infections** - including meningitis and encephalitis and their after-effects",
+            "**Functional neurological symptoms** - including balance and coordination difficulties, dizziness and related conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "The Neurorehabilitation Team",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Recovery from a neurological condition often involves several specialists working together. Depending on each patient’s needs, the rehabilitation team may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Neurologist / neurosurgeon** – providing diagnosis and medical management where required",
+            "**Physiatrist (rehabilitation physician)** - directing the rehabilitation plan",
+            "**Physiotherapist** - restoring movement, strength, balance and mobility",
+            "**Occupational therapist** – helping patients rebuild the skills needed for daily life",
+            "**Speech and language therapist** - supporting speech, communication and swallowing",
+            "**Neuropsychologist / psychiatrist** - supporting cognition, mood and behaviour",
+            "**Case manager** - coordinating the patient’s care journey and discharge planning"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Where needed, the team may also involve a social worker, recreational therapist, vocational counsellor or chaplain."
+        }
+      ]
+    },
+    {
+      "label": "Our Approach",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our neurorehabilitation programme is built around four key aims:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Supporting the nervous system’s ability to adapt and reorganise",
+            "Retraining movement and function through targeted, repetitive practice",
+            "Helping patients adapt to changes and regain greater independence",
+            "Using evidence-based therapeutic techniques to support the development of new neural pathways."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Every plan is personalised to the patient’s condition, goals and stage of recovery, with treatment adjusted as their needs evolve."
+        }
+      ]
+    },
+    {
+      "label": "Therapies And Techniques",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Depending on the patient’s condition and goals, our therapists may use evidence-based techniques such as:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Constraint-induced motor therapy** - encouraging use of a weaker limb by limiting reliance on the stronger limb, with intensive repetitive practice to rebuild movement and neural pathways",
+            "**Weight-supported treadmill training** - supported walking practice that helps reactivate lower limb movement and build endurance",
+            "**Constraint-induced speech therapy** - intensive, communication-focused therapy to support recovery from aphasia after stroke or brain injury",
+            "**Prism adaptation training** - a visual-spatial technique used to help correct spatial neglect, often seen after stroke"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "The specific techniques, intensity and duration of therapy are always tailored to each patient by the clinical team and adjusted according to their progress."
+        }
+      ]
+    }
+  ]
+}

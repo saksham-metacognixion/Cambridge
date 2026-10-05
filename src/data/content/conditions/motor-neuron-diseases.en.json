@@ -1,0 +1,31 @@
+{
+  "_note": "Motor Neuron Diseases (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Motor Neuron Diseases | Cambridge Hospital",
+    "description": "Enhancing comfort, function and quality of life through supportive care."
+  },
+  "hero": {
+    "ariaLabel": "Motor Neuron Diseases",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Motor Neuron",
+      "Diseases"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Motor neuron diseases such as ALS progressively affect the nerves that control movement, breathing and swallowing. While curative treatment is not yet available, specialist rehabilitation and long-term care can significantly improve quality of life and reduce the burden on families.",
+    "At Cambridge Hospital, we offer coordinated motor neuron disease therapy and rehabilitation covering respiratory support, physiotherapy, occupational therapy, speech and swallowing care, nutritional management and psychological support for both patients and caregivers."
+  ]
+}

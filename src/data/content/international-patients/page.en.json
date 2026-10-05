@@ -1,22 +1,30 @@
 {
-  "_note": "International Patients (Figma 54:9239). Visible text exactly as in Figma; meta.* = PLACEHOLDER. Form text: forms/international.*.json.",
+  "_note": "International Patients (Figma 54:9239). Text = Website Content - Suhad/Patient Hub/EN - Intl Patients.md (5 Oct 2026). meta.description from the document. Form text: forms/international.*.json.",
   "meta": {
     "title": "International Patients | Cambridge Hospital",
-    "description": "International patient care at Cambridge Hospital: post-acute rehabilitation and long-term care with coordinated support before, during and after treatment."
+    "description": "Comprehensive rehabilitation, post-acute and long-term care for international patients, with coordinated clinical and practical support throughout their stay."
   },
   "hero": {
     "ariaLabel": "International Patients",
-    "banner": { "image": "international/banner", "alt": "" },
-    "title": ["International Patient Care", "at Cambridge"],
-    "text": "Comprehensive support for international patients seeking advanced post-acute rehabilitation and long-term care, with coordinated services before, during, and after treatment.",
-    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+    "banner": {
+      "image": "international/banner",
+      "alt": ""
+    },
+    "title": [
+      "International",
+      "Patient Care"
+    ],
+    "text": "Comprehensive rehabilitation, post-acute and long-term care for international patients, with coordinated clinical and practical support throughout their stay.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
   },
   "intro": {
     "heading": "Comprehensive Care for Patients Worldwide",
     "text": [
-      "Cambridge Hospital welcomes international patients seeking specialized post-acute rehabilitation, long-term care, and recovery support. With a multidisciplinary team of experts and a patient-centered approach, we provide coordinated care designed to improve outcomes and quality of life.",
-      "Our services are tailored to each patient’s needs, combining advanced medical expertise with comprehensive rehabilitation programs. From initial consultation to recovery and follow-up, our team ensures a seamless experience for patients and their families.",
-      "We offer dedicated support for international patients, including care coordination, treatment planning, and assistance throughout the entire care journey."
+      "For patients travelling from other countries for healthcare, planning treatment and managing a stay away from home can be challenging. Cambridge Hospital provides a range of healthcare services alongside dedicated support for international patients, including care planning, coordination and practical support throughout their stay.",
+      "From initial assessment and personalised treatment planning through medical care, rehabilitation and follow-up, our teams work closely with patients and their families to coordinate their care, ensure a smooth experience and help them navigate each stage of their treatment journey."
     ]
   }
 }

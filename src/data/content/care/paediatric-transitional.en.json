@@ -1,0 +1,98 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Transitional Care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Paediatric Transitional Care",
+    "title": [
+      "Paediatric",
+      "Transitional Care"
+    ],
+    "text": "For infants transitioning from hospital to home or between stages of care, to support a safe transition and healthy development."
+  },
+  "overview": [
+    "When a child is born early or faces complex medical needs at the start of life, the journey can bring uncertainty and a need for expert and compassionate support. Our paediatric transitional care programme supports infants and their families as they move from specialised hospital care towards a safe and confident return home, while ensuring continuity of care, knowledge and guidance throughout the transition."
+  ],
+  "topics": [
+    {
+      "label": "What is Transitional Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Paediatric transitional care provides gentle, specialised support for infants who still need medical attention as they move from hospital care towards home. It helps babies stabilise, grow and reach early developmental milestones, while giving families the confidence and guidance they need during this important transition."
+        },
+        {
+          "type": "p",
+          "text": "With close monitoring, nurturing therapy, and handson family education, transitional care ensures every child progresses safely, while parents feel supported and prepared for the next stage of their baby’s care."
+        }
+      ]
+    },
+    {
+      "label": "Specialised Newborn Care",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Babies born early or with complex needs can receive expert, life-supporting care from their first moments. Many begin in a Neonatal Intensive Care Unit (NICU), where a specialised team closely monitors vital signs and provides carefully tailored support, which may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Respiratory support** - including ventilation where needed, to help babies whose lungs are still developing breathe safely",
+            "**Feeding support** - nutrients and fluids delivered intravenously when needed, with a gradual transition to milk feeding once the baby is strong enough",
+            "**Temperature regulation** - incubator care that keeps babies warm and protected as they grow stronger",
+            "**Continuous monitoring** - regular assessment and testing to identify and address any concerns early",
+            "**Phototherapy** - specialised treatment available in neonatal units to safely manage newborn jaundice, which can occur when a baby’s liver is still maturing"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "The Transition from Hospital to Home",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Moving from intensive hospital care to home is a significant milestone for both babies and their families. When medically ready, babies can return home, while those with ongoing respiratory or complex needs may require a longer period of care or a structured transitional pathway, including, where needed, a long-term care setting."
+        },
+        {
+          "type": "p",
+          "text": "Families do not navigate this alone. We work closely with parents throughout, building their confidence and equipping them with the knowledge and skills needed to care for their child safely."
+        }
+      ]
+    },
+    {
+      "label": "How Cambridge Hospital Support Families",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Caring for a premature or medically complex infant is a demanding journey, and the right support can make a meaningful difference."
+        },
+        {
+          "type": "lead",
+          "text": "Our approach focuses on:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Caregiver education and training** - practical skills and confidence to care for the child at home, including any specialised care they need",
+            "**Coordinated medical follow-up** - working alongside the paediatrician for consistent, scheduled care and monitoring after discharge",
+            "**Emotional support** - recognising the worry and exhaustion families experience, and providing reassurance and guidance throughout",
+            "**Guidance on home care essentials** - clear instruction on medication, feeding, hygiene and infection prevention",
+            "**Developmental screening and monitoring** - regular, standardised assessments to track the child’s growth and development over time",
+            "**Early intervention support** - connecting families with programmes that support physical, cognitive, and emotional development, especially for children with longer term needs"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "The Value of Early Intervention",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Many babies born early go on to develop and thrive. For those who face longer-term challenges, early intervention is one of the most powerful tools available to support a child’s physical, cognitive and emotional development during the years when it matters most."
+        },
+        {
+          "type": "p",
+          "text": "By identifying needs early and providing structured, ongoing rehabilitation and support, our teams help give every child the best possible foundation for growth, and help families move forward with knowledge, confidence, and hope."
+        }
+      ]
+    }
+  ]
+}

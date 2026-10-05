@@ -1,0 +1,96 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Speech and language rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Speech and Language Rehabilitation",
+    "title": [
+      "Speech and Language",
+      "Rehabilitation"
+    ],
+    "text": "For children and adults with communication, speech or swallowing difficulties, to help patients communicate more clearly, confidently and independently."
+  },
+  "overview": [
+    "Communication is fundamental to how we connect with others, and when it becomes difficult, it can bring isolation, frustration and a loss of confidence. Speech and language therapy helps patients overcome these barriers and express their needs, thoughts and emotions.",
+    "Our speech and language therapists provide personalised therapy for each patient’s unique challenges, helping children and adults develop language skills, improve articulation and communicate with greater confidence and ease."
+  ],
+  "topics": [
+    {
+      "label": "What Is Speech and language Rehabilitation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Speech and language rehabilitation helps patients find their voice again, whether they’re recovering from illness or injury, or living with a communication disorder."
+        },
+        {
+          "type": "p",
+          "text": "It focuses on improving speech clarity, language understanding and confidence in expressing thoughts and emotions."
+        },
+        {
+          "type": "p",
+          "text": "Through gentle, personalised therapy, patients learn to communicate more easily, connect with others and regain the joy of being heard."
+        }
+      ]
+    },
+    {
+      "label": "How We Help",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "**Articulation therapy** – helping patients produce sounds more accurately so they can speak more clearly and fluently, while developing greater confidence in communication",
+            "**Language comprehension therapy** - supporting patients with developmental difficulties or language delays, as well as those whose ability to understand or use language has been affected by stroke or other conditions",
+            "**Oral, swallowing & feeding therapy** - targeted facial, jaw, lip and tongue exercises to strengthen the muscles used in eating and drinking helping to improve swallowing control"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Who Can Benefit from This Programme?",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our speech and language rehabilitation programme supports children and adults across a wide range of needs, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Speech and articulation difficulties",
+            "Language delays or comprehension difficulties",
+            "Voice disorders",
+            "Feeding and swallowing difficulties",
+            "Communication challenges following stroke or traumatic injury",
+            "Hearing impairments",
+            "Autism and associated communication or motor-planning difficulties",
+            "Weakened oral muscles",
+            "Difficulties with intellectual expression and thinking"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Whatever the cause, our speech and language therapists help each patient establish the most effective way to communicate, whether through verbal, written, or assisted communication."
+        }
+      ]
+    },
+    {
+      "label": "Our Approach at Cambridge Hospital",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "We work closely with families to create personalised plans that support communication from an early age, taking a proactive approach that can help address future challenges in academic and social settings."
+        },
+        {
+          "type": "p",
+          "text": "We also believe in holistic rehabilitation. Our speech and language therapists collaborate with occupational therapists, physiotherapists and other professionals to provide coordinated support, monitor progress and adjust treatment plans to meet each patient’s changing needs."
+        }
+      ]
+    },
+    {
+      "label": "Begin Speech and Language Therapy",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "If you or your child has difficulty with communication, speech, voice or swallowing due to a developmental challenge, stroke, injury or another condition, our speech and language team is here to help. Get in touch to begin your care journey."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+---
+import { editionFromBase, editionPaths } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { PAGE_PATHS } from '../../../lib/paths';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import TestimonialList from '../../../components/testimonials/TestimonialList.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('patient-testimonials/page', edition.locale);
+
+/*
+ * Patient Testimonials template (Figma 62:2403, file LJIRtzU...). Gaps (Figma px): hero 119-556 (title 260 2 lines, text 338
+ * 3 lines, button 388) | 42 | H2 598 | ... card row 2 ends 1542.8 | 98.2 | recovery box 1641 (heading top 50) | box ends
+ * 1909 | 43 | footer 1952.
+ */
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.patientTestimonials} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 8 }} /></div>
+    <div id="stories" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))"><TestimonialList /></div>
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(98.2 * var(--u))">
+      <ContactRecovery content={c.recovery} headTop={50} />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(43 * var(--u))">
+    <Footer />
+  </div>
+  <script>
+    import '../../../scripts/region-filter';
+  </script>
+</BaseLayout>

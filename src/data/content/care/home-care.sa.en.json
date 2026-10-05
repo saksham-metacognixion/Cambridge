@@ -1,0 +1,224 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - KSA.md (5 Oct 2026): the KSA version of Home Care (two extra sections: Laboratory Services, Speech and Language Therapy Services; 'across Saudi Arabia'). Used on /sa; Global and /ae use home-care.en.json (UAE version), docs/open-decisions.md CT5.",
+  "hero": {
+    "ariaLabel": "Home Care",
+    "title": [
+      "Home Care"
+    ],
+    "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home."
+  },
+  "overview": [
+    "Our home care services bring world-class care to patients in the comfort of their own homes. Whether patients are returning home after surgery, managing a health condition or continuing recovery after a rehabilitation programme, our home care teams provide the clinical support needed to recover safely and resume daily life with their families by their side."
+  ],
+  "topics": [
+    {
+      "label": "What Our Home Care Services Offer",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our home care services bring specialised clinical care into the home, delivered by highly qualified physicians, therapists, and skilled nurses. Services range from post-surgical recovery to ongoing condition management to post-rehabilitation care."
+        },
+        {
+          "type": "p",
+          "text": "Built around comfort and continuity, home care enables patients to receive specialist medical care in familiar surroundings while remaining close to their families and support networks."
+        }
+      ]
+    },
+    {
+      "label": "A True Continuum of Care",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Home care completes our continuum of care across inpatient and outpatient services, ensuring a smooth transition from the rehabilitation facility to home and into the community."
+        },
+        {
+          "type": "p",
+          "text": "We support each patient throughout their full care journey, from the facility to home and into the wider community, through ongoing assessment, multidisciplinary care and technology-enabled support. Care coordination also helps families understand and manage the next stages of care and supports patients as they return to their usual routines and community settings."
+        }
+      ]
+    },
+    {
+      "label": "Home Physiotherapy",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Home physiotherapy is one of our core home care services and is available for adults, seniors and children across Saudi Arabia. Our therapists provide specialised physiotherapy in the home, supporting patients with a range of conditions, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Post-stroke physiotherapy",
+            "Brain injury physiotherapy",
+            "Post-accident physiotherapy",
+            "Musculoskeletal physiotherapy, including support for knee pain, back pain, shoulder pain, neck pain and fibromyalgia"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "By delivering physiotherapy at home, we help patients maintain progress, rebuild strength and mobility and continue working towards their rehabilitation goals without the need to travel to a healthcare facility."
+        }
+      ]
+    },
+    {
+      "label": "Scope of Physician Services",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Patient education and counselling",
+            "Prescription of medications and medical devices",
+            "Assessment of the patient’s home environment and patient safety",
+            "Clinical assessment and evaluation",
+            "Consultation and treatment",
+            "Specialist physician visits"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Scope of Skilled Nursing Services",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Wound care and wound VAC therapy",
+            "Post-acute and transitional care",
+            "Tube feeding and stoma care",
+            "Colostomy and ostomy care",
+            "Catheter care",
+            "Tracheostomy care",
+            "Medication administration and management",
+            "IV therapy and administration",
+            "Respiratory therapy",
+            "Palliative care",
+            "Chronic illness management",
+            "Assistance with activities of daily living"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Scope of Respiratory Therapy Services",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Tracheostomy care",
+            "Mechanical ventilation management",
+            "Oxygen therapy",
+            "Nebulisation therapy",
+            "Pulmonary rehabilitation",
+            "Patient education"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Scope of Physical and Occupational Therapy Services",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Pain management",
+            "Transfer and gait training",
+            "Functional mobility training",
+            "Safe use of adaptive devices",
+            "Developing personalised home exercise programmes"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Scope of Ambulance Services",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Follow-up and check-up visits",
+            "Non-emergency patient transport"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Newborn Nursing Care",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Specialist nursing support for newborns and their mothers in the comfort of home, helping families manage the earliest days with confidence and reassurance. Our teams provide:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Routine newborn health checks, including monitoring weight, feeding and general wellbeing",
+            "Feeding support, including breastfeeding guidance and help with bottle feeding",
+            "Umbilical cord care and newborn skin care",
+            "Monitoring of newborn jaundice, with guidance on when further assessment or care may be needed",
+            "Guidance for parents on safe sleep, hygiene and everyday newborn care",
+            "Postnatal support for mothers recovering after delivery"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Medical Examination Services",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Physician and nursing examinations carried out at home for patients who need regular review or may find it difficult to travel to a clinic. Our teams provide:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Scheduled home visits for routine medical examination and review",
+            "Monitoring of vital signs, including blood pressure, heart rate, temperature and oxygen levels",
+            "Review of ongoing conditions and current medications",
+            "Pre-operative and post-operative check-ups",
+            "Health assessments for patients unable to travel to a clinic",
+            "Referral and coordination with hospital services where further care is needed"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Laboratory Services",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Convenient laboratory sample collection and testing at home, allowing patients to complete routine and specialist tests without travelling to hospital. Our teams provide:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Collection of blood and other samples by trained staff",
+            "Routine and specialist laboratory testing processed through our laboratory facilities",
+            "Sample collection for patients who cannot easily travel",
+            "Timely and secure delivery of results to the patient’s care team",
+            "Coordination of follow-up based on results",
+            "Support for regular monitoring of chronic conditions"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Speech and Language Therapy Services",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Speech, language, communication and swallowing support delivered in the comfort of the patient’s home, for adults and children. Our services include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Assessment and evaluation of speech, language and communication",
+            "Therapy for speech and language difficulties following stroke or brain injury",
+            "Support for communication and cognitive communication needs",
+            "Assessment and management of swallowing difficulties",
+            "Speech, language and communication support for children",
+            "Individualised therapy plans and home exercise programmes"
+          ]
+        }
+      ]
+    }
+  ]
+}

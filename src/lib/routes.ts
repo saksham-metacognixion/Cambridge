@@ -9,7 +9,7 @@ import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
-import { CARE_PATHS, services } from "./care";
+import { CARE_PATHS, allCareNodes } from "./care";
 import { urlFor, type Edition } from "./editions";
 
 export interface PageRoute {
@@ -41,13 +41,10 @@ function routes(): PageRoute[] {
       editions: hospitalEditions(h),
     })),
     { key: "our-care", path: CARE_PATHS.hub },
-    ...services.flatMap((s) => [
-      { key: `care-${s.slug}`, path: CARE_PATHS.service(s.slug) },
-      ...s.subServices.map((x) => ({
-        key: `care-${s.slug}-${x.slug}`,
-        path: CARE_PATHS.sub(s.slug, x.slug),
-      })),
-    ]),
+    ...allCareNodes().map((p) => ({
+      key: `care-${p.trail.join("-")}`,
+      path: CARE_PATHS.of(p.trail),
+    })),
     { key: "contact", path: PAGE_PATHS.contact },
     { key: "careers", path: PAGE_PATHS.careers },
     { key: "media-hub", path: NEWS_PATHS.list },
@@ -81,7 +78,7 @@ function routes(): PageRoute[] {
 
 /**
  * Language / region switch target: the same page path in the other edition when it exists there, else the nearest
- * ancestor that does (a KSA hospital page seen from /ae -> /ae/our-hospitals), else the edition home. Keeps the switches
+ * ancestor that does (a KSA hospital page seen from /ae -> /ae/hospitals), else the edition home. Keeps the switches
  * from landing on a 404 (scope 2.2: "same page in the other language / region where it exists").
  */
 export function switchHref(target: Edition, path: string): string {

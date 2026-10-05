@@ -1,0 +1,118 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Long term care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Long-Term Care",
+    "title": [
+      "Long-Term Care"
+    ],
+    "text": "For patients with chronic illness, disability or prolonged recovery needs, to support stability, independence and quality of life."
+  },
+  "overview": [
+    "Some journeys of care are measured not in days, but in months or years. Long-term care at Cambridge Hospital supports patients who need continuous medical management, skilled nursing and sustained rehabilitation over an extended period - built around stability, dignity and meaningful human connection.",
+    "Every care plan is personal, every routine is intentional and every patient is treated as an individual, not a condition. Through familiar caregivers, structured daily care and active family involvement, we work to preserve dignity, maintain function and enhance quality of life, whatever the complexity of each patient’s medical needs."
+  ],
+  "topics": [
+    {
+      "label": "What Is Long-Term Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Long-term care provides ongoing support for patients who need help with activities of daily living, such as eating, dressing, bathing and moving, alongside continuous medical and nursing care."
+        },
+        {
+          "type": "p",
+          "text": "It is designed for patients who are medically stable but not fully independent and who benefit from a supportive, supervised environment with skilled staff available around the clock."
+        },
+        {
+          "type": "p",
+          "text": "Unlike a short hospital stay with a defined end point, long-term care is an ongoing relationship that adapts as a patient’s needs change over time."
+        }
+      ]
+    },
+    {
+      "label": "Who Is It For?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Patients may need long-term care for many reasons, including chronic illness, physical or cognitive disability, the lasting effects of a stroke or serious injury, or a recovery that simply needs more time."
+        },
+        {
+          "type": "p",
+          "text": "Some patients depend on a ventilator or other medical technology, while others need support managing complex or multiple conditions on a day-to-day basis."
+        },
+        {
+          "type": "p",
+          "text": "What they share is a need for consistent, expert care and support that may be difficult to provide at home, delivered by a team that knows them and understands their individual needs."
+        }
+      ]
+    },
+    {
+      "label": "A Care Plan Built Around Each Patient",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "No two patients are the same, so no two care plans are either."
+        },
+        {
+          "type": "p",
+          "text": "Our physicians, nurses and therapists assess each patient’s medical needs, abilities and personal goals, then build a personalised care plan that is regularly reviewed and adapted as their condition and priorities change."
+        },
+        {
+          "type": "p",
+          "text": "Familiar caregivers and predictable daily routines bring a sense of stability that matters greatly in long-term care, helping patients feel secure, understood and at home."
+        }
+      ]
+    },
+    {
+      "label": "Skilled Nursing and Daily Medical Support",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "At the heart of long-term care is round-the-clock skilled nursing."
+        },
+        {
+          "type": "p",
+          "text": "Our teams manage medications, wound and skin care, nutrition and feeding, continence care and chronic conditions, helping identify changes early and address them before they become more serious."
+        },
+        {
+          "type": "p",
+          "text": "Patients also receive hands-on support with everyday tasks that illness or disability has made difficult, always delivered with patience, respect and dignity."
+        }
+      ]
+    },
+    {
+      "label": "Managing Complex and Ventilator-Dependent Needs",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our teams have experience caring for medically complex patients, including those who depend on a ventilator to breathe."
+        },
+        {
+          "type": "p",
+          "text": "We provide supportive, continuous respiratory and medical management for these patients and, where clinically appropriate, work towards reducing ventilator dependence over time."
+        },
+        {
+          "type": "p",
+          "text": "Complex needs are managed with calm, specialist expertise and coordinated care, helping patients avoid unnecessary disruption and supporting greater continuity in their care."
+        }
+      ]
+    },
+    {
+      "label": "Rehabilitation That Continues",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Long-term care and rehabilitation go hand in hand."
+        },
+        {
+          "type": "p",
+          "text": "Physiotherapy, occupational therapy, and speech and language therapy are integrated into daily life to maintain strength, mobility, communication and independence, while making the most of every gain."
+        },
+        {
+          "type": "p",
+          "text": "Even where full recovery is not the goal, therapy can help patients remain as active, capable and comfortable as possible, for as long as possible."
+        }
+      ]
+    }
+  ]
+}

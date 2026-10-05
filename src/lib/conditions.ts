@@ -7,7 +7,7 @@ import type { Localized } from "./content";
  * List data: src/data/conditions.json. Full detail content: src/data/content/conditions/<slug>.<locale>.json — a condition
  * without that file still gets a detail page, generated from its card title + summary and marked "content pending"
  * (note visible on staging only, see showPendingNote).
- * Detail pages that are not cards on the list page (Accidents Rehabilitation, Figma 41:2373) are listed in EXTRA_DETAILS.
+ * Detail pages that are not cards on the list page would be listed in EXTRA_DETAILS (none today).
  */
 export interface Condition {
   slug: string;
@@ -20,8 +20,8 @@ export interface Condition {
 
 export const conditions: Condition[] = data.conditions as Condition[];
 
-/** Detail pages with full content that have no card on the list page. Slug = content file name. */
-export const EXTRA_DETAILS = ["accidents-rehabilitation"];
+/** Detail pages with full content that have no card on the list page. Slug = content file name. Empty since 5 Oct 2026: the Figma 'Accidents Rehabilitation' placeholder page is not in the client's content (its text lives on in figma-cache). */
+export const EXTRA_DETAILS: string[] = [];
 
 export const CONDITION_PATHS = {
   list: PAGE_PATHS.conditions,

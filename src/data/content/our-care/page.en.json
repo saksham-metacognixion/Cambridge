@@ -1,37 +1,49 @@
 {
-  "_note": "Our Care hub (Figma 36:5631). Visible text exactly as in Figma (the two long texts keep Figma's blank line between paragraphs). The four service cards = content/home/services.en.json (same photos and text, titles navy here). meta.*, alt and aria PLACEHOLDER.",
+  "_note": "Our Care hub (Figma 36:5631). Text = Website Content - Suhad/Our Care/EN - Our Care Main Page.md ('New Text' column, 5 Oct 2026): one section 'Care Built Around Each Patient' (three paragraphs) replaces Figma's two. The four service cards = content/home/services.en.json (same photos and text, titles navy here). meta.description from the document's banner text; alt and aria PLACEHOLDER.",
   "meta": {
     "title": "Our Care | Cambridge Hospital",
-    "description": "Coordinated care across inpatient, outpatient, home and school settings for every stage of recovery at Cambridge Hospital."
+    "description": "Comprehensive medical, rehabilitation and long-term care, tailored to each patient’s needs and delivered across the settings that support their recovery and independence."
   },
   "hero": {
-    "ariaLabel": "Your Path to Recovery",
-    "banner": { "image": "care/banner-our-care", "alt": "" },
-    "title": ["Your Path to Recovery."],
-    "text": "We provide coordinated care across inpatient, outpatient, and home settings for every stage of recovery.",
-    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+    "ariaLabel": "Care Designed Around Each Patient",
+    "banner": {
+      "image": "care/banner-our-care",
+      "alt": ""
+    },
+    "title": [
+      "Care Designed",
+      "Around Each Patient"
+    ],
+    "text": "Comprehensive medical, rehabilitation and long-term care, tailored to each patient’s needs and delivered across the settings that support their recovery and independence.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
   },
   "sections": [
     {
-      "heading": "Specialized Care for Every Need",
+      "heading": "Care Built Around Each Patient",
       "text": [
-        "At Cambridge Hospital, our care model is built around one principle: recovery is not a single event, but a continuous journey. We provide coordinated care across inpatient rehabilitation services, outpatient care and home healthcare, ensuring each patient receives the right level of medical support, therapy and follow-up at every stage of recovery.",
-        "Our multidisciplinary teams manage complex medical conditions, neurological injuries, pediatric needs, ventilated patient care and long-term recovery pathways through structured programs designed to restore function, improve independence and enhance quality of life. Whether a patient requires intensive inpatient support, specialist outpatient rehabilitation or rehabilitation at home, Cambridge Hospital delivers care that is clinically focused, personalized and connected."
-      ]
-    },
-    {
-      "heading": "A Structured Continuum of Care",
-      "text": [
-        "Our care pathways are designed to move with the patient. Many patients begin with inpatient rehabilitation, where medical supervision, therapy intensity and daily care coordination are essential. As recovery progresses, care can transition into outpatient rehabilitation or home healthcare services to maintain momentum, support functional gains and reduce avoidable readmissions.",
-        "This integrated approach allows Cambridge Hospital to deliver post-acute care, long-term care, ventilator-related care, pediatric rehabilitation and therapy services within one connected system of care."
+        "At Cambridge Hospital, our care model is built around one principle: recovery is not a single event, but a continuous journey. Every patient’s needs are different, and those needs can change as they progress through recovery. Our multidisciplinary teams work closely with patients and their families to understand these needs and provide the right level of medical care, rehabilitation, therapy and ongoing support at each stage.",
+        "We care for patients with complex medical conditions, neurological injuries, paediatric needs, ventilator requirements and long-term care needs through structured programmes designed to restore function, build independence and improve quality of life. Our connected services span inpatient rehabilitation, outpatient care, home healthcare and in-school care, allowing patients to move between different levels and settings of care as their needs evolve. From the close medical supervision and intensive therapy needed during inpatient rehabilitation, to specialist outpatient treatment and therapy, and continued care and rehabilitation at home, our approach helps patients maintain their progress and apply their gains in everyday life.",
+        "By bringing these services together within one connected system of care, we can provide continuity throughout the recovery journey, while giving patients and families the support and guidance they need along the way."
       ]
     }
   ],
-  "specializations": { "heading": "Our Specializations", "listLabel": "Our services", "button": "Start Your Care" },
+  "specializations": {
+    "heading": "Our Specializations",
+    "listLabel": "Our services",
+    "button": "Start Your Care"
+  },
   "doctors": {
     "heading": "Expert Care, Trusted Doctors",
     "text": "Our specialists are committed to providing the right care at every stage of your journey.",
     "listLabel": "Our doctors",
-    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-hanna-kassab"
+    ]
   }
 }

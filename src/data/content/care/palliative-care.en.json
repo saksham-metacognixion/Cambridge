@@ -1,0 +1,99 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/EN - Palliative care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Palliative Care",
+    "title": [
+      "Palliative Care"
+    ],
+    "text": "For patients living with serious or long-term illness, to manage symptoms, protect dignity and support quality of life."
+  },
+  "overview": [
+    "Palliative care focuses on comfort, dignity, and quality of life. At Cambridge Hospital, a specialised team works alongside the patient’s treating doctors to manage pain and other symptoms, ease emotional strain and support both patients and families through serious illness, at any stage and alongside other treatments."
+  ],
+  "topics": [
+    {
+      "label": "What is Palliative Care",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Palliative care is specialised care for patients living with a serious or long-term illness."
+        },
+        {
+          "type": "p",
+          "text": "Its goal is not to replace the treatment for the underlying condition, but to relieve the physical and emotional difficulties that can accompany it, including pain and other symptoms, so that patients can live as fully and comfortably as possible."
+        },
+        {
+          "type": "p",
+          "text": "Palliative care focuses on the whole person, not just the diagnosis, and extends support to the family alongside the patient. It can begin at any point during a serious illness and can be provided at the same time as treatments intended to cure or control the underlying condition."
+        }
+      ]
+    },
+    {
+      "label": "Who Can Benefit",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Palliative care is based on a patient’s needs rather than a single diagnosis. It helps patients living with a wide range of serious conditions, such as advanced neurological illness, the effects of a severe stroke, chronic respiratory disease, cancer, complex chronic illness and conditions requiring long-term ventilation."
+        },
+        {
+          "type": "p",
+          "text": "It is appropriate for patients of all ages, including children living with serious medical conditions. For children, care takes into account their comfort, development and individual needs, while supporting their families throughout their care."
+        },
+        {
+          "type": "p",
+          "text": "Wherever serious illness creates a need for symptom relief, comfort or additional support, palliative care can play an important role."
+        }
+      ]
+    },
+    {
+      "label": "Care Built Around Changing Needs",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Palliative care should remain consistent as a patient’s needs and circumstances change."
+        },
+        {
+          "type": "p",
+          "text": "At Cambridge Hospital, we provide compassionate palliative support within our inpatient and long-term care settings and continue this care at home through our home health care services. This allows patients to receive care settings where they feel most at ease, surrounded by the people they love."
+        },
+        {
+          "type": "p",
+          "text": "The same coordinated team and care plan follow the patient across settings, maintaining consistent support as needs evolve."
+        }
+      ]
+    },
+    {
+      "label": "Our Multidisciplinary Team",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Good palliative care is a team effort. At Cambridge Hospital, doctors, specialist nurses, therapists, dietitians and psychosocial support teams work together around a shared care plan built on each patient’s individual goals."
+        },
+        {
+          "type": "p",
+          "text": "This coordinated approach means nothing falls through the gaps; physical symptoms, emotional needs, and family concerns are all addressed together, by specialists who communicate with one another and with you."
+        }
+      ]
+    },
+    {
+      "label": "What Palliative Care Can Support",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Palliative care can help with:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Pain management",
+            "Improved physical function and mobility",
+            "Faster recovery after surgery or injury",
+            "Support with emotional and psychological needs",
+            "Maintaining comfort, dignity and quality of life",
+            "Support for families and caregivers"
+          ]
+        }
+      ]
+    }
+  ]
+}

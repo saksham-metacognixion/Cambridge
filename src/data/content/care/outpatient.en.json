@@ -1,0 +1,17 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Main Page.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Outpatient Care",
+    "title": [
+      "Outpatient Care"
+    ],
+    "text": "Comprehensive outpatient rehabilitation for adults, adolescents and children, bringing together multidisciplinary teams to restore function, build independence and support them throughout their recovery."
+  },
+  "intro": {
+    "heading": "Outpatient Care Services",
+    "text": [
+      "Our outpatient clinics bring together a holistic, multidisciplinary approach to rehabilitation. Our teams work hand in hand to design a comprehensive and personalised recovery roadmap for every patient, whether they are recovering from injury, surgery, a neurological event or a long-term condition.",
+      "With outpatient clinics in both UAE and KSA, we provide specialised therapy for patients continuing their recovery at home, as well as those who received their initial treatment elsewhere and require ongoing care."
+    ]
+  }
+}

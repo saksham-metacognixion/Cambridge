@@ -20,10 +20,12 @@ import SectionIntro from '../shared/SectionIntro.astro';
  */
 interface Props { edition: Edition; c: { heading: string; text: string; listLabel: string; button: string; empty: string } }
 const { edition, c } = Astro.props;
+// Card title = listTitle ("Abu Dhabi Hospital", "Al Mudeef Centre": the client's Our Hospitals document, 5 Oct 2026), else brand + city;
+// button = listButton ("View Centre" for Al Mudeef) else the shared label.
 const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.filter((h) => h.region === edition.region) : hospitals).map((h) => ({
   slug: h.slug,
-  brand: t(h.brand, edition.locale, 'hospitals'),
-  city: (h as any).listTitleCityless ? '' : t(h.city, edition.locale, 'hospitals'),
+  title: (h as any).listTitle ? [t((h as any).listTitle, edition.locale, 'hospitals')] : [t(h.brand, edition.locale, 'hospitals'), t(h.city, edition.locale, 'hospitals')],
+  button: (h as any).listButton ? t((h as any).listButton, edition.locale, 'hospitals') : c.button,
   address: t((h as any).address, edition.locale, 'hospitals'),
   src: img((h as any).listPhoto, edition.region),
   href: viewHospitalHref(h.slug, edition),
@@ -38,9 +40,9 @@ const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.f
       <li class="cell">
         <article class="card">
           <Picture src={h.src} formats={['avif']} fallbackFormat="webp" width={px(296.21)} height={px(325.564)} widths={[px(296.21), px(296.21) * 2]} sizes={`(min-width: 1440px) ${px(296.21)}px, (min-width: 1024px) 28.16vw, ${px(296.21)}px`} loading="lazy" decoding="async" alt="" class="img" pictureAttributes={{ class: 'contents' }} />
-          <h3 class="title m-0 font-gotham font-medium not-italic text-navy"><span class="block">{h.brand}</span>{h.city && <span class="block">{h.city}</span>}</h3>
+          <h3 class="title m-0 font-gotham font-medium not-italic text-navy">{h.title.map((l) => <span class="block">{l}</span>)}</h3>
           <p class="addr m-0 font-gotham font-normal not-italic text-body">{h.address}</p>
-          <a href={h.href} class="btn hit font-gotham font-medium not-italic no-underline" aria-label={`${c.button}: ${h.brand} ${h.city}`.trim()}>{c.button}</a>
+          <a href={h.href} class="btn hit font-gotham font-medium not-italic no-underline" aria-label={`${h.button}: ${h.title.join(' ')}`}>{h.button}</a>
         </article>
       </li>
     ))}

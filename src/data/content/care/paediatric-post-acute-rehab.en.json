@@ -1,0 +1,103 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Post acute care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Paediatric Post-Acute Rehabilitation",
+    "title": [
+      "Paediatric",
+      "Post-Acute",
+      "Rehabilitation"
+    ],
+    "text": "For children recovering from serious illness or injury, or living with complex long-term conditions, to support recovery, manage their condition and improve quality of life."
+  },
+  "overview": [
+    "Paediatric post-acute care provides long-term, high-quality care for children recovering from severe illness or serious injury, as well as those living with long-term or lifelong chronic conditions. Children require particular care, not only because they are more vulnerable, but also because their risk of complications from chronic conditions and prolonged hospitalisation can be higher."
+  ],
+  "topics": [
+    {
+      "label": "What Is Paediatric Post-Acute Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our post-acute care provides children with the treatment and rehabilitation they need alongside psychological and emotional support, supporting recovery, comfort and confidence."
+        }
+      ]
+    },
+    {
+      "label": "Who It’s For",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Children recovering from a severe illness or serious injury",
+            "Children recovering from major surgery or post-surgical complications",
+            "Children living with long-term, chronic or lifelong conditions or disabilities",
+            "Children with special needs who benefit from continuous, professional care"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Our Approach",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Depending on each child’s needs, post-acute care may be delivered across different settings and for shorter or longer periods:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**In-hospital post-acute care** - for children with special health care needs or those recovering from major surgery or treatment, with continuous supervision",
+            "**Paediatric rehabilitation** - short-term or long-term rehabilitation for children experiencing significant pain, trauma or long-term illness, helping manage the impact of chronic conditions",
+            "**Residential paediatric care** - short-term or long-term care for children recovering from major surgery, undergoing long-term treatment or living with permanent disabilities"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Therapies and Techniques",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Care is tailored to each child and may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Physiotherapy",
+            "Psychological support and counselling",
+            "Therapeutic exercises",
+            "Medication management",
+            "Teaching coping mechanisms and self-management skills"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Expected Outcomes",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Teach self-management while treating chronic pain or illness",
+            "Help children develop methods to cope with long-term health conditions",
+            "Prepare children with severe disabilities to lead as full and normal a life as possible",
+            "Minimise risk of post-surgery complications for children recovering from major surgery or treatment"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "How Children Will Benefit",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "With consistent, professional post-acute care, many children can experience improvements such as reduced pain, better physical function, lower anxiety and improved emotional wellbeing, better sleep and stronger coping and social interaction."
+        },
+        {
+          "type": "p",
+          "text": "Steady recovery can also help reduce post-surgical complications and the need for rehospitalisation."
+        }
+      ]
+    }
+  ]
+}

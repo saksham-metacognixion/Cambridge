@@ -1,0 +1,32 @@
+{
+  "_note": "Acquired Brain Injury (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Acquired Brain Injury | Cambridge Hospital",
+    "description": "Rebuilding cognitive, physical and daily-living skills through coordinated care."
+  },
+  "hero": {
+    "ariaLabel": "Acquired Brain Injury",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Acquired Brain",
+      "Injury"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Acquired brain injuries, resulting from infection, tumour, hypoxia or toxic exposure, produce complex, overlapping deficits in movement, cognition, communication and behaviour.",
+    "At Cambridge Hospital, our interdisciplinary team designs individualised rehabilitation and care plans to address each patient’s specific deficit profile.",
+    "Neurorehabilitation assessment guides therapy planning, and family coaching ensures that rehabilitation gains transfer into everyday life across our inpatient, outpatient and home care services."
+  ]
+}

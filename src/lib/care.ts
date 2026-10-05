@@ -1,57 +1,79 @@
 import data from "../data/care.json";
 import { PAGE_PATHS } from "./paths";
 import { content, type Localized } from "./content";
-import type { LocaleId } from "./editions";
+import type { LocaleId, RegionId } from "./editions";
 
 /*
- * Our Care hierarchy (src/data/care.json): Our Care hub (Figma 36:5631) -> service pages (Inpatient Care 83:226; Outpatient,
- * Home Health, In School have no Figma page yet) -> sub-service pages (Post Acute Care 41:1730; the other five have no Figma
- * page yet) -> condition detail pages (src/lib/conditions.ts).
- * URL pattern in ONE place: our-care, our-care/<service>, our-care/<service>/<sub>. UNCONFIRMED (docs/open-decisions.md OC2).
- * Full page text: src/data/content/care/<slug>.<locale>.json; pages without a file are generated from care.json and marked
- * "content pending" on staging (showPendingNote in src/lib/conditions.ts).
+ * Our Care hierarchy (src/data/care.json) = the folder structure of the client's content ('Website Content - Suhad/Our Care',
+ * 5 Oct 2026): hub (Figma 36:5631) -> 4 services (Inpatient Care = Figma 83:226) -> sections (Figma 41:1730 template)
+ * -> programmes (condition-detail template 41:2373: Overview + topic tabs), up to 4 levels under /care.
+ * URL pattern in ONE place: care, care/<service>, care/<service>/<section>, ... (the live site's /care/... paths quoted in the
+ * documents; derived slugs are UNCONFIRMED, docs/open-decisions.md CT2).
+ * Full page text: src/data/content/care/<slug>.<locale>.json (+ <slug>.<region>.<locale>.json for a region variant, e.g.
+ * home-care.sa); pages without a file are generated from care.json and marked "content pending" on staging (showPendingNote).
  */
-export interface SubService {
+export interface CareNode {
   slug: string;
   figma?: string;
   title: Localized;
-  desc: { en: string[]; ar?: string[] };
-  image: string;
-  alt: string;
+  /** card title when the parent page names it differently from the page title (Inpatient Care: "Post Acute Care") */
+  cardTitle?: Localized;
+  /** card text (from the parent's document) = the generated overview of a page without a content file */
+  desc: Localized;
+  image?: string;
+  alt?: string;
+  children: CareNode[];
 }
-export interface Service {
-  slug: string;
-  figma?: string;
-  title: Localized;
-  subServices: SubService[];
+export interface CarePath {
+  node: CareNode;
+  /** slugs from the service down to this node */
+  trail: string[];
+  parent: CareNode | null;
 }
 
-export const services = data.services as Service[];
+export const services = data.services as CareNode[];
 
 export const CARE_PATHS = {
   hub: PAGE_PATHS.ourCare,
+  /** care/<service>[/<section>[/<programme>...]] */
+  of: (trail: string[]) => [PAGE_PATHS.ourCare, ...trail].join("/"),
   service: (slug: string) => `${PAGE_PATHS.ourCare}/${slug}`,
-  sub: (service: string, sub: string) =>
-    `${PAGE_PATHS.ourCare}/${service}/${sub}`,
 };
 
-export const service = (slug: string): Service => {
+/** Every node with its trail, depth-first in data order. */
+export function allCareNodes(): CarePath[] {
+  const out: CarePath[] = [];
+  const walk = (nodes: CareNode[], trail: string[], parent: CareNode | null) => {
+    for (const n of nodes) {
+      const t = [...trail, n.slug];
+      out.push({ node: n, trail: t, parent });
+      walk(n.children, t, n);
+    }
+  };
+  walk(services, [], null);
+  return out;
+}
+
+/** Nodes at a given depth (1 = services) with their trails. */
+export const careNodesAtDepth = (depth: number) =>
+  allCareNodes().filter((p) => p.trail.length === depth);
+
+export const service = (slug: string): CareNode => {
   const s = services.find((x) => x.slug === slug);
   if (!s)
     throw new Error(`Unknown service slug "${slug}" (src/data/care.json)`);
   return s;
 };
 
-/** Description lines for a locale (English fallback, like `t`). */
-export const descLines = (d: SubService["desc"], locale: LocaleId) =>
-  locale !== "en" && d[locale]?.length ? d[locale]! : d.en;
-
 const files = import.meta.glob("../data/content/care/*.en.json");
-/** Slugs (service or sub-service) with a full content file. */
-export const careContentSlugs = new Set(
+/** Content file names (without .en.json): "<slug>" or "<slug>.<region>". */
+export const careContentNames = new Set(
   Object.keys(files).map((p) => p.replace(/^.*\/(.+)\.en\.json$/, "$1")),
 );
-export const careContent = (slug: string, locale: LocaleId) =>
-  careContentSlugs.has(slug) && slug !== "shared"
-    ? content(`care/${slug}`, locale)
-    : null;
+/** Full page content: the region variant when one exists (home-care.sa on /sa), else the shared file, else null. */
+export function careContent(slug: string, locale: LocaleId, region?: RegionId) {
+  if (slug === "shared") return null;
+  if (region && region !== "global" && careContentNames.has(`${slug}.${region}`))
+    return content(`care/${slug}.${region}`, locale);
+  return careContentNames.has(slug) ? content(`care/${slug}`, locale) : null;
+}

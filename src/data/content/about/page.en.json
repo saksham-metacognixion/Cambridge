@@ -1,21 +1,22 @@
 {
-  "_note": "About Cambridge (Figma 45:4982; timeline = 307:494, switched off by src/data/about.json showTimeline). Visible text exactly as in Figma (typos kept: 'Lear more', 'Go LIve'); meta.*, alt texts and aria labels are NOT in Figma (PLACEHOLDER). Card links: page = key in PAGE_PATHS. 'Your recovery matters' CTA = the shared Contact page block (contact/page recovery), identical in Figma.",
+  "_note": "About Cambridge (Figma 45:4982; timeline = 307:494). Text = Website Content - Suhad/About Cambridge/EN-Main Page.md ('New Text' column, 5 Oct 2026): new hero, intro (no lead line), the 18-entry Journey of Excellence, 'Get to Know Cambridge' without a sub line. meta.*, alt texts and aria labels are NOT in the document (PLACEHOLDER). Card links: page = key in PAGE_PATHS ('Who We Are' has no page: it opens About, docs/open-decisions.md A4 / CT7). 'Your recovery matters' CTA = the shared Contact page block.",
   "meta": {
     "title": "About Cambridge | Cambridge Hospital",
-    "description": "Cambridge Hospital is a specialized hospital for rehabilitation and long-term care in the GCC region, a leader in post-acute and rehabilitation care."
+    "description": "Cambridge Hospital is a leader in post-acute and rehabilitation care in the GCC: from hospital care to rehabilitation and home care, we support patients through every stage of recovery."
   },
   "hero": {
-    "ariaLabel": "From treatment to recovery, all in one place",
+    "ariaLabel": "A Leader in Post-Acute and Rehabilitation Care in the GCC",
     "banner": {
       "image": "about/banner",
       "alt": ""
     },
     "title": [
-      "From treatment to",
-      "recovery, all in one",
-      "place"
+      "A Leader in",
+      "Post-Acute and",
+      "Rehabilitation Care",
+      "in the GCC"
     ],
-    "text": "From hospital care to rehabilitation and home support, we deliver care that is continuous and personalized.",
+    "text": "From hospital care to rehabilitation and home care, we support patients through every stage of recovery.",
     "button": {
       "label": "Book an Appointment",
       "href": "#book-appointment"
@@ -29,11 +30,11 @@
       "playLabel": "Play video"
     },
     "title": "Cambridge Hospital",
-    "subtitle": "A Leader in Post-Acute and Rehabilitation Care",
-    "lead": "We are a specialized hospital for rehabilitation and long-term care in the GCC region.",
+    "subtitle": "Personalised Care, Every Step of the Way",
+    "lead": "",
     "text": [
-      "At Cambridge Hospital, we provide comprehensive medical care and advanced rehabilitation services for patients requiring short-term recovery as well as long-term support for chronic conditions and complex injuries.",
-      "We deliver personalized care tailored to each patient’s needs, focusing on recovery, independence, and improved quality of life. We also encourage active involvement of family members as an integral part of the care journey."
+      "Cambridge Hospital provides comprehensive and specialised post-acute, rehabilitation and long-term care for patients recovering from illness, injury or complex medical conditions, as well as those requiring ongoing support.",
+      "Our multidisciplinary teams deliver personalised care based on each patient’s needs, helping them recover, regain independence and improve their quality of life. We work closely with families throughout the journey, providing guidance and support as patients transition between different stages of care."
     ]
   },
   "timeline": {
@@ -45,46 +46,132 @@
       {
         "year": "2012",
         "title": [
-          "Group was",
-          "Established"
+          "Cambridge Group Establishment"
         ],
-        "text": "Holding company incorporated with mandate to launch LTC facilities in Region"
+        "text": "The holding company was established to develop long-term care facilities across the region."
       },
       {
         "year": "2014",
         "title": [
-          "Abu Dhabi & Al Ain",
-          "Facility Go LIve"
+          "UAE – Abu Dhabi and Al Ain Facilities Launch"
         ],
-        "text": "Phase I Abu Dhabi launched June 2014, Phase II January 2015, and Al Ain - April 2015"
+        "text": "Phase I in Abu Dhabi Hospital launched in June 2014, followed by Phase II in January 2015 and the Al Ain facility in April 2015."
       },
       {
         "year": "2015",
         "title": [
-          "Launch of TVU",
-          "Program"
+          "UAE - TVU Programme Launch"
         ],
-        "text": "Launched 1st program for Transitional Vent Unit “TVU” for mechanical ventilated patients"
+        "text": "Launched the first Transitional Vent Unit (TVU) programme for mechanically ventilated patients."
       },
       {
         "year": "2016",
         "title": [
-          "UAE & KSA",
-          "Expansion"
+          "UAE & KSA Expansion"
         ],
-        "text": "CMRC Saudi Arabia secured its SAGIA license, and Al Ain Facility Phase II became fully operational"
+        "text": "Secured a SAGIA license for expansion into Saudi Arabia and opened Phase II of Al Ain Facility."
+      },
+      {
+        "year": "2019",
+        "title": [
+          "KSA - Dhahran Facility Launch"
+        ],
+        "text": "Opened the Eastern Province’s first dedicated inpatient and outpatient rehabilitation facility."
+      },
+      {
+        "year": "2020",
+        "title": [
+          "UAE - Abu Dhabi Facility Expansion"
+        ],
+        "text": "Expanded the Abu Dhabi facility, with capacity planned to reach 106 beds."
+      },
+      {
+        "year": "2021",
+        "title": [
+          "Group Acquisition by Amanat"
+        ],
+        "text": "Strategic acquisition by Amanat Holdings to drive accelerated sustainable growth."
+      },
+      {
+        "year": "2023",
+        "title": [
+          "KSA - IECC Jeddah Acquisition"
+        ],
+        "text": "Group acquired a majority stake in the IECC facility in Jeddah, adding 100 beds to the group’s portfolio."
+      },
+      {
+        "year": "2023",
+        "title": [
+          "UAE - Al Ain Facility Expansion"
+        ],
+        "text": "Expanded the Al Ain facility to a capacity of 109 beds."
+      },
+      {
+        "year": "2024",
+        "title": [
+          "UAE - Al Mudeef Centre Partnership"
+        ],
+        "text": "Entered into a public-private partnership with Zayed Higher Organisation to operate and maintain the 80-bed Al Mudeef facility."
+      },
+      {
+        "year": "2024",
+        "title": [
+          "KSA - Al Khobar Facility Commissioning"
+        ],
+        "text": "Commissioned a long-term care and ICU facility in Saudi Arabia’s Eastern Province."
+      },
+      {
+        "year": "2025",
+        "title": [
+          "KSA - Al Khobar Facility Expansion"
+        ],
+        "text": "Licensed 100 additional beds, including 30 rehabilitation beds, bringing total capacity to 200 beds."
+      },
+      {
+        "year": "2025",
+        "title": [
+          "Cambridge Health Group Launch"
+        ],
+        "text": "Established Cambridge Health Group as the regional healthcare platform for strategic growth and portfolio expansion."
+      },
+      {
+        "year": "2026",
+        "title": [
+          "KSA - Al Khobar Facility Expansion"
+        ],
+        "text": "Increased the Al Khobar facility’s capacity to 150 beds as part of the group’s expansion in Saudi Arabia."
+      },
+      {
+        "year": "2026",
+        "title": [
+          "Full Ownership by Amanat"
+        ],
+        "text": "Amanat Holdings acquired full ownership of Cambridge Health Group, supporting further growth and integration."
+      },
+      {
+        "year": "2026",
+        "title": [
+          "Cambridge Hospital Brand Unification"
+        ],
+        "text": "CMRE, Al Mudeef Center and IECC facilities in the UAE and Saudi Arabia unified under the Cambridge Hospital brand."
+      },
+      {
+        "year": "2026",
+        "title": [
+          "KSA - Cambridge Home Care Launch"
+        ],
+        "text": "Launched Cambridge Home Care in Saudi Arabia, providing initial home-based patient services."
       }
     ]
   },
   "explore": {
-    "ariaLabel": "Explore Our Care, Expertise, and Opportunities",
-    "heading": "Explore Our Care, Expertise, and Opportunities",
-    "text": "Lear more about how we deliver care, what sets us apart, and the opportunities we offer.",
+    "ariaLabel": "Get to Know Cambridge",
+    "heading": "Get to Know Cambridge",
+    "text": "",
     "cards": [
       {
         "title": [
-          "About",
-          "Cambridge"
+          "Who We Are"
         ],
         "button": "Learn More",
         "page": "about",
@@ -95,7 +182,7 @@
       {
         "title": [
           "Why Choose",
-          "Cambridge"
+          "Cambridge Hospital"
         ],
         "button": "Discover More",
         "page": "whyCambridge",
@@ -116,7 +203,7 @@
       },
       {
         "title": [
-          "Careers Hub"
+          "Career Hub"
         ],
         "button": "Explore Careers",
         "page": "careers",

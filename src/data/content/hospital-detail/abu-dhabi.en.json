@@ -1,16 +1,23 @@
 {
-  "_note": "Cambridge Hospital Abu Dhabi (Figma 112:7721). Text exactly as in Figma. video.host / video.id: the player source is not in Figma (poster + play button only, as on About, A3); empty = the button does nothing. gallery: Figma shows one area ('Outdoor Spaces' in the dropdown) with 4 photos, the third one in the centre (active: 2).",
+  "_note": "Abu Dhabi Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. Banner, video poster and the four gallery photos = the Figma Abu Dhabi frame; the old 'Outdoor Spaces' text is replaced by the shared 'Designed for Comfort' text. video.host / video.id: empty = the play button does nothing (A3).",
   "hero": {
-    "title": ["Advanced Care ", "in Abu Dhabi"],
-    "text": "Delivering specialized rehabilitation and long-term care in a purpose-built environment designed for recovery and comfort.",
-    "banner": { "image": "hospital-detail/banner-abu-dhabi", "alt": "" }
+    "title": [
+      "Abu Dhabi Hospital"
+    ],
+    "text": "Specialised rehabilitation and extended care, delivered through structured clinical pathways and multidisciplinary expertise.",
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
   },
-  "video": { "host": "", "id": "" },
+  "video": {
+    "host": "",
+    "id": ""
+  },
   "environment": {
     "text": [
-      "At Cambridge Hospital Abu Dhabi, we provide a trusted care environment that combines the comfort of home with advanced, state-of-the-art medical technology.",
-      "Our dedicated team takes pride in delivering compassionate care within a warm and welcoming setting, supporting every patient’s journey toward recovery. We focus on helping patients regain their highest level of function, enabling them to return home with greater independence and confidence.",
-      "We work closely with each patient every day to deliver a seamless care experience and ensure their personal recovery goals are achieved."
+      "Cambridge Hospital Abu Dhabi is a key facility within the Cambridge Hospital network in the UAE, supporting patients who require post-acute care, rehabilitation, long term care and extended medical support within a structured hospital environment.",
+      "The facility is designed for patients whose recovery continues beyond acute treatment and who require a higher level of coordination, monitoring and therapeutic support than conventional discharge pathways can provide."
     ]
   },
   "healing": {
@@ -18,16 +25,24 @@
       {
         "key": "outdoor-spaces",
         "label": "Outdoor Spaces",
-        "text": [
-          "The Abu Dhabi facility offers thoughtfully designed outdoor spaces that extend the healing environment beyond the hospital interiors. Spacious gardens and landscaped areas provide patients and their families with a calm, open setting to relax, reconnect, and support recovery.",
-          "These outdoor spaces are integrated into the care experience, allowing patients to benefit from fresh air, natural light, and a more comfortable, home-like atmosphere. Designed with accessibility and safety in mind, they support both rehabilitation activities and moments of rest, contributing to overall well-being throughout the recovery journey."
-        ],
         "active": 2,
         "images": [
-          { "image": "hospital-detail/gallery-1", "alt": "" },
-          { "image": "hospital-detail/gallery-2", "alt": "" },
-          { "image": "hospital-detail/gallery-3", "alt": "" },
-          { "image": "hospital-detail/gallery-4", "alt": "" }
+          {
+            "image": "hospital-detail/gallery-1",
+            "alt": ""
+          },
+          {
+            "image": "hospital-detail/gallery-2",
+            "alt": ""
+          },
+          {
+            "image": "hospital-detail/gallery-3",
+            "alt": ""
+          },
+          {
+            "image": "hospital-detail/gallery-4",
+            "alt": ""
+          }
         ]
       }
     ]

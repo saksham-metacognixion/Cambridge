@@ -4,6 +4,7 @@ import { px } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
+import { PAGE_PATHS } from '../../lib/paths';
 import chevron from '../../assets/media-hub/select-chevron.svg';
 import overlay from '../../assets/media-hub/tile-overlay.png';
 import dots from '../../assets/media-hub/divider-group620.svg';
@@ -15,7 +16,7 @@ import arrow4 from '../../assets/media-hub/tile-arrow-4.svg';
 // Figma 47:8510 and 46:7942..46:8507 (page y 593-1191). Flow layout; gaps are the Figma distances between neighbouring blocks.
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('media-hub/page', edition.locale).explore;
-const listUrl = urlFor(edition, 'media-hub');
+const listUrl = urlFor(edition, PAGE_PATHS.mediaHub);
 // Corner arrow wrapper position inside each tile (Figma px; the designer nudged them slightly) and the rotation of tile 1's arrow.
 const corner = [
   { x: 176, y: 1, rot: 'rotate(-45.51deg) skewX(-1.02deg)', w: 41.485, h: 42.233, icon: arrow1 },
@@ -34,7 +35,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
 
 <section class="relative" aria-labelledby="explore-title">
   <h2 id="explore-title" class="m-0 mx-auto mt-37 h-27 max-w-430 text-center font-gotham font-medium text-f28 leading-27 text-navy not-italic [word-break:break-word] max-lg:px-16">{c.title}</h2>
-  <p class="m-0 mx-auto mt-10 min-h-32 max-w-577 text-center font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] max-lg:px-16">{c.text}</p>
+  {c.text && <p class="m-0 mx-auto mt-10 min-h-32 max-w-577 text-center font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] max-lg:px-16">{c.text}</p>}
 
   <!-- Category dropdown. The visible box is 311x35 like Figma; the <select> is 44px tall (touch target) and transparent. -->
   <div class="relative mx-auto mt-37 h-35 w-311 max-w-[calc(100%-32px)] rounded-r10 hair-50 border-teal-border">

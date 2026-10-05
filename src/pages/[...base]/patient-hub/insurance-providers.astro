@@ -1,0 +1,36 @@
+---
+import { editionFromBase, editionPaths } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { PAGE_PATHS } from '../../../lib/paths';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import InsurerList from '../../../components/insurance/InsurerList.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('insurance-providers/page', edition.locale);
+
+/*
+ * Insurance Providers template (Figma 46:6844, file LJIRtzU...). Gaps (Figma px): hero 119-556 (title 260 w402, text 338
+ * 3 lines, button 384) | 50 | H2 606 | ... last card row ends 1382.31 | 59.69 | footer 1442.
+ */
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.insuranceProviders} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 402, textGap: 4, textW: 374, buttonGap: 4 }} /></div>
+    <div id="insurers" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(50 * var(--u))"><InsurerList /></div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(59.69 * var(--u))">
+    <Footer />
+  </div>
+  <script>
+    import '../../../scripts/region-filter';
+  </script>
+</BaseLayout>

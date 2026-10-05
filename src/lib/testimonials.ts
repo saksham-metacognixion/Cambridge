@@ -8,7 +8,8 @@ export interface Testimonial {
   name: Localized;
   quote: Localized;
   regions: string[];
-  photo: { image: string; alt: Localized; w: number; h: number; x: number; y: number; r?: number; ratio?: number; crop?: { w: string; h: string; left: string; top: string } };
+  /** absent = no photo yet (card without the photo layer) */
+  photo?: { image: string; alt: Localized; w: number; h: number; x: number; y: number; r?: number; ratio?: number; crop?: { w: string; h: string; left: string; top: string } };
   pattern: string[];
   layers: string[];
 }

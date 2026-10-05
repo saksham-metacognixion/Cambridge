@@ -1,0 +1,32 @@
+{
+  "_note": "Neck Pain & Cervical Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Neck Pain & Cervical Rehabilitation | Cambridge Hospital",
+    "description": "Reducing neck pain and restoring flexibility and function."
+  },
+  "hero": {
+    "ariaLabel": "Neck Pain & Cervical Rehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Neck Pain &",
+      "Cervical",
+      "Rehabilitation"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Neck pain, whether from poor posture, disc degeneration, whiplash or cervical radiculopathy, is one of the most common musculoskeletal complaints and one that often responds well to expert physiotherapy.",
+    "At Cambridge Hospital, our outpatient musculoskeletal therapy services offer comprehensive cervical spine assessment, manual therapy, mobilisation techniques, nerve-root management, postural retraining and ergonomic guidance. For post-surgical cervical cases, structured inpatient and outpatient rehabilitation programmes are available."
+  ]
+}

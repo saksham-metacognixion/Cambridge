@@ -4,26 +4,28 @@ import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { t } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
-import { CARE_PATHS, descLines, type Service } from '../../lib/care';
+import { CARE_PATHS, type CareNode } from '../../lib/care';
 
 /*
  * Sub-service cards of a service page (Figma 83:226 Inpatient Care: 6 cards in 2 rows of 3). Section top = the H2 top (page y 578).
  * H2 Medium 28 #00415a at x56 (box 33) | 12 | text Book 12/14 #6b6b6b at x58 w937 (box 52) | 20.31 | cards.
  * Card (Figma px, row 1 = reference; row 2 is 11.8 taller in Figma, normalised): photo 291.178 x 320.034 on top, box from +3.94,
  * 436.768 tall, radius 19.674, border .328 #418ea2; columns x 53 / 370.41 / 687.82 (gap 26.23); rows 476.12 apart (gap 35.41).
- * Title Medium 19.674 #004059 at (+31.48, +335.77); text Book 11.805/13.116 #6b6b6b at +364.63 (two Figma lines, kept);
+ * Title Medium 19.674 #004059 at (+31.48, +335.77); text Book 11.805/13.116 #6b6b6b at +364.63 (Figma: two lines; the client's
+ * card sentences are longer and wrap, the card grows);
  * button #004059 97.059 x 22.297 r3.935 at +401.36, label "Start Your Care" Medium 10.493/13.116 white at +9.18 / +5.24.
  */
-interface Props { edition: Edition; service: Service; heading: string; text: string[]; listLabel: string; button: string }
-const { edition, service, heading, text, listLabel, button } = Astro.props;
+interface Props { edition: Edition; trail: string[]; nodes: CareNode[]; heading: string; text: string[]; listLabel: string; button: string }
+const { edition, trail, nodes, heading, text, listLabel, button } = Astro.props;
 const loc = edition.locale;
-const cards = service.subServices.map((s) => ({
+// Card title / text = how the PARENT's document names the child (cardTitle, desc); photo per child (Figma 83:226).
+const cards = nodes.map((s) => ({
   slug: s.slug,
-  title: t(s.title, loc, 'care'),
-  lines: descLines(s.desc, loc),
-  src: img(s.image, edition.region),
-  alt: s.alt,
-  href: urlFor(edition, CARE_PATHS.sub(service.slug, s.slug)),
+  title: t(s.cardTitle ?? s.title, loc, 'care'),
+  text: t(s.desc, loc, 'care'),
+  src: img(s.image!, edition.region),
+  alt: s.alt ?? '',
+  href: urlFor(edition, CARE_PATHS.of([...trail, s.slug])),
 }));
 ---
 
@@ -36,7 +38,7 @@ const cards = service.subServices.map((s) => ({
         <article class="card">
           <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(291.178)} height={px(320.034)} widths={[px(291.178), px(291.178) * 2]} sizes={`(min-width: 1440px) ${px(291.178)}px, (min-width: 1024px) 27.7vw, ${px(291.178)}px`} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
           <h3 class="title">{k.title}</h3>
-          <p class="desc">{k.lines.map((l, i) => (i === 0 ? l : <><br />{l}</>))}</p>
+          <p class="desc">{k.text}</p>
           <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}>{button}</a>
         </article>
       </li>
@@ -57,7 +59,7 @@ const cards = service.subServices.map((s) => ({
   .card > :global(*), .card :global(.img) { position: relative; }
   .card :global(.img) { display: block; align-self: stretch; width: calc(100% + 62.96 * var(--u)); margin-inline: calc(-31.48 * var(--u)); height: auto; aspect-ratio: 291.178 / 320.034; object-fit: cover; max-width: none; border-start-start-radius: calc(19.674 * var(--u)); border-start-end-radius: calc(19.674 * var(--u)); }
   .title { margin: calc(15.74 * var(--u)) 0 0; min-height: calc(19.674 * var(--u)); font-weight: 500; font-size: calc(19.674 * var(--u)); line-height: normal; color: var(--color-navy); overflow-wrap: anywhere; }
-  .desc { margin: calc(9.19 * var(--u)) 0 0; min-height: calc(26.23 * var(--u)); font-size: calc(11.805 * var(--u)); line-height: calc(13.116 * var(--u)); color: var(--color-body); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .desc { margin: calc(9.19 * var(--u)) 0 0; min-height: calc(26.23 * var(--u)); font-size: calc(11.805 * var(--u)); line-height: calc(13.116 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .btn { display: flex; align-items: center; box-sizing: border-box; margin-top: calc(10.5 * var(--u)); width: calc(97.059 * var(--u)); height: calc(22.297 * var(--u)); padding-inline-start: calc(9.18 * var(--u)); border-radius: calc(3.935 * var(--u)); background: var(--color-navy); color: #fff; font-weight: 500; font-size: calc(10.493 * var(--u)); line-height: calc(13.116 * var(--u)); text-decoration: none; white-space: nowrap; --hit-h: 44px; --hit-w: 0px; }
   .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   @media (min-width: 1024px) {

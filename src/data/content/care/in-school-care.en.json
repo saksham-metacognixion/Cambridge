@@ -1,0 +1,190 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/School/EN - In-School Care.md (5 Oct 2026), the 'New Text' column of the current/new table, text exactly as in the document. No Figma banner: shared placeholder (CT4).",
+  "hero": {
+    "ariaLabel": "In-School Care",
+    "title": [
+      "In-School Care"
+    ],
+    "text": "Specialised therapy and rehabilitation for children, delivered within the school environment and integrated into their daily routine."
+  },
+  "overview": [
+    "Our In-School therapy programme brings structured, clinically supervised rehabilitation into the child’s everyday learning experience.",
+    "Delivered during the school day and woven into classroom activities, it moves therapy beyond the clinic and into the child’s real-life learning environment. This allows skills to be developed, practised and applied in real-time, in settings where they’re needed most."
+  ],
+  "topics": [
+    {
+      "label": "Supporting Children Where They Learn",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Many children experience developmental or functional challenges that may be easily overlooked in the classroom, such as:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Difficulty with writing, coordination or posture",
+            "Challenges with communication and expression",
+            "Sensory sensitivities or behavioural responses",
+            "Delays in language or social interaction"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Without early and targeted intervention, these challenges can affect a child’s academic performance, confidence and long-term development. Support within the school allows intervention to be timely, relevant and effective - reaching children where the challenges arise."
+        }
+      ]
+    },
+    {
+      "label": "Our Approach",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "The programme is built on a medically led multidisciplinary approach, so every child receives structured, clinically grounded support:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Therapy integrated into the school day without disrupting academic schedules",
+            "Sessions delivered within the classroom environment",
+            "Goals aligned with teachers’ objectives and learning outcomes",
+            "Continuous medical supervision throughout the programme"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Therapy is never isolated, it is embedded directly into the child’s real learning experience."
+        }
+      ]
+    },
+    {
+      "label": "Programme Structure",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "The programme provides a clear pathway from identification to measurable progress:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Referral and Identification** - through teacher observations, parental concerns or clinical referral",
+            "**Clinical Assessment** - a comprehensive evaluation of developmental, functional and communication needs",
+            "**Individualised Therapy Plan** - tailored to the child’s academic environment and developmental goals",
+            "**Therapy Delivery** - sessions during school hours integrated into the daily routine",
+            "**Progress monitoring** - continuous tracking and reporting to measure outcomes and adjust the treatment plan as needed"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Medical Oversight",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "What sets our programme apart is its paediatric medical leadership. Each child benefits from:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Medical review of their developmental and neurological profile",
+            "Clinically validated therapy goals",
+            "Ongoing monitoring and adjustment",
+            "Integration of medical, therapy and educational input"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Each child is supported comprehensively rather than through isolated or disconnected interventions."
+        }
+      ]
+    },
+    {
+      "label": "Occupational Therapy",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Occupational therapy helps children develop the skills they need to participate more independently in everyday school activities. This may include writing, handwriting grip, coordination, posture, sensory processing, physical endurance or classroom participation."
+        },
+        {
+          "type": "p",
+          "text": "The goal is to help children feel more confident, independent and capable in the activities that matter to them at school."
+        }
+      ]
+    },
+    {
+      "label": "Speech & Language Therapy",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Speech and language therapy supports communication, comprehension and social interaction. It addresses language delays, speech sound disorders, fluency difficulties including stuttering, comprehension challenges, communication needs associated with autism or oral motor difficulties - helping children better express themselves, understand others and engage more effectively, supporting academic and social success."
+        }
+      ]
+    },
+    {
+      "label": "Why In-School Therapy?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Clinic-based therapy requires children to transfer the skills they develop in therapy to the classroom, a gap that can sometimes limit how effectively those skills are applied in everyday situations."
+        },
+        {
+          "type": "p",
+          "text": "In-school therapy removes this barrier by delivering therapy in the child’s real-life learning environment. This allows children to apply skills immediately, enables teachers to reinforce strategies in the moment and supports greater consistency across environments."
+        },
+        {
+          "type": "p",
+          "text": "By bringing therapy into the school setting, children can practise and develop skills where they are needed most, as part of their everyday learning and activities."
+        }
+      ]
+    },
+    {
+      "label": "The Team Around the Child",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Our shared-responsibility model brings together everyone involved in the child’s development – including therapists, paediatricians, teachers, families and school administrators - all working within a single and unified plan focused on the child’s progress."
+        }
+      ]
+    },
+    {
+      "label": "Benefits for Schools",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Beyond the benefits to individual children, the programme can support the wider school community by:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Early identification of developmental challenges",
+            "Improved student participation and engagement",
+            "Stronger academic outcomes",
+            "Support for teachers in managing diverse learning needs",
+            "Enhanced parent confidence and trust"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "How Success is Measured",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "We monitor each child's progress across areas such as functional skills, academic participation, communication ability and behavioural engagement. Progress is regularly reviewed with the school and family, helping the team understand what is working and adapt the programme when needed, ensuring transparency and shared accountability."
+        }
+      ]
+    },
+    {
+      "label": "Bring Specialist Therapy into Your School",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Bring medically led, structured therapy to your school with our in-school therapy programme tailored to your students’ needs."
+        },
+        {
+          "type": "p",
+          "text": "Connect with Cambridge Hospital to support children’s development, learning and confidence, helping them build skills where they learn and grow."
+        }
+      ]
+    }
+  ]
+}

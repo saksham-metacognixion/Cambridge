@@ -1,0 +1,145 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN - Pulmonary.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Paediatric Pulmonary Rehabilitation",
+    "title": [
+      "Paediatric",
+      "Pulmonary",
+      "Rehabilitation"
+    ],
+    "text": "For children with chronic respiratory conditions requiring monitored therapy and long-term management, to help children breathe easier."
+  },
+  "overview": [
+    "For children living with chronic respiratory conditions, even simple daily activities can feel exhausting. Paediatric pulmonary rehabilitation provides structured support that helps children breathe more comfortably and stay active. Through guided breathing techniques, targeted physical training and practical education, the programme helps strengthen lung function and builds confidence in managing symptoms."
+  ],
+  "topics": [
+    {
+      "label": "What Is Pulmonary Rehabilitation?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Paediatric pulmonary rehabilitation is a specialised therapy programme that is designed to help children improve their breathing, stay active and feel confident in managing their respiratory condition. It provides guided exercises, breathing training and support to make daily activities easier and reduce the impact of chronic respiratory conditions."
+        }
+      ]
+    },
+    {
+      "label": "Our Specialised Programme",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "A typical paediatric pulmonary rehabilitation programme includes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Practical guidance on the child’s condition and how their family can help them breathe more easily",
+            "Counselling and support to help families navigate the emotional challenges of caring for a child with a serious lung condition",
+            "Tailored training exercises to help the child’s body manage their condition and build healthy energy"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "This kind of programme may be recommended both before and after lung surgery, helping children restore strength, ease anxiety and low mood, and return to daily activities."
+        },
+        {
+          "type": "p",
+          "text": "Children with moderate or severe lung disease may benefit from pulmonary rehabilitation, supported by a multidisciplinary team of respiratory therapists, nurses, physicians, physiologists, and registered dietitians."
+        }
+      ]
+    },
+    {
+      "label": "How the Programme Works",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Every programme is tailored to the individual child and designed to support the whole family. Most programmes share the same core elements:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Patient assessment** - examining the child’s overall health, lung condition, and lifestyle to identify the cause of breathing difficulties and anything that may worsen them",
+            "**Treatment planning** - a plan suited to the child’s specific needs, with appropriate support at home and helpful adjustments to daily routines",
+            "**Consistent communication** - continuous monitoring, progress reviews and coordination with any additional support the child may need",
+            "**Regular sessions** - exercise and education sessions that build the knowledge and skills to manage respiratory conditions with confidence"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Pulmonary Rehabilitation for Children Receiving Mechanical Ventilation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "When a child’s respiratory condition is too severe to manage with therapy alone, mechanical ventilation can provide vital support, helping strengthen the respiratory system while working towards a more independent lifestyle."
+        },
+        {
+          "type": "p",
+          "text": "Rehabilitation for children receiving mechanical ventilation is more complex and depends on close teamwork across disciplines, including physical therapists, occupational therapists, speech and language therapists, dietitians, physicians, and pulmonary specialists. Therapy is continuously adjusted according to each child’s assessment, progress and daily tolerance."
+        },
+        {
+          "type": "p",
+          "text": "Where appropriate, pulmonary rehabilitation may include a structured weaning process. For children with severe chronic respiratory failure, ongoing mechanical ventilator support may be required."
+        }
+      ]
+    },
+    {
+      "label": "Chronic Respiratory Failure",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "For children with chronic respiratory failure, mechanical ventilation helps maintain healthy oxygen levels and support adequate ventilation. Two main ventilation approaches are used:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Non-invasive ventilation** - used when a child has persistent symptoms of respiratory failure requiring ventilation support",
+            "**Invasive ventilation** - used when non-invasive therapy is not sufficient, or when a child’s condition requires an artificial airway to maintain airflow"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Both aim to support ventilation and deliver the best possible therapeutic benefit to the child."
+        },
+        {
+          "type": "p",
+          "text": "With appropriate support, both ventilator-dependent and non-ventilator-dependent children can experience improved lung function, better oxygenation, reduced breathlessness, improved physical performance and resilience, and often better quality of sleep."
+        }
+      ]
+    },
+    {
+      "label": "Weaning from Mechanical Ventilation In Children",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Weaning is the carefully managed process of reducing and eventually discontinuing a child’s dependence on mechanical ventilation, helping them regain the ability to breathe independently. Before weaning begins, each child is assessed against specific criteria, through both subjective and objective measures such as heart rate, blood pressure and cough strength, to determine readiness."
+        },
+        {
+          "type": "lead",
+          "text": "The process generally involves:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Grouping children according to their condition and the anticipated difficulty of weaning",
+            "Gradually and carefully reducing mechanical support",
+            "Conducting a spontaneous breathing trial to assess progress, typically focused on breathing effort and pressure support",
+            "Adjusting support as needed if a child is not yet ready, sometimes using non-invasive ventilation to reduce the duration of intubation"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Weaning is central to caring for critically ill children and requires close cooperation and continuous monitoring to keep the child safe throughout."
+        }
+      ]
+    },
+    {
+      "label": "Begin Your Child’s Pulmonary Rehabilitation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The most important step is seeking timely care and understanding your child’s condition. Our paediatric pulmonary rehabilitation teams are here to support your child’s breathing, development, and wellbeing, and to support your family every step of the way"
+        }
+      ]
+    }
+  ]
+}

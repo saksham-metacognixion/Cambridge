@@ -1,0 +1,31 @@
+{
+  "_note": "Back Pain & Lumbar Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Back Pain & Lumbar Rehabilitation | Cambridge Hospital",
+    "description": "Managing pain and improving movement, posture and daily function."
+  },
+  "hero": {
+    "ariaLabel": "Back Pain & Lumbar Rehabilitation",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Back Pain & Lumbar",
+      "Rehabilitation"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Chronic and acute lower back pain, including disc prolapse, facet joint pain and sciatica, affects quality of life profoundly and is one of the leading causes of disability worldwide.",
+    "At Cambridge Hospital, our rehabilitation services offer assessment for lumbar conditions and therapy services that include manual therapy, core stabilisation, postural and movement retraining and pain management education. For patients who have undergone spinal surgery, structured inpatient and day-programme rehabilitation supports a safe and faster return to function."
+  ]
+}

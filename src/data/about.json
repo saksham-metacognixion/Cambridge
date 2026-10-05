@@ -1,5 +1,8 @@
 {
-  "_note": "About page switches. showTimeline: the 'Journey of Excellence' section from Figma 307:494 (second About version) is built but OFF until Pratik/Padmavathi confirm 307:494 as the final About frame (docs/open-decisions.md A1). video: source of the intro video (Figma has only the poster + play button, A3): host = youtube | vimeo | file, id = the video id, or the file URL for 'file'. Empty = the play button does nothing. The player loads only on click.",
-  "showTimeline": false,
-  "video": { "host": "", "id": "" }
+  "_note": "About page switches. showTimeline: the 'Journey of Excellence' section (Figma 307:494) is ON since 5 Oct 2026: the client's About document supplies its 18 entries (docs/open-decisions.md A1 / CT8). video: source of the intro video (Figma has only the poster + play button, A3): host = youtube | vimeo | file, id = the video id, or the file URL for 'file'. Empty = the play button does nothing. The player loads only on click.",
+  "showTimeline": true,
+  "video": {
+    "host": "",
+    "id": ""
+  }
 }

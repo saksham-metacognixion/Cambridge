@@ -1,0 +1,64 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Musculoskeletal Rehab main.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Musculoskeletal Rehabilitation",
+    "title": [
+      "Musculoskeletal",
+      "Rehabilitation"
+    ],
+    "text": "For patients recovering from musculoskeletal injuries, chronic conditions or post-surgical limitations affecting movement, to regain independence and strength."
+  },
+  "overview": [
+    "Patients recovering from a bone, joint or soft tissue injury, or from orthopaedic surgery, can benefit from our specialised musculoskeletal rehabilitation programme to restore mobility, rebuild strength and return to daily life with confidence. Care is individualised and expert-led, based on each patient’s needs, goals and stage of recovery."
+  ],
+  "topics": [
+    {
+      "label": "What is Musculoskeletal Rehabilitation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Musculoskeletal rehabilitation is a specialised, structured programme designed to help patients recovering from injuries, surgery or chronic conditions affecting the muscles, bones, joints, tendons, ligaments and connective tissues."
+        },
+        {
+          "type": "p",
+          "text": "It focuses on restoring movement, strength and function, helping patients manage pain and return to daily activities safely and confidently."
+        }
+      ]
+    },
+    {
+      "label": "Conditions We Treat",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "**Traumatic fractures** - recovery after a broken bone, including recovery after casting, splinting or surgery",
+            "**Spinal surgery** - rehabilitation following back surgery such as spinal fusion, laminectomy, foraminotomy, discectomy, disc replacement or interlaminar implant procedures",
+            "**Arthroscopy** - recovery after minimally invasive joint surgery",
+            "**Limb reconstruction** - rehabilitation after surgery to correct the length or shape of a limb"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Personalised Rehabilitation",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Each patient is carefully assessed before an individualised plan is created and delivered by our multidisciplinary teams."
+        },
+        {
+          "type": "lead",
+          "text": "For patients recovering from surgery or injury, long-term inpatient rehabilitation offers 24/7 supervision by qualified medical staff, access to specialised care and ongoing follow-up at the facility, reducing the need for travel that can otherwise slow recovery. The programme may include:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "**Physical and occupational therapy** - to help patients regain mobility and function after surgery or injury",
+            "**Personalised exercise programmes** - to improve mobility in the affected area and strengthen the surrounding muscles and connective tissues",
+            "**Medication management** - including anti-inflammatory medication to help manage inflammation and pain throughout recovery"
+          ]
+        }
+      ]
+    }
+  ]
+}

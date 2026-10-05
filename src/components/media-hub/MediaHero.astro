@@ -34,7 +34,7 @@ const banner = img(c.banner.image, edition.region);
 
     <div class="hero-copy">
       <h1 class="relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-141 lg:w-494 lg:h-74">
-        <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
+        {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
       <p class="relative m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] lg:absolute lg:start-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-374">{c.text}</p>
 

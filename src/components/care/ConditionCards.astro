@@ -13,27 +13,31 @@ import accident from '../../assets/care/post-acute/icon-accident.svg';
  * normalised to the Figma x's). Inside (Figma px from the card's top-left; the designer nudged each card a little, normalised to card 1):
  * icon at (15, 23), its own size (41.8 x 38.2 / 36.4 x 36.6 / 34.6 x 36.5 / 38.3 x 38.3); title Book 15 #004059 at x15, top 78 (Figma 77-84;
  * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 74 x 17 r3 at (16, 152), label "Know More" Medium 8 white
- * at +7 / +4. Card target: `condition` (detail slug) or `page` (PAGE_PATHS) from the page JSON (OC4: not in Figma).
+ * at +7 / +4. Card target: `href` (a care page, CarePage), `condition` (detail slug) or `page` (PAGE_PATHS).
+ * `icon` is optional: the client's programme lists (Our Care documents, 5 Oct 2026) have no icons, so those cards start with the
+ * title at the icon's top (docs/open-decisions.md CT6). `text` = optional intro paragraphs under the heading (Outpatient Care:
+ * heading + two paragraphs + six text cards, same geometry as SubServiceGrid's intro).
  */
-interface Card { title: string; text: string; icon: string; condition?: string; page?: string; href?: string }
-interface Props { edition: Edition; heading: string; listLabel: string; button: string; cards: Card[] }
-const { edition, heading, listLabel, button, cards } = Astro.props;
+interface Card { title: string; text: string; icon?: string; condition?: string; page?: string; href?: string }
+interface Props { edition: Edition; heading: string; text?: string[]; listLabel: string; button: string; cards: Card[] }
+const { edition, heading, text = [], listLabel, button, cards } = Astro.props;
 const icons: Record<string, { src: string; width: number; height: number }> = { neuro, musculoskeletal, 'post-surgical': postSurgical, accident };
 const xs = [61, 298, 536, 773];
 const list = cards.map((k, i) => ({
   ...k,
-  icon: icons[k.icon],
+  icon: k.icon ? icons[k.icon] : undefined,
   x: xs[i % 4],
-  href: k.condition ? urlFor(edition, CONDITION_PATHS.detail(k.condition)) : k.page ? urlFor(edition, pagePath(k.page)) : (k.href ?? '#'),
+  href: k.href ?? (k.condition ? urlFor(edition, CONDITION_PATHS.detail(k.condition)) : k.page ? urlFor(edition, pagePath(k.page)) : '#'),
 }));
 ---
 
 <section class="cond" aria-labelledby="conditions-heading">
   <h2 id="conditions-heading" class="h">{heading}</h2>
+  {text.length > 0 && <div class="t">{text.map((p) => <p>{p}</p>)}</div>}
   <ul class="grid" role="list" aria-label={listLabel}>
     {list.map((k) => (
       <li class="cell">
-        <article class="card hair-card" style="--sw:.5;--sc:var(--color-navy)">
+        <article class:list={['card', 'hair-card', !k.icon && 'no-icon']} style="--sw:.5;--sc:var(--color-navy)">
           {k.icon && <img src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
           <h3 class="title">{k.title}</h3>
           <p class="text">{k.text}</p>
@@ -47,6 +51,9 @@ const list = cards.map((k, i) => ({
 <style>
   .cond { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
   .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .t { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
   .grid { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--u))); column-gap: calc(15.33 * var(--u)); row-gap: calc(24 * var(--u)); }
   .cell { display: flex; }
   .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: calc(187 * var(--u)); padding: calc(23 * var(--u)) calc(15 * var(--u)) calc(18 * var(--u)); border-radius: calc(10 * var(--u)); background: #fff; }
@@ -58,17 +65,20 @@ const list = cards.map((k, i) => ({
   .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
     .grid { margin-inline-start: calc(61 * var(--u)); justify-content: start; column-gap: 0; grid-template-columns: calc(222 * var(--u)) calc(15 * var(--u)) calc(222 * var(--u)) calc(16 * var(--u)) calc(222 * var(--u)) calc(15 * var(--u)) calc(222 * var(--u)); }
     .grid > li:nth-child(4n + 1) { grid-column: 1; }
     .grid > li:nth-child(4n + 2) { grid-column: 3; }
     .grid > li:nth-child(4n + 3) { grid-column: 5; }
     .grid > li:nth-child(4n) { grid-column: 7; }
     .title { margin-top: calc(55 * var(--u) - var(--ih, 38.2) * var(--u)); } /* title top at 78 whatever the icon height: 78 - 23 = 55 from the icon top */
+    .no-icon .title { margin-top: 0; } /* no icon: the title starts where the icon would (card top + 23) */
     .text { margin-bottom: calc(8 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
     .cond { padding-inline: 16px; }
     .title { margin-top: calc(17 * var(--u)); }
+    .no-icon .title { margin-top: 0; }
     .text { margin-bottom: calc(12 * var(--u)); }
   }
 </style>

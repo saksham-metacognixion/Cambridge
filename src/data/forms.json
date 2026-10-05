@@ -5,74 +5,429 @@
       "subject": "Book an Appointment",
       "inbox": "book-appointment",
       "fields": [
-        { "name": "specialty", "label": "Speciality", "type": "select", "source": "specialties", "required": false, "ui": { "group": "choose" } },
-        { "name": "doctor", "label": "Doctor", "type": "select", "source": "doctors", "required": false, "ui": { "group": "choose" } },
-        { "name": "name", "label": "Name", "type": "text", "required": true, "max": 120, "autocomplete": "name", "ui": { "group": "details", "inputAt": 54.99, "strong": true } },
-        { "name": "email", "label": "E-mail", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "details", "inputAt": 56.8 } },
-        { "name": "dob", "label": "Date of birth", "type": "date", "required": true, "autocomplete": "bday", "ui": { "group": "details", "inputAt": 55.9 } },
-        { "name": "mobile", "label": "Mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "details", "inputAt": 56.8 } },
-        { "name": "gender", "label": "Gender", "type": "radio", "options": ["male", "female"], "required": true, "ui": { "group": "gender" } },
-        { "name": "message", "label": "Other details", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "message" } },
-        { "name": "hospital", "label": "Hospital (page)", "type": "select", "source": "hospitals", "required": false, "ui": { "group": "hidden" } }
+        {
+          "name": "specialty",
+          "label": "Speciality",
+          "type": "select",
+          "source": "specialties",
+          "required": false,
+          "ui": {
+            "group": "choose"
+          }
+        },
+        {
+          "name": "doctor",
+          "label": "Doctor",
+          "type": "select",
+          "source": "doctors",
+          "required": false,
+          "ui": {
+            "group": "choose"
+          }
+        },
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "autocomplete": "name",
+          "ui": {
+            "group": "details",
+            "inputAt": 54.99,
+            "strong": true
+          }
+        },
+        {
+          "name": "email",
+          "label": "E-mail",
+          "type": "email",
+          "required": false,
+          "max": 200,
+          "autocomplete": "email",
+          "ui": {
+            "group": "details",
+            "inputAt": 56.8
+          }
+        },
+        {
+          "name": "dob",
+          "label": "Date of birth",
+          "type": "date",
+          "required": true,
+          "autocomplete": "bday",
+          "ui": {
+            "group": "details",
+            "inputAt": 55.9
+          }
+        },
+        {
+          "name": "mobile",
+          "label": "Mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "autocomplete": "tel-national",
+          "ui": {
+            "group": "details",
+            "inputAt": 56.8
+          }
+        },
+        {
+          "name": "gender",
+          "label": "Gender",
+          "type": "radio",
+          "options": [
+            "male",
+            "female"
+          ],
+          "required": true,
+          "ui": {
+            "group": "gender"
+          }
+        },
+        {
+          "name": "message",
+          "label": "Other details",
+          "type": "textarea",
+          "required": false,
+          "max": 4000,
+          "ui": {
+            "group": "message"
+          }
+        },
+        {
+          "name": "hospital",
+          "label": "Hospital (page)",
+          "type": "select",
+          "source": "hospitals",
+          "required": false,
+          "ui": {
+            "group": "hidden"
+          }
+        }
       ]
     },
     "send-enquiry": {
       "subject": "Send an Enquiry",
       "inbox": "send-enquiry",
       "fields": [
-        { "name": "name", "label": "Full name", "type": "text", "required": true, "max": 120 },
-        { "name": "email", "label": "E-mail", "type": "email", "required": true, "max": 200 },
-        { "name": "hospital", "label": "Hospital", "type": "select", "source": "hospitals", "required": true, "max": 120 },
-        { "name": "subject", "label": "Subject", "type": "text", "required": true, "max": 200 },
-        { "name": "message", "label": "Message", "type": "textarea", "required": true, "max": 4000 }
+        {
+          "name": "name",
+          "label": "Full name",
+          "type": "text",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "email",
+          "label": "E-mail",
+          "type": "email",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "hospital",
+          "label": "Hospital",
+          "type": "select",
+          "source": "hospitals",
+          "required": true,
+          "max": 120
+        },
+        {
+          "name": "subject",
+          "label": "Subject",
+          "type": "text",
+          "required": true,
+          "max": 200
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true,
+          "max": 4000
+        }
       ]
     },
     "send-enquiry-popup": {
       "subject": "Send an Enquiry",
       "inbox": "send-enquiry",
       "fields": [
-        { "name": "name", "label": "Name", "type": "text", "required": true, "max": 120, "autocomplete": "name", "ui": { "group": "details", "inputAt": 54.99, "strong": true } },
-        { "name": "mobile", "label": "Mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "details", "inputAt": 56.8 } },
-        { "name": "email", "label": "E-mail", "type": "email", "required": true, "max": 200, "autocomplete": "email", "ui": { "group": "details", "inputAt": 56.8 } },
-        { "name": "message", "label": "Message", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "details" } }
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "autocomplete": "name",
+          "ui": {
+            "group": "details",
+            "inputAt": 54.99,
+            "strong": true
+          }
+        },
+        {
+          "name": "mobile",
+          "label": "Mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "autocomplete": "tel-national",
+          "ui": {
+            "group": "details",
+            "inputAt": 56.8
+          }
+        },
+        {
+          "name": "email",
+          "label": "E-mail",
+          "type": "email",
+          "required": true,
+          "max": 200,
+          "autocomplete": "email",
+          "ui": {
+            "group": "details",
+            "inputAt": 56.8
+          }
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": false,
+          "max": 4000,
+          "ui": {
+            "group": "details"
+          }
+        }
       ]
     },
     "home-contact": {
       "subject": "Get in touch with us (Home)",
       "inbox": "send-enquiry",
       "fields": [
-        { "name": "name", "label": "Your Name", "type": "text", "required": true, "max": 120, "autocomplete": "name" },
-        { "name": "email", "label": "Email Address", "type": "email", "required": true, "max": 200, "autocomplete": "email" },
-        { "name": "message", "label": "Message", "type": "textarea", "required": true, "max": 4000 }
+        {
+          "name": "name",
+          "label": "Your Name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "autocomplete": "name"
+        },
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "max": 200,
+          "autocomplete": "email"
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true,
+          "max": 4000
+        }
       ]
     },
     "refer-patient": {
       "subject": "Refer a Patient (doctor referral)",
       "inbox": "refer-patient",
       "fields": [
-        { "name": "doctor_name", "label": "Referring doctor: name", "type": "text", "required": true, "max": 120, "autocomplete": "name", "ui": { "group": "doctor" } },
-        { "name": "doctor_specialty", "label": "Referring doctor: speciality", "type": "text", "required": false, "max": 120, "ui": { "group": "doctor" } },
-        { "name": "doctor_mobile", "label": "Referring doctor: mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "doctor" } },
-        { "name": "doctor_email", "label": "Referring doctor: e-mail", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "doctor" } },
-        { "name": "specialty", "label": "Requested speciality", "type": "select", "source": "specialties", "required": false, "ui": { "group": "requested" } },
-        { "name": "doctor", "label": "Requested doctor", "type": "select", "source": "doctors", "required": false, "ui": { "group": "requested" } },
-        { "name": "name", "label": "Patient name", "type": "text", "required": true, "max": 120, "ui": { "group": "patient" } },
-        { "name": "email", "label": "Patient e-mail", "type": "email", "required": false, "max": 200, "ui": { "group": "patient" } },
-        { "name": "dob", "label": "Patient date of birth", "type": "date", "required": true, "ui": { "group": "patient" } },
-        { "name": "mobile", "label": "Patient mobile", "type": "tel", "required": true, "max": 20, "ui": { "group": "patient" } },
-        { "name": "gender", "label": "Patient gender", "type": "radio", "options": ["male", "female"], "required": true, "ui": { "group": "patient" } },
-        { "name": "eid", "label": "EID / Passport No", "type": "text", "required": false, "max": 40, "ui": { "group": "patient" } },
-        { "name": "referral_type", "label": "Referral type", "type": "select", "options": [], "required": false, "ui": { "group": "patient" } },
-        { "name": "referral_for", "label": "Referral for", "type": "select", "options": [], "required": false, "ui": { "group": "patient" } },
-        { "name": "guardian_name", "label": "Paediatrics: guardian name", "type": "text", "required": false, "max": 120, "ui": { "group": "patient" } },
-        { "name": "guardian_mobile", "label": "Paediatrics: guardian mobile", "type": "tel", "required": true, "max": 20, "ui": { "group": "patient" } },
-        { "name": "diagnosis", "label": "Diagnosis (ICD code if available)", "type": "textarea", "required": true, "max": 4000, "ui": { "group": "info" } },
-        { "name": "history", "label": "Brief history", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "info" } }
+        {
+          "name": "doctor_name",
+          "label": "Referring doctor: name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "autocomplete": "name",
+          "ui": {
+            "group": "doctor"
+          }
+        },
+        {
+          "name": "doctor_specialty",
+          "label": "Referring doctor: speciality",
+          "type": "text",
+          "required": false,
+          "max": 120,
+          "ui": {
+            "group": "doctor"
+          }
+        },
+        {
+          "name": "doctor_mobile",
+          "label": "Referring doctor: mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "autocomplete": "tel-national",
+          "ui": {
+            "group": "doctor"
+          }
+        },
+        {
+          "name": "doctor_email",
+          "label": "Referring doctor: e-mail",
+          "type": "email",
+          "required": false,
+          "max": 200,
+          "autocomplete": "email",
+          "ui": {
+            "group": "doctor"
+          }
+        },
+        {
+          "name": "specialty",
+          "label": "Requested speciality",
+          "type": "select",
+          "source": "specialties",
+          "required": false,
+          "ui": {
+            "group": "requested"
+          }
+        },
+        {
+          "name": "doctor",
+          "label": "Requested doctor",
+          "type": "select",
+          "source": "doctors",
+          "required": false,
+          "ui": {
+            "group": "requested"
+          }
+        },
+        {
+          "name": "name",
+          "label": "Patient name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "email",
+          "label": "Patient e-mail",
+          "type": "email",
+          "required": false,
+          "max": 200,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "dob",
+          "label": "Patient date of birth",
+          "type": "date",
+          "required": true,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "mobile",
+          "label": "Patient mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "gender",
+          "label": "Patient gender",
+          "type": "radio",
+          "options": [
+            "male",
+            "female"
+          ],
+          "required": true,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "eid",
+          "label": "EID / Passport No",
+          "type": "text",
+          "required": false,
+          "max": 40,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "referral_type",
+          "label": "Referral type",
+          "type": "select",
+          "options": [],
+          "required": false,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "referral_for",
+          "label": "Referral for",
+          "type": "select",
+          "options": [],
+          "required": false,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "guardian_name",
+          "label": "Paediatrics: guardian name",
+          "type": "text",
+          "required": false,
+          "max": 120,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "guardian_mobile",
+          "label": "Paediatrics: guardian mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "diagnosis",
+          "label": "Diagnosis (ICD code if available)",
+          "type": "textarea",
+          "required": true,
+          "max": 4000,
+          "ui": {
+            "group": "info"
+          }
+        },
+        {
+          "name": "history",
+          "label": "Brief history",
+          "type": "textarea",
+          "required": false,
+          "max": 4000,
+          "ui": {
+            "group": "info"
+          }
+        }
       ]
     },
     "refer-patient-other": {
       "variantOf": "refer-patient",
-      "omitGroups": ["doctor"],
+      "omitGroups": [
+        "doctor"
+      ],
       "subject": "Refer a Patient (other referrer)"
     },
     "international-enquiry": {
@@ -80,48 +435,404 @@
       "inbox": "international",
       "inboxEnv": "INTERNATIONAL_INBOX",
       "fields": [
-        { "name": "name", "label": "Name", "type": "text", "required": false, "max": 120, "autocomplete": "name", "ui": { "group": "patient" } },
-        { "name": "email", "label": "E-mail", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "patient" } },
-        { "name": "mobile", "label": "Mobile", "type": "tel", "required": false, "max": 20, "autocomplete": "tel-national", "ui": { "group": "patient" } },
-        { "name": "age", "label": "Age", "type": "text", "required": false, "max": 3, "ui": { "group": "patient" } },
-        { "name": "country", "label": "Country", "type": "select", "source": "countries", "required": false, "ui": { "group": "patient" } },
-        { "name": "gender", "label": "Gender", "type": "radio", "options": ["male", "female"], "required": true, "ui": { "group": "patient" } },
-        { "name": "message", "label": "Query details", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "message" } }
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "text",
+          "required": false,
+          "max": 120,
+          "autocomplete": "name",
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "email",
+          "label": "E-mail",
+          "type": "email",
+          "required": false,
+          "max": 200,
+          "autocomplete": "email",
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "mobile",
+          "label": "Mobile",
+          "type": "tel",
+          "required": false,
+          "max": 20,
+          "autocomplete": "tel-national",
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "age",
+          "label": "Age",
+          "type": "text",
+          "required": false,
+          "max": 3,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "country",
+          "label": "Country",
+          "type": "select",
+          "source": "countries",
+          "required": false,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "gender",
+          "label": "Gender",
+          "type": "radio",
+          "options": [
+            "male",
+            "female"
+          ],
+          "required": true,
+          "ui": {
+            "group": "patient"
+          }
+        },
+        {
+          "name": "message",
+          "label": "Query details",
+          "type": "textarea",
+          "required": false,
+          "max": 4000,
+          "ui": {
+            "group": "message"
+          }
+        }
       ]
     },
     "feedback-popup": {
       "subject": "Your Opinion Matters",
       "inbox": "feedback",
       "fields": [
-        { "name": "specialty", "label": "Speciality", "type": "select", "source": "specialties", "required": false, "ui": { "group": "choose" } },
-        { "name": "doctor", "label": "Doctor", "type": "select", "source": "doctors", "required": false, "ui": { "group": "choose" } },
-        { "name": "name", "label": "Name", "type": "text", "required": true, "max": 120, "autocomplete": "name", "ui": { "group": "details", "inputAt": 54.99, "strong": true } },
-        { "name": "email", "label": "E-mail", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "details", "inputAt": 56.8 } },
-        { "name": "visit_date", "label": "Date of visit", "type": "date", "required": false, "ui": { "group": "details", "inputAt": 96.69 } },
-        { "name": "mobile", "label": "Mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "details", "inputAt": 56.8 } },
-        { "name": "overall", "label": "Overall Experience", "type": "rating", "options": ["excellent", "good", "medium", "poor"], "required": false, "ui": { "group": "ratings" } },
-        { "name": "staff", "label": "Staff Friendliness", "type": "rating", "options": ["excellent", "good", "medium", "poor"], "required": false, "ui": { "group": "ratings" } },
-        { "name": "wait", "label": "Wait Time", "type": "rating", "options": ["excellent", "good", "medium", "poor"], "required": false, "ui": { "group": "ratings" } },
-        { "name": "communication", "label": "Communication", "type": "rating", "options": ["excellent", "good", "medium", "poor"], "required": false, "ui": { "group": "ratings" } },
-        { "name": "message", "label": "Opinion", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "message" } }
+        {
+          "name": "specialty",
+          "label": "Speciality",
+          "type": "select",
+          "source": "specialties",
+          "required": false,
+          "ui": {
+            "group": "choose"
+          }
+        },
+        {
+          "name": "doctor",
+          "label": "Doctor",
+          "type": "select",
+          "source": "doctors",
+          "required": false,
+          "ui": {
+            "group": "choose"
+          }
+        },
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "autocomplete": "name",
+          "ui": {
+            "group": "details",
+            "inputAt": 54.99,
+            "strong": true
+          }
+        },
+        {
+          "name": "email",
+          "label": "E-mail",
+          "type": "email",
+          "required": false,
+          "max": 200,
+          "autocomplete": "email",
+          "ui": {
+            "group": "details",
+            "inputAt": 56.8
+          }
+        },
+        {
+          "name": "visit_date",
+          "label": "Date of visit",
+          "type": "date",
+          "required": false,
+          "ui": {
+            "group": "details",
+            "inputAt": 96.69
+          }
+        },
+        {
+          "name": "mobile",
+          "label": "Mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "autocomplete": "tel-national",
+          "ui": {
+            "group": "details",
+            "inputAt": 56.8
+          }
+        },
+        {
+          "name": "overall",
+          "label": "Overall Experience",
+          "type": "rating",
+          "options": [
+            "excellent",
+            "good",
+            "medium",
+            "poor"
+          ],
+          "required": false,
+          "ui": {
+            "group": "ratings"
+          }
+        },
+        {
+          "name": "staff",
+          "label": "Staff Friendliness",
+          "type": "rating",
+          "options": [
+            "excellent",
+            "good",
+            "medium",
+            "poor"
+          ],
+          "required": false,
+          "ui": {
+            "group": "ratings"
+          }
+        },
+        {
+          "name": "wait",
+          "label": "Wait Time",
+          "type": "rating",
+          "options": [
+            "excellent",
+            "good",
+            "medium",
+            "poor"
+          ],
+          "required": false,
+          "ui": {
+            "group": "ratings"
+          }
+        },
+        {
+          "name": "communication",
+          "label": "Communication",
+          "type": "rating",
+          "options": [
+            "excellent",
+            "good",
+            "medium",
+            "poor"
+          ],
+          "required": false,
+          "ui": {
+            "group": "ratings"
+          }
+        },
+        {
+          "name": "message",
+          "label": "Opinion",
+          "type": "textarea",
+          "required": false,
+          "max": 4000,
+          "ui": {
+            "group": "message"
+          }
+        }
       ]
     },
     "feedback": {
       "subject": "Patient Feedback",
       "inbox": "feedback",
       "fields": [
-        { "name": "name", "label": "Name", "type": "text", "required": true, "max": 120, "autocomplete": "name", "ui": { "group": "contact" } },
-        { "name": "hospital", "label": "Hospital", "type": "select", "source": "hospitals", "required": false, "ui": { "group": "contact" } },
-        { "name": "mobile", "label": "Mobile", "type": "tel", "required": true, "max": 20, "autocomplete": "tel-national", "ui": { "group": "contact" } },
-        { "name": "email", "label": "Email", "type": "email", "required": false, "max": 200, "autocomplete": "email", "ui": { "group": "contact" } },
-        { "name": "recommend", "label": "How likely to recommend us", "type": "radio", "options": ["never", "not-very-likely", "somewhat-likely", "likely", "very-likely"], "required": false, "ui": { "group": "recommend" } },
-        { "name": "quality", "label": "The overall quality of care received", "type": "rating", "options": ["very-dissatisfied", "dissatisfied", "neutral", "satisfied", "very-satisfied"], "required": false, "ui": { "group": "matrix" } },
-        { "name": "communication", "label": "Communication & Clarity of information provided", "type": "rating", "options": ["very-dissatisfied", "dissatisfied", "neutral", "satisfied", "very-satisfied"], "required": false, "ui": { "group": "matrix" } },
-        { "name": "cleanliness", "label": "Cleanliness & Maintenance of hospital facilities", "type": "rating", "options": ["very-dissatisfied", "dissatisfied", "neutral", "satisfied", "very-satisfied"], "required": false, "ui": { "group": "matrix" } },
-        { "name": "information", "label": "Information provided for diagnosis and treatment", "type": "rating", "options": ["very-dissatisfied", "dissatisfied", "neutral", "satisfied", "very-satisfied"], "required": false, "ui": { "group": "matrix" } },
-        { "name": "admission", "label": "Efficiency of admission & discharge process", "type": "rating", "options": ["very-dissatisfied", "dissatisfied", "neutral", "satisfied", "very-satisfied"], "required": false, "ui": { "group": "matrix" } },
-        { "name": "message", "label": "How we can improve", "type": "textarea", "required": false, "max": 4000, "ui": { "group": "message" } }
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "text",
+          "required": true,
+          "max": 120,
+          "autocomplete": "name",
+          "ui": {
+            "group": "contact"
+          }
+        },
+        {
+          "name": "hospital",
+          "label": "Hospital",
+          "type": "select",
+          "source": "hospitals",
+          "required": false,
+          "ui": {
+            "group": "contact"
+          }
+        },
+        {
+          "name": "mobile",
+          "label": "Mobile",
+          "type": "tel",
+          "required": true,
+          "max": 20,
+          "autocomplete": "tel-national",
+          "ui": {
+            "group": "contact"
+          }
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": false,
+          "max": 200,
+          "autocomplete": "email",
+          "ui": {
+            "group": "contact"
+          }
+        },
+        {
+          "name": "recommend",
+          "label": "How likely to recommend us",
+          "type": "radio",
+          "options": [
+            "never",
+            "not-very-likely",
+            "somewhat-likely",
+            "likely",
+            "very-likely"
+          ],
+          "required": false,
+          "ui": {
+            "group": "recommend"
+          }
+        },
+        {
+          "name": "quality",
+          "label": "The overall quality of care received",
+          "type": "rating",
+          "options": [
+            "very-dissatisfied",
+            "dissatisfied",
+            "neutral",
+            "satisfied",
+            "very-satisfied"
+          ],
+          "required": false,
+          "ui": {
+            "group": "matrix"
+          }
+        },
+        {
+          "name": "communication",
+          "label": "Communication & Clarity of information provided",
+          "type": "rating",
+          "options": [
+            "very-dissatisfied",
+            "dissatisfied",
+            "neutral",
+            "satisfied",
+            "very-satisfied"
+          ],
+          "required": false,
+          "ui": {
+            "group": "matrix"
+          }
+        },
+        {
+          "name": "cleanliness",
+          "label": "Cleanliness & Maintenance of hospital facilities",
+          "type": "rating",
+          "options": [
+            "very-dissatisfied",
+            "dissatisfied",
+            "neutral",
+            "satisfied",
+            "very-satisfied"
+          ],
+          "required": false,
+          "ui": {
+            "group": "matrix"
+          }
+        },
+        {
+          "name": "information",
+          "label": "Information provided for diagnosis and treatment",
+          "type": "rating",
+          "options": [
+            "very-dissatisfied",
+            "dissatisfied",
+            "neutral",
+            "satisfied",
+            "very-satisfied"
+          ],
+          "required": false,
+          "ui": {
+            "group": "matrix"
+          }
+        },
+        {
+          "name": "admission",
+          "label": "Efficiency of admission & discharge process",
+          "type": "rating",
+          "options": [
+            "very-dissatisfied",
+            "dissatisfied",
+            "neutral",
+            "satisfied",
+            "very-satisfied"
+          ],
+          "required": false,
+          "ui": {
+            "group": "matrix"
+          }
+        },
+        {
+          "name": "responsiveness",
+          "label": "Responsiveness of our staff to your needs",
+          "type": "rating",
+          "options": [
+            "very-dissatisfied",
+            "dissatisfied",
+            "neutral",
+            "satisfied",
+            "very-satisfied"
+          ],
+          "required": false,
+          "ui": {
+            "group": "matrix"
+          }
+        },
+        {
+          "name": "message",
+          "label": "Tell us more",
+          "type": "textarea",
+          "required": false,
+          "max": 4000,
+          "ui": {
+            "group": "message"
+          }
+        }
       ]
+    },
+    "refer-patient-corporate": {
+      "variantOf": "refer-patient",
+      "omitGroups": [
+        "doctor"
+      ],
+      "subject": "Refer a Patient (corporate or organisation referral)"
     }
   }
 }

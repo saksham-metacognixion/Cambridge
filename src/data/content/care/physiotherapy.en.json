@@ -1,0 +1,132 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Physiotherapy.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Physiotherapy",
+    "title": [
+      "Physiotherapy"
+    ],
+    "text": "For patients experiencing pain, reduced movement, weakness or balance difficulties, to improve mobility, strength, balance and coordination."
+  },
+  "overview": [
+    "If a patient’s movement has been affected by trauma, injury, surgery or a medical condition, physiotherapy can help restore coordination, strength, balance, endurance and flexibility, while managing chronic pain and addressing postural problems."
+  ],
+  "topics": [
+    {
+      "label": "What Is Physiotherapy",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Physiotherapy helps patients recover movement and function after injury, surgery or illness."
+        },
+        {
+          "type": "p",
+          "text": "Our physiotherapists assess each patient’s individual needs and goals, then use evidence-based techniques to help them achieve their best possible level of physical function. Each treatment plan is tailored to the patient, with their family involved throughout their care."
+        }
+      ]
+    },
+    {
+      "label": "Conditions We Treat",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "We commonly treat:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Musculoskeletal injuries affecting muscles, bones, joints and ligaments",
+            "Post-surgical recovery",
+            "Sports injuries",
+            "Recovery after stroke and other neurological conditions",
+            "Chronic pain and postural problems",
+            "Reduced mobility, weakness or loss of coordination after illness or injury"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Techniques We Use",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our physiotherapists may use a combination of techniques, depending on the patient’s condition and treatment goals:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Manual therapy",
+            "Therapeutic exercise",
+            "Hydrotherapy",
+            "Hot and cold therapy",
+            "Electrical muscle stimulation",
+            "Orthopaedic supports"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Condition-Specific Techniques",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "Stroke Rehabilitation"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Range-of-motion exercises",
+            "Circuit training",
+            "Intensive repetition of daily activities",
+            "Hydrotherapy",
+            "Stretching programmes"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Sports Rehabilitation"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Injury-specific strengthening",
+            "Mobility restoration",
+            "Pain management",
+            "Return-to-sport conditioning"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Cerebral Palsy (CP) Physiotherapy"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Spastic CP: Assisted stretching",
+            "Athetoid CP: Muscle toning and control training",
+            "Ataxic CP: Balance and resistance training"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Expected Outcomes",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Physiotherapy can help patients with:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Improved physical function",
+            "Pain reduction",
+            "Enhanced mobility",
+            "Faster recovery after surgery or injury",
+            "Prevention of future injuries",
+            "Improved quality of life"
+          ]
+        }
+      ]
+    }
+  ]
+}

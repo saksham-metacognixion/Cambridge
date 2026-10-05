@@ -1,0 +1,30 @@
+{
+  "_note": "Epilepsy (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "meta": {
+    "title": "Epilepsy | Cambridge Hospital",
+    "description": "Supporting seizure management and safe, independent daily living."
+  },
+  "hero": {
+    "ariaLabel": "Epilepsy",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "title": [
+      "Epilepsy"
+    ],
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "heroLayout": {
+    "titleTop": 99,
+    "titleW": 385,
+    "buttonGap": 16
+  },
+  "overview": [
+    "Epilepsy causes recurrent seizures that vary widely in type, severity and impact on daily life.",
+    "At Cambridge Hospital, we provide comprehensive assessment, medication review and lifestyle guidance for adults and children. Families receive seizure-management education, safety planning and rehabilitation support for any cognitive or physical effects after episodes. For school-aged children, in-school therapy coordination ensures safe and confident participation in the classroom."
+  ]
+}

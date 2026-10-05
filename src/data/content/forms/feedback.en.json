@@ -1,44 +1,106 @@
 {
   "meta": {
-    "title": "Your Opinion Matters | Cambridge Hospital",
-    "description": "Thank you for choosing us for your medical needs. Please provide feedback on your visit so we can continue improving our services."
+    "title": "Your Experience Matters to Us | Cambridge Hospital",
+    "description": "At Cambridge Hospital, we believe listening to our patients and families helps us provide compassionate, high-quality care and identify ways to improve."
   },
   "hero": {
-    "title": ["Your Opinion", "Matters"],
+    "title": [
+      "Your Experience",
+      "Matters to Us"
+    ],
     "image": "forms/feedback-hero",
-    "button": { "label": "Consult for a Care Plan", "href": "#book-appointment" }
+    "button": {
+      "label": "Consult for a Care Plan",
+      "href": "#book-appointment"
+    },
+    "text": "At Cambridge Hospital, we believe listening to our patients and families helps us provide compassionate, high-quality care and identify ways to improve. We welcome your thoughts, experiences and suggestions."
   },
-  "intro": [
-    "Thank you for choosing us for your medical needs.",
-    "Please provide feedback on your visit so we can continue improving our services.",
-    "We appreciate your time!"
-  ],
+  "intro": {
+    "heading": "We’re Listening",
+    "text": "We would appreciate you taking a few moments to share your experience at Cambridge Hospital."
+  },
   "ariaLabel": "Patient feedback form",
   "fields": {
-    "name": { "label": "Name*" },
-    "hospital": { "label": "Hospital" },
-    "mobile": { "label": "Mobile*", "placeholder": "xx xxx xxxx" },
-    "email": { "label": "Email" },
+    "name": {
+      "label": "Name*"
+    },
+    "hospital": {
+      "label": "Hospital"
+    },
+    "mobile": {
+      "label": "Mobile*",
+      "placeholder": "xx xxx xxxx"
+    },
+    "email": {
+      "label": "Email"
+    },
     "recommend": {
       "label": "How likely are you to recommend us to your friends and family?",
-      "options": { "never": "Never", "not-very-likely": "Not Very Likely", "somewhat-likely": "Somewhat Likely", "likely": "Likely", "very-likely": "Very Likely" }
+      "options": {
+        "never": "Never",
+        "not-very-likely": "Not Very Likely",
+        "somewhat-likely": "Somewhat Likely",
+        "likely": "Likely",
+        "very-likely": "Very Likely"
+      }
     },
-    "quality": { "label": ["The overall quality of ", "care received"] },
-    "communication": { "label": ["Communication & Clarity of information provided"] },
-    "cleanliness": { "label": ["Cleanliness & Maintenance of hospital facilities"] },
-    "information": { "label": ["Information provided for diagnosis and treatment"] },
-    "admission": { "label": ["Efficiency of admission & discharge process"] },
-    "message": { "label": "Tell us how we can improve:", "placeholder": "Write Something..." }
-  },
-  "matrix": {
-    "label": "Please rate your satisfaction with the hospital and services provided by rating the following statements:",
-    "columns": {
-      "very-dissatisfied": ["Very", "Dissatisfied"],
-      "dissatisfied": ["Dissatisfied"],
-      "neutral": ["Neutral"],
-      "satisfied": ["Satisfied"],
-      "very-satisfied": ["Very", "Satisfied"]
+    "quality": {
+      "label": [
+        "Overall quality of care received"
+      ]
+    },
+    "communication": {
+      "label": [
+        "Communication and clarity of information provided"
+      ]
+    },
+    "cleanliness": {
+      "label": [
+        "Cleanliness and maintenance of hospital facilities"
+      ]
+    },
+    "information": {
+      "label": [
+        "Information provided about your diagnosis and treatment"
+      ]
+    },
+    "admission": {
+      "label": [
+        "Efficiency of the admission and discharge process"
+      ]
+    },
+    "message": {
+      "label": "Tell us more",
+      "placeholder": "What did we do well? What could we improve?"
+    },
+    "responsiveness": {
+      "label": [
+        "Responsiveness of our staff to your needs"
+      ]
     }
   },
-  "submit": "SUBMIT"
+  "matrix": {
+    "label": "How would you rate your experience?",
+    "columns": {
+      "very-dissatisfied": [
+        "Very",
+        "Dissatisfied"
+      ],
+      "dissatisfied": [
+        "Dissatisfied"
+      ],
+      "neutral": [
+        "Neutral"
+      ],
+      "satisfied": [
+        "Satisfied"
+      ],
+      "very-satisfied": [
+        "Very",
+        "Satisfied"
+      ]
+    }
+  },
+  "submit": "SUBMIT",
+  "_note": "Your Opinion Matters / Patient Feedback page (Figma 188:964). Text = Website Content - Suhad/Navigation Bar/EN - Your Opinion Matters.md ('New Text' column, 5 Oct 2026): hero 'Your Experience Matters to Us' + text, intro 'We’re Listening', the rating matrix first ('How would you rate your experience?', six rows incl. the new 'Responsiveness of our staff to your needs'), then the recommend question, then 'Tell us more'. The document's five-star recommendation is logged, not built (docs/open-decisions.md CT10). Fields: src/data/forms.json 'feedback'."
 }

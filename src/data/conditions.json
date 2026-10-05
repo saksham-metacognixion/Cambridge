@@ -1,263 +1,243 @@
 {
-  "$comment": "Conditions shown on Conditions & Specialities (Figma 40:318), in Figma order (rows left to right). title/summary = exact Figma text (Pediatric Neurological keeps Figma's no-break space). specialties = ids from specialties.json: the speciality-to-condition MAPPING IS NOT IN FIGMA and waits for Pramod (empty = shown only when no speciality is selected). Detail pages: conditions with a file in src/data/content/conditions/<slug>.<locale>.json use it; the others are generated from title + summary and marked 'content pending' on staging.",
+  "$comment": "Conditions shown on Conditions & Specialities (Figma 40:318 layout). The 20 conditions, their card lines (summary) and titles = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md and AR-Conditions & Specialities.md (document order, 5 Oct 2026; Arabic text exactly as given). specialties = ids from specialties.json: the speciality-to-condition MAPPING is not in the documents (D16; empty = shown only when no speciality is selected). Detail pages: src/data/content/conditions/<slug>.<locale>.json (all 20, EN + AR).",
   "conditions": [
     {
       "slug": "stroke-rehabilitation",
-      "figma": "67:2892",
       "title": {
         "en": "Stroke Rehabilitation",
-        "ar": ""
+        "ar": "إعادة تأهيل السكتة الدماغية"
       },
       "summary": {
-        "en": "Restoring mobility, speech, and independence following stroke.",
-        "ar": ""
+        "en": "Restoring movement, speech and independence after stroke.",
+        "ar": "استعادة الحركة والكلام والاستقلالية بعد السكتة الدماغية."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "amputation-prosthetic-rehabilitation",
+      "title": {
+        "en": "Amputation & Prosthetic Rehabilitation",
+        "ar": "البتر وإعادة التأهيل بالأطراف الصناعية"
+      },
+      "summary": {
+        "en": "Building strength, balance and confidence for life with a prosthesis.",
+        "ar": "بناء القوة والتوازن والثقة للحياة باستخدام طرف صناعي."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "hip-fracture-rehabilitation",
+      "title": {
+        "en": "Hip Fracture & Femoral Neck Fracture Rehabilitation",
+        "ar": "إعادة تأهيل كسر الورك وكسر عنق الفخذ"
+      },
+      "summary": {
+        "en": "Rebuilding mobility and stability after fracture surgery.",
+        "ar": "إعادة بناء الحركة والثبات بعد جراحة الكسور."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "fracture-rehabilitation",
+      "title": {
+        "en": "Fracture Rehabilitation",
+        "ar": "إعادة تأهيل الكسور"
+      },
+      "summary": {
+        "en": "Restoring strength, motion and function as bones heal.",
+        "ar": "استعادة القوة والحركة والوظيفة أثناء شفاء العظام."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "shoulder-rotator-cuff-rehabilitation",
+      "title": {
+        "en": "Shoulder Injury & Rotator Cuff Rehabilitation",
+        "ar": "إصابة الكتف وإعادة تأهيل الكفة المدورة"
+      },
+      "summary": {
+        "en": "Relieving pain and restoring shoulder mobility through targeted therapy.",
+        "ar": "تخفيف الألم واستعادة حركة الكتف من خلال العلاج المستهدف."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "tennis-elbow",
+      "title": {
+        "en": "Tennis Elbow",
+        "ar": "كوع التنس"
+      },
+      "summary": {
+        "en": "Easing pain and rebuilding elbow strength through structured rehabilitation.",
+        "ar": "تخفيف الألم وإعادة بناء قوة المرفق من خلال إعادة التأهيل المنظمة."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "neck-pain-cervical-rehabilitation",
+      "title": {
+        "en": "Neck Pain & Cervical Rehabilitation",
+        "ar": "آلام الرقبة وإعادة التأهيل العنقي"
+      },
+      "summary": {
+        "en": "Reducing neck pain and restoring flexibility and function.",
+        "ar": "تقليل آلام الرقبة واستعادة المرونة والوظيفة."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "back-pain-lumbar-rehabilitation",
+      "title": {
+        "en": "Back Pain & Lumbar Rehabilitation",
+        "ar": "آلام الظهر وإعادة التأهيل القطني"
+      },
+      "summary": {
+        "en": "Managing pain and improving movement, posture and daily function.",
+        "ar": "إدارة الألم وتحسين الحركة والوضعية والوظائف اليومية."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "knee-ligament-cartilage-injuries",
+      "title": {
+        "en": "Knee Ligament & Cartilage Injuries",
+        "ar": "إصابات أربطة الركبة والغضاريف"
+      },
+      "summary": {
+        "en": "Restoring knee stability and mobility for a confident return to activity.",
+        "ar": "استعادة استقرار الركبة وحركتها للعودة الواثقة إلى النشاط."
       },
       "specialties": []
     },
     {
       "slug": "traumatic-brain-injury",
-      "figma": "67:2901",
       "title": {
         "en": "Traumatic Brain Injury",
-        "ar": ""
+        "ar": "إصابة الدماغ الرضحية"
       },
       "summary": {
-        "en": "Supporting recovery of cognitive, physical, and functional abilities after brain injury.",
-        "ar": ""
+        "en": "Supporting recovery of cognitive, physical and functional abilities after injury.",
+        "ar": "دعم استعادة القدرات الذهنية والجسدية والوظيفية بعد الإصابة."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "hip-knee-replacement-recovery",
+      "title": {
+        "en": "Hip & Knee Replacement Recovery",
+        "ar": "التعافي من استبدال الورك والركبة"
+      },
+      "summary": {
+        "en": "Restoring movement and strength for a safe return to daily life.",
+        "ar": "استعادة الحركة والقوة للعودة الآمنة إلى الحياة اليومية."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "musculoskeletal-orthopaedic-rehabilitation",
+      "title": {
+        "en": "Musculoskeletal and Orthopaedic Rehabilitation",
+        "ar": "إعادة التأهيل العضلي الهيكلي والعظمي"
+      },
+      "summary": {
+        "en": "Improving movement, strength and function after injury or surgery.",
+        "ar": "تحسين الحركة والقوة والوظيفة بعد الإصابة أو الجراحة."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "neurorehabilitation",
+      "title": {
+        "en": "Neurorehabilitation",
+        "ar": "إعادة التأهيل العصبي"
+      },
+      "summary": {
+        "en": "Restoring movement, independence and quality of life after neurological injury.",
+        "ar": "استعادة الحركة والاستقلالية وجودة الحياة بعد الإصابة العصبية."
+      },
+      "specialties": []
+    },
+    {
+      "slug": "acquired-brain-injury",
+      "title": {
+        "en": "Acquired Brain Injury",
+        "ar": "إصابة الدماغ المكتسبة"
+      },
+      "summary": {
+        "en": "Rebuilding cognitive, physical and daily-living skills through coordinated care.",
+        "ar": "إعادة بناء المهارات الذهنية والجسدية ومهارات الحياة اليومية من خلال الرعاية المنسقة."
       },
       "specialties": []
     },
     {
       "slug": "spinal-cord-injury",
-      "figma": "67:2910",
       "title": {
         "en": "Spinal Cord Injury",
-        "ar": ""
+        "ar": "إصابة الحبل الشوكي"
       },
       "summary": {
-        "en": "Enhancing mobility and independence through specialized spinal rehabilitation.",
-        "ar": ""
+        "en": "Maximising mobility, independence and function through specialised rehabilitation.",
+        "ar": "تعظيم الحركة والاستقلالية والوظيفة من خلال إعادة التأهيل المتخصصة."
       },
       "specialties": []
     },
     {
       "slug": "parkinsons-disease",
-      "figma": "67:2919",
       "title": {
-        "en": "Parkinson’s Disease",
-        "ar": ""
+        "en": "Parkinson's Disease",
+        "ar": "مرض باركنسون"
       },
       "summary": {
-        "en": "Managing movement, balance, and daily function through targeted therapy.",
-        "ar": ""
+        "en": "Improving movement and independence through targeted rehabilitation.",
+        "ar": "تحسين الحركة والاستقلالية من خلال إعادة التأهيل المستهدفة."
       },
       "specialties": []
     },
     {
       "slug": "multiple-sclerosis",
-      "figma": "67:2929",
       "title": {
         "en": "Multiple Sclerosis",
-        "ar": ""
+        "ar": "التصلب المتعدد"
       },
       "summary": {
-        "en": "Supporting strength, coordination, and long-term functional ability.",
-        "ar": ""
+        "en": "Managing symptoms and maintaining mobility and daily function.",
+        "ar": "إدارة الأعراض والحفاظ على الحركة والوظائف اليومية."
       },
       "specialties": []
     },
     {
-      "slug": "back-pain",
-      "figma": "67:2938",
+      "slug": "epilepsy",
       "title": {
-        "en": "Back Pain",
-        "ar": ""
+        "en": "Epilepsy",
+        "ar": "الصرع"
       },
       "summary": {
-        "en": "Relieving pain and restoring movement through structured therapy.",
-        "ar": ""
+        "en": "Supporting seizure management and safe, independent daily living.",
+        "ar": "دعم إدارة النوبات والحياة اليومية الآمنة والمستقلة."
       },
       "specialties": []
     },
     {
-      "slug": "neck-pain",
-      "figma": "67:2947",
+      "slug": "guillain-barre-syndrome",
       "title": {
-        "en": "Neck Pain",
-        "ar": ""
+        "en": "Guillain-Barré Syndrome",
+        "ar": "متلازمة غيلان-باري"
       },
       "summary": {
-        "en": "Improving mobility and reducing discomfort with targeted rehabilitation.",
-        "ar": ""
+        "en": "Restoring strength, mobility and independence throughout recovery.",
+        "ar": "استعادة القوة والحركة والاستقلالية طوال فترة التعافي."
       },
       "specialties": []
     },
     {
-      "slug": "joint-replacement-recovery",
-      "figma": "67:2956",
+      "slug": "motor-neuron-diseases",
       "title": {
-        "en": "Joint Replacement Recovery",
-        "ar": ""
+        "en": "Motor Neuron Diseases",
+        "ar": "أمراض الخلايا العصبية الحركية"
       },
       "summary": {
-        "en": "Optimizing recovery, strength, and mobility after joint surgery.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "sports-injury-rehabilitation",
-      "figma": "67:2966",
-      "title": {
-        "en": "Sports Injury Rehabilitation",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Restoring performance and preventing re-injury through guided therapy.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "fracture-recovery",
-      "figma": "67:2975",
-      "title": {
-        "en": "Fracture Recovery",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Supporting healing, strength, and safe return to daily activities.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "cerebral-palsy",
-      "figma": "67:2984",
-      "title": {
-        "en": "Cerebral Palsy",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Improving movement, coordination, and functional independence in children.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "developmental-delay",
-      "figma": "67:2993",
-      "title": {
-        "en": "Developmental Delay",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Supporting developmental milestones through early intervention and therapy.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "pediatric-neurological-conditions",
-      "figma": "67:3004",
-      "title": {
-        "en": "Pediatric Neurological Conditions",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Enhancing function and quality of life for children with neurological needs.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "ventilator-dependent-care",
-      "figma": "67:3013",
-      "title": {
-        "en": "Ventilator-Dependent Care",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Providing specialized support for patients requiring long-term ventilation.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "long-term-care-management",
-      "figma": "67:3022",
-      "title": {
-        "en": "Long-Term Care Management",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Delivering continuous medical and supportive care for complex conditions.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "post-acute-recovery",
-      "figma": "67:3031",
-      "title": {
-        "en": "Post-Acute Recovery",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Supporting transition from hospital to structured rehabilitation and recovery.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "mobility-impairment",
-      "figma": "67:3041",
-      "title": {
-        "en": "Mobility Impairment",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Improving movement and independence through targeted rehabilitation.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "balance-disorders",
-      "figma": "67:3050",
-      "title": {
-        "en": "Balance Disorders",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Enhancing stability and reducing fall risk through specialized therapy.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "chronic-pain-management",
-      "figma": "67:3059",
-      "title": {
-        "en": "Chronic Pain Management",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Reducing pain and improving daily function through multidisciplinary care.",
-        "ar": ""
-      },
-      "specialties": []
-    },
-    {
-      "slug": "post-surgical-rehabilitation",
-      "figma": "67:3068",
-      "title": {
-        "en": "Post-Surgical Rehabilitation",
-        "ar": ""
-      },
-      "summary": {
-        "en": "Supporting recovery, strength, and function after surgery.",
-        "ar": ""
+        "en": "Enhancing comfort, function and quality of life through supportive care.",
+        "ar": "تعزيز الراحة والوظيفة وجودة الحياة من خلال الرعاية الداعمة."
       },
       "specialties": []
     }

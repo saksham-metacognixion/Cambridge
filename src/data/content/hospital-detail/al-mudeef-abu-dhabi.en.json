@@ -1,0 +1,26 @@
+{
+  "_note": "Al Mudeef Centre (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "hero": {
+    "title": [
+      "Al Mudeef Centre"
+    ],
+    "text": "Long term care and rehabilitation, providing continuous clinical support for adolescents and adults with complex medical and disability related needs.",
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
+  },
+  "video": {
+    "host": "",
+    "id": ""
+  },
+  "environment": {
+    "text": [
+      "Al Mudeef Centre extends the Cambridge Hospital care platform in Abu Dhabi through a Public Private Partnership with the Zayed Higher Organization for People of Determination. Cambridge Hospital operates and maintains the 80-bed facility.",
+      "The centre contributes to Cambridge Hospital’s regional capacity in long term and complex care, providing people with complex medical and disability related needs with access to around the clock medical, therapeutic and nursing support within a structured care environment."
+    ]
+  },
+  "healing": {
+    "areas": []
+  }
+}

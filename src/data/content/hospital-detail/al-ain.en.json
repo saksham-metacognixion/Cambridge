@@ -1,0 +1,26 @@
+{
+  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "hero": {
+    "title": [
+      "Al Ain Hospital"
+    ],
+    "text": "Recovery-focused care combining rehabilitation, extended support and structured clinical coordination.",
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
+  },
+  "video": {
+    "host": "",
+    "id": ""
+  },
+  "environment": {
+    "text": [
+      "Cambridge Hospital Al Ain supports patients who require rehabilitation, long term care and clinically managed recovery within a setting designed specifically for extended care and function focused treatment.",
+      "The hospital plays an important role in expanding access to rehabilitation and extended care in Al Ain and the surrounding areas, helping patients receive coordinated care closer to home and reducing the need for fragmented or distant care pathways."
+    ]
+  },
+  "healing": {
+    "areas": []
+  }
+}

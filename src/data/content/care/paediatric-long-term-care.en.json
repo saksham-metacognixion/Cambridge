@@ -1,0 +1,116 @@
+{
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Paediatric long term care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "hero": {
+    "ariaLabel": "Paediatric Long-Term Care",
+    "title": [
+      "Paediatric",
+      "Long-Term Care"
+    ],
+    "text": "For children with chronic medical, neurological or developmental needs, to support their health, development and quality of life in a comfortable, home-like environment."
+  },
+  "overview": [
+    "For a child with complex, long-lasting medical needs, the right care can make a meaningful difference not only to the child, but to the whole family. Paediatric long-term care at Cambridge Hospital provides specialised, 24/7 care for children living with chronic medical, neurological or developmental conditions, in an environment built around their medical needs, comfort and development.",
+    "Every child is cared for as an individual, with a personalised plan shaped around their medical needs and their potential. Because families play a central role in a child’s care and wellbeing, parents and caregivers are welcomed as partners throughout their child’s care."
+  ],
+  "topics": [
+    {
+      "label": "What Is Paediatric Long-Term Care?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Paediatric long-term care provides ongoing, specialised medical and nursing care for children whose health needs extend well beyond a short hospital stay. It provides a stable and supportive environment designed specifically for children and gives their families the reassurance that skilled medical help is always available around the clock."
+        },
+        {
+          "type": "p",
+          "text": "Some children may require this level of support for months or years, depending on their condition and ongoing care needs. Throughout their stay, our focus remains on maintaining their health, supporting their development and helping them achieve the best possible quality of life."
+        }
+      ]
+    },
+    {
+      "label": "The Children We Care For",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Our teams care for children with a wide range of complex conditions, including:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Neurological impairments and complex seizure disorders",
+            "Congenital and craniofacial conditions",
+            "Neuromuscular disease",
+            "The lasting effects of premature birth"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Many of these children live with more than one condition at the same time, and some depend on medical technology such as ventilators or feeding support. Whatever the diagnosis, each child receives care tailored to their individual needs."
+        }
+      ]
+    },
+    {
+      "label": "24/7 Skilled Paediatric Nursing",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Children with complex medical needs require vigilant, expert care around the clock. Our paediatric nursing teams are highly trained in the specialised needs of infants and children, skilled not only in delivering care, but also in recognising the subtle early signs that a child’s condition may be changing."
+        },
+        {
+          "type": "p",
+          "text": "This constant, attentive presence keeps children safe and gives parents peace of mind, day and night."
+        }
+      ]
+    },
+    {
+      "label": "Care for Ventilator-Dependent Children",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Some children rely on medical technology to breathe, feed or stay stable, including those who depend on a ventilator."
+        },
+        {
+          "type": "p",
+          "text": "At Cambridge Hospital, our specialist teams have extensive expertise in caring for these children, managing their equipment and medical needs safely and calmly and, where clinically appropriate, working towards reducing their dependence on a ventilator over time."
+        },
+        {
+          "type": "p",
+          "text": "Complex medical needs are handled with specialist skill and a gentle, child-first approach."
+        }
+      ]
+    },
+    {
+      "label": "Growth, Development and Early Intervention",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Children continue to grow and develop throughout childhood, even when they are living with complex medical needs. Their care should support this development wherever possible."
+        },
+        {
+          "type": "p",
+          "text": "Alongside medical management, our physiotherapists, occupational therapists and speech and language therapists support each child’s movement, communication and development, with early intervention helping to make the most of every stage."
+        },
+        {
+          "type": "p",
+          "text": "Play, learning and social interaction are part of our care because childhood should continue, even alongside serious illness."
+        }
+      ]
+    },
+    {
+      "label": "A Joyful and Home-Like Environment",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Children are better able to heal, grow and thrive when they feel secure, comfortable and happy."
+        },
+        {
+          "type": "p",
+          "text": "Our facilities are designed with young patients in mind, from children’s rooms to dedicated spaces for the smallest babies, within a warm, welcoming environment surrounded by experienced caregivers."
+        },
+        {
+          "type": "p",
+          "text": "Whatever a child’s condition, our aim is to provide care that gives them comfort, dignity and joy, while supporting the best possible quality of life."
+        }
+      ]
+    }
+  ]
+}

@@ -1,21 +1,558 @@
 {
-  "$comment": "Our Care hierarchy (Figma: Our Care 36:5631 -> service pages, e.g. Inpatient Care 83:226 -> sub-service pages, e.g. Post Acute Care 41:1730 -> condition detail pages). The four services are the Home 'Services' cards (text + photos in content/home/services.en.json); only Inpatient Care has a Figma page and only Post Acute Care has a Figma sub-service page. Sub-service titles / descriptions / photos exactly as in Figma 83:226 (descriptions keep the two Figma lines; the second line of Post Acute Care starts with a space in Figma). Services without sub-services and sub-services without a content file get generated pages ('Content pending' on staging). Slugs are URL placeholders (docs/open-decisions.md OC2). Replace / extend with Pramod's list.",
+  "$comment": "Our Care hierarchy = the folder structure of 'Website Content - Suhad/Our Care' (5 Oct 2026): hub -> 4 services -> sections -> programmes (up to 4 levels under /care). title/desc = the page title and lead line of each document; a child's card text (desc, cardTitle) comes from its PARENT's document where that lists it (Inpatient / Outpatient main pages, the programme lists of the section pages), else from the child's own lead line. Slugs: from the live site URLs quoted in the documents where given (care, inpatient, outpatient, pediatric-rehab, pulmonary-rehab, physical-medicine-rehab-care, pediatric-care, physiotherapy, occupational-therapy, speech-language-therapy, cerebral-palsy-program); the others are derived from the titles and UNCONFIRMED (docs/open-decisions.md CT2). image = the Figma Inpatient Care card photos (83:226) for the six sections that had them; children without a photo render as text cards. Full page text: src/data/content/care/<slug>.en.json (+ <slug>.<region>.en.json for a region variant: home-care.sa). Paediatric Care (pediatric-rehab) has no document in the folder: generated from its card (CT3).",
   "services": [
     {
-      "slug": "inpatient-care",
+      "slug": "inpatient",
+      "title": {
+        "en": "Inpatient Care",
+        "ar": ""
+      },
+      "desc": {
+        "en": "Comprehensive inpatient care for adults, adolescents and children, bringing together expert medical supervision, nursing care and rehabilitation within a structured clinical environment.",
+        "ar": ""
+      },
       "figma": "83:226",
-      "title": { "en": "Inpatient Care", "ar": "" },
-      "subServices": [
-        { "slug": "post-acute-care", "figma": "41:1730", "title": { "en": "Post Acute Care", "ar": "" }, "desc": { "en": ["Recovery after illness or injury.", " Restoring strength and independence."], "ar": [] }, "image": "care/inpatient/post-acute-care", "alt": "" },
-        { "slug": "long-term-care", "title": { "en": "Long Term Care", "ar": "" }, "desc": { "en": ["Ongoing care for complex conditions.", "Focused on comfort and stability."], "ar": [] }, "image": "care/inpatient/long-term-care", "alt": "" },
-        { "slug": "ventilated-patients-care", "title": { "en": "Ventilated Patients Care", "ar": "" }, "desc": { "en": ["Care for patients on respiratory support.", "Continuous monitoring and management."], "ar": [] }, "image": "care/inpatient/ventilated-patients-care", "alt": "" },
-        { "slug": "pediatric-care", "title": { "en": "Pediatric Care", "ar": "" }, "desc": { "en": ["Specialized care for children.", "Supporting growth and recovery."], "ar": [] }, "image": "care/inpatient/pediatric-care", "alt": "" },
-        { "slug": "icu-critical-care", "title": { "en": "ICU/Critical Care", "ar": "" }, "desc": { "en": ["Advanced care for critical conditions.", "24/7 monitoring and life support."], "ar": [] }, "image": "care/inpatient/icu-critical-care", "alt": "" },
-        { "slug": "palliative-care", "title": { "en": "Palliative Care", "ar": "" }, "desc": { "en": ["Care focused on comfort.", "Supporting quality of life."], "ar": [] }, "image": "care/inpatient/palliative-care", "alt": "" }
+      "children": [
+        {
+          "slug": "post-acute-rehabilitation",
+          "title": {
+            "en": "Post-Acute Rehabilitation",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Individualised care for patients recovering from serious illness, injury or surgery, supporting medical stability, rehabilitation and a safe transition to the next stage of care.",
+            "ar": ""
+          },
+          "figma": "41:1730",
+          "image": "care/inpatient/post-acute-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "neurorehabilitation",
+              "title": {
+                "en": "Neurorehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Rehabilitation for patients with neurological conditions affecting movement, cognition, balance and daily function.",
+                "ar": ""
+              },
+              "children": [
+                {
+                  "slug": "stroke-rehabilitation",
+                  "title": {
+                    "en": "Stroke Rehabilitation",
+                    "ar": ""
+                  },
+                  "desc": {
+                    "en": "Tailored rehabilitation for neurological conditions affecting movement, cognition, balance and daily function",
+                    "ar": ""
+                  },
+                  "children": [],
+                  "cardTitle": {
+                    "en": "Stroke Rehabilitation",
+                    "ar": ""
+                  }
+                },
+                {
+                  "slug": "traumatic-brain-injury-rehabilitation",
+                  "title": {
+                    "en": "Traumatic Brain Injury Rehabilitation",
+                    "ar": ""
+                  },
+                  "desc": {
+                    "en": "Multidisciplinary rehabilitation to support recovery following traumatic brain injury and address physical, cognitive, communication and functional difficulties",
+                    "ar": ""
+                  },
+                  "children": [],
+                  "cardTitle": {
+                    "en": "Traumatic Brain Injury Rehabilitation",
+                    "ar": ""
+                  }
+                },
+                {
+                  "slug": "spinal-cord-injury-rehabilitation",
+                  "title": {
+                    "en": "Spinal Cord Injury Rehabilitation",
+                    "ar": ""
+                  },
+                  "desc": {
+                    "en": "Specialised rehabilitation to support mobility, function and independence following spinal cord injury and its associated complications",
+                    "ar": ""
+                  },
+                  "children": [],
+                  "cardTitle": {
+                    "en": "Spinal Cord Injury Rehabilitation",
+                    "ar": ""
+                  }
+                }
+              ],
+              "cardTitle": {
+                "en": "Neurorehabilitation",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "musculoskeletal-rehabilitation",
+              "title": {
+                "en": "Musculoskeletal Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Rehabilitation for patients with musculoskeletal injuries, chronic conditions and post-surgical limitations affecting movement and strength.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Musculoskeletal Rehabilitation",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "post-surgical-rehabilitation",
+              "title": {
+                "en": "Post-Surgical Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Rehabilitation for patients recovering from surgery, to restore mobility and reduce the risk of post-surgical complications.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Post-Surgical Rehabilitation",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "road-traffic-accident-rehabilitation",
+              "title": {
+                "en": "Road Traffic Accident Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Rehabilitation for patients recovering from traumatic injuries following road traffic accidents, supporting recovery of movement and function.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Road Traffic Accident Rehabilitation",
+                "ar": ""
+              }
+            }
+          ],
+          "cardTitle": {
+            "en": "Post Acute Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "long-term-care-rehab",
+          "title": {
+            "en": "Long-Term Care & Rehabilitation",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Ongoing medical and nursing care for patients with complex or chronic conditions who require continuous support, with a focus on comfort, stability, symptom management and quality of life.",
+            "ar": ""
+          },
+          "image": "care/inpatient/long-term-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "long-term-care",
+              "title": {
+                "en": "Long-Term Care",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Comprehensive ongoing care for patients with chronic illness, disability or prolonged recovery needs.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Long-Term Care",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "long-term-acute-care",
+              "title": {
+                "en": "Long-Term Acute Care",
+                "ar": ""
+              },
+              "desc": {
+                "en": "High-dependency medical care for clinically complex patients who require specialist oversight and intensive coordination.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Long-Term Acute Care",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "geriatric-care",
+              "title": {
+                "en": "Geriatric Care",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Integrated compassionate care for older adults with complex or age-related health needs.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Geriatric Care",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "paediatric-long-term-care",
+              "title": {
+                "en": "Paediatric Long-Term Care",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Specialised long-term care for children with chronic medical, neurological or developmental needs.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Paediatric Long-Term Care",
+                "ar": ""
+              }
+            }
+          ],
+          "cardTitle": {
+            "en": "Long Term Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "ventilated-patients-care",
+          "title": {
+            "en": "Ventilated Patients Care",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Care for patients who require mechanical ventilation, providing respiratory support, continuous monitoring and management according to their clinical needs.",
+            "ar": ""
+          },
+          "image": "care/inpatient/ventilated-patients-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "weaning-programme",
+              "title": {
+                "en": "Weaning Programme",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Structured respiratory management aimed at reducing and eventually removing dependence on mechanical ventilation, where clinically possible.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Ventilator Weaning Programme",
+                "ar": ""
+              }
+            },
+            {
+              "slug": "long-term-ventilated-care",
+              "title": {
+                "en": "Long-Term Ventilated Care",
+                "ar": ""
+              },
+              "desc": {
+                "en": "Ongoing respiratory and medical support for patients who require long-term mechanical ventilation.",
+                "ar": ""
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Long-Term Ventilation Programme",
+                "ar": ""
+              }
+            }
+          ],
+          "cardTitle": {
+            "en": "Ventilated Patients Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "pediatric-rehab",
+          "title": {
+            "en": "Paediatric Care",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress.",
+            "ar": ""
+          },
+          "image": "care/inpatient/pediatric-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "pulmonary-rehab",
+              "title": {
+                "en": "Paediatric Pulmonary Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For children with chronic respiratory conditions requiring monitored therapy and long-term management, to help children breathe easier.",
+                "ar": ""
+              },
+              "children": []
+            },
+            {
+              "slug": "speech-language-rehab",
+              "title": {
+                "en": "Speech and Language Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For children and adults with communication, speech or swallowing difficulties, to help patients communicate more clearly, confidently and independently.",
+                "ar": ""
+              },
+              "children": []
+            },
+            {
+              "slug": "neuromuscular-rehab",
+              "title": {
+                "en": "Paediatric Neuromuscular Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For children with neuromuscular conditions affecting movement and muscle control, to build strength, improve function and support greater independence.",
+                "ar": ""
+              },
+              "children": []
+            },
+            {
+              "slug": "central-nervous-system",
+              "title": {
+                "en": "Central Nervous System Anomalies Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For children affected by neurological and developmental conditions, to help manage symptoms, support development and improve quality of life",
+                "ar": ""
+              },
+              "children": []
+            },
+            {
+              "slug": "long-term-cardiac",
+              "title": {
+                "en": "Long-Term Cardiac Anomalies Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For children with congenital or acquired heart conditions, to support recovery, manage symptoms and promote healthy growth and development.",
+                "ar": ""
+              },
+              "children": []
+            },
+            {
+              "slug": "paediatric-transitional",
+              "title": {
+                "en": "Paediatric Transitional Care",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For infants transitioning from hospital to home or between stages of care, to support a safe transition and healthy development.",
+                "ar": ""
+              },
+              "children": []
+            },
+            {
+              "slug": "paediatric-post-acute-rehab",
+              "title": {
+                "en": "Paediatric Post-Acute Rehabilitation",
+                "ar": ""
+              },
+              "desc": {
+                "en": "For children recovering from serious illness or injury, or living with complex long-term conditions, to support recovery, manage their condition and improve quality of life.",
+                "ar": ""
+              },
+              "children": []
+            }
+          ],
+          "cardTitle": {
+            "en": "Paediatric Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "icu-critical-care",
+          "title": {
+            "en": "ICU and Critical Care",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Advanced 24/7 care for patients with life threatening or unstable conditions, with continuous monitoring, medical treatment and critical support.",
+            "ar": ""
+          },
+          "image": "care/inpatient/icu-critical-care",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "ICU and Critical Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "palliative-care",
+          "title": {
+            "en": "Palliative Care",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Specialist care for patients living with serious or long-term illness, focused on managing symptoms, relieving discomfort and supporting patients and their families.",
+            "ar": ""
+          },
+          "image": "care/inpatient/palliative-care",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Palliative Care",
+            "ar": ""
+          }
+        }
       ]
     },
-    { "slug": "outpatient-care", "title": { "en": "Outpatient Care", "ar": "" }, "subServices": [] },
-    { "slug": "home-health-care", "title": { "en": "Home Health Care", "ar": "" }, "subServices": [] },
-    { "slug": "in-school-care", "title": { "en": "In School Care", "ar": "" }, "subServices": [] }
+    {
+      "slug": "outpatient",
+      "title": {
+        "en": "Outpatient Care",
+        "ar": ""
+      },
+      "desc": {
+        "en": "Comprehensive outpatient rehabilitation for adults, adolescents and children, bringing together multidisciplinary teams to restore function, build independence and support them throughout their recovery.",
+        "ar": ""
+      },
+      "children": [
+        {
+          "slug": "physical-medicine-rehab-care",
+          "title": {
+            "en": "Physical Medicine and Rehabilitation Care",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Physician led care for adults and children with conditions affecting movement, function, pain and physical wellbeing.",
+            "ar": ""
+          },
+          "children": [],
+          "cardTitle": {
+            "en": "Physical Medicine Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "pediatric-care",
+          "title": {
+            "en": "Paediatric Care",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement, function and daily activities.",
+            "ar": ""
+          },
+          "children": [],
+          "cardTitle": {
+            "en": "Paediatric Care",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "physiotherapy",
+          "title": {
+            "en": "Physiotherapy",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Movement based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
+            "ar": ""
+          },
+          "children": [],
+          "cardTitle": {
+            "en": "Physiotherapy",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "occupational-therapy",
+          "title": {
+            "en": "Occupational Therapy",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Functional therapy for patients who need support with daily activities, independence, self care or participation at home, school or work.",
+            "ar": ""
+          },
+          "children": [],
+          "cardTitle": {
+            "en": "Occupational Therapy",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "speech-language-therapy",
+          "title": {
+            "en": "Speech and Language Therapy",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Specialist therapy for patients with difficulties affecting speech, language, communication, voice, feeding or swallowing.",
+            "ar": ""
+          },
+          "children": [],
+          "cardTitle": {
+            "en": "Speech and Language Therapy",
+            "ar": ""
+          }
+        },
+        {
+          "slug": "cerebral-palsy-program",
+          "title": {
+            "en": "Cerebral Palsy Programme",
+            "ar": ""
+          },
+          "desc": {
+            "en": "Specialised rehabilitation for children and adults with cerebral palsy, addressing movement, muscle control, function and independence.",
+            "ar": ""
+          },
+          "children": [],
+          "cardTitle": {
+            "en": "Cerebral Palsy Programme",
+            "ar": ""
+          }
+        }
+      ]
+    },
+    {
+      "slug": "home-care",
+      "title": {
+        "en": "Home Care",
+        "ar": ""
+      },
+      "desc": {
+        "en": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
+        "ar": ""
+      },
+      "children": []
+    },
+    {
+      "slug": "in-school-care",
+      "title": {
+        "en": "In-School Care",
+        "ar": ""
+      },
+      "desc": {
+        "en": "Specialist therapy and medical support delivered at school",
+        "ar": ""
+      },
+      "children": []
+    }
   ]
 }

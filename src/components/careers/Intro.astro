@@ -1,0 +1,52 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import Band from './Band.astro';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "Be Part of a Purpose That Transforms Lives" (Figma 112:7124 / 7125 / 7132), page y 556-969 = hero end to the grey band.
+ * Photo 384 x 395 at x85, 18 below the hero; the PNG (1536x1024, transparent) is drawn 210.68% x 136.67% of that box at
+ * left -32.81% / top -15.7% (Figma crop; physical left because the crop is inside a photo that never flips).
+ * Heading x488 (top +67 from the photo top): Gotham 37 / 40 #00415a, lines 1-2 Book, line 3 Medium, w320; paragraph x489 w495
+ * Book 14/17 #6b6b6b, 13 below the 3 heading lines (Figma top 774), paragraphs separated by one empty 17px line.
+ */
+interface Props { edition: Edition; c: { ariaLabel: string; image: { image: string; alt: string }; heading: string[]; text: string[] } }
+const { edition, c } = Astro.props;
+const photo = img(c.image.image, edition.region);
+---
+
+<Band label={c.ariaLabel}>
+  <div class="row">
+    <div class="photo">
+      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(809)} height={Math.round(px(809) / 1.5)} widths={[px(809), 1536]} sizes={`(min-width: 1440px) ${px(809)}px, 80vw`} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+    </div>
+    <div class="copy">
+      <h2 class="h">{c.heading.map((line, i) => <span class:list={['block', i < c.heading.length - 1 && 'light']}>{line}</span>)}</h2>
+      <div class="t">{c.text.map((p) => <p>{p}</p>)}</div>
+    </div>
+  </div>
+</Band>
+
+<style>
+  .row { display: flex; flex-direction: column; gap: calc(24 * var(--u)); padding-block: calc(18 * var(--u)) 0; }
+  .photo { position: relative; overflow: hidden; flex: none; width: calc(384 * var(--u)); max-width: 100%; aspect-ratio: 384 / 395; }
+  .img { position: absolute; left: -32.81%; top: -15.7%; width: 210.68%; height: 136.67%; max-width: none; }
+  .h { margin: 0; font-weight: 500; font-size: calc(37 * var(--u)); line-height: calc(40 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .h .light { font-weight: 400; }
+  .t { margin-top: calc(13 * var(--u)); color: var(--color-body); font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(17 * var(--u)); }
+  @media (min-width: 1024px) {
+    .row { flex-direction: row; align-items: flex-start; gap: 0; }
+    .photo { margin-inline-start: calc(85 * var(--u)); }
+    .copy { flex: none; width: calc(496 * var(--u)); margin-top: calc(67 * var(--u)); margin-inline-start: calc(19 * var(--u)); }
+    .h { width: calc(320 * var(--u)); }
+    .t { margin-inline-start: calc(1 * var(--u)); width: calc(495 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .row { padding-bottom: calc(24 * var(--u)); }
+    .copy { padding-bottom: calc(24 * var(--u)); }
+  }
+</style>

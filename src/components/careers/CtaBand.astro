@@ -1,0 +1,51 @@
+---
+import chevron from '../../assets/careers/chevron.svg';
+
+/*
+ * "Start Your Career Journey with Us!" band (Figma 112:7230, page y 2303-2518, #004059; the SVG is a plain rectangle).
+ * The designer centres each line on a slightly different x, kept: heading 112:7231 centre 512 (w606, Medium 30 white, box 27,
+ * +38 from the top), text 112:7232 centre 526.5 (w577, Book 12/14 white, 7 below the heading box), field 112:7242 centre 510.5
+ * (311 x 35, #d9d9d9, 0.5 white outline, radius 10, 17 below the text; label Book 10/14 #00415a at +15 / +10; chevron
+ * 7 x 4.207 at +287 / +17), button 112:7234 centre 512 (166 x 30, white, radius 7, 14 below the field; label Medium 13
+ * #004059, box 145 at +9 / +9). Band ends 19 below the button.
+ * "View Open Roles" is a dropdown-LOOK link to openRolesUrl (Figma shows a select with no options): nothing invented.
+ * Existing band component? None fits (CtaTab / Contact / ContactRecovery are different layouts), so this one is new.
+ */
+interface Props { c: { ariaLabel: string; heading: string; text: string; openRoles: { label: string }; apply: { label: string } }; openRolesHref: string; applyHref: string }
+const { c, openRolesHref, applyHref } = Astro.props;
+---
+
+<section class="cta" aria-label={c.ariaLabel}>
+  <div class="in">
+    <h2 class="h">{c.heading}</h2>
+    <p class="t">{c.text}</p>
+    <a href={openRolesHref} class="field hit hair-card">
+      <span class="fl">{c.openRoles.label}</span>
+      <img src={chevron.src} alt="" aria-hidden="true" width="7" height="4.207" class="chev" />
+    </a>
+    <a href={applyHref} class="apply hit"><span class="al">{c.apply.label}</span></a>
+  </div>
+</section>
+
+<style>
+  .cta { background: var(--color-navy); font-family: var(--font-gotham); font-style: normal; }
+  .in { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-width: calc(var(--target-w) * 1px); margin-inline: auto; padding: calc(38 * var(--u)) calc(24 * var(--u)) calc(19 * var(--u)); text-align: center; color: #fff; }
+  .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(34.6 * var(--u)); overflow-wrap: anywhere; }
+  .t { margin: calc(14 * var(--u)) 0 0; max-width: calc(577 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); overflow-wrap: anywhere; }
+  .field { --sw: 0.5; --sc: #fff; position: relative; display: block; box-sizing: border-box; width: calc(311 * var(--u)); max-width: 100%; height: calc(35 * var(--u)); margin-top: calc(17 * var(--u)); background: #d9d9d9; border-radius: calc(10 * var(--u)); color: var(--color-navy-alt); text-align: start; text-decoration: none; }
+  .fl { position: absolute; inset-inline-start: calc(15 * var(--u)); top: calc(10 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(14 * var(--u)); white-space: nowrap; }
+  .chev { position: absolute; inset-inline-start: calc(287 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); }
+  .apply { position: relative; display: block; box-sizing: border-box; width: calc(166 * var(--u)); height: calc(30 * var(--u)); margin-top: calc(14 * var(--u)); background: #fff; border-radius: calc(7 * var(--u)); color: var(--color-navy); text-decoration: none; }
+  .al { position: absolute; inset-inline-start: calc(9 * var(--u)); top: calc(9 * var(--u)); width: calc(145 * var(--u)); height: calc(15 * var(--u)); font-weight: 500; font-size: calc(13 * var(--u)); line-height: calc(15 * var(--u)); text-align: center; white-space: nowrap; }
+  @media (min-width: 1024px) {
+    .in { display: block; padding-inline: 0; text-align: start; height: calc(215 * var(--u)); }
+    .h { width: calc(606 * var(--u)); height: calc(27 * var(--u)); margin-inline-start: calc(209 * var(--u)); text-align: center; }
+    .t { width: calc(577 * var(--u)); max-width: none; margin-top: calc(7 * var(--u)); margin-inline-start: calc(238 * var(--u)); text-align: center; }
+    .field { margin-inline-start: calc(355 * var(--u)); }
+    .apply { margin-inline-start: calc(429 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .in { padding-block: calc(40 * var(--u)); }
+    .h { font-size: calc(26 * var(--u)); }
+  }
+</style>

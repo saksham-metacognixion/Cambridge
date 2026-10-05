@@ -5,7 +5,7 @@
   "topLinks": [
     { "label": "Your Opinion Matters", "href": "#your-opinion" },
     { "label": "Media Hub", "href": "#", "path": "media-hub" },
-    { "label": "Careers", "href": "#" },
+    { "label": "Careers", "href": "#", "path": "careers" },
     { "label": "Knowledge Center", "href": "#" },
     { "label": "FAQs", "href": "#", "path": "faq" }
   ],

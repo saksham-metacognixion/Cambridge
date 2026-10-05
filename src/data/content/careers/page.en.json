@@ -1,0 +1,104 @@
+{
+  "_note": "Careers (Figma 112:7295). Visible text exactly as in Figma; meta.*, pendingTab and the alt texts are NOT in Figma (PLACEHOLDER). Button destinations: src/data/careers.json. Tab panels with empty blocks have no content in Figma ('Content pending' on staging only).",
+  "meta": {
+    "title": "Careers | Cambridge Hospital",
+    "description": "Careers at Cambridge Hospital: join a team shaping recovery, restoring lives and redefining care across the United Arab Emirates and the Kingdom of Saudi Arabia."
+  },
+  "pendingTab": "Content pending",
+  "hero": {
+    "ariaLabel": "Careers at Cambridge Hospital",
+    "banner": { "image": "careers/banner", "alt": "" },
+    "title": ["Careers at", "Cambridge", "Hospital"],
+    "text": "Join a team shaping recovery, restoring lives, and redefining care across the region.",
+    "button": { "label": "Join our Team" }
+  },
+  "intro": {
+    "ariaLabel": "Be part of a purpose that transforms lives",
+    "image": { "image": "careers/nurse", "alt": "Two Cambridge Hospital clinicians standing back to back" },
+    "heading": ["Be Part of a", "Purpose That", "Transforms Lives"],
+    "text": [
+      "At Cambridge Hospital, being part of the team means contributing to something greater, supporting patients through recovery journeys that restore independence, wellbeing, and quality of life.",
+      "Across the United Arab Emirates and the Kingdom of Saudi Arabia, our teams work within a unified healthcare system built on collaboration, clinical excellence, and purpose-driven care."
+    ]
+  },
+  "life": {
+    "heading": "Life at Cambridge",
+    "sub": ["At Cambridge Hospital, ", "our people are at the heart of everything we do."],
+    "text": "We foster a collaborative, multidisciplinary environment where clinical expertise, compassion, and innovation come together to deliver meaningful patient outcomes. Every team member plays a role in shaping recovery journeys — from physicians and therapists to nursing teams and operational support functions.",
+    "join": { "label": "Join our Team" },
+    "openRoles": { "label": "View Open Roles" }
+  },
+  "multi": {
+    "heading": "A Multidisciplinary Environment",
+    "sub": "Our teams span across:",
+    "tabsLabel": "Our teams",
+    "active": 0,
+    "tabs": [
+      {
+        "label": "Physical Medicine & Rehabilitation",
+        "blocks": [
+          {
+            "type": "lines",
+            "lines": [
+              "- Nursing & Ventilator Care Units",
+              "- Pediatric & Developmental Care",
+              "- Case Management",
+              "- Patient Experience",
+              "- Customer Service",
+              "- Admissions & Clinical Liaison",
+              "- Business Development & Operations",
+              "- Marketing & Communications",
+              "- Facility Management"
+            ]
+          },
+          { "type": "note", "text": "Each function contributes to a unified model of care designed to support patients at every stage of recovery." }
+        ]
+      },
+      { "label": "Growth & Development", "blocks": [] },
+      { "label": "Purpose - Driven Work ", "blocks": [] },
+      { "label": "Our People, One Team", "blocks": [] },
+      { "label": "Regional Presence", "blocks": [] }
+    ]
+  },
+  "talent": {
+    "ariaLabel": "National Talent Development",
+    "heading": "National Talent Development",
+    "text": "We are committed to building sustainable healthcare capabilities by investing in national talent across both markets.",
+    "photo": { "image": "careers/pioneer", "alt": "An Emirati woman and man, Cambridge Hospital clinicians" },
+    "blocks": [
+      {
+        "heading": "United Arab Emirates",
+        "lead": "Cambridge Hospital actively supports the development of Emirati healthcare ",
+        "text": "professionals through structured training, academic partnerships, and career pathways.",
+        "more": "Our collaboration with institutions such as Fatima College of Health Sciences reflects our commitment to nurturing the next generation of nursing and healthcare talent in the UAE."
+      },
+      {
+        "heading": "Kingdom of Saudi Arabia",
+        "lead": "In Saudi Arabia, Cambridge Hospital continues to support national workforce ",
+        "text": "development across its facilities in Dhahran, Al Khobar, and Jeddah.",
+        "more": "Through structured career pathways, clinical training, and integration into multidisciplinary teams, we contribute to strengthening local healthcare capabilities in alignment with national priorities."
+      }
+    ]
+  },
+  "cta": {
+    "ariaLabel": "Start your career journey",
+    "heading": "Start Your Career Journey with Us!",
+    "text": "Explore open roles across our network and become part of a team dedicated to delivering exceptional care and meaningful impact.",
+    "openRoles": { "label": "View Open Roles" },
+    "apply": { "label": "Apply Now" }
+  },
+  "why": {
+    "heading": "Why Cambridge Hospital?",
+    "tabsLabel": "Why Cambridge Hospital",
+    "active": 0,
+    "tabs": [
+      {
+        "label": "Supportive Environment",
+        "blocks": [{ "type": "note", "text": "A collaborative culture where your contributions are valued and your growth is supported." }]
+      },
+      { "label": "Professional Development", "blocks": [] },
+      { "label": "Meaningful Impact", "blocks": [] },
+      { "label": "Innovation & Excellence", "blocks": [] }
+    ]
+  }
+}

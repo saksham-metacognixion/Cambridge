@@ -1,0 +1,41 @@
+---
+import Band from './Band.astro';
+import OutlineButton from '../shared/OutlineButton.astro';
+
+/*
+ * "Life at Cambridge" (Figma 112:7092 band, page y 969-1305, #e7e7e7 at 50%). Figma px from the band top:
+ * H 112:7176 x105 top +57, Medium 28/32 #004059 | 8 | cyan line 112:7175 Book 28/32 (2 lines, w770) | 20 | text 112:7178
+ * x106 w649 Book 14/17 #6b6b6b (box 83 high) | 1 | buttons 164 x 30 at x106 and x296 (26 apart) | 41 to the band end.
+ */
+interface Props { c: { heading: string; sub: string[]; text: string; join: { label: string }; openRoles: { label: string } }; joinHref: string; openRolesHref: string }
+const { c, joinHref, openRolesHref } = Astro.props;
+---
+
+<Band bg="var(--color-veil)" labelledby="life-heading">
+  <div class="life">
+    <h2 id="life-heading" class="h">{c.heading}</h2>
+    <p class="sub">{c.sub.map((line) => <span class="block">{line}</span>)}</p>
+    <p class="t">{c.text}</p>
+    <div class="btns">
+      <OutlineButton href={joinHref} label={c.join.label} />
+      <OutlineButton href={openRolesHref} label={c.openRoles.label} />
+    </div>
+  </div>
+</Band>
+
+<style>
+  .life { padding-block: calc(57 * var(--u)) calc(41 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .sub { margin: calc(8 * var(--u)) 0 0; font-weight: 400; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-cyan); overflow-wrap: anywhere; }
+  .t { margin: calc(20 * var(--u)) 0 0; min-height: calc(83 * var(--u)); font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .btns { display: flex; flex-wrap: wrap; gap: calc(12 * var(--u)) calc(26 * var(--u)); margin-top: calc(1 * var(--u)); }
+  @media (min-width: 1024px) {
+    .h, .sub { margin-inline-start: calc(105 * var(--u)); width: calc(770 * var(--u)); }
+    .t { margin-inline-start: calc(106 * var(--u)); width: calc(649 * var(--u)); }
+    .btns { margin-inline-start: calc(106 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .t { min-height: 0; }
+    .btns { margin-top: calc(16 * var(--u)); }
+  }
+</style>

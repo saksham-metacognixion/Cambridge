@@ -16,7 +16,8 @@ export interface PageRoute {
 export function allRoutes(): PageRoute[] {
   return [
     { key: 'home', path: '' },
-    { key: 'contact', path: 'contact' },
+    { key: 'contact', path: PAGE_PATHS.contact },
+    { key: 'careers', path: PAGE_PATHS.careers },
     { key: 'media-hub', path: 'media-hub' },
     { key: 'patient-hub', path: PAGE_PATHS.patientHub },
     { key: 'patient-feedback', path: PAGE_PATHS.patientFeedback },

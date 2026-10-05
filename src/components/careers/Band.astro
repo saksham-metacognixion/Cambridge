@@ -1,0 +1,21 @@
+---
+/*
+ * Careers section frame: full-bleed background (the band) + a 1440-max, centred, horizontally clipping inner box, so
+ * decoration that overhangs the Figma frame (pill pattern at x720 + 447 > 1052) is cut at the stage edge like in Figma.
+ * Contents are FLOW layout; only decoration is absolutely positioned. Below 1024px: side padding.
+ */
+interface Props { bg?: string; label?: string; labelledby?: string; class?: string }
+const { bg, label, labelledby, class: cls } = Astro.props;
+---
+
+<section class:list={['band', cls]} style={bg ? `background:${bg}` : undefined} aria-label={label} aria-labelledby={labelledby}>
+  <div class="in"><slot /></div>
+</section>
+
+<style>
+  .band { position: relative; font-family: var(--font-gotham); font-style: normal; }
+  .in { position: relative; box-sizing: border-box; max-width: calc(var(--target-w) * 1px); margin-inline: auto; overflow-x: clip; padding-inline: calc(24 * var(--u)); }
+  @media (min-width: 1024px) {
+    .in { padding-inline: 0; }
+  }
+</style>

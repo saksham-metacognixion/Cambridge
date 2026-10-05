@@ -900,5 +900,32 @@
   "faq-100-5509": {
     "PAR-inside 1": "src/assets/faq/hero.png (1052x323 only)",
     "chevrons": "src/assets/faq/chevron-open.svg (white), chevron-closed.svg (#21b5be, Q2)"
+  },
+  "careers": {
+    "banner": {
+      "file": "assets/careers/banner.png",
+      "src": "src/assets/careers/banner.png"
+    },
+    "nurse": {
+      "file": "assets/careers/nurse.png",
+      "src": "src/assets/careers/nurse.png"
+    },
+    "pioneer": {
+      "file": "assets/careers/pioneer.png",
+      "src": "src/assets/careers/pioneer.png"
+    },
+    "pattern": {
+      "file": "assets/careers/pattern-full.svg",
+      "src": "src/assets/careers/pattern.svg"
+    },
+    "talent_lines": {
+      "file": "assets/careers/talent-lines.svg",
+      "src": "src/assets/careers/talent-lines.svg"
+    },
+    "chevron": {
+      "file": "assets/careers/chevron.svg",
+      "src": "src/assets/careers/chevron.svg"
+    },
+    "_note": "Figma 112:7295. banner 1052x500 only (1x), nurse 1536x1024 RGBA, pioneer 1080x1350. CTA band SVG (112:7230) is a plain #004059 rectangle: not stored."
   }
 }

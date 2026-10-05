@@ -135,3 +135,6 @@ NOTE (merge 2 Oct): the batch-2 session (above, #50-#87) and the forms session (
 60. download_assets 76:431 Welcome Page vertical colour logo, format svg -> figma-cache/assets/forms/welcome/logo-vertical.svg (one flattened SVG, 67.9 KB; the per-layer list was truncated at 20, not needed).
 SUMMARY after 60: forms session today 14. Next free number: 61 (batch-2 session used 50-59).
 61. get_screenshot 112:7295 Career (maxDimension 2400, 757x2400 preview of 1052x3339) -> inspected only (careers session, 5 Oct 2026)
+62. get_screenshot 112:7295 Career (maxDimension 4570; returned 1052x3339) -> figma-cache/pages/career-112-7295.png (comparison reference)
+63. get_design_context 112:7295 Career -> FULL -> careers-spec.md, assets/careers/* (7 assets curled from the returned URLs at once)
+SUMMARY careers session: 3 calls (2 get_screenshot, 1 get_design_context) + the earlier get_screenshot (#61). No use_figma, get_metadata or download_assets needed. Next free number: 64.

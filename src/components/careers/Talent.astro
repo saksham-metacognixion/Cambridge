@@ -1,0 +1,77 @@
+---
+import { Picture } from 'astro:assets';
+import { img } from '../../lib/images';
+import Band from './Band.astro';
+import lines from '../../assets/careers/talent-lines.svg';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "National Talent Development" (Figma 108:6675 band, page y 1835-2303, #e7e7e7 at 50%). Figma px from the band top:
+ * H 108:7060 x88 top +67 Medium 28/32 #004059 | 24 | intro 108:7061 x91 w496 Book 12/14 #6b6b6b, JUSTIFIED (2 lines) |
+ * 16 | UAE block 112:7200 (box 121 high) | 17 | KSA block 112:7201 (x91, w496) | ~42 to the band end.
+ * A block = teal Medium heading line, one empty line, then the text; its FIRST text line is a separate span with line height
+ * 10 (Figma: mixed line heights inside one text layer; kept), the rest 14, paragraphs separated by one empty 14px line.
+ * Card 108:7058: white 214.853 x 268.276, radius 17.298, shadow 0 1 4 2 rgba(0,0,0,.13), at x661 (74 right of the text column),
+ * top = the intro's top; photo 108:7059 208 x 262 radius 17.3, inset 3 (PNG 1080x1350, object-cover). Line art 108:7042
+ * (220.117 x 168.514) behind the card at +86 / +50. Photo and art are never flipped on RTL; the art mirrors.
+ */
+interface Props {
+  edition: Edition;
+  c: {
+    ariaLabel: string; heading: string; text: string;
+    photo: { image: string; alt: string };
+    blocks: { heading: string; lead: string; text: string; more: string }[];
+  };
+}
+const { edition, c } = Astro.props;
+const photo = img(c.photo.image, edition.region);
+---
+
+<Band bg="var(--color-veil)" labelledby="talent-heading">
+  <div class="talent">
+    <h2 id="talent-heading" class="h">{c.heading}</h2>
+    <div class="grid">
+      <div class="col">
+        <p class="intro">{c.text}</p>
+        {c.blocks.map((b) => (
+          <p class="blk"><span class="s14"><span class="hd">{b.heading}</span><br /><br /></span><span class="lead">{b.lead}</span><span class="s14">{b.text}<br /><br />{b.more}</span></p>
+        ))}
+      </div>
+      <div class="card-wrap">
+        <img src={lines.src} alt="" aria-hidden="true" width="220.117" height="168.514" class="art" />
+        <div class="card">
+          <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={285} height={359} widths={[285, 570]} sizes="285px" loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Band>
+
+<style>
+  .talent { padding-block: calc(67 * var(--u)) calc(42.2 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .grid { display: flex; flex-direction: column; gap: calc(32 * var(--u)); margin-top: calc(24 * var(--u)); }
+  .col { color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .intro { margin: 0; text-align: justify; overflow-wrap: anywhere; }
+  .blk { margin: calc(16 * var(--u)) 0 0; min-height: calc(121 * var(--u)); line-height: 0; overflow-wrap: anywhere; }
+  .blk + .blk { margin-top: calc(17 * var(--u)); }
+  .s14 { line-height: calc(14 * var(--u)); }
+  .hd { font-weight: 500; color: var(--color-teal-border); }
+  .lead { line-height: calc(14 * var(--u)); } /* the Figma line height 10 only from 1024px: on phones the span wraps over several lines and would overlap */
+  .card-wrap { position: relative; flex: none; width: calc(214.853 * var(--u)); height: calc(268.276 * var(--u)); }
+  .card { position: relative; box-sizing: border-box; width: 100%; height: 100%; padding: calc(3 * var(--u)); background: #fff; border-radius: calc(17.298 * var(--u)); box-shadow: 0 calc(1 * var(--u)) calc(4 * var(--u)) calc(2 * var(--u)) rgba(0, 0, 0, 0.13); }
+  .photo { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: calc(17.3 * var(--u)); }
+  .art { position: absolute; inset-inline-start: calc(86 * var(--u)); top: calc(50 * var(--u)); width: calc(220.117 * var(--u)); height: calc(168.514 * var(--u)); max-width: none; pointer-events: none; }
+  :global([dir='rtl']) .art { scale: -1 1; }
+  @media (min-width: 1024px) {
+    .lead { line-height: calc(10 * var(--u)); }
+    .h { margin-inline-start: calc(88 * var(--u)); width: calc(576 * var(--u)); }
+    .grid { flex-direction: row; align-items: flex-start; gap: calc(74 * var(--u)); margin-inline-start: calc(91 * var(--u)); }
+    .col { flex: none; width: calc(496 * var(--u)); }
+    .intro { margin-bottom: 0; }
+  }
+  @media (max-width: 1023.98px) {
+    .art { display: none; }
+    .talent { padding-block: calc(40 * var(--u)); }
+  }
+</style>

@@ -10,7 +10,7 @@
       [{ "label": "Contact Us", "href": "#", "path": "contact" }],
       [{ "label": "Book an Appointment", "href": "#book-appointment" }],
       [{ "label": "Media Hub", "href": "#", "path": "media-hub" }],
-      [{ "label": "Careers", "href": "#" }],
+      [{ "label": "Careers", "href": "#", "path": "careers" }],
       [{ "label": "Knowledge Center", "href": "#" }],
       [{ "label": "FAQs", "href": "#", "path": "faq" }, { "label": "Your Opinion Matters", "href": "#your-opinion", "path": "patient-feedback" }],
       [{ "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" }],

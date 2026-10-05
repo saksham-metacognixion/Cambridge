@@ -1,0 +1,60 @@
+---
+import Band from './Band.astro';
+import Tabs, { type Block } from '../shared/Tabs.astro';
+import pattern from '../../assets/careers/pattern.svg';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * Heading + (optional sub-heading) + vertical tabs + the pill-outline pattern. Used twice (Figma 112:7199 "A Multidisciplinary
+ * Environment" page y 1305-1835, and 112:7293 "Why Cambridge Hospital?" y 2518-2970). Figma px from the section top:
+ *   multi: H +56 (x105, Medium 28/32 #004059) | 8 | sub 112:7198 Book 28/32 #00415a (box 42) | 28 | tabs (x106, 311 x 63) |
+ *          panel x441 (24 right of the tabs, 27 below their top, w529) | 51 below the tabs
+ *   why:   H +52 | 23.17 | tabs | panel w441 | 86.83 below the tabs
+ * Pattern 112:7247 / 7264: 447 x 458.67 at x720, top +42.17 (multi) / +52 (why); drawn behind (SVG carries its 15% opacity),
+ * cut at the frame edge, mirrored on RTL. Decoration only (aria-hidden).
+ */
+interface Props {
+  edition: Edition;
+  id: string;
+  heading: string;
+  sub?: string;
+  tabsLabel: string;
+  tabs: { label: string; blocks: Block[] }[];
+  active?: number;
+  pending?: string | null;
+  panelWidth: number;
+  padTop: number;
+  padBottom: number;
+  /** Figma px between the heading (or sub-heading) and the tabs */
+  tabsGap: number;
+  patternTop: number;
+}
+const { edition, id, heading, sub, tabsLabel, tabs, active, pending, panelWidth, padTop, padBottom, tabsGap, patternTop } = Astro.props;
+---
+
+<Band labelledby={`${id}-heading`}>
+  <img src={pattern.src} alt="" aria-hidden="true" width="447" height="458.67" class="pattern" style={`top:calc(${patternTop} * var(--u))`} />
+  <div class="sec" style={`--pt:${padTop};--pb:${padBottom};--tg:${tabsGap}`}>
+    <h2 id={`${id}-heading`} class="h">{heading}</h2>
+    {sub && <p class="sub">{sub}</p>}
+    <div class="tabs"><Tabs edition={edition} label={tabsLabel} items={tabs} active={active} idPrefix={`${id}-`} pending={pending} gap={24} top={27} width={panelWidth} /></div>
+  </div>
+</Band>
+
+<style>
+  .sec { position: relative; z-index: 1; padding-block: calc(var(--pt) * var(--u)) calc(var(--pb) * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .sub { margin: calc(8 * var(--u)) 0 0; font-weight: 400; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .tabs { margin-top: calc(var(--tg) * var(--u)); }
+  .pattern { position: absolute; z-index: 0; inset-inline-start: calc(720 * var(--u)); width: calc(447 * var(--u)); height: calc(458.67 * var(--u)); max-width: none; pointer-events: none; }
+  :global([dir='rtl']) .pattern { scale: -1 1; }
+  @media (min-width: 1024px) {
+    .h, .sub { margin-inline-start: calc(105 * var(--u)); width: calc(770 * var(--u)); }
+    .tabs { margin-inline-start: calc(106 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .pattern { display: none; }
+    .sec { padding-block: calc(40 * var(--u)); }
+    .tabs { margin-top: calc(24 * var(--u)); }
+  }
+</style>

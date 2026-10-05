@@ -9,6 +9,10 @@ import { DOCTOR_PATHS } from './doctors';
  * so they enter the sitemaps and hreflang.
  */
 export const PAGE_PATHS = {
+  /** Contact Us (Figma 86:431) */
+  contact: 'contact',
+  /** Careers (Figma 112:7295). Slug and scope UNCONFIRMED (docs/open-decisions.md D1, D2). */
+  careers: 'careers',
   patientHub: 'patient-hub',
   /** Patient Feedback Form (Figma 188:964). Slug UNCONFIRMED: the current site's URL could not be read. */
   patientFeedback: 'patient-feedback',

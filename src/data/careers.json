@@ -1,0 +1,6 @@
+{
+  "$comment": "Careers button destinations (ONE place). Figma has no destination for any of them (no job list, detail page or apply form), so all three point to the Contact page for now. A link is { \"page\": \"<key in PAGE_PATHS>\" } (edition-aware internal page) or { \"href\": \"https://...\" } (e.g. a future external jobs portal). joinUrl = 'Join our Team' (hero + Life at Cambridge), openRolesUrl = 'View Open Roles' (Life at Cambridge + the dropdown-look field), applyUrl = 'Apply Now'. See docs/open-decisions.md D3/D4.",
+  "joinUrl": { "page": "contact" },
+  "openRolesUrl": { "page": "contact" },
+  "applyUrl": { "page": "contact" }
+}

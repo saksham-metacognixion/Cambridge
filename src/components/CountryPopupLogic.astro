@@ -4,7 +4,8 @@
  * is saved; the pop-up itself (src/components/forms/CountryPopup.astro) listens for `ch:country-popup` / reads
  * html[data-country-popup]. Config: src/data/country-popup.json.
  *   - detected country = the `ch_geo` cookie set by functions/_middleware.ts ("XX" if unknown); on a local dev server
- *     (no Cloudflare) `devCountry` is assumed so the pop-up can be seen
+ *     (no Cloudflare) `devCountry` is assumed so the pop-up can be seen. A country without its own pop-up version (incl.
+ *     "XX": the nginx QA staging has no edge detection at all) gets `fallbackCountry`'s version (AE, the only one in Figma)
  *   - `remember` says how long a choice is kept (user decision 5 Oct 2026: the pop-up appears every time the site is
  *     opened, so the default is 'tab' = sessionStorage, which a new tab or window does not share):
  *       tab      -> sessionStorage ch_edition: back in every new tab / window, not on the next page in the same tab
@@ -23,10 +24,12 @@ const homes = Object.fromEntries(
 );
 const remember = (config as { remember?: string }).remember ?? 'forever';
 const devCountry = import.meta.env.DEV ? ((config as { devCountry?: string }).devCountry ?? '') : '';
+const fallback = (config as { fallbackCountry?: string }).fallbackCountry ?? '';
+const known = Object.keys(config.countries);
 ---
 
 {edition.region === 'global' && (
-  <script is:inline define:vars={{ homes, remember, devCountry }}>
+  <script is:inline define:vars={{ homes, remember, devCountry, fallback, known }}>
     (function () {
       var c = document.cookie;
       function read(n) { var m = c.match(new RegExp('(?:^|;\\s*)' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
@@ -48,6 +51,7 @@ const devCountry = import.meta.env.DEV ? ((config as { devCountry?: string }).de
       };
       if (saved()) return;
       var country = read('ch_geo') || devCountry || 'XX';
+      if (known.indexOf(country) < 0 && fallback) country = fallback;
       document.documentElement.dataset.countryPopup = country;
       document.dispatchEvent(new CustomEvent('ch:country-popup', { detail: { country: country } }));
     })();

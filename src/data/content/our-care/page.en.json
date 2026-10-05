@@ -1,0 +1,37 @@
+{
+  "_note": "Our Care hub (Figma 36:5631). Visible text exactly as in Figma (the two long texts keep Figma's blank line between paragraphs). The four service cards = content/home/services.en.json (same photos and text, titles navy here). meta.*, alt and aria PLACEHOLDER.",
+  "meta": {
+    "title": "Our Care | Cambridge Hospital",
+    "description": "Coordinated care across inpatient, outpatient, home and school settings for every stage of recovery at Cambridge Hospital."
+  },
+  "hero": {
+    "ariaLabel": "Your Path to Recovery",
+    "banner": { "image": "care/banner-our-care", "alt": "" },
+    "title": ["Your Path to Recovery."],
+    "text": "We provide coordinated care across inpatient, outpatient, and home settings for every stage of recovery.",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "sections": [
+    {
+      "heading": "Specialized Care for Every Need",
+      "text": [
+        "At Cambridge Hospital, our care model is built around one principle: recovery is not a single event, but a continuous journey. We provide coordinated care across inpatient rehabilitation services, outpatient care and home healthcare, ensuring each patient receives the right level of medical support, therapy and follow-up at every stage of recovery.",
+        "Our multidisciplinary teams manage complex medical conditions, neurological injuries, pediatric needs, ventilated patient care and long-term recovery pathways through structured programs designed to restore function, improve independence and enhance quality of life. Whether a patient requires intensive inpatient support, specialist outpatient rehabilitation or rehabilitation at home, Cambridge Hospital delivers care that is clinically focused, personalized and connected."
+      ]
+    },
+    {
+      "heading": "A Structured Continuum of Care",
+      "text": [
+        "Our care pathways are designed to move with the patient. Many patients begin with inpatient rehabilitation, where medical supervision, therapy intensity and daily care coordination are essential. As recovery progresses, care can transition into outpatient rehabilitation or home healthcare services to maintain momentum, support functional gains and reduce avoidable readmissions.",
+        "This integrated approach allows Cambridge Hospital to deliver post-acute care, long-term care, ventilator-related care, pediatric rehabilitation and therapy services within one connected system of care."
+      ]
+    }
+  ],
+  "specializations": { "heading": "Our Specializations", "listLabel": "Our services", "button": "Start Your Care" },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+  }
+}

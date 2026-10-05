@@ -5,38 +5,52 @@ import { img } from '../../lib/images';
 import { content } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
+import { CARE_PATHS } from '../../lib/care';
 
 /*
- * "Delivering Excellence Across Every Stage of Care" on the hospital pages (Figma 112:7721, page y 2305-2773): the four Home
- * Services cards (same photos and text: home/services JSON) scaled by 0.9884, under a LEFT-aligned heading.
- * H2 Medium 28 #004059 at x58 w387 (2 lines) | text Book 12/14 #6b6b6b at x58 w577, 64 below the H2 top | 36 (from the text box
- * end) | cards 219.434 x 338.046 r14.827 (border .247 #418ea2) at x 55 / 298.16 / 537.36 / 780.51, photo 219.434 x 241.179 on top
- * (overhangs the box by 2.96); title Medium 18.78 #00b8ff at (+23.72, +256.01); text Book 8.896/9.884 at +277.76; button #00b8ff
- * 73.145 x 16.803 r2.965 at +305.43, label Medium 7.908 white at +6.92 / +3.96.
- * Card target: `page` key (PAGE_PATHS) or `href` from the services JSON (the Our Care routes).
+ * The four service cards (Home "Services" cards: photos + text from home/services JSON), reused on
+ *  - the hospital pages (Figma 112:7721, page y 2305-2773): scaled by 0.9884 (219.434 x 338.046 r14.827, border .247 #418ea2) at
+ *    x 55 / 298.16 / 537.36 / 780.51 under a LEFT-aligned H2 Medium 28 #004059 at x58 w387 (2 lines) + text Book 12/14 #6b6b6b at x58
+ *    w577, 64 below the H2 top | 36 | cards; title Medium 18.78 #00b8ff at (+23.72, +256.01); text Book 8.896/9.884 at +277.76;
+ *    button #00b8ff 73.145 x 16.803 r2.965 at +305.43, label Medium 7.908 white at +6.92 / +3.96; photo 219.434 x 241.179, 2.96 above the box.
+ *  - the Our Care hub (Figma 36:5631, cards at y943): scale 1 (222 x 342 r15, border .25) at x 53 / 295 / 537 / 779, title NAVY
+ *    (#004059) Medium 19 at (+24, +259), text Book 9/10 at +281 (w 138 / 154), button cyan 74 x 17 r3 at +309, label Medium 8 at +7 / +4,
+ *    photo 222 x 244, 3 above the box; the heading above it is the page's "Our Specializations" label (not this component).
+ * Card target: `care` (service slug -> our-care/<slug>) or `page` (PAGE_PATHS) or `href` from the services JSON.
  */
-interface Props { edition: Edition; c: { heading: string; text: string; listLabel: string; button: string } }
-const { edition, c } = Astro.props;
+interface Props {
+  edition: Edition;
+  c?: { heading: string; text: string };
+  listLabel: string;
+  button: string;
+  /** 0.9884 (hospital pages) or 1 (Our Care) */
+  scale?: number;
+  titleTone?: 'cyan' | 'navy';
+  /** Figma x of the four columns */
+  xs?: number[];
+}
+const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51] } = Astro.props;
 const s = content('home/services', edition.locale);
-const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href: string; page?: string }[]).map((k) => ({
+const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).map((k) => ({
   ...k,
   src: img(k.image, edition.region),
-  href: k.page ? urlFor(edition, pagePath(k.page)) : k.href,
+  href: k.care ? urlFor(edition, CARE_PATHS.service(k.care)) : k.page ? urlFor(edition, pagePath(k.page)) : (k.href ?? '#'),
 }));
-const K = 0.9884;
+const w = 222 * K;
+const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc(${w} * var(--u)) calc(${xs[2] - xs[1] - w} * var(--u)) calc(${w} * var(--u)) calc(${xs[3] - xs[2] - w} * var(--u)) calc(${w} * var(--u))`;
 ---
 
-<section class="care" aria-labelledby="care-heading">
-  <h2 id="care-heading" class="h">{c.heading}</h2>
-  <p class="t">{c.text}</p>
-  <ul class="grid" role="list" aria-label={c.listLabel}>
+<section class="care" aria-labelledby={c ? 'care-heading' : undefined} aria-label={c ? undefined : listLabel} style={`--k:${K};--x0:${xs[0]};--cols:${cols}`}>
+  {c && <h2 id="care-heading" class="h">{c.heading}</h2>}
+  {c && <p class="t">{c.text}</p>}
+  <ul class:list={['grid', !c && 'bare']} role="list" aria-label={listLabel}>
     {cards.map((k) => (
       <li class="cell">
-        <article class="card hair-card" style="--sw:.247">
+        <article class="card hair-card" style={`--sw:${0.25 * K}`}>
           <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(222 * K)} height={px(244 * K)} widths={[px(222 * K), px(222 * K) * 2]} sizes={`${px(222 * K)}px`} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
-          <h3 class="title">{k.title}</h3>
+          <h3 class:list={['title', titleTone === 'navy' ? 'text-navy' : 'text-cyan']}>{k.title}</h3>
           <p class="desc">{k.desc}</p>
-          <a href={k.href} class="btn hit" aria-label={`${c.button}: ${k.title}`}><span>{c.button}</span></a>
+          <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
         </article>
       </li>
     ))}
@@ -44,22 +58,23 @@ const K = 0.9884;
 </section>
 
 <style>
-  .care { --k: 0.9884; max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
+  .care { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
   .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: normal; color: var(--color-navy); overflow-wrap: anywhere; }
   .t { margin: calc(12 * var(--u)) 0 0; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); overflow-wrap: anywhere; }
-  .grid { list-style: none; margin: calc(36 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--k) * var(--u))); column-gap: calc(23.72 * var(--u)); row-gap: calc(32 * var(--u)); }
+  .grid { list-style: none; margin: calc(36 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--k) * var(--u))); column-gap: calc(24 * var(--k) * var(--u)); row-gap: calc(32 * var(--u)); }
+  .grid.bare { margin-top: 0; }
   .cell { display: flex; }
-  .card { position: relative; box-sizing: border-box; width: 100%; height: calc(342 * var(--k) * var(--u)); margin-top: calc(2.96 * var(--u)); border-radius: calc(15 * var(--k) * var(--u)); background: #fff; }
-  .card :global(.img) { position: absolute; inset-inline-start: 0; top: calc(-2.96 * var(--u)); display: block; width: 100%; height: calc(244 * var(--k) * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: calc(15 * var(--k) * var(--u)); border-start-end-radius: calc(15 * var(--k) * var(--u)); }
-  .title { position: absolute; inset-inline-start: calc(23.72 * var(--u)); top: calc(256.01 * var(--u) - 2.96 * var(--u)); margin: 0; width: calc(172.977 * var(--u)); font-weight: 500; font-size: calc(18.78 * var(--u)); line-height: calc(14.827 * var(--u)); color: var(--color-cyan); white-space: nowrap; }
-  .desc { position: absolute; inset-inline-start: calc(23.72 * var(--u)); top: calc(277.76 * var(--u) - 2.96 * var(--u)); margin: 0; width: calc(152.22 * var(--u)); font-size: calc(8.896 * var(--u)); line-height: calc(9.884 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
-  .btn { position: absolute; inset-inline-start: calc(23.72 * var(--u)); top: calc(305.43 * var(--u) - 2.96 * var(--u)); display: block; width: calc(73.145 * var(--u)); height: calc(16.803 * var(--u)); border-radius: calc(2.965 * var(--u)); background: var(--color-cyan); text-decoration: none; }
-  .btn span { position: absolute; inset-inline-start: calc(6.92 * var(--u)); top: calc(3.96 * var(--u)); width: calc(65.237 * var(--u)); font-weight: 500; font-size: calc(7.908 * var(--u)); line-height: calc(9.884 * var(--u)); color: #fff; white-space: nowrap; }
+  .card { position: relative; box-sizing: border-box; width: 100%; height: calc(342 * var(--k) * var(--u)); margin-top: calc(3 * var(--k) * var(--u)); border-radius: calc(15 * var(--k) * var(--u)); background: #fff; }
+  .card :global(.img) { position: absolute; inset-inline-start: 0; top: calc(-3 * var(--k) * var(--u)); display: block; width: 100%; height: calc(244 * var(--k) * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: calc(15 * var(--k) * var(--u)); border-start-end-radius: calc(15 * var(--k) * var(--u)); }
+  .title { position: absolute; inset-inline-start: calc(24 * var(--k) * var(--u)); top: calc(256 * var(--k) * var(--u)); margin: 0; width: calc(175 * var(--k) * var(--u)); font-weight: 500; font-size: calc(19 * var(--k) * var(--u)); line-height: calc(15 * var(--k) * var(--u)); white-space: nowrap; }
+  .desc { position: absolute; inset-inline-start: calc(24 * var(--k) * var(--u)); top: calc(278 * var(--k) * var(--u)); margin: 0; width: calc(154 * var(--k) * var(--u)); font-size: calc(9 * var(--k) * var(--u)); line-height: calc(10 * var(--k) * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .btn { position: absolute; inset-inline-start: calc(24 * var(--k) * var(--u)); top: calc(306 * var(--k) * var(--u)); display: block; width: calc(74 * var(--k) * var(--u)); height: calc(17 * var(--k) * var(--u)); border-radius: calc(3 * var(--k) * var(--u)); background: var(--color-cyan); text-decoration: none; }
+  .btn span { position: absolute; inset-inline-start: calc(7 * var(--k) * var(--u)); top: calc(4 * var(--k) * var(--u)); width: calc(66 * var(--k) * var(--u)); font-weight: 500; font-size: calc(8 * var(--k) * var(--u)); line-height: calc(10 * var(--k) * var(--u)); color: #fff; white-space: nowrap; }
   .btn:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(58 * var(--u)); width: calc(387 * var(--u)); min-height: calc(64 * var(--u)); }
     .t { margin: 0; margin-inline-start: calc(58 * var(--u)); width: calc(577 * var(--u)); min-height: calc(27 * var(--u)); }
-    .grid { margin-inline-start: calc(55 * var(--u)); justify-content: start; column-gap: 0; grid-template-columns: calc(219.434 * var(--u)) calc(23.726 * var(--u)) calc(219.434 * var(--u)) calc(19.766 * var(--u)) calc(219.434 * var(--u)) calc(23.716 * var(--u)) calc(219.434 * var(--u)); }
+    .grid { margin-inline-start: calc(var(--x0) * var(--u)); justify-content: start; column-gap: 0; grid-template-columns: var(--cols); }
     .grid > li:nth-child(4n + 1) { grid-column: 1; }
     .grid > li:nth-child(4n + 2) { grid-column: 3; }
     .grid > li:nth-child(4n + 3) { grid-column: 5; }

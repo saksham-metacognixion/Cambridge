@@ -8,6 +8,7 @@ import { PAGE_PATHS } from "./paths";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
+import { CARE_PATHS, services } from "./care";
 import type { Edition } from "./editions";
 
 export interface PageRoute {
@@ -38,6 +39,14 @@ function routes(): PageRoute[] {
       path: HOSPITAL_PATHS.detail(h.slug),
       editions: hospitalEditions(h),
     })),
+    { key: "our-care", path: CARE_PATHS.hub },
+    ...services.flatMap((s) => [
+      { key: `care-${s.slug}`, path: CARE_PATHS.service(s.slug) },
+      ...s.subServices.map((x) => ({
+        key: `care-${s.slug}-${x.slug}`,
+        path: CARE_PATHS.sub(s.slug, x.slug),
+      })),
+    ]),
     { key: "contact", path: PAGE_PATHS.contact },
     { key: "careers", path: PAGE_PATHS.careers },
     { key: "media-hub", path: NEWS_PATHS.list },

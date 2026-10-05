@@ -2,11 +2,14 @@
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
 import { content } from '../../lib/content';
+import { CARE_PATHS } from '../../lib/care';
 
 const { edition } = parsePath(Astro.url.pathname);
 const s = content('home/services', edition.locale);
+// "Start Your Care" -> the service page (our-care/<slug>, `care` key in the JSON); a card without one keeps its href.
+const target = (k: { care?: string; href?: string }) => (k.care ? urlFor(edition, CARE_PATHS.service(k.care)) : (k.href ?? '#'));
 
 // x = page x of the card; imgY = image top relative to card top (169/168/169 - 172)
 // Design only; zipped by index with the content cards from home/services.json
@@ -18,7 +21,7 @@ const layout = [
 ];
 const cards = layout.map((d, i) => {
   const k = s.cards[i];
-  return { ...d, img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: k.href };
+  return { ...d, img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: target(k) };
 });
 const u = (n: number) => `calc(${n} * var(--u))`;
 ---

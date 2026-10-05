@@ -1,0 +1,16 @@
+{
+  "_note": "Post Acute Care sub-service page (Figma 41:1730). Text exactly as in Figma (hero text is the Inpatient Care one in Figma; 'chronic  and' keeps Figma's double space). Condition cards: 'Know More' targets are NOT in Figma (docs/open-decisions.md OC4): Post-Surgical and Accident have a detail page (condition slug), Neuro and Musculoskeletal go to the Conditions & Specialities list. meta.* PLACEHOLDER.",
+  "hero": {
+    "ariaLabel": "Post Acute Care",
+    "banner": { "image": "care/banner-post-acute-care", "alt": "" },
+    "title": ["Post Acute Care."],
+    "text": "24/7 inpatient care with expert medical supervision, nursing support, and rehabilitation services tailored to your recovery."
+  },
+  "overview": ["Post-acute care is designed for patients recovering from stroke, traumatic brain injury, spinal cord injury, major surgery, road traffic accidents and other acute medical events that affect mobility, function and independence."],
+  "conditions": [
+    { "title": "Neuro Rehabilitation", "text": "Tailored rehabilitation for neurological conditions affecting movement, cognition, balance and daily function.", "icon": "neuro", "page": "conditions" },
+    { "title": "Musculoskeletal Rehabilitation", "text": "Rehabilitation supports musculoskeletal injuries, chronic  and post-surgical limitations affecting movement and strength.", "icon": "musculoskeletal", "page": "conditions" },
+    { "title": "Post-Surgical Rehabilitation", "text": "Rehabilitation programs that promote safe recovery, restore mobility and reduce complications after surgery.", "icon": "post-surgical", "condition": "post-surgical-rehabilitation" },
+    { "title": "Accident Rehabilitation", "text": "Multidisciplinary rehabilitation for patients recovering from trauma-related injuries following road traffic accidents, work injuries, and life changing injuries.", "icon": "accident", "condition": "accidents-rehabilitation" }
+  ]
+}

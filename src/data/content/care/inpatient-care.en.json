@@ -1,0 +1,13 @@
+{
+  "_note": "Inpatient Care service page (Figma 83:226). Text exactly as in Figma (incl. 'ventilated patients care'). The six cards come from care.json (subServices of inpatient-care). meta.* PLACEHOLDER.",
+  "hero": {
+    "ariaLabel": "Inpatient Care",
+    "banner": { "image": "care/banner-inpatient-care", "alt": "" },
+    "title": ["Inpatient Care."],
+    "text": "24/7 inpatient care with expert medical supervision, nursing support, and rehabilitation services tailored to your recovery."
+  },
+  "intro": {
+    "heading": "Inpatient Rehabilitation Services",
+    "text": ["Cambridge Hospital’s inpatient rehabilitation services support patients who require intensive therapy, continuous nursing care and close medical oversight in a structured clinical environment. These services are designed for complex medical recovery, post-acute rehabilitation, ventilated patients care, pediatric rehabilitation and long-term support."]
+  }
+}

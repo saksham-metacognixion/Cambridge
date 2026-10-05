@@ -1,0 +1,74 @@
+---
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import { CONDITION_PATHS } from '../../lib/conditions';
+import neuro from '../../assets/care/post-acute/icon-neuro.svg';
+import musculoskeletal from '../../assets/care/post-acute/icon-musculoskeletal.svg';
+import postSurgical from '../../assets/care/post-acute/icon-post-surgical.svg';
+import accident from '../../assets/care/post-acute/icon-accident.svg';
+
+/*
+ * "Conditions Treated by Our Specialists" (Figma 41:1730 Post Acute Care, page y 578-823). Section top = the H2 top.
+ * H2 Medium 28 #00415a at x56 (box 33) | 24 | cards 222 x 187, radius 10, border .5 #004059 at x 61 / 298 / 536 / 773 (gaps 15 / 16 / 15,
+ * normalised to the Figma x's). Inside (Figma px from the card's top-left; the designer nudged each card a little, normalised to card 1):
+ * icon at (15, 23), its own size (41.8 x 38.2 / 36.4 x 36.6 / 34.6 x 36.5 / 38.3 x 38.3); title Book 15 #004059 at x15, top 78 (Figma 77-84;
+ * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 74 x 17 r3 at (16, 152), label "Know More" Medium 8 white
+ * at +7 / +4. Card target: `condition` (detail slug) or `page` (PAGE_PATHS) from the page JSON (OC4: not in Figma).
+ */
+interface Card { title: string; text: string; icon: string; condition?: string; page?: string; href?: string }
+interface Props { edition: Edition; heading: string; listLabel: string; button: string; cards: Card[] }
+const { edition, heading, listLabel, button, cards } = Astro.props;
+const icons: Record<string, { src: string; width: number; height: number }> = { neuro, musculoskeletal, 'post-surgical': postSurgical, accident };
+const xs = [61, 298, 536, 773];
+const list = cards.map((k, i) => ({
+  ...k,
+  icon: icons[k.icon],
+  x: xs[i % 4],
+  href: k.condition ? urlFor(edition, CONDITION_PATHS.detail(k.condition)) : k.page ? urlFor(edition, pagePath(k.page)) : (k.href ?? '#'),
+}));
+---
+
+<section class="cond" aria-labelledby="conditions-heading">
+  <h2 id="conditions-heading" class="h">{heading}</h2>
+  <ul class="grid" role="list" aria-label={listLabel}>
+    {list.map((k) => (
+      <li class="cell">
+        <article class="card hair-card" style="--sw:.5;--sc:var(--color-navy)">
+          {k.icon && <img src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
+          <h3 class="title">{k.title}</h3>
+          <p class="text">{k.text}</p>
+          <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .cond { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .grid { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--u))); column-gap: calc(15.33 * var(--u)); row-gap: calc(24 * var(--u)); }
+  .cell { display: flex; }
+  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: calc(187 * var(--u)); padding: calc(23 * var(--u)) calc(15 * var(--u)) calc(18 * var(--u)); border-radius: calc(10 * var(--u)); background: #fff; }
+  .ico { display: block; max-width: none; flex: none; }
+  .title { margin: 0; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .text { margin: calc(2 * var(--u)) 0 0; width: 100%; font-size: calc(9 * var(--u)); line-height: calc(10 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .btn { position: relative; display: block; flex: none; margin-top: auto; margin-inline-start: calc(1 * var(--u)); width: calc(74 * var(--u)); height: calc(17 * var(--u)); border-radius: calc(3 * var(--u)); background: var(--color-navy); text-decoration: none; --hit-h: 44px; --hit-w: 0px; }
+  .btn span { position: absolute; inset-inline-start: calc(7 * var(--u)); top: calc(4 * var(--u)); width: calc(66 * var(--u)); font-weight: 500; font-size: calc(8 * var(--u)); line-height: calc(10 * var(--u)); color: #fff; white-space: nowrap; }
+  .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .grid { margin-inline-start: calc(61 * var(--u)); justify-content: start; column-gap: 0; grid-template-columns: calc(222 * var(--u)) calc(15 * var(--u)) calc(222 * var(--u)) calc(16 * var(--u)) calc(222 * var(--u)) calc(15 * var(--u)) calc(222 * var(--u)); }
+    .grid > li:nth-child(4n + 1) { grid-column: 1; }
+    .grid > li:nth-child(4n + 2) { grid-column: 3; }
+    .grid > li:nth-child(4n + 3) { grid-column: 5; }
+    .grid > li:nth-child(4n) { grid-column: 7; }
+    .title { margin-top: calc(55 * var(--u) - var(--ih, 38.2) * var(--u)); } /* title top at 78 whatever the icon height: 78 - 23 = 55 from the icon top */
+    .text { margin-bottom: calc(8 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .cond { padding-inline: 16px; }
+    .title { margin-top: calc(17 * var(--u)); }
+    .text { margin-bottom: calc(12 * var(--u)); }
+  }
+</style>

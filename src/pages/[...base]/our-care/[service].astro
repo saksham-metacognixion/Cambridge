@@ -1,0 +1,72 @@
+---
+import { editions, editionFromBase } from '../../../lib/editions';
+import { content, t } from '../../../lib/content';
+import { services, careContent, CARE_PATHS, type Service } from '../../../lib/care';
+import { showPendingNote } from '../../../lib/conditions';
+import { INDEXABLE } from '../../../lib/seo';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import SubServiceGrid from '../../../components/care/SubServiceGrid.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+import DoctorsRow from '../../../components/shared/DoctorsRow.astro';
+
+/*
+ * Service template (Figma 83:226 Inpatient Care): one page per service in src/data/care.json, every edition.
+ * hero 119-556 (banner; title top 171 = 1 line, text 15 below, button 15 below) | 22 | H2 + text + sub-service cards (SubServiceGrid)
+ * | 55.86 | CTA band (heading top 50) | 41 | doctors | 36.54 | footer.
+ * Services without a content file (Outpatient, Home Health, In School): generated hero (title "<Service>.", placeholder banner), no intro
+ * text, their sub-service cards when care.json has any, "Content pending" on staging (docs/open-decisions.md OC1).
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) => services.map((s) => ({ params: { base: e.base || undefined, service: s.slug }, props: { service: s } })));
+}
+
+const { service } = Astro.props as { service: Service };
+const edition = editionFromBase(Astro.params.base);
+const loc = edition.locale;
+const shared = content('care/shared', loc);
+const own = careContent(service.slug, loc);
+const title = t(service.title, loc, 'care');
+const fill = (s: string) => s.replace('{title}', title);
+const hero = {
+  ariaLabel: own?.hero.ariaLabel ?? title,
+  banner: own?.hero.banner ?? shared.generated.serviceBanner,
+  title: own?.hero.title ?? [title + shared.generated.titleSuffix],
+  text: own?.hero.text ?? undefined,
+  button: shared.heroButton,
+};
+const pos = { titleTop: 171, titleW: 385, textGap: 15, textW: 374, textX: 97, buttonGap: 15 };
+const pending = !own && showPendingNote(INDEXABLE) ? shared.pending.service : null;
+---
+
+<BaseLayout edition={edition} path={CARE_PATHS.service(service.slug)} title={fill(shared.meta.title)} description={fill(shared.meta.description)}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={hero} pos={pos} />
+    </div>
+    {pending && <p class="pending-note" role="note">{pending}</p>}
+    {(own || service.subServices.length > 0) && (
+      <div id="services" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(22 * var(--u))">
+        <SubServiceGrid edition={edition} service={service} heading={own?.intro.heading ?? title} text={own?.intro.text ?? []} listLabel={shared.service.cardsLabel} button={shared.service.button} />
+      </div>
+    )}
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(55.86 * var(--u))">
+      <ContactRecovery content={shared.recovery} headTop={50} />
+    </div>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(41 * var(--u))">
+      <DoctorsRow content={shared.doctors} id="care-doctors-heading" />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(36.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+</style>

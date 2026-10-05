@@ -2,10 +2,35 @@
   "heading": "Delivering Excellence Across Every Stage of Care",
   "text": "At Cambridge Hospital, we are committed to delivering advanced, patient-centered care with clinical excellence, providing a full spectrum of services designed around your individual needs.",
   "cards": [
-    { "image": "services/inpatient", "alt": "Inpatient care ward", "title": "Inpatient Care", "desc": "24/7 hospital care for patients needing continuous support.", "href": "#" },
-    { "image": "services/outpatient", "alt": "Outpatient consultation", "title": "Outpatient Care", "desc": "Consultations, diagnostics, and treatments without admission.", "href": "#" },
-    { "image": "services/home-healthcare", "alt": "Home health care visit", "title": "Home Health Care", "desc": "Quality medical care delivered at home.", "href": "#" },
-    { "image": "services/in-school", "alt": "In-school care", "title": "In School Care", "desc": "On-site care to support student health and safety.", "href": "#" }
+    {
+      "image": "services/inpatient",
+      "alt": "Inpatient care ward",
+      "title": "Inpatient Care",
+      "desc": "24/7 hospital care for patients needing continuous support.",
+      "care": "inpatient-care"
+    },
+    {
+      "image": "services/outpatient",
+      "alt": "Outpatient consultation",
+      "title": "Outpatient Care",
+      "desc": "Consultations, diagnostics, and treatments without admission.",
+      "care": "outpatient-care"
+    },
+    {
+      "image": "services/home-healthcare",
+      "alt": "Home health care visit",
+      "title": "Home Health Care",
+      "desc": "Quality medical care delivered at home.",
+      "care": "home-health-care"
+    },
+    {
+      "image": "services/in-school",
+      "alt": "In-school care",
+      "title": "In School Care",
+      "desc": "On-site care to support student health and safety.",
+      "care": "in-school-care"
+    }
   ],
-  "cardButton": "Start Your Care"
+  "cardButton": "Start Your Care",
+  "_note": "Home Services section (Figma). The same four cards are reused on the Our Care hub and on every hospital page. care = service slug in src/data/care.json: the card links to that service page (our-care/<slug>)."
 }

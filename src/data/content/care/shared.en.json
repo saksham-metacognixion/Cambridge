@@ -1,0 +1,38 @@
+{
+  "_note": "Shared parts of the service (Figma 83:226 Inpatient Care) and sub-service (Figma 41:1730 Post Acute Care) templates. Visible text exactly as in Figma. meta.*, generated.* and pending.* are PLACEHOLDERS (not in Figma). {title} = the service / sub-service title.",
+  "meta": {
+    "title": "{title} | Cambridge Hospital",
+    "description": "{title} at Cambridge Hospital: specialised rehabilitation and long-term care with expert medical supervision."
+  },
+  "heroButton": { "label": "Book an Appointment", "href": "#book-appointment" },
+  "generated": {
+    "_note": "Pages without a content file. Service: hero title = '<title>.' (Figma pattern), the Inpatient Care banner as a placeholder (flagged OC1), no text, sub-service cards from care.json. Sub-service: hero title = '<title>.', the Post Acute Care banner as a placeholder, overview = the card description, no condition cards.",
+    "serviceBanner": { "image": "care/banner-inpatient-care", "alt": "" },
+    "subBanner": { "image": "care/banner-post-acute-care", "alt": "" },
+    "titleSuffix": "."
+  },
+  "service": { "cardsLabel": "Services", "button": "Start Your Care" },
+  "sub": { "overviewHeading": "Overview", "conditionsHeading": "Conditions Treated by Our Specialists", "conditionsLabel": "Conditions", "button": "Know More" },
+  "recovery": {
+    "ariaLabel": "Your recovery matters to us",
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "Your recovery matters to us,",
+    "emphasis": [" and we are with you every step of", "the journey."],
+    "tiles": [
+      { "label": "Book an Appointment", "href": "#book-appointment" },
+      { "label": "Find a Doctor", "href": "#", "page": "findDoctor" },
+      { "label": "Refer a Patient", "href": "#", "page": "referPatient" },
+      { "label": "Send an Inquiry", "href": "#send-inquiry" }
+    ]
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": ["ahmad-al-khayer", "wael-sary", "suhaila-kallada", "rober-hanna-kassab"]
+  },
+  "pending": {
+    "service": "Content pending: this service page is generated from the care data until its text and photos are supplied.",
+    "sub": "Content pending: this page is generated from the service card until its text is supplied."
+  }
+}

@@ -1,0 +1,79 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { CARE_PATHS } from '../../lib/care';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import CareCards from '../../components/hospital/CareCards.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+import DoctorsRow from '../../components/shared/DoctorsRow.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('our-care/page', edition.locale);
+const shared = content('care/shared', edition.locale);
+
+/*
+ * Our Care hub (Figma 36:5631, spec figma-cache/our-care-spec.md). Gaps (Figma px):
+ * hero 119-556 (title top 263: 144 in the stage, 2 lines; text 5 below the title; button 15 below the text) | 22 | "Specialized Care for
+ * Every Need" H2 (box 33) | 12 | text (2 paragraphs, blank line between; box 115) | 22 | "A Structured Continuum of Care" H2 | 12 | text
+ * (box 83) | 22 | "Our Specializations" Medium 14 #00415a (box 33) | 0 | the four service cards (Home Services geometry, navy titles,
+ * x 53 / 295 / 537 / 779) | 44 | CTA band (Contact page tiles: Refer a Patient, heading top 43) | 62 | doctors | 52.54 | footer.
+ */
+const pos = { titleTop: 144, titleW: 385, textGap: 5, textW: 374, textX: 97, buttonGap: 15 };
+---
+
+<BaseLayout edition={edition} path={CARE_PATHS.hub} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={c.hero} pos={pos} />
+    </div>
+    <div id="intro" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(22 * var(--u))">
+      <div class="wrap">
+        {c.sections.map((s: { heading: string; text: string[] }, i: number) => (
+          <section class:list={['sec', i > 0 && 'next']} aria-labelledby={`care-sec-${i}`}>
+            <h2 id={`care-sec-${i}`} class="h">{s.heading}</h2>
+            <div class="t" style={`--mh:${i === 0 ? 115 : 83}`}>{s.text.map((p) => <p>{p}</p>)}</div>
+          </section>
+        ))}
+        <h2 id="specializations" class="label">{c.specializations.heading}</h2>
+      </div>
+    </div>
+    <div id="services" class="relative">
+      <CareCards edition={edition} listLabel={c.specializations.listLabel} button={c.specializations.button} scale={1} titleTone="navy" xs={[53, 295, 537, 779]} />
+    </div>
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
+      <ContactRecovery content={shared.recovery} headTop={43} />
+    </div>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(62 * var(--u))">
+      <DoctorsRow content={c.doctors} id="care-doctors-heading" />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(52.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap { max-width: calc(var(--target-w) * 1px); margin-inline: auto; padding-inline: calc(16 * var(--u)); box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; }
+  .sec.next { margin-top: calc(22 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .t { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
+  .label { margin: calc(22 * var(--u)) 0 0; font-weight: 500; font-size: calc(14 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); }
+  @media (min-width: 1024px) {
+    .wrap { padding-inline: 0; }
+    .h, .label { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); min-height: calc(var(--mh) * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .label { margin-bottom: calc(12 * var(--u)); }
+  }
+</style>

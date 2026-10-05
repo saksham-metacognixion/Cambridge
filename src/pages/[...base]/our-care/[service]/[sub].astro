@@ -1,0 +1,79 @@
+---
+import { editions, editionFromBase } from '../../../../lib/editions';
+import { content, t } from '../../../../lib/content';
+import { services, careContent, descLines, CARE_PATHS, type Service, type SubService } from '../../../../lib/care';
+import { showPendingNote } from '../../../../lib/conditions';
+import { INDEXABLE } from '../../../../lib/seo';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import PageHero from '../../../../components/shared/PageHero.astro';
+import DetailBody from '../../../../components/condition-detail/DetailBody.astro';
+import ConditionCards from '../../../../components/care/ConditionCards.astro';
+import ContactRecovery from '../../../../components/contact/ContactRecovery.astro';
+import DoctorsRow from '../../../../components/shared/DoctorsRow.astro';
+
+/*
+ * Sub-service template (Figma 41:1730 Post Acute Care): one page per sub-service in src/data/care.json, every edition.
+ * hero 118-441 (cover, like the condition pages; title top 100, text 13 below, button 17 below) | 34 | "Overview" H2 + text (DetailBody,
+ * no tabs) | 30 | "Conditions Treated by Our Specialists" + 4 cards (ConditionCards) | 51 | CTA band (heading top 50) | 59 | doctors |
+ * 36.54 | footer. Sub-services without a content file: hero title "<Title>.", placeholder banner, overview = the card description,
+ * no condition cards, "Content pending" on staging (docs/open-decisions.md OC1).
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) =>
+    services.flatMap((s) => s.subServices.map((x) => ({ params: { base: e.base || undefined, service: s.slug, sub: x.slug }, props: { service: s, sub: x } }))),
+  );
+}
+
+const { service, sub } = Astro.props as { service: Service; sub: SubService };
+const edition = editionFromBase(Astro.params.base);
+const loc = edition.locale;
+const shared = content('care/shared', loc);
+const own = careContent(sub.slug, loc);
+const title = t(sub.title, loc, 'care');
+const fill = (s: string) => s.replace('{title}', title);
+const hero = {
+  ariaLabel: own?.hero.ariaLabel ?? title,
+  banner: own?.hero.banner ?? shared.generated.subBanner,
+  title: own?.hero.title ?? [title + shared.generated.titleSuffix],
+  text: own?.hero.text ?? undefined,
+  button: shared.heroButton,
+};
+const pos = { titleTop: 100, titleW: 385, textGap: 13, textW: 374, textX: 97, buttonGap: 17 };
+const overview: string[] = own?.overview ?? [descLines(sub.desc, loc).join(' ').replace(/\s+/g, ' ').trim()];
+const pending = !own && showPendingNote(INDEXABLE) ? shared.pending.sub : null;
+---
+
+<BaseLayout edition={edition} path={CARE_PATHS.sub(service.slug, sub.slug)} title={fill(shared.meta.title)} description={fill(shared.meta.description)}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={hero} pos={pos} h={322} variant="cover" />
+    </div>
+    {pending && <p class="pending-note" role="note">{pending}</p>}
+    <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
+      <DetailBody edition={edition} heading={shared.sub.overviewHeading} overview={overview} tabsLabel="" />
+    </div>
+    {own && own.conditions?.length > 0 && (
+      <div id="conditions" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(30 * var(--u))">
+        <ConditionCards edition={edition} heading={shared.sub.conditionsHeading} listLabel={shared.sub.conditionsLabel} button={shared.sub.button} cards={own.conditions} />
+      </div>
+    )}
+    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(51 * var(--u))">
+      <ContactRecovery content={shared.recovery} headTop={50} />
+    </div>
+    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(59 * var(--u))">
+      <DoctorsRow content={shared.doctors} id="care-doctors-heading" />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(36.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+</style>

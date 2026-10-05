@@ -1,0 +1,72 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { t } from '../../lib/content';
+import { urlFor, type Edition } from '../../lib/editions';
+import { CARE_PATHS, descLines, type Service } from '../../lib/care';
+
+/*
+ * Sub-service cards of a service page (Figma 83:226 Inpatient Care: 6 cards in 2 rows of 3). Section top = the H2 top (page y 578).
+ * H2 Medium 28 #00415a at x56 (box 33) | 12 | text Book 12/14 #6b6b6b at x58 w937 (box 52) | 20.31 | cards.
+ * Card (Figma px, row 1 = reference; row 2 is 11.8 taller in Figma, normalised): photo 291.178 x 320.034 on top, box from +3.94,
+ * 436.768 tall, radius 19.674, border .328 #418ea2; columns x 53 / 370.41 / 687.82 (gap 26.23); rows 476.12 apart (gap 35.41).
+ * Title Medium 19.674 #004059 at (+31.48, +335.77); text Book 11.805/13.116 #6b6b6b at +364.63 (two Figma lines, kept);
+ * button #004059 97.059 x 22.297 r3.935 at +401.36, label "Start Your Care" Medium 10.493/13.116 white at +9.18 / +5.24.
+ */
+interface Props { edition: Edition; service: Service; heading: string; text: string[]; listLabel: string; button: string }
+const { edition, service, heading, text, listLabel, button } = Astro.props;
+const loc = edition.locale;
+const cards = service.subServices.map((s) => ({
+  slug: s.slug,
+  title: t(s.title, loc, 'care'),
+  lines: descLines(s.desc, loc),
+  src: img(s.image, edition.region),
+  alt: s.alt,
+  href: urlFor(edition, CARE_PATHS.sub(service.slug, s.slug)),
+}));
+---
+
+<section class="svc" aria-labelledby="service-heading">
+  <h2 id="service-heading" class="h">{heading}</h2>
+  {text.length > 0 && <div class="t">{text.map((p) => <p>{p}</p>)}</div>}
+  <ul class="grid" role="list" aria-label={listLabel}>
+    {cards.map((k) => (
+      <li class="cell">
+        <article class="card">
+          <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(291.178)} height={px(320.034)} widths={[px(291.178), px(291.178) * 2]} sizes={`(min-width: 1440px) ${px(291.178)}px, (min-width: 1024px) 27.7vw, ${px(291.178)}px`} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+          <h3 class="title">{k.title}</h3>
+          <p class="desc">{k.lines.map((l, i) => (i === 0 ? l : <><br />{l}</>))}</p>
+          <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}>{button}</a>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .svc { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .t { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
+  .grid { list-style: none; margin: calc(20.31 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(291.178 * var(--u))); column-gap: calc(26.23 * var(--u)); row-gap: calc(35.41 * var(--u)); }
+  .cell { display: flex; }
+  .card { position: relative; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(440.71 * var(--u)); padding: 0 calc(31.48 * var(--u)) calc(13 * var(--u)); }
+  .card::before { content: ''; position: absolute; inset: calc(3.94 * var(--u)) 0 0; background: #fff; border-radius: calc(19.674 * var(--u)); box-shadow: inset 0 0 0 calc(0.328 * var(--u)) var(--color-teal-border); }
+  .card > :global(*), .card :global(.img) { position: relative; }
+  .card :global(.img) { display: block; align-self: stretch; width: calc(100% + 62.96 * var(--u)); margin-inline: calc(-31.48 * var(--u)); height: auto; aspect-ratio: 291.178 / 320.034; object-fit: cover; max-width: none; border-start-start-radius: calc(19.674 * var(--u)); border-start-end-radius: calc(19.674 * var(--u)); }
+  .title { margin: calc(15.74 * var(--u)) 0 0; min-height: calc(19.674 * var(--u)); font-weight: 500; font-size: calc(19.674 * var(--u)); line-height: normal; color: var(--color-navy); overflow-wrap: anywhere; }
+  .desc { margin: calc(9.19 * var(--u)) 0 0; min-height: calc(26.23 * var(--u)); font-size: calc(11.805 * var(--u)); line-height: calc(13.116 * var(--u)); color: var(--color-body); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .btn { display: flex; align-items: center; box-sizing: border-box; margin-top: calc(10.5 * var(--u)); width: calc(97.059 * var(--u)); height: calc(22.297 * var(--u)); padding-inline-start: calc(9.18 * var(--u)); border-radius: calc(3.935 * var(--u)); background: var(--color-navy); color: #fff; font-weight: 500; font-size: calc(10.493 * var(--u)); line-height: calc(13.116 * var(--u)); text-decoration: none; white-space: nowrap; --hit-h: 44px; --hit-w: 0px; }
+  .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); min-height: calc(52 * var(--u)); }
+    .grid { margin-inline-start: calc(53 * var(--u)); justify-content: start; grid-template-columns: repeat(3, calc(291.178 * var(--u))); }
+  }
+  @media (max-width: 1023.98px) {
+    .svc { padding-inline: 16px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(291.178 * var(--u))), calc(291.178 * var(--u)))); }
+  }
+</style>

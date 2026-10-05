@@ -190,3 +190,9 @@ SUMMARY: Our Hospitals session 12 calls (#108-119). Running total since #68: 52.
 SUMMARY: Our Hospitals session 13 calls (#108-120). Running total since #68: 53. Next free number: 121.
 121. get_design_context 112:7721 Hospital detail template (excludeScreenshot; screenshot cached as pages/hospitals2-112-7721.png) -> FULL -> raw/hospital-detail-112-7721.tsx, hospital-detail-spec.md
 SUMMARY: Hospital detail session 1 call (#121). Running total since #68: 54. Next free number: 122.
+122. get_design_context 36:5631 Our Care (excludeScreenshot) -> FULL -> raw/our-care-36-5631.tsx, our-care-spec.md
+123. get_screenshot 36:5631 Our Care (1052x2423) -> pages/our-care-36-5631.png
+124. get_design_context 83:226 Inpatient Care (excludeScreenshot; screenshot cached) -> FULL -> raw/inpatient-83-226.tsx
+125. get_design_context 41:1730 Post Acute Care (excludeScreenshot; screenshot cached) -> FULL -> raw/post-acute-41-1730.tsx
+126. download_assets 40:1467 Post Acute card 1 icon group (svg export, the design context split it into 4 vectors) -> assets/post-acute/icon-neuro-group-40-1467.svg
+SUMMARY: Our Care / Inpatient / Post Acute session 5 calls (#122-126). Running total since #68: 59. Next free number: 127.

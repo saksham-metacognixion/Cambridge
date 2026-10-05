@@ -37,6 +37,8 @@ export const PAGE_PATHS = {
   faq: "faq",
   /** Patient Testimonials (Figma 62:2403) */
   patientTestimonials: "patient-testimonials",
+  /** Our Care hub (Figma 36:5631); services = our-care/<service>, sub-services = our-care/<service>/<sub> (CARE_PATHS in src/lib/care.ts). Slug UNCONFIRMED (OC2). */
+  ourCare: "our-care",
   /** Media Hub list (Figma 100:5522); articles = media-hub/<slug> (NEWS_PATHS in src/lib/news.ts) */
   mediaHub: "media-hub",
   /**

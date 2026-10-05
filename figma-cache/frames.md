@@ -13,9 +13,9 @@ All frames are 1052 wide. Loose layers on the canvas (stray rects/texts/vectors)
 | 116:311 | Why Cambridge | 1052x4488 | cached (why-spec.md, pages/why-116-311*.png) — BUILT 5 Oct |
 | 55:12215 | Accreditations & Partnerships | 1052x2100 | cached (accreditations-spec.md, pages/accreditations-55-12215.png) — BUILT 5 Oct |
 | 112:7295 | Career | 1052x3339 | cached (careers-spec.md, pages/career-112-7295.png) — BUILT 5 Oct |
-| 36:5631 | Our Care | 1052x2423 | no |
-| 83:226 | Inpatient Care | 1052x2725 | screenshot pages/ |
-| 41:1730 | Post Acute Care | 1052x1949 | screenshot pages/ |
+| 36:5631 | Our Care | 1052x2423 | cached (our-care-spec.md, raw/, assets/our-care, pages/our-care-36-5631.png) — BUILT 5 Oct |
+| 83:226 | Inpatient Care | 1052x2725 | cached (our-care-spec.md, raw/inpatient-83-226.tsx, assets/inpatient, pages/) — BUILT 5 Oct (service template) |
+| 41:1730 | Post Acute Care | 1052x1949 | cached (our-care-spec.md, raw/post-acute-41-1730.tsx, assets/post-acute, pages/) — BUILT 5 Oct (sub-service template) |
 | 41:2373 | Accidents Rehabilitation | 1052x2141 | screenshot pages/ (real Accidents Rehabilitation) |
 | 67:3070 | Accidents Rehabilitation (second copy, ask which) | 1052x2141 | screenshot pages/ — content is STROKE REHABILITATION (same template as 41:2373) |
 | 40:318 | Conditions & Specialities | 1052x2547 | screenshot pages/ |

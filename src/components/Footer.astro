@@ -8,14 +8,16 @@ import { content, t } from '../lib/content';
 import { img } from '../lib/images';
 import hospitalData from '../data/hospitals.json';
 import { hospitalHref } from '../lib/hospitals';
+import { CARE_PATHS } from '../lib/care';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
 const logo = img(c.logo.image, edition.region);
 const accredited = img(c.accreditations.image, edition.region);
-type Link = { label: string; href: string; path?: string };
+type Link = { label: string; href: string; path?: string; care?: string };
 const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) })));
-const services: Link[] = c.services.links;
+// Services column: each entry links to its service page (`care` = slug in src/data/care.json -> our-care/<slug>).
+const services: Link[] = c.services.links.map((x: Link) => ({ ...x, href: x.care ? urlFor(edition, CARE_PATHS.service(x.care)) : x.href }));
 // Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
 // Each links to its detail page (in this edition, or in the hospital's own region when this edition has no page for it).
 const hospitals = (c.hospitals.slugs as string[]).map((slug) => {

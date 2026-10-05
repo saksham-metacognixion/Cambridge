@@ -114,6 +114,13 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     .stage > img[src*="line24"], .stage > img:not(.logo):not(.icons) { width: 100%; height: auto; flex: 1 1 100%; }
     .bot { flex: 1 1 auto; white-space: pre-wrap; }
     .bot.right { text-align: start; }
+    /* Tap targets: every footer link row is 44px high (text size, colour and order unchanged). */
+    .links li a { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; }
+    .links br { display: none; }
+    .bot a { display: inline-flex; align-items: center; min-height: 44px; }
+    .nl .box { height: max(44px, calc(26 * var(--u))); }
+    .nl input[type="email"], .nl button { top: 0; height: 100%; }
+    .nl input[type="email"] { width: calc(100% - 60 * var(--u)); }
   }
   /* link lists are 12 Figma px apart: the hit layer can't grow taller than the line without overlapping */
   .dense { --hit-h: 100%; }

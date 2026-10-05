@@ -167,7 +167,8 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     .list > .dpos2:first-child { width: calc(149 * var(--u)); height: calc(40 * var(--u)); display: flex; align-items: center; justify-content: center; }
     .list > .dpos2:first-child > .dpos2 { position: static; width: auto; height: auto; }
     a.dpos2 { position: relative; inset: auto; }
-    /* the two buttons are stacked 6 Figma px apart: grow each hit layer by half the gap only, so they never overlap */
-    .actions a { --hit-h: calc(100% + 6 * var(--u)); }
+    /* the two buttons are stacked 10px apart (6 Figma px = 8px was too tight for 44px targets): grow each hit layer by half the gap only, so they never overlap */
+    .actions { gap: 10px; }
+    .actions a { --hit-h: calc(100% + 10px); }
   }
 </style>

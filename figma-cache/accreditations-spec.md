@@ -1,0 +1,5 @@
+# Accreditations & Partnerships (Figma 55:12215, 1052 x 2100). Calls #104-107.
+- Hero 119-556: shared PageHero, banner `assets/accreditations/banner.png` (1052x500, 114.42 %). Title x95 y244 w434 (Medium 39 #004059, 2 lines); text x97 y326 w392 h41 (Book 12/14 #6b6b6b); button 164x30 at x98 y367 (right under the text box).
+- Heading "Internationally Recognised. Clinically Verified." x56 y592 w881 (Medium 28/32 #004059); text x56 y635 w770 h88 (Book 12/14 #6b6b6b).
+- Tabs x56 y722: 8 tabs 311 x 78 at y 722 / 802 / 883 / 963 / 1044 / 1124 / 1205 / 1285 (pitch 80.43), rgba(231,231,231,.45), active (CARF) #418ea2; label x80 (Book 17 #004059, active Bold white, Kozyavkin 2 lines at 21) vertically centred. Panel x385 y904 w610 h459 (Book 12/14 #6b6b6b, section lines #00415a, bullet lines with a literal "•", first bullet line 19 tall); CARF seal 146x142 at (589,729) (`carf.png`, 583x570 original). Only the CARF tab has content.
+- CTA 1423-1691: shared Contact block, third tile "Search Conditions". Footer 1732.

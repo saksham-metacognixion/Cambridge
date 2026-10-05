@@ -1,0 +1,153 @@
+{
+  "_note": "Accreditations & Partnerships (Figma 55:12215, 1052 x 2100). Visible text exactly as in Figma (double spaces, 'Recognised' / 'Specialized', 'LIve'-style typos kept: 'Inpatient Stroke  specialty program', 'Accredited  in 2025 till now-'). Only the CARF tab has panel content in Figma; the other 7 tabs show 'Content pending' on staging only (D5 rule). meta.* and alt texts are PLACEHOLDER.",
+  "meta": {
+    "title": "Accreditations & Partnerships | Cambridge Hospital",
+    "description": "Cambridge Hospital's care is guided by internationally recognized standards: CARF, JCI, CBAHI, CAP, Kozyavkin, OSHAD, ADHICS and JAWDA."
+  },
+  "pendingTab": "Content pending",
+  "hero": {
+    "ariaLabel": "Standards That Define Our Care",
+    "banner": {
+      "image": "accreditations/banner",
+      "alt": ""
+    },
+    "title": [
+      "Standards That",
+      "Define Our Care"
+    ],
+    "text": "Our care is guided by internationally recognized standards, ensuring safety, consistency, and measurable clinical outcomes.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "intro": {
+    "heading": "Internationally Recognised. Clinically Verified.",
+    "text": "Cambridge Hospital's accreditations are not marketing credentials, they are externally audited, periodically renewed clinical standards that govern every protocol, every patient pathway, and every care environment across the network. They exist to protect patients, not to differentiate press releases.",
+    "tabsLabel": "Accreditations and certifications"
+  },
+  "tabs": [
+    {
+      "label": "CARF Accredited",
+      "image": {
+        "image": "accreditations/carf",
+        "alt": "CARF accredited seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 142
+      },
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The international benchmark for rehabilitation services. CARF accreditation confirms that Cambridge Hospital's rehabilitation programmes meet globally recognised standards for patient outcomes, clinical process, and service delivery. Both UAE and KSA facilities are CARF-accredited."
+        },
+        {
+          "type": "sec",
+          "text": "CMRC obtained CARF accreditation in 2017 and re-accredited till now. Accredited - Specialized Programs in UAE facilities"
+        },
+        {
+          "type": "bullets",
+          "lines": [
+            "•Inpatient Stroke  specialty program",
+            "•Inpatient LTAC specialty program",
+            "•Inpatient Rehabilitation Adults",
+            "•Inpatient Rehabilitation Child & ",
+            "Adolescents",
+            "•Outpatient Rehabilitation Adults",
+            "•Outpatient Rehabilitation Child & ",
+            "Adolescents"
+          ]
+        },
+        {
+          "type": "sec",
+          "text": "Accredited in 2019 till now - Specialized Programs in CMRC Saudi Arabia- Dhahran"
+        },
+        {
+          "type": "bullets",
+          "lines": [
+            "•Inpatient Rehabilitation Adults",
+            "•Inpatient Rehabilitation stroke specialty program.",
+            "•Inpatient Rehabilitation brain injury rehabilitation.",
+            "•Inpatient Rehabilitation-spinal cord injury specialty.",
+            "•Inpatient Rehabilitation Child & Adolescents",
+            "•Outpatient Rehabilitation Adults",
+            "•Outpatient Rehabilitation child & Adolescents"
+          ]
+        },
+        {
+          "type": "sec",
+          "text": "Accredited  in 2025 till now- Specialized Programs in CMRC Saudi Arabia - Khobar"
+        },
+        {
+          "type": "bullets",
+          "lines": [
+            "•Inpatient Rehabilitation Adults",
+            "•Inpatient Rehabilitation Child & Adolescents"
+          ]
+        },
+        {
+          "type": "sec",
+          "text": "Accredited in 2026 - Specialized Programs in IECC KSA"
+        },
+        {
+          "type": "bullets",
+          "lines": [
+            "•Inpatient Rehabilitation Adults",
+            "•Inpatient Rehabilitation Child & Adolescents"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "JCI Accredited",
+      "blocks": []
+    },
+    {
+      "label": "CBAHI Accredited",
+      "blocks": []
+    },
+    {
+      "label": "CAP Accredited",
+      "blocks": []
+    },
+    {
+      "label": "Affiliated & Certified with Professor Kozyavkin Program",
+      "blocks": []
+    },
+    {
+      "label": "OSHAD Certified",
+      "blocks": []
+    },
+    {
+      "label": "ADHICS Certified",
+      "blocks": []
+    },
+    {
+      "label": "JAWDA Certified",
+      "blocks": []
+    }
+  ],
+  "recovery": {
+    "tiles": [
+      {
+        "label": "Book an Appointment",
+        "href": "#book-appointment"
+      },
+      {
+        "label": "Find a Doctor",
+        "href": "#",
+        "path": "find-a-doctor"
+      },
+      {
+        "label": "Search Conditions",
+        "href": "#",
+        "page": "conditions"
+      },
+      {
+        "label": "Send an Inquiry",
+        "href": "#send-inquiry"
+      }
+    ]
+  }
+}

@@ -1,5 +1,8 @@
 ---
 import RichText from '../shared/RichText.astro';
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 
 /*
@@ -9,18 +12,25 @@ import type { Edition } from '../../lib/editions';
  * Look (Figma px): tabs 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25; active #418ea2, white text with
  * text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059. The panel sits `gap` right of the tabs
  * (18 on detail pages, 24 on Careers), `top` below the tabs top (1 / 27), `width` wide (610 / 529 / 441), Book 12/14 #6b6b6b.
- * Block types: p (paragraph) | h (sub-heading, Medium) | lead (teal line, 22) | note (teal line, 14) | ul (bullets) |
- * lines (several lines, line breaks kept). One empty 14px line between blocks.
+ * Block types: p (paragraph) | h (sub-heading, Medium) | sec (sub-heading, Book, #00415a: Accreditations) | lead (teal line, 22) |
+ * note (teal line, 14) | ul (bullets) | lines (several lines, line breaks kept) | bullets (lines starting with a literal bullet,
+ * first line 19 tall: Accreditations). One empty 14px line between blocks.
+ * `look` (Accreditations 55:12215: tabs 311 x 78, pitch 80.43, label Book 17 (active Bold) centred vertically, no text shadow):
+ * overrides the tab geometry; defaults = the values above. `item.image` = a picture placed inside the panel (page px x, y).
  * `pending`: the text shown in an empty panel (staging only; the caller passes null in production).
  */
 export type Block =
-  | { type: 'p' | 'h' | 'lead' | 'note'; text: string }
-  | { type: 'lines'; lines: string[] }
+  | { type: 'p' | 'h' | 'lead' | 'note' | 'sec'; text: string }
+  | { type: 'lines' | 'bullets'; lines: string[] }
   | { type: 'ul'; items: (string | string[])[] };
 interface Props {
   edition: Edition;
   label: string;
-  items: { label: string; blocks: Block[] }[];
+  items: { label: string; blocks: Block[]; image?: { image: string; alt: string; x: number; y: number; w: number; h: number } }[];
+  look?: { tabH?: number; tabGap?: number; fontSize?: number; lineHeight?: number; activeWeight?: number; shadow?: boolean; center?: boolean; padStart?: number; labelW?: number };
+  /** page x / y of the panel text box, so `item.image` positions are page coordinates (Figma px) */
+  panelX?: number;
+  panelY?: number;
   active?: number;
   /** id prefix: two tab lists on one page need different ids */
   idPrefix?: string;
@@ -30,12 +40,14 @@ interface Props {
   top?: number;
   width?: number;
 }
-const { edition, label, items, active: activeIn = 0, idPrefix = '', pending, gap = 18, top = 1, width = 610 } = Astro.props;
+const { edition, label, items, active: activeIn = 0, idPrefix = '', pending, gap = 18, top = 1, width = 610, look = {}, panelX = 0, panelY = 0 } = Astro.props;
+const L = { tabH: 63, tabGap: 2, fontSize: 13, lineHeight: 14, activeWeight: 400, shadow: true, center: false, padStart: 24, labelW: 265, ...look };
+const photos = items.map((t) => (t.image ? { ...t.image, src: img(t.image.image, edition.region) } : null));
 const active = Math.min(activeIn, Math.max(items.length - 1, 0));
 const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
 ---
 
-<div class="topics" data-tabs style={`--pg:${gap};--pt:${top};--pw:${width}`}>
+<div class:list={['topics', L.center && 'centered']} data-tabs style={`--pg:${gap};--pt:${top};--pw:${width};--th:${L.tabH};--tgp:${L.tabGap};--tfs:${L.fontSize};--tlh:${L.lineHeight};--taw:${L.activeWeight};--tsh:${L.shadow ? 1 : 0};--tps:${L.padStart};--tlw:${L.labelW}`}>
   <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={label}>
     {items.map((t, i) => (
       <button type="button" role="tab" id={id('tab', i)} class="tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={id('panel', i)} tabindex={i === active ? 0 : -1}>
@@ -46,6 +58,9 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
   <div class="panels">
     {items.map((t, i) => (
       <div role="tabpanel" id={id('panel', i)} class="panel" aria-labelledby={id('tab', i)} tabindex="0" hidden={i !== active}>
+        {photos[i] && (
+          <Picture src={photos[i]!.src} formats={['avif']} fallbackFormat="webp" width={px(photos[i]!.w)} height={px(photos[i]!.h)} widths={[px(photos[i]!.w), px(photos[i]!.w) * 2]} sizes={`${px(photos[i]!.w)}px`} loading="lazy" decoding="async" alt={photos[i]!.alt} class="art" pictureAttributes={{ class: 'contents' }} style={`--ax:${photos[i]!.x - panelX};--ay:${photos[i]!.y - panelY};--aw:${photos[i]!.w};--ah:${photos[i]!.h}`} />
+        )}
         {t.blocks.length === 0 && pending && <p class="pending">{pending}</p>}
         {t.blocks.map((b) =>
           b.type === 'ul' ? (
@@ -56,6 +71,8 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
             </ul>
           ) : b.type === 'lines' ? (
             <p class="lines">{b.lines.map((line, k) => (k === 0 ? line : <><br />{line}</>))}</p>
+          ) : b.type === 'bullets' ? (
+            <p class="bullets"><span class="b1">{b.lines[0]}</span>{b.lines.slice(1).map((line) => <><br />{line}</>)}</p>
           ) : b.type === 'h' ? (
             <h3 class="sub">{b.text}</h3>
           ) : (
@@ -73,17 +90,25 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
 
 <style>
   .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
-  .tablist { display: flex; flex-direction: column; gap: calc(2 * var(--u)); }
-  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(63 * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(24 * var(--u)) calc(22 * var(--u)); border: 0; border-radius: 0; background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(13 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
-  .tab[aria-selected='true'] { background: var(--color-teal-border); color: #fff; text-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25); }
+  .tablist { display: flex; flex-direction: column; gap: calc(var(--tgp, 2) * var(--u)); }
+  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(var(--th, 63) * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(var(--tps, 24) * var(--u)) calc(22 * var(--u)); border: 0; border-radius: 0; background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(var(--tfs, 13) * var(--u)) / calc(var(--tlh, 14) * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
+  .tab[aria-selected='true'] { background: var(--color-teal-border); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
+  .centered .tab { align-items: center; padding-block: 0; }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
-  .tab-label { max-width: calc(265 * var(--u)); overflow-wrap: anywhere; }
-  .panel { color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .tab-label { max-width: calc(var(--tlw, 265) * var(--u)); overflow-wrap: anywhere; }
+  .panel { position: relative; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
   .panel:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(4 * var(--u)); }
   .panel[hidden] { display: none; }
   .panel > * { margin: calc(14 * var(--u)) 0 0; overflow-wrap: anywhere; }
   .panel > :first-child { margin-top: 0; }
   .panel > .sub + .lead, .panel > .lead + .ul { margin-top: 0; }
+  .sec { color: var(--color-navy-alt); }
+  .bullets { white-space: normal; }
+  .bullets .b1 { display: inline-block; line-height: calc(19 * var(--u)); }
+  .panel > .sec + .bullets { margin-top: 0; }
+  .panel :global(.art) { display: block; margin: 0 auto calc(14 * var(--u)); width: calc(var(--aw) * var(--u)); height: calc(var(--ah) * var(--u)); max-width: none; object-fit: cover; }
+  .panel > :global(picture:first-child) + * { margin-top: 0; }
+  @media (min-width: 1024px) { .panel > :global(picture:first-child) + * { margin-top: 0; } .panel :global(.art) { position: absolute; z-index: 1; margin: 0; max-width: none; object-fit: cover; width: calc(var(--aw) * var(--u)); height: calc(var(--ah) * var(--u)); inset-inline-start: calc(var(--ax) * var(--u)); top: calc(var(--ay) * var(--u)); } }
   .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
   .lead { color: var(--color-teal-border); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
   .note { color: var(--color-teal-border); }

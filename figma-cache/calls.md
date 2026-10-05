@@ -176,3 +176,8 @@ SUMMARY: Why session 12 calls (#79-90 incl. 2 get_*); About + Why total 23 (#68-
 SUMMARY: Why session 24 calls (#79-102); About + Why total 35 (#68-102). Next free number: 103.
 103. use_figma READ-ONLY: image fill crop transforms of 97:5493 (wireframe: crop y .5779-1, x 0-1), 93:892 (accreditation: x .1762-.8299, y .5791-1), 46:6348 (hero) and 116:309 (team, FILL). The scale-2 renders (#89, #90) are flattened on #F5F5F5, so both images are re-cut from the transparent originals with these crops.
 SUMMARY: Why session 25 calls (#79-103); About + Why total 36 (#68-103). Next free number: 104.
+104. get_design_context 55:12215 Accreditations & Partnerships (with screenshot) -> FULL -> accreditations-spec.md
+105. download_assets 55:10616 Banner3 1 (hero) -> raw 1052x500
+106. download_assets 55:11522 CARF-Loogo 1 -> raw
+107. get_screenshot 55:12215 (1052x2100) -> pages/accreditations-55-12215.png
+SUMMARY: About + Why + Accreditations total 40 calls (#68-107). Next free number: 108.

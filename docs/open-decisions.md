@@ -2,7 +2,7 @@
 
 Replaces the old "Pramod list" (docs/audit-and-plan.md §7). Pramod is unavailable, so every open question has a **default we built with** and a note on **what changes if the answer differs**. Every default can be changed by editing config or JSON only, never code.
 
-Last updated: 5 Oct 2026 (About Cambridge + Why Cambridge pages, Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
+Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge + Accreditations & Partnerships pages, Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
 
 ## Default rules (apply everywhere)
 | Situation | Default |
@@ -62,12 +62,12 @@ Last updated: 5 Oct 2026 (About Cambridge + Why Cambridge pages, Careers page, m
 | A2 | **Header link "We are listening"** (not in the Figma header): approve the addition and its position. | Added as the first link of the top row, same Gotham Book 9 cyan as the other top links, in the free space between the logo and the Opinion icon (x305, 72 wide, 9 Figma px from the logo). Also first in the mobile menu. Fits from 1200px up (checked 1200 to 1920). Target = the Your Opinion Matters pop-up (scope 2.7 form), from `src/data/nav.json` -> `weAreListeningTarget`. | When the About section exists, set `weAreListeningTarget` to `{ "page": "about", "hash": "we-are-listening" }` (= `/about#we-are-listening`). Text: `topLinks[0].label` in `layout/header.en.json`. Move it: `topLinkBoxes[0]` in `Header.astro`. | open (Padmavathi) |
 | A3 | **Intro video: source and host** (YouTube, Vimeo or self-hosted). Figma shows only a poster and a play button. | Poster + play button exactly as in Figma. `src/data/about.json` -> `video: { host, id }` is empty, so the button does nothing. When filled, the player (iframe or `<video>`) is created only on click, no third-party request on page load. | Fill `host` (`youtube`, `vimeo` or `file`) and `id` (video id, or the file URL for `file`). | open (Pratik) |
 | A4 | **"Who We Are" (46:5841): older About draft, or a separate page?** It repeats the About hero, then has an intro text, six stats ("Six Hospitals. Two Countries. One Standard Care."), "Our Foundation of Care" tabs (Mission / Vision / Values) and "Expanding Services to Communities Regionally". No About card links to it. | Not built. | If it is a page: add a route and a card/menu link, build from the saved screenshot (`figma-cache/pages/who-we-are-46-5841.png`). | open (Pratik) |
-| A5 | **About card destinations.** | "About Cambridge" = this page, "Careers Hub" = `/careers`, "Why Choose Cambridge" = `why-cambridge` (Figma 116:311, **built**, see W1-W7), "Accreditations & Partnerships" = `accreditations-partnerships` (Figma 55:12215, **not built yet**: planned next, listed in the missing pages below). Slugs are placeholders (`src/lib/paths.ts`). | Change the three keys in `PAGE_PATHS`; add 301s. | open |
+| A5 | **About card destinations.** | "About Cambridge" = this page, "Careers Hub" = `/careers`, "Why Choose Cambridge" = `why-cambridge` (Figma 116:311, **built**, see W1-W7), "Accreditations & Partnerships" = `accreditations-partnerships` (Figma 55:12215, **built**, see AC1-AC3). Slugs are placeholders (`src/lib/paths.ts`). | Change the three keys in `PAGE_PATHS`; add 301s. | open |
 | A6 | **About URL and footer link.** | `/about` (+ edition prefixes). Header "About Cambridge" and the footer's first Quick Link ("Cambridge", see D8) both point to it. | `PAGE_PATHS.about`; `layout/footer.en.json` first quick link. | open |
 | A7 | **Numbers and spelling conflicts.** | None on this page: it has no stats or facility names beyond the shared header/footer. (Stats appear in Who We Are / Why Cambridge: 715 beds, 1200+ professionals, 85% discharge rate, 13+ years: compare with the landing page when Why Cambridge is built.) Typos kept as in Figma: "Lear more about how we deliver care" (Explore sub), "Facility Go LIve" (timeline, OFF). | Edit `content/about/page.en.json`. | open (D8 list) |
 | A8 | **Images.** Hero banner (one flattened PNG 1052x500), the four card photos (888 x 976) and the video poster (429 x 264, 1x only, soft at 1440 and retina). People images need KSA versions (hero banner, all four cards). Card 2's photo is 1 Figma px higher than the others in Figma (1122 vs 1123): kept per card (`imageTop`). "Inpatient 3" in Figma (d3f04) is hidden under the handshake photo and is not used. | UAE / Global images on every edition. | Add `src/assets/regions/sa/about/*` (see P5, P6, B7). | open |
 
-**Missing pages (linked but not built):** Accreditations & Partnerships (`accreditations-partnerships`, Figma 55:12215; linked from the About card and the Why Cambridge "Read More"), Our Hospitals (`our-hospitals`, Figma 101:6247; linked from the Why Cambridge "Our Hospitals" button). The links return 404 until they exist.
+**Missing pages (linked but not built):** Our Hospitals (`our-hospitals`, Figma 101:6247; linked from the Why Cambridge "Our Hospitals" button). The links return 404 until they exist.
 **Fixed on the way:** the Book an Appointment link's tap layer covered the whole mobile menu, so no menu link could be tapped (mobile review M11).
 
 ### Why Cambridge (built 5 Oct 2026 from Figma 116:311)
@@ -80,6 +80,14 @@ Last updated: 5 Oct 2026 (About Cambridge + Why Cambridge pages, Careers page, m
 | W5 | **Text kept as in Figma** (D8 list): double space in the hero text ("hospital and home  with"), straight apostrophe in "The Region's Most Clinically...", British "Specialised Programmes" next to American "Specialized" on the same page (one spelling per name: confirm which). | As in Figma. | `why/page.en.json`. | open |
 | W6 | **Small screens.** No Figma. Below 1024px sections stack; the three stat groups wrap; the "Multidisciplinary Professionals" and "Trusted Standards" headings step down with the width (7.6vw / 8.4vw, never above 37 Figma px) because the long words do not fit at full size; the pill bars and the pattern art are hidden. | See docs/mobile-review. | CSS in `components/why/*`. | open (Padmavathi) |
 | W7 | **URL.** `why-cambridge` (+ edition prefixes). | Placeholder in `PAGE_PATHS`. | `src/lib/paths.ts`, 301 in `_redirects`. | open |
+
+
+### Accreditations & Partnerships (built 5 Oct 2026 from Figma 55:12215)
+| # | Question | Default used and why | If the answer differs | Status |
+|---|---|---|---|---|
+| AC1 | **Seven of the eight accreditation tabs have no panel content in Figma** (JCI, CBAHI, CAP, Kozyavkin, OSHAD, ADHICS, JAWDA): only CARF has text and a seal. | Tabs kept as in Figma; empty panels show "Content pending" on staging only (`PUBLIC_SHOW_PENDING_NOTE=true`), nothing in production. | Fill the `blocks` (and `image`) of each tab in `src/data/content/accreditations/page.en.json`. | open (Pratik) |
+| AC2 | **Text kept as in Figma** (D8 list): "Internationally Recognised" (British) next to "recognized" / "Specialized"; "Inpatient Stroke  specialty program" and "Accredited  in 2025 till now-" (double spaces); "CMRC" / "IECC KSA" group names; "Adolescents" wrapped to its own line twice in the first list. | As in Figma. | Edit the JSON. | open |
+| AC3 | **URL.** `accreditations-partnerships` (+ edition prefixes). | Placeholder in `PAGE_PATHS`. | `src/lib/paths.ts`, 301 in `_redirects`. | open |
 
 
 ### Design and QC (Padmavathi)

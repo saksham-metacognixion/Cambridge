@@ -1,0 +1,38 @@
+---
+import Band from '../careers/Band.astro';
+import Tabs from '../shared/Tabs.astro';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "Internationally Recognised. Clinically Verified." + the accreditation tabs (Figma 55:12215), page y 592-1363.
+ * Heading x56 y592 (Medium 28 / 32 #004059, w881); text x56 y635 (Book 12 / 14 #6b6b6b, w770), 11 below the heading;
+ * tabs x56 y722 (45 below the 3 text lines): 311 x 78, pitch 80.43, rgba(231,231,231,.45) / active #418ea2, label at +23 / +24,
+ * Book 17 #004059 (active Bold white), centred vertically (two-line label: line 21). Panel text x385 (18 right of the tabs)
+ * y904 (182 below their top), w610, Book 12 / 14; CARF seal 146 x 142 at (589, 729).
+ * Uses the shared Tabs component (ARIA tabs, src/scripts/tabs.ts) with `look`.
+ */
+interface Props { edition: Edition; c: any; tabs: any[]; pending: string | null }
+const { edition, c, tabs, pending } = Astro.props;
+---
+
+<Band labelledby="standards-heading">
+  <div class="sec">
+    <h2 id="standards-heading" class="h">{c.heading}</h2>
+    <p class="p">{c.text}</p>
+    <div class="tabs">
+      <Tabs edition={edition} label={c.tabsLabel} items={tabs} pending={pending} idPrefix="acc-" gap={18} top={182} width={610} panelX={385} panelY={904}
+        look={{ tabH: 78, tabGap: 2.43, fontSize: 17, lineHeight: 21, activeWeight: 700, shadow: false, center: true, padStart: 24, labelW: 263 }} />
+    </div>
+  </div>
+</Band>
+
+<style>
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .p { margin: calc(11 * var(--u)) 0 0; font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .tabs { margin-top: calc(24 * var(--u)); }
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(881 * var(--u)); }
+    .p { margin-inline-start: calc(56 * var(--u)); width: calc(770 * var(--u)); min-height: calc(42 * var(--u)); }
+    .tabs { margin-top: calc(45 * var(--u)); margin-inline-start: calc(56 * var(--u)); }
+  }
+</style>

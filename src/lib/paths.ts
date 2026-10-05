@@ -13,7 +13,7 @@ export const PAGE_PATHS = {
   about: 'about',
   /** Why Cambridge (Figma 116:311), built after About. Slug UNCONFIRMED. */
   whyCambridge: 'why-cambridge',
-  /** Accreditations & Partnerships (Figma 55:12215), NOT BUILT yet (linked from the About cards; missing-pages list). Slug UNCONFIRMED. */
+  /** Accreditations & Partnerships (Figma 55:12215). Slug UNCONFIRMED. */
   accreditations: 'accreditations-partnerships',
   /** Our Hospitals list (Figma 101:6247), NOT BUILT yet (linked from Why Cambridge). Slug UNCONFIRMED. */
   hospitals: 'our-hospitals',

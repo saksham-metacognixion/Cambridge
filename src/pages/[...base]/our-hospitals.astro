@@ -1,0 +1,56 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import HeroMap from '../../components/hospitals/HeroMap.astro';
+import HospitalCards from '../../components/hospitals/HospitalCards.astro';
+import Impact from '../../components/hospitals/Impact.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+import DoctorsRow from '../../components/shared/DoctorsRow.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('hospitals/page', edition.locale);
+
+/*
+ * Our Hospitals list template (Figma 101:6247, file LJIRtzU...). Gaps (Figma px) between blocks:
+ * Hero 119-556 -> "Find Care Near You" H2 578: 22 | last card box ends 1605.31 -> Impact band 1660: 54.69 | band ends 2045 -> CTA 2097: 52 |
+ * CTA ends 2365 -> doctors H2 2422: 57 | doctor cards end 2765.46 -> footer 2801: 35.54.
+ * Hero (white text on the dark banner, filled button): title top 252 - 119 = 133 (w450, 2 lines), text 336 (10 below), button 387 (24 below the 27 text box).
+ * The second "Our Hospitals" frame (112:7721) is the Hospital DETAIL template ("Advanced Care in Abu Dhabi"), not built yet (docs/open-decisions.md H2).
+ */
+const sections = [
+  { id: 'hospitals', C: HospitalCards, props: { edition, c: c.list }, mt: 22 },
+  { id: 'impact', C: Impact, props: { edition, c: c.impact }, mt: 54.69 },
+  { id: 'recovery', C: ContactRecovery, props: {}, mt: 52 },
+  { id: 'doctors', C: DoctorsRow, props: { content: c.doctors, id: 'hospitals-doctors-heading' }, mt: 57 },
+];
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.hospitals} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={c.hero} pos={{ titleTop: 133, titleW: 450, textGap: 10, textW: 389, textX: 97, buttonGap: 24 }} tone="white" button="fill">
+        <HeroMap labels={c.hero.map.labels} slot="art" />
+      </PageHero>
+    </div>
+    {
+      sections.map(({ id, C, props, mt }) => (
+        <div id={id} class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+          <C {...props} />
+        </div>
+      ))
+    }
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(35.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

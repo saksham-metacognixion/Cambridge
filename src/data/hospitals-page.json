@@ -1,0 +1,7 @@
+{
+  "_note": "Our Hospitals page switches. filterByRegion: scope 2.5 says the list is filtered by region (Global = all, /ae = UAE, /sa = KSA); set false to show all six everywhere (D15 default). viewHospital: destination of the 'View Hospital' buttons until the Hospital detail template (Figma 112:7721) is built: { page } = key in PAGE_PATHS, or { detail: true } once the detail pages exist (docs/open-decisions.md H2).",
+  "filterByRegion": true,
+  "viewHospital": {
+    "page": "contact"
+  }
+}

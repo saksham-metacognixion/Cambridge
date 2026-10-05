@@ -2,7 +2,7 @@
 
 Replaces the old "Pramod list" (docs/audit-and-plan.md §7). Pramod is unavailable, so every open question has a **default we built with** and a note on **what changes if the answer differs**. Every default can be changed by editing config or JSON only, never code.
 
-Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge + Accreditations & Partnerships pages, Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
+Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge, Accreditations & Partnerships + Our Hospitals pages, Careers page, mobile/tablet review). Confirmers: **Pratik** = scope and content, **Padmavathi** = design / QC approval, **Manager** = cost items.
 
 ## Default rules (apply everywhere)
 | Situation | Default |
@@ -67,7 +67,7 @@ Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge + Accreditations & Part
 | A7 | **Numbers and spelling conflicts.** | None on this page: it has no stats or facility names beyond the shared header/footer. (Stats appear in Who We Are / Why Cambridge: 715 beds, 1200+ professionals, 85% discharge rate, 13+ years: compare with the landing page when Why Cambridge is built.) Typos kept as in Figma: "Lear more about how we deliver care" (Explore sub), "Facility Go LIve" (timeline, OFF). | Edit `content/about/page.en.json`. | open (D8 list) |
 | A8 | **Images.** Hero banner (one flattened PNG 1052x500), the four card photos (888 x 976) and the video poster (429 x 264, 1x only, soft at 1440 and retina). People images need KSA versions (hero banner, all four cards). Card 2's photo is 1 Figma px higher than the others in Figma (1122 vs 1123): kept per card (`imageTop`). "Inpatient 3" in Figma (d3f04) is hidden under the handshake photo and is not used. | UAE / Global images on every edition. | Add `src/assets/regions/sa/about/*` (see P5, P6, B7). | open |
 
-**Missing pages (linked but not built):** Our Hospitals (`our-hospitals`, Figma 101:6247; linked from the Why Cambridge "Our Hospitals" button). The links return 404 until they exist.
+**Missing pages (linked but not built):** Hospital detail pages (Figma 112:7721, see H2). Every link on these pages now reaches a built page.
 **Fixed on the way:** the Book an Appointment link's tap layer covered the whole mobile menu, so no menu link could be tapped (mobile review M11).
 
 ### Why Cambridge (built 5 Oct 2026 from Figma 116:311)
@@ -88,6 +88,16 @@ Last updated: 5 Oct 2026 (About Cambridge, Why Cambridge + Accreditations & Part
 | AC1 | **Seven of the eight accreditation tabs have no panel content in Figma** (JCI, CBAHI, CAP, Kozyavkin, OSHAD, ADHICS, JAWDA): only CARF has text and a seal. | Tabs kept as in Figma; empty panels show "Content pending" on staging only (`PUBLIC_SHOW_PENDING_NOTE=true`), nothing in production. | Fill the `blocks` (and `image`) of each tab in `src/data/content/accreditations/page.en.json`. | open (Pratik) |
 | AC2 | **Text kept as in Figma** (D8 list): "Internationally Recognised" (British) next to "recognized" / "Specialized"; "Inpatient Stroke  specialty program" and "Accredited  in 2025 till now-" (double spaces); "CMRC" / "IECC KSA" group names; "Adolescents" wrapped to its own line twice in the first list. | As in Figma. | Edit the JSON. | open |
 | AC3 | **URL.** `accreditations-partnerships` (+ edition prefixes). | Placeholder in `PAGE_PATHS`. | `src/lib/paths.ts`, 301 in `_redirects`. | open |
+
+
+### Our Hospitals (built 5 Oct 2026 from Figma 101:6247)
+| # | Question | Default used and why | If the answer differs | Status |
+|---|---|---|---|---|
+| H1 | **Region filter.** Scope 2.5 says the hospitals list is "filtered by region"; the Figma frame (Global) shows all six. The hero text "Six Locations." is the same on every edition. | Global = all six, `/ae` = the three UAE facilities, `/sa` = the three KSA ones (`src/data/hospitals-page.json` -> `filterByRegion: true`). Hero text unchanged (Figma). | Set `filterByRegion: false` to show all six everywhere (the D15 default). Region of each hospital: `region` in `src/data/hospitals.json`. | open (Pratik) |
+| H2 | **Hospital detail pages.** The second "Our Hospitals" frame (112:7721) is in fact the hospital DETAIL template ("Advanced Care in Abu Dhabi": hero, video, environment text, gallery with a dropdown + arrows and dots, "Find Us in Abu Dhabi" map band with "Open in Google Maps", 4 care cards, CTA, doctors). Scope 2.5 wants it with address, phone, hours, map and click-to-call, which the frame does not show. Needs per-hospital content (B3). | Not built. "View Hospital" buttons go to the Contact page (`hospitals-page.json` -> `viewHospital.page`). | Build the template next (slug pattern `our-hospitals/<slug>`), then set `viewHospital` to `{ "detail": true }`. | open (Pratik: content + phone/hours; Padmavathi) |
+| H3 | **Number conflicts.** This page: "715 Operational Beds" (no plus) and "13+ Years of Experience". Landing page: "720 Operational Beds". Why Cambridge: "715+ Beds Across the Network", "13+ Years of Care". Three spellings of the same two facts. | Each page as in Figma; the four identical stats (300,000+, 5,000+, 30,000+) come from the shared landing JSON; 85 %, 715 and 13+ are page-specific. | Pick one number and label; edit `why/page.en.json`, `hospitals/page.en.json` or `home/facilities.en.json`. | open (Pratik, with W1) |
+| H4 | **Hospital names, addresses and photos** are the Figma placeholders in `src/data/hospitals.json` (`address`, `listPhoto`; Al Mudeef's card says only "Al Mudeef Center"). The list photos differ from the Home facilities photos (both kept). Arabic address fields are empty (B4). | Figma text. | Replace with Pramod's export (B3). | open |
+| H5 | **Map labels and pins** on the hero are decoration (aria-hidden; the dark banner PNG from Figma already contains the map and pins, so below 1024px the banner shows them without labels). | As in Figma. | n/a | open (Padmavathi) |
 
 
 ### Design and QC (Padmavathi)

@@ -1,0 +1,58 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { resolveStats } from '../../lib/stats';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "Real Impact. Real Outcomes." (Figma 101:6235-6244), page y 1660-2045: full-width band rgba(231,231,231,.5), h385.
+ * Photo "Care 1" 410 x 385 at x-11 (crop of the 1052x1008 original: y from 2.04 %, pre-cut in care.png). Heading x469 y+72 w481,
+ * Gotham Medium 30 #418ea2 with the two full stops in #00b8ff; hairline 616 x .5 #418ea2 at x472 y+121; six stats Medium 35 / 12
+ * (line height 133.7 %) #00415a in two rows: (469, 691, 863) x (+158, +257).
+ */
+interface Props { edition: Edition; c: { ariaLabel: string; heading: [string, string][]; photo: { image: string; alt: string }; stats: any[] } }
+const { edition, c } = Astro.props;
+const stats = resolveStats(edition, c.stats);
+const photo = img(c.photo.image, edition.region);
+const cols = [469, 691, 863], rows = [158, 257];
+const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)] }));
+---
+
+<section class="imp" aria-label={c.ariaLabel}>
+  <div class="in">
+    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(385)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+    <div class="copy">
+      <h2 class="h">{c.heading.map(([w, dot]) => <>{w}<span class="dot">{dot}</span></>)}</h2>
+      <hr class="rule" />
+      <ul class="stats" role="list">
+        {items.map((s) => (
+          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="n">{s.number}</span><span class="l">{s.label}</span></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .imp { position: relative; background: rgba(231, 231, 231, 0.5); font-family: var(--font-gotham); font-style: normal; }
+  .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; overflow-x: clip; }
+  .imp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 410 / 385; object-fit: cover; max-width: none; }
+  .copy { padding: calc(32 * var(--u)) 16px calc(40 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); color: var(--color-teal-border); overflow-wrap: anywhere; }
+  .dot { color: var(--color-cyan); }
+  .rule { margin: calc(13 * var(--u)) 0 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid var(--color-teal-border); }
+  .stats { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
+  .stat { color: var(--color-navy-alt); font-weight: 500; padding-top: calc(3 * var(--u)); }
+  .n { display: block; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  .l { display: block; font-size: calc(12 * var(--u)); line-height: calc(12 * var(--u)); margin-top: calc(6 * var(--u)); }
+  @media (min-width: 1024px) {
+    .in { height: calc(385 * var(--u)); }
+    .imp :global(.photo) { position: absolute; inset-inline-start: calc(-11 * var(--u)); top: 0; width: calc(410 * var(--u)); height: calc(385 * var(--u)); }
+    .copy { padding: 0; }
+    .h { position: absolute; inset-inline-start: calc(469 * var(--u)); top: calc(72 * var(--u)); width: calc(481 * var(--u)); }
+    .rule { position: absolute; inset-inline-start: calc(472 * var(--u)); top: calc(121 * var(--u)); width: calc(616 * var(--u)); margin: 0; }
+    .stats { display: block; margin: 0; }
+    .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); }
+  }
+</style>

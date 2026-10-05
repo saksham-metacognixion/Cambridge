@@ -24,8 +24,11 @@ interface Props {
   /** stage height in Figma px: 437 (banner) or 322 (cover) */
   h?: number;
   variant?: 'banner' | 'cover';
+  /** Our Hospitals (101:6247): white text on the dark banner (desktop only: below 1024px the text sits on white under the photo) and a filled cyan button (white label) */
+  tone?: 'navy' | 'white';
+  button?: 'outline' | 'fill';
 }
-const { content: c, pos, h = 437, variant = 'banner' } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline' } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
 const p = { textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
@@ -53,12 +56,13 @@ const imgH = variant === 'banner' ? 500 : 323;
     </div>
 
     <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
-      <h1 class="title m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic">
+      <h1 class:list={["title m-0 font-gotham font-medium text-f39 leading-37 not-italic", tone === "white" ? "text-navy lg:text-white" : "text-navy"]}>
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
-      {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
-      <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" />
+      {c.text && <p class:list={["text m-0 font-gotham font-normal text-f12 leading-14 not-italic", tone === "white" ? "text-body lg:text-white" : "text-body"]}>{c.text}</p>}
+      <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" fill={button === "fill"} />
     </div>
+    <slot name="art" />
   </div>
 </section>
 

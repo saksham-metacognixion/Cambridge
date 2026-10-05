@@ -17,7 +17,7 @@
     { "label": "About Cambridge", "href": "#", "path": "about" },
     { "label": "Our Care", "href": "#" },
     { "label": "Patient Hub", "href": "#", "path": "patient-hub" },
-    { "label": "Our Hospitals", "href": "#" },
+    { "label": "Our Hospitals", "href": "#", "path": "our-hospitals" },
     { "label": "Contact Us", "href": "#", "path": "contact" }
   ],
   "book": { "label": "BOOK AN APPOINTMENT", "ariaLabel": "Book an appointment", "href": "#book-appointment" }

@@ -15,7 +15,7 @@ export const PAGE_PATHS = {
   whyCambridge: 'why-cambridge',
   /** Accreditations & Partnerships (Figma 55:12215). Slug UNCONFIRMED. */
   accreditations: 'accreditations-partnerships',
-  /** Our Hospitals list (Figma 101:6247), NOT BUILT yet (linked from Why Cambridge). Slug UNCONFIRMED. */
+  /** Our Hospitals list (Figma 101:6247). Slug UNCONFIRMED. Hospital DETAIL pages (Figma 112:7721) are not built yet. */
   hospitals: 'our-hospitals',
   /** Contact Us (Figma 86:431) */
   contact: 'contact',

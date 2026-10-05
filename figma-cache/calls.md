@@ -181,3 +181,10 @@ SUMMARY: Why session 25 calls (#79-103); About + Why total 36 (#68-103). Next fr
 106. download_assets 55:11522 CARF-Loogo 1 -> raw
 107. get_screenshot 55:12215 (1052x2100) -> pages/accreditations-55-12215.png
 SUMMARY: About + Why + Accreditations total 40 calls (#68-107). Next free number: 108.
+108. get_screenshot 101:6247 Our Hospitals (1052x3169) -> pages/hospitals-101-6247.png
+109. get_screenshot 112:7721 Our Hospitals second version (1052x3900) -> pages/hospitals2-112-7721.png
+110. get_design_context 101:6247 Our Hospitals (with screenshot) -> FULL (output cut after the header; all sections captured) -> hospitals-spec.md
+111-119. download_assets 81:1443 (hero banner raw), 101:6237 (Care 1 raw), 101:6609 (map group svg: vector + 2 pin shapes), 81:1644 / 101:6152 / 101:6175 / 101:6204 / 101:6211 / 101:6218 (6 hospital card photos raw)
+SUMMARY: Our Hospitals session 12 calls (#108-119). Running total since #68: 52. Next free number: 120.
+120. use_figma READ-ONLY 101:6247: map group geometry (vector, 6 pins, 5 labels), Line 28 stroke, Care 1 + banner crop transforms, heading colour segments
+SUMMARY: Our Hospitals session 13 calls (#108-120). Running total since #68: 53. Next free number: 121.

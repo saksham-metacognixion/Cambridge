@@ -1,11 +1,114 @@
 {
-  "$comment": "PLACEHOLDER: the 6 facilities shown on the Figma Home page and footer, text exactly as in Figma. Replace with Pramod's export. Full name = brand + ' ' + city. region = edition that lists it.",
+  "$comment": "PLACEHOLDER: the 6 facilities shown on the Figma Home page and footer, text exactly as in Figma. Replace with Pramod's export. Full name = brand + ' ' + city. region = edition that lists it. address + listPhoto (Our Hospitals page, Figma 101:6247; the list photos differ from the Home 'photo' ones). Al Mudeef's card title is 'Al Mudeef Center' only in Figma (listTitleCityless).",
   "hospitals": [
-    { "slug": "abu-dhabi", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Abu Dhabi", "ar": "" }, "region": "ae", "photo": "facilities/auh-new" },
-    { "slug": "al-ain", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Al Ain", "ar": "" }, "region": "ae", "photo": "facilities/al-ain" },
-    { "slug": "dhahran", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Dhahran", "ar": "" }, "region": "sa", "photo": "facilities/dhahran" },
-    { "slug": "al-khobar", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Al Khobar", "ar": "" }, "region": "sa", "photo": "facilities/al-khobar" },
-    { "slug": "jeddah", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Jeddah", "ar": "" }, "region": "sa", "photo": "facilities/jeddah" },
-    { "slug": "al-mudeef-abu-dhabi", "brand": { "en": "Al Mudeef Center", "ar": "" }, "city": { "en": "Abu Dhabi", "ar": "" }, "region": "ae", "photo": "facilities/al-mudeef" }
+    {
+      "slug": "abu-dhabi",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": ""
+      },
+      "city": {
+        "en": "Abu Dhabi",
+        "ar": ""
+      },
+      "region": "ae",
+      "photo": "facilities/auh-new",
+      "address": {
+        "en": "Shakbout City, Abu Dhabi - UAE",
+        "ar": ""
+      },
+      "listPhoto": "hospitals/abu-dhabi"
+    },
+    {
+      "slug": "al-ain",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": ""
+      },
+      "city": {
+        "en": "Al Ain",
+        "ar": ""
+      },
+      "region": "ae",
+      "photo": "facilities/al-ain",
+      "address": {
+        "en": "Al Khabisi, Al Ain - UAE",
+        "ar": ""
+      },
+      "listPhoto": "hospitals/al-ain"
+    },
+    {
+      "slug": "dhahran",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": ""
+      },
+      "city": {
+        "en": "Dhahran",
+        "ar": ""
+      },
+      "region": "sa",
+      "photo": "facilities/dhahran",
+      "address": {
+        "en": "Al Doha Al Janubia, Dhahran - KSA",
+        "ar": ""
+      },
+      "listPhoto": "hospitals/dhahran"
+    },
+    {
+      "slug": "al-khobar",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": ""
+      },
+      "city": {
+        "en": "Al Khobar",
+        "ar": ""
+      },
+      "region": "sa",
+      "photo": "facilities/al-khobar",
+      "address": {
+        "en": "Al Tahliyah, Al Khobar - KSA",
+        "ar": ""
+      },
+      "listPhoto": "hospitals/al-khobar"
+    },
+    {
+      "slug": "jeddah",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": ""
+      },
+      "city": {
+        "en": "Jeddah",
+        "ar": ""
+      },
+      "region": "sa",
+      "photo": "facilities/jeddah",
+      "address": {
+        "en": "Al Ruwais, Jeddah - KSA",
+        "ar": ""
+      },
+      "listPhoto": "hospitals/jeddah"
+    },
+    {
+      "slug": "al-mudeef-abu-dhabi",
+      "brand": {
+        "en": "Al Mudeef Center",
+        "ar": ""
+      },
+      "city": {
+        "en": "Abu Dhabi",
+        "ar": ""
+      },
+      "region": "ae",
+      "photo": "facilities/al-mudeef",
+      "address": {
+        "en": "Shakbout City, Abu Dhabi - UAE",
+        "ar": ""
+      },
+      "listPhoto": "hospitals/al-mudeef-abu-dhabi",
+      "listTitleCityless": true
+    }
   ]
 }

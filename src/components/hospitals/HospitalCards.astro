@@ -1,0 +1,68 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { t } from '../../lib/content';
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import { hospitals } from '../../lib/doctors';
+import config from '../../data/hospitals-page.json';
+import SectionIntro from '../shared/SectionIntro.astro';
+
+/*
+ * "Find Care Near You" (Figma 81:1676 + cards 81:1640, 101:6148 ...), section top = H2 top (page y 578).
+ * Same card geometry as the Patient Hub cards: columns x 53 / 376 / 699 (gap 26.79), card 296.21 wide, photo 296.21 x 325.564 on top,
+ * overhanging the white box (border .334 #418ea2, radius 20.014) by 4; rows 483 apart (photo tops 674 / 1157).
+ * Under the photo: 16.1 -> title (Medium 20.014 / 22, 2 lines, box 39) at x +23 -> 8 -> address (Book 12.008 / 13.343, x +22.68) ->
+ * button (#004059, 98.737 x 22.683, radius 4.003, label Medium 10.674 / 13.343 at 9.34 / 5.34) top +408.29 -> 13.34 -> box bottom (444.314).
+ * Al Mudeef (one-line title) sits 8 lower in Figma (title +350, address +376): normalised to the two-line geometry (same rule as the
+ * Patient Hub cards). Text gaps: H2 box (h33) -> text 3; text box (h28) -> first photo 32.
+ * Hospitals from src/data/hospitals.json; region filter and button target from src/data/hospitals-page.json.
+ */
+interface Props { edition: Edition; c: { heading: string; text: string; listLabel: string; button: string; empty: string } }
+const { edition, c } = Astro.props;
+const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.filter((h) => h.region === edition.region) : hospitals).map((h) => ({
+  slug: h.slug,
+  brand: t(h.brand, edition.locale, 'hospitals'),
+  city: (h as any).listTitleCityless ? '' : t(h.city, edition.locale, 'hospitals'),
+  address: t((h as any).address, edition.locale, 'hospitals'),
+  src: img((h as any).listPhoto, edition.region),
+  href: urlFor(edition, pagePath((config.viewHospital as any).page)),
+}));
+---
+
+<section class="hosp" aria-labelledby="hospitals-heading">
+  <SectionIntro id="hospitals-heading" heading={c.heading} text={c.text} gap={3} minH={28} />
+  {list.length === 0 && <p class="empty">{c.empty}</p>}
+  <ul class="grid" role="list" aria-label={c.listLabel}>
+    {list.map((h) => (
+      <li class="cell">
+        <article class="card">
+          <Picture src={h.src} formats={['avif']} fallbackFormat="webp" width={px(296.21)} height={px(325.564)} widths={[px(296.21), px(296.21) * 2]} sizes={`(min-width: 1440px) ${px(296.21)}px, (min-width: 1024px) 28.16vw, ${px(296.21)}px`} loading="lazy" decoding="async" alt="" class="img" pictureAttributes={{ class: 'contents' }} />
+          <h3 class="title m-0 font-gotham font-medium not-italic text-navy"><span class="block">{h.brand}</span>{h.city && <span class="block">{h.city}</span>}</h3>
+          <p class="addr m-0 font-gotham font-normal not-italic text-body">{h.address}</p>
+          <a href={h.href} class="btn hit font-gotham font-medium not-italic no-underline" aria-label={`${c.button}: ${h.brand} ${h.city}`.trim()}>{c.button}</a>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .hosp { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .empty { margin: calc(32 * var(--u)) 0 0; font: 400 calc(12 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+  .grid { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(296.21 * var(--u))); column-gap: calc(26.79 * var(--u)); row-gap: calc(34.69 * var(--u)); }
+  .cell { display: flex; }
+  .card { position: relative; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(448.314 * var(--u)); padding: 0 calc(23 * var(--u)) calc(13.34 * var(--u)); }
+  .card::before { content: ''; position: absolute; inset: calc(4 * var(--u)) 0 0; background: #fff; border-radius: calc(20.014 * var(--u)); box-shadow: inset 0 0 0 calc(0.334 * var(--u)) var(--color-teal-border); }
+  .card > :global(*), .card :global(.img) { position: relative; }
+  .card :global(.img) { display: block; align-self: stretch; width: calc(100% + 46 * var(--u)); margin-inline: calc(-23 * var(--u)); height: auto; aspect-ratio: 296.21 / 325.564; object-fit: cover; max-width: none; border-start-start-radius: calc(20.014 * var(--u)); border-start-end-radius: calc(20.014 * var(--u)); }
+  .title { margin-top: calc(16.1 * var(--u)); min-height: calc(39 * var(--u)); font-size: calc(20.014 * var(--u)); line-height: calc(22 * var(--u)); overflow-wrap: anywhere; }
+  .addr { margin-top: calc(8 * var(--u)); margin-inline-start: calc(-0.32 * var(--u)); min-height: calc(19.62 * var(--u)); font-size: calc(12.008 * var(--u)); line-height: calc(13.343 * var(--u)); overflow-wrap: anywhere; }
+  .btn { display: flex; align-items: center; box-sizing: border-box; margin-top: auto; margin-inline-start: calc(-0.32 * var(--u)); width: calc(98.737 * var(--u)); height: calc(22.683 * var(--u)); padding-inline-start: calc(9.34 * var(--u)); border-radius: calc(4.003 * var(--u)); background: var(--color-navy); color: #fff; font-size: calc(10.674 * var(--u)); line-height: calc(13.343 * var(--u)); white-space: nowrap; --hit-h: 44px; --hit-w: 0px; }
+  .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  @media (max-width: 1023.98px) {
+    .hosp { padding-inline: 16px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(296.21 * var(--u))), calc(296.21 * var(--u)))); }
+  }
+</style>

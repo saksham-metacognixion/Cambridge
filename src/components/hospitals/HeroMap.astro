@@ -1,0 +1,32 @@
+---
+import map from '../../assets/hospitals/map.svg';
+import pin from '../../assets/hospitals/pin.svg';
+
+/*
+ * Map art on the Our Hospitals hero (Figma 101:6609, inside the 437 hero: page y minus 119). Vector 368.816 x 294.809 at
+ * (601, 96.87), #e7e7e7 at 45 % x opacity .5; six Material "location_on" pins (32.79 boxes, icon 21.863 x 27.329 centred, #00b8ff)
+ * at (832.47,166.17) (848.68,183.92) (676.61,256.45) (918.89,232.53) (935.1,214.78) (952.07,232.53); five labels Gotham Medium 8.112 white
+ * (page x/y in the JSON). Decoration (aria-hidden): the same cities are listed as cards below. Hidden below 1024px (the hero photo
+ * becomes its own block there). Never flipped on RTL: it is a map.
+ */
+interface Props { labels: { text: string; x: number; y: number }[] }
+const { labels } = Astro.props;
+const pins = [[832.47, 285.17], [848.68, 302.92], [676.61, 375.45], [918.89, 351.53], [935.1, 333.78], [952.07, 351.53]];
+---
+
+<div class="map" aria-hidden="true" slot="art">
+  <img src={map.src} width="368.816" height="294.809" alt="" class="vec" />
+  {pins.map(([x, y]) => <img src={pin.src} width="21.863" height="27.329" alt="" class="pin" style={`--x:${x + 5.46};--y:${y - 119 + 2.73}`} />)}
+  {labels.map((l) => <span class="lbl" style={`--x:${l.x};--y:${l.y - 119}`}>{l.text}</span>)}
+</div>
+
+<style>
+  .map { display: none; }
+  @media (min-width: 1024px) {
+    .map { display: block; position: absolute; inset: 0; pointer-events: none; direction: ltr; }
+    .map > * { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); max-width: none; }
+    .vec { --x: 601; --y: 96.87; width: calc(368.816 * var(--u)); height: calc(294.809 * var(--u)); }
+    .pin { width: calc(21.863 * var(--u)); height: calc(27.329 * var(--u)); }
+    .lbl { font-family: var(--font-gotham); font-weight: 500; font-style: normal; font-size: calc(8.112 * var(--u)); line-height: calc(13.888 * var(--u)); color: #fff; white-space: nowrap; }
+  }
+</style>

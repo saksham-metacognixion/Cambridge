@@ -1,0 +1,111 @@
+{
+  "_note": "Our Hospitals list (Figma 101:6247). Visible text exactly as in Figma; meta.*, alt texts and aria labels PLACEHOLDER. Hospital names, addresses and photos: src/data/hospitals.json. Stats {shared} = landing page numbers (src/lib/stats.ts); '715 Operational Beds' (no +) and '13+ Years of Experience' are this page's own (docs/open-decisions.md H3). Config: src/data/hospitals-page.json.",
+  "meta": {
+    "title": "Our Hospitals | Cambridge Hospital",
+    "description": "Six locations, one standard of care: Cambridge Hospital's network of specialized facilities across the UAE and KSA."
+  },
+  "hero": {
+    "ariaLabel": "Six Locations. One Standard of Care.",
+    "banner": {
+      "image": "hospitals/banner",
+      "alt": ""
+    },
+    "title": [
+      "Six Locations. ",
+      "One Standard of Care."
+    ],
+    "text": "Access Cambridge Hospital’s network of specialized facilities across the UAE and KSA, delivering consistent, high-quality care wherever you are.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    },
+    "map": {
+      "alt": "",
+      "labels": [
+        {
+          "text": "Dhahran",
+          "x": 863.34,
+          "y": 288.4
+        },
+        {
+          "text": "Al Khobar",
+          "x": 880.31,
+          "y": 307.69
+        },
+        {
+          "text": "Abu Dhabi",
+          "x": 968.41,
+          "y": 334.7
+        },
+        {
+          "text": "Al Ain",
+          "x": 976.76,
+          "y": 380.22
+        },
+        {
+          "text": "Jeddah",
+          "x": 698.36,
+          "y": 404.91
+        }
+      ]
+    }
+  },
+  "list": {
+    "heading": "Find Care Near You",
+    "text": "Our facilities combine the comfort of a welcoming environment with advanced medical technology, ensuring patients receive specialized care in spaces designed for recovery, dignity, and peace of mind.",
+    "listLabel": "Our hospitals",
+    "button": "View Hospital",
+    "empty": "No hospitals in this region yet."
+  },
+  "impact": {
+    "ariaLabel": "Real Impact. Real Outcomes.",
+    "heading": [
+      [
+        "Real Impact",
+        "."
+      ],
+      [
+        " Real Outcomes",
+        "."
+      ]
+    ],
+    "photo": {
+      "image": "hospitals/care",
+      "alt": "A nurse with her hand on a smiling patient's shoulder"
+    },
+    "stats": [
+      {
+        "shared": "opd"
+      },
+      {
+        "shared": "inpatients"
+      },
+      {
+        "number": "715",
+        "label": "Operational Beds"
+      },
+      {
+        "shared": "homecare"
+      },
+      {
+        "number": "85%",
+        "label": "Discharge Rate"
+      },
+      {
+        "number": "13+",
+        "label": "Years of Experience"
+      }
+    ]
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-hanna-kassab"
+    ]
+  }
+}

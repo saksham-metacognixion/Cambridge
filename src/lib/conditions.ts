@@ -14,8 +14,10 @@ export interface Condition {
   figma?: string;
   title: Localized;
   summary: Localized;
-  /** specialty ids (src/data/specialties.json); mapping pending from Pramod */
+  /** specialty ids (src/data/specialties.json), from the WordPress condition_specialty terms */
   specialties: string[];
+  /** slug of the live site's /condition/<old_slug>/ page (301 map, src/pages/redirects-pages.txt.ts) */
+  old_slug?: string;
 }
 
 export const conditions: Condition[] = data.conditions as Condition[];

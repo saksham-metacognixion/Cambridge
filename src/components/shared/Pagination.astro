@@ -1,0 +1,36 @@
+---
+import { parsePath } from '../../lib/editions';
+import { content } from '../../lib/content';
+
+/*
+ * Pagination dots (bug 012): one <button> per page, the current one bigger and navy (Figma's dot divider look: 6.972 grey dots,
+ * the active one 8.716 #004059, centres 11.1 apart), built and kept in step by src/scripts/pagination.ts. Hidden (but keeping
+ * its 8.716 line, so the Figma spacing around it holds) with fewer than two pages, i.e. whenever everything fits.
+ *  - `for` = id of a horizontal scroller: self-mounting, a page = one visible width of the row.
+ *  - no `for`: the owner script (doctors-row.ts, hospital-gallery.ts) mounts it with its own page source.
+ *  - `mode` picks the labels (layout/pagination JSON): 'scroll' = pages, 'slides' = photos.
+ *  - `tone` = colour of the active dot ('navy' default; News uses Figma's cyan).
+ * Place it with a wrapper (it has no margin of its own). Touch targets: every dot has a 24 x 44 px hit layer; on coarse
+ * pointers the dots are spaced 24 px apart so the layers never overlap (no design for dots below 1024 in Figma).
+ */
+interface Props { for?: string; mode?: 'scroll' | 'slides'; tone?: 'navy' | 'cyan'; class?: string }
+const { for: target, mode = 'scroll', tone = 'navy', class: cls } = Astro.props;
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('layout/pagination', edition.locale)[mode];
+---
+
+<nav class:list={['pgn', tone === 'cyan' && 'pgn-cyan', cls]} data-pagination data-for={target} data-dot-label={c.dot} aria-label={c.label} hidden></nav>
+
+<style is:global>
+  .pgn { display: flex; justify-content: center; align-items: center; min-height: calc(8.716 * var(--u)); --pgn-on: var(--color-navy); }
+  .pgn-cyan { --pgn-on: var(--color-cyan); }
+  .pgn[hidden] { visibility: hidden; } /* keeps its line (the Figma gap above / below it) but is neither seen nor focusable */
+  .pgn-dot { position: relative; flex: none; display: grid; place-items: center; width: calc(11.1 * var(--u)); height: calc(11.1 * var(--u)); margin: 0; padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer; }
+  .pgn-dot::before { content: ''; width: calc(6.972 * var(--u)); height: calc(6.972 * var(--u)); border-radius: 50%; background: var(--color-dot-grey); transition: background-color 200ms, width 200ms, height 200ms; }
+  .pgn-dot[aria-current='true']::before { width: calc(8.716 * var(--u)); height: calc(8.716 * var(--u)); background: var(--pgn-on); } /* size + colour, not colour alone */
+  .pgn-dot::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 24px); height: 44px; } /* hit layer */
+  .pgn-dot:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  @media (hover: hover) { .pgn-dot:hover::before { background: var(--pgn-on); } }
+  @media (pointer: coarse) { .pgn { gap: max(0px, 24px - 11.1 * var(--u)); } }
+  @media (prefers-reduced-motion: reduce) { .pgn-dot::before { transition: none; } }
+</style>

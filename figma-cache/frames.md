@@ -9,7 +9,7 @@ All frames are 1052 wide. Loose layers on the canvas (stray rects/texts/vectors)
 | 76:196 | Welcome Page (country pop-up) | 1052x642 | screenshot forms/ |
 | 45:4982 | About Cambridge | 1052x2309 | cached (about-spec.md, pages/about-45-4982.png) — BUILT 5 Oct |
 | 307:494 | About Cambridge (second version, ask which) | 1052x2655 | screenshot pages/about2-307-494.png (timeline built, OFF: A1) |
-| 46:5841 | Who We Are | 1052x2844 | screenshot pages/who-we-are-46-5841.png — not built (A4) |
+| 46:5841 | Who We Are | 1052x2844 | screenshot pages/who-we-are-46-5841.png; design context #127 -> who-we-are-spec.md; built 6 Oct 2026 (about/who-we-are) |
 | 116:311 | Why Cambridge | 1052x4488 | cached (why-spec.md, pages/why-116-311*.png) — BUILT 5 Oct |
 | 55:12215 | Accreditations & Partnerships | 1052x2100 | cached (accreditations-spec.md, pages/accreditations-55-12215.png) — BUILT 5 Oct |
 | 112:7295 | Career | 1052x3339 | cached (careers-spec.md, pages/career-112-7295.png) — BUILT 5 Oct |

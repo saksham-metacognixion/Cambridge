@@ -7,7 +7,8 @@ export interface Insurer {
   slug: string;
   name: Localized;
   regions: string[];
-  logo: { image: string; w: number; h: number; x: number; y: number; fit?: 'contain'; ratio?: number; crop?: { w: string; h: string; left: string; top: string } };
+  /** absent = no logo file yet (the card shows the name only) */
+  logo?: { image: string; w: number; h: number; x: number; y: number; fit?: 'contain'; ratio?: number; crop?: { w: string; h: string; left: string; top: string } };
 }
 export const insurers = data.insurers as Insurer[];
 export const insurersFor = (region: RegionId) => (region === 'global' ? insurers : insurers.filter((i) => i.regions.includes(region)));

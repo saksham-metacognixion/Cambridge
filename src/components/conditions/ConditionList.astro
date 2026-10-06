@@ -26,7 +26,9 @@ const items = conditions.map((x) => ({
   specialties: x.specialties,
   href: urlFor(edition, CONDITION_PATHS.detail(x.slug)),
 }));
-// Dropdown order = data order; the A-Z buttons sort the cards (see src/lib/condition-filters.ts).
+// Dropdown = the specialties that have at least one condition (WordPress condition_specialty), in data order; the A-Z buttons
+// sort the cards (see src/lib/condition-filters.ts).
+const options = specialties.filter((s) => conditions.some((x) => x.specialties.includes(s.id)));
 ---
 
 <section class="list" aria-labelledby="conditions-heading" data-condition-filters data-locale={edition.lang}>
@@ -38,7 +40,7 @@ const items = conditions.map((x) => ({
         <label class="sr-only" for="cf-specialty">{c.filters.specialtyLabel}</label>
         <select id="cf-specialty" name="specialty" class="ui-field">
           <option value="">{c.filters.specialtyLabel}</option>
-          {specialties.map((s) => <option value={s.id}>{t(s.name, loc, 'specialties')}</option>)}
+          {options.map((s) => <option value={s.id}>{t(s.name, loc, 'specialties')}</option>)}
         </select>
         <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
       </div>

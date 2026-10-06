@@ -55,12 +55,13 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         </div>
         <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="hospital">
           <label for="cf-hospital" class:list={[label, 'lg:absolute lg:start-117 lg:top-244']}>{f.hospitalLabel}</label>
-          <div class="relative max-lg:w-full lg:contents">
-            <select id="cf-hospital" name="hospital" required class="field select lg:absolute lg:start-205 lg:top-236">
+          <!-- The box is the select's own frame (positioned on desktop like the other fields), so the chevron is anchored to the field's end edge. -->
+          <div class="relative max-lg:w-full lg:absolute lg:start-205 lg:top-236">
+            <select id="cf-hospital" name="hospital" required class="field select">
               <option value="" selected disabled>{f.hospitalPlaceholder}</option>
               {hospitals.map((h) => <option value={h.value}>{h.label}</option>)}
             </select>
-            <img src={chevron.src} width="7" height="4.207" alt="" class="chev pointer-events-none absolute max-w-none end-[calc(11*var(--u))] top-[calc(15*var(--u))] lg:end-auto lg:start-302 lg:top-254" style="width:calc(7*var(--u));height:calc(4.207*var(--u))" />
+            <img src={chevron.src} width="7" height="4.207" alt="" class="chev" />
           </div>
           <p id="cf-hospital-error" class:list={[err, 'lg:top-[calc(272*var(--u))]']} hidden></p>
         </div>
@@ -131,7 +132,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-598" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <span class:list={[detail, 'lg:absolute lg:start-451.25 lg:top-601']}>{c.details.web}</span>
+        <a href={c.details.webHref} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-601']}>{c.details.web}</a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-596" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
@@ -153,6 +154,9 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
   .field::placeholder { color: var(--color-body); opacity: 1; font-style: italic; }
   .select { padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
   .select:invalid { color: var(--color-body); }
+  /* Figma: chevron 7 x 4.207 at 13 from the field's end edge, 18 below its top (= centre + 0.5 on the 35 tall field, kept
+     relative to the centre when the field grows to the 44px touch height). Logical inset, so it sits on the left in RTL. */
+  .chev { position: absolute; inset-inline-end: calc(13 * var(--u)); top: calc(50% + 0.5 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); max-width: none; pointer-events: none; }
   .area { height: calc(86 * var(--u)); padding: calc(8.94 * var(--u)) calc(7 * var(--u)); resize: none; }
   .field { min-height: 44px; }  /* touch target (scope 2.8): only bites below ~1346px wide, where 35 Figma px < 44px */
   @media (min-width: 1024px) {

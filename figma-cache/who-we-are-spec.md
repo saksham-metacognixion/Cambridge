@@ -1,0 +1,11 @@
+# Who We Are — Figma 46:5841 (1052 x 2844), design context call #127 (6 Oct 2026)
+
+Page y (Figma px). Header 0-119, footer 2475-2843 (shared).
+- Hero 119-556 (Banner3 1 = the Accreditations banner image, 1052x500 drawn at 114.42%): title Medium 39 #004059 x95 y217 w385 "From treatment to recovery, all in one place"; text Book 12/14 #6b6b6b x97 y342 w374; outline button #00b8ff 164x30 r7 x98 y384, label Medium 13 "Book an Appointment".
+- Intro: heading Medium 28/32 #004059 x56 y608 w881 (46:5473); text Book 12/14 #6b6b6b x56 y693 w861, 3 paragraphs with one empty 14px line between (45:5202).
+- Pill 55:9264: #004059 x57 y849 w938 h96 r15; heading 55:9265 Medium 30 white centred x524 y883 "Six Hospitals. Two Countries. One Standard Care." (full stops #00b8ff).
+- Band 55:9242: rgba(231,231,231,.5) x0 y897 w1052 h385. Lines 55:9247 (bf269.svg 554.5x562) at x-128.7 y870.6, clipped (dec58.svg) to x0..449, y925..1282. Photo "Care 1" 55:9266 410x336 at x-11 y946 (image 116.96% high, top -16.96%). Stats Medium #00415a 35 / 12 (line-height 1.337): 1200+ Healthcare Professionals (504,1022); 715 Beds Across the Network (660,1022); 13+ Years of Clinical Delivery (802,1022); 60% Female Workforce (504,1140); 85% Discharge Rate (660,1140); 91% Patient Satisfaction (802,1140).
+- Foundation: heading 46:5751 Medium 28 #00415a x56 y1338 w558; text 46:5742 Book 12/14 #6b6b6b x58 y1373 w937; tabs 311x63 at x56 y1414/1479/1544 (active #418ea2, others rgba(231,231,231,.45)); labels Medium 17/14 x80 y+25 (white / #418ea2): Our Mission / Our Vision / Our Values; panel x385 y1415 w552 lead Book 12/14 #418ea2; items y1453 w610 Medium 12/22 #418ea2 title + Book 12/22 #6b6b6b text (Restoring Hope / Compassionate Excellence / Every Stage — Figma sample; live content used).
+- Expanding 46:5813: #00415a x0 y1656 w1052 h444. Photo "Care 1" 46:5836 463x444 at x0 (a4237.png). Heading 46:5837 Medium 28 #00415a centred x226 y1708 w430, 3 lines, dot #00b8ff. Lead 46:5756 Book 16/18 white x505 y1705 w489; text 46:5839 Book 12/14 white x505 y1804 w489, 4 paragraphs.
+- Stray layer 46:5815 "Quick insights to better understand your health and risks." at y1735 (calculators leftover, hidden behind the photo): ignored.
+- CTA 45:5207-5242: the shared Contact "Your recovery matters" block at y2158 (tiles Book an Appointment / Find a Doctor / Refer a Patient / Send an Inquiry).

@@ -14,8 +14,8 @@ interface Props {
   id: string;
   edition: Edition;
   submit: string;
-  /** submit button box (Figma px): width, height, radius, font size, label top */
-  button: { w: number; h: number; r: number; fs: number; ty: number };
+  /** submit button box (Figma px): width, height, radius, font size (label centred by flex) */
+  button: { w: number; h: number; r: number; fs: number };
   ariaLabelledby?: string;
   ariaLabel?: string;
   class?: string;
@@ -70,7 +70,7 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
     <button
       type="submit"
       class="f-submit"
-      style={`margin-block-start:calc(${gaps.submit} * var(--u));--bw:${button.w};--bh:${button.h};--br:${button.r};--bfs:${button.fs};--bty:${button.ty}`}
+      style={`margin-block-start:calc(${gaps.submit} * var(--u));--bw:${button.w};--bh:${button.h};--br:${button.r};--bfs:${button.fs}`}
     ><span>{submit}</span></button>
   </div>
 </form>

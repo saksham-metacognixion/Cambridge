@@ -43,10 +43,11 @@
     "alt": ""
   },
   "details": {
-    "email": "info@cmrc.ae",
-    "web": "www.info@cmrc.ae",
-    "phone": "+971 8002672",
-    "phoneHref": "+9718002672"
+    "email": "info@cambridgehospital.com",
+    "web": "www.cambridgehospital.com",
+    "webHref": "https://cambridgehospital.com/",
+    "phone": "800-692273",
+    "phoneHref": "800692273"
   },
   "recovery": {
     "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
@@ -63,7 +64,7 @@
       {
         "label": "Find a Doctor",
         "href": "#",
-        "path": "find-a-doctor"
+        "page": "findDoctor"
       },
       {
         "label": "Refer a Patient",
@@ -75,5 +76,6 @@
         "href": "#send-inquiry"
       }
     ]
-  }
+  },
+  "_note": "Contact page (Figma 86:431). details.* = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026) (email, website, UAE toll-free number as on the live contact page / home page); the Figma values (info@cmrc.ae, +971 8002672) were placeholders. web = the label (Figma's www. format, the live site's domain), webHref = the live link; kept separate from email (bug 017: Figma's \"www.info@cmrc.ae\" mixed the two)."
 }

@@ -1,59 +1,52 @@
 {
-  "$comment": "PLACEHOLDER: one specialty per distinct role title shown in the Figma Find a Doctor list (the dropdown options themselves are NOT in Figma). Replace with Pramod's export; doctors reference these ids in specialties[].",
+  "$comment": "Doctor specialties = the live site's doctor_specialty terms that have doctors (WordPress export, 6 Oct 2026, tools/import-wp-cpt.mjs). id = term slug. No Arabic names in the export.",
   "specialties": [
     {
-      "id": "physical-medicine-rehab",
+      "id": "pmr",
       "name": {
-        "en": "Physical Medicine & Rehab Specialist",
-        "ar": ""
-      }
-    },
-    {
-      "id": "icu-anesthesia",
-      "name": {
-        "en": "ICU & Anesthesia Specialist",
-        "ar": ""
-      }
-    },
-    {
-      "id": "pediatrics",
-      "name": {
-        "en": "Pediatrician",
-        "ar": ""
-      }
-    },
-    {
-      "id": "general-practitioner",
-      "name": {
-        "en": "General Practitioner",
-        "ar": ""
-      }
-    },
-    {
-      "id": "general-physician",
-      "name": {
-        "en": "General Physician",
-        "ar": ""
-      }
-    },
-    {
-      "id": "general-practitioner-icu",
-      "name": {
-        "en": "General Practitioner ICU",
+        "en": "PM&R",
         "ar": ""
       }
     },
     {
       "id": "internal-medicine",
       "name": {
-        "en": "Internal medicine specialist",
+        "en": "Internal Medicine",
         "ar": ""
       }
     },
     {
-      "id": "neuro",
+      "id": "pediatric",
       "name": {
-        "en": "Neuro Specialist",
+        "en": "Pediatric",
+        "ar": ""
+      }
+    },
+    {
+      "id": "gp",
+      "name": {
+        "en": "GP",
+        "ar": ""
+      }
+    },
+    {
+      "id": "neurology",
+      "name": {
+        "en": "Neurology",
+        "ar": ""
+      }
+    },
+    {
+      "id": "intensive-care",
+      "name": {
+        "en": "Intensive Care",
+        "ar": ""
+      }
+    },
+    {
+      "id": "psychiatry",
+      "name": {
+        "en": "Psychiatry",
         "ar": ""
       }
     }

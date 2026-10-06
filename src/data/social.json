@@ -1,0 +1,11 @@
+{
+  "$comment": "Social profile links, from the live site's home page / footer (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026). Order = the six icons of the Figma icon strips (home contact card: src/assets/contact/social-icons.svg; footer: src/assets/footer/group53.svg): Facebook, Instagram, X, YouTube, WhatsApp, LinkedIn. An empty href = icon without a link (the live site has no WhatsApp link and its LinkedIn icon points to '#'). label = accessible name.",
+  "links": [
+    { "id": "facebook", "label": "Facebook", "href": "https://www.facebook.com/cambridgehospital.uae" },
+    { "id": "instagram", "label": "Instagram", "href": "https://www.instagram.com/cambridgehospital.uae" },
+    { "id": "x", "label": "X (Twitter)", "href": "https://x.com/cambridgehosp" },
+    { "id": "youtube", "label": "YouTube", "href": "https://www.youtube.com/@cambridgehospitaluae" },
+    { "id": "whatsapp", "label": "WhatsApp", "href": "" },
+    { "id": "linkedin", "label": "LinkedIn", "href": "" }
+  ]
+}

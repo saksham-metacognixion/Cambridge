@@ -1,0 +1,73 @@
+{
+  "$comment": "Live site calculator page (cambridgehospital.com, WordPress export 6 Oct 2026 for the hero and intro; the form text and result strings from the live calculator script, read 6 Oct 2026). No Figma frame (docs/open-decisions.md CA1).",
+  "meta": {
+    "title": "BMI Calculator | Cambridge Hospital",
+    "description": "Use this quick tool to check your BMI and understand your weight category."
+  },
+  "hero": {
+    "ariaLabel": "BMI Calculator",
+    "banner": {
+      "image": "doctors-page/banner",
+      "alt": ""
+    },
+    "title": [
+      "Know Your Body Mass Index."
+    ],
+    "text": "Use this quick tool to check your BMI and understand your weight category."
+  },
+  "intro": {
+    "heading": "What Your Result Shows",
+    "text": "BMI is a simple screening measure based on your height and weight that helps indicate whether you may be underweight, at a healthy weight, overweight, or living with obesity."
+  },
+  "form": {
+    "ariaLabel": "BMI Calculator",
+    "submit": "Calculate BMI",
+    "fields": {
+      "unit": {
+        "label": "Units",
+        "placeholder": "Select units",
+        "options": {
+          "metric": "Metric (kg / cm)",
+          "imperial": "Imperial (lb / in)"
+        }
+      },
+      "weight": {
+        "label": "Weight",
+        "placeholder": "Select units first",
+        "byUnit": {
+          "metric": {
+            "label": "Weight (kg)",
+            "placeholder": "e.g. 70"
+          },
+          "imperial": {
+            "label": "Weight (lb)",
+            "placeholder": "e.g. 154"
+          }
+        }
+      },
+      "height": {
+        "label": "Height",
+        "placeholder": "Select units first",
+        "byUnit": {
+          "metric": {
+            "label": "Height (cm)",
+            "placeholder": "e.g. 175"
+          },
+          "imperial": {
+            "label": "Height (in)",
+            "placeholder": "e.g. 69"
+          }
+        }
+      }
+    }
+  },
+  "result": {
+    "title": "BMI",
+    "categories": {
+      "underweight": "Underweight",
+      "normal": "Normal Weight",
+      "overweight": "Overweight",
+      "obese": "Obese"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+---
+import { editions, editionFromBase } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { pagePath } from '../../../lib/paths';
+import { sanitizeHtml } from '../../../lib/sanitize';
+import { badgeDate } from '../../../lib/news';
+import { showPendingNote } from '../../../lib/conditions';
+import { INDEXABLE } from '../../../lib/seo';
+import legal from '../../../data/legal.json';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import ArticleBody from '../../../components/article/ArticleBody.astro';
+
+/*
+ * Legal template (scope 2.5: privacy policy, cookie policy, compliance ...), one page per entry in src/data/legal.json, every edition.
+ * NO Figma frame: the Article layout's typography (ArticleBody: H2-style title Medium 28 #00415a, Book 12/14 body, lists, tables)
+ * under the shared header, no hero. Text = src/data/content/legal/<slug>.<locale>.json (HTML body, sanitised at build); an empty body
+ * shows "Content pending" on staging only (B10). Flagged for Padmavathi (L1).
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) => legal.pages.map((p) => ({ params: { base: e.base || undefined, legal: p.slug }, props: { slug: p.slug, page: p.page } })));
+}
+
+const { slug, page } = Astro.props as { slug: string; page: string };
+const edition = editionFromBase(Astro.params.base);
+const loc = edition.locale;
+const shared = content('legal/shared', loc);
+const c = content(`legal/${slug}`, loc);
+const html = sanitizeHtml(c.body);
+const pending = !html && showPendingNote(INDEXABLE) ? shared.pending : null;
+const date = c.updated ? { iso: c.updated, text: badgeDate(c.updated, loc).full, label: shared.updatedLabel } : null;
+const fill = (s: string) => s.replace('{title}', c.title);
+---
+
+<BaseLayout edition={edition} path={pagePath(page)} title={fill(shared.meta.title)} description={fill(shared.meta.description)}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main class="legal">
+    <ArticleBody heading={c.title} headingTag="h1" date={date} intro={[]} html={html} pending={pending} />
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(68 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .legal { padding-top: calc(60 * var(--u)); }
+</style>

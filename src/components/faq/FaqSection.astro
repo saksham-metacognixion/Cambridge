@@ -27,6 +27,8 @@ const c = content('faq/page', loc);
 const pending = showPendingNote(INDEXABLE);
 const cats = data.categories.map((x) => ({ id: x.id, label: t(x.label, loc, 'faqs'), items: data.questions.filter((q) => q.category === x.id).map((q) => ({ q: t(q.question, loc, 'faqs'), a: q.answer[loc] || q.answer.en })) }));
 const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
+// An answer is plain text: paragraphs separated by a blank line, line breaks inside a paragraph kept (src/data/faqs.json).
+const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
 ---
 
 <section class="faq" aria-labelledby="faq-heading">
@@ -50,7 +52,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
               <img class="chev chev-closed" src={chevClosed.src} width="9.661" height="5.806" alt="" />
             </summary>
             <div class="ans">
-              {it.a ? <p>{it.a}</p> : pending && <p class="pending">{c.answerPending}</p>}
+              {it.a ? paras(it.a).map((lines) => <p>{lines.map((l, j) => (<>{j > 0 && <br />}{l}</>))}</p>) : pending && <p class="pending">{c.answerPending}</p>}
             </div>
           </details>
         ))}
@@ -84,6 +86,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
   .chev-closed { transform: scaleY(-1); }
   .qa[open] .chev-closed, .qa:not([open]) .chev-open { display: none; }
   .ans { position: relative; box-sizing: border-box; min-height: calc(118 * var(--u)); margin-top: calc(-37.925 * var(--u)); padding: calc(51 * var(--u)) calc(6 * var(--u)) calc(15.24 * var(--u)) calc(23 * var(--u)); border-radius: calc(10 * var(--u)); background: #f7f7f7; width: calc(629 * var(--u)); max-width: 100%; }
+  .ans p + p { margin-top: calc(8 * var(--u)); }
   .ans p { margin: 0; width: calc(600 * var(--u)); max-width: 100%; color: var(--color-navy-alt); font-size: calc(11.041 * var(--u)); line-height: calc(17.252 * var(--u)); overflow-wrap: anywhere; }
   .ans .pending { font-style: italic; color: var(--color-body); }
   @media (max-width: 1023.98px) {

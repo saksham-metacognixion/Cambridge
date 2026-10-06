@@ -1,1 +1,23 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153). Card descriptions = the live site's one-liners (the English ones are the client's 5 Oct documents, which have no Arabic yet). cardButton 'Start Your Care': no Arabic on the live site (English shown).",
+  "heading": "خدمات مميزة في كل مرحلة من مراحل الرعاية",
+  "text": "في مستشفى كامبريدج، نلتزم بتقديم رعاية متقدمة مرتكزة على المريض مع تميز سريري، ونوفر مجموعة كاملة من الخدمات المصممة خصيصًا لتلبية احتياجاتكم الفردية",
+  "cards": [
+    {
+      "title": "الرعاية الداخلية للمرضى",
+      "desc": "رعاية على مدار الساعة للمرضى بحاجة إلى دعم مستمر."
+    },
+    {
+      "title": "رعاية المرضى الخارجيين",
+      "desc": "الاستشارات، والتشخيصات، والعلاجات بدون دخول."
+    },
+    {
+      "title": "الرعاية الصحية المنزلية",
+      "desc": "رعاية طبية عالية الجودة يتم تقديمها حتي باب المنزل."
+    },
+    {
+      "title": "الرعاية داخل المدرسة",
+      "desc": "توفير الرعاية في الموقع لدعم صحة الطلاب وسلامتهم."
+    }
+  ]
+}

@@ -1,7 +1,23 @@
 {
   "title": "News & Insights",
-  "filters": ["Blogs", "News", "Events"],
-  "filterCategories": ["blog", "news", "event"],
-  "posts": ["cambridge-hospital-al-khobar", "abdullah-success-story", "dr-robert-kassab-sabah-al-arabiya"],
-  "readMore": { "label": "Read more", "href": "#" }
+  "filters": [
+    "Blogs",
+    "News",
+    "Events"
+  ],
+  "filterCategories": [
+    "health-articles",
+    "press-releases",
+    "events"
+  ],
+  "posts": [
+    "al-khobar-opening-and-employee-recognition",
+    "abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story",
+    "dr-rober-interview-al-arabiya-tv"
+  ],
+  "readMore": {
+    "label": "Read more",
+    "href": "#"
+  },
+  "_note": "Home News section (Figma 'News & Insights', three pills). filters = the Figma pill labels; filterCategories pairs each pill with a category of the news export (src/data/news/posts.json: Blogs = health-articles, News = press-releases, Events = events; conferences and interviews stay reachable in the Media Hub). posts = the slugs of the three default cards (Figma photos + crops from src/data/news.json, live title / excerpt from the export). readMore.href = fallback only."
 }

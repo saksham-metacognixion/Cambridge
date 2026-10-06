@@ -7,7 +7,8 @@ import chevron from '../../assets/careers/chevron.svg';
  * +38 from the top), text 112:7232 centre 526.5 (w577, Book 12/14 white, 7 below the heading box), field 112:7242 centre 510.5
  * (311 x 35, #d9d9d9, 0.5 white outline, radius 10, 17 below the text; label Book 10/14 #00415a at +15 / +10; chevron
  * 7 x 4.207 at +287 / +17), button 112:7234 centre 512 (166 x 30, white, radius 7, 14 below the field; label Medium 13
- * #004059, box 145 at +9 / +9). Band ends 19 below the button.
+ * #004059, centred in the button by flex: the Figma text box at +9 / +9 put the label low with the real Gotham metrics, bug 007).
+ * Band ends 19 below the button.
  * "View Open Roles" is a dropdown-LOOK link to openRolesUrl (Figma shows a select with no options): nothing invented.
  * Existing band component? None fits (CtaTab / Contact / ContactRecovery are different layouts), so this one is new.
  */
@@ -35,8 +36,8 @@ const { c, openRolesHref, applyHref } = Astro.props;
   .field { --sw: 0.5; --sc: #fff; position: relative; display: block; box-sizing: border-box; width: calc(311 * var(--u)); max-width: 100%; height: calc(35 * var(--u)); margin-top: calc(17 * var(--u)); background: #d9d9d9; border-radius: calc(10 * var(--u)); color: var(--color-navy-alt); text-align: start; text-decoration: none; }
   .fl { position: absolute; inset-inline-start: calc(15 * var(--u)); top: calc(10 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(14 * var(--u)); white-space: nowrap; }
   .chev { position: absolute; inset-inline-start: calc(287 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); }
-  .apply { position: relative; display: block; box-sizing: border-box; width: calc(166 * var(--u)); height: calc(30 * var(--u)); margin-top: calc(14 * var(--u)); background: #fff; border-radius: calc(7 * var(--u)); color: var(--color-navy); text-decoration: none; }
-  .al { position: absolute; inset-inline-start: calc(9 * var(--u)); top: calc(9 * var(--u)); width: calc(145 * var(--u)); height: calc(15 * var(--u)); font-weight: 500; font-size: calc(13 * var(--u)); line-height: calc(15 * var(--u)); text-align: center; white-space: nowrap; }
+  .apply { position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: calc(166 * var(--u)); height: calc(30 * var(--u)); margin-top: calc(14 * var(--u)); background: #fff; border-radius: calc(7 * var(--u)); color: var(--color-navy); text-decoration: none; }
+  .al { font-weight: 500; font-size: calc(13 * var(--u)); line-height: 1; white-space: nowrap; text-box: trim-both cap alphabetic; } /* caps centred, see forms.css .f-submit */
   @media (min-width: 1024px) {
     .in { display: block; padding-inline: 0; text-align: start; height: calc(215 * var(--u)); }
     .h { width: calc(606 * var(--u)); height: calc(27 * var(--u)); margin-inline-start: calc(209 * var(--u)); text-align: center; }

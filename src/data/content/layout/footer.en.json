@@ -119,12 +119,12 @@
       {
         "label": "Home Care",
         "href": "#",
-        "care": "home-care"
+        "care": "home-healthcare"
       },
       {
         "label": "In-School Care",
         "href": "#",
-        "care": "in-school-care"
+        "care": "in-school"
       }
     ]
   },
@@ -164,5 +164,5 @@
       "page": "privacyPolicy"
     }
   },
-  "_note": "Footer text (Figma). Quick link labels: 'Career Hub', 'Knowledge Centre' (site map, 5 Oct 2026); services = the four Our Care services ('Home Care', 'In-School Care' as in the documents; `care` = service slug in src/data/care.json). Links: `page` = key in PAGE_PATHS, `href` = literal (pop-ups). Facility names come from hospitals.json."
+  "_note": "Footer text (Figma). Quick link labels: 'Career Hub', 'Knowledge Centre' (site map, 5 Oct 2026); services = the four Our Care services ('Home Care', 'In-School Care' as in the documents; `care` = service slug in src/data/care.json). Links: `page` = key in PAGE_PATHS, `href` = literal (pop-ups). Facility names come from hospitals.json. Legal links: 'Compliance' opens the live site's GDPR Compliance page (/legal/gdpr-compliance), 'Privacy Policy' /legal/privacy-policy (WordPress export, 6 Oct 2026)."
 }

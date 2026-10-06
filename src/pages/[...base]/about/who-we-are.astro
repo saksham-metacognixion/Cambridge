@@ -1,0 +1,55 @@
+---
+import { editionFromBase, editionPaths } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { PAGE_PATHS } from '../../../lib/paths';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import Intro from '../../../components/who-we-are/Intro.astro';
+import Network from '../../../components/who-we-are/Network.astro';
+import Foundation from '../../../components/who-we-are/Foundation.astro';
+import Expanding from '../../../components/who-we-are/Expanding.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('who-we-are/page', edition.locale);
+
+/*
+ * Who We Are template (Figma 46:5841, file LJIRtzU...; built 6 Oct 2026 with the live site's text, docs/open-decisions.md WP5).
+ * Gaps (Figma px): Hero 119-556 -> intro heading 608: 52 | intro ends 828 -> navy pill 849: 21 | grey band ends 1282 -> Foundation
+ * heading 1338: 56 | tabs end 1607 -> navy "Expanding" band 1656: 49 | band ends 2100 -> "Your recovery matters" 2158: 58 |
+ * box ends 2426 -> footer 2475: 49. Hero = shared PageHero with the About page geometry (title 217, text 342, button 384).
+ * "Your recovery matters" = the shared Contact page block (its four tiles match this frame).
+ */
+const sections = [
+  { id: 'intro', C: Intro, props: { c: c.intro }, mt: 52 },
+  { id: 'network', C: Network, props: { edition, c: c.network }, mt: 21 },
+  { id: 'foundation', C: Foundation, props: { edition, c: c.foundation }, mt: 56 },
+  { id: 'expanding', C: Expanding, props: { edition, c: c.expanding }, mt: 49 },
+  { id: 'recovery', C: ContactRecovery, props: {}, mt: 58 },
+];
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.whoWeAre} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <PageHero content={c.hero} pos={{ titleTop: 98, titleW: 385, textGap: 14, textW: 374, textX: 97, buttonGap: 15 }} />
+    </div>
+    {
+      sections.map(({ id, C, props, mt }) => (
+        <div id={id} class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+          <C {...props} />
+        </div>
+      ))
+    }
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(49 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

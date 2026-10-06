@@ -10,6 +10,7 @@ import { img } from '../lib/images';
 import hospitalData from '../data/hospitals.json';
 import { hospitalHref } from '../lib/hospitals';
 import { CARE_PATHS } from '../lib/care';
+import SocialIcons from './shared/SocialIcons.astro';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
@@ -77,7 +78,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     </form>
 
     <img class="a" style="--l:62;--t:319;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
-    <img class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24" src={group53.src} width="161" height="16.24" alt="" />
+    <div class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24"><SocialIcons src={group53.src} width="161" height="16.24" alt="" /></div>
 
     <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">{c.copyright}</p>
     <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={legal.compliance.href} class="hit">{legal.compliance.label}</a><span class="gap">       </span><a href={legal.privacy.href} class="hit">{legal.privacy.label}</a></p>
@@ -120,7 +121,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     .col, .acc, .nl { position: static; }
     .acc, .nl { flex: 1 1 calc(235 * var(--u)); }
     .icons { width: calc(161 * var(--u)); height: auto; }
-    .stage > img[src*="line24"], .stage > img:not(.logo):not(.icons) { width: 100%; height: auto; flex: 1 1 100%; }
+    .stage > img[src*="line24"], .stage > img:not(.logo) { width: 100%; height: auto; flex: 1 1 100%; }
     .bot { flex: 1 1 auto; white-space: pre-wrap; }
     .bot.right { text-align: start; }
     /* Tap targets: every footer link row is 44px high (text size, colour and order unchanged). */

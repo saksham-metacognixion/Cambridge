@@ -1,0 +1,9 @@
+{
+  "_note": "Live calculator script strings.",
+  "errors": {
+    "invalid": "يرجى إدخال قيم صحيحة في جميع الحقول."
+  },
+  "cta": {
+    "label": "حجز موعد"
+  }
+}

@@ -1,19 +1,21 @@
 ---
 import NewsCard from '../NewsCard.astro';
-import dots from '../../assets/news/divider-group622.svg';
+import Pagination from '../shared/Pagination.astro';
 import line from '../../assets/news/line23.svg';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
-import { hasPost, NEWS_PATHS } from '../../lib/news';
+import { hasPost, NEWS_PATHS, postFor, postsFor, type Post as NewsPost } from '../../lib/news';
 import { PAGE_PATHS } from '../../lib/paths';
 import news from '../../data/news.json';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/news', edition.locale);
-// "Read more" -> the post's article page (media-hub/<slug>). The 3 Figma placeholder posts of this section live in
-// news.json only (not in src/data/news/posts.json), so until the export arrives their link goes to the 404 page
-// (docs/open-decisions.md AR5). readMore.href in home/news JSON is the fallback for a slug that is nowhere.
+// "Read more" -> the post's article page (media-hub/<slug>); a slug that is in no export record goes to the 404 page (AR5).
+// Default cards: the three slugs of home/news JSON with the Figma photos + crops (news.json); their title and excerpt come
+// from the post record in the edition's language (src/data/news/posts.json), so the Arabic editions show the Arabic post.
+// Tabs: each pill = a category of the export (filterCategories in home/news JSON); pressing it shows that category's three
+// latest posts of the edition's language. A post whose image file is not downloaded yet renders an empty image box (NW1).
 const articleHref = (slug: string) => (hasPost(slug) ? urlFor(edition, NEWS_PATHS.article(slug)) : urlFor(edition, PAGE_PATHS.notFound));
 
 // crop.ratio = intrinsic height/width of the source file. Hardcoded on purpose: reading c.src.width/height
@@ -34,28 +36,39 @@ const design = [
     crop: { h: '102.73%', l: '-0.04%', t: '-2.73%', w: '100.07%', iw: 288 * 1.0007, ratio: 832 / 1061 },
   },
 ];
-type Post = (typeof news.posts)[number] & { category?: string };
-const card = (post: Post) => ({
-  src: img(post.image, edition.region),
-  alt: t(post.imageAlt, edition.locale, 'news'),
-  title: t(post.title, edition.locale, 'news'),
-  text: t(post.excerpt, edition.locale, 'news'),
-  readMore: { label: txt.readMore.label, href: articleHref(post.slug) },
-});
-// Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, with their Figma crops.
+type FigmaPost = (typeof news.posts)[number];
+const safeImg = (key: string, slug: string) => {
+  try { return img(key, edition.region); } catch { console.warn(`[news] home: image "${key}" of ${slug} not found in src/assets; empty image box`); return null; }
+};
+// Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, Figma photo + crop, live text.
 const cards = design.map((d, i) => {
   const slug: string = txt.posts[i];
-  const post = news.posts.find((n) => n.slug === slug);
-  if (!post) throw new Error(`home/news: unknown post slug "${slug}"`);
-  return { ...d, ...card(post) };
+  const figma = news.posts.find((n) => n.slug === slug) as FigmaPost | undefined;
+  if (!figma) throw new Error(`home/news: unknown post slug "${slug}"`);
+  const post = postFor(slug, edition);
+  return {
+    ...d,
+    src: img(figma.image, edition.region),
+    alt: post?.image_alt || t(figma.imageAlt, edition.locale, 'news'),
+    title: post?.title ?? t(figma.title, edition.locale, 'news'),
+    text: post?.excerpt ?? t(figma.excerpt, edition.locale, 'news'),
+    readMore: { label: txt.readMore.label, href: articleHref(slug) },
+  };
 });
-// Tabs: filterCategories (home/news JSON) pairs each pill with a `category` value on the posts in news.json.
-// Each tab's first 3 posts are rendered into a <template>; a category with no posts yet gets no template and its
-// tab keeps the default cards.
+const card = (post: NewsPost) => ({
+  src: safeImg(post.image, post.slug),
+  alt: post.image_alt || post.title,
+  title: post.title,
+  text: post.excerpt,
+  readMore: { label: txt.readMore.label, href: articleHref(post.slug) },
+});
+// Tabs: filterCategories (home/news JSON) = export categories; each tab's three latest posts (edition language, newest
+// first) are rendered into a <template>. A category with no posts gets no template and its tab keeps the default cards.
+const all = postsFor(edition);
 const pillX = [321, 420, 519];
 const pills = pillX.map((x, i) => {
   const key: string = txt.filterCategories[i];
-  const posts = (news.posts as Post[]).filter((n) => n.category === key).slice(0, design.length);
+  const posts = all.filter((n) => n.category === key).slice(0, design.length);
   return { label: txt.filters[i] as string, x, key, sets: posts.map((post, j) => ({ slot: design[j].slot, ...card(post) })) };
 });
 ---
@@ -87,7 +100,11 @@ const pills = pillX.map((x, i) => {
       </template>
     ))}
 
-    <img src={dots.src} width={dots.width} height={dots.height} alt="" class="hidden lg:block absolute start-506 top-544" style="width:calc(40.972 * var(--u));height:calc(8.716 * var(--u))" />
+    <!-- Pagination dots of the cards box (Figma's dot divider at y 544, cyan active dot): shared component (bug 012). Shown
+         only when the box overflows sideways; the three cards fit at every width (stacked below 1024), so nothing shows today. -->
+    <div class="lg:absolute lg:start-0 lg:top-544 lg:w-full max-lg:mt-30">
+      <Pagination for="news-cards" tone="cyan" />
+    </div>
     <div class="hidden lg:block absolute start-60 -rotate-[0.31deg]" style="top:calc(587.375 * var(--u));width:calc(915.014 * var(--u));height:calc(0.25 * var(--u))">
       <img src={line.src} width={line.width} height={line.height} alt="" class="block w-full h-full" />
     </div>
@@ -96,6 +113,7 @@ const pills = pillX.map((x, i) => {
 
 <script>
   import '../../scripts/news-tabs';
+  import '../../scripts/pagination';
 </script>
 
 <style>

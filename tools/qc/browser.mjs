@@ -13,7 +13,7 @@ import { chromium } from 'playwright-core';
 const base = process.argv[2] ?? 'http://localhost:4400';
 const out = process.argv[3] ?? 'docs/qc/browser.json';
 const WIDTHS = [360, 390, 414, 768, 1024, 1200, 1280, 1366, 1440, 1536, 1920];
-const TEMPLATES = ['/', '/about', '/about/why-cambridge', '/about/accreditations-partnerships', '/about/careers', '/care', '/care/inpatient', '/care/inpatient/post-acute-rehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation/stroke-rehabilitation', '/care/outpatient', '/care/home-care', '/sa/care/home-care', '/care/in-school-care', '/patient-hub/conditions-specialities', '/patient-hub/conditions-specialities/stroke-rehabilitation', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation', '/patient-hub', '/find-a-doctor', '/find-a-doctor/ahmad-al-khayer', '/hospitals', '/hospitals/cambridge-hospital-abu-dhabi', '/hospitals/cambridge-hospital-al-ain', '/media-hub', '/media-hub/first-patients-new-saudi-facility', '/contact', '/your-opinion-matters', '/patient-hub/refer-a-patient', '/patient-hub/international-patients', '/patient-hub/insurance-providers', '/patient-hub/testimonials', '/faq', '/privacy-policy', '/404'];
+const TEMPLATES = ['/', '/about', '/about/why-cambridge-hospital', '/about/accreditations-partnerships', '/about/careers', '/care', '/care/inpatient', '/care/inpatient/post-acute-rehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation/stroke-rehabilitation', '/care/outpatient', '/care/home-healthcare', '/sa/care/home-healthcare', '/care/in-school', '/patient-hub/conditions-specialities', '/patient-hub/conditions-specialities/stroke-rehabilitation', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation', '/patient-hub', '/patient-hub/find-a-doctor', '/patient-hub/find-a-doctor/ahmad-al-khayer', '/hospitals', '/hospitals/cambridge-hospital-abu-dhabi', '/hospitals/cambridge-hospital-al-ain', '/media-hub', '/media-hub/first-patients-new-saudi-facility', '/contact-us', '/your-opinion-matters', '/patient-hub/refer-a-patient', '/patient-hub/international-patients', '/patient-hub/insurance-providers', '/patient-hub/testimonials', '/bmi-calculator', '/ar/stroke-risk-calculator', '/faqs', '/legal/privacy-policy', '/404'];
 
 const results = { responsive: [], doctors: [], forms: [], keyboard: [] };
 const ok = (list, name, pass, note = '') => { list.push({ name, pass, note }); console.log(`${pass ? 'PASS' : 'FAIL'} ${name}${note ? ' - ' + note : ''}`); };
@@ -95,7 +95,7 @@ for (const url of TEMPLATES) {
 
 // 3. forms ------------------------------------------------------------------------------------------------------------
 const FORMS = [
-  { url: '/contact', form: 'form[data-form="send-enquiry"]', open: null, name: 'Contact page (Send an Enquiry)' },
+  { url: '/contact-us', form: 'form[data-form="send-enquiry"]', open: null, name: 'Contact page (Send an Enquiry)' },
   { url: '/', form: 'form[data-form="home-contact"]', open: null, name: 'Home "Get in touch" form' },
   { url: '/', form: '#book-appointment form[data-form]', open: 'a[href="#book-appointment"]', name: 'Book an Appointment pop-up' },
   { url: '/', form: '#send-enquiry-popup form[data-form]', open: 'a[href="#send-inquiry"]', name: 'Send an Inquiry pop-up' },
@@ -183,7 +183,7 @@ await formChecks('ar');
   const t3 = await page.evaluate(() => ({ sel: [...document.querySelectorAll('[data-tabs] [role="tab"]')].findIndex((t) => t.getAttribute('aria-selected') === 'true'), n: document.querySelectorAll('[data-tabs] [role="tab"]').length, panelVisible: !document.querySelector('[data-tabs] [role="tabpanel"]:not([hidden])')?.hidden }));
   ok(results.keyboard, 'Tabs: ArrowDown / End move selection and focus, panel follows', t2.sel === t2.foc && t2.sel === 1 && t3.sel === t3.n - 1 && t3.panelVisible, JSON.stringify({ t2, t3 }));
   // keyboard through the contact form: every field reachable, checkbox toggles with Space
-  await page.goto(base + '/contact', { waitUntil: 'load' });
+  await page.goto(base + '/contact-us', { waitUntil: 'load' });
   await page.focus('form[data-form="send-enquiry"] [name="name"]');
   const reached = new Set();
   for (let i = 0; i < 12; i++) { reached.add(await page.evaluate(() => document.activeElement.getAttribute('name') || document.activeElement.tagName)); await page.keyboard.press('Tab'); }

@@ -13,26 +13,22 @@
     {
       "title": "BMI Calculator",
       "desc": "Check your weight category instantly.",
-      "href": "#",
-      "page": "patientHub"
+      "page": "bmiCalculator"
     },
     {
       "title": "Stroke Risk Calculator",
       "desc": "Understand your risk in minutes.",
-      "href": "#",
-      "page": "patientHub"
+      "page": "strokeRiskCalculator"
     },
     {
       "title": "Heart Age Calculator",
       "desc": "See how healthy and well your heart is.",
-      "href": "#",
-      "page": "patientHub"
+      "page": "heartAgeCalculator"
     },
     {
       "title": "Lung Health Calculator",
       "desc": "Assess your lung health quickly.",
-      "href": "#",
-      "page": "patientHub"
+      "page": "lungHealthCalculator"
     }
   ],
   "cardButton": "Calculate Now"

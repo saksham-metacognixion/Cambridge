@@ -3,16 +3,23 @@
   "emailLabel": "Email:",
   "email": "info@cambridgehospital.com",
   "phoneLabel": "Phone:",
-  "phones": ["800-2672 - UAE", "800-2772 - KSA"],
+  "phones": [
+    "800-692273 - MYCARE - UAE",
+    "9200-13122 - KSA"
+  ],
   "addressLabel": "Address:",
   "address": "Prestige 17 Tower - Hamdan Bin Mohammed St - Mohamed Bin Zayed City - ME2 - Abu Dhabi",
   "followLabel": "Follow us:",
-  "social": { "image": "contact/social-icons", "alt": "Social media icons" },
+  "social": {
+    "image": "contact/social-icons",
+    "alt": "Social media icons"
+  },
   "form": {
     "nameLabel": "Your Name",
     "emailLabel": "Email Address",
     "messageLabel": "Message",
     "messagePlaceholder": "Write Something...",
     "submit": "Send Message"
-  }
+  },
+  "_note": "Home contact section (Figma). Phone lines = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026); the Figma numbers (800-2672 / 800-2772) were placeholders. Social icon links: src/data/social.json."
 }

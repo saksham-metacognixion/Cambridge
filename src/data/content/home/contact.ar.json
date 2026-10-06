@@ -1,1 +1,11 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153): heading, labels and the two phone lines. Address label / address and the form labels have no Arabic in the export (English shown).",
+  "title": "تواصل معنا",
+  "emailLabel": "البريد الإلكتروني:",
+  "phoneLabel": "الهاتف",
+  "phones": [
+    "800-692273 - MYCARE - الإمارات",
+    "9200-13122 - السعودية"
+  ],
+  "followLabel": "تابعونا"
+}

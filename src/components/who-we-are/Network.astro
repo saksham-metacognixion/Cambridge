@@ -1,0 +1,63 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { resolveStats } from '../../lib/stats';
+import type { Edition } from '../../lib/editions';
+import lines from '../../assets/who-we-are/lines.svg';
+
+/*
+ * "Six Hospitals. Two Countries. One Standard of Care." (Figma 55:9241-9272), page y 849-1282.
+ * Navy pill #004059 (x57, w938, h96, radius 15) with the heading centred, Gotham Medium 30 white, full stops in #00b8ff
+ * (text top +34). 48 below the pill top a full-width band rgba(231,231,231,.5), h385 (y 897-1282): the pill overlaps it.
+ * Inside the band: the pill-outline lines (55:9247, 554.5 x 562 at x-128.7, y-26.4, clipped to 449 x 357 at x0, y+28),
+ * photo "Care 1" 410 x 336 at x-11, y+49 (object-cover, bottom-aligned: Figma shows the lower 86% of the image), six stats
+ * Medium 35 / 12 (line height 133.7%) #00415a at x 504 / 660 / 802, y +125 / +243.
+ */
+interface Props { edition: Edition; c: { ariaLabel: string; heading: [string, string][]; photo: { image: string; alt: string }; stats: any[] } }
+const { edition, c } = Astro.props;
+const stats = resolveStats(edition, c.stats);
+const photo = img(c.photo.image, edition.region);
+const cols = [504, 660, 802], rows = [125, 243];
+const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)] }));
+---
+
+<section class="net" aria-label={c.ariaLabel}>
+  <div class="in">
+    <div class="pill"><h2 class="h">{c.heading.map(([w, dot]) => <>{w}<span class="dot">{dot}</span></>)}</h2></div>
+    <div class="band">
+      <div class="clip" aria-hidden="true"><img src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
+      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+      <ul class="stats" role="list">
+        {items.map((s) => (
+          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="n">{s.number}</span><span class="l">{s.label}</span></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .net { font-family: var(--font-gotham); font-style: normal; }
+  .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .pill { position: relative; z-index: 1; box-sizing: border-box; margin-inline: 16px; padding: calc(30 * var(--u)) calc(24 * var(--u)); border-radius: calc(15 * var(--u)); background: var(--color-navy); }
+  .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); color: #fff; text-align: center; overflow-wrap: anywhere; }
+  .dot { color: var(--color-cyan); white-space: pre; }
+  .band { position: relative; margin-top: calc(-48 * var(--u)); background: rgba(231, 231, 231, 0.5); overflow: clip; padding: calc(72 * var(--u)) 16px calc(40 * var(--u)); }
+  .clip { position: absolute; inset-inline-start: 0; top: calc(28 * var(--u)); width: calc(449 * var(--u)); height: calc(357 * var(--u)); overflow: clip; pointer-events: none; }
+  .lines { position: absolute; inset-inline-start: calc(-128.7 * var(--u)); top: calc(-54.4 * var(--u)); width: calc(554.5 * var(--u)); height: calc(562 * var(--u)); max-width: none; }
+  :global([dir='rtl']) .lines { scale: -1 1; }
+  .net :global(.photo) { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 410 / 336; object-fit: cover; object-position: 0 100%; max-width: none; }
+  .stats { position: relative; list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
+  .stat { color: var(--color-navy-alt); font-weight: 500; line-height: 1.337; }
+  .n { display: block; font-size: calc(35 * var(--u)); }
+  .l { display: block; font-size: calc(12 * var(--u)); max-width: calc(140 * var(--u)); }
+  @media (min-width: 1024px) {
+    .pill { margin-inline: calc(57 * var(--u)); width: calc(938 * var(--u)); height: calc(96 * var(--u)); padding: calc(34 * var(--u)) 0 0; }
+    .h { line-height: normal; }
+    .band { height: calc(385 * var(--u)); padding: 0; }
+    .net :global(.photo) { position: absolute; inset-inline-start: calc(-11 * var(--u)); top: calc(49 * var(--u)); width: calc(410 * var(--u)); height: calc(336 * var(--u)); }
+    .stats { display: block; margin: 0; }
+    .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); }
+  }
+</style>

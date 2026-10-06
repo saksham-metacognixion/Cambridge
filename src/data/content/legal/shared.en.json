@@ -1,6 +1,9 @@
 {
   "_note": "Shared text of the legal template. PLACEHOLDER (no Figma, no copy from Pramod yet, B10 / L1).",
-  "meta": { "title": "{title} | Cambridge Hospital", "description": "{title} of Cambridge Hospital." },
+  "meta": {
+    "title": "{title} | Cambridge Hospital",
+    "description": "{title} of Cambridge Hospital."
+  },
   "updatedLabel": "Last updated",
   "pending": "Content pending: the text of this page arrives with the legal documents."
 }

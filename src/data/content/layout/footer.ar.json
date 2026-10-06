@@ -1,1 +1,112 @@
-{}
+{
+  "_note": "Arabic = the live site's Arabic footer (WordPress export, content block 19169 'Footer-Ar', 6 Oct 2026). Knowledge Centre -> the Health Articles category name; 'Compliance' -> the live footer's GDPR link label (the page is /legal/gdpr-compliance). Newsletter field labels: no Arabic (English shown).",
+  "quickLinks": {
+    "heading": "روابط سريعة",
+    "rows": [
+      [
+        {
+          "label": "حول مستشفى كامبريدج"
+        }
+      ],
+      [
+        {
+          "label": "خدماتنا"
+        }
+      ],
+      [
+        {
+          "label": "مركز المرضى"
+        }
+      ],
+      [
+        {
+          "label": "مستشفياتنا"
+        }
+      ],
+      [
+        {
+          "label": "اتصل بنا"
+        }
+      ],
+      [
+        {
+          "label": "احجز موعد"
+        }
+      ],
+      [
+        {
+          "label": "المركز الإعلامي"
+        }
+      ],
+      [
+        {
+          "label": "الوظائف"
+        }
+      ],
+      [
+        {
+          "label": "مقالات صحية"
+        }
+      ],
+      [
+        {
+          "label": "الأسئلة الشائعة"
+        },
+        {
+          "label": "رأيك يهمنا"
+        }
+      ],
+      [
+        {
+          "label": "ابحث عن طبيب"
+        }
+      ],
+      [
+        {
+          "label": "ابحث عن تخصص"
+        }
+      ],
+      [
+        {
+          "label": "أرسل استفسار"
+        }
+      ]
+    ]
+  },
+  "services": {
+    "heading": "خدماتنا",
+    "links": [
+      {
+        "label": "خدمات المرضى الداخلية"
+      },
+      {
+        "label": "خدمات العيادات الخارجية"
+      },
+      {
+        "label": "خدمات الرعاية المنزلية"
+      },
+      {
+        "label": "خدمة الرعاية المدرسية"
+      }
+    ]
+  },
+  "hospitals": {
+    "heading": "مستشفياتنا"
+  },
+  "accreditations": {
+    "heading": "اعتمادات موثوقة",
+    "alt": "الاعتمادات الموثوقة لمستشفى كامبريدج"
+  },
+  "newsletter": {
+    "heading": "اشترك في نشرتنا الإخبارية"
+  },
+  "copyright": "© 2026 مجموعة كامبريدج للصحة . جميع الحقوق محفوظة.",
+  "legal": {
+    "compliance": {
+      "label": "حماية البيانات (GDPR)"
+    },
+    "privacy": {
+      "label": "سياسة الخصوصية"
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { parsePath, urlFor } from '../../lib/editions';
 import { PAGE_PATHS } from '../../lib/paths';
 import chevron from '../../assets/media-hub/select-chevron.svg';
 import overlay from '../../assets/media-hub/tile-overlay.png';
-import dots from '../../assets/media-hub/divider-group620.svg';
+import Pagination from '../shared/Pagination.astro';
 import arrow1 from '../../assets/media-hub/tile-arrow-1.svg';
 import arrow2 from '../../assets/media-hub/tile-arrow-2.svg';
 import arrow3 from '../../assets/media-hub/tile-arrow-3.svg';
@@ -47,8 +47,8 @@ const tiles = c.tiles.map((t: any, i: number) => ({
     <img src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="pointer-events-none absolute top-17 end-17 block w-7 h-[calc(4.207*var(--u))]" />
   </div>
 
-  <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005). -->
-  <ul class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-48 lg:pe-47" data-tiles>
+  <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below. -->
+  <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-48 lg:pe-47" data-tiles>
     {
       tiles.map((t: any) => (
         <li class="relative h-342 w-222 shrink-0 snap-start">
@@ -84,8 +84,13 @@ const tiles = c.tiles.map((t: any, i: number) => ({
     }
   </ul>
 
-  <img src={dots.src} width={dots.width} height={dots.height} alt="" class="mx-auto mt-64 block w-[calc(40.972*var(--u))] h-[calc(8.716*var(--u))]" />
+  <!-- Pagination dots of the tile row (Figma's dot divider, 64 below the tiles): shared component, bug 012. -->
+  <Pagination for="media-tiles" class="mt-64" />
 </section>
+
+<script>
+  import '../../scripts/pagination';
+</script>
 
 <style>
   .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: calc(15 * var(--u)); }

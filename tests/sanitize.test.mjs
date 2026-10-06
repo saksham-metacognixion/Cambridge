@@ -20,6 +20,12 @@ assert.equal(sanitizeHtml('<a href="/x?a=1&b=2" title=\'He said "hi"\'>t</a>'), 
 assert.equal(sanitizeHtml('<p>open <strong>bold</p></em>'), '<p>open <strong>bold</strong></p>');
 // comments go, text entities stay as they are
 assert.equal(sanitizeHtml('<!-- c --><p>&amp; &nbsp; &#169;</p>'), '<p>&amp; &nbsp; &#169;</p>');
+// YouTube marker of the news import: the validated id survives on <figure>, anything else on it is dropped
+assert.equal(
+  sanitizeHtml('<figure data-youtube="Hmhu4kql_Pw" class="x"><a href="https://www.youtube.com/watch?v=Hmhu4kql_Pw">t</a></figure>'),
+  '<figure data-youtube="Hmhu4kql_Pw"><a href="https://www.youtube.com/watch?v=Hmhu4kql_Pw" target="_blank" rel="noopener">t</a></figure>',
+);
+assert.equal(sanitizeHtml('<figure data-youtube="x\" onclick=\"y"><a>t</a></figure>'), '<figure><a>t</a></figure>');
 // empty input
 assert.equal(sanitizeHtml(''), '');
 

@@ -10,7 +10,7 @@ import type { LocaleId, RegionId } from "./editions";
  * URL pattern in ONE place: care, care/<service>, care/<service>/<section>, ... (the live site's /care/... paths quoted in the
  * documents; derived slugs are UNCONFIRMED, docs/open-decisions.md CT2).
  * Full page text: src/data/content/care/<slug>.<locale>.json (+ <slug>.<region>.<locale>.json for a region variant, e.g.
- * home-care.sa); pages without a file are generated from care.json and marked "content pending" on staging (showPendingNote).
+ * home-healthcare.sa); pages without a file are generated from care.json and marked "content pending" on staging (showPendingNote).
  */
 export interface CareNode {
   slug: string;
@@ -70,7 +70,7 @@ const files = import.meta.glob("../data/content/care/*.en.json");
 export const careContentNames = new Set(
   Object.keys(files).map((p) => p.replace(/^.*\/(.+)\.en\.json$/, "$1")),
 );
-/** Full page content: the region variant when one exists (home-care.sa on /sa), else the shared file, else null. */
+/** Full page content: the region variant when one exists (home-healthcare.sa on /sa), else the shared file, else null. */
 export function careContent(slug: string, locale: LocaleId, region?: RegionId) {
   if (slug === "shared") return null;
   if (region && region !== "global" && careContentNames.has(`${slug}.${region}`))

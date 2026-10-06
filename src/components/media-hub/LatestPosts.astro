@@ -4,7 +4,7 @@ import { content } from '../../lib/content';
 import { parsePath, urlFor } from '../../lib/editions';
 import { postsFor } from '../../lib/news';
 import { cardData } from '../../lib/news-image';
-import dots from '../../assets/media-hub/divider-group620.svg';
+import Pagination from '../shared/Pagination.astro';
 
 // Figma 46:7903 (page y 1236, h 656.769). The first posts are rendered here; the rest are added by the script
 // from posts.json when the row is scrolled or a category is chosen (the row can hold all ~259 posts).
@@ -20,15 +20,18 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
   <h2 id="latest-title" class="m-0 mx-auto max-lg:box-border max-lg:px-[16px] mt-[calc(27.64*var(--u))] max-w-[calc(457.328*var(--u))] text-center font-gotham font-bold text-f29p076 leading-[calc(34.336*var(--u))] text-navy not-italic [word-break:break-word]">{c.title}</h2>
 
   <!-- Swipe / scroll row (no arrows): padding keeps the card shadows from being clipped, margins cancel it out. -->
-  <ul class="hscroll m-0 mt-[calc(1.64*var(--u))] -mb-30 flex list-none gap-[calc(36.6*var(--u))] p-0 py-30 ps-16 pe-16 scroll-ps-16 lg:ps-115 lg:pe-115 lg:scroll-ps-115" data-row aria-label={c.indexLabel}>
+  <ul id="latest-posts" class="hscroll m-0 mt-[calc(1.64*var(--u))] -mb-30 flex list-none gap-[calc(36.6*var(--u))] p-0 py-30 ps-16 pe-16 scroll-ps-16 lg:ps-115 lg:pe-115 lg:scroll-ps-115" data-row aria-label={c.indexLabel}>
     {cards.map((card) => <li class="flex"><PostCard card={card} /></li>)}
     <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
   </ul>
   <template data-card-template><li class="flex"><PostCard /></li></template>
 
-  <img src={dots.src} width={dots.width} height={dots.height} alt="" class="mx-auto mt-[calc(58.83*var(--u))] block w-[calc(40.972*var(--u))] h-[calc(8.716*var(--u))]" />
+  <!-- Pagination dots of the post row (Figma's dot divider, 58.83 below the cards): shared component, bug 012; recounted as
+       the script appends more posts or a category is chosen. -->
+  <Pagination for="latest-posts" class="mt-[calc(58.83*var(--u))]" />
 </section>
 
 <script>
   import '../../scripts/media-hub';
+  import '../../scripts/pagination';
 </script>

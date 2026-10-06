@@ -1,0 +1,137 @@
+{
+  "_note": "Who We Are (Figma 46:5841, measurements in figma-cache/who-we-are-spec.md). Text = the live site's /about/who-we-are/ page (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, page 41, 6 Oct 2026): hero, intro, the 'Six Hospitals' band, Our Foundation of Care (mission / vision / values from the live tabs; the Figma panel sample text is not the live content), Expanding Our Reach. Stats numbers = the live counters (1,300+ via the shared stat, 715+, 15+, 60 %, 85 %, 91 %). meta.*, alt texts and aria labels are PLACEHOLDER. Figma headings 'One Standard Care' / 'Expanding Services to Communities Regionally.' vs the live 'One Standard of Care' / 'Expanding Our Reach Across the Region': the live text is used (the cyan full stop stays, Figma design). 'Your recovery matters' CTA = the shared Contact page block.",
+  "meta": {
+    "title": "Who We Are | Cambridge Hospital",
+    "description": "A leading provider of specialized rehabilitation and long-term care across the UAE and Saudi Arabia: six hospitals, two countries, one standard of care."
+  },
+  "hero": {
+    "ariaLabel": "From treatment to recovery, all together",
+    "banner": {
+      "image": "accreditations/banner",
+      "alt": ""
+    },
+    "title": [
+      "From treatment to",
+      "recovery, all together."
+    ],
+    "text": "From hospital care to rehabilitation and home support, we deliver care that is continuous and personalized.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "intro": {
+    "heading": "A leading provider of specialized rehabilitation and long-term care across the UAE and Saudi Arabia.",
+    "text": [
+      "Founded in 2012, Cambridge Hospital has spent over thirteen years building what no other provider in the Gulf has matched: a fully integrated, dual-accredited clinical network that supports patients from the first day of post-acute care through to long-term management, community reintegration, and home-based support.",
+      "Across more than 715 beds and six purpose-built facilities, our multidisciplinary teams deliver outcome-driven care to patients with complex neurological conditions, long-term ventilation dependency, post-surgical rehabilitation needs, and medically complex profiles requiring sustained clinical oversight.",
+      "We do not treat conditions. We treat people, in the full context of their lives, their families, and their futures."
+    ]
+  },
+  "network": {
+    "ariaLabel": "Six Hospitals. Two Countries. One Standard of Care.",
+    "heading": [
+      [
+        "Six Hospitals",
+        ". "
+      ],
+      [
+        "Two Countries",
+        ". "
+      ],
+      [
+        "One Standard of Care",
+        "."
+      ]
+    ],
+    "photo": {
+      "image": "who-we-are/network",
+      "alt": "A Cambridge Hospital nurse hugging a smiling young patient"
+    },
+    "stats": [
+      {
+        "shared": "professionals"
+      },
+      {
+        "number": "715+",
+        "label": "Beds Across the Network"
+      },
+      {
+        "number": "15+",
+        "label": "Years of Clinical Delivery"
+      },
+      {
+        "number": "60%",
+        "label": "Female Workforce"
+      },
+      {
+        "number": "85%",
+        "label": "Discharge Rate"
+      },
+      {
+        "number": "91%",
+        "label": "Patient Satisfaction"
+      }
+    ]
+  },
+  "foundation": {
+    "heading": "Our Foundation of Care",
+    "text": "We are guided by a clear purpose, a strong vision, and values that shape every patient experience and clinical outcome.",
+    "tabsLabel": "Our foundation of care",
+    "tabs": [
+      {
+        "label": "Our Mission",
+        "blocks": [
+          {
+            "type": "note",
+            "text": "Enhancing quality of life by adopting best practices, creating stakeholder value, and expanding service access, while empowering and engaging our employees."
+          }
+        ]
+      },
+      {
+        "label": "Our Vision",
+        "blocks": [
+          {
+            "type": "note",
+            "text": "To be the leader of post-acute and rehabilitation services providing exceptional patient experiences and clinical outcomes across the MENA region."
+          }
+        ]
+      },
+      {
+        "label": "Our Values",
+        "blocks": [
+          {
+            "type": "lines",
+            "lines": [
+              "Integrity",
+              "Compassion",
+              "Achievement",
+              "Diversity",
+              "Teamwork",
+              "Quality"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "expanding": {
+    "ariaLabel": "Expanding Our Reach Across the Region",
+    "heading": [
+      "Expanding Our Reach",
+      "Across the Region"
+    ],
+    "headingDot": ".",
+    "image": {
+      "image": "who-we-are/expanding",
+      "alt": ""
+    },
+    "lead": "Cambridge Hospital continues to expand its services across the United Arab Emirates and the Kingdom of Saudi Arabia as part of Cambridge Health Group’s commitment to advancing rehabilitation and extended care in the region.",
+    "text": [
+      "As the network grows, the focus remains on expanding access to specialized care for patients requiring structured recovery pathways, long-term medical support, and multidisciplinary rehabilitation, addressing the increasing demand for post-acute and long-term care services across both markets.",
+      "Cambridge Hospital is committed to delivering patient-centered care that enables individuals with serious injury or illness to achieve meaningful improvements in their quality of life, supported by a comprehensive range of rehabilitation services including physiotherapy, occupational therapy, speech and language therapy, hydrotherapy, and respiratory care.",
+      "Operating in alignment with internationally recognized standards, Cambridge Hospital maintains a strong commitment to quality and patient safety, ensuring consistency and excellence in care delivery across all locations.",
+      "As Cambridge Hospital continues to evolve, the focus remains on strengthening its role as a regional provider of rehabilitation, post-acute care, and long-term care services, while maintaining a clear commitment to clinical excellence."
+    ]
+  }
+}

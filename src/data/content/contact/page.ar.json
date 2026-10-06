@@ -1,1 +1,41 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19053 'اتصل بنا'): hero, heading, website link, CTA band. Form labels: no Arabic (the live forms are a plugin, not exported).",
+  "meta": {
+    "title": "اتصل بنا | مستشفى كامبريدج",
+    "description": "تواصل مع فريقنا من المتخصصين ذوي الخبرة في منشآتنا في الإمارات العربية المتحدة والسعودية. سواء كان لديك أسئلة أو تحتاج إلى مساعدة، نحن هنا لمساعدتك."
+  },
+  "hero": {
+    "title": [
+      "تحدث مع",
+      "فريق الرعاية لدينا"
+    ]
+  },
+  "heading": "اتصل بنا",
+  "details": {
+    "web": "www.cambridgehospital.com/ar",
+    "webHref": "https://cambridgehospital.com/ar/"
+  },
+  "recovery": {
+    "ariaLabel": "إن تعافيك يهمنا",
+    "text": "الرعاية في مستشفى كامبريدج هي رحلة متكاملة تشمل خدمات المرضى الداخليين والخارجيين والمنزل والمدرسة، وتدعم كل مرحلة من مراحل التعافي.",
+    "lead": "إن تعافيك يهمنا،",
+    "emphasis": [
+      " ونحن معك في كل خطوة من",
+      "رحلتك."
+    ],
+    "tiles": [
+      {
+        "label": "احجز موعد"
+      },
+      {
+        "label": "ابحث عن طبيب"
+      },
+      {
+        "label": "إحالة مريض"
+      },
+      {
+        "label": "أرسل استفسار"
+      }
+    ]
+  }
+}

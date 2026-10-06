@@ -4,7 +4,7 @@ import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 import chevron from '../../assets/media-hub/select-chevron.svg';
-import dots from '../../assets/media-hub/divider-group620.svg';
+import Pagination from '../shared/Pagination.astro';
 
 /*
  * "A Healing Environment, Thoughtfully Designed" (Figma 112:7721, page y 1260-1941). Section top = the H2 top.
@@ -12,9 +12,10 @@ import dots from '../../assets/media-hub/divider-group620.svg';
  * chevron 7 x 4.207 at 17 from the end | 22 | text Book 12/14 #6b6b6b centred w539 (2 paragraphs, 14 apart... Figma: no extra gap)
  * (text = the client's shared "Designed for Comfort" paragraphs, 5 Oct 2026) | 42 | gallery 397.648 tall: active photo 646.178 x 397.648 r17.148 shadow 0 4.573 4.573 3 rgba(0,0,0,.2) at x203.41;
  * neighbours 270 x 166.154 r7.165 at x97 / x682 (opacity .75) and x-187 / x965 (opacity .5), vertically centred (Figma: left pair
- * 10 higher, normalised), BEHIND the active photo | 21.63 | 3-dot divider (shared media-hub asset) 40.972 x 8.716 centred.
- * Figma shows no arrows or dots for the gallery: the photos are the controls (click / tap a side photo, arrow keys, swipe;
- * src/scripts/hospital-gallery.ts). The dropdown switches the area (text + photos). One area ("Outdoor Spaces") in Figma.
+ * 10 higher, normalised), BEHIND the active photo | 21.63 | pagination dots (Figma: its static dot divider, 40.972 x 8.716 centred).
+ * Controls: the photos themselves (click / tap a side photo, arrow keys, swipe; src/scripts/hospital-gallery.ts) and the shared
+ * pagination dots, one per photo of the shown area (bug 012; hidden with a single photo). The dropdown switches the area
+ * (text + photos). One area ("Outdoor Spaces") in Figma.
  */
 interface Area { key: string; label: string; active?: number; images: { image: string; alt: string }[] }
 interface Props { edition: Edition; c: { heading: string; text: string[]; selectLabel: string; galleryLabel: string; slideLabel: string; showSlide: string }; text?: string[]; areas: Area[] }
@@ -76,7 +77,11 @@ const pos = (len: number, active: number, i: number) => {
     );
   })}
 
-  <img src={dots.src} width={dots.width} height={dots.height} alt="" class="dots" />
+  {hasPhotos && (
+    <div class="dots">
+      <Pagination mode="slides" />
+    </div>
+  )}
 </section>
 
 <script>
@@ -100,7 +105,7 @@ const pos = (len: number, active: number, i: number) => {
   .pick-slide { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: #e7e7e7; cursor: pointer; overflow: hidden; border-radius: calc(17.148 * var(--u)); }
   .pick-slide :global(.ph) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }
   .pick-slide:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
-  .dots { margin-top: calc(21.63 * var(--u)); width: calc(40.972 * var(--u)); height: calc(8.716 * var(--u)); }
+  .dots { margin-top: calc(21.63 * var(--u)); align-self: stretch; }
   @media (prefers-reduced-motion: no-preference) {
     .slide { transition: inset-inline-start .45s cubic-bezier(.22,1,.36,1), top .45s cubic-bezier(.22,1,.36,1), width .45s cubic-bezier(.22,1,.36,1), height .45s cubic-bezier(.22,1,.36,1), opacity .45s, visibility .45s; }
   }

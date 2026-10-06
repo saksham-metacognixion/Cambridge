@@ -1,1 +1,19 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153, 6 Oct 2026), split over the Figma lines.",
+  "title": [
+    "معًا نحو التعافي ...",
+    "وحياة أفضل"
+  ],
+  "text": [
+    "ندعمكم في كل خطوة من رحلة تعافيكم",
+    "برعاية متعاطفة وتميز سريري"
+  ],
+  "buttons": [
+    {
+      "label": "تواصل معنا"
+    },
+    {
+      "label": "اقرأ المزيد"
+    }
+  ]
+}

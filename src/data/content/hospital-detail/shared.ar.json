@@ -1,1 +1,16 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, the care cards heading / text (home page 19153), doctors block, 'Take a Tour' / map labels: no Arabic (English shown).",
+  "hero": {
+    "button": {
+      "label": "احجز موعد"
+    }
+  },
+  "care": {
+    "heading": "خدمات مميزة في كل مرحلة من مراحل الرعاية",
+    "text": "في مستشفى كامبريدج، نلتزم بتقديم رعاية متقدمة مرتكزة على المريض مع تميز سريري، ونوفر مجموعة كاملة من الخدمات المصممة خصيصًا لتلبية احتياجاتكم الفردية"
+  },
+  "doctors": {
+    "heading": "رعاية متخصصة، أطباء موثوق بهم",
+    "text": "يلتزم متخصصونا بتقديم الرعاية المناسبة في كل مرحلة من مراحل رحلتك"
+  }
+}

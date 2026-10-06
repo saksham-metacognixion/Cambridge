@@ -10,6 +10,7 @@ import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
 import { CARE_PATHS, allCareNodes } from "./care";
+import { calculators } from "./calculators";
 import { urlFor, type Edition } from "./editions";
 
 export interface PageRoute {
@@ -32,6 +33,7 @@ function routes(): PageRoute[] {
   return [
     { key: "home", path: "" },
     { key: "about", path: PAGE_PATHS.about },
+    { key: "who-we-are", path: PAGE_PATHS.whoWeAre },
     { key: "why-cambridge", path: PAGE_PATHS.whyCambridge },
     { key: "accreditations", path: PAGE_PATHS.accreditations },
     { key: "hospitals", path: PAGE_PATHS.hospitals },
@@ -53,6 +55,10 @@ function routes(): PageRoute[] {
       path: NEWS_PATHS.article(slug),
     })),
     { key: "patient-hub", path: PAGE_PATHS.patientHub },
+    ...calculators.map((c) => ({
+      key: `calculator-${c.key}`,
+      path: pagePath(c.page),
+    })),
     { key: "patient-feedback", path: PAGE_PATHS.patientFeedback },
     { key: "find-a-doctor", path: DOCTOR_PATHS.list },
     { key: "refer-patient", path: PAGE_PATHS.referPatient },

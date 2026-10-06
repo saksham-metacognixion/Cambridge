@@ -1,44 +1,7 @@
 {
+  "_note": "The six stories (names, quotes, photos) come from src/data/testimonials.json (`home`), rendered with the Patient Testimonials card.",
   "title": "Stories of Care and Recovery",
   "subtitle": "Hear from our patients as they share their journeys of recovery, care, and renewed independence.",
-  "items": [
-    {
-      "name": "Mohamed Al Menhali",
-      "quote": "With the help of God, and then Cambridge Hospital, I was able to return to my normal life, stronger and more determined than ever.",
-      "photo": "testimonials/patient-6",
-      "photoAlt": "Mohamed Al Menhali"
-    },
-    {
-      "name": "Mohamed Al Bloushi",
-      "quote": "Thank God, I was able to get back to walking within almost four months, with God’s will and the help of the team at Cambridge Hospital.",
-      "photo": "testimonials/patient-1",
-      "photoAlt": "Mohamed Al Bloushi"
-    },
-    {
-      "name": "Tamam’s Mother",
-      "quote": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities over time.",
-      "photo": "testimonials/patient-2",
-      "photoAlt": "Tamam’s Mother"
-    },
-    {
-      "name": "Shamma’s Mother",
-      "quote": "Shamma’s ability to communicate improved remarkably thanks to Cambridge Hospital, and we are deeply grateful.",
-      "photo": "testimonials/shamma",
-      "photoAlt": "Shamma’s Mother"
-    },
-    {
-      "name": "Salem Bin Saleh",
-      "quote": "Previously, my daughter would walk three or four steps and then fall. Now, thank God, she walks without relying on anyone, covering thirty to forty metres.",
-      "photo": "testimonials/patient-4",
-      "photoAlt": "Salem Bin Saleh"
-    },
-    {
-      "name": "Nujood Saeed",
-      "quote": "I recommend that anyone facing a medical problem always hold on to hope and never lose faith in recovery, even during difficult times.",
-      "photo": "testimonials/patient-5",
-      "photoAlt": "Nujood Saeed"
-    }
-  ],
   "button": {
     "label": "View More Stories",
     "href": "#",

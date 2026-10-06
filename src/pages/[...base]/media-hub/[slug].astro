@@ -72,7 +72,7 @@ const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
         {image ? <PageHero content={hero} pos={pos} h={322} variant="cover" mirror={false} /> : <PageHero content={{ ...hero, banner: { image: 'conditions/accidents-rehabilitation', alt: '' } }} pos={pos} h={322} variant="cover" />}
       </div>
       <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
-        <ArticleBody heading={c.overviewHeading} date={date} intro={post.excerpt ? [post.excerpt] : []} html={html} pending={pending} />
+        <ArticleBody heading={c.overviewHeading} date={date} intro={post.excerpt ? [post.excerpt] : []} html={html} pending={pending} video={c.video} />
       </div>
     </article>
     <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">

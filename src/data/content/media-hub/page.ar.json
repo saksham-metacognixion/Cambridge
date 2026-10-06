@@ -1,1 +1,44 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (content block 19447 'MediaHub-Archive AR'): hero, category names, 'What's Trending', newsletter. The live Arabic 'Explore' heading is 'المركز الإعلامي'. Tile titles (post titles) and the select label: no Arabic (English shown).",
+  "meta": {
+    "title": "المركز الإعلامي | مستشفى كامبريدج",
+    "description": "استكشف آخر التحديثات، والرؤى الطبية، والتطورات الرئيسية من مستشفى كامبريدج وما بعده."
+  },
+  "hero": {
+    "title": [
+      "ابق على اطلاع مع كامبريدج"
+    ],
+    "text": "استكشف آخر التحديثات، والرؤى الطبية، والتطورات الرئيسية من مستشفى كامبريدج وما بعده.",
+    "button": {
+      "label": "احجز موعد"
+    }
+  },
+  "explore": {
+    "title": "المركز الإعلامي",
+    "categories": [
+      {
+        "label": "الفعاليات"
+      },
+      {
+        "label": "المؤتمرات"
+      },
+      {
+        "label": "البيانات الصحفية"
+      },
+      {
+        "label": "مقالات صحية"
+      }
+    ]
+  },
+  "latest": {
+    "eyebrow": "ما هو الرائج",
+    "title": "أحدث المدونات والمنشورات"
+  },
+  "newsletter": {
+    "heading": [
+      "اشترك في ",
+      "نشرتنا الإخبارية"
+    ],
+    "text": "سجل مجانا، وابق على اطلاع بأحدث تطورات الأبحاث، ونصائح الصحة، والمزيد!"
+  }
+}

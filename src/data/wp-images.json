@@ -1,0 +1,299 @@
+{
+  "$comment": "Images of the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, attachment URLs) that would fill a placeholder or an empty image slot here. The export carries URLs only and wp-content/uploads sits behind a Cloudflare bot check (403 to scripts, NW1): download with `node tools/download-news-images.mjs --browser --headed` (fetches these too, into src/assets/<key>.<ext>) or copy the uploads folder from Pramod. After the download, point the JSON named in `usedBy` at `key` (and crop / box values for insurer logos). Nothing in this list is wired yet: the site keeps the Figma photos until then.",
+  "images": [
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Acquired-Brain-Injury.avif",
+      "key": "conditions/live/acquired-brain-injury",
+      "usedBy": "src/data/content/conditions/acquired-brain-injury.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Amputation-Prosthetic-Rehabilitation.avif",
+      "key": "conditions/live/amputation-prosthetic-rehabilitation",
+      "usedBy": "src/data/content/conditions/amputation-prosthetic-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Back-Pain-Lumbar-Rehabilitation.avif",
+      "key": "conditions/live/back-pain-lumbar-rehabilitation",
+      "usedBy": "src/data/content/conditions/back-pain-lumbar-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Epilepsy.avif",
+      "key": "conditions/live/epilepsy",
+      "usedBy": "src/data/content/conditions/epilepsy.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Fracture-Rehabilitation.avif",
+      "key": "conditions/live/fracture-rehabilitation",
+      "usedBy": "src/data/content/conditions/fracture-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Guillain-Barre-Syndrome.avif",
+      "key": "conditions/live/guillain-barre-syndrome",
+      "usedBy": "src/data/content/conditions/guillain-barre-syndrome.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif",
+      "key": "conditions/live/hip-fracture-rehabilitation",
+      "usedBy": "src/data/content/conditions/hip-fracture-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Hip-Knee-Replacement-Recovery.avif",
+      "key": "conditions/live/hip-knee-replacement-recovery",
+      "usedBy": "src/data/content/conditions/hip-knee-replacement-recovery.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Knee-Ligament-Cartilage-Injuries.avif",
+      "key": "conditions/live/knee-ligament-cartilage-injuries",
+      "usedBy": "src/data/content/conditions/knee-ligament-cartilage-injuries.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Motor-Neuron-Diseases.avif",
+      "key": "conditions/live/motor-neuron-diseases",
+      "usedBy": "src/data/content/conditions/motor-neuron-diseases.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Multiple-Sclerosis.avif",
+      "key": "conditions/live/multiple-sclerosis",
+      "usedBy": "src/data/content/conditions/multiple-sclerosis.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Musculoskeletal-Orthopedic-Rehabilitation.avif",
+      "key": "conditions/live/musculoskeletal-orthopaedic-rehabilitation",
+      "usedBy": "src/data/content/conditions/musculoskeletal-orthopaedic-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Neck-Pain-Cervical-Rehabilitation.avif",
+      "key": "conditions/live/neck-pain-cervical-rehabilitation",
+      "usedBy": "src/data/content/conditions/neck-pain-cervical-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Neurorehabilitation.avif",
+      "key": "conditions/live/neurorehabilitation",
+      "usedBy": "src/data/content/conditions/neurorehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Parkinsons-Disease.avif",
+      "key": "conditions/live/parkinsons-disease",
+      "usedBy": "src/data/content/conditions/parkinsons-disease.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Shoulder-Injury-Rotator-Cuff-Rehabilitation.avif",
+      "key": "conditions/live/shoulder-rotator-cuff-rehabilitation",
+      "usedBy": "src/data/content/conditions/shoulder-rotator-cuff-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Spinal-Cord-Injury.avif",
+      "key": "conditions/live/spinal-cord-injury",
+      "usedBy": "src/data/content/conditions/spinal-cord-injury.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Stroke-Rehabilitation.avif",
+      "key": "conditions/live/stroke-rehabilitation",
+      "usedBy": "src/data/content/conditions/stroke-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Tennis-Elbow.avif",
+      "key": "conditions/live/tennis-elbow",
+      "usedBy": "src/data/content/conditions/tennis-elbow.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+    },
+    {
+      "group": "care",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/Inpatient-Care-Cambridge-Hospital.avif",
+      "key": "care/live/inpatient",
+      "usedBy": "src/data/content/care/inpatient.en.json hero.banner.image (today the Inpatient Care banner placeholder, CT4 / OC1)"
+    },
+    {
+      "group": "care",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/Outpatient-Care-Cambridge-Hospital.avif",
+      "key": "care/live/outpatient",
+      "usedBy": "src/data/content/care/outpatient.en.json hero.banner.image (today the Inpatient Care banner placeholder, CT4 / OC1)"
+    },
+    {
+      "group": "care",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/Home-Healthcare-Care-Cambridge-Hospital.avif",
+      "key": "care/live/home-healthcare",
+      "usedBy": "src/data/content/care/home-healthcare.en.json hero.banner.image (today the Inpatient Care banner placeholder, CT4 / OC1)"
+    },
+    {
+      "group": "care",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/In-School-Care-Cambridge-Hospital.avif",
+      "key": "care/live/in-school",
+      "usedBy": "src/data/content/care/in-school.en.json hero.banner.image (today the Inpatient Care banner placeholder, CT4 / OC1)"
+    },
+    {
+      "group": "testimonials",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Amani.avif",
+      "key": "testimonials/live/amani",
+      "usedBy": "src/data/testimonials.json photo.image of \"amani\" (no photo today, CT12)"
+    },
+    {
+      "group": "testimonials",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Mobbad.avif",
+      "key": "testimonials/live/yousef-al-mobbed",
+      "usedBy": "src/data/testimonials.json photo.image of \"yousef-al-mobbed\" (no photo today, CT12)"
+    },
+    {
+      "group": "testimonials",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Mohamed-Ghafil.avif",
+      "key": "testimonials/live/mohamed-ghafil",
+      "usedBy": "src/data/testimonials.json photo.image of \"mohamed-ghafil\" (no photo today, CT12)"
+    },
+    {
+      "group": "testimonials",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Naeema-Al-Blooshi.avif",
+      "key": "testimonials/live/naeema-al-blooshi",
+      "usedBy": "src/data/testimonials.json photo.image of \"naeema-al-blooshi\" (no photo today, CT12)"
+    },
+    {
+      "group": "testimonials",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Ahmed-Al-Shamsi.avif",
+      "key": "testimonials/live/ahmed-al-shamsi",
+      "usedBy": "src/data/testimonials.json photo.image of \"ahmed-al-shamsi\" (no photo today, CT12)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/enaya-insurance-uae.avif",
+      "key": "insurance/live/enaya-insurance-uae",
+      "usedBy": "src/data/insurers.json logo of \"Enaya Insurance\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/bupa-insurance-ksa.avif",
+      "key": "insurance/live/bupa-insurance-ksa",
+      "usedBy": "src/data/insurers.json logo of \"Bupa\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Gulf-Union-KSA-1.avif",
+      "key": "insurance/live/gulf-union-ksa",
+      "usedBy": "src/data/insurers.json logo of \"Gulf Union\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/tawuniya-ksa-1.avif",
+      "key": "insurance/live/tawuniya-ksa",
+      "usedBy": "src/data/insurers.json logo of \"Tawuniya\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/alrajhi-takaful-ksa-1.avif",
+      "key": "insurance/live/alrajhi-takaful-ksa",
+      "usedBy": "src/data/insurers.json logo of \"Al Rajhi Takaful\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/TCS-ksa-1.avif",
+      "key": "insurance/live/tcs-ksa",
+      "usedBy": "src/data/insurers.json logo of \"TCS\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/globemed-ksa-1.avif",
+      "key": "insurance/live/globemed-ksa",
+      "usedBy": "src/data/insurers.json logo of \"GlobeMed\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/malath-insurance-ksa-1.avif",
+      "key": "insurance/live/malath-insurance-ksa",
+      "usedBy": "src/data/insurers.json logo of \"Malath\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/medgulf-ksa-1.avif",
+      "key": "insurance/live/medgulf-ksa",
+      "usedBy": "src/data/insurers.json logo of \"MedGulf (not in the live FAQ list; logo only)\" (name-only card today)"
+    },
+    {
+      "group": "insurers",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/walaa-ksa-1.avif",
+      "key": "insurance/live/walaa-ksa",
+      "usedBy": "src/data/insurers.json logo of \"Walaa (not in the live FAQ list; logo only)\" (name-only card today)"
+    },
+    {
+      "group": "hospitals",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Cambridge-Hospital-Abu-Dhabi-Global.avif",
+      "key": "hospitals/live/abu-dhabi",
+      "usedBy": "the live Our Hospitals card photo of \"abu-dhabi\" (our cards use the Figma photos; candidate for the KSA detail banners, HD1 / CT4)"
+    },
+    {
+      "group": "hospitals",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Cambridge-Hospital-Al-Ain-Global.avif",
+      "key": "hospitals/live/al-ain",
+      "usedBy": "the live Our Hospitals card photo of \"al-ain\" (our cards use the Figma photos; candidate for the KSA detail banners, HD1 / CT4)"
+    },
+    {
+      "group": "hospitals",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Cambridge-Hospital-Dhahran-Global.avif",
+      "key": "hospitals/live/dhahran",
+      "usedBy": "the live Our Hospitals card photo of \"dhahran\" (our cards use the Figma photos; candidate for the KSA detail banners, HD1 / CT4)"
+    },
+    {
+      "group": "hospitals",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Cambridge-Hospital-Al-Khobar-Global.avif",
+      "key": "hospitals/live/al-khobar",
+      "usedBy": "the live Our Hospitals card photo of \"al-khobar\" (our cards use the Figma photos; candidate for the KSA detail banners, HD1 / CT4)"
+    },
+    {
+      "group": "hospitals",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Cambridge-Hospital-Jeddah-Global.avif",
+      "key": "hospitals/live/jeddah",
+      "usedBy": "the live Our Hospitals card photo of \"jeddah\" (our cards use the Figma photos; candidate for the KSA detail banners, HD1 / CT4)"
+    },
+    {
+      "group": "hospitals",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/Al-Mudeef-Center.avif",
+      "key": "hospitals/live/al-mudeef-abu-dhabi",
+      "usedBy": "the live Our Hospitals card photo of \"al-mudeef-abu-dhabi\" (our cards use the Figma photos; candidate for the KSA detail banners, HD1 / CT4)"
+    },
+    {
+      "group": "pages",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Who-We-Are-Global.avif",
+      "key": "who-we-are/live/banner",
+      "usedBy": "Who We Are hero (today the Figma banner = Accreditations photo)"
+    },
+    {
+      "group": "pages",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/Find-a-Doctor-Banner.avif",
+      "key": "doctors-page/live/banner",
+      "usedBy": "live Find a Doctor banner (Figma banner in use)"
+    },
+    {
+      "group": "pages",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/FAQs-Cambridge-Hospital.avif",
+      "key": "faq/live/banner",
+      "usedBy": "live FAQ banner (Figma banner in use)"
+    },
+    {
+      "group": "pages",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/06/Media-Hub.avif",
+      "key": "media-hub/live/banner",
+      "usedBy": "live Media Hub banner (Figma banner in use)"
+    },
+    {
+      "group": "pages",
+      "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Check-Your-Health-in-Seconds-Global.avif",
+      "key": "calculators/live/care",
+      "usedBy": "live home calculators photo (Figma photo in use)"
+    }
+  ]
+}

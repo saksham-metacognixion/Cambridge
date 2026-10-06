@@ -1,1 +1,17 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19021 'رأيك يهمنا'): hero and intro. The English hero / intro are the client's 5 Oct document ('Your Experience Matters to Us'); the live Arabic page is the older 'Your Opinion Matters' page, used as the best available Arabic. Form fields: no Arabic (English shown).",
+  "meta": {
+    "title": "رأيك يهمنا | مستشفى كامبريدج",
+    "description": "دعم شامل لمرضانا الذين يبحثون عن إعادة تأهيل متقدمة بعد الحادة ورعاية طويلة الأمد، مع خدمات منسقة طوال فترة العلاج."
+  },
+  "hero": {
+    "title": [
+      "رأيك يهمنا."
+    ],
+    "text": "دعم شامل لمرضانا الذين يبحثون عن إعادة تأهيل متقدمة بعد الحادة ورعاية طويلة الأمد، مع خدمات منسقة طوال فترة العلاج."
+  },
+  "intro": {
+    "heading": "نحن هنا للاستماع",
+    "text": "دعم شامل لمرضانا الذين يسعون إلى إعادة تأهيل متقدمة بعد الحادة ورعاية طويلة الأمد، مع خدمات منسقة طوال فترة العلاج."
+  }
+}

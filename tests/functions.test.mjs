@@ -29,7 +29,7 @@ const post = (form, fields, { json = true, origin = 'https://site.test' } = {}) 
   return onRequestPost({ request: req, env, params: { form } });
 };
 const good = { name: 'A Patient', email: 'a@b.test', hospital: 'abu-dhabi', subject: 'Question', message: 'Hello <b>there</b>', consent: 'on', 'cf-turnstile-response': 't', edition: 'ae-en' };
-const book = { specialty: 'pediatrics', doctor: 'ahmad-al-khayer', name: 'A Patient', email: '', dob: '1990-05-01', mobile_code: 'AE', mobile: '50 123 4567', gender: 'female', message: '', consent: 'on', 'cf-turnstile-response': 't', edition: 'sa-ar' };
+const book = { specialty: 'pediatric', doctor: 'ahmad-al-khayer', name: 'A Patient', email: '', dob: '1990-05-01', mobile_code: 'AE', mobile: '50 123 4567', gender: 'female', message: '', consent: 'on', 'cf-turnstile-response': 't', edition: 'sa-ar' };
 const refer = { doctor_name: 'Dr A', doctor_mobile_code: 'AE', doctor_mobile: '50 111 2222', name: 'A Patient', dob: '1990-05-01', mobile_code: 'AE', mobile: '50 123 4567', gender: 'male', guardian_mobile_code: 'AE', guardian_mobile: '50 999 8888', diagnosis: 'Stroke', consent: 'on', 'cf-turnstile-response': 't', edition: 'ae-en' };
 const cases = [
   ['valid (JSON)', () => post('send-enquiry', good), (r, b) => r.status === 200 && b.ok && sent.length === 1 && sent[0].to[0] === 'ae@x.test' && sent[0].html.includes('&lt;b&gt;') && sent[0].reply_to === 'a@b.test'],

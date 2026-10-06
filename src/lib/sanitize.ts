@@ -5,6 +5,8 @@
  * No dependency: a tokenizer over the tag syntax is enough for trusted-source content that is rendered statically.
  * Links: http(s), mailto:, tel: and root-relative paths only; external links get rel="noopener". Images: src (same
  * rules), alt, width, height, loading=lazy. Body text tags: see TAGS.
+ * Videos: the news import (tools/import-wp-news.mjs) writes a YouTube embed as <figure data-youtube="<11-char id>">
+ * with a link inside; that one data attribute is kept (validated) so ArticleBody can render a click-to-play facade.
  */
 const TAGS = new Set([
   "p",
@@ -50,6 +52,7 @@ const VOID = new Set(["br", "img"]);
 const ATTRS: Record<string, Set<string>> = {
   a: new Set(["href", "title"]),
   img: new Set(["src", "alt", "width", "height"]),
+  figure: new Set(["data-youtube"]),
   th: new Set(["colspan", "rowspan", "scope"]),
   td: new Set(["colspan", "rowspan"]),
 };
@@ -89,6 +92,7 @@ function attributes(tag: string, raw: string): string {
       if (!safe) continue;
       value = safe;
     }
+    if (name === "data-youtube" && !/^[A-Za-z0-9_-]{11}$/.test(value)) continue;
     if (
       (name === "width" ||
         name === "height" ||

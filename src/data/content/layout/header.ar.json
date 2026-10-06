@@ -1,1 +1,54 @@
-{}
+{
+  "_note": "Arabic labels = the live site's Arabic menus (WordPress export: nav menus headertop-arabic, headermain-arabic, headertop-global-arabic, 6 Oct 2026). 'We are listening', 'Knowledge Centre' (the live site links the Health Articles category: 'مقالات صحية'), 'Visit Cambridge Health Group' and the toggle / menu labels: no Arabic on the live site (English shown). The link's URL (visit.href) is inherited from the English file: one Cambridge Health Group site for both languages (its /ar/ page does not exist).",
+  "topLinks": [
+    {},
+    {
+      "label": "رأيك يهمنا"
+    },
+    {
+      "label": "المركز الإعلامي"
+    },
+    {
+      "label": "مركز التوظيف"
+    },
+    {
+      "label": "مقالات صحية"
+    },
+    {
+      "label": "الأسئلة الشائعة"
+    }
+  ],
+  "region": {
+    "options": [
+      {
+        "label": "الرئيسي"
+      },
+      {
+        "label": "الإمارات"
+      },
+      {
+        "label": "السعودية"
+      }
+    ]
+  },
+  "mainLinks": [
+    {
+      "label": "حول مستشفى كامبريدج"
+    },
+    {
+      "label": "خدماتنا"
+    },
+    {
+      "label": "مركز المرضى"
+    },
+    {
+      "label": "مستشفياتنا"
+    },
+    {
+      "label": "اتصل بنا"
+    }
+  ],
+  "book": {
+    "label": "احجز موعد"
+  }
+}

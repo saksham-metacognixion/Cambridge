@@ -9,7 +9,8 @@ export type Crop = { h: string; l: string; t: string; w: string; iw: number; rat
 export type Slot = { x: number; w: number; hx: number; ex: number; ax: number };
 type Props = {
   slot: Slot; F: number; crop?: Crop;
-  src: any; alt: string; title: string; text: string; readMore: { label: string; href: string };
+  /** null = the image file is not downloaded yet (news export, NW1): the box stays empty */
+  src: any | null; alt: string; title: string; text: string; readMore: { label: string; href: string };
 };
 const { slot: c, F, crop, src, alt, title, text, readMore } = Astro.props;
 const iw = crop ? crop.iw : c.w;
@@ -17,7 +18,7 @@ const iw = crop ? crop.iw : c.w;
 
 <article class="relative w-full max-w-289 lg:absolute lg:top-113 lg:h-[calc(var(--u)*362)]" style={`--cx:${c.x + F}; --w:${c.w}`} data-card>
   <div class="relative overflow-hidden rounded-r21 shadow-news aspect-[289/220] lg:aspect-auto lg:h-220 w-full">
-    {crop ? (
+    {!src ? null : crop ? (
       <Picture
         src={src}
         formats={['avif']}

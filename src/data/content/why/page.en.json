@@ -64,7 +64,7 @@
     },
     "stats": [
       {
-        "number": "13+",
+        "number": "15+",
         "label": "Years of Care"
       },
       {
@@ -139,7 +139,7 @@
       {
         "label": "Find a Doctor",
         "href": "#",
-        "path": "find-a-doctor"
+        "page": "findDoctor"
       },
       {
         "label": "Search Conditions",

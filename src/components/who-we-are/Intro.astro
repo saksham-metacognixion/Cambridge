@@ -1,0 +1,29 @@
+---
+/*
+ * Who We Are intro (Figma 46:5473 + 45:5202): heading Gotham Medium 28/32 #004059 at x56 (w881), page y 608 (52 below the hero);
+ * 21 below it the text, Book 12/14 #6b6b6b at x56 (w861), paragraphs separated by one empty 14px line.
+ */
+interface Props { c: { heading: string; text: string[] } }
+const { c } = Astro.props;
+---
+
+<section class="intro" aria-labelledby="who-intro">
+  <div class="in">
+    <h2 id="who-intro" class="h">{c.heading}</h2>
+    <div class="t">{c.text.map((p) => <p>{p}</p>)}</div>
+  </div>
+</section>
+
+<style>
+  .intro { font-family: var(--font-gotham); font-style: normal; }
+  .in { max-width: calc(var(--target-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .t { margin-top: calc(21 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
+  @media (min-width: 1024px) {
+    .in { padding: 0; }
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(881 * var(--u)); }
+    .t { margin-inline-start: calc(56 * var(--u)); width: calc(861 * var(--u)); }
+  }
+</style>

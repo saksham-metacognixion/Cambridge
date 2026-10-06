@@ -1,5 +1,13 @@
 {
-  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403). name/quote = Website Content - Suhad/Patient Hub/EN-Patient Testimonials.md (12 stories, document order, 5 Oct 2026). The first six keep their Figma photos and card geometry; the other six have NO photo yet (card without the photo layer, docs/open-decisions.md CT12). regions: editions where the story is shown; all 'ae' until Pramod confirms each one's region (D15). photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop; pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. The landing page's Testimonials section (home/testimonials JSON) shows the same first six stories.",
+  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403). name/quote = Website Content - Suhad/Patient Hub/EN-Patient Testimonials.md (12 stories, document order, 5 Oct 2026). The first six keep their Figma photos and card geometry; the other six have NO photo yet (card without the photo layer, docs/open-decisions.md CT12). regions: editions where the story is shown; all 'ae' until Pramod confirms each one's region (D15). photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop; pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. `home` = the six stories of the landing page's Testimonials row (Figma 2007:342 order; the row renders this card at 185 / 257.723).",
+  "home": [
+    "mohamed-al-menhali",
+    "mohamed-al-bloushi",
+    "tamams-mother",
+    "shammas-mother",
+    "salem-bin-saleh",
+    "nujood-saeed"
+  ],
   "testimonials": [
     {
       "slug": "mohamed-al-menhali",
@@ -36,7 +44,8 @@
         "name",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 17857
     },
     {
       "slug": "nujood-saeed",
@@ -76,7 +85,8 @@
         "quote",
         "name",
         "badge"
-      ]
+      ],
+      "wp_media": 17855
     },
     {
       "slug": "shammas-mother",
@@ -123,7 +133,8 @@
         "qi",
         "name",
         "badge"
-      ]
+      ],
+      "wp_media": 17853
     },
     {
       "slug": "tamams-mother",
@@ -160,7 +171,8 @@
         "quote",
         "name",
         "badge"
-      ]
+      ],
+      "wp_media": 17852
     },
     {
       "slug": "mohamed-al-bloushi",
@@ -197,7 +209,8 @@
         "photo",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 17856
     },
     {
       "slug": "salem-bin-saleh",
@@ -245,7 +258,8 @@
         "photo",
         "badge",
         "quote"
-      ]
+      ],
+      "wp_media": 17854
     },
     {
       "slug": "amani",
@@ -258,7 +272,7 @@
         "ar": ""
       },
       "regions": [
-        "ae"
+        "sa"
       ],
       "pattern": [
         "A",
@@ -267,10 +281,23 @@
       "layers": [
         "pat",
         "quote",
+        "photo",
         "name",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 21510,
+      "photo": {
+        "image": "testimonials/wp/amani",
+        "alt": {
+          "en": "Amani",
+          "ar": ""
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
     },
     {
       "slug": "abdullah-jayoul",
@@ -283,7 +310,7 @@
         "ar": ""
       },
       "regions": [
-        "ae"
+        "sa"
       ],
       "pattern": [
         "A",
@@ -308,7 +335,7 @@
         "ar": ""
       },
       "regions": [
-        "ae"
+        "sa"
       ],
       "pattern": [
         "A",
@@ -317,10 +344,23 @@
       "layers": [
         "pat",
         "quote",
+        "photo",
         "name",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 21513,
+      "photo": {
+        "image": "testimonials/wp/yousef-al-mobbed",
+        "alt": {
+          "en": "Yousef Al Mobbed",
+          "ar": ""
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
     },
     {
       "slug": "mohamed-ghafil",
@@ -333,7 +373,7 @@
         "ar": ""
       },
       "regions": [
-        "ae"
+        "sa"
       ],
       "pattern": [
         "A",
@@ -342,10 +382,23 @@
       "layers": [
         "pat",
         "quote",
+        "photo",
         "name",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 21508,
+      "photo": {
+        "image": "testimonials/wp/mohamed-ghafil",
+        "alt": {
+          "en": "Mohamed Ghafil",
+          "ar": ""
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
     },
     {
       "slug": "naeema-al-blooshi",
@@ -358,7 +411,7 @@
         "ar": ""
       },
       "regions": [
-        "ae"
+        "sa"
       ],
       "pattern": [
         "A",
@@ -367,10 +420,23 @@
       "layers": [
         "pat",
         "quote",
+        "photo",
         "name",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 21506,
+      "photo": {
+        "image": "testimonials/wp/naeema-al-blooshi",
+        "alt": {
+          "en": "Naeema Al Blooshi",
+          "ar": ""
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
     },
     {
       "slug": "ahmed-al-shamsi",
@@ -383,7 +449,7 @@
         "ar": ""
       },
       "regions": [
-        "ae"
+        "sa"
       ],
       "pattern": [
         "A",
@@ -392,10 +458,23 @@
       "layers": [
         "pat",
         "quote",
+        "photo",
         "name",
         "badge",
         "qi"
-      ]
+      ],
+      "wp_media": 21504,
+      "photo": {
+        "image": "testimonials/wp/ahmed-al-shamsi",
+        "alt": {
+          "en": "Ahmed Al Shamsi",
+          "ar": ""
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
     }
   ]
 }

@@ -1,8 +1,29 @@
 {
-  "$comment": "Legal pages (scope 2.5: privacy, cookies, others). NO Figma frame: one template with the Article layout's typography (docs/open-decisions.md L1). One entry per page: slug = key in PAGE_PATHS (src/lib/paths.ts), text in src/data/content/legal/<slug>.<locale>.json ({ title, updated: 'YYYY-MM-DD' | '', body: HTML }). Empty body = 'Content pending' on staging (B10). Add a page: an entry here + a PAGE_PATHS key + the content file.",
+  "$comment": "Legal pages (scope 2.5: privacy, cookies, others). NO Figma frame: one template with the Article layout's typography (docs/open-decisions.md L1). Slugs = the live site's URLs /legal/<slug> (WordPress export, 6 Oct 2026: six legal pages, all without content there too). One entry per page: page = key in PAGE_PATHS (src/lib/paths.ts), text in src/data/content/legal/<slug>.<locale>.json ({ title, updated: 'YYYY-MM-DD' | '', body: HTML }). Empty body = 'Content pending' on staging (B10). Add a page: an entry here + a PAGE_PATHS key + the content file.",
   "pages": [
-    { "slug": "privacy-policy", "page": "privacyPolicy" },
-    { "slug": "cookie-policy", "page": "cookiePolicy" },
-    { "slug": "compliance", "page": "compliance" }
+    {
+      "slug": "privacy-policy",
+      "page": "privacyPolicy"
+    },
+    {
+      "slug": "cookie-policy",
+      "page": "cookiePolicy"
+    },
+    {
+      "slug": "gdpr-compliance",
+      "page": "compliance"
+    },
+    {
+      "slug": "patient-rights",
+      "page": "patientRights"
+    },
+    {
+      "slug": "ethics-statement",
+      "page": "ethicsStatement"
+    },
+    {
+      "slug": "accessibility-statement",
+      "page": "accessibilityStatement"
+    }
   ]
 }

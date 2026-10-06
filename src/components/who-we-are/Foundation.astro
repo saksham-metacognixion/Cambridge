@@ -1,0 +1,38 @@
+---
+import Tabs, { type Block } from '../shared/Tabs.astro';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "Our Foundation of Care" (Figma 46:5735-5754), page y 1338-1607: heading Medium 28 #00415a at x56 (w558); 35 below it the
+ * text Book 12/14 #6b6b6b at x58 (w937); 41 below the text top the vertical tabs (x56, 311 x 63, pitch 65): label Medium 17/14
+ * at x +24, top +25; active #418ea2 with a white label, the others rgba(231,231,231,.45) with a #418ea2 label (no text shadow).
+ * Panel 18 right of the tabs, 1 below their top, w552: teal Book 12/14 text (shared Tabs 'note' block; values as 'lines').
+ */
+interface Props { edition: Edition; c: { heading: string; text: string; tabsLabel: string; tabs: { label: string; blocks: Block[] }[] } }
+const { edition, c } = Astro.props;
+---
+
+<section class="fnd" aria-labelledby="who-foundation">
+  <div class="in">
+    <h2 id="who-foundation" class="h">{c.heading}</h2>
+    <p class="t">{c.text}</p>
+    <div class="tabs"><Tabs edition={edition} label={c.tabsLabel} items={c.tabs} idPrefix="who-" gap={18} top={1} width={552} look={{ fontSize: 17, lineHeight: 14, activeWeight: 500, shadow: false }} /></div>
+  </div>
+</section>
+
+<style>
+  .fnd { font-family: var(--font-gotham); font-style: normal; }
+  .in { max-width: calc(var(--target-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: normal; color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .t { margin: calc(35 * var(--u)) 0 0; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); overflow-wrap: anywhere; }
+  .tabs { margin-top: calc(17 * var(--u)); }
+  /* Figma: inactive tab labels are teal here (the shared Tabs default is navy) and the labels are Medium */
+  .tabs :global(.tab) { color: var(--color-teal-border); font-weight: 500; }
+  .tabs :global(.tab[aria-selected='true']) { color: #fff; }
+  @media (min-width: 1024px) {
+    .in { padding: 0; }
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .tabs { margin-inline-start: calc(56 * var(--u)); }
+  }
+</style>

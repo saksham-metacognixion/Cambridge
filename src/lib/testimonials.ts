@@ -15,3 +15,10 @@ export interface Testimonial {
 }
 export const testimonials = data.testimonials as Testimonial[];
 export const testimonialsFor = (region: RegionId) => (region === 'global' ? testimonials : testimonials.filter((t) => t.regions.includes(region)));
+
+/** The six stories of the home page's "Stories of Care and Recovery" row (testimonials.json `home`, Figma 2007:342 order). */
+export const homeTestimonials: Testimonial[] = (data.home as string[]).map((slug) => {
+  const s = testimonials.find((x) => x.slug === slug);
+  if (!s) throw new Error(`testimonials.json home: unknown story "${slug}"`);
+  return s;
+});

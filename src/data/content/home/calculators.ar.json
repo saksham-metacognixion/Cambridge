@@ -1,1 +1,27 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153), exactly as on the live site (the BMI card repeats its title as its description there).",
+  "subtitle": "رؤى سريعة لفهم صحتك والمخاطر بشكل أفضل",
+  "heading": [
+    "اطمئن على صحتك",
+    "في ثوان"
+  ],
+  "cards": [
+    {
+      "title": "حاسبة مؤشر كتلة الجسم",
+      "desc": "حاسبة مؤشر كتلة الجسم"
+    },
+    {
+      "title": "حاسبة خطر الإصابة بالسكتة الدماغية",
+      "desc": "تعرف على مستوى خطر إصابتك في دقائق"
+    },
+    {
+      "title": "حاسبة عمر القلب",
+      "desc": "تعرف على مدى صحة قلبك"
+    },
+    {
+      "title": "حاسبة صحة الرئتين",
+      "desc": "قيّم صحة رئتيك بسرعة"
+    }
+  ],
+  "cardButton": "احسب الآن"
+}

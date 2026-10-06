@@ -4,8 +4,8 @@ import type { LocaleId } from './editions';
  * Content lives in JSON so a CMS can be added later (CLAUDE.md §4):
  *   src/data/content/<page>/<section>.<locale>.json   page text (e.g. home/hero.en.json)
  *   src/data/doctors.json, hospitals.json, news.json    entities (placeholders until Pramod's export arrives)
- * English text is exactly as in Figma. Arabic files stay `{}` until the Arabic Figma data is fetched; until then
- * every missing Arabic value falls back to English and the build prints one warning per file.
+ * English text = Figma / the client's documents. Arabic = the live site's Arabic pages (WordPress export, 6 Oct 2026) where the
+ * export has them; every missing Arabic value falls back to English and the build prints one warning per file.
  */
 const files = import.meta.glob<Record<string, unknown>>('../data/content/**/*.json', { eager: true, import: 'default' });
 
@@ -31,7 +31,7 @@ const warned = new Set<string>();
 function warn(where: string) {
   if (warned.has(where)) return;
   warned.add(where);
-  console.warn(`[content] ${where}: Arabic text missing, English shown (waiting for Arabic Figma data)`);
+  console.warn(`[content] ${where}: Arabic text missing, English shown (no Arabic for it in the live site's export, docs/open-decisions.md WP2)`);
 }
 
 function merge(en: any, loc: any, where: string): any {

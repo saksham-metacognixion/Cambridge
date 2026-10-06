@@ -99,13 +99,15 @@
 .gf-title { margin: 0; font-weight: 700; font-size: calc(13.523 * var(--u)); line-height: normal; color: var(--color-navy-alt); text-align: center; }
 .gf-section { margin: 0; font-weight: 700; font-size: calc(11.72 * var(--u)); line-height: normal; color: var(--color-navy); }
 
-/* Submit buttons */
+/* Submit buttons: the label is centred by flex, no offsets (bug 007: a Figma text-box top offset sat it low with the real Gotham metrics) */
 .f-submit {
-  position: relative; display: block; box-sizing: border-box; margin: 0 auto; padding: 0; border: 0; cursor: pointer;
+  position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box; margin: 0 auto; padding: 0; border: 0; cursor: pointer;
   inline-size: calc(var(--bw) * var(--u)); block-size: calc(var(--bh) * var(--u)); border-radius: calc(var(--br) * var(--u));
-  background: var(--color-cyan); color: #fff; font-family: var(--font-gotham); font-weight: 700; font-size: calc(var(--bfs) * var(--u)); line-height: normal; white-space: nowrap;
+  background: var(--color-cyan); color: #fff; font-family: var(--font-gotham); font-weight: 700; font-size: calc(var(--bfs) * var(--u)); line-height: 1; white-space: nowrap;
 }
-.f-submit > span { position: absolute; inset-inline: 0; inset-block-start: calc(var(--bty) * var(--u)); text-align: center; }
+/* Centre the caps, not the font's line box: trim the label to cap height / baseline so the centring holds whatever the
+   font's ascent / descent (browsers without text-box keep the line-box centring, within ~1px). */
+.f-submit > span { text-box: trim-both cap alphabetic; }
 .f-submit:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
 .f-submit[aria-disabled='true'] { cursor: progress; }
 

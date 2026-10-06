@@ -43,9 +43,12 @@
     "ar": "AR"
   },
   "region": {
-    "label": "Global",
     "menuLabel": "Choose region",
     "options": [
+      {
+        "region": "global",
+        "label": "Global"
+      },
       {
         "region": "ae",
         "label": "UAE"
@@ -61,7 +64,8 @@
     "lines": [
       "Cambridge",
       "Health Group"
-    ]
+    ],
+    "href": "https://cambridge-health.com/"
   },
   "mainLinks": [
     {
@@ -95,5 +99,5 @@
     "ariaLabel": "Book an appointment",
     "href": "#book-appointment"
   },
-  "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Career Hub', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target."
+  "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Career Hub', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target. Region switch: `region.options` = every region in menu order (`region` = id in src/data/editions.json); the button label is the option of the page's own edition (no fixed label). `visit.href` = the Cambridge Health Group website, opened in a new tab (bug 010): the URL the live site's footer links for \"Cambridge Health Group\" (WordPress export, 6 Oct 2026; its /ar/ page does not exist, so the Arabic editions use the same URL). Not confirmed by the client as the header target."
 }

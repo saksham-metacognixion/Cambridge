@@ -74,7 +74,7 @@
       {
         "label": "Find a Doctor",
         "href": "#",
-        "path": "find-a-doctor"
+        "page": "findDoctor"
       },
       {
         "label": "Search Conditions",

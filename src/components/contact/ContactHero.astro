@@ -33,7 +33,10 @@ const banner = img(c.banner.image, edition.region);
     </div>
 
     <div class="hero-copy">
-      <h1 class="relative m-0 font-gotham font-medium text-f39 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-178 lg:w-374">
+      <!-- Figma: Gotham Medium 39 on 37px lines (box 297..371, 2 lines), button at 384 = 13 under it; the line height is
+           the inner-page hero one (Hero / MediaHero / PageHero `leading-37`): without it the font's own line box is ~47px and the
+           title ran into the button (bug 015). -->
+      <h1 class="relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-178 lg:w-374">
         <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
       </h1>
 

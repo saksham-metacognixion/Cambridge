@@ -1,0 +1,83 @@
+{
+  "$comment": "Live site calculator page (cambridgehospital.com, WordPress export 6 Oct 2026 for the hero and intro; the form text and result strings from the live calculator script, read 6 Oct 2026). No Figma frame (docs/open-decisions.md CA1).",
+  "meta": {
+    "title": "Lung Health Calculator | Cambridge Hospital",
+    "description": "Answer a few simple questions to understand your possible lung health risk."
+  },
+  "hero": {
+    "ariaLabel": "Lung Health Calculator",
+    "banner": {
+      "image": "doctors-page/banner",
+      "alt": ""
+    },
+    "title": [
+      "Check Your Lung Health Risk."
+    ],
+    "text": "Answer a few simple questions to understand your possible lung health risk."
+  },
+  "intro": {
+    "heading": "What This Screening Helps Identify",
+    "text": "This quick screening tool looks at breathing symptoms, smoking history, and age to help identify whether you may be at lower risk or may need further medical evaluation for possible COPD."
+  },
+  "form": {
+    "ariaLabel": "Lung Health Calculator",
+    "submit": "Check Lung Health Risk",
+    "fields": {
+      "q1": {
+        "label": "In the last 4 weeks, how often were you short of breath?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "Never or rarely",
+          "1": "Some of the time",
+          "2": "Most or all of the time"
+        }
+      },
+      "q2": {
+        "label": "Do you ever cough up mucus or phlegm?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No or never",
+          "1": "Some days",
+          "2": "Every day"
+        }
+      },
+      "q3": {
+        "label": "Do your breathing problems limit your daily activities?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "Disagree",
+          "1": "Agree",
+          "2": "Strongly agree"
+        }
+      },
+      "q4": {
+        "label": "Have you smoked at least 100 cigarettes in your life?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "2": "Yes"
+        }
+      },
+      "q5": {
+        "label": "Your age",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "Under 50",
+          "1": "50 to 59",
+          "2": "60 or above"
+        }
+      }
+    }
+  },
+  "result": {
+    "title": "Score",
+    "categories": {
+      "lower": "Lower risk",
+      "copd": "Possible COPD"
+    },
+    "notes": {
+      "lower": "If you still have breathing problems, see a doctor.",
+      "copd": "See a doctor for a breathing test (spirometry)."
+    }
+  }
+}

@@ -1,57 +1,28 @@
 ---
-import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
 import ellipses from '../../assets/testimonials/bg-ellipses.svg';
-import cornerVector from '../../assets/testimonials/corner-vector.svg';
-import quoteIcon from '../../assets/testimonials/quote-icon.svg';
-import patFill from '../../assets/testimonials/pattern-fill.svg';
-import patMask from '../../assets/testimonials/pattern-mask.svg';
-import { content } from '../../lib/content';
-import { img } from '../../lib/images';
+import { content, t } from '../../lib/content';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
+import { homeTestimonials } from '../../lib/testimonials';
+import TestimonialCard from '../testimonials/TestimonialCard.astro';
 
+/*
+ * Stories of Care and Recovery (Figma 2007:342): blue panel + six 185 x 231 cards at a 203 pitch from page x -96 (the first
+ * and last cut by the page edge), 117 under the section top. Each card is the Patient Testimonials card (TestimonialCard,
+ * Figma 62:2398) at 185 / 257.723 of its size: every Figma value of the home card (quote box 52 = 72.441 s, name 5 below the
+ * quote box, pattern box at 116, badge 53 at 137 / 186) is that card's, so the stories come from src/data/testimonials.json
+ * (`home` = the slugs in Figma order) and the text is flow layout: a quote of five or more lines (long English, Arabic)
+ * pushes the name down instead of running into it (bug 013), while a card with the Figma content keeps the Figma layout
+ * (min-height 231). The badge overhangs the card bottom in Figma (186 + 53 > 231): the scroller leaves it that room.
+ */
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/testimonials', edition.locale);
+const loc = edition.locale;
 
-const u = (n: number | string) => `calc(${n} * var(--u))`;
-
-// Inset (top right bottom left) of each masked pattern element, as % of the 107x115 box.
-const INSET = {
-  A: '4.11% 3.42% -12.46% -20.43%',
-  B: '4.11% -186.3% -12.46% 169.29%',
-  C: '4.11% -376.02% -12.46% 359.01%',
-  D: '4.11% -185.36% -12.46% 168.36%',
-} as const;
-// Written as logical insets so the pattern mirrors in RTL: inset-block = top bottom, inset-inline = start end.
-const logicalInset = (v: string) => { const [t, r, b, l] = v.split(' '); return `inset-block:${t} ${b};inset-inline:${l} ${r}`; };
-
-type Wrap = { r: number; h: string; l: string; t: string; w: string; iw: number };
-// Design per card (zipped by index with txt.items from home/testimonials JSON).
-const design: {
-  x: number; pats: (keyof typeof INSET)[]; order: string[];
-  photo: { x: number; y: number; w: number; h: number; wrap?: Wrap };
-}[] = [
-  { x: 0, pats: ['A', 'B'], order: ['pat', 'quote', 'photo', 'name', 'vec', 'qi'],
-    photo: { x: 55, y: 85, w: 117, h: 146 } },
-  { x: 203, pats: ['A', 'B'], order: ['pat', 'quote', 'name', 'photo', 'vec', 'qi'],
-    photo: { x: 58, y: 89, w: 114, h: 142 } },
-  { x: 406, pats: ['A', 'B'], order: ['qi', 'pat', 'photo', 'quote', 'name', 'vec'],
-    photo: { x: 48, y: 73, w: 127, h: 158 } },
-  { x: 609, pats: ['A', 'B', 'B', 'C'], order: ['pat', 'quote', 'photo', 'qi', 'name', 'vec'],
-    photo: { x: 28, y: 56, w: 157, h: 175,
-      wrap: { r: 16, h: '112.02%', l: '0', t: '-0.01%', w: '100%', iw: 157 } } },
-  { x: 812, pats: ['A', 'B', 'B', 'C', 'D'], order: ['qi', 'name', 'pat', 'photo', 'vec', 'quote'],
-    photo: { x: 53, y: 73, w: 132, h: 158,
-      wrap: { r: 18, h: '119.62%', l: '-0.14%', t: '0', w: '114.67%', iw: 132 * 1.1467 } } },
-  { x: 1014, pats: ['A', 'B', 'B', 'C', 'D'], order: ['pat', 'qi', 'photo', 'quote', 'name', 'vec'],
-    photo: { x: 66, y: 76, w: 124, h: 155 } },
-];
-const items: { name: string; quote: string; photo: string; photoAlt: string }[] = txt.items;
-const cards = design.map((d, i) => ({
-  ...d, name: items[i].name, quote: items[i].quote,
-  photo: { ...d.photo, src: img(items[i].photo, edition.region), alt: items[i].photoAlt },
-}));
+const u = (n: number) => `calc(${n} * var(--u))`;
+const S = 185 / 257.723;
+const GAP = 203 - 185;
+const OVERHANG = (259.12 + 73.834 - 321.805) * S;
 ---
 
 <section class="testi relative" style="--h: 421" id="testimonials">
@@ -63,45 +34,12 @@ const cards = design.map((d, i) => ({
       <p class="t-sub absolute start-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{txt.subtitle}</p>
     </div>
 
-    <div data-autoscroll class="hscroll t-scroller absolute start-0 top-117 w-full h-231">
-      <div data-loop-row class="t-row relative h-231" style={`width:${u(1199)};margin-inline-start:${u(-96)}`}>
-        <span class="absolute start-0 top-0 w-0 h-0" style="scroll-snap-align:start" aria-hidden="true"></span>
-        {cards.map((c) => (
-          <article data-loop-item class="t-card absolute top-0 w-185 h-231 overflow-hidden bg-white hair-card rounded-r15" style={`inset-inline-start:${u(c.x)};scroll-snap-align:start`}>
-            {c.order.map((k) => {
-              if (k === 'pat') return c.pats.map((p) => (
-                <div class="absolute start-0 top-116 w-107 h-115 overflow-hidden rounded-es-r16" aria-hidden="true">
-                  <div class="pm absolute" style={`${logicalInset(INSET[p])};--m:url(${patMask.src})`}>
-                    <img class="block w-full h-full" src={patFill.src} alt="" width="125" height="125" loading="lazy" decoding="async" />
-                  </div>
-                </div>
-              ));
-              if (k === 'quote') return <p class="absolute start-13 top-31 w-159 h-52 m-0 font-gotham font-normal text-f9 leading-13 text-navy-alt not-italic [word-break:break-word]">{c.quote}</p>;
-              if (k === 'name') return <p class="absolute start-13 top-88 w-159 h-16 m-0 font-gotham font-bold text-f9 leading-13 text-cyan not-italic">{c.name}</p>;
-              if (k === 'qi') return <img class="absolute start-13 top-9 w-12 h-12" src={quoteIcon.src} width="12" height="12" alt="" loading="lazy" decoding="async" />;
-              if (k === 'vec') return <img class="absolute start-137 top-186 w-53 h-53 rtl:-scale-x-100" style="transform:scaleX(-1)" src={cornerVector.src} width="53" height="53" alt="" loading="lazy" decoding="async" />;
-              if (k === 'photo') {
-                const ph = c.photo;
-                const box = `inset-inline-start:${u(ph.x)};top:${u(ph.y)};width:${u(ph.w)};height:${u(ph.h)}`;
-                if (ph.wrap) {
-                  const wp = ph.wrap;
-                  return (
-                    <div class="absolute overflow-hidden" style={`${box};border-end-end-radius:${u(wp.r)}`}>
-                      <Picture src={ph.src} formats={['avif']} fallbackFormat="webp" width={px(wp.iw)} height={Math.round(px(wp.iw) * 693 / 555)} widths={[px(wp.iw), px(wp.iw) * 2]} sizes={`${px(wp.iw)}px`} loading="lazy" decoding="async" alt={ph.alt}
-                        class="absolute block max-w-none" style={`height:${wp.h};inset-inline-start:${wp.l};top:${wp.t};width:${wp.w}`} />
-                    </div>
-                  );
-                }
-                return (
-                  <div class="absolute" style={box}>
-                    <Picture src={ph.src} formats={['avif']} fallbackFormat="webp" width={px(ph.w)} height={px(ph.h)} widths={[px(ph.w), px(ph.w) * 2]} sizes={`${px(ph.w)}px`} loading="lazy" decoding="async" alt={ph.alt}
-                      class="block w-full h-full object-cover" />
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </article>
+    <div data-autoscroll class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
+      <div data-loop-row class="t-row flex" style={`gap:${u(GAP)};margin-inline-start:${u(-96)}`}>
+        {homeTestimonials.map((s) => (
+          <div data-loop-item class="t-item shrink-0" style="scroll-snap-align:start">
+            <TestimonialCard name={t(s.name, loc, 'testimonials')} quote={t(s.quote, loc, 'testimonials')} photo={s.photo ? { ...s.photo, alt: t(s.photo.alt, loc, 'testimonials') } : undefined} pattern={s.pattern} layers={s.layers} region={edition.region} s={S} />
+          </div>
         ))}
       </div>
     </div>
@@ -117,13 +55,6 @@ const cards = design.map((d, i) => ({
 </script>
 
 <style>
-  .pm {
-    -webkit-mask-image: var(--m); mask-image: var(--m);
-    mask-mode: alpha;
-        -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-    -webkit-mask-size: calc(135.395 * var(--u)) calc(117.928 * var(--u)); mask-size: calc(135.395 * var(--u)) calc(117.928 * var(--u));
-    -webkit-mask-position: calc(-4.959 * var(--u)) calc(-7.656 * var(--u)); mask-position: calc(-4.959 * var(--u)) calc(-7.656 * var(--u));
-  }
   .t-head { display: contents; }
   .t-btn { text-decoration: none; }
   @media (max-width: 1023.98px) {
@@ -133,11 +64,10 @@ const cards = design.map((d, i) => ({
     .t-art { inset: 0; width: 100%; height: 100%; inset-inline-start: 0; top: 0; }
     .t-title, .t-sub { position: relative; inset-inline-start: auto; top: auto; width: auto; }
     .t-sub { margin-top: 8px; }
-    .t-scroller { position: static; width: 100%; height: auto; margin-top: 24px; }
+    .t-scroller { position: static; width: 100%; margin-top: 24px; }
     .t-row { margin-inline-start: 16px !important; }
     /* snap cards 16px in from the edge so the first card keeps its gutter in both directions */
     .t-scroller { scroll-padding-inline: 16px; }
     .t-btn { position: relative; inset-inline-start: auto; top: auto; display: block; margin: 24px auto 0; }
   }
-  :global([dir='rtl']) .pm { scale: -1 1; }
 </style>

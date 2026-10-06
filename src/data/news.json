@@ -1,22 +1,22 @@
 {
-  "$comment": "PLACEHOLDER: the 3 posts shown on the Figma Home page, text exactly as in Figma. Replace with Pramod's export (~259 posts). image = image key.",
+  "$comment": "Home \"News & Insights\" cards only (Figma text and crops). Since 5 Oct 2026 each slug is a real post of src/data/news/posts.json (the news export), so Read more opens its article: Al Khobar -> the opening post, Abdullah -> his success story, Dr. Kassab -> his Al Arabiya interview (docs/open-decisions.md AR5 / NW4). image = image key.",
   "posts": [
     {
-      "slug": "cambridge-hospital-al-khobar",
+      "slug": "al-khobar-opening-and-employee-recognition",
       "title": { "en": "Cambridge Hospital Al Khobar, a state-of-the-art rehabilitative hospital in the Eastern Province of Kingdom of Saudi Arabia.", "ar": "" },
       "excerpt": { "en": "In Q2 2019, Cambridge Medical & Rehabilitation, the UAE’s leading post-acute rehabilitation and long-term care facility, announced the opening of its first medical and rehabilitation facility....", "ar": "" },
       "image": "news/al-khobar-image",
       "imageAlt": { "en": "Cambridge Hospital Al Khobar building", "ar": "" }
     },
     {
-      "slug": "abdullah-success-story",
+      "slug": "abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story",
       "title": { "en": "Abdullah, a young Emirati, is a beacon of hope and a true success story of recovery, resilience, and renewed life.", "ar": "" },
       "excerpt": { "en": "On August 11, 2018, 17-year-old Abdullah Al Mehrezi, bedridden and developing spasticity in all four limbs due to a dreadful road traffic accident that left him with severe traumatic brain injury, was admitted...", "ar": "" },
       "image": "news/patient",
       "imageAlt": { "en": "Abdullah, a young Emirati patient, with his care team", "ar": "" }
     },
     {
-      "slug": "dr-robert-kassab-sabah-al-arabiya",
+      "slug": "dr-rober-interview-al-arabiya-tv",
       "title": { "en": "Dr. Robert Kassab shares insights on stroke rehabilitation and long-term care in his recent TV interview on Sabah Al Arabiya.", "ar": "" },
       "excerpt": { "en": "Watch Dr. Robert Kassab’s TV interview on Sabah Al Arabiya, where he shares expert insights on stroke rehabilitation and long-term care, highlighting the importance of specialized treatment....", "ar": "" },
       "image": "news/doctor",

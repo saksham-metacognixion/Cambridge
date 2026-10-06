@@ -11,8 +11,11 @@
  *       because each starts with a lead line; plain items keep the disc marker of the condition tabs (41:2373)
  *   closing p 14 below a list (1503 -> 1517)
  * No Figma design for: date line (AR3, intro style), blockquote (lead-line style), images (column width, flagged AR4).
- * The HTML comes sanitized from src/lib/sanitize.ts (allow-list), so set:html is safe here.
+ * The HTML comes sanitized from src/lib/sanitize.ts (allow-list), so set:html is safe here. A YouTube marker of the news
+ * import (<figure data-youtube="id"><a href>title</a></figure>, kept by the sanitizer) is rendered as ArticleVideo (click-to-play
+ * poster); the HTML around it stays as is, each piece a direct child of .body so the spacing rules apply to the video too.
  */
+import ArticleVideo from './ArticleVideo.astro';
 interface Props {
   heading: string;
   /** h1 on the legal pages (no hero), h2 on the articles (the post title is the hero H1) */
@@ -21,8 +24,21 @@ interface Props {
   intro: string[];
   html: string;
   pending?: string | null;
+  /** accessible name of an embedded video's play button (article JSON); pages without videos omit it */
+  video?: { playLabel: string };
 }
-const { heading, headingTag: H = 'h2', date, intro, html, pending } = Astro.props;
+const { heading, headingTag: H = 'h2', date, intro, html, pending, video } = Astro.props;
+
+type Seg = { html: string } | { id: string; title: string; href: string };
+const segs: Seg[] = [];
+const marker = /<figure data-youtube="([A-Za-z0-9_-]{11})">\s*<a href="([^"]*)"[^>]*>([\s\S]*?)<\/a>\s*<\/figure>/g;
+let at = 0;
+for (const m of html.matchAll(marker)) {
+  if (m.index! > at) segs.push({ html: html.slice(at, m.index) });
+  segs.push({ id: m[1], href: m[2], title: m[3].replace(/<[^>]+>/g, '').trim() });
+  at = m.index! + m[0].length;
+}
+if (at < html.length) segs.push({ html: html.slice(at) });
 ---
 
 <section class="art" aria-labelledby="overview-heading">
@@ -31,7 +47,11 @@ const { heading, headingTag: H = 'h2', date, intro, html, pending } = Astro.prop
     {date && <p class="date"><time datetime={date.iso} aria-label={`${date.label}: ${date.text}`}>{date.text}</time></p>}
     {intro.map((p) => <p>{p}</p>)}
   </div>
-  {html && <div class="body" set:html={html} />}
+  {html && (
+    <div class="body">
+      {segs.map((s) => ('html' in s ? <Fragment set:html={s.html} /> : <ArticleVideo id={s.id} title={s.title} href={s.href} playLabel={video?.playLabel ?? s.title} />))}
+    </div>
+  )}
   {!html && pending && <p class="pending" role="note">{pending}</p>}
 </section>
 

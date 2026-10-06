@@ -197,3 +197,10 @@ SUMMARY: Hospital detail session 1 call (#121). Running total since #68: 54. Nex
 126. download_assets 40:1467 Post Acute card 1 icon group (svg export, the design context split it into 4 vectors) -> assets/post-acute/icon-neuro-group-40-1467.svg
 SUMMARY: Our Care / Inpatient / Post Acute session 5 calls (#122-126). Running total since #68: 59. Next free number: 127.
 SUMMARY (final build phase, 5 Oct): 6 calls = #121-126 (4 get_design_context, 1 get_screenshot, 1 download_assets). Running total since #68: 59; total logged in this file: 126. Next free number: 127.
+127. get_design_context 46:5841 Who We Are (excludeScreenshot; screenshot cached as pages/who-we-are-46-5841.png) -> FULL -> who-we-are-spec.md; assets downloaded to assets/who-we-are/ (banner = accreditations/banner.png, same file)
+SUMMARY: Who We Are session 1 call (#127, 6 Oct 2026). Running total since #68: 60; total logged in this file: 127. Next free number: 128.
+128. use_figma READ-ONLY 93:894: hero H1 21:1432 / sub 21:1433 and services heading 21:1399 / sub 21:1398 -> textAlign (services sub = LEFT), lineHeight (headings AUTO), box + absoluteRenderBounds (bug 002 reopened)
+129. use_figma READ-ONLY 93:894: every single-line Gotham text (131) with box / ink top+bottom -> fitted Figma's Gotham metrics (ascent 0.76em, descent 0.192em, baselines snapped to whole px) -> @font-face overrides in src/styles/global.css
+SUMMARY: Bug 001/002 reopen session 2 calls (#128-129, 6 Oct 2026). Total logged in this file: 129. Next free number: 130.
+130. get_metadata 1:2 (page root) to check for mobile / tablet frames added since #41 (bug 004 reopened, 6 Oct 2026) -> none: every page frame is still 1052 wide ("Mobile" / "Phone:" matches are form field labels)
+SUMMARY: Bug 004 reopen session 1 call (#130, 6 Oct 2026). Total logged in this file: 130. Next free number: 131.

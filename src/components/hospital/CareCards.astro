@@ -1,6 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import CareCard from '../shared/CareCard.astro';
 import { img } from '../../lib/images';
 import { content } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
@@ -8,7 +7,7 @@ import { pagePath } from '../../lib/paths';
 import { CARE_PATHS } from '../../lib/care';
 
 /*
- * The four service cards (Home "Services" cards: photos + text from home/services JSON), reused on
+ * The four service cards (Home "Services" cards: photos + text from home/services JSON; one card = shared/CareCard.astro), reused on
  *  - the hospital pages (Figma 112:7721, page y 2305-2773): scaled by 0.9884 (219.434 x 338.046 r14.827, border .247 #418ea2) at
  *    x 55 / 298.16 / 537.36 / 780.51 under a LEFT-aligned H2 Medium 28 #004059 at x58 w387 (2 lines) + text Book 12/14 #6b6b6b at x58
  *    w577, 64 below the H2 top | 36 | cards; title Medium 18.78 #00b8ff at (+23.72, +256.01); text Book 8.896/9.884 at +277.76;
@@ -17,6 +16,7 @@ import { CARE_PATHS } from '../../lib/care';
  *    (#004059) Medium 19 at (+24, +259), text Book 9/10 at +281 (w 138 / 154), button cyan 74 x 17 r3 at +309, label Medium 8 at +7 / +4,
  *    photo 222 x 244, 3 above the box; the heading above it is the page's "Our Specializations" label (not this component).
  * Card target: `care` (service slug -> our-care/<slug>) or `page` (PAGE_PATHS) or `href` from the services JSON.
+ * The cells stretch (grid rows), so every card of a row is as tall as the tallest and the four buttons stay level (bug 011).
  */
 interface Props {
   edition: Edition;
@@ -46,12 +46,7 @@ const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc($
   <ul class:list={['grid', !c && 'bare']} role="list" aria-label={listLabel}>
     {cards.map((k) => (
       <li class="cell">
-        <article class="card hair-card" style={`--sw:${0.25 * K}`}>
-          <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(222 * K)} height={px(244 * K)} widths={[px(222 * K), px(222 * K) * 2]} sizes={`${px(222 * K)}px`} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
-          <h3 class:list={['title', titleTone === 'navy' ? 'text-navy' : 'text-cyan']}>{k.title}</h3>
-          <p class="desc">{k.desc}</p>
-          <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
-        </article>
+        <CareCard src={k.src} alt={k.alt} title={k.title} desc={k.desc} href={k.href} button={button} buttonLabel={`${button}: ${k.title}`} scale={K} titleTone={titleTone} />
       </li>
     ))}
   </ul>
@@ -64,13 +59,6 @@ const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc($
   .grid { list-style: none; margin: calc(36 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--k) * var(--u))); column-gap: calc(24 * var(--k) * var(--u)); row-gap: calc(32 * var(--u)); }
   .grid.bare { margin-top: 0; }
   .cell { display: flex; }
-  .card { position: relative; box-sizing: border-box; width: 100%; height: calc(342 * var(--k) * var(--u)); margin-top: calc(3 * var(--k) * var(--u)); border-radius: calc(15 * var(--k) * var(--u)); background: #fff; }
-  .card :global(.img) { position: absolute; inset-inline-start: 0; top: calc(-3 * var(--k) * var(--u)); display: block; width: 100%; height: calc(244 * var(--k) * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: calc(15 * var(--k) * var(--u)); border-start-end-radius: calc(15 * var(--k) * var(--u)); }
-  .title { position: absolute; inset-inline-start: calc(24 * var(--k) * var(--u)); top: calc(256 * var(--k) * var(--u)); margin: 0; width: calc(175 * var(--k) * var(--u)); font-weight: 500; font-size: calc(19 * var(--k) * var(--u)); line-height: calc(15 * var(--k) * var(--u)); white-space: nowrap; }
-  .desc { position: absolute; inset-inline-start: calc(24 * var(--k) * var(--u)); top: calc(278 * var(--k) * var(--u)); margin: 0; width: calc(154 * var(--k) * var(--u)); font-size: calc(9 * var(--k) * var(--u)); line-height: calc(10 * var(--k) * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
-  .btn { position: absolute; inset-inline-start: calc(24 * var(--k) * var(--u)); top: calc(306 * var(--k) * var(--u)); display: block; width: calc(74 * var(--k) * var(--u)); height: calc(17 * var(--k) * var(--u)); border-radius: calc(3 * var(--k) * var(--u)); background: var(--color-cyan); text-decoration: none; }
-  .btn span { position: absolute; inset-inline-start: calc(7 * var(--k) * var(--u)); top: calc(4 * var(--k) * var(--u)); width: calc(66 * var(--k) * var(--u)); font-weight: 500; font-size: calc(8 * var(--k) * var(--u)); line-height: calc(10 * var(--k) * var(--u)); color: #fff; white-space: nowrap; }
-  .btn:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(58 * var(--u)); width: calc(387 * var(--u)); min-height: calc(64 * var(--u)); }
     .t { margin: 0; margin-inline-start: calc(58 * var(--u)); width: calc(577 * var(--u)); min-height: calc(27 * var(--u)); }

@@ -1,0 +1,96 @@
+{
+  "$comment": "Live site calculator page (cambridgehospital.com, WordPress export 6 Oct 2026 for the hero and intro; the form text and result strings from the live calculator script, read 6 Oct 2026). No Figma frame (docs/open-decisions.md CA1).",
+  "meta": {
+    "title": "Stroke Risk Calculator | Cambridge Hospital",
+    "description": "Estimate your possible stroke risk using key cardiovascular health factors."
+  },
+  "hero": {
+    "ariaLabel": "Stroke Risk Calculator",
+    "banner": {
+      "image": "doctors-page/banner",
+      "alt": ""
+    },
+    "title": [
+      "Check Your Stroke Risk."
+    ],
+    "text": "Estimate your possible stroke risk using key cardiovascular health factors."
+  },
+  "intro": {
+    "heading": "What This Calculator Assesses",
+    "text": "This calculator reviews factors such as age, blood pressure, diabetes, smoking, heart disease history, and atrial fibrillation to estimate possible stroke risk."
+  },
+  "form": {
+    "ariaLabel": "Stroke Risk Calculator",
+    "submit": "Calculate Stroke Risk",
+    "fields": {
+      "sex": {
+        "label": "Sex",
+        "placeholder": "Select an option",
+        "options": {
+          "male": "Male",
+          "female": "Female"
+        }
+      },
+      "age": {
+        "label": "Age",
+        "placeholder": "e.g. 65"
+      },
+      "sbp": {
+        "label": "Systolic Blood Pressure (mmHg)",
+        "placeholder": "e.g. 140"
+      },
+      "bp_meds": {
+        "label": "Are you taking blood pressure medication?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      },
+      "diabetes": {
+        "label": "Do you have diabetes?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      },
+      "smoker": {
+        "label": "Are you a current smoker?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      },
+      "heart_disease": {
+        "label": "History of heart disease?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      },
+      "af": {
+        "label": "Do you have atrial fibrillation?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      }
+    }
+  },
+  "result": {
+    "title": "10-Year Stroke Risk",
+    "categories": {
+      "lower": "Lower risk",
+      "elevated": "Elevated risk"
+    },
+    "notes": {
+      "lower": "This is only an estimate. If you have risk factors or symptoms, see a doctor.",
+      "elevated": "You may have higher stroke risk factors. A medical review is recommended."
+    },
+    "scoreLabel": "Score: "
+  }
+}

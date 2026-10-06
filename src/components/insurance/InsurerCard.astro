@@ -13,19 +13,20 @@ import type { RegionId } from '../../lib/editions';
  * a logo is never mirrored, only its place in the card follows the reading direction.
  */
 interface Logo { image: string; w: number; h: number; x: number; y: number; fit?: 'contain'; ratio?: number; crop?: { w: string; h: string; left: string; top: string } }
-interface Props { name: string; logo: Logo; region: RegionId }
+interface Props { name: string; logo?: Logo; region: RegionId }
 const { name, logo, region } = Astro.props;
-const src = img(logo.image, region);
-const svg = logo.image.endsWith('.svg') || (src as { format?: string }).format === 'svg';
+// No logo yet (src/data/insurers.json, the live site's KSA insurers): the card keeps its size and shows the name bar only.
+const src = logo ? img(logo.image, region) : null;
+const svg = !!logo && (logo.image.endsWith('.svg') || (src as { format?: string }).format === 'svg');
 // Rendered image size in Figma px (crop: the % of the box; contain: fitted into the box keeping the image ratio).
 const pct = (v: string) => parseFloat(v) / 100;
-let iw = logo.w, ih = logo.h;
-if (logo.crop) { iw = logo.w * pct(logo.crop.w); ih = logo.h * pct(logo.crop.h); }
+let iw = logo?.w ?? 0, ih = logo?.h ?? 0;
+if (!logo) { /* name only */ } else if (logo.crop) { iw = logo.w * pct(logo.crop.w); ih = logo.h * pct(logo.crop.h); }
 else if (logo.fit === 'contain' && logo.ratio) { const r = logo.ratio; if (r > logo.w / logo.h) ih = logo.w / r; else iw = logo.h * r; }
 ---
 
 <article class="icard">
-  <div class="logo" style={`--w:${logo.w};--h:${logo.h};--x:${logo.x};--y:${logo.y}`}>
+  {logo && src && <div class="logo" style={`--w:${logo.w};--h:${logo.h};--x:${logo.x};--y:${logo.y}`}>
     {svg ? (
       <img src={src.src} width={logo.w} height={logo.h} alt="" loading="lazy" decoding="async" class="fill" />
     ) : logo.crop ? (
@@ -33,7 +34,7 @@ else if (logo.fit === 'contain' && logo.ratio) { const r = logo.ratio; if (r > l
     ) : (
       <Image src={src} width={px(iw)} height={px(ih)} densities={[1, 2]} format="webp" alt="" loading="lazy" decoding="async" class:list={['fill', logo.fit === 'contain' && 'contain']} />
     )}
-  </div>
+  </div>}
   <p class="name">{name}</p>
 </article>
 

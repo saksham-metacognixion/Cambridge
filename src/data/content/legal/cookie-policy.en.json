@@ -1,5 +1,5 @@
 {
-  "_note": "Cookie Policy page text. PLACEHOLDER title (the footer / consent label); body = the legal text as HTML (sanitised at build: p, h2-h4, ul/ol/li, a, strong/em, table...). Empty until Pramod sends it (B10).",
+  "_note": "Cookie Policy page. Title = the live site's page title (WordPress export, 6 Oct 2026; the live page has no content either). body = the legal text as HTML (sanitised at build: p, h2-h4, ul/ol/li, a, strong/em, table...). Empty until Pramod sends it (B10).",
   "title": "Cookie Policy",
   "updated": "",
   "body": ""

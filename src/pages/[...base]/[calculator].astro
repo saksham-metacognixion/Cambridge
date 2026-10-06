@@ -1,0 +1,40 @@
+---
+import { editions, editionFromBase } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { pagePath } from '../../lib/paths';
+import { calculators, type Calculator } from '../../lib/calculators';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import CalculatorForm from '../../components/calculators/CalculatorForm.astro';
+
+/*
+ * Health calculator template (bug 014): one page per calculator (src/data/calculators.json) in every edition, at the live
+ * site's URL (PAGE_PATHS). No Figma frame: the inner-page hero (banner layout, text positions of Find a Doctor 62:180,
+ * no button: the live calculator heroes have none) with the live page's title and intro, then the calculator block
+ * (CalculatorForm) with the Refer a Patient rhythm: hero 119-556 | 35 | H2 | ... | card | 44.54 | footer.
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) =>
+    calculators.map((calc) => ({ params: { base: e.base || undefined, calculator: pagePath(calc.page) }, props: { calc } })),
+  );
+}
+
+const edition = editionFromBase(Astro.params.base);
+const { calc } = Astro.props as { calc: Calculator };
+const c = content(`calculators/${calc.key}`, edition.locale);
+---
+
+<BaseLayout edition={edition} path={pagePath(calc.page)} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
+    <div id="calculator" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(35 * var(--u))"><CalculatorForm calc={calc} /></div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44.54 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

@@ -6,12 +6,13 @@ import type { LocaleId } from './editions';
 
 /*
  * Doctors come from src/data/doctors.json (Pramod's export later; schema in the $comment of that file).
- * URL pattern in ONE place: change DOCTOR_PATHS if the current site uses different paths. UNCONFIRMED with Pramod.
+ * URL pattern in ONE place: list = the live site's /patient-hub/find-a-doctor/ (WordPress export, 6 Oct 2026); the profile
+ * pattern is UNCONFIRMED (the doctor records are not in the export): profiles sit under the list.
  */
 export const DOCTOR_PATHS = {
-  list: 'find-a-doctor',
+  list: 'patient-hub/find-a-doctor',
   /** path inside the edition of one doctor profile */
-  profile: (slug: string) => `find-a-doctor/${slug}`,
+  profile: (slug: string) => `patient-hub/find-a-doctor/${slug}`,
 };
 
 export interface Doctor {
@@ -22,7 +23,7 @@ export interface Doctor {
   title: Localized;
   specialties: string[];
   hospital_id: string;
-  country: 'ae' | 'sa';
+  country: 'ae' | 'sa' | ''; // '' = no country in WordPress (Global list only)
   languages: Localized[] | string[];
   bio: Localized;
   sub_specialities: Localized[];
@@ -30,6 +31,9 @@ export interface Doctor {
   photo_alt?: Localized;
   card_photo?: { size?: number; h?: number; dx?: number };
   listed?: boolean;
+  wp_media?: number;
+  home_photo?: string;
+  home_title?: Localized;
   show_book_now?: boolean;
 }
 
@@ -52,3 +56,7 @@ export const specialtyName = (id: string, locale: LocaleId) => {
 
 /** Everything the client filter needs per card, as data attributes. */
 export const filterHospitals = hospitals.map((h) => ({ slug: h.slug, country: h.region }));
+
+/** The line under a doctor's name: the designation, else (no designation in the WordPress export) the specialty names. */
+export const doctorRole = (d: Doctor, locale: LocaleId) =>
+  t(d.title, locale, 'doctors') || d.specialties.map((s) => specialtyName(s, locale)).join(', ');

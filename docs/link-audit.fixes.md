@@ -17,4 +17,4 @@ All destinations are configuration (JSON `page` / `path` / `care` / `action` key
 | Language and region switches on hospital pages | 404 for a hospital the other region does not have | nearest existing parent (`our-hospitals` list) | LA5 |
 | Post Acute "Know More" cards | new | condition detail pages / Conditions list | OC4 |
 
-Still pointing to a stand-in page (needs an answer): Knowledge Center (LA1), Learn More (LA2), calculators (LA4), Home News placeholder posts (AR5), social icons (LA6: one decorative image, no per-icon URLs yet).
+Still pointing to a stand-in page (needs an answer): Knowledge Center (LA1), Learn More (LA2), calculators (LA4), Home News placeholder posts (AR5). Social icons (LA6): linked to the live site's profiles since 6 Oct 2026 (`src/data/social.json`). URLs follow the live site since 6 Oct 2026 (WP1): `/faqs`, `/contact-us`, `/about/why-cambridge-hospital`, `/about/who-we-are`, `/patient-hub/find-a-doctor`, `/legal/<slug>`, `/care/home-healthcare`, `/care/in-school`.

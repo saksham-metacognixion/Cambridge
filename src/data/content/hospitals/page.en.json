@@ -81,7 +81,7 @@
         "shared": "inpatients"
       },
       {
-        "number": "715",
+        "number": "715+",
         "label": "Operational Beds"
       },
       {
@@ -92,7 +92,7 @@
         "label": "Discharge Rate"
       },
       {
-        "number": "13+",
+        "number": "15+",
         "label": "Years of Experience"
       }
     ]
@@ -105,7 +105,7 @@
       "ahmad-al-khayer",
       "wael-sary",
       "suhaila-kallada",
-      "rober-hanna-kassab"
+      "rober-kassab"
     ]
   }
 }

@@ -436,8 +436,9 @@
       "figma_asset_id": "0c4054f1-299b-4ceb-bca6-527ad53172ae"
     },
     "divider-group622": {
-      "file": "assets/news/divider-group622.svg",
-      "figma_asset_id": "d43aaea3-30ed-47ff-bd6b-82bd5594a403"
+      "file": null,
+      "figma_asset_id": "d43aaea3-30ed-47ff-bd6b-82bd5594a403",
+      "note": "file removed 6 Oct 2026 (bug 012): the dot divider is now the shared Pagination component (src/components/shared/Pagination.astro)"
     },
     "arrow-icon-group33": {
       "file": "assets/news/arrow-icon-group33.svg",
@@ -927,5 +928,40 @@
       "src": "src/assets/careers/chevron.svg"
     },
     "_note": "Figma 112:7295. banner 1052x500 only (1x), nurse 1536x1024 RGBA, pioneer 1080x1350. CTA band SVG (112:7230) is a plain #004059 rectangle: not stored."
+  },
+  "who-we-are": {
+    "banner": {
+      "file": "assets/who-we-are/banner.png",
+      "figma_asset": "56b21.png",
+      "note": "identical to assets/accreditations/raw/banner-r1.png (src/assets/accreditations/banner.png is used)"
+    },
+    "expanding-care1": {
+      "file": "assets/who-we-are/expanding-care1.png",
+      "figma_asset": "a4237.png",
+      "src": "src/assets/who-we-are/expanding.png"
+    },
+    "network-care2": {
+      "file": "assets/who-we-are/network-care2.png",
+      "figma_asset": "3acaa.png",
+      "src": "src/assets/who-we-are/network.png"
+    },
+    "network-lines": {
+      "file": "assets/who-we-are/network-lines.svg",
+      "figma_asset": "bf269.svg",
+      "src": "src/assets/who-we-are/lines.svg"
+    },
+    "network-lines-mask": {
+      "file": "assets/who-we-are/network-lines-mask.svg",
+      "figma_asset": "dec58.svg"
+    },
+    "cta-pattern": {
+      "file": "assets/who-we-are/cta-pattern.svg",
+      "figma_asset": "995fa.svg",
+      "note": "the shared ContactRecovery pattern"
+    },
+    "cta-pattern-mask": {
+      "file": "assets/who-we-are/cta-pattern-mask.svg",
+      "figma_asset": "c5645.svg"
+    }
   }
 }

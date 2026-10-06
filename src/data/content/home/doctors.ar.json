@@ -1,1 +1,15 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153). Filters ALL / KSA / UAE: the live site has no Arabic doctor filter (English shown). 'Book Now' = the live site's 'احجز موعد'; 'See More': no Arabic on the live site.",
+  "heading": "رعاية متخصصة، وأطباء موثوقون",
+  "intro": "يلتزم أخصائيونا بتقديم الرعاية المناسبة في كل مرحلة من مراحل رحلتك العلاجية",
+  "buttons": [
+    {
+      "label": "احجز موعد"
+    },
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}

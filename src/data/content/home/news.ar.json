@@ -1,1 +1,12 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153): section heading 'المركز الإعلامي' and 'اقرأ المزيد'. Pill labels = the live Arabic names of the categories each pill shows (Media Hub block 19447: health articles, press releases, events).",
+  "title": "المركز الإعلامي",
+  "readMore": {
+    "label": "اقرأ المزيد"
+  },
+  "filters": [
+    "مقالات صحية",
+    "البيانات الصحفية",
+    "الفعاليات"
+  ]
+}

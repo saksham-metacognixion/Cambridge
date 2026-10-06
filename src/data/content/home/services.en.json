@@ -21,14 +21,14 @@
       "alt": "Home health care visit",
       "title": "Home Care",
       "desc": "Personalised medical and rehabilitation care delivered at home",
-      "care": "home-care"
+      "care": "home-healthcare"
     },
     {
       "image": "services/in-school",
       "alt": "In-school care",
       "title": "In-School Care",
       "desc": "Specialist therapy and medical support delivered at school",
-      "care": "in-school-care"
+      "care": "in-school"
     }
   ],
   "cardButton": "Start Your Care",

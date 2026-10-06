@@ -1,5 +1,5 @@
 {
-  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image.",
+  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded.",
   "insurers": [
     {
       "slug": "al-buhaira",
@@ -33,7 +33,8 @@
         "h": 27.288,
         "x": 62.3,
         "y": 37.24
-      }
+      },
+      "wp_media": 18544
     },
     {
       "slug": "almadallah",
@@ -50,7 +51,8 @@
         "h": 32.129,
         "x": 43.68,
         "y": 31.51
-      }
+      },
+      "wp_media": 18535
     },
     {
       "slug": "dubai-insurance",
@@ -90,7 +92,8 @@
         "h": 27.213,
         "x": 54.42,
         "y": 40.82
-      }
+      },
+      "wp_media": 18549
     },
     {
       "slug": "al-khazna",
@@ -112,7 +115,7 @@
     {
       "slug": "adnic",
       "name": {
-        "en": "Adu Dhabi National Insurance Company",
+        "en": "Abu Dhabi National Insurance",
         "ar": ""
       },
       "regions": [
@@ -122,9 +125,10 @@
         "image": "insurance/layout-set",
         "w": 79.709,
         "h": 27.848,
-        "x": 58.0,
+        "x": 58,
         "y": 34.37
-      }
+      },
+      "wp_media": 18534
     },
     {
       "slug": "aafiya",
@@ -181,7 +185,8 @@
           "left": "-39.74%",
           "top": "0%"
         }
-      }
+      },
+      "wp_media": 18538
     },
     {
       "slug": "nextcare",
@@ -196,9 +201,10 @@
         "image": "insurance/images",
         "w": 79.241,
         "h": 24.202,
-        "x": 58.0,
+        "x": 58,
         "y": 38.67
-      }
+      },
+      "wp_media": 18545
     },
     {
       "slug": "saico",
@@ -216,7 +222,8 @@
         "x": 78.05,
         "y": 9.31
       },
-      "$note": "Shown under UAE in Figma; SAICO is a Saudi insurer (probable Figma error). Region to be confirmed by Pramod."
+      "$note": "Shown under UAE in Figma; SAICO is a Saudi insurer (probable Figma error). Region to be confirmed by Pramod.",
+      "wp_media": 18546
     },
     {
       "slug": "al-sagr",
@@ -248,8 +255,8 @@
         "image": "insurance/orient",
         "w": 103.113,
         "h": 51.557,
-        "x": 45.0,
-        "y": 25.0,
+        "x": 45,
+        "y": 25,
         "fit": "contain",
         "ratio": 3.4289
       }
@@ -267,8 +274,8 @@
         "image": "insurance/allianz",
         "w": 116,
         "h": 28.771,
-        "x": 39.0,
-        "y": 37.0
+        "x": 39,
+        "y": 37
       }
     },
     {
@@ -284,9 +291,168 @@
         "image": "insurance/deutsche",
         "w": 136,
         "h": 11.137,
-        "x": 29.0,
-        "y": 47.0
+        "x": 29,
+        "y": 47
       }
+    },
+    {
+      "name": {
+        "en": "Enaya Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "ae"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/enaya-insurance-uae.avif",
+      "slug": "enaya-insurance",
+      "wp_media": 18539
+    },
+    {
+      "name": {
+        "en": "Bupa",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/bupa-insurance-ksa.avif",
+      "slug": "bupa-insurance",
+      "wp_media": 18551,
+      "logo": {
+        "image": "insurance/wp/bupa-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
+    },
+    {
+      "name": {
+        "en": "Gulf Union",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/Gulf-Union-KSA.avif",
+      "slug": "gulf-union",
+      "wp_media": 18559
+    },
+    {
+      "name": {
+        "en": "Tawuniya",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/tawuniya-ksa.avif",
+      "slug": "tawuniya-insurance",
+      "wp_media": 18562,
+      "logo": {
+        "image": "insurance/wp/tawuniya-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
+    },
+    {
+      "name": {
+        "en": "JHAH",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "slug": "jhah"
+    },
+    {
+      "name": {
+        "en": "MOH",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "slug": "moh"
+    },
+    {
+      "name": {
+        "en": "Al Rajhi Takaful",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/alrajhi-takaful-ksa.avif",
+      "slug": "alrajhi-takaful",
+      "wp_media": 18556
+    },
+    {
+      "name": {
+        "en": "TCS",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/TCS-ksa.avif",
+      "slug": "tcs-insurance",
+      "wp_media": 18563
+    },
+    {
+      "name": {
+        "en": "GlobeMed",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/globemed-ksa.avif",
+      "slug": "globemed-insurance",
+      "wp_media": 18558,
+      "logo": {
+        "image": "insurance/wp/globemed-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
+    },
+    {
+      "name": {
+        "en": "Malath",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "logoSource": "https://cambridgehospital.com/wp-content/uploads/malath-insurance-ksa.avif",
+      "slug": "malath-insurance",
+      "wp_media": 18560
+    },
+    {
+      "name": {
+        "en": "MEDGULF Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "slug": "medgulf-insurance",
+      "wp_media": 18561
+    },
+    {
+      "name": {
+        "en": "Walaa Insurance",
+        "ar": ""
+      },
+      "regions": [
+        "sa"
+      ],
+      "slug": "walaa-insurance",
+      "wp_media": 18564
     }
   ]
 }

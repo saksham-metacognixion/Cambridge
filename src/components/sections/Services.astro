@@ -1,6 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import CareCard from '../shared/CareCard.astro';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { content } from '../../lib/content';
@@ -11,65 +10,52 @@ const s = content('home/services', edition.locale);
 // "Start Your Care" -> the service page (our-care/<slug>, `care` key in the JSON); a card without one keeps its href.
 const target = (k: { care?: string; href?: string }) => (k.care ? urlFor(edition, CARE_PATHS.service(k.care)) : (k.href ?? '#'));
 
-// x = page x of the card; imgY = image top relative to card top (169/168/169 - 172)
-// Design only; zipped by index with the content cards from home/services.json
-const layout = [
-  { x: 49, tw: 148, dw: 138, imgY: -3 },
-  { x: 295, tw: 162, dw: 154, imgY: -4 },
-  { x: 537, tw: 175, dw: 138, imgY: -3 },
-  { x: 783, tw: 162, dw: 154, imgY: -3 },
-];
-const cards = layout.map((d, i) => {
-  const k = s.cards[i];
-  return { ...d, img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: target(k) };
-});
-const u = (n: number) => `calc(${n} * var(--u))`;
+// Cards (shared/CareCard.astro) at Figma x 49 / 295 / 537 / 783, top 172 (photo 169): a grid with the Figma gaps as columns
+// (24 / 20 / 24), so the four cards share one row and stretch to the tallest (bug 011: the buttons stay level).
+const cards = (s.cards as { image: string; alt: string; title: string; desc: string; care?: string; href?: string }[]).map((k) => ({
+  img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: target(k),
+}));
 ---
-<!-- Services: page y 640, --h 553. Spec coords are frame-relative (frame x = 0).
-     Heading: Figma sets 2 lines of Gotham Medium 28 on 27px lines (measured: text 42..96), paragraph box at 106. -->
+<!-- Services: page y 640, --h 553 (its minimum: cards 172..514 + 39 below; a row with a long description grows). Spec coords
+     are frame-relative (frame x = 0).
+     Heading: Figma sets 2 lines of Gotham Medium 28 on 27px lines (measured: text 42..96), centred; paragraph box at 106,
+     LEFT-aligned in Figma (21:1398, start in RTL). -->
 <section class="relative bg-veil" style="--h: 553" aria-labelledby="services-heading">
-  <script is:inline>!function(s){"IntersectionObserver"in window&&(s.classList.add("rv-armed"),new IntersectionObserver(function(e,o){e[0].isIntersecting&&(s.classList.add("is-visible"),o.disconnect())},{threshold:.2}).observe(s))}(document.currentScript.parentElement)</script>
+  <script is:inline>!function(s){"IntersectionObserver"in window&&(s.classList.add("rv-armed"),new IntersectionObserver(function(e){var r=e[e.length-1];r.intersectionRatio>=.2?s.classList.add("is-visible"):(!r.isIntersecting||r.boundingClientRect.top>0)&&s.classList.remove("is-visible")},{threshold:[0,.2]}).observe(s))}(document.currentScript.parentElement)</script>
   <div class="stage max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(42*var(--u))]">
     <h2 id="services-heading" class="rv m-0 font-gotham font-medium not-italic text-f28 leading-27 text-navy text-center whitespace-normal [word-break:break-word] lg:absolute lg:start-319 lg:top-42 lg:w-387 lg:h-74 max-lg:mx-auto max-lg:max-w-[calc(387*var(--u))]">{s.heading}</h2>
 
-    <p class="rv m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body text-center whitespace-normal [word-break:break-word] lg:absolute lg:start-237 lg:top-106 lg:w-577 lg:h-27 max-lg:mx-auto max-lg:mt-[calc(16*var(--u))] max-lg:max-w-[calc(577*var(--u))]">{s.text}</p>
+    <p class="rv m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body text-start whitespace-normal [word-break:break-word] lg:absolute lg:start-237 lg:top-106 lg:w-577 lg:h-27 max-lg:mx-auto max-lg:mt-[calc(16*var(--u))] max-lg:max-w-[calc(577*var(--u))]">{s.text}</p>
 
-    <ul class="m-0 flex list-none flex-wrap justify-center gap-x-[calc(24*var(--u))] gap-y-[calc(32*var(--u))] p-0 max-lg:mt-[calc(32*var(--u))] lg:contents">
+    <ul class="cards m-0 flex list-none flex-wrap justify-center gap-x-[calc(24*var(--u))] gap-y-[calc(32*var(--u))] p-0 max-lg:mt-[calc(32*var(--u))]">
       {cards.map((c, i) => (
-        <li style={`--x:${c.x};--i:${i}`} class="rv rv-card relative h-342 w-222 shrink-0 rounded-r15 bg-white hair-card max-lg:mt-[calc(4*var(--u))] lg:absolute lg:top-172">
-          <Picture
-            src={c.img}
-            formats={['avif']}
-            fallbackFormat="webp"
-            width={px(222)}
-            height={px(244)}
-            widths={[px(222), px(222) * 2]}
-            sizes={`${px(222)}px`}
-            loading="lazy"
-            decoding="async"
-            alt={c.alt}
-            class="absolute start-0 block h-244 w-222 rounded-t-r15 object-cover"
-            style={`top:${u(c.imgY - 0)}`}
-            pictureAttributes={{ class: 'contents' }}
-          />
-          <h3 class="m-0 absolute start-24 top-259 h-15 font-gotham font-medium not-italic text-f19 leading-[calc(15*var(--u))] text-cyan whitespace-nowrap" style={`width:${u(c.tw)}`}>{c.title}</h3>
-          <p class="m-0 absolute start-24 top-281 h-19 font-gotham font-normal not-italic text-f9 leading-[calc(10*var(--u))] text-body whitespace-normal [word-break:break-word]" style={`width:${u(c.dw)}`}>{c.desc}</p>
-          <a href={c.href} class="hit absolute start-24 top-309 block h-17 w-74 rounded-r3 bg-cyan">
-            <span class="absolute start-7 top-4 h-10 w-66 font-gotham font-medium not-italic text-f8 leading-[calc(10*var(--u))] text-white whitespace-nowrap">{s.cardButton}</span>
-          </a>
+        <li style={`--i:${i}`} class="rv rv-card cell">
+          <CareCard src={c.img} alt={c.alt} title={c.title} desc={c.desc} href={c.href} button={s.cardButton} buttonLabel={`${s.cardButton}: ${c.title}`} />
         </li>
       ))}
     </ul>
   </div>
 </section>
 <style>
-  /* Scroll reveal: armed by the inline script (so no-JS stays visible); opacity + transform only, space is reserved. */
+  /* Scroll reveal: armed by the inline script (so no-JS stays visible); opacity + transform only, space is reserved.
+     Replays on every entry: is-visible is added at 20% in view and removed once the section is off-screen (or back under
+     the fold, below 20%, where the cards are not yet visible).
+     The transition lives on the visible state only, so the reset happens instantly while nobody can see it. */
   @media (prefers-reduced-motion: no-preference) {
-    .rv-armed .rv { opacity: 0; transform: translateY(24px); transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
-    .rv-armed .rv-card { transform: translateY(40px); transition-delay: calc(var(--i) * 120ms + 150ms); }
-    .rv-armed.is-visible .rv { opacity: 1; transform: none; }
+    .rv-armed .rv { opacity: 0; transform: translateY(24px); }
+    .rv-armed .rv-card { transform: translateY(40px); }
+    .rv-armed.is-visible .rv { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .rv-armed.is-visible .rv-card { transition-delay: calc(var(--i) * 120ms + 150ms); }
   }
+  .cell { display: flex; width: calc(222 * var(--u)); flex: none; }
   @media (min-width: 1024px) {
-    li[style*='--x'] { inset-inline-start: calc(var(--x) * var(--u)); }
+    /* The stage keeps the Figma height as a minimum and grows with the card row. The grid starts at the photo top (169;
+       the card's own 3 margin puts the box at 172); columns = Figma gaps 24 / 20 / 24. */
+    .stage { height: auto; min-height: calc(var(--h) * var(--u)); box-sizing: border-box; padding-top: calc(169 * var(--u)); padding-bottom: calc(39 * var(--u)); }
+    .cards { display: grid; justify-content: start; margin-inline-start: calc(49 * var(--u)); column-gap: 0; row-gap: calc(32 * var(--u)); grid-template-columns: calc(222 * var(--u)) calc(24 * var(--u)) calc(222 * var(--u)) calc(20 * var(--u)) calc(222 * var(--u)) calc(24 * var(--u)) calc(222 * var(--u)); }
+    .cards > li:nth-child(4n + 1) { grid-column: 1; }
+    .cards > li:nth-child(4n + 2) { grid-column: 3; }
+    .cards > li:nth-child(4n + 3) { grid-column: 5; }
+    .cards > li:nth-child(4n) { grid-column: 7; }
   }
 </style>

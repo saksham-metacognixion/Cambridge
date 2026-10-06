@@ -1,8 +1,8 @@
 {
-  "$comment": "PLACEHOLDER sample data. NAMES, ROLES and PHOTOS are exactly as in the Figma Find a Doctor list (14 cards) + the Home doctor row. COUNTRY, HOSPITAL, SPECIALTY ids and Ahmad's bio/sub-specialities are NOT assigned in Figma except Ahmad's profile text: country/hospital are invented test values so the filters can be exercised. Replace the whole file with Pramod's export. Schema: id, slug, old_url (current site URL, feeds the 301 map), name{en,ar}, title{en,ar}, specialties[] (ids in specialties.json), hospital_id (hospitals.json slug), country ae|sa, languages[], bio{en,ar} (HTML), sub_specialities[{en,ar}], photo (image key under src/assets), photo_alt{en,ar} (falls back to the name). DESIGN-ONLY extras for the sample: card_photo {size|h, dx} tunes the photo box inside the Figma card (Figma sizes each photo by hand; real data omits it and gets the default), home_photo (the Home row uses different crops), home_title, show_book_now (Figma shows a second 'Book Now' button on the first card only), listed=false hides a doctor from the list (Halawani is on Home only).",
+  "$comment": "Doctors from the live site (WordPress REST export docs/doctor.json, 6 Oct 2026) via tools/import-wp-cpt.mjs; do not edit by hand, re-run the importer. Schema: id (wp-<post id>), slug (WordPress slug), old_url (empty: the live site has no public doctor pages), name{en,ar}, title{en,ar} (designation; WordPress keeps it in the doctor_designation field, which is not in the export: filled for the 15 Figma doctors only, the card falls back to the specialty name), specialties[] (ids in specialties.json = doctor_specialty term slugs), hospital_id (not in WordPress, empty), country ae|sa (\"\" = no country in WordPress: Global list only), languages[], bio{en,ar} (HTML), sub_specialities[{en,ar}] (doctor_condition terms), photo (image key under src/assets; Figma photos for the 15 Figma doctors), photo_alt, wp_media (WordPress featured image id, for the image import). DESIGN-ONLY extras from Figma: card_photo, home_photo, home_title, show_book_now.",
   "doctors": [
     {
-      "id": "dr-001",
+      "id": "wp-19833",
       "slug": "ahmad-al-khayer",
       "old_url": "",
       "name": {
@@ -14,9 +14,9 @@
         "ar": ""
       },
       "specialties": [
-        "physical-medicine-rehab"
+        "pmr"
       ],
-      "hospital_id": "abu-dhabi",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -58,17 +58,17 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 20041,
       "card_photo": {
         "w": 134.879,
         "h": 153.118,
         "dx": -0.6
       },
-      "listed": true,
       "home_photo": "doctors/dr-ahmad",
       "show_book_now": true
     },
     {
-      "id": "dr-002",
+      "id": "wp-19638",
       "slug": "wael-sary",
       "old_url": "",
       "name": {
@@ -80,13 +80,13 @@
         "ar": ""
       },
       "specialties": [
-        "icu-anesthesia"
+        "internal-medicine"
       ],
-      "hospital_id": "abu-dhabi",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
-        "en": "",
+        "en": "<p>Dr. Wael Mohamed Mokhtar Sary is the Facility Medical Director for Abu Dhabi and a Specialist Anesthesia and ICU at Cambridge Hospital. He has an experience of over 18 years as a healthcare professional.</p>\n<p>He has previously worked in various hospitals in Kuwait, Egypt, and the UAE. He has a bachelor’s degree in Medicine, a master’s degree in anesthesia. He is also a member of the Royal College of Emergency Medicine.</p>\n<p>He is experienced in: – Ventilator management including experience with various modes and continuous positive airway pressure therapies ( BiPAP and CPAP ) – Management of thrombolytic therapy – Wound care including simple superficial debridement, suture and general care for wounds and general care for wounds including the performance of topical or field infiltration of anesthetic solution.</p>",
         "ar": ""
       },
       "sub_specialities": [],
@@ -95,15 +95,15 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 626,
       "card_photo": {
         "size": 167.351,
         "dx": 0.6
       },
-      "listed": true,
       "home_photo": "doctors/dr-wael"
     },
     {
-      "id": "dr-003",
+      "id": "wp-19639",
       "slug": "suhaila-kallada",
       "old_url": "",
       "name": {
@@ -115,9 +115,9 @@
         "ar": ""
       },
       "specialties": [
-        "physical-medicine-rehab"
+        "pmr"
       ],
-      "hospital_id": "al-ain",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -130,19 +130,19 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19687,
       "card_photo": {
         "size": 169.676,
         "dx": 2.9
       },
-      "listed": true,
       "home_photo": "doctors/dr-suhaila"
     },
     {
-      "id": "dr-004",
-      "slug": "rober-hanna-kassab",
+      "id": "wp-19647",
+      "slug": "rober-kassab",
       "old_url": "",
       "name": {
-        "en": "Dr. Rober Hanna Kassab",
+        "en": "Dr. Rober Kassab",
         "ar": ""
       },
       "title": {
@@ -150,9 +150,9 @@
         "ar": ""
       },
       "specialties": [
-        "physical-medicine-rehab"
+        "pmr"
       ],
-      "hospital_id": "abu-dhabi",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -165,19 +165,19 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19661,
       "card_photo": {
         "size": 174.324,
         "dx": 4.1
       },
-      "listed": true,
       "home_photo": "doctors/dr-rober"
     },
     {
-      "id": "dr-005",
-      "slug": "elsanosi-ali-babiker",
+      "id": "wp-19644",
+      "slug": "elsanosi-habour",
       "old_url": "",
       "name": {
-        "en": "Dr. Elsanosi Ali Babiker",
+        "en": "Dr. Elsanosi Habour",
         "ar": ""
       },
       "title": {
@@ -185,9 +185,9 @@
         "ar": ""
       },
       "specialties": [
-        "pediatrics"
+        "pediatric"
       ],
-      "hospital_id": "al-ain",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -200,18 +200,18 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19663,
       "card_photo": {
         "size": 169,
         "dx": 0
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-006",
-      "slug": "amjad-abdelqader",
+      "id": "wp-19645",
+      "slug": "amjad-abdel-qader",
       "old_url": "",
       "name": {
-        "en": "Dr. Amjad Abdelqader",
+        "en": "Dr. Amjad Abdel Qader",
         "ar": ""
       },
       "title": {
@@ -219,9 +219,9 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner"
+        "gp"
       ],
-      "hospital_id": "abu-dhabi",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -234,11 +234,11 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19685,
       "card_photo": {
         "size": 167.351,
         "dx": -1.7
       },
-      "listed": true,
       "home_photo": "doctors/dr-amjed",
       "home_title": {
         "en": "General Physician",
@@ -246,7 +246,7 @@
       }
     },
     {
-      "id": "dr-007",
+      "id": "wp-19637",
       "slug": "sheema-jeelani",
       "old_url": "",
       "name": {
@@ -258,9 +258,9 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner"
+        "gp"
       ],
-      "hospital_id": "al-ain",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -273,18 +273,18 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19682,
       "card_photo": {
         "size": 169,
         "dx": -6
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-008",
-      "slug": "sami-al-amin",
+      "id": "wp-18747",
+      "slug": "sami-alamin",
       "old_url": "",
       "name": {
-        "en": "Dr. Sami Al Amin",
+        "en": "Dr. Sami Alamin",
         "ar": ""
       },
       "title": {
@@ -294,31 +294,88 @@
       "specialties": [
         "internal-medicine"
       ],
-      "hospital_id": "al-mudeef-abu-dhabi",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
-        "en": "",
+        "en": "<p>Dr. Sami Ali Alamin is an Internal Medicine Specialist in Abu Dhabi with 15+ years’ experience in critical care, rehabilitation, renal medicine, and complex patient management.</p>",
         "ar": ""
       },
-      "sub_specialities": [],
+      "sub_specialities": [
+        {
+          "en": "Antimicrobial Stewardship",
+          "ar": ""
+        },
+        {
+          "en": "Cardiac Rehabilitation",
+          "ar": ""
+        },
+        {
+          "en": "Complex Patient Care",
+          "ar": ""
+        },
+        {
+          "en": "Critical Care",
+          "ar": ""
+        },
+        {
+          "en": "Geriatric Medicine",
+          "ar": ""
+        },
+        {
+          "en": "Infection Control",
+          "ar": ""
+        },
+        {
+          "en": "Invasive Bedside Procedures",
+          "ar": ""
+        },
+        {
+          "en": "Mechanical Ventilator Management",
+          "ar": ""
+        },
+        {
+          "en": "Neurology Care",
+          "ar": ""
+        },
+        {
+          "en": "Pulmonary Rehabilitation",
+          "ar": ""
+        },
+        {
+          "en": "Renal Disease & Dialysis",
+          "ar": ""
+        },
+        {
+          "en": "Respiratory Disease",
+          "ar": ""
+        },
+        {
+          "en": "Shock & Hemodynamic Management",
+          "ar": ""
+        },
+        {
+          "en": "Stroke Management",
+          "ar": ""
+        }
+      ],
       "photo": "doctors/list/sami-al-amin",
       "photo_alt": {
         "en": "",
         "ar": ""
       },
+      "wp_media": 19327,
       "card_photo": {
         "size": 169,
         "dx": 0
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-009",
-      "slug": "rao-muhammad-tariq",
+      "id": "wp-19640",
+      "slug": "rao-tariq",
       "old_url": "",
       "name": {
-        "en": "Dr. Rao Muhammad Tariq",
+        "en": "Dr. Rao Tariq",
         "ar": ""
       },
       "title": {
@@ -326,9 +383,9 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner"
+        "gp"
       ],
-      "hospital_id": "abu-dhabi",
+      "hospital_id": "",
       "country": "ae",
       "languages": [],
       "bio": {
@@ -341,18 +398,18 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19691,
       "card_photo": {
         "size": 174.324,
         "dx": 5.2
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-010",
-      "slug": "rasha-hassan",
+      "id": "wp-19646",
+      "slug": "rasha-mahgoub",
       "old_url": "",
       "name": {
-        "en": "Dr. Rasha Hassan",
+        "en": "Dr. Rasha Mahgoub",
         "ar": ""
       },
       "title": {
@@ -360,10 +417,10 @@
         "ar": ""
       },
       "specialties": [
-        "general-physician"
+        "gp"
       ],
-      "hospital_id": "dhahran",
-      "country": "sa",
+      "hospital_id": "",
+      "country": "ae",
       "languages": [],
       "bio": {
         "en": "",
@@ -375,18 +432,18 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19680,
       "card_photo": {
         "size": 160,
         "dx": 4.5
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-011",
-      "slug": "wala-mohammed",
+      "id": "wp-19641",
+      "slug": "walaa-mohamed",
       "old_url": "",
       "name": {
-        "en": "Dr. Wala Mohammed",
+        "en": "Dr. Walaa Mohamed",
         "ar": ""
       },
       "title": {
@@ -394,10 +451,10 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner-icu"
+        "gp"
       ],
-      "hospital_id": "al-khobar",
-      "country": "sa",
+      "hospital_id": "",
+      "country": "ae",
       "languages": [],
       "bio": {
         "en": "",
@@ -409,18 +466,18 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19662,
       "card_photo": {
         "size": 159,
         "dx": 0
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-012",
-      "slug": "ebtihal-rahma-ahmed",
+      "id": "wp-18749",
+      "slug": "ebtihal-mohammed",
       "old_url": "",
       "name": {
-        "en": "Dr. Ebtihal Rahma Ahmed",
+        "en": "Dr. Ebtihal Mohammed",
         "ar": ""
       },
       "title": {
@@ -428,33 +485,82 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner-icu"
+        "internal-medicine"
       ],
-      "hospital_id": "jeddah",
-      "country": "sa",
+      "hospital_id": "",
+      "country": "ae",
       "languages": [],
       "bio": {
-        "en": "",
+        "en": "<p>Dr. Ebtihal Rahma Mohammed is an Internal Medicine Specialist in Abu Dhabi with 13+ years’ experience in ICU, emergency care, renal medicine, and rehabilitation.</p>",
         "ar": ""
       },
-      "sub_specialities": [],
+      "sub_specialities": [
+        {
+          "en": "Acute/Chronic Care",
+          "ar": ""
+        },
+        {
+          "en": "Cardiac Care",
+          "ar": ""
+        },
+        {
+          "en": "Critical Care",
+          "ar": ""
+        },
+        {
+          "en": "Dialysis Complications",
+          "ar": ""
+        },
+        {
+          "en": "Geriatric Medicine",
+          "ar": ""
+        },
+        {
+          "en": "Invasive Procedures",
+          "ar": ""
+        },
+        {
+          "en": "Neurological Emergencies",
+          "ar": ""
+        },
+        {
+          "en": "Renal Disease",
+          "ar": ""
+        },
+        {
+          "en": "Sepsis Control",
+          "ar": ""
+        },
+        {
+          "en": "Shock Management",
+          "ar": ""
+        },
+        {
+          "en": "Stroke Management",
+          "ar": ""
+        },
+        {
+          "en": "Ventilator Management",
+          "ar": ""
+        }
+      ],
       "photo": "doctors/list/ebtihal-rahma-ahmed",
       "photo_alt": {
         "en": "",
         "ar": ""
       },
+      "wp_media": 19326,
       "card_photo": {
         "size": 174.324,
         "dx": 5.2
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-013",
-      "slug": "samuel-tesfaye",
+      "id": "wp-19643",
+      "slug": "samuel-tefera",
       "old_url": "",
       "name": {
-        "en": "Dr. Samuel Tesfaye",
+        "en": "Dr. Samuel Tefera",
         "ar": ""
       },
       "title": {
@@ -462,10 +568,10 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner"
+        "gp"
       ],
-      "hospital_id": "dhahran",
-      "country": "sa",
+      "hospital_id": "",
+      "country": "ae",
       "languages": [],
       "bio": {
         "en": "",
@@ -477,18 +583,18 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19675,
       "card_photo": {
         "size": 165,
         "dx": 0
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-014",
-      "slug": "hasan-abu-eidah",
+      "id": "wp-19642",
+      "slug": "hasan-abueideh",
       "old_url": "",
       "name": {
-        "en": "Dr. Hasan Abu Eidah",
+        "en": "Dr. Hasan Abueideh",
         "ar": ""
       },
       "title": {
@@ -496,10 +602,10 @@
         "ar": ""
       },
       "specialties": [
-        "general-practitioner"
+        "gp"
       ],
-      "hospital_id": "al-khobar",
-      "country": "sa",
+      "hospital_id": "",
+      "country": "ae",
       "languages": [],
       "bio": {
         "en": "",
@@ -511,14 +617,14 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19676,
       "card_photo": {
         "size": 165,
         "dx": 0
-      },
-      "listed": true
+      }
     },
     {
-      "id": "dr-015",
+      "id": "wp-19657",
       "slug": "mohammed-halawani",
       "old_url": "",
       "name": {
@@ -530,13 +636,13 @@
         "ar": ""
       },
       "specialties": [
-        "neuro"
+        "neurology"
       ],
-      "hospital_id": "abu-dhabi",
-      "country": "ae",
+      "hospital_id": "",
+      "country": "sa",
       "languages": [],
       "bio": {
-        "en": "",
+        "en": "<p>Dr. Mohammed Halawani is a distinguished neurosurgeon, academic, and healthcare executive whose career spans two decades of clinical excellence and organizational transformation. As KSA CEO of Cambridge Health Group, he leads the organization&#8217;s strategy, operations, and growth across all facilities in the Kingdom, with a mandate to expand access, enhance quality, and deliver sustainable impact. A Fellow of the Royal College of Physicians and Surgeons of Canada, Dr. Halawani completed advanced neurosurgical training at the University of Ottawa and the University of Calgary. His leadership portfolio includes serving as Chairman of Spine Surgery at King Fahad Medical City and Head of Neurosurgery and Spine Divisions at several leading hospitals in Saudi Arabia. He also played a pivotal role in establishing the Johns Hopkins National Guard Epilepsy Surgery Program and the Arab Spine Association, advancing neurosurgical care regionally. Clinically, Dr. Halawani is recognized as a pioneer in minimally invasive and oncological spine surgeries, with more than 3,000 complex procedures performed. His academic contributions include textbook chapters, peer-reviewed publications, and advancements in surgical innovation. At Cambridge Health Group, he anchors the Kingdom&#8217;s growth agenda on patient-centered outcomes, disciplined governance, and a vision to set new standards for long-term and rehabilitative care in the region.</p>",
         "ar": ""
       },
       "sub_specialities": [],
@@ -545,11 +651,1604 @@
         "en": "",
         "ar": ""
       },
+      "wp_media": 19257,
       "card_photo": {
         "size": 174.324,
         "dx": 0
+      }
+    },
+    {
+      "id": "wp-20262",
+      "slug": "saleh-damnan",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Saleh Damnan",
+        "ar": ""
       },
-      "listed": false
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20261",
+      "slug": "mehnaz-abdul-ghafoor",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mehnaz Abdul Ghafoor",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20260",
+      "slug": "nader-bin-taleb",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Nader Bin Taleb",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20258",
+      "slug": "ali-mahmoud",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ali Mahmoud",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20256",
+      "slug": "mohamed-bahrudeen",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohamed Bahrudeen",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20253",
+      "slug": "ahmad-almohamady",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmad Almohamady",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20252",
+      "slug": "hesham-mustafa",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Hesham Mustafa",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20247",
+      "slug": "wafaa-farag",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Wafaa Farag",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pediatric"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20245",
+      "slug": "abdulaziz-alqutub",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Abdulaziz Alqutub",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20241",
+      "slug": "setelnesa-mohamed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Setelnesa Mohamed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20239",
+      "slug": "majed-osaylan",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Majed Osaylan",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20238",
+      "slug": "wissam-al-safi",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Wissam Al Safi",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "psychiatry"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20237",
+      "slug": "omar-baaqil",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Omar Baaqil",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pmr"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20235",
+      "slug": "ahmed-eltahir",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Eltahir",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20234",
+      "slug": "ahmed-abdallah",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Abdallah",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20233",
+      "slug": "ahmed-rohoma",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Rohoma",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20232",
+      "slug": "abdulrahman-batarfi",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Abdulrahman Batarfi",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20229",
+      "slug": "kashif-ahmed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Kashif Ahmed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20228",
+      "slug": "farahim-chaudhary",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Farahim Chaudhary",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20226",
+      "slug": "ahmed-morsy",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Morsy",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20225",
+      "slug": "mohammed-esmail",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohammed Esmail",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pediatric"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20222",
+      "slug": "suheib-ahmed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Suheib Ahmed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "intensive-care"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20221",
+      "slug": "wael-mabruk",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Wael Mabruk",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-20220",
+      "slug": "nada-mohamed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Nada Mohamed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-18834",
+      "slug": "abdulaziz-almetrek",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Abdulaziz Almetrek",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pmr"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19296
+    },
+    {
+      "id": "wp-18833",
+      "slug": "mohammed-alhayyan",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohammed Alhayyan",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pmr"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "<p>Dr. Mohammed Alhayyan is a Consultant in Physical Medicine and Rehabilitation (PM&amp;R) and currently serves as the Medical Director of Cambridge Hospital &#8211; Dhahran Branch. As Medical Director at Cambridge Hospital, I oversee the medical and clinical operations of the hospital, with a focus on maintaining high standards of patient care, strengthening multidisciplinary collaboration, and developing comprehensive inpatient and outpatient rehabilitation services. I also lead initiatives aimed at expanding specialized rehabilitation programs and enhancing the overall patient experience and quality of care.</p>",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19297
+    },
+    {
+      "id": "wp-18832",
+      "slug": "ahmed-ibrahim",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Ibrahim",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/ahmed-ibrahim",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19281
+    },
+    {
+      "id": "wp-18830",
+      "slug": "mohammed-bawahal",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohammed Bawahal",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/mohammed-bawahal",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19328
+    },
+    {
+      "id": "wp-18829",
+      "slug": "nansy-elnaggar",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Nansy Elnaggar",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19286
+    },
+    {
+      "id": "wp-18828",
+      "slug": "souad-mohamed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Souad Mohamed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19287
+    },
+    {
+      "id": "wp-18827",
+      "slug": "rawiyah-abdalla",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Rawiyah Abdalla",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19289
+    },
+    {
+      "id": "wp-18825",
+      "slug": "mohammed-mugahed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohammed Mugahed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19329
+    },
+    {
+      "id": "wp-18824",
+      "slug": "medhat-hagras",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Medhat Hagras",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "internal-medicine"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/medhat-hagras",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19299
+    },
+    {
+      "id": "wp-18822",
+      "slug": "shayma-marganie",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Shayma Marganie",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pediatric"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19294
+    },
+    {
+      "id": "wp-18821",
+      "slug": "amgad-ali",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Amgad Ali",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19301
+    },
+    {
+      "id": "wp-18820",
+      "slug": "safa-mohamed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Safa Mohamed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19330
+    },
+    {
+      "id": "wp-18819",
+      "slug": "ahmed-eldadah",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Eldadah",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19331
+    },
+    {
+      "id": "wp-18818",
+      "slug": "ahmed-basunbul",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Basunbul",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "internal-medicine"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/ahmed-basunbul",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19304
+    },
+    {
+      "id": "wp-18816",
+      "slug": "abbas-khalid",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Abbas Khalid",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/abbas-khalid",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19306
+    },
+    {
+      "id": "wp-18815",
+      "slug": "adnan-bahakam",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Adnan Bahakam",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pmr"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19307
+    },
+    {
+      "id": "wp-18814",
+      "slug": "asmaa-alalay",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Asmaa Alalay",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pmr"
+      ],
+      "hospital_id": "",
+      "country": "",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/asmaa-alalay",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19308
+    },
+    {
+      "id": "wp-18813",
+      "slug": "mohamed-fathi",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohamed Fathi",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19332
+    },
+    {
+      "id": "wp-18751",
+      "slug": "safa-alsayed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Safa Alsayed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "<p>Dr. Safa Alsayed provides comprehensive pediatric care in inpatient, outpatient, and emergency settings, including cerebral palsy, trauma rehab, and critical care.</p>",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 19312
+    },
+    {
+      "id": "wp-19656",
+      "slug": "bader-al-qahtani",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Bader Al Qahtani",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20033
+    },
+    {
+      "id": "wp-19655",
+      "slug": "khalifa-swidan",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Khalifa Swidan",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/khalifa-swidan",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20035
+    },
+    {
+      "id": "wp-19654",
+      "slug": "asma-mohamed",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Asma Mohamed",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/asma-mohamed",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20034
+    },
+    {
+      "id": "wp-18826",
+      "slug": "asmaa-abdullah",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Asmaa Abdullah",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-19653",
+      "slug": "tamer-eissa",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Tamer Eissa",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20036
+    },
+    {
+      "id": "wp-19652",
+      "slug": "ahmed-elenani",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Ahmed Elenani",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20040
+    },
+    {
+      "id": "wp-19651",
+      "slug": "youssef-haggag",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Youssef Haggag",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "doctors/wp/youssef-haggag",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20037
+    },
+    {
+      "id": "wp-19650",
+      "slug": "isra-adam",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Isra Adam",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "pediatric"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20038
+    },
+    {
+      "id": "wp-18823",
+      "slug": "walaa-elgheriany",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Walaa Elgheriany",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "internal-medicine"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
+    },
+    {
+      "id": "wp-19648",
+      "slug": "maysa-osman",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Maysa Osman",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "ae",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      },
+      "wp_media": 20039
+    },
+    {
+      "id": "wp-20031",
+      "slug": "mohamed-kallash",
+      "old_url": "",
+      "name": {
+        "en": "Dr. Mohamed Kallash",
+        "ar": ""
+      },
+      "title": {
+        "en": "",
+        "ar": ""
+      },
+      "specialties": [
+        "gp"
+      ],
+      "hospital_id": "",
+      "country": "sa",
+      "languages": [],
+      "bio": {
+        "en": "",
+        "ar": ""
+      },
+      "sub_specialities": [],
+      "photo": "",
+      "photo_alt": {
+        "en": "",
+        "ar": ""
+      }
     }
   ]
 }

@@ -2,17 +2,61 @@
   "heading": "Bringing Expert Care Closer to You Across the Region",
   "headingAccent": ".",
   "mapAlt": "Map of the region showing Cambridge Hospital locations in Saudi Arabia and the United Arab Emirates",
-  "mapLabels": ["Dhahran", "Al Khobar", "Abu Dhabi", "Al Ain", "Jeddah"],
+  "mapLabels": [
+    "Dhahran",
+    "Al Khobar",
+    "Abu Dhabi",
+    "Al Ain",
+    "Jeddah"
+  ],
   "listTab": "Hospitals",
-  "hospitals": ["abu-dhabi", "al-ain", "dhahran", "al-khobar", "jeddah", "al-mudeef-abu-dhabi"],
-  "book": { "label": "Book Appointment", "href": "#book-appointment" },
-  "visit": { "label": "Visit Page", "href": "#" },
+  "hospitals": [
+    "abu-dhabi",
+    "al-ain",
+    "dhahran",
+    "al-khobar",
+    "jeddah",
+    "al-mudeef-abu-dhabi"
+  ],
+  "book": {
+    "label": "Book Appointment",
+    "href": "#book-appointment"
+  },
+  "visit": {
+    "label": "Visit Page",
+    "href": "#"
+  },
   "stats": [
-    { "number": "300,000+", "label": "Unique OPD Visits", "key": "opd" },
-    { "number": "5,000+", "label": "Improved Impatients", "key": "inpatients" },
-    { "number": "30,000+", "label": "Homecare Visits", "key": "homecare" },
-    { "number": "1200+", "label": "Healthcare Professionals", "key": "professionals" },
-    { "number": "720", "label": "Operational Beds", "key": "beds" },
-    { "number": "6", "label": "Care Presence", "key": "presence" }
-  ]
+    {
+      "number": "340,000+",
+      "label": "Unique OPD Visits",
+      "key": "opd"
+    },
+    {
+      "number": "5,000+",
+      "label": "Improved Inpatients",
+      "key": "inpatients"
+    },
+    {
+      "number": "30,000+",
+      "label": "Home Care Visits",
+      "key": "homecare"
+    },
+    {
+      "number": "1,300+",
+      "label": "Healthcare Professionals",
+      "key": "professionals"
+    },
+    {
+      "number": "715+",
+      "label": "Operational Beds",
+      "key": "beds"
+    },
+    {
+      "number": "6",
+      "label": "Care Presence",
+      "key": "presence"
+    }
+  ],
+  "_note": "Home facilities section (Figma). Stats numbers = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026) counters (340,000+ OPD visits, 5,000+ improved inpatients, 30,000+ home care visits, 1,300+ professionals, 715+ beds); 'Improved Inpatients' / 'Home Care Visits' spelt as on the live site (Figma: 'Improved Impatients', 'Homecare Visits'). 'Care Presence' = Figma (no live counterpart). CT13 / WP4."
 }

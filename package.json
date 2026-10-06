@@ -12,9 +12,12 @@
     "astro": "astro",
     "test:functions": "node tests/functions.test.mjs",
     "test:filters": "node tests/doctor-filters.test.mjs",
-    "test": "npm run test:functions && npm run test:filters && npm run test:conditions && npm run test:sanitize",
+    "test": "npm run test:functions && npm run test:filters && npm run test:conditions && npm run test:sanitize && npm run test:news && npm run test:calculators",
     "test:conditions": "node tests/condition-filters.test.mjs",
-    "test:sanitize": "node tests/sanitize.test.mjs"
+    "test:sanitize": "node tests/sanitize.test.mjs",
+    "test:news": "node tests/news.test.mjs",
+    "test:pagination": "node tests/pagination.test.mjs",
+    "test:calculators": "node tests/calculators.test.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",

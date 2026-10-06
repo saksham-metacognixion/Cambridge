@@ -1,15 +1,15 @@
 {
-  "$comment": "Our Care hierarchy = the folder structure of 'Website Content - Suhad/Our Care' (5 Oct 2026): hub -> 4 services -> sections -> programmes (up to 4 levels under /care). title/desc = the page title and lead line of each document; a child's card text (desc, cardTitle) comes from its PARENT's document where that lists it (Inpatient / Outpatient main pages, the programme lists of the section pages), else from the child's own lead line. Slugs: from the live site URLs quoted in the documents where given (care, inpatient, outpatient, pediatric-rehab, pulmonary-rehab, physical-medicine-rehab-care, pediatric-care, physiotherapy, occupational-therapy, speech-language-therapy, cerebral-palsy-program); the others are derived from the titles and UNCONFIRMED (docs/open-decisions.md CT2). image = the Figma Inpatient Care card photos (83:226) for the six sections that had them; children without a photo render as text cards. Full page text: src/data/content/care/<slug>.en.json (+ <slug>.<region>.en.json for a region variant: home-care.sa). Paediatric Care (pediatric-rehab) has no document in the folder: generated from its card (CT3).",
+  "$comment": "Our Care hierarchy = the folder structure of 'Website Content - Suhad/Our Care' (5 Oct 2026): hub -> 4 services -> sections -> programmes (up to 4 levels under /care). title/desc = the page title and lead line of each document; a child's card text (desc, cardTitle) comes from its PARENT's document where that lists it (Inpatient / Outpatient main pages, the programme lists of the section pages), else from the child's own lead line. Slugs: from the live site URLs quoted in the documents where given (care, inpatient, outpatient, pediatric-rehab, pulmonary-rehab, physical-medicine-rehab-care, pediatric-care, physiotherapy, occupational-therapy, speech-language-therapy, cerebral-palsy-program); home-healthcare and in-school from the live site's home / Our Care page links (WordPress export, 6 Oct 2026); the section / programme slugs are derived from the titles and UNCONFIRMED (docs/open-decisions.md CT2). image = the Figma Inpatient Care card photos (83:226) for the six sections that had them; children without a photo render as text cards. Full page text: src/data/content/care/<slug>.en.json (+ <slug>.<region>.en.json for a region variant: home-care.sa). Paediatric Care (pediatric-rehab) has no document in the folder: generated from its card (CT3). Arabic service titles / card text = the live site's Arabic Our Care and home pages (WordPress export pages 19115 / 19153); the sections and programmes have no Arabic in the export.",
   "services": [
     {
       "slug": "inpatient",
       "title": {
         "en": "Inpatient Care",
-        "ar": ""
+        "ar": "خدمات المرضى الداخلية"
       },
       "desc": {
         "en": "Comprehensive inpatient care for adults, adolescents and children, bringing together expert medical supervision, nursing care and rehabilitation within a structured clinical environment.",
-        "ar": ""
+        "ar": "رعاية على مدار الساعة للمرضى بحاجة إلى دعم مستمر."
       },
       "figma": "83:226",
       "children": [
@@ -425,11 +425,11 @@
       "slug": "outpatient",
       "title": {
         "en": "Outpatient Care",
-        "ar": ""
+        "ar": "خدمات العيادات الخارجية"
       },
       "desc": {
         "en": "Comprehensive outpatient rehabilitation for adults, adolescents and children, bringing together multidisciplinary teams to restore function, build independence and support them throughout their recovery.",
-        "ar": ""
+        "ar": "الاستشارات، والتشخيصات، والعلاجات بدون دخول."
       },
       "children": [
         {
@@ -531,26 +531,26 @@
       ]
     },
     {
-      "slug": "home-care",
+      "slug": "home-healthcare",
       "title": {
         "en": "Home Care",
-        "ar": ""
+        "ar": "خدمات الرعاية المنزلية"
       },
       "desc": {
         "en": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
-        "ar": ""
+        "ar": "رعاية طبية عالية الجودة يتم تقديمها حتي باب المنزل."
       },
       "children": []
     },
     {
-      "slug": "in-school-care",
+      "slug": "in-school",
       "title": {
         "en": "In-School Care",
-        "ar": ""
+        "ar": "خدمة الرعاية المدرسية"
       },
       "desc": {
         "en": "Specialist therapy and medical support delivered at school",
-        "ar": ""
+        "ar": "توفير الرعاية في الموقع لدعم صحة الطلاب وسلامتهم."
       },
       "children": []
     }

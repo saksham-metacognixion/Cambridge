@@ -1,1 +1,31 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19068 'شركات التأمين'). Filter 'ALL' and result texts: no Arabic (English shown).",
+  "meta": {
+    "title": "شركات التأمين | مستشفى كامبريدج",
+    "description": "نعمل مع شبكة واسعة من مزودي التأمين لضمان حصولك على الرعاية التي تحتاجها بسهولة ووضوح وثقة."
+  },
+  "hero": {
+    "title": [
+      "تغطية سلسة، رعاية مبسطة."
+    ],
+    "text": "نعمل مع شبكة واسعة من مزودي التأمين لضمان حصولك على الرعاية التي تحتاجها بسهولة ووضوح وثقة.",
+    "button": {
+      "label": "احجز موعد"
+    }
+  },
+  "intro": {
+    "heading": "شركاء التأمين",
+    "text": "تمكن شبكة التأمين الواسعة لدينا من الوصول السلس إلى رعاية عالية الجودة، مما يدعم المرضى حلول تغطية فعالة وموثوقة."
+  },
+  "filters": {
+    "countries": [
+      {},
+      {
+        "label": "السعودية"
+      },
+      {
+        "label": "الإمارات"
+      }
+    ]
+  }
+}

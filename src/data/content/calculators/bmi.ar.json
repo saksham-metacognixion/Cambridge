@@ -1,0 +1,69 @@
+{
+  "_note": "Live site Arabic calculator page (WordPress export 6 Oct 2026 for the hero and intro; the form text and result strings = the live calculator's Arabic strings, read 6 Oct 2026).",
+  "meta": {
+    "title": "حاسبة مؤشر كتلة الجسم | مستشفى كامبريدج",
+    "description": "استخدم هذه الأداة السريعة لفحص مؤشر كتلة الجسم وفهم فئة وزنك."
+  },
+  "hero": {
+    "ariaLabel": "حاسبة مؤشر كتلة الجسم",
+    "title": [
+      "اعرف مؤشر كتلة جسمك."
+    ],
+    "text": "استخدم هذه الأداة السريعة لفحص مؤشر كتلة الجسم وفهم فئة وزنك."
+  },
+  "intro": {
+    "heading": "ما تظهره نتيجتك",
+    "text": "مؤشر كتلة الجسم هو مقياس فحص بسيط يعتمد على طولك ووزنك يساعد في تحديد ما إذا كنت تعاني من نقص الوزن، أو في وزن صحي، أو زيادة الوزن، أو تعاني من السمنة."
+  },
+  "form": {
+    "ariaLabel": "حاسبة مؤشر كتلة الجسم",
+    "submit": "احسب مؤشر كتلة الجسم",
+    "fields": {
+      "unit": {
+        "label": "الوحدات",
+        "placeholder": "اختر الوحدة",
+        "options": {
+          "metric": "متري (كجم / سم)",
+          "imperial": "إمبراطوري (رطل / بوصة)"
+        }
+      },
+      "weight": {
+        "label": "الوزن",
+        "placeholder": "اختر الوحدة أولاً",
+        "byUnit": {
+          "metric": {
+            "label": "الوزن (كجم)",
+            "placeholder": "مثال: 70"
+          },
+          "imperial": {
+            "label": "الوزن (رطل)",
+            "placeholder": "مثال: 154"
+          }
+        }
+      },
+      "height": {
+        "label": "الطول",
+        "placeholder": "اختر الوحدة أولاً",
+        "byUnit": {
+          "metric": {
+            "label": "الطول (سم)",
+            "placeholder": "مثال: 175"
+          },
+          "imperial": {
+            "label": "الطول (بوصة)",
+            "placeholder": "مثال: 69"
+          }
+        }
+      }
+    }
+  },
+  "result": {
+    "title": "مؤشر كتلة الجسم",
+    "categories": {
+      "underweight": "نقص الوزن",
+      "normal": "وزن طبيعي",
+      "overweight": "وزن زائد",
+      "obese": "سمنة"
+    }
+  }
+}

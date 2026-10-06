@@ -1,0 +1,48 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content, t } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import FaqSection from '../../components/faq/FaqSection.astro';
+import data from '../../data/faqs.json';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('faq/page', edition.locale);
+
+/*
+ * FAQ template (Figma 100:5509, file LJIRtzU...). Gaps (Figma px): hero 119-441 (cover image; title 218 w385 2 lines, button
+ * 298 "Consult for a Care Plan", as on Stroke Rehabilitation) | 75 | first question 516 | last question ends 886.26 |
+ * 52.74 | footer 939.
+ * FAQPage structured data: every question that has an answer (all categories), in the page's language.
+ */
+const answered = data.questions.filter((q) => (q.answer as Record<string, string>)[edition.locale] || q.answer.en);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: edition.lang,
+  mainEntity: answered.map((q) => ({
+    '@type': 'Question',
+    name: t(q.question, edition.locale, 'faqs'),
+    acceptedAnswer: { '@type': 'Answer', text: ((q.answer as Record<string, string>)[edition.locale] || q.answer.en).replace(/\s*\n\s*/g, ' ') },
+  })),
+};
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.faq} title={c.meta.title} description={c.meta.description}>
+  {answered.length > 0 && <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 }} h={322} variant="cover" /></div>
+    <div id="faq" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(75 * var(--u))"><FaqSection /></div>
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(52.74 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

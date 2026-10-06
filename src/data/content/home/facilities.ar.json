@@ -1,1 +1,35 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153 + 19111 for 'الكوادر الصحية'). 'Care Presence': no Arabic on the live site (English shown). Map labels = the live site's city names.",
+  "heading": "خبراتنا الطبية بين أيديكم اينما كنتم",
+  "mapLabels": [
+    "الظهران",
+    "الخبر",
+    "أبوظبي",
+    "العين",
+    "جدة"
+  ],
+  "book": {
+    "label": "احجز موعد"
+  },
+  "visit": {
+    "label": "اعرف المزيد"
+  },
+  "stats": [
+    {
+      "label": "زوار العيادات الخارجية"
+    },
+    {
+      "label": "مريض داخلي متعاف"
+    },
+    {
+      "label": "زيارات الرعاية المنزلية"
+    },
+    {
+      "label": "الكوادر الصحية"
+    },
+    {
+      "label": "عدد الاسرة"
+    },
+    {}
+  ]
+}

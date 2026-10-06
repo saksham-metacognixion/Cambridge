@@ -1,0 +1,50 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "Expanding Services to Communities Regionally." (Figma 46:5813-5839), page y 1656-2100: full-width band #00415a, h444.
+ * Left: photo "Care 1" 463 x 444 at x0 (object-cover) with the heading over it, centred on x226 (w430), top +52, Gotham Medium 28
+ * #00415a, 3 lines, full stop in #00b8ff. Right (x505, w489): lead Book 16/18 white at top +49; text Book 12/14 white at top +148,
+ * paragraphs separated by one empty 14px line.
+ */
+interface Props { edition: Edition; c: { ariaLabel: string; heading: string[]; headingDot: string; image: { image: string; alt: string }; lead: string; text: string[] } }
+const { edition, c } = Astro.props;
+const photo = img(c.image.image, edition.region);
+---
+
+<section class="exp" aria-label={c.ariaLabel}>
+  <div class="in">
+    <div class="art">
+      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(463)} height={px(444)} widths={[px(463), px(463) * 2]} sizes={`(min-width: 1024px) ${px(463)}px, 100vw`} loading="lazy" decoding="async" alt={c.image.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+      <h2 class="h">{c.heading.map((l, i) => <>{i > 0 && <br />}{l}</>)}<span class="dot">{c.headingDot}</span></h2>
+    </div>
+    <div class="copy">
+      <p class="lead">{c.lead}</p>
+      <div class="t">{c.text.map((p) => <p>{p}</p>)}</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .exp { background: var(--color-navy-alt); font-family: var(--font-gotham); font-style: normal; }
+  .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .art { position: relative; }
+  .exp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 463 / 444; object-fit: cover; max-width: none; }
+  .h { position: absolute; inset-inline-start: calc(11 * var(--u)); top: calc(52 * var(--u)); width: calc(430 * var(--u)); max-width: calc(100% - 22 * var(--u)); margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: normal; color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
+  .dot { color: var(--color-cyan); }
+  .copy { padding: calc(40 * var(--u)) 16px calc(48 * var(--u)); color: #fff; }
+  .lead { margin: 0; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); overflow-wrap: anywhere; }
+  .t { margin-top: calc(23 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
+  @media (min-width: 1024px) {
+    .in { height: calc(444 * var(--u)); }
+    .art { position: absolute; inset-inline-start: 0; top: 0; width: calc(463 * var(--u)); height: calc(444 * var(--u)); }
+    .exp :global(.photo) { width: calc(463 * var(--u)); height: calc(444 * var(--u)); }
+    .copy { position: absolute; inset-inline-start: calc(505 * var(--u)); top: calc(49 * var(--u)); width: calc(489 * var(--u)); padding: 0; }
+    .t { margin-top: calc(23 * var(--u)); } /* lead 76 (4 lines) + 23 = text at +148 */
+  }
+</style>

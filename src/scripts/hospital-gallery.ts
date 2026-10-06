@@ -1,15 +1,27 @@
 /*
  * Hospital photo gallery (Figma 112:7721 "A Healing Environment"): the centred photo is active, its neighbours sit behind it.
- * Figma draws no arrows or dots, so the photos are the controls: click / tap a side photo, Left / Right (mirrored on RTL),
- * Home / End on the focused photo, or swipe. The area dropdown shows another set (text + photos). State is per area;
- * positions are written as data-pos (0 active, ±1 neighbours, ±2 far, 9 hidden) and the CSS places them.
+ * Controls: the photos (click / tap a side photo, Left / Right (mirrored on RTL), Home / End on the focused photo, or swipe)
+ * and the shared pagination dots under the gallery (src/scripts/pagination.ts; one dot per photo of the shown area, the
+ * active photo marked, a dot click shows that photo; hidden with a single photo). The area dropdown shows another set
+ * (text + photos). State is per area; positions are written as data-pos (0 active, ±1 neighbours, ±2 far, 9 hidden) and
+ * the CSS places them.
  */
+import { createPagination, type Pagination } from "./pagination";
+
 const mod = (a: number, b: number) => ((a % b) + b) % b;
 
 for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
   const select = root.querySelector<HTMLSelectElement>("[data-gallery-select]");
   const areas = [...root.querySelectorAll<HTMLElement>("[data-gallery-area]")];
+  const nav = root.querySelector<HTMLElement>("[data-pagination]");
   const rtl = document.documentElement.dir === "rtl";
+
+  // The shown area's slide state, for the dots.
+  type State = { len: number; active: () => number; go: (i: number) => void };
+  const states = new Map<HTMLElement, State>();
+  const shown = (): State | undefined =>
+    states.get(areas.find((a) => !a.hidden) ?? areas[0]);
+  let pg: Pagination | undefined;
 
   for (const area of areas) {
     const list = area.querySelector<HTMLElement>("[data-slides]");
@@ -47,6 +59,7 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
         status.textContent = (status.dataset.template ?? "")
           .replace("{n}", String(active + 1))
           .replace("{total}", String(len));
+      if (!area.hidden) pg?.mark();
     };
     const go = (i: number, focus = false) => {
       active = mod(i, len);
@@ -92,10 +105,19 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
     list.addEventListener("pointercancel", () => {
       x0 = null;
     });
+    states.set(area, { len, active: () => active, go: (i) => go(i) });
     render(false);
   }
 
+  if (nav)
+    pg = createPagination(nav, {
+      count: () => shown()?.len ?? 0,
+      current: () => shown()?.active() ?? 0,
+      go: (i) => shown()?.go(i),
+    });
+
   select?.addEventListener("change", () => {
     for (const a of areas) a.hidden = a.dataset.galleryArea !== select.value;
+    pg?.update();
   });
 }

@@ -1,96 +1,232 @@
 {
-  "$comment": "FAQ (Figma 100:5509). Categories = the 5 Figma tabs (id = URL value ?category=). Questions: only the 5 Inpatient questions exist in Figma and only the first has an answer (sample data); Pramod sends the full Q&A for all 5 categories. A question without an answer shows a staging-only 'answer pending' note and is left out of the FAQPage structured data. Text exactly as in Figma (the '01.' numbering is added by the page).",
+  "$comment": "FAQ (Figma 100:5509 template). Content = the live site's FAQ page (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, pages 78 EN / 19070 AR, 6 Oct 2026): 4 categories (General Questions, Inpatient Services, Outpatient Services, Home Care), 18 questions, English and Arabic exactly as on the live site. Figma showed 5 sample tabs (incl. 'In School Care') with placeholder questions: replaced by the live content (docs/open-decisions.md WP3). id = URL value ?category=. Answers: paragraphs separated by a blank line, line breaks inside a paragraph kept (the live page's <br> lists); the page renders them as <p> / <br>. The '01.' numbering is added by the page.",
   "categories": [
+    {
+      "id": "general",
+      "label": {
+        "en": "General Questions",
+        "ar": "أسئلة عامة"
+      }
+    },
     {
       "id": "inpatient",
       "label": {
         "en": "Inpatient Services",
-        "ar": ""
+        "ar": "خدمات إعادة التأهيل للمرضى الداخليين"
       }
     },
     {
       "id": "outpatient",
       "label": {
         "en": "Outpatient Services",
-        "ar": ""
+        "ar": "خدمات العيادات الخارجية"
       }
     },
     {
-      "id": "home-health-care",
+      "id": "home-care",
       "label": {
-        "en": "Home Health Care",
-        "ar": ""
-      }
-    },
-    {
-      "id": "in-school-care",
-      "label": {
-        "en": "In School Care",
-        "ar": ""
-      }
-    },
-    {
-      "id": "general",
-      "label": {
-        "en": "General",
-        "ar": ""
+        "en": "Home Care",
+        "ar": "الرعاية الصحية المنزلية"
       }
     }
   ],
   "questions": [
     {
-      "category": "inpatient",
+      "category": "general",
       "question": {
-        "en": "What is inpatient services, and how does it differ from outpatient rehabilitation?",
-        "ar": ""
+        "en": "What is Cambridge Hospital, and where are your facilities?",
+        "ar": "ما هو مستشفى كامبريدج، وأين تقع مرافقك؟"
       },
       "answer": {
-        "en": "Inpatient services rehabilitation involves staying at a medical facility where patients receive continuous care and therapy, often for more intensive recovery needs. In contrast, outpatient rehabilitation allows patients to receive treatment during scheduled visits while living at home.",
-        "ar": ""
+        "en": "Cambridge Hospital, part of Cambridge Health Group, is a specialized provider of rehabilitation, post-acute, long-term, and home-based care. We operate six facilities across two countries. In the United Arab Emirates: Cambridge Hospital Abu Dhabi, Cambridge Hospital Al Ain, and the Al Mudeef in Abu Dhabi. In the Kingdom of Saudi Arabia: Cambridge Hospital Dhahran, Cambridge Hospital Al Khobar, and Cambridge Hospital Jeddah. Together they provide 715 beds and more than 1,300 healthcare professionals.",
+        "ar": "مستشفى كامبريدج، التابع لمجموعة كامبريدج الصحية، هو مزود متخصص في إعادة التأهيل، والرعاية بعد الحادة، والرعاية طويلة الأمد، والرعاية المنزلية. ندير ست منشآت في بلدين. في الإمارات العربية المتحدة: مستشفى كامبريدج أبوظبي، مستشفى كامبريدج العين، ومستشفى المديف في أبوظبي. في المملكة العربية السعودية: مستشفى كامبريدج الظهران، مستشفى كامبريدج الخبر، ومستشفى كامبريدج جدة. معا يوفرون 715 سريرا وأكثر من 1,300 متخصص في الرعاية الصحية."
+      }
+    },
+    {
+      "category": "general",
+      "question": {
+        "en": "How do I book an appointment, and do I need a referral?",
+        "ar": "كيف أحجز موعد، وهل أحتاج إلى إحالة؟"
+      },
+      "answer": {
+        "en": "You can book by calling 800-692273 in the United Arab Emirates or 920013122 in Saudi Arabia, by emailing info@cambridgehospital.com, or by using the booking form on this website. Many of our services can be accessed by contacting us directly, while some may need a referral from your treating doctor or may require one for insurance purposes. Tell us about the condition and our team will confirm what is needed and guide you to the right service.",
+        "ar": "يمكنك الحجز بالاتصال على 800-692273 في الإمارات العربية المتحدة أو 920013122 في السعودية، أو عبر إرسال بريد إلكتروني info@cambridgehospital.com، أو باستخدام نموذج الحجز على هذا الموقع. يمكن الوصول إلى العديد من خدماتنا من خلال التواصل معنا مباشرة، بينما قد يحتاج بعضها إلى إحالة من طبيبك المعالج أو قد يتطلب ذلك لأغراض التأمين. أخبرنا عن الحالة وسيؤكد فريقنا ما هو مطلوب ويرشدك إلى الخدمة المناسبة."
+      }
+    },
+    {
+      "category": "general",
+      "question": {
+        "en": "Do you accept insurance patients?",
+        "ar": "هل تقبلون مرضى التأمين؟"
+      },
+      "answer": {
+        "en": "Yes. Wherever you're being cared for, across the UAE or Saudi Arabia, Cambridge Hospital works with a wide network of insurance providers to make your care as seamless as possible.\n\nIn the UAE, we work with: Thiqa Insurance, Daman Insurance, Abu Dhabi National Insurance, NextCare Insurance, Neuron Insurance, AlMadallah Healthcare Management, SAICO Insurance, Enaya Insurance.\n\nIn Saudi Arabia, we work with: Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath.\n\nContact us with your insurance details and our team will confirm whether your plan is accepted, explain what it covers, and set out self-pay options where needed.",
+        "ar": "نعم. أينما كنت تتلقى رعاية، سواء في الإمارات أو السعودية، يعمل مستشفى كامبريدج مع شبكة واسعة من مقدمي التأمين لجعل رعايتك سلسة قدر الإمكان.\n\nفي الإمارات العربية المتحدةنعمل مع: ثيقة للتأمين، دامن للتأمين، أبوظبي الوطني للتأمين، نيكست كير للتأمين، نيورون للتأمين، الإدارة المدللة للرعاية الصحية، سايكو للتأمين، إنيا للتأمين.\n\nفي السعودية، نعمل مع: بوبا، اتحاد الخليج، تاونية، JHAH، وزارة الصحة، الراجهي تكافول، TCS، غلوب ميد، مالات.\n\nتواصل معنا بتفاصيل التأمين الخاصة بك وسيؤكد فريقنا ما إذا كانت خطتك مقبولة، ويشرح ما تغطيه، ويوضح خيارات الدفع الذاتي عند الحاجة."
+      }
+    },
+    {
+      "category": "general",
+      "question": {
+        "en": "Can my family be involved in my care?",
+        "ar": "هل يمكن لعائلتي أن تشارك في رعايتي؟"
+      },
+      "answer": {
+        "en": "Yes, and we encourage it. Families are part of the rehabilitation team: they take part in setting goals, receive training and education so they can support care safely at home, and are kept informed throughout.",
+        "ar": "نعم، ونحن نشجع ذلك. العائلات جزء من فريق التأهيل: يشاركون في وضع الأهداف، ويتلقون التدريب والتعليم حتى يتمكنوا من دعم الرعاية بأمان في المنزل، ويبقى على اطلاع دائم."
+      }
+    },
+    {
+      "category": "general",
+      "question": {
+        "en": "Is Cambridge Hospital accredited?",
+        "ar": "هل مستشفى كامبريدج معتمد؟"
+      },
+      "answer": {
+        "en": "You can trust that every part of your care meets internationally recognized standards. Our rehabilitation programs are accredited by CARF, the global benchmark for rehabilitation and extended care, and our UAE facilities hold Joint Commission International (JCI) accreditation.\n\nWe also hold ADHICS certification for healthcare information and cyber security, OSHAD certification for occupational safety and health, and take part in the Department of Health Abu Dhabi's JAWDA healthcare quality program.\n\nFor KSA, we also hold CAP certification.",
+        "ar": "يمكنك الوثوق بأن كل جزء من رعايتك يفي بمعايير معترف بها دوليا. برامج إعادة التأهيل لدينا معتمدة من قبل كارف، المعيار العالمي لإعادة التأهيل والرعاية الممتدة، ومرافقنا في الإمارات تحتفظ بهذه العلامة اللجنة الدولية المشتركة (JCI) الاعتماد.\n\nونحن نحتفظ أيضا ADHICS شهادة لمعلومات الرعاية الصحية وأمن السيبران، أوشاد شهادة للسلامة والصحة المهنية، والمشاركة في وزارة الصحة أبوظبي جاودا برنامج جودة الرعاية الصحية.\n\nبالنسبة لعربة السعودية، نحن أيضا نحتفظ شهادة CAP."
       }
     },
     {
       "category": "inpatient",
       "question": {
-        "en": "How long do patients typically stay in an inpatient rehabilitation facility?",
-        "ar": ""
+        "en": "What are inpatient services, and how do they differ from outpatient rehabilitation?",
+        "ar": "ما هي خدمات المرضى الداخليين، وكيف تختلف عن إعادة التأهيل الخارجية؟"
       },
       "answer": {
-        "en": "",
-        "ar": ""
+        "en": "Inpatient care means becoming a resident with us for a period of focused recovery, in a homelike environment across our hospitals designed around your comfort and progress. This suits patients who need intensive daily therapy, close medical supervision, or round-the-clock nursing while they heal.\n\nHow long you remain with us varies from patient to patient, guided by your individual care plan, which may include intensive rehabilitation programs, transitional ventilator weaning, or long-term complex medical care.\n\nOutpatient rehabilitation is for patients who are well enough to live at home and come to us for scheduled therapy, consultations, diagnostics, treatments, and follow-up care.\n\nInpatient and outpatient are two distinct services, each suited to a different level of need. For some patients, they come one after the other, as inpatient care gives way to outpatient rehabilitation while strength returns. For others, either one may be the right starting point on its own, depending on their individual condition and care plan.",
+        "ar": "الرعاية الداخلية تعني أن تصبح مقيما معنا لفترة تعافي مركز، في بيئة منزلية عبر مستشفياتنا مصممة حول راحتك وتقدمك. وهذا يناسب المرضى الذين يحتاجون إلى علاج يومي مكثف، أو إشراف طبي دقيق، أو تمريض مستمر على مدار الساعة أثناء التعافي.\n\nمدة بقائك معنا تختلف من مريض لآخر، وتسترشد بخطة الرعاية الفردية الخاصة بك، والتي قد تشمل برامج إعادة تأهيل مكثفة، أو الفطام الانتقالي بجهاز التنفس الصناعي، أو رعاية طبية معقدة طويلة الأمد.\n\nإعادة التأهيل الخارجية مخصصة للمرضى الذين يتمتعون بما يكفي للعيش في المنزل ويأتون إلينا للعلاج المجدول والاستشارات والتشخيصات والعلاجات والرعاية اللاحقة.\n\nالمستشفى الداخلي والخارجي هما خدمتان مختلفتان، كل منهما مناسب مستوى مختلف من الحاجة. بالنسبة لبعض المرضى، تأتي واحدة تلو الأخرى، حيث تتحول الرعاية الداخلية إلى إعادة التأهيل الخارجي بينما تعود القوة. بالنسبة لآخرين، قد يكون أي منهما نقطة البداية المناسبة بحد ذاته، حسب حالتهم الفردية وخطة رعايتهم."
       }
     },
     {
       "category": "inpatient",
       "question": {
-        "en": "What types of rehabilitation services are available for patients in an inpatient setting?",
-        "ar": ""
+        "en": "Who is inpatient rehabilitation for, and which conditions does it treat?",
+        "ar": "لمن يتم إعادة التأهيل الداخلي، وما هي الحالات التي يعالجها؟"
       },
       "answer": {
-        "en": "",
-        "ar": ""
+        "en": "Inpatient rehabilitation is for people who need intensive daily therapy with round-the-clock medical supervision — usually after a hospital stay, when recovery at home or through outpatient visits isn't sufficient.\n\nWe care for adults, adolescents, and children recovering from stroke, brain and spinal cord injury, major surgery or trauma, cardiac and respiratory events, and prolonged critical illness.",
+        "ar": "إعادة التأهيل الداخلي مخصصة للأشخاص الذين يحتاجون إلى علاج يومي مكثف تحت إشراف طبي على مدار الساعة — عادة بعد الإقامة في المستشفى، عندما لا يكون التعافي في المنزل أو من خلال زيارات خارجية كافيا.\n\nنحن نعتني بالبالغين والمراهقين والأطفال الذين يتعافون من السكتة الدماغية، وإصابات الدماغ والحبل الشوكي، والجراحة الكبرى أو الإصابات، والأحداث القلبية والتنفسية، والأمراض الحرجة المطولة."
       }
     },
     {
       "category": "inpatient",
       "question": {
-        "en": "Who provides care in an inpatient rehabilitation facility?",
-        "ar": ""
+        "en": "How long do patients usually stay?",
+        "ar": "كم من الوقت يبقى المرضى عادة؟"
       },
       "answer": {
-        "en": "",
-        "ar": ""
+        "en": "There is no standard length of stay, because it depends on the condition, the patient's goals, and how recovery progresses. Some patients stay for a few weeks; others with more complex needs stay considerably longer. At admission, your team agrees clear, individual goals with you and your family, reviews them regularly, and keeps you informed at every stage — including when the time is right to move on to outpatient or home-based care.",
+        "ar": "لا يوجد مدة إقامة قياسية، لأنها تعتمد على الحالة وأهداف المريض وكيفية تقدم التعافي. بعض المرضى يبقون لبضعة أسابيع؛ أما الآخرون الذين لديهم احتياجات أكثر تعقيدا فيبقى لفترة أطول بكثير. عند القبول، يتفق فريقك على أهداف واضحة وفردية معك ومع عائلتك، ويراجعها بانتظام، ويبقيك على اطلاع في كل مرحلة — بما في ذلك الوقت المناسب للانتقال إلى الرعاية الخارجية أو الرعاية المنزلية."
       }
     },
     {
       "category": "inpatient",
       "question": {
-        "en": "What conditions can benefit from inpatient rehabilitation services?",
-        "ar": ""
+        "en": "Who will be looking after me, and what does a typical day involve?",
+        "ar": "من سيعتني بي، وماذا يتضمن اليوم المعتاد؟"
       },
       "answer": {
-        "en": "",
-        "ar": ""
+        "en": "Yes. Our facilities have a Transitional Ventilator Care Unit and structured weaning programs for patients who arrive on mechanical ventilation, including patients transferring from intensive care elsewhere. The aim is to reduce or remove ventilator dependence wherever it is clinically possible, and to provide safe, skilled long-term ventilated care where it is not.\n\nEvery patient's care plan is shaped by a multidisciplinary team working together throughout the journey. Consultant intensivists and physicians lead the medical plan, whether that means designing a weaning protocol or managing long-term ventilator dependence, while respiratory therapists, ICU nurses, physical and occupational therapists, and speech-language pathologists work alongside the patient to build strength and stability. Case managers and social workers support the patient and family at every step, from admission through discharge or long-term care planning.",
+        "ar": "نعم. تحتوي منشآتنا على وحدة رعاية التنفس الانتقالي وبرامج فطام منظمة للمرضى الذين يصلون إلى التنفس الميكانيكي، بما في ذلك المرضى الذين ينتقلون من العناية المركزة إلى أماكن أخرى. الهدف هو تقليل أو إزالة الاعتماد على أجهزة التنفس الصناعي حيثما كان ذلك ممكنا سريريا، وتوفير رعاية مصوية طويلة الأمد آمنة وماهرة حيث لا يمكن ذلك.\n\nخطة رعاية كل مريض تتشكل من خلال فريق متعدد التخصصات يعمل معا طوال الرحلة. يقود الخطة الطبية أخصائيو العناية المركزة والأطباء الاستشاريين، سواء كان ذلك بتصميم بروتوكول فطام أو إدارة الاعتماد طويل الأمد على جهاز التنفس الصناعي، بينما يعمل معالجو الجهاز التنفسي، وممرضو العناية المركزة، والمعالجون الفيزيائيون والمهنيون، وأخصائيو النطق واللغة جنبا إلى جنب مع المريض لبناء القوة والاستقرار. يدعم مديرو الحالات والأخصائيون الاجتماعيون المريض وعائلته في كل خطوة، من القبول وحتى الخروج أو التخطيط للرعاية طويلة الأمد."
+      }
+    },
+    {
+      "category": "outpatient",
+      "question": {
+        "en": "What are outpatient services, and who are they for?",
+        "ar": "ما هي خدمات العيادات الخارجية، ولمن هي؟"
+      },
+      "answer": {
+        "en": "Outpatient services are specialist consultations and therapy for patients who live at home and visit us for scheduled appointments. They suit patients who are medically stable but still need expert rehabilitation, whether continuing recovery after an inpatient stay, recovering from an injury or an operation, or managing a long-term condition.\nYour care is led by consultations across the following Specialties, each paired with focused therapy programs. Availability varies by country, as noted below.\nPhysical Medicine and Rehabilitation\nLed by Physical Medicine & Rehabilitation Physicians (physiatrists), restoring mobility, function, and independence following injury, illness, or surgery, through:\nNeuro Rehabilitation\nStroke Rehabilitation\nMusculoskeletal Rehabilitation\nPost-Surgical Rehabilitation\nTraumatic Brain Injury (TBI) Rehabilitation\nSpinal Cord Injury (SCI) Rehabilitation\nPain & Functional Management\nPersonalized Rehabilitation Planning\nIntensive Pediatric Rehabilitation\nLed by Pediatric Physicians, supporting children with developmental, neurological, and complex healthcare needs, through:\nPediatric Rehabilitation Programs\nNeurodevelopmental Rehabilitation\nSpeech & Language Therapy\nOccupational Therapy\nSensory Integration Therapy\nBehavioral Therapy Programs\nPediatric Respiratory Rehabilitation\nSport Medicine and Rehabilitation\nFocused on sports injuries, mobility impairments, and orthopedic recovery, through:\nSports Injury Rehabilitation\nPost-Orthopedic Surgery Rehabilitation\nMobility & Strength Training\nBalance & Coordination Therapy\nPerformance Recovery Programs\nNeuro Psychology Rehabilitation\nSupporting patients with neurological, behavioral, and emotional challenges, through:\nCognitive Rehabilitation Programs\nBehavioral Therapy & Support\nPsychological Assessment (available at our Saudi Arabia facilities)\nEmotional & Mental Health Support\nMemory & Attention Training\nFamily Counseling & Education",
+        "ar": "الخدمات الخارجية هي استشارات وعلاج متخصص للمرضى الذين يعيشون في منازلهم ويزوروننا لمواعيد محددة. تناسب هذه العلاجات المرضى الذين هم مستقرون طبيا لكنهم لا يزالون بحاجة إلى إعادة تأهيل خبير، سواء كانوا مستمرين في التعافي بعد الإقامة الداخلية، أو التعافي من إصابة أو عملية، أو إدارة حالة طويلة الأمد.\nيتم توجيه رعايتك من خلال استشارات عبر التخصصات التالية، كل منها مرتبط ببرامج علاجية مركزة. يختلف توفر الخدمات بحسب الدولة، كما هو موضح أدناه.\nالطب الفيزيائي وإعادة التأهيل\nيقودها أطباء الطب الفيزيائي وإعادة التأهيل، الذين يستعيدون الحركة والوظيفة والاستقلالية بعد الإصابة أو المرض أو الجراحة، من خلال:\nإعادة التأهيل العصبي\nإعادة تأهيل السكتة الدماغية\nإعادة التأهيل الهيكلي العضلي\nإعادة التأهيل بعد العمليات الجراحية\nإعادة تأهيل إصابات الدماغ الرضحية (TBI)\nإعادة تأهيل إصابة الحبل الشوكي (SCI)\nالألم والإدارة الوظيفية\nتخطيط التأهيل الشخصي\nإعادة التأهيل المكثف للأطفال\nيقودها أطباء الأطفال، لدعم الأطفال ذوي الاحتياجات التنموية والعصبية والمعقدة في الرعاية الصحية، من خلال:\nبرامج إعادة تأهيل الأطفال\nإعادة التأهيل العصبي التنموي\nعلاج النطق واللغة\nالعلاج الوظيفي\nعلاج التكامل الحسي\nبرامج العلاج السلوكي\nإعادة تأهيل الجهاز التنفسي للأطفال\nطب الرياضة وإعادة التأهيل\nيركز على إصابات الرياضة، وضعف الحركة، والتعافي العظامي، من خلال:\nإعادة تأهيل إصابات الرياضة\nإعادة التأهيل بعد جراحة العظام\nتدريب الحركة والقوة\nعلاج التوازن والتنسيق\nبرامج استعادة الأداء\nإعادة تأهيل علم النفس العصبي\nدعم المرضى الذين يعانون من تحديات عصبية وسلوكية وعاطفية، من خلال:\nبرامج التأهيل المعرفي\nالعلاج السلوكي والدعم\nالتقييم النفسي (متوفر في منشآتنا السعودية)\nالدعم العاطفي والصحة النفسية\nتدريب الذاكرة والانتباه\nالإرشاد الأسري والتعليم"
+      }
+    },
+    {
+      "category": "outpatient",
+      "question": {
+        "en": "Which therapies are available on an outpatient basis?",
+        "ar": "ما هي العلاجات المتاحة على أساس العيادات الخارجية؟"
+      },
+      "answer": {
+        "en": "Outpatient care includes specialist consultations alongside physiotherapy, occupational therapy, and speech and language therapy for both adults and children, supported by dedicated therapy facilities such as rehabilitation gyms, gait and mobility assessment, hydrotherapy, and sensory rooms where available at your chosen facility. Children are seen through dedicated pediatric rehabilitation pathways.",
+        "ar": "تشمل الرعاية الخارجية استشارات متخصصة إلى جانب العلاج الطبيعي، والعلاج الوظيفي، وعلاج النطق واللغة لكل من البالغين والأطفال، مدعومة بمرافق علاجية مخصصة مثل صالات التأهيل، وتقييم المشي والحركة، والعلاج المائي، وغرف الحواس حيثما توفرت في المنشأة التي تختارها. يتم مراقبة الأطفال من خلال مسارات إعادة تأهيل مخصصة للأطفال."
+      }
+    },
+    {
+      "category": "outpatient",
+      "question": {
+        "en": "Do I need to have been an inpatient first?",
+        "ar": "هل يجب أن أكون مريضا داخليا أولا؟"
+      },
+      "answer": {
+        "en": "No. Many of our outpatients have never been admitted to one of our hospitals — they come to us for rehabilitation after an injury, an operation, or a diagnosis elsewhere. You can be referred by your doctor, or contact us directly.",
+        "ar": "لا. العديد من مرضى العلاج الخارجي لدينا لم يدخلوا أبدا في أحد مستشفاتنا — بل يأتون إلينا لإعادة التأهيل بعد إصابة أو عملية جراحية أو تشخيص في مكان آخر. يمكنك إحالتك من قبل طبيبك، أو التواصل معنا مباشرة."
+      }
+    },
+    {
+      "category": "outpatient",
+      "question": {
+        "en": "How often will I attend, and for how long?",
+        "ar": "كم مرة سأحضر، وكم من الوقت؟"
+      },
+      "answer": {
+        "en": "Most patients attend one or more therapy sessions a week, over a period ranging from a few weeks to several months, depending on your condition and recovery goals. Your care team, your physician and therapists working together, sets your exact schedule based on your initial assessment, and adjusts it as you progress, so you always know what you are working towards and how you are progressing.",
+        "ar": "يحضر معظم المرضى جلسة علاج أو أكثر في الأسبوع، على مدى تتراوح من عدة أسابيع إلى عدة أشهر، حسب حالتك وأهداف التعافي. فريق الرعاية الخاص بك، وطبيبك والمعالجين يعملون معا، يضعون جدولك الدقيق بناء على تقييمك الأولي، ويعدلونه مع تقدمك، حتى تعرف دائما ما الذي تعمل من أجله وكيف تتقدم."
+      }
+    },
+    {
+      "category": "outpatient",
+      "question": {
+        "en": "Is the Kozyavkin Method available through outpatient care, and how is it different from standard rehabilitation?",
+        "ar": "هل طريقة كوزيافكين متاحة من خلال الرعاية الخارجية، وكيف تختلف عن إعادة التأهيل التقليدية؟"
+      },
+      "answer": {
+        "en": "Yes. The Kozyavkin Method is offered as one of our specialized outpatient pediatric programs, for children and adolescents with cerebral palsy and other neurological conditions where spasticity affects movement.\nWhat sets it apart is the intensive, cycle-based structure: rather than isolated weekly sessions, care is delivered in focused rehabilitation cycles that combine Physiotherapy, Occupational Therapy, and Speech & Language Therapy with techniques such as spinal mobilization and postural correction, working on multiple systems at once to build lasting improvements in mobility, coordination, and daily function.\nThis is delivered through Cambridge Hospital's Cerebral Palsy Program across our Abu Dhabi, Al Ain, and Dhahran facilities, with an individualized treatment plan and family-centered care so you always know how your child's progress is being tracked and adjusted.",
+        "ar": "نعم. تقدم طريقة كوزيافكين كواحدة من برامجنا المتخصصة الخارجية لطب الأطفال، للأطفال والمراهقين المصابين بالشلل الدماغي والحالات العصبية الأخرى التي تؤثر فيها التشنجات على الحركة.\nما يميزها هو الهيكل المكثف القائم على الدورات: بدلا من جلسات أسبوعية منفصلة، تقدم الرعاية في دورات إعادة تأهيل مركزة تجمع بين العلاج الطبيعي، والعلاج الوظيفي، وعلاج النطق واللغة مع تقنيات مثل تعبئة العمود الفقري وتصحيح الوضعية، مع العمل على أنظمة متعددة في آن واحد لبناء تحسينات دائمة في الحركة والتنسيق والوظائف اليومية.\nيتم تقديم هذا البرنامج من خلال برنامج الشلل الدماغي في مستشفى كامبريدج عبر منشآتنا في أبوظبي والعين والظهران، مع خطة علاج فردية ورعاية تركز على الأسرة حتى تعرف دائما كيف يتم تتبع تقدم طفلك وتعديله."
+      }
+    },
+    {
+      "category": "home-care",
+      "question": {
+        "en": "What is home care, and what does it include?",
+        "ar": "ما هي الرعاية المنزلية، وماذا تتضمن؟"
+      },
+      "answer": {
+        "en": "Home Care brings clinical and rehabilitation services into the patient's own home. It can include skilled nursing — such as wound care, tube feeding, catheter and tracheostomy care, medication management, and intravenous therapy — as well as respiratory therapy including oxygen, nebulization, and ventilator management; home physiotherapy and occupational therapy; and physician home visits. Care is delivered by licensed teams to the same clinical standards as in our hospitals.",
+        "ar": "تقدم الرعاية المنزلية الخدمات السريرية وخدمات إعادة التأهيل في منزل المريض نفسه. يمكن أن يشمل ذلك خدمات التمريض المتخصص — مثل العناية بالجروح، التغذية بالأنابيب، رعاية القسطرة والقصبة الهوائية، إدارة الأدوية، والعلاج الوريدي — بالإضافة إلى العلاج التنفسي بما في ذلك الأكسجين، والاستنشاق، وإدارة جهاز التنفس الصناعي؛ العلاج الطبيعي المنزلي والعلاج الوظيفي؛ وزيارات الأطباء المنزلية. يتم تقديم الرعاية من قبل فرق مرخصة وفقا لنفس المعايير السريرية الموجودة في مستشفياتنا."
+      }
+    },
+    {
+      "category": "home-care",
+      "question": {
+        "en": "Who is home Care for?",
+        "ar": "لمن الرعاية المنزلية؟"
+      },
+      "answer": {
+        "en": "It supports patients returning home after surgery or a hospital stay, patients continuing their recovery after a rehabilitation program, and patients living with long-term or complex conditions who are better cared for at home. We care for adults, adolescents, and children.",
+        "ar": "يدعم المرضى الذين يعودون إلى منازلهم بعد الجراحة أو الإقامة في المستشفى، والمرضى الذين يواصلون تعافيهم بعد برنامج إعادة التأهيل، والمرضى الذين يعيشون مع حالات طويلة الأمد أو معقدة ويتم رعاية أفضل في المنزل. نحن نهتم بالبالغين والمراهقين والأطفال."
+      }
+    },
+    {
+      "category": "home-care",
+      "question": {
+        "en": "Is home care only for patients who have been treated at Cambridge Hospital?",
+        "ar": "هل الرعاية المنزلية مخصصة فقط للمرضى الذين تلقوا العلاج في مستشفى كامبريدج؟"
+      },
+      "answer": {
+        "en": "No. Home care completes the recovery journey for many of our own patients, but you can arrange it directly whether or not you have been treated with us before.",
+        "ar": "لا. تكمل الرعاية المنزلية رحلة التعافي للعديد من مرضانا، لكن يمكنك ترتيب ذلك مباشرة سواء كنت قد تلقيت العلاج معنا من قبل أم لا."
+      }
+    },
+    {
+      "category": "home-care",
+      "question": {
+        "en": "How do I arrange home care?",
+        "ar": "كيف اطلب خدمات الرعاية المنزلية؟"
+      },
+      "answer": {
+        "en": "Contact our team and we will arrange an assessment of the patient's clinical needs and home environment, then build a care plan around them. We will also confirm what your insurance covers, or explain self-pay options where needed.",
+        "ar": "تواصل مع فريقنا وسنرتب تقييما لاحتياجات المريض السريرية وبيئته المنزلية، ثم نبني خطة رعاية حوله. سنؤكد أيضا ما يغطيه تأمينك، أو نشرح خيارات الدفع الذاتي عند الحاجة."
       }
     }
   ]

@@ -1,0 +1,45 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { PAGE_PATHS } from '../../lib/paths';
+import { content } from '../../lib/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ContactHero from '../../components/contact/ContactHero.astro';
+import ContactForm from '../../components/contact/ContactForm.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const page = content('contact/page', edition.locale).meta;
+
+/*
+ * Contact Us template (Figma 86:431, drafts copy). `mt` = gap (Figma px) between the previous block's bottom and this
+ * one's top, from the Figma frame: Header ends 119 = Hero starts 119 | Hero ends 556 = form band starts 556 |
+ * band ends 1223, recovery box starts 1271 | box ends 1539, footer starts 1581 (footer ends 1949 = page end).
+ */
+const sections = [
+  { id: 'hero', C: ContactHero, mt: 0 },
+  { id: 'enquiry', C: ContactForm, mt: 0 },
+  { id: 'recovery', C: ContactRecovery, mt: 48 },
+];
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.contact} title={page.title} description={page.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    {
+      sections.map(({ id, C, mt }) => (
+        <div id={id} class="relative lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+          <C />
+        </div>
+      ))
+    }
+  </main>
+  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

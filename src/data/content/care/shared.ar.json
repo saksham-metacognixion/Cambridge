@@ -1,1 +1,33 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, CTA band, doctors block (Our Care page 19115). Overview / Topics / 'Know More' / 'Start Your Care' and the generated-page notes: no Arabic (English shown).",
+  "heroButton": {
+    "label": "احجز موعد"
+  },
+  "recovery": {
+    "ariaLabel": "تعافيك يهمنا",
+    "text": "الرعاية في مستشفى كامبريدج هي رحلة متكاملة تشمل خدمات المرضى الداخليين والخارجيين والمنزل والمدرسة، وتدعم كل مرحلة من مراحل التعافي.",
+    "lead": "تعافيك يهمنا،",
+    "emphasis": [
+      " ونحن معكم في كل خطوة من",
+      "الرحلة."
+    ],
+    "tiles": [
+      {
+        "label": "احجز موعد"
+      },
+      {
+        "label": "ابحث عن طبيب"
+      },
+      {
+        "label": "إحالة مريض"
+      },
+      {
+        "label": "أرسل استفسار"
+      }
+    ]
+  },
+  "doctors": {
+    "heading": "رعاية متخصصة، أطباء موثوق بهم",
+    "text": "يلتزم متخصصونا بتقديم الرعاية المناسبة في كل مرحلة من مراحل رحلتك"
+  }
+}

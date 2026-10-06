@@ -1,1 +1,8 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export page 19153): heading, intro, button. The stories themselves (names, quotes) have no Arabic in the export (the testimonials post type is not exported): English shown.",
+  "title": "رحلات الشفاء.. برواية مرضانا",
+  "subtitle": "شاركونا قصص شفاء ملهمة يرويها مرضانا؛ لتعيشوا معهم رحلتهم في التغلب على المرض، واستعادة العافية والقدرة على بدء حياة جديدة بثقة.",
+  "button": {
+    "label": "اقرأ المزيد من القصص"
+  }
+}

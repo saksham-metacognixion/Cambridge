@@ -11,7 +11,10 @@
         "en": "Restoring movement, speech and independence after stroke.",
         "ar": "استعادة الحركة والكلام والاستقلالية بعد السكتة الدماغية."
       },
-      "specialties": []
+      "specialties": [
+        "pmr"
+      ],
+      "old_slug": "stroke-rehabilitation"
     },
     {
       "slug": "amputation-prosthetic-rehabilitation",
@@ -23,7 +26,8 @@
         "en": "Building strength, balance and confidence for life with a prosthesis.",
         "ar": "بناء القوة والتوازن والثقة للحياة باستخدام طرف صناعي."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "amputation-prosthetic-rehabilitation"
     },
     {
       "slug": "hip-fracture-rehabilitation",
@@ -35,7 +39,8 @@
         "en": "Rebuilding mobility and stability after fracture surgery.",
         "ar": "إعادة بناء الحركة والثبات بعد جراحة الكسور."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "hip-fracture-femoral-neck-fracture-rehabilitation"
     },
     {
       "slug": "fracture-rehabilitation",
@@ -47,7 +52,8 @@
         "en": "Restoring strength, motion and function as bones heal.",
         "ar": "استعادة القوة والحركة والوظيفة أثناء شفاء العظام."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "fracture-rehabilitation"
     },
     {
       "slug": "shoulder-rotator-cuff-rehabilitation",
@@ -59,7 +65,8 @@
         "en": "Relieving pain and restoring shoulder mobility through targeted therapy.",
         "ar": "تخفيف الألم واستعادة حركة الكتف من خلال العلاج المستهدف."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "shoulder-injury-rotator-cuff-rehabilitation"
     },
     {
       "slug": "tennis-elbow",
@@ -71,7 +78,8 @@
         "en": "Easing pain and rebuilding elbow strength through structured rehabilitation.",
         "ar": "تخفيف الألم وإعادة بناء قوة المرفق من خلال إعادة التأهيل المنظمة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "tennis-elbow"
     },
     {
       "slug": "neck-pain-cervical-rehabilitation",
@@ -83,7 +91,8 @@
         "en": "Reducing neck pain and restoring flexibility and function.",
         "ar": "تقليل آلام الرقبة واستعادة المرونة والوظيفة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "neck-pain-cervical-rehabilitation"
     },
     {
       "slug": "back-pain-lumbar-rehabilitation",
@@ -95,7 +104,8 @@
         "en": "Managing pain and improving movement, posture and daily function.",
         "ar": "إدارة الألم وتحسين الحركة والوضعية والوظائف اليومية."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "back-pain-lumbar-rehabilitation"
     },
     {
       "slug": "knee-ligament-cartilage-injuries",
@@ -107,7 +117,8 @@
         "en": "Restoring knee stability and mobility for a confident return to activity.",
         "ar": "استعادة استقرار الركبة وحركتها للعودة الواثقة إلى النشاط."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "knee-ligament-cartilage-injuries"
     },
     {
       "slug": "traumatic-brain-injury",
@@ -119,7 +130,8 @@
         "en": "Supporting recovery of cognitive, physical and functional abilities after injury.",
         "ar": "دعم استعادة القدرات الذهنية والجسدية والوظيفية بعد الإصابة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "traumatic-brain-injury"
     },
     {
       "slug": "hip-knee-replacement-recovery",
@@ -131,7 +143,8 @@
         "en": "Restoring movement and strength for a safe return to daily life.",
         "ar": "استعادة الحركة والقوة للعودة الآمنة إلى الحياة اليومية."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "hip-knee-replacement-recovery"
     },
     {
       "slug": "musculoskeletal-orthopaedic-rehabilitation",
@@ -143,7 +156,8 @@
         "en": "Improving movement, strength and function after injury or surgery.",
         "ar": "تحسين الحركة والقوة والوظيفة بعد الإصابة أو الجراحة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "musculoskeletal-and-orthopedic-rehabilitation"
     },
     {
       "slug": "neurorehabilitation",
@@ -155,7 +169,10 @@
         "en": "Restoring movement, independence and quality of life after neurological injury.",
         "ar": "استعادة الحركة والاستقلالية وجودة الحياة بعد الإصابة العصبية."
       },
-      "specialties": []
+      "specialties": [
+        "pmr"
+      ],
+      "old_slug": "post-surgical-rehabilitation"
     },
     {
       "slug": "acquired-brain-injury",
@@ -167,7 +184,8 @@
         "en": "Rebuilding cognitive, physical and daily-living skills through coordinated care.",
         "ar": "إعادة بناء المهارات الذهنية والجسدية ومهارات الحياة اليومية من خلال الرعاية المنسقة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "acquired-brain-injury"
     },
     {
       "slug": "spinal-cord-injury",
@@ -179,7 +197,8 @@
         "en": "Maximising mobility, independence and function through specialised rehabilitation.",
         "ar": "تعظيم الحركة والاستقلالية والوظيفة من خلال إعادة التأهيل المتخصصة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "spinal-cord-injury-2"
     },
     {
       "slug": "parkinsons-disease",
@@ -191,7 +210,8 @@
         "en": "Improving movement and independence through targeted rehabilitation.",
         "ar": "تحسين الحركة والاستقلالية من خلال إعادة التأهيل المستهدفة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "parkinsons-disease-2"
     },
     {
       "slug": "multiple-sclerosis",
@@ -203,7 +223,8 @@
         "en": "Managing symptoms and maintaining mobility and daily function.",
         "ar": "إدارة الأعراض والحفاظ على الحركة والوظائف اليومية."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "multiple-sclerosis-2"
     },
     {
       "slug": "epilepsy",
@@ -215,7 +236,8 @@
         "en": "Supporting seizure management and safe, independent daily living.",
         "ar": "دعم إدارة النوبات والحياة اليومية الآمنة والمستقلة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "epilepsy"
     },
     {
       "slug": "guillain-barre-syndrome",
@@ -227,7 +249,8 @@
         "en": "Restoring strength, mobility and independence throughout recovery.",
         "ar": "استعادة القوة والحركة والاستقلالية طوال فترة التعافي."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "guillain-barre-syndrome"
     },
     {
       "slug": "motor-neuron-diseases",
@@ -239,7 +262,8 @@
         "en": "Enhancing comfort, function and quality of life through supportive care.",
         "ar": "تعزيز الراحة والوظيفة وجودة الحياة من خلال الرعاية الداعمة."
       },
-      "specialties": []
+      "specialties": [],
+      "old_slug": "motor-neuron-diseases"
     }
   ]
 }

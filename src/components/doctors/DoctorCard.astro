@@ -4,7 +4,7 @@ import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { urlFor, type Edition } from '../../lib/editions';
 import { t } from '../../lib/content';
-import { DOCTOR_PATHS, type Doctor } from '../../lib/doctors';
+import { DOCTOR_PATHS, doctorRole, type Doctor } from '../../lib/doctors';
 import mask from '../../assets/doctors-page/card-mask.svg';
 import fill from '../../assets/doctors-page/card-fill.svg';
 
@@ -17,7 +17,7 @@ import fill from '../../assets/doctors-page/card-fill.svg';
 interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; heading?: 'h2' | 'h3'; book?: boolean; }
 const { doctor: d, edition, labels, heading: Name = 'h2', book = true } = Astro.props;
 const name = t(d.name, edition.locale, 'doctors');
-const role = t(d.title, edition.locale, 'doctors');
+const role = doctorRole(d, edition.locale);
 const alt = (d.photo_alt && t(d.photo_alt, edition.locale, 'doctors')) || name;
 const photo = d.photo ? img(d.photo, edition.region) : null;
 // Default photo box for real data (Pramod's JSON has no card_photo): 169 square, centred, bottom on the panel edge.
@@ -27,7 +27,7 @@ const dx = d.card_photo?.dx ?? 0;
 const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
 ---
 
-<article class="card hair-card relative flex flex-col bg-white" style="--sw:.291" aria-label={name}>
+<article class="card dr-card hair-card relative flex flex-col bg-white" style="--sw:.291" aria-label={name}>
   <div class="panel relative" aria-hidden={photo ? undefined : 'true'}>
     <div class="shape" aria-hidden="true" style={`--mask:url("${mask.src}")`}>
       <img src={fill.src} alt="" width="196" height="198" loading="lazy" decoding="async" />
@@ -44,7 +44,7 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
         loading="lazy"
         decoding="async"
         alt={alt}
-        class="photo object-cover"
+        class="photo dr-photo object-cover"
         pictureAttributes={{ class: 'contents' }}
         style={`--pw:${w};--ph:${h};--dx:${dx}`}
       />

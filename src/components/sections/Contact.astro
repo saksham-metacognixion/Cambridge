@@ -10,6 +10,7 @@ import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
 import { clientConfig, commonText } from '../../lib/forms';
 import checkbox from '../../assets/contact-page/checkbox.svg';
+import SocialIcons from '../shared/SocialIcons.astro';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/contact', edition.locale);
@@ -58,8 +59,8 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
         <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>
         <p class:list={[value, 'lg:absolute lg:start-54 lg:top-198 lg:w-193 lg:h-42']}>{txt.address}</p>
         <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-253 lg:w-49']}>{txt.followLabel}</p>
-        <!-- TODO(figma): no per-icon links known; the six social icons are one svg image. -->
-        <img src={social.src} width={social.width} height={social.height} alt={txt.social.alt} class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))" />
+        <!-- The six icons are one svg image (Figma); each icon gets the live site's profile link (src/data/social.json). -->
+        <div class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))"><SocialIcons src={social.src} width={social.width} height={social.height} alt={txt.social.alt} /></div>
       </div>
 
       <!-- Own form id "home-contact" (fields = what Figma shows; src/data/forms.json), inbox FORM_TO_SEND_ENQUIRY.

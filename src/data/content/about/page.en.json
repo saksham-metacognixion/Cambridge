@@ -1,8 +1,8 @@
 {
-  "_note": "About Cambridge (Figma 45:4982; timeline = 307:494). Text = Website Content - Suhad/About Cambridge/EN-Main Page.md ('New Text' column, 5 Oct 2026): new hero, intro (no lead line), the 18-entry Journey of Excellence, 'Get to Know Cambridge' without a sub line. meta.*, alt texts and aria labels are NOT in the document (PLACEHOLDER). Card links: page = key in PAGE_PATHS ('Who We Are' has no page: it opens About, docs/open-decisions.md A4 / CT7). 'Your recovery matters' CTA = the shared Contact page block.",
+  "_note": "About Cambridge (Figma 45:4982; timeline = 307:494). Text = Website Content - Suhad/About Cambridge/EN-Main Page.md ('New Text' column, 5 Oct 2026): new hero, intro (no lead line), the 18-entry Journey of Excellence, 'Get to Know Cambridge' without a sub line. meta.description = the live About page's Rank Math description (WordPress export, 6 Oct 2026); meta.title, alt texts and aria labels are NOT in the document (PLACEHOLDER). Card links: page = key in PAGE_PATHS ('Who We Are' opens the Who We Are page (built 6 Oct 2026 from Figma 46:5841 + the live site's text, CT7 closed)). 'Your recovery matters' CTA = the shared Contact page block.",
   "meta": {
     "title": "About Cambridge | Cambridge Hospital",
-    "description": "Cambridge Hospital is a leader in post-acute and rehabilitation care in the GCC: from hospital care to rehabilitation and home care, we support patients through every stage of recovery."
+    "description": "Learn about Cambridge Hospital Group, our mission, accreditations, partnerships and commitment to specialized healthcare and rehabilitation services."
   },
   "hero": {
     "ariaLabel": "A Leader in Post-Acute and Rehabilitation Care in the GCC",
@@ -174,7 +174,7 @@
           "Who We Are"
         ],
         "button": "Learn More",
-        "page": "about",
+        "page": "whoWeAre",
         "image": "about/card-about",
         "alt": "",
         "imageTop": -3

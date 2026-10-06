@@ -1,0 +1,42 @@
+---
+import { Picture } from 'astro:assets';
+import { px } from '../../lib/scale';
+import { img } from '../../lib/images';
+import play from '../../assets/about/play.svg';
+
+/*
+ * Embedded YouTube video of a news post (the import writes <figure data-youtube="id">, see tools/import-wp-news.mjs).
+ * No Figma design for a video inside an article (docs/open-decisions.md AR4 / NW3): the About page's pattern is reused =
+ * poster + the 44 px play icon, full body column width (937 Figma px), 16:9. The poster is the video's own thumbnail,
+ * self-hosted (src/assets/news/videos/<id>.jpg, tools/download-news-images.mjs), so the page makes no YouTube request
+ * until the visitor clicks; the player is then created by src/scripts/video-facade.ts (youtube-nocookie). Without a
+ * poster file the box is plain dark. <noscript> keeps the link to the video.
+ */
+interface Props { id: string; title: string; href: string; playLabel: string }
+const { id, title, href, playLabel } = Astro.props;
+let poster: ReturnType<typeof img> | null = null;
+try { poster = img(`news/videos/${id}`); } catch { console.warn(`[news] poster for video ${id} not found in src/assets/news/videos`); }
+const W = px(937);
+---
+
+<figure class="video" data-video-facade data-host="youtube" data-id={id}>
+  <button type="button" class="poster" data-video-play aria-label={title ? `${playLabel}: ${title}` : playLabel}>
+    {poster && <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={W} height={Math.round((W * 9) / 16)} widths={[Math.round(W / 2), W]} sizes={`(min-width: 1024px) ${W}px, 100vw`} loading="lazy" decoding="async" alt="" class="thumb" pictureAttributes={{ class: 'contents' }} />}
+    <img src={play.src} width="44" height="44" alt="" class="play" />
+  </button>
+  <noscript><a href={href} target="_blank" rel="noopener">{title || href}</a></noscript>
+</figure>
+
+<script>
+  import '../../scripts/video-facade';
+</script>
+
+<style>
+  .video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #1d1d1b; }
+  .poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+  .poster :global(.thumb) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }
+  .play { position: absolute; width: calc(44 * var(--u)); height: calc(44 * var(--u)); inset-inline-start: 50%; top: 50%; transform: translate(-50%, -50%); max-width: none; }
+  :global([dir='rtl']) .play { transform: translate(50%, -50%); }
+  .poster:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+  .video :global(.player) { display: block; width: 100%; height: 100%; border: 0; background: #000; }
+</style>

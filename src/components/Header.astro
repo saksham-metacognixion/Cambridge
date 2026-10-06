@@ -2,7 +2,7 @@
 import line1 from '../assets/header/line1.svg';
 import line2 from '../assets/header/line2.svg';
 import vector from '../assets/header/vector.svg';
-import { parsePath, getEdition, urlFor } from '../lib/editions';
+import { parsePath, getEdition, urlFor, type RegionId } from '../lib/editions';
 import { pagePath } from '../lib/paths';
 import { content } from '../lib/content';
 import { img } from '../lib/images';
@@ -12,8 +12,6 @@ import { switchHref } from '../lib/routes';
 // Current edition and page path, so the language switch lands on the same page in the other language (or the nearest
 // page that exists there, src/lib/routes.ts switchHref: never a 404).
 const { edition, path } = parsePath(Astro.url.pathname);
-const enHref = switchHref(getEdition(edition.region, 'en'), path);
-const arHref = switchHref(getEdition(edition.region, 'ar'), path);
 const homeHref = urlFor(edition);
 const c = content('layout/header', edition.locale);
 const logo = img(c.logo.image, edition.region);
@@ -29,12 +27,27 @@ const mainLinkWidths = [84, 41, 54, 62, 51];
 const mainLinks = c.mainLinks.map((x: { label: string; href: string; path?: string; page?: string }, i: number) => ({ ...x, href: target(x), w: mainLinkWidths[i] }));
 // Region switch: same page in the chosen region, same language (the language switch does the reverse); a page that does
 // not exist there (hospital of another region) lands on its nearest existing parent.
-const regionOptions = c.region.options.map((o: { region: 'ae' | 'sa'; label: string }) => ({
-  label: o.label,
-  href: switchHref(getEdition(o.region, edition.locale), path),
-  lang: getEdition(o.region, edition.locale).lang,
+// Every region is listed (Global, UAE, KSA); the current one comes from the URL's edition (parsePath), never from a
+// fixed label, so a direct visit, a refresh or a deep link of /ae or /sa shows that region as the button label.
+const regionOptions = c.region.options.map((o: { region: RegionId; label: string }) => {
+  const target = getEdition(o.region, edition.locale);
+  return { label: o.label, href: switchHref(target, path), lang: target.lang, current: o.region === edition.region };
+});
+const currentRegion = regionOptions.find((o: { current: boolean }) => o.current)!;
+// Language switch: the active language = the page's own locale (desktop pill + mobile chip, colours, aria-current).
+// Figma 112:13218 only shows EN active: pill 22 x 18 at 849, 5 before the EN label (854). AR active keeps that relation
+// (874 - 5 = 869, inside the chip 846-893), which centres the pill on either label's glyphs, LTR and RTL.
+const langBoxes = { en: { l: 854, w: 15 }, ar: { l: 874, w: 17 } };
+const langs = (['en', 'ar'] as const).map((id) => ({
+  id,
+  label: c.lang[id],
+  href: switchHref(getEdition(edition.region, id), path),
+  hreflang: getEdition(edition.region, id).lang,
+  active: id === edition.locale,
+  ...langBoxes[id],
 }));
-const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
+const pillL = langBoxes[edition.locale].l - 5;
+const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
 ---
 
 <header class="hd relative z-50 bg-white shadow-bar font-gotham">
@@ -57,27 +70,30 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
       </ul>
 
       <div class="chip a" style="--l:846;--t:26;--w:47;--ph:25"></div>
-      <div class="pill a" style="--l:849;--t:30;--w:22;--ph:18"></div>
+      <div class="pill a" style={`--l:${pillL};--t:30;--w:22;--ph:18`}></div>
       <ul class="lang">
-        <li class="a" style="--l:854;--t:35;--w:15;--ph:15"><a href={enHref} hreflang={getEdition(edition.region, 'en').lang} lang="en" class="hit lang-hit block text-f9 font-normal not-italic text-white">{c.lang.en}</a></li>
-        <li class="a" style="--l:874;--t:35;--w:17;--ph:15"><a href={arHref} hreflang={getEdition(edition.region, 'ar').lang} lang="ar" class="hit lang-hit block text-f9 font-medium not-italic text-navy">{c.lang.ar}</a></li>
+        {langs.map((x) => (
+          <li class="a" style={`--l:${x.l};--t:35;--w:${x.w};--ph:15`}><a href={x.href} hreflang={x.hreflang} lang={x.id} aria-current={x.active ? 'true' : undefined} class:list={['hit lang-hit block text-f9 not-italic', x.active ? 'font-normal text-white' : 'font-medium text-navy']}>{x.label}</a></li>
+        ))}
       </ul>
 
       <div class="region a" data-region style="--l:932;--t:33;--w:52;--ph:15">
-        <button type="button" class="hit region-btn font-medium not-italic text-f9 text-navy" aria-haspopup="true" aria-expanded="false" aria-controls="region-menu" aria-label={`${c.region.label}, ${c.region.menuLabel}`} data-region-btn>
-          <span class="region-label">{c.region.label}</span>
+        <button type="button" class="hit region-btn font-medium not-italic text-f9 text-navy" aria-haspopup="true" aria-expanded="false" aria-controls="region-menu" aria-label={`${currentRegion.label}, ${c.region.menuLabel}`} data-region-btn>
+          <span class="region-label">{currentRegion.label}</span>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
         </button>
         <div class="rmenu" id="region-menu" data-region-menu>
           <ul class="rlist">
             {regionOptions.map((o) => (
-              <li><a href={o.href} hreflang={o.lang} class="hit ritem block whitespace-nowrap text-f9 font-medium not-italic text-navy">{o.label}</a></li>
+              <li><a href={o.href} hreflang={o.lang} class="hit ritem block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={o.current ? 'true' : undefined}>{o.label}</a></li>
             ))}
           </ul>
         </div>
       </div>
 
-      <p class="visit a text-f9 not-italic text-navy" style="--l:932;--t:71;--w:111;--ph:32"><span class="font-normal">{c.visit.intro}</span><br /><span class="font-medium">{c.visit.lines[0]}<br />{c.visit.lines[1]}</span></p>
+      <!-- "Visit Cambridge Health Group": a link to the group's own website (layout/header JSON `visit.href`, the live site's
+           Cambridge Health Group link), new tab (bug 010). Same look as the Figma text block; hover / focus like the other header links. -->
+      <a href={c.visit.href} target="_blank" rel="noopener noreferrer" class="visit hit a block text-f9 not-italic text-navy" style="--l:932;--t:71;--w:111;--ph:32"><span class="font-normal">{c.visit.intro}</span>{' '}<br /><span class="font-medium">{c.visit.lines[0]}{' '}<br />{c.visit.lines[1]}</span></a>
 
       <ul class="mainnav a" style="--l:393;--t:81;--w:595;--ph:15">
         {mainLinks.map((x) => (
@@ -106,7 +122,10 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
   :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }
   .hd ul { margin: 0; padding: 0; list-style: none; }
-  .mainnav { display: flex; gap: calc(11 * var(--u)); }
+  /* The list's Figma box (595 wide at x 393) runs under the "Visit Cambridge Health Group" block (x 932..1043) and would
+     take the clicks meant for it (bug 010): the box lets pointer events through, only its links take them. */
+  .mainnav { display: flex; gap: calc(11 * var(--u)); pointer-events: none; }
+  .mainnav a { pointer-events: auto; }
   .mainnav li { width: calc(var(--w) * var(--u)); height: calc(15 * var(--u)); }
   .burger { display: none; }
   .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
@@ -115,11 +134,19 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .region-btn:focus-visible, .ritem:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   .chev { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-inline-start: calc(5 * var(--u)); transition: transform .2s; }
   .region[data-open] .chev { transform: rotate(180deg); }
-  .rmenu { visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(64 * var(--u)); }
+  /* The open menu drops over the "Visit Cambridge Health Group" block (932..1043 x 71..103), so it is as wide as that
+     column (111) and, with three rows, reaches below it (56..114): the white list hides the text under it completely
+     instead of cutting through it. Stacking: .region (z 60) is above its sibling .visit inside the header, and the
+     header (z-50) is above the page. */
+  .rmenu { visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(111 * var(--u)); }
   .region[data-open] .rmenu { visibility: visible; opacity: 1; }
-  .rlist { background: #fff; border-radius: calc(5 * var(--u)); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(6 * var(--u)) calc(10 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
+  /* .hd .rlist, not .rlist: `.hd ul { padding: 0 }` above is more specific and used to strip the list's padding. */
+  .hd .rlist { background: #fff; border-radius: calc(5 * var(--u)); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(6 * var(--u)) calc(10 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
   .ritem { --hit-h: calc(100% + 10 * var(--u)); }
-  .ritem:hover { color: #00b8ff; }
+  .ritem:hover, .ritem[aria-current='true'] { color: #00b8ff; } /* current region: the header's highlight colour */
+  .visit { cursor: pointer; transition: color .15s; }
+  .visit:hover { color: #00b8ff; } /* like the region menu's items */
+  .visit:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   .deco { pointer-events: none; } /* decorative lines must not swallow clicks meant for the links next to them */
 
   @media (min-width: 1200px) {
@@ -149,7 +176,7 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .region-btn { width: auto; min-height: 44px; gap: calc(4 * var(--u)); }
     .rmenu { position: static; display: none; padding-top: 0; visibility: visible; opacity: 1; }
     .region[data-open] .rmenu { display: block; }
-    .rlist { box-shadow: none; background: transparent; padding: 0 0 0 calc(10 * var(--u)); gap: 0; }
+    .hd .rlist { box-shadow: none; background: transparent; padding: 0; padding-inline-start: calc(10 * var(--u)); gap: 0; }
     .ritem { display: flex; align-items: center; min-height: 44px; }
     .toplinks, .mainnav { display: flex; flex-direction: column; gap: 0; }
     /* Tap targets: every menu row is at least 44px high (rows touch, so the hit area is the row itself). */
@@ -157,12 +184,12 @@ const vlines = [ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .menu a.lang-hit { --hit-w: 44px; --hit-h: 44px; }
     .mainnav li { width: auto; height: auto; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
-    .lang li:first-child a { background: #00415a; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
-    .lang li:last-child a { background: #ededed; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
+    .lang a { background: #ededed; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
+    .lang a[aria-current='true'] { background: #00415a; }
     .book { position: relative; display: flex; align-items: center; justify-content: center; width: calc(138 * var(--u)); height: calc(30 * var(--u)); }
     .book::after { content: "BOOK AN APPOINTMENT"; font-size: calc(9 * var(--u)); font-weight: 500; color: #fffdfd; white-space: nowrap; }
     .book { width: calc(158 * var(--u)); }
-    .visit { margin: 0; }
+    .visit { margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; --hit-h: 100%; } /* a menu row like the links above it (44px tap target); the lines stay stacked */
   }
 </style>
 

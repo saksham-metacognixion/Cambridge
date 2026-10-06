@@ -1,1 +1,57 @@
-{}
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19085 'ابحث عن طبيب'): hero, CTA band, 'احجز موعد'. Filter 'ALL', search labels, result counts, profile labels except 'Find a Doctor' / 'Book an Appointment': no Arabic (English shown).",
+  "meta": {
+    "title": "ابحث عن طبيب | مستشفى كامبريدج",
+    "description": "استكشف شبكتنا من الأطباء والمتخصصين ذوي الخبرة في مرافقنا الصحية في الإمارات والمملكة العربية السعودية."
+  },
+  "hero": {
+    "title": [
+      "اعثر على الطبيب",
+      "المناسب لك"
+    ],
+    "text": "استكشف شبكتنا من الأطباء والمتخصصين ذوي الخبرة في مرافقنا الصحية في الإمارات والمملكة العربية السعودية.",
+    "button": {
+      "label": "احجز موعد"
+    }
+  },
+  "filters": {
+    "countries": [
+      {},
+      {
+        "label": "السعودية"
+      },
+      {
+        "label": "الإمارات"
+      }
+    ]
+  },
+  "card": {
+    "bookNow": "احجز موعد"
+  },
+  "profile": {
+    "list": "ابحث عن طبيب",
+    "book": "احجز موعد"
+  },
+  "recovery": {
+    "ariaLabel": "إن تعافيك يهمنا",
+    "text": "الرعاية في مستشفى كامبريدج هي رحلة متكاملة تشمل خدمات المرضى الداخليين والخارجيين والمنزل والمدرسة، وتدعم كل مرحلة من مراحل التعافي.",
+    "emphasis": [
+      "إن تعافيك يهمنا، ونحن معك في كل خطوة من",
+      "رحلتك."
+    ],
+    "tiles": [
+      {
+        "label": "احجز موعد"
+      },
+      {
+        "label": "ابحث عن طبيب"
+      },
+      {
+        "label": "ابحث عن تخصص"
+      },
+      {
+        "label": "أرسل استفسار"
+      }
+    ]
+  }
+}

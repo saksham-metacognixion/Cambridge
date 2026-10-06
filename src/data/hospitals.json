@@ -1,26 +1,26 @@
 {
-  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format), hours ({en, ar}) and mapUrl are NOT in Figma or the documents and wait for Pramod (empty = not shown; empty mapUrl = Google Maps search for the address).",
+  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format), hours ({en, ar}) and mapUrl are NOT in Figma or the documents and wait for Pramod (empty = not shown; empty mapUrl = Google Maps search for the address). Arabic names, list titles, addresses and 'View Centre' = the live site's Arabic Our Hospitals page and footer (WordPress export pages 19104 / 19153 / block 19169, 6 Oct 2026).",
   "hospitals": [
     {
       "slug": "abu-dhabi",
       "path": "cambridge-hospital-abu-dhabi",
       "brand": {
         "en": "Cambridge Hospital",
-        "ar": ""
+        "ar": "مستشفى كامبريدج"
       },
       "city": {
         "en": "Abu Dhabi",
-        "ar": ""
+        "ar": "أبوظبي"
       },
       "region": "ae",
       "listTitle": {
         "en": "Abu Dhabi Hospital",
-        "ar": ""
+        "ar": "مستشفى أبوظبي"
       },
       "photo": "facilities/auh-new",
       "address": {
         "en": "Shakbout City, Abu Dhabi - UAE",
-        "ar": ""
+        "ar": "مدينة شخبوط، أبوظبي، الامارات"
       },
       "listPhoto": "hospitals/abu-dhabi",
       "phone": "",
@@ -35,21 +35,21 @@
       "path": "cambridge-hospital-al-ain",
       "brand": {
         "en": "Cambridge Hospital",
-        "ar": ""
+        "ar": "مستشفى كامبريدج"
       },
       "city": {
         "en": "Al Ain",
-        "ar": ""
+        "ar": "العين"
       },
       "region": "ae",
       "listTitle": {
         "en": "Al Ain Hospital",
-        "ar": ""
+        "ar": "مستشفى العين"
       },
       "photo": "facilities/al-ain",
       "address": {
         "en": "Al Khabisi, Al Ain - UAE",
-        "ar": ""
+        "ar": "شارع الخبيسي، العين، الامارات"
       },
       "listPhoto": "hospitals/al-ain",
       "phone": "",
@@ -64,21 +64,21 @@
       "path": "cambridge-hospital-dhahran",
       "brand": {
         "en": "Cambridge Hospital",
-        "ar": ""
+        "ar": "مستشفى كامبريدج"
       },
       "city": {
         "en": "Dhahran",
-        "ar": ""
+        "ar": "ظهران"
       },
       "region": "sa",
       "listTitle": {
         "en": "Dhahran Hospital",
-        "ar": ""
+        "ar": "مستشفى ظهران"
       },
       "photo": "facilities/dhahran",
       "address": {
         "en": "Al Doha Al Janubia, Dhahran - KSA",
-        "ar": ""
+        "ar": "الدوحة الجنوبية، ظهران - المملكة العربية السعودية"
       },
       "listPhoto": "hospitals/dhahran",
       "phone": "",
@@ -93,21 +93,21 @@
       "path": "cambridge-hospital-al-khobar",
       "brand": {
         "en": "Cambridge Hospital",
-        "ar": ""
+        "ar": "مستشفى كامبريدج"
       },
       "city": {
         "en": "Al Khobar",
-        "ar": ""
+        "ar": "الخبر"
       },
       "region": "sa",
       "listTitle": {
         "en": "Al Khobar Hospital",
-        "ar": ""
+        "ar": "مستشفى الخبر"
       },
       "photo": "facilities/al-khobar",
       "address": {
         "en": "Al Tahliyah, Al Khobar - KSA",
-        "ar": ""
+        "ar": "الطهلية، الخبر - المملكة العربية السعودية"
       },
       "listPhoto": "hospitals/al-khobar",
       "phone": "",
@@ -122,21 +122,21 @@
       "path": "cambridge-hospital-jeddah",
       "brand": {
         "en": "Cambridge Hospital",
-        "ar": ""
+        "ar": "مستشفى كامبريدج"
       },
       "city": {
         "en": "Jeddah",
-        "ar": ""
+        "ar": "جدة"
       },
       "region": "sa",
       "listTitle": {
         "en": "Jeddah Hospital",
-        "ar": ""
+        "ar": "مستشفى جدة"
       },
       "photo": "facilities/jeddah",
       "address": {
         "en": "Al Ruwais, Jeddah - KSA",
-        "ar": ""
+        "ar": "الرويس، جدة - المملكة العربية السعودية"
       },
       "listPhoto": "hospitals/jeddah",
       "phone": "",
@@ -151,25 +151,25 @@
       "path": "al-mudeef-center-abu-dhabi",
       "brand": {
         "en": "Al Mudeef Centre",
-        "ar": ""
+        "ar": "مركز المضيف"
       },
       "city": {
         "en": "Abu Dhabi",
-        "ar": ""
+        "ar": "أبوظبي"
       },
       "region": "ae",
       "listTitle": {
         "en": "Al Mudeef Centre",
-        "ar": ""
+        "ar": "المضيف"
       },
       "listButton": {
         "en": "View Centre",
-        "ar": ""
+        "ar": "عرض المركز"
       },
       "photo": "facilities/al-mudeef",
       "address": {
         "en": "Shakbout City, Abu Dhabi - UAE",
-        "ar": ""
+        "ar": "مدينة شخبوط، أبوظبي، الامارات"
       },
       "listPhoto": "hospitals/al-mudeef-abu-dhabi",
       "phone": "",

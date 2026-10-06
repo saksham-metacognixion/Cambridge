@@ -1,0 +1,31 @@
+---
+import social from '../../data/social.json';
+
+/*
+ * The Figma social icon strip (one SVG image, six icons at an equal pitch) with a link over each icon, so the strip looks
+ * exactly as designed and each icon opens the live site's profile (src/data/social.json). Icons without a link get no anchor.
+ * `class` / `style` position the strip exactly as the plain <img> did (the wrapper takes the image's box).
+ */
+interface Props { src: string; width: number | string; height: number | string; alt?: string; class?: string; style?: string; dense?: boolean }
+const { src, width, height, alt = '', class: cls = '', style = '', dense = false } = Astro.props;
+const links = social.links as { id: string; label: string; href: string }[];
+---
+
+<div class:list={['soc', cls]} style={style}>
+  <img src={src} width={width} height={height} alt={alt} class="soc-img" />
+  <ul class="soc-links" role="list">
+    {links.map((l) => (
+      <li>{l.href && <a href={l.href} target="_blank" rel="noopener" class:list={['soc-a', dense && 'dense']}><span class="sr-only">{l.label}</span></a>}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .soc { position: relative; width: 100%; height: 100%; }
+  .soc-img { display: block; width: 100%; height: 100%; max-width: none; }
+  .soc-links { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; display: flex; direction: ltr; } /* the icons are drawn LTR in the image; the strip itself is mirrored by the page */
+  .soc-links li { flex: 1 1 0; position: relative; }
+  .soc-a { position: absolute; inset: 0; display: block; }
+  .soc-a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 4px; }
+  @media (max-width: 1023.98px) { .soc-a::before { content: ''; position: absolute; inset: 50% auto auto 50%; width: 100%; min-width: 44px; min-height: 44px; transform: translate(-50%, -50%); } } /* tap target */
+</style>

@@ -19,7 +19,8 @@ import OutlineButton from './OutlineButton.astro';
  */
 interface Pos { titleTop: number; titleW: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
 interface Props {
-  content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button: { label: string; href: string } };
+  /** button: absent = a hero without one (the calculator pages, as on the live site) */
+  content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button?: { label: string; href: string } };
   pos: Pos;
   /** stage height in Figma px: 437 (banner) or 322 (cover) */
   h?: number;
@@ -64,7 +65,7 @@ const imgH = variant === 'banner' ? 500 : 323;
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
       {c.text && <p class:list={["text m-0 font-gotham font-normal text-f12 leading-14 not-italic", tone === "white" ? "text-body lg:text-white" : "text-body"]}>{c.text}</p>}
-      <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" fill={button === "fill"} {...buttonAttrs} />
+      {c.button && <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" fill={button === "fill"} {...buttonAttrs} />}
     </div>
     <slot name="art" />
   </div>

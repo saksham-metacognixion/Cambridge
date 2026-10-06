@@ -1,0 +1,89 @@
+{
+  "$comment": "Live site calculator page (cambridgehospital.com, WordPress export 6 Oct 2026 for the hero and intro; the form text and result strings from the live calculator script, read 6 Oct 2026). No Figma frame (docs/open-decisions.md CA1).",
+  "meta": {
+    "title": "Heart Health Age Calculator | Cambridge Hospital",
+    "description": "Estimate your heart health age using key cardiovascular risk factors."
+  },
+  "hero": {
+    "ariaLabel": "Heart Health Age Calculator",
+    "banner": {
+      "image": "doctors-page/banner",
+      "alt": ""
+    },
+    "title": [
+      "Check Your Heart Health Age."
+    ],
+    "text": "Estimate your heart health age using key cardiovascular risk factors."
+  },
+  "intro": {
+    "heading": "What This Calculator Measures",
+    "text": "This calculator uses factors such as age, cholesterol, blood pressure, smoking, diabetes, and blood pressure treatment status to estimate your heart health age."
+  },
+  "form": {
+    "ariaLabel": "Heart Health Age Calculator",
+    "submit": "Calculate Heart Health Age",
+    "fields": {
+      "sex": {
+        "label": "Sex",
+        "placeholder": "Select an option",
+        "options": {
+          "male": "Male",
+          "female": "Female"
+        }
+      },
+      "age": {
+        "label": "Age",
+        "placeholder": "e.g. 45"
+      },
+      "total_chol": {
+        "label": "Total Cholesterol",
+        "placeholder": "e.g. 200"
+      },
+      "hdl": {
+        "label": "HDL Cholesterol",
+        "placeholder": "e.g. 50"
+      },
+      "sbp": {
+        "label": "Systolic Blood Pressure",
+        "placeholder": "e.g. 120"
+      },
+      "bp_meds": {
+        "label": "Are you taking blood pressure medication?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      },
+      "smoker": {
+        "label": "Are you a smoker?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      },
+      "diabetic": {
+        "label": "Do you have diabetes?",
+        "placeholder": "Select an option",
+        "options": {
+          "0": "No",
+          "1": "Yes"
+        }
+      }
+    }
+  },
+  "result": {
+    "title": "Heart Health Age",
+    "categories": {
+      "younger": "Younger than your age",
+      "similar": "Close to your age",
+      "older": "Older than your age"
+    },
+    "notes": {
+      "younger": "This estimate suggests your heart health age is younger than your actual age.",
+      "similar": "This estimate suggests your heart health age is close to your actual age.",
+      "older": "This estimate suggests your heart health age is older than your actual age."
+    }
+  }
+}

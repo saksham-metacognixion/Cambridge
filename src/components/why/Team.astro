@@ -28,7 +28,7 @@ const more = urlFor(edition, pagePath(c.button.page));
   <div class="nv">
     <div class="copy">
       <h2 class="title">{c.title.map((l: string) => <span class="block">{l}</span>)}</h2>
-      <p class="text">{c.text}</p>
+      <div class="text">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
       <a href={more} class="btn">{c.button.label}</a>
     </div>
     <ul class="stats" role="list">
@@ -49,6 +49,8 @@ const more = urlFor(edition, pagePath(c.button.page));
   .title { margin: 0; overflow-wrap: anywhere; font-weight: 500; font-size: min(calc(37 * var(--u)), 7.6vw); line-height: 1.14; }
   @media (min-width: 1024px) { .title { line-height: calc(42 * var(--u)); } }
   .text { margin: calc(13 * var(--u)) 0 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); overflow-wrap: anywhere; }
+  .text p { margin: 0; }
+  .text p + p { margin-top: calc(17 * var(--u)); }
   .btn { display: flex; align-items: center; justify-content: center; margin-top: calc(11 * var(--u)); width: calc(118 * var(--u)); height: calc(30 * var(--u)); border-radius: calc(7 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(13 * var(--u)); text-decoration: none; white-space: nowrap; }
   .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
   .stat { font-weight: 500; padding-top: calc(3 * var(--u)); }

@@ -16,7 +16,7 @@
       "Rehabilitation Care",
       "in the GCC"
     ],
-    "text": "From hospital care to rehabilitation and home care, we support patients through every stage of recovery.",
+    "text": "Comprehensive care and clinical expertise centred on patients and families, from hospital to home.",
     "button": {
       "label": "Book an Appointment",
       "href": "#book-appointment"
@@ -182,7 +182,8 @@
       {
         "title": [
           "Why Choose",
-          "Cambridge Hospital"
+          "Cambridge",
+          "Hospital"
         ],
         "button": "Discover More",
         "page": "whyCambridge",

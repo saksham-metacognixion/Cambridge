@@ -64,19 +64,21 @@ const countries = ['all', 'sa', 'ae'];
 const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.src}");mask-mode:alpha;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-size:calc(182.127*var(--u)) calc(161.519*var(--u));-webkit-mask-size:calc(182.127*var(--u)) calc(161.519*var(--u));mask-position:calc(-${MASK_DX}*var(--u)) calc(-${MASK_DY}*var(--u));-webkit-mask-position:calc(-${MASK_DX}*var(--u)) calc(-${MASK_DY}*var(--u));`;
 ---
 
-<section class="relative overflow-x-clip" style="--h: 457">
+<!-- Home copy of 6 Oct 2026 (client document): the heading box is widened about its Figma centre so the longer heading stays on
+     one line, and the four-line intro pushes the pills, row and dots down by 29 (Figma 79 / 139 / 404, height 457). -->
+<section class="relative overflow-x-clip" style="--h: 486">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-6 max-lg:py-6">
-    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:317;--y:0;--w:417;--h:27">{c.heading}</h2>
-    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:27">{c.intro}</p>
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:175;--y:0;--w:701;--h:27">{c.heading}</h2>
+    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:56">{c.intro}</p>
 
-    <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label={c.filterLabel} data-row-pills style="--x:371;--y:79;--w:279;--h:25">
+    <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label={c.filterLabel} data-row-pills style="--x:371;--y:108;--w:279;--h:25">
       <button type="button" aria-pressed="true" class="hit ui-pill pill" data-country={countries[0]} style="--x:0">{c.filters[0]}</button>
       <button type="button" aria-pressed="false" class="hit ui-pill pill" data-country={countries[1]} style="--x:99">{c.filters[1]}</button>
       <button type="button" aria-pressed="false" class="hit ui-pill pill" data-country={countries[2]} style="--x:200">{c.filters[2]}</button>
     </div>
 
     <!-- Auto-scrolls in a slow loop as on the live site (src/scripts/autoscroll.ts, user decision 6 Oct 2026, bug 018). -->
-    <div class="hscroll dpos w-full max-lg:self-stretch" data-row data-autoscroll style="--x:0;--y:139;--w:1052;--h:231">
+    <div class="hscroll dpos w-full max-lg:self-stretch" data-row data-autoscroll style="--x:0;--y:168;--w:1052;--h:231">
       <div class="row flex gap-[calc(27*var(--u))] px-4" data-loop-row>
         {cards.map((card) => (
           <article class="card dr-card relative shrink-0 snap-start bg-white rounded-r15 hair-card" data-loop-item data-sets={card.sets}>
@@ -95,7 +97,7 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
     <!-- Pagination dots (Figma's dot divider sits at y 408, 41 x 9): the shared component, one button per page of the row
          (a page = one visible width; while the row loops, the pages tile one loop), filled by src/scripts/doctors-row.ts
          (bug 012). Hidden when everything fits. -->
-    <div class="dpos dots" style="--x:0;--y:404;--w:1052;--h:17">
+    <div class="dpos dots" style="--x:0;--y:433;--w:1052;--h:17">
       <Pagination />
     </div>
   </div>

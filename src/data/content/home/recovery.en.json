@@ -1,6 +1,6 @@
 {
-  "title": "Start Your Recovery Today!",
-  "text": "Our specialists provides personalized treatment and rehabilitation plans for your conditions.",
+  "title": "Ready to Take the Next Step?",
+  "text": "Whether looking for rehabilitation, medical care, ongoing support or care at home, patients and families can find the right pathway with support from our team.",
   "buttons": [
     { "label": "Book an Appointment", "href": "#book-appointment" },
     { "label": "Find a Doctor", "href": "#doctors" }

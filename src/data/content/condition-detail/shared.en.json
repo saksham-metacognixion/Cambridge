@@ -1,5 +1,5 @@
 {
-  "_note": "Shared parts of the condition detail template (Figma 41:2373 / 67:3070). Visible text exactly as in Figma. pending.* and generated.* are NOT in Figma (PLACEHOLDER). Arabic overviewHeading (shared.ar.json) = the documents' 'نبذة عن البرنامج' line; a page may override it (overviewHeading in its own file, e.g. Motor Neuron Diseases 'عن الحالة').",
+  "_note": "Shared parts of the condition detail template (Figma 41:2373 / 67:3070). Visible text exactly as in Figma. pending.* and generated.* are NOT in Figma (PLACEHOLDER). Arabic overviewHeading (shared.ar.json) = the documents' 'نبذة عن البرنامج' line; a page may override it (overviewHeading in its own file).",
   "overviewHeading": "Overview",
   "tabsLabel": "Topics",
   "pending": {

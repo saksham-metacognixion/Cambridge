@@ -1,33 +1,34 @@
 {
-  "_note": "Why Cambridge (Figma 116:311, 1052 x 4488, nodes in figma-cache/why-spec.md). Visible text exactly as in Figma ('Region's' with a straight apostrophe, 'Impatients' kept); meta.*, alt texts and aria labels are NOT in Figma (PLACEHOLDER). Stats with {shared} come from home/facilities (one number and spelling site-wide); the others are specific to this page (715+ beds here vs 720 Operational Beds on the landing page: flagged, docs/open-decisions.md W1). Button targets: page = key in PAGE_PATHS.",
+  "_note": "Why Cambridge (Figma 116:311, 1052 x 4488, nodes in figma-cache/why-spec.md). Text = Website Content - Suhad/About Cambridge/EN- Why Cambridge.docx (6 Oct 2026), mapped onto the Figma blocks: hero, 'The Cambridge Hospital Difference' (Figma 'The Specialized Post-Acute Provider' block), Multidisciplinary Professionals, the three feature blocks, Trusted Standards. A text given as an array = paragraphs. Stats, button labels/targets, meta.*, alt texts and aria labels are NOT in the document (Figma / PLACEHOLDER). Stats with {shared} come from home/facilities (one number and spelling site-wide); the others are specific to this page (715+ beds here vs 720 Operational Beds on the landing page: flagged, docs/open-decisions.md W1). Button targets: page = key in PAGE_PATHS.",
   "meta": {
     "title": "Why Cambridge | Cambridge Hospital",
     "description": "A different standard of care: Cambridge Hospital is a specialized post-acute provider in the UAE and KSA, with multidisciplinary professionals, proven outcomes and globally recognized accreditations."
   },
   "hero": {
-    "ariaLabel": "A Different Standard of Care",
+    "ariaLabel": "A Leader in Post-Acute and Rehabilitation Care in the GCC",
     "banner": {
       "image": "why/banner",
       "alt": ""
     },
     "title": [
-      "A Different",
-      "Standard of Care"
+      "A Leader in",
+      "Post-Acute and",
+      "Rehabilitation Care",
+      "in the GCC"
     ],
-    "text": "We support patients in the space between hospital and home  with expert care, continuity, and an environment built for recovery.",
+    "text": "Comprehensive care and clinical expertise centred on patients and families, from hospital to home.",
     "button": {
       "label": "Book an Appointment",
       "href": "#book-appointment"
     }
   },
   "specialized": {
-    "ariaLabel": "The Specialized Post-Acute Provider in UAE & KSA",
-    "titleLight": "The Specialized",
+    "ariaLabel": "The Cambridge Hospital Difference",
+    "titleLight": "The Cambridge",
     "titleBold": [
-      "Post-Acute Provider",
-      "in UAE & KSA"
+      "Hospital Difference"
     ],
-    "text": "Cambridge Hospital is a pioneer in post-acute care services across the GCC, operating six dedicated facilities in the United Arab Emirates and the Kingdom of Saudi Arabia. As a specialized provider in the region, Cambridge Hospital delivers a comprehensive range of rehabilitation services, including long-term care, post-acute rehabilitation, transitional ventilator weaning, outpatient rehabilitation programs, and home healthcare. This integrated approach makes Cambridge Hospital one of the few providers offering a complete continuum of care across the UAE and KSA.",
+    "text": "For patients and families, choosing the right care means more than finding a specialist. It means having access to the right expertise, programmes and standards of care throughout the journey. At Cambridge Hospital, experienced multidisciplinary teams, specialised programmes, internationally-recognised accreditations and global partnerships come together within an integrated model of care. This makes us one of the few providers in the region able to connect different stages and settings of care, from specialist inpatient services to outpatient and home-based support, with a clear focus on meaningful outcomes and quality of life.",
     "stats": [
       {
         "number": "85%",
@@ -57,7 +58,10 @@
       "Multidisciplinary",
       "Professionals"
     ],
-    "text": "Cambridge Medical & Rehabilitation’s specialized teams are dedicated to providing hope and support by identifying key aspects that enhance the patient’s healing journey. Our outstanding multidisciplinary professionals prioritize patients and their families, offering essential assistance through evidence-based solutions. By integrating the latest technology with the expertise of CMRC’s world-class physicians, specialized therapists, skilled nurses, case managers, and general practitioners, we empower patients to overcome their obstacles and achieve optimal recovery outcomes. Explore how our comprehensive rehabilitation services can transform your healing experience today.",
+    "text": [
+      "Our specialised teams bring together physicians, specialised therapists, skilled nurses, case managers and general practitioners, working collaboratively to understand each patient’s needs, goals and circumstances. By putting patients and their families at the centre of care, our teams provide the expertise, guidance and support needed throughout the recovery journey.",
+      "Combining clinical expertise with the latest technology and evidence-based approaches, our multidisciplinary professionals develop personalised care plans designed around each patient. Together, they help patients overcome challenges, regain function and achieve optimal recovery outcomes, supporting them at every stage of their care."
+    ],
     "button": {
       "label": "Read More",
       "page": "conditions"
@@ -90,25 +94,31 @@
       {
         "title": [
           "Proven Outcomes.",
-          "Measurable Results."
+          "Measurable Results"
         ],
-        "text": "Our outcomes reflect consistent success in recovery, ventilator weaning, and patient satisfaction—built on years of proven clinical delivery.",
+        "text": "Our outcomes reflect consistent success in recovery, ventilator weaning and patient satisfaction, built on years of proven clinical experience and delivery.",
         "image": "why/outcomes",
         "alt": ""
       },
       {
         "title": [
-          "The Region's Most Clinically Diversified Post Acute Care Provider"
+          "A Structured, Diversified Continuum of Care"
         ],
-        "text": "Cambridge Hospital is the only provider in the Gulf offering the full continuum, long-term care, LTAC, post-acute rehabilitation, transitional vent weaning, outpatient rehab, and home healthcare, under one integrated clinical governance framework.",
+        "text": [
+          "From post-acute rehabilitation and long-term care to transitional ventilator weaning, outpatient rehabilitation, home care and in-school care, our hospitals provide a broad range of specialised services to support patients at different stages of their recovery and ongoing care.",
+          "Together, these services form a connected continuum delivered by multidisciplinary teams across our six hospitals in two countries, helping patients move between different levels and settings of care as their needs evolve."
+        ],
         "image": "why/map",
         "alt": "Map of the Gulf region"
       },
       {
         "title": [
-          "Pioneer of Specialised Programmes in the Gulf"
+          "A Pioneer of Specialised Programmes in the Gulf"
         ],
-        "text": "Cambridge Hospital introduced the Transitional Vent Weaning Programme and the Kozyavkin Method for cerebral palsy in the UAE, both firsts in the region. Cambridge Hospital Jeddah was the first standalone extended care facility in the Western Province of KSA.",
+        "text": [
+          "At Cambridge Hospital, we introduced the Transitional Ventilator Weaning Programme and the Kozyavkin Method for cerebral palsy in the UAE, both firsts in the region. These pioneering programmes have expanded access to specialised care and introduced new approaches to supporting patients with complex rehabilitation needs.",
+          "Cambridge Hospital Jeddah was also the first standalone extended care facility in the Western Province of KSA."
+        ],
         "image": "why/programmes",
         "alt": ""
       }
@@ -120,7 +130,10 @@
       "Trusted Standards &",
       "Global Partnerships"
     ],
-    "text": "Our accreditations and partnerships reflect globally recognized standards of clinical quality, patient safety, and service excellence. These are not just certifications, but actively applied frameworks that guide how we deliver care every day. Through collaboration with leading international and regional organizations, we ensure our patients benefit from proven practices, advanced methodologies, and a consistently high standard of care across our network.",
+    "text": [
+      "Our accreditations and partnerships reflect internationally-recognised standards of clinical quality, patient safety and service excellence. More than certifications, they provide frameworks that guide how we deliver care every day.",
+      "Through collaboration with leading international and regional organisations, we ensure our patients benefit from proven practices, advanced methodologies and a consistently high standard of care across our network."
+    ],
     "button": {
       "label": "Read More",
       "page": "accreditations"

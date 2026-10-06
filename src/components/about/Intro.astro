@@ -5,6 +5,7 @@ import { img } from '../../lib/images';
 import Band from '../careers/Band.astro';
 import play from '../../assets/about/play.svg';
 import about from '../../data/about.json';
+import { commonText } from '../../lib/forms';
 import type { Edition } from '../../lib/editions';
 
 /*
@@ -19,13 +20,15 @@ interface Props { edition: Edition; c: { ariaLabel: string; video: { poster: str
 const { edition, c } = Astro.props;
 const poster = img(c.video.poster, edition.region);
 const hasVideo = Boolean(about.video.host && about.video.id);
+const closeLabel = commonText(edition.locale).close as string;
 ---
 
 <Band label={c.ariaLabel}>
   <div class="row">
     <div class="video" data-video-facade data-host={about.video.host} data-id={about.video.id}>
-      <button type="button" class="poster" data-video-play aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
+      <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
         <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(429)} height={px(264)} widths={[px(429)]} sizes={`(min-width: 1440px) ${px(429)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
+        {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
         <img src={play.src} width="44" height="44" alt="" class="play" />
       </button>
     </div>

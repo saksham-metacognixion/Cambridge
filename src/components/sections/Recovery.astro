@@ -6,10 +6,12 @@ const { edition } = parsePath(Astro.url.pathname);
 const c = content('home/recovery', edition.locale);
 ---
 
+<!-- Home copy of 6 Oct 2026 (client document): the title box is widened about its Figma centre (start 321, width 411) so the
+     longer title stays on one line; the two-line text still clears the buttons (top 116). -->
 <section class="rec relative" style="--h: 186; background:#004059">
   <div class="stage">
-    <h2 class="r-title absolute start-321 top-38 w-411 h-27 m-0 font-gotham font-medium text-f30 text-white text-center not-italic">{c.title}</h2>
-    <p class="r-sub absolute start-238 top-71 w-577 h-18 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{c.text}</p>
+    <h2 class="r-title absolute start-176 top-38 w-701 h-27 m-0 font-gotham font-medium text-f30 text-white text-center not-italic">{c.title}</h2>
+    <p class="r-sub absolute start-238 top-71 w-577 h-28 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{c.text}</p>
     <a href={c.buttons[0].href} class="hit r-btn absolute start-350 top-116 w-166 h-30 rounded-r7 bg-white">
       <span class="r-l absolute start-11 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">{c.buttons[0].label}</span>
     </a>

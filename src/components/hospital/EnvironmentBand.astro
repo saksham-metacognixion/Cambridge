@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
+import { commonText } from '../../lib/forms';
 import type { Edition } from '../../lib/editions';
 import play from '../../assets/hospital-detail/play-58.svg';
 import pattern from '../../assets/hospital-detail/pattern-full-1.svg';
@@ -24,6 +25,7 @@ interface Props {
 const { edition, c, text, video } = Astro.props;
 const poster = img(c.video.poster, edition.region);
 const hasVideo = Boolean(video.host && video.id);
+const closeLabel = commonText(edition.locale).close as string;
 ---
 
 <section class="env" aria-label={c.ariaLabel}>
@@ -31,8 +33,9 @@ const hasVideo = Boolean(video.host && video.id);
     <div class="in">
       <img src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
       <div id="hospital-video" class="video" data-video-facade data-host={video.host} data-id={video.id}>
-        <button type="button" class="poster" data-video-play aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
+        <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
           <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565)]} sizes={`(min-width: 1440px) ${px(565)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
+          {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
           <img src={play.src} width={play.width} height={play.height} alt="" class="play" />
         </button>
       </div>

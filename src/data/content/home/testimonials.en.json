@@ -1,7 +1,7 @@
 {
   "_note": "The six stories (names, quotes, photos) come from src/data/testimonials.json (`home`), rendered with the Patient Testimonials card.",
-  "title": "Stories of Care and Recovery",
-  "subtitle": "Hear from our patients as they share their journeys of recovery, care, and renewed independence.",
+  "title": "Real People. Real Stories.",
+  "subtitle": "Every recovery journey is different. Hear from patients and families as they share their experiences of care, progress and renewed independence.",
   "button": {
     "label": "View More Stories",
     "href": "#",

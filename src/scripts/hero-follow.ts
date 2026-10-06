@@ -17,12 +17,14 @@ if (box && img && ok.matches) {
   let raf = 0;
   let last = 0;
   img.style.willChange = 'transform';
+  // RTL: the box is mirrored (Hero.astro), which flips the img's own x axis; reverse it so the drift still follows the cursor.
+  const dir = getComputedStyle(box).direction === 'rtl' ? -1 : 1;
 
   const frame = (t: number) => {
     const k = 1 - Math.pow(1 - EASE, last ? (t - last) / (1000 / 60) : 1); // same feel at 60/120Hz
     last = t;
     x += (target - x) * k;
-    img.style.transform = `translate3d(${(x * box.clientWidth * SHIFT).toFixed(2)}px,0,0)`;
+    img.style.transform = `translate3d(${(dir * x * box.clientWidth * SHIFT).toFixed(2)}px,0,0)`;
     if (Math.abs(target - x) > 0.001) raf = requestAnimationFrame(frame);
     else { raf = 0; last = 0; }
   };

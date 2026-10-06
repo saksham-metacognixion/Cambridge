@@ -39,7 +39,7 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
           </div>
           <div class="txt">
             <h2 class="t">{x.title.map((l: string) => <span class="block">{l}</span>)}</h2>
-            <p class="p">{x.text}</p>
+            <div class="p">{[x.text].flat().map((t: string) => <p>{t}</p>)}</div>
           </div>
         </article>
       </>
@@ -55,6 +55,8 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
   .card :global(.photo) { position: absolute; inset-inline-start: calc(var(--px) * var(--u)); top: calc(3 * var(--u)); width: calc(208 * var(--u)); height: calc(262 * var(--u)); object-fit: cover; max-width: none; border-radius: calc(17.3 * var(--u)); display: block; }
   .t { margin: 0; font-weight: 500; font-size: calc(29 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .p { margin: calc(var(--g) * var(--u)) 0 0; font-weight: 400; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .p p { margin: 0; }
+  .p p + p { margin-top: calc(18 * var(--u)); }
   .rule { margin: 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid #bcbcbc; }
   @media (min-width: 1024px) {
     .list { gap: 0; }

@@ -30,7 +30,7 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
   <div class="sp">
     <div class="top">
       <h2 class="title"><span class="light">{c.titleLight}</span>{c.titleBold.map((l: string) => <span class="block">{l}</span>)}</h2>
-      <p class="text">{c.text}</p>
+      <div class="text">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
     </div>
     <ul class="stats" role="list">
       {items.map((s) => (
@@ -52,6 +52,8 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
   .title { margin: 0; overflow-wrap: anywhere; font-weight: 500; font-style: normal; font-size: calc(37 * var(--u)); line-height: calc(42 * var(--u)); color: var(--color-navy-alt); }
   .title .light { display: block; font-weight: 400; }
   .text { margin: 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .text p { margin: 0; }
+  .text p + p { margin-top: calc(17 * var(--u)); }
   .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
   .stat { color: var(--color-navy-alt); font-weight: 500; font-style: normal; padding-top: calc(3 * var(--u)); }
   .n { display: block; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }

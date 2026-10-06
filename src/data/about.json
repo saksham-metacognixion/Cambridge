@@ -1,8 +1,8 @@
 {
-  "_note": "About page switches. showTimeline: the 'Journey of Excellence' section (Figma 307:494) is ON since 5 Oct 2026: the client's About document supplies its 18 entries (docs/open-decisions.md A1 / CT8). video: source of the intro video (Figma has only the poster + play button, A3): host = youtube | vimeo | file, id = the video id, or the file URL for 'file'. Empty = the play button does nothing. The player loads only on click.",
+  "_note": "About page switches. showTimeline: the 'Journey of Excellence' section (Figma 307:494) is ON since 5 Oct 2026: the client's About document supplies its 18 entries (docs/open-decisions.md A1 / CT8). video: source of the intro video (Figma has only the poster + play button, A3): host = youtube | vimeo | file, id = the video id, or the file URL for 'file'. Empty = the play button does nothing. The player loads only on click, in a lightbox (6 Oct 2026). Video = the live site's 'CMRC TimeLine' (https://www.youtube.com/watch?v=7cYs0xA9vEw), supplied by the user 6 Oct 2026.",
   "showTimeline": true,
   "video": {
-    "host": "",
-    "id": ""
+    "host": "youtube",
+    "id": "7cYs0xA9vEw"
   }
 }

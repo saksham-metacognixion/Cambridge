@@ -13,6 +13,10 @@ import lines from '../../assets/who-we-are/lines.svg';
  * Inside the band: the pill-outline lines (55:9247, 554.5 x 562 at x-128.7, y-26.4, clipped to 449 x 357 at x0, y+28),
  * photo "Care 1" 410 x 336 at x-11, y+49 (object-cover, bottom-aligned: Figma shows the lower 86% of the image), six stats
  * Medium 35 / 12 (line height 133.7%) #00415a at x 504 / 660 / 802, y +125 / +243.
+ *
+ * Below 1024 (no Figma frame): the lines are a layer of the photo figure, sized in % of the photo so the composition scales
+ * with it and ends at the photo's bottom edge (bugs 032/033, 7 Oct 2026) — they never reach the stats. Stats = one grid
+ * (2 columns < 768, 3 columns 768-1023); heading font fluid (clamp) so the words wrap at spaces, never mid-word.
  */
 interface Props { edition: Edition; c: { ariaLabel: string; heading: [string, string][]; photo: { image: string; alt: string }; stats: any[] } }
 const { edition, c } = Astro.props;
@@ -24,10 +28,12 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 
 <section class="net" aria-label={c.ariaLabel}>
   <div class="in">
-    <div class="pill"><h2 class="h">{c.heading.map(([w, dot]) => <>{w}<span class="dot">{dot}</span></>)}</h2></div>
+    <div class="pill"><h2 class="h">{c.heading.map(([w, dot]) => <><span class="s">{w}<span class="dot">{dot.trim()}</span></span>{dot.endsWith(' ') ? ' ' : ''}</>)}</h2></div>
     <div class="band">
-      <div class="clip" aria-hidden="true"><img src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
-      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+      <div class="figure">
+        <div class="clip" aria-hidden="true"><img src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
+        <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+      </div>
       <ul class="stats" role="list">
         {items.map((s) => (
           <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="n">{s.number}</span><span class="l">{s.label}</span></li>
@@ -40,24 +46,38 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 <style>
   .net { font-family: var(--font-gotham); font-style: normal; }
   .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
-  .pill { position: relative; z-index: 1; box-sizing: border-box; margin-inline: 16px; padding: calc(30 * var(--u)) calc(24 * var(--u)); border-radius: calc(15 * var(--u)); background: var(--color-navy); }
-  .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); color: #fff; text-align: center; overflow-wrap: anywhere; }
-  .dot { color: var(--color-cyan); white-space: pre; }
+  .pill { position: relative; z-index: 1; box-sizing: border-box; margin-inline: 16px; padding: calc(30 * var(--u)) calc(16 * var(--u)); border-radius: calc(15 * var(--u)); background: var(--color-navy); }
+  /* < 1024: fluid size between 21px and the Figma 30 so the three sentences wrap at their spaces (no mid-word breaks) */
+  .h { margin: 0; font-weight: 500; font-size: clamp(21px, 6.5vw, calc(30 * var(--u))); line-height: 1.2; color: #fff; text-align: center; text-wrap: balance; }
+  /* each sentence wraps as a unit when it fits the line (inline-block), and at its spaces when it does not (max-width) */
+  .s { display: inline-block; max-width: 100%; }
+  .dot { color: var(--color-cyan); }
   .band { position: relative; margin-top: calc(-48 * var(--u)); background: rgba(231, 231, 231, 0.5); overflow: clip; padding: calc(72 * var(--u)) 16px calc(40 * var(--u)); }
-  .clip { position: absolute; inset-inline-start: 0; top: calc(28 * var(--u)); width: calc(449 * var(--u)); height: calc(357 * var(--u)); overflow: clip; pointer-events: none; }
-  .lines { position: absolute; inset-inline-start: calc(-128.7 * var(--u)); top: calc(-54.4 * var(--u)); width: calc(554.5 * var(--u)); height: calc(562 * var(--u)); max-width: none; }
+  /* Photo figure = the 410 x 336 Figma photo box; the lines and their clip are laid out in % of it so they scale with the photo.
+     Clip (Figma 449 x 357 from the band edge, y+28): from 41 before the photo (cut by the band edge) to 50 after, 21 above, ending
+     at the photo's bottom edge. Lines (554.5 x 562) at photo x-117.7, y-75.4. */
+  .figure { position: relative; }
+  .clip { position: absolute; inset-inline-start: calc(-41 / 410 * 100%); top: calc(-21 / 336 * 100%); width: calc(501 / 410 * 100%); height: calc(357 / 336 * 100%); overflow: clip; pointer-events: none; }
+  .lines { position: absolute; inset-inline-start: calc(-76.7 / 501 * 100%); top: calc(-54.4 / 357 * 100%); width: calc(554.5 / 501 * 100%); height: calc(562 / 357 * 100%); max-width: none; }
   :global([dir='rtl']) .lines { scale: -1 1; }
   .net :global(.photo) { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 410 / 336; object-fit: cover; object-position: 0 100%; max-width: none; }
-  .stats { position: relative; list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
-  .stat { color: var(--color-navy-alt); font-weight: 500; line-height: 1.337; }
-  .n { display: block; font-size: calc(35 * var(--u)); }
+  /* Stats: one grid for all six — 2 columns on phones, 3 on tablets; the number shrinks with the viewport so it fits its column */
+  .stats { position: relative; list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(24 * var(--u)) calc(40 * var(--u)); }
+  .stat { color: var(--color-navy-alt); font-weight: 500; line-height: 1.337; min-width: 0; }
+  .n { display: block; font-size: clamp(28px, 9vw, calc(35 * var(--u))); }
   .l { display: block; font-size: calc(12 * var(--u)); max-width: calc(140 * var(--u)); }
+  @media (min-width: 768px) {
+    .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
   @media (min-width: 1024px) {
     .pill { margin-inline: calc(57 * var(--u)); width: calc(938 * var(--u)); height: calc(96 * var(--u)); padding: calc(34 * var(--u)) 0 0; }
-    .h { line-height: normal; }
+    .h { font-size: calc(30 * var(--u)); line-height: normal; text-wrap: wrap; }
+    .s { display: inline; }
     .band { height: calc(385 * var(--u)); padding: 0; }
-    .net :global(.photo) { position: absolute; inset-inline-start: calc(-11 * var(--u)); top: calc(49 * var(--u)); width: calc(410 * var(--u)); height: calc(336 * var(--u)); }
+    .figure { position: absolute; inset-inline-start: calc(-11 * var(--u)); top: calc(49 * var(--u)); width: calc(410 * var(--u)); height: calc(336 * var(--u)); }
+    .net :global(.photo) { position: absolute; inset: 0; width: 100%; height: 100%; }
     .stats { display: block; margin: 0; }
     .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); }
+    .n { font-size: calc(35 * var(--u)); }
   }
 </style>

@@ -61,7 +61,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
         <h1 id="dr-name" class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</h1>
         <p class="role m-0 font-gotham font-normal not-italic">{role}</p>
       </div>
-      <a href="#book-appointment" data-doctor={d.slug} class="book hit font-gotham font-medium no-underline">{c.book}</a>
+      <a href="#book-appointment" data-doctor={d.slug} class="book hit btn-fill-navy font-gotham font-medium no-underline">{c.book}</a>
     </div>
     <img class="rule-top" src={ruleTop.src} width="571" height="0.5" alt="" />
     {subs.length > 0 && (

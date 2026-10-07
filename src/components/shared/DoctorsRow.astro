@@ -12,9 +12,14 @@ import SectionIntro from './SectionIntro.astro';
  * Gaps: H2 box (h33) -> text 3; text box (h26) -> cards 13. Identical on the condition detail pages (41:1924..41:2049) and
  * Refer a Patient. Content (heading, text, listLabel, doctor slugs) comes from the page JSON via `content`.
  */
-interface Props { content: { heading: string; text: string; listLabel: string; slugs: string[] }; id?: string }
+interface Props {
+  content: { heading: string; text: string; listLabel: string; slugs: string[] }; id?: string;
+  /** Our Care: the cards slide one at a time in an endless loop like the live page's Swiper (scripts/autoscroll.ts, step mode):
+   *  four in view on desktop (Figma x 48, 215 wide, the 31 / 32 / 32 gaps averaged so every step is the same). */
+  slider?: boolean;
+}
 const { edition } = parsePath(Astro.url.pathname);
-const { content: d, id = 'doctors-heading' } = Astro.props;
+const { content: d, id = 'doctors-heading', slider = false } = Astro.props;
 const labels = content('doctors/page', edition.locale).card;
 const doctors = d.slugs.map((slug: string) => {
   const doc = profileDoctors.find((x) => x.slug === slug);
@@ -25,12 +30,26 @@ const doctors = d.slugs.map((slug: string) => {
 
 <section class="docs" aria-labelledby={id}>
   <SectionIntro id={id} heading={d.heading} text={d.text} gap={3} minH={26} />
-  <ul class="grid" role="list" aria-label={d.listLabel}>
-    {doctors.map((doc: any) => (
-      <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
-    ))}
-  </ul>
+  {slider ? (
+    <div class="hscroll slide" data-autoscroll="step">
+      <ul class="srow" role="list" aria-label={d.listLabel} data-loop-row>
+        {doctors.map((doc: any) => (
+          <li class="snap-start" data-loop-item><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
+        ))}
+      </ul>
+    </div>
+  ) : (
+    <ul class="grid" role="list" aria-label={d.listLabel}>
+      {doctors.map((doc: any) => (
+        <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
+      ))}
+    </ul>
+  )}
 </section>
+
+<script>
+  import '../../scripts/autoscroll';
+</script>
 
 <style>
   .docs { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
@@ -39,6 +58,9 @@ const doctors = d.slugs.map((slug: string) => {
     grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u));
   }
   .grid > li { display: flex; }
+  .slide { margin-top: calc(13 * var(--u)); }
+  .srow { list-style: none; margin: 0; padding: 0; display: flex; gap: calc(31.667 * var(--u)); }
+  .srow > li { display: flex; flex: 0 0 calc(215 * var(--u)); }
   @media (min-width: 1024px) {
     .grid {
       width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); justify-content: start; column-gap: 0;
@@ -49,7 +71,12 @@ const doctors = d.slugs.map((slug: string) => {
     .grid > li:nth-child(4n + 3) { grid-column: 5; }
     .grid > li:nth-child(4n) { grid-column: 7; }
   }
+  @media (min-width: 1024px) {
+    .slide { width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); }
+  }
   @media (max-width: 1023.98px) {
     .docs { padding-inline: 16px; }
+    .slide { margin-inline: -16px; scroll-padding-inline: 16px; }
+    .srow { padding-inline: 16px; gap: calc(20 * var(--u)); }
   }
 </style>

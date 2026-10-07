@@ -29,7 +29,7 @@ const more = urlFor(edition, pagePath(c.button.page));
     <div class="copy">
       <h2 class="title">{c.title.map((l: string) => <span class="block">{l}</span>)}</h2>
       <div class="text">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
-      <a href={more} class="btn">{c.button.label}</a>
+      <a href={more} class="btn btn-fill">{c.button.label}</a>
     </div>
     <ul class="stats" role="list">
       {items.map((s) => (

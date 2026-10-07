@@ -1,1 +1,8 @@
-{}
+{
+  "_note": "Tab labels = Website Content - Suhad 2/Patient Hub/AR- Refer a patient.docx (7 Oct 2026), text exactly as in the document. The rest of the form has no Arabic source yet (English shown, docs/open-decisions.md CT24).",
+  "tabs": {
+    "doctor": "للعاملين في القطاع الصحي",
+    "other": "لك، لفرد من أسرتك أو لصديق",
+    "corporate": "للشركات أو المؤسسات"
+  }
+}

@@ -20,6 +20,10 @@ Read this file at the start of every session and follow it for all work.
   another font. If files are missing, keep the `font-family` rule and ask.
 - Animations as in Figma: hero image that follows the cursor, and the doctor animation. Smooth on laptop
   and mobile.
+  Since 7 Oct 2026 (user decision) every page hero follows the cursor like the Home one (`src/scripts/hero-follow.ts`,
+  `data-hero-follow` box + `data-hero-subject` people layer in PageHero / ContactHero / FeedbackHero): only the people move,
+  gradient and pills stay. Our Hospitals: the map group drifts in both axes (`follow="map"`, the live site's map motion).
+  Layers `<key>-subject` / `<key>-bg` come from `tools/hero-layers/run-all.sh` (HF1 in docs/open-decisions.md).
 - Doctors / Testimonials rows overflow the frame in Figma: CSS scroll-snap rows, swipe/scroll, no arrows or
   dots unless Figma shows them. Exception (user decision, 2 Oct 2026, matching the live site): Testimonials and
   Care Support rows auto-scroll in a slow seamless loop (`src/scripts/autoscroll.ts`) — pauses on hover/focus/touch,

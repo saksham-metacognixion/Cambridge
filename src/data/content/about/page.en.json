@@ -176,8 +176,7 @@
         "button": "Learn More",
         "page": "whoWeAre",
         "image": "about/card-about",
-        "alt": "",
-        "imageTop": -3
+        "alt": ""
       },
       {
         "title": [
@@ -188,8 +187,7 @@
         "button": "Discover More",
         "page": "whyCambridge",
         "image": "about/card-why",
-        "alt": "",
-        "imageTop": -4
+        "alt": ""
       },
       {
         "title": [
@@ -199,8 +197,7 @@
         "button": "View Details",
         "page": "accreditations",
         "image": "about/card-accreditations",
-        "alt": "",
-        "imageTop": -3
+        "alt": ""
       },
       {
         "title": [
@@ -209,8 +206,7 @@
         "button": "Explore Careers",
         "page": "careers",
         "image": "about/card-careers",
-        "alt": "",
-        "imageTop": -3
+        "alt": ""
       }
     ]
   }

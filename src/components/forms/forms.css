@@ -108,7 +108,7 @@
 /* Centre the caps, not the font's line box: trim the label to cap height / baseline so the centring holds whatever the
    font's ascent / descent (browsers without text-box keep the line-box centring, within ~1px). */
 .f-submit > span { text-box: trim-both cap alphabetic; }
-.f-submit:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+/* hover / focus-visible: the shared .btn-fill rules in global.css */
 .f-submit[aria-disabled='true'] { cursor: progress; }
 
 /* Consent (Figma Contact page 86:799: circle 15.47 + Gotham Light 9.87 / 10.5 navy, link Gotham Book underlined) */

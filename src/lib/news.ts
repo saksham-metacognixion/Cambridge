@@ -1,5 +1,7 @@
 import type { Edition, LocaleId } from "./editions";
 import posts from "../data/news/posts.json";
+import samples from "../data/news/sample-images.json";
+import { img } from "./images";
 
 /*
  * News posts (src/data/news/posts.json, schema in the README next to it).
@@ -74,4 +76,25 @@ export function badgeDate(iso: string, locale: LocaleId) {
       timeZone: "UTC",
     }).format(d),
   };
+}
+
+/*
+ * Image key for a post: its own file when it is in src/assets, else a TEMPORARY sample photo (src/data/news/sample-images.json,
+ * NW1) so cards are not empty; "" when samples are off. The sample is picked by the post's position in its category (newest
+ * first), so the latest posts of one tab never share a photo and a post keeps the same photo on every page.
+ */
+const hasImg = (key: string) => { try { img(key); return true; } catch { return false; } };
+const categoryRank = new Map<string, number>();
+{
+  const seen = new Map<string, number>();
+  for (const p of [...new Map(all.map((p) => [p.slug, p])).values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))) {
+    const n = seen.get(p.category) ?? 0;
+    categoryRank.set(p.slug, n);
+    seen.set(p.category, n + 1);
+  }
+}
+export function postImage(post: Pick<Post, "slug" | "image">): { key: string; sample: boolean } {
+  if (post.image && hasImg(post.image)) return { key: post.image, sample: false };
+  if (!samples.enabled || !samples.images.length) return { key: "", sample: false };
+  return { key: samples.images[(categoryRank.get(post.slug) ?? 0) % samples.images.length], sample: true };
 }

@@ -44,7 +44,7 @@ const cards = s.cards.map((c: any) => ({ ...c, src: img(c.image, edition.region)
           />
           <h3 class="title m-0 font-gotham font-medium not-italic text-navy">{c.title}</h3>
           <p class="lines m-0 font-gotham font-normal not-italic text-body">{c.lines.map((l: string) => <span class="block">{l}</span>)}</p>
-          <a href={c.href} class="btn hit font-gotham font-medium not-italic no-underline">{c.button}</a>
+          <a href={c.href} class="btn hit btn-fill-navy font-gotham font-medium not-italic no-underline">{c.button}</a>
         </article>
       </li>
     ))}

@@ -10,15 +10,17 @@ import Band from '../careers/Band.astro';
  * "Explore Our Care, Expertise, and Opportunities" (Figma 45:4982, grey band rgba(231,231,231,.5), page y 974-1537, h 563).
  * Heading Gotham Medium 28 #004059 at x194, band top + 55, box 664 x 27; sub Book 12/14 #6b6b6b at x262 (w528), 5 below the
  * heading box; cards 47 below the sub box. Four cards 222 x 342 at x53 / 295 / 537 / 779 (gap 20), white box, radius 15,
- * hairline .25 #418ea2; photo 222 x 244 (top corners radius 15) at box top - 3 (card 2: -4, Figma 1122 vs 1123, kept per card,
- * imageTop in the JSON). Title Medium 19 #004059 at box + (24, 260) in a 32 tall box (a 1-line title is centred in it: Careers Hub 1394);
+ * hairline .25 #418ea2; photo 222 x 244 (top corners radius 15). In Figma the photo sits 3 px above the box top (card 2: 4 px,
+ * 1122 / 1123 vs 1126), which on the page reads as a strip of photo above the border (bug 028, client review 7 Oct 2026): the
+ * photo now starts exactly at the card top and the card clips to its own rounded box, so no photo pixel can leave it; the
+ * hairline border (.hair-card::after) paints above the photo. Title Medium 19 #004059 at box + (24, 260) in a 32 tall box (a 1-line title is centred in it: Careers Hub 1394);
  * button 74 x 17 (#00b8ff, radius 3) at box + (24, 309), label Medium 8 / 10 white centred. Box bottom 69 above the band end.
  * Each card is a column: photo space, title, then the button pushed to the bottom (margin-top: auto). Cards in a row stretch
  * to the tallest one, so a longer title (client copy "Why Choose Cambridge Hospital" = 3 lines at 174 wide, Figma has
  * "Why Choose Cambridge") grows every card in the row and all buttons stay on one line (bug 008). The title lines are given
  * in the JSON; Figma's 16 line height only holds 2 lines, so a title of 3+ lines gets 21 (1.1em) so the lines don't crowd.
  */
-interface Card { title: string[]; button: string; page: string; image: string; alt: string; imageTop: number }
+interface Card { title: string[]; button: string; page: string; image: string; alt: string }
 interface Props { edition: Edition; c: { ariaLabel: string; heading: string; text: string; cards: Card[] } }
 const { edition, c } = Astro.props;
 const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), href: urlFor(edition, pagePath(x.page)) }));
@@ -29,14 +31,14 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
     <h2 id="about-explore-heading" class="h">{c.heading}</h2>
     {c.text && <p class="sub">{c.text}</p>}
     <ul class="grid" role="list">
-      {cards.map((x) => (
-        <li class="cell">
-          <article class="card hair-card" style={`--sw:.25;--it:${x.imageTop}`}>
+      {cards.map((x, i) => (
+        <li data-aos="fade-up" style={`--aos-delay:${i * 50}ms`} class="cell">
+          <article class="card hair-card" style="--sw:.25">
             <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(222)} height={px(244)} widths={[px(222), px(222) * 2]} sizes={`(min-width: 1440px) ${px(222)}px, (min-width: 1024px) 15.4vw, ${px(222)}px`} loading="lazy" decoding="async" alt={x.alt} class="img" pictureAttributes={{ class: 'contents' }} />
             <h3 class:list={['t', { long: x.title.length > 2 }]}>
               <a href={x.href} class="stretch">{x.title.map((l) => <span class="block">{l}</span>)}</a>
             </h3>
-            <span class="btn" aria-hidden="true">{x.button}</span>
+            <a href={x.href} class="btn btn-fill" tabindex="-1" aria-hidden="true">{x.button}</a>
           </article>
         </li>
       ))}
@@ -45,22 +47,30 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
 </Band>
 
 <style>
+  /* Scroll entrance as on the live About page (data-aos="fade-up", scripts/aos.ts + global.css): each card on its own,
+     0.8s, delays 0 / 50 / 100 / 150ms, replays on every return. The heading and the grey band do not move. */
   .wrap { padding-block: calc(55 * var(--u)) calc(69 * var(--u)); }
-  .h { margin: 0; width: calc(664 * var(--u)); max-width: 100%; margin-inline: auto; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
-  .sub { margin: calc(5 * var(--u)) auto 0; width: calc(528 * var(--u)); max-width: 100%; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); }
+  .h { margin: 0; width: calc(664 * var(--u)); max-width: 100%; margin-inline: auto; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); text-align: center; overflow-wrap: anywhere; }
+  .sub { margin: calc(5 * var(--u)) auto 0; width: calc(528 * var(--u)); max-width: 100%; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); text-align: center; }
   .grid { list-style: none; margin: calc(47 * var(--u)) 0 0; } /* 47 below the sub box; without a sub line (client text) the sub's 5 + 18 are added so the cards keep their Figma y */
   .h + .grid { margin-top: calc(70 * var(--u)); }
   .grid { padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(222 * var(--u)), calc(222 * var(--u)))); justify-content: center; gap: calc(40 * var(--u)) calc(20 * var(--u)); }
   .cell { display: flex; }
-  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: calc(222 * var(--u)); min-height: calc(342 * var(--u)); padding: calc(260 * var(--u)) calc(24 * var(--u)) calc(16 * var(--u)); background: #fff; border-radius: calc(15 * var(--u)); }
-  .card :global(.img) { position: absolute; inset-inline-start: 0; top: calc(var(--it) * var(--u)); width: 100%; height: calc(244 * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: calc(15 * var(--u)); border-start-end-radius: calc(15 * var(--u)); }
+  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: calc(222 * var(--u)); min-height: calc(342 * var(--u)); padding: calc(260 * var(--u)) calc(24 * var(--u)) calc(16 * var(--u)); background: #fff; border-radius: calc(15 * var(--u)); overflow: clip; }
+  .card :global(.img) { position: absolute; inset-inline-start: 0; top: 0; width: 100%; height: calc(244 * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: calc(15 * var(--u)); border-start-end-radius: calc(15 * var(--u)); }
   .t { margin: 0 0 calc(17 * var(--u)); display: flex; align-items: center; min-height: calc(32 * var(--u)); font-weight: 500; font-size: calc(19 * var(--u)); line-height: calc(16 * var(--u)); color: var(--color-navy); font-style: normal; }
   .t.long { line-height: calc(21 * var(--u)); }
   .t a { color: inherit; text-decoration: none; }
   .stretch::after { content: ''; position: absolute; inset: 0; border-radius: calc(15 * var(--u)); }
   .stretch:focus-visible { outline: none; }
+  /* Hovers as on the live About cards: the title text turns cyan, the button navy (shared .btn-fill). Both sit above the
+     whole-card link layer so each reacts on its own; the button is a second link to the same page, hidden from AT and Tab
+     (the title link is the one they use). */
+  .t .block, .btn { position: relative; z-index: 1; }
+  .t a { transition: color 160ms ease; }
+  @media (hover: hover) { .t:has(.block:hover) a { color: var(--color-cyan); } }
   .card:has(.stretch:focus-visible) { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
-  .btn { display: flex; align-items: center; justify-content: center; margin-top: auto; width: calc(74 * var(--u)); height: calc(17 * var(--u)); border-radius: calc(3 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(8 * var(--u)); line-height: calc(10 * var(--u)); white-space: nowrap; }
+  .btn { text-decoration: none; display: flex; align-items: center; justify-content: center; margin-top: auto; width: calc(74 * var(--u)); height: calc(17 * var(--u)); border-radius: calc(3 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(8 * var(--u)); line-height: calc(10 * var(--u)); white-space: nowrap; }
   @media (min-width: 1024px) {
     .grid { grid-template-columns: repeat(4, calc(222 * var(--u))); column-gap: calc(20 * var(--u)); }
   }

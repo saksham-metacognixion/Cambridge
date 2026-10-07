@@ -40,7 +40,9 @@ const sections = [
   </div>
   <main>
     <div id="hero" class="relative">
-      <PageHero content={c.hero} pos={{ titleTop: 98, titleW: 385, textGap: 14, textW: 374, textX: 97, buttonGap: 15 }} />
+      <!-- small: bug 027. The five staff stand at the right edge of the art (x 470-1052); below 1024px the photo shows the strip
+           from x 440 (30 Figma px of gradient before the first nurse) to the right edge, so nobody is cut and the group is centred. -->
+      <PageHero content={c.hero} pos={{ titleTop: 98, titleW: 385, textGap: 14, textW: 374, textX: 97, buttonGap: 15 }} small={{ x: 440, w: 612, maxH: 640 }} />
     </div>
     {
       sections.map(({ id, C, props, mt }) => (

@@ -1,21 +1,22 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19081 'إحالة مريض').",
+  "_note": "Hero, intro and tab labels = Website Content - Suhad 2/Patient Hub/AR- Refer a patient.docx (7 Oct 2026), text exactly as in the document; meta.description = the hero text (as in English). Button and 'doctors' section: live site Arabic (WordPress export, 6 Oct 2026, page 19081).",
   "meta": {
     "title": "إحالة مريض | مستشفى كامبريدج",
-    "description": "شارك تفاصيل المريض والإحالة، وسيتولى فريقنا تنسيق الرعاية."
+    "description": "شارك بيانات المريض مع فريقنا، وسنتولى تنسيق الإحالة ومساعدتك في ترتيب الرعاية المناسبة لاحتياجاته."
   },
   "hero": {
     "title": [
-      "أحيل مريضا بثقة."
+      "أحِل مريضاً إلى الرعاية المناسبة"
     ],
-    "text": "شارك تفاصيل المريض والإحالة، وسيتولى فريقنا تنسيق الرعاية.",
+    "text": "شارك بيانات المريض مع فريقنا، وسنتولى تنسيق الإحالة ومساعدتك في ترتيب الرعاية المناسبة لاحتياجاته.",
     "button": {
       "label": "احجز موعد"
-    }
+    },
+    "ariaLabel": "إحالة مريض"
   },
   "intro": {
-    "heading": "إحالة المرضى",
-    "text": "يرجى تعبئة النموذج أدناه لإحالة مريض. سيقوم فريقنا بمراجعة وتنسيق الخطوات التالية بسرعة."
+    "heading": "إحالة مريض",
+    "text": "يرجى تعبئة النموذج أدناه لإحالة المريض. سيقوم فريقنا بمراجعة الإحالة والتواصل معكم في أقرب وقت لتنسيق الخطوات التالية."
   },
   "doctors": {
     "heading": "رعاية متخصصة، أطباء موثوق بهم",

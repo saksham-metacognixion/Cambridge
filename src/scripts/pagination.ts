@@ -10,11 +10,16 @@
  *  - Anything with its own notion of a page (the looping Home doctors row, the hospital photo galleries) calls
  *    createPagination(nav, source) with its own count / current / go and update() when its state changes.
  *
+ * Narrow screens (bug 023): a long row (the Home doctors row has ~18 pages at 360-390) would give a dot line wider than the
+ * phone. Every dot stays in the DOM, but only a window of WINDOW dots around the current one is shown below 600px
+ * (Pagination.astro hides [data-out] dots there); the dot at each window edge with more beyond is drawn smaller
+ * ([data-edge]). The window moves with the current page. Wider screens show every dot, as before.
+ *
  * RTL: every evergreen browser (Chrome, Firefox, Safari) reports a negative scrollLeft in an RTL scroller, 0 at the logical
  * start (the right edge). Positions are therefore taken as |scrollLeft| and the sign is put back when scrolling, so dot 1
  * is always the logical first page in both directions.
  */
-import { pageCount, pageIndex } from "../lib/pagination";
+import { pageCount, pageIndex, windowStart } from "../lib/pagination";
 
 export interface Source {
   /** number of pages (0 or 1 hides the dots) */
@@ -32,15 +37,27 @@ export interface Pagination {
 }
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/** Dots shown at once below 600px (Pagination.astro). */
+const WINDOW = 7;
+
 
 export function createPagination(nav: HTMLElement, src: Source): Pagination {
   const label = nav.dataset.dotLabel ?? "{n}";
   let dots: HTMLButtonElement[] = [];
   const mark = () => {
     const i = src.current();
-    dots.forEach((d, k) =>
-      k === i ? d.setAttribute("aria-current", "true") : d.removeAttribute("aria-current"),
-    );
+    const n = dots.length;
+    const a = windowStart(i, n, WINDOW);
+    const b = Math.min(n, a + WINDOW) - 1;
+    dots.forEach((d, k) => {
+      if (k === i) d.setAttribute("aria-current", "true");
+      else d.removeAttribute("aria-current");
+      d.toggleAttribute("data-out", k < a || k > b);
+      d.toggleAttribute(
+        "data-edge",
+        (k === a && a > 0) || (k === b && b < n - 1),
+      );
+    });
   };
   const update = () => {
     const n = src.count();
@@ -50,7 +67,10 @@ export function createPagination(nav: HTMLElement, src: Source): Pagination {
         const b = document.createElement("button");
         b.type = "button";
         b.className = "pgn-dot";
-        b.setAttribute("aria-label", label.replace("{n}", String(i + 1)).replace("{total}", String(n)));
+        b.setAttribute(
+          "aria-label",
+          label.replace("{n}", String(i + 1)).replace("{total}", String(n)),
+        );
         b.addEventListener("click", () => src.go(i));
         return b;
       });
@@ -63,7 +83,9 @@ export function createPagination(nav: HTMLElement, src: Source): Pagination {
 }
 
 /** Horizontal scroller as a page source; `watch` keeps the dots in step with scrolling, resizing and content changes. */
-export function scrollSource(row: HTMLElement): Source & { watch(pg: Pagination): void } {
+export function scrollSource(
+  row: HTMLElement,
+): Source & { watch(pg: Pagination): void } {
   const sign = () => (getComputedStyle(row).direction === "rtl" ? -1 : 1);
   const max = () => row.scrollWidth - row.clientWidth;
   return {
@@ -85,14 +107,20 @@ export function scrollSource(row: HTMLElement): Source & { watch(pg: Pagination)
         { passive: true },
       );
       new ResizeObserver(pg.update).observe(row);
-      new MutationObserver(pg.update).observe(row, { childList: true, subtree: true, attributeFilter: ["hidden"] });
+      new MutationObserver(pg.update).observe(row, {
+        childList: true,
+        subtree: true,
+        attributeFilter: ["hidden"],
+      });
       document.fonts?.ready.then(pg.update);
     },
   };
 }
 
 // Self-mounting scroll rows.
-for (const nav of document.querySelectorAll<HTMLElement>("[data-pagination][data-for]")) {
+for (const nav of document.querySelectorAll<HTMLElement>(
+  "[data-pagination][data-for]",
+)) {
   const row = document.getElementById(nav.dataset.for!);
   if (!row) continue;
   const src = scrollSource(row);

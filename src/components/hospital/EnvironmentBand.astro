@@ -14,13 +14,14 @@ import pattern from '../../assets/hospital-detail/pattern-full-1.svg';
  * decoration clipped by the frame. Heading Medium 28 #00415a centred 30 below the video (965); text Book 12 #6b6b6b centred w539
  * 13 below the heading box (1010), 3 paragraphs: lines 14, each new paragraph 5 lower (Figma 19px first lines); "Take a Tour"
  * cyan pill 100 x 21.333 r7, Medium 10 white, 17 below the text (1149); band bottom 35.67 below it.
- * The player is created on click only (src/scripts/video-facade.ts, same as About); `video` = { host, id } from the hospital JSON.
+ * The player is created on click only (src/scripts/video-facade.ts, same as About); `video` = { host, id, aspect? } from the hospital
+ * JSON (aspect '16:9' when missing; '9:16' for a portrait video, bug 031).
  */
 interface Props {
   edition: Edition;
   c: { ariaLabel: string; heading: string; video: { poster: string; alt: string; playLabel: string }; tour: { label: string; href: string } };
   text: string[];
-  video: { host: string; id: string };
+  video: { host: string; id: string; aspect?: string };
 }
 const { edition, c, text, video } = Astro.props;
 const poster = img(c.video.poster, edition.region);
@@ -32,7 +33,7 @@ const closeLabel = commonText(edition.locale).close as string;
   <div class="band">
     <div class="in">
       <img src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
-      <div id="hospital-video" class="video" data-video-facade data-host={video.host} data-id={video.id}>
+      <div id="hospital-video" class="video" data-video-facade data-host={video.host} data-id={video.id} data-aspect={video.aspect}>
         <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
           <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565)]} sizes={`(min-width: 1440px) ${px(565)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
           {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
@@ -41,7 +42,7 @@ const closeLabel = commonText(edition.locale).close as string;
       </div>
       <h2 class="h">{c.heading}</h2>
       <div class="text">{text.map((p) => <p>{p}</p>)}</div>
-      <a href={c.tour.href} class="tour hit">{c.tour.label}</a>
+      <a href={c.tour.href} class="tour hit btn-fill">{c.tour.label}</a>
     </div>
   </div>
 </section>
@@ -66,7 +67,6 @@ const closeLabel = commonText(edition.locale).close as string;
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(5 * var(--u)); }
   .tour { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; box-sizing: border-box; margin-top: calc(17 * var(--u)); width: calc(100 * var(--u)); height: calc(21.333 * var(--u)); border-radius: calc(7 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(10 * var(--u)); line-height: calc(12 * var(--u)); text-decoration: none; white-space: nowrap; }
-  .tour:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   @media (min-width: 1024px) {
     .in { padding-inline: 0; }
     .pattern { display: block; position: absolute; inset-inline-start: calc(-126 * var(--u)); top: calc(39 * var(--u)); width: calc(423 * var(--u)); height: calc(433 * var(--u)); max-width: none; pointer-events: none; }

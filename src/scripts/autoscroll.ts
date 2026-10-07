@@ -4,18 +4,41 @@
 // The row is copied as often as needed to fill the scroller, and the scroller wraps by exactly one period, so the loop is
 // seamless in LTR and RTL at every breakpoint. Copies are aria-hidden and out of the tab order (screen readers and the
 // keyboard meet each item once) but still take pointer clicks, since a copy is often the card on screen.
-// Pauses on hover, focus, touch/drag, wheel, when off screen or the tab is hidden; on resume it continues from wherever
+// Eases to a stop on hover / focus, stops at once on touch/drag, wheel, when off screen or the tab is hidden; on resume it continues from wherever
 // the visitor (or a script) left the row.
 // Events on the scroller: 'autoscroll:refresh' (dispatch after changing which items show) rebuilds the copies;
 // 'autoscroll:hold' (dispatch before scrolling the row from script) pauses for RESUME_MS; 'autoscroll:change' is sent
 // after every rebuild. The scroller carries [data-looping] while the loop is set up.
 // prefers-reduced-motion: nothing runs and the row stays a plain swipe/scroll-snap row.
+// [data-autoscroll="step"] (Our Care doctors, the live page's Greenshift Swiper: autoplay delay 1000, speed 1000, loop,
+// pauseOnMouseEnter): instead of gliding, the row waits STEP_DELAY_MS, then slides one item in STEP_MS with Swiper's CSS
+// `ease`, and so on. Hover / focus let the slide in progress finish and hold the next one; touch, drag and wheel stop it at
+// once, and the next slide lands on the next item boundary.
 
 const SECONDS_PER_ITEM = 8; // pace taken from the live-site recording; tied to the item step so it looks the same at every width
 const RESUME_MS = 2500; // after a touch/wheel, wait this long before moving again
+const EASE_MS = 450; // time constant of the pace easing in / out (hover, resume)
+const STEP_DELAY_MS = 1000; // Swiper autoplay delay (data-autodelay)
+const STEP_MS = 1000; // Swiper speed (data-speed)
 const FOCUSABLE = "a[href], button, input, select, textarea, [tabindex]";
 
+// CSS `ease` = cubic-bezier(0.25, 0.1, 0.25, 1) (Swiper's wrapper transition): solve x(s) = p, return y(s).
+function ease(p: number) {
+  const bez = (s: number, a: number, b: number) =>
+    3 * a * s * (1 - s) ** 2 + 3 * b * s * s * (1 - s) + s ** 3;
+  const dBez = (s: number, a: number, b: number) =>
+    3 * a * (1 - s) ** 2 + 6 * (b - a) * s * (1 - s) + 3 * (1 - b) * s * s;
+  let s = p;
+  for (let i = 0; i < 8; i++)
+    s = Math.min(
+      1,
+      Math.max(0, s - (bez(s, 0.25, 0.25) - p) / (dBez(s, 0.25, 0.25) || 1)),
+    );
+  return bez(s, 0.1, 1);
+}
+
 function setup(scroller: HTMLElement) {
+  const stepMode = scroller.dataset.autoscroll === "step";
   const row = scroller.querySelector<HTMLElement>("[data-loop-row]");
   if (!row) return;
   const shown = (el: HTMLElement) =>
@@ -48,6 +71,7 @@ function setup(scroller: HTMLElement) {
   let copies: HTMLElement[] = [];
   let period = 0;
   let speed = 0; // px per second
+  let stepPx = 0; // item step (step mode)
 
   const clear = () => {
     copies.forEach((c) => c.remove());
@@ -57,6 +81,7 @@ function setup(scroller: HTMLElement) {
     scroller.style.removeProperty("scroll-snap-type");
     row.style.removeProperty("flex-shrink");
     delete scroller.dataset.looping;
+    delete scroller.dataset.loopPeriod;
   };
 
   // One period = distance from item 1 to its first copy = n × the item step. Each copy is nudged so that holds (the row's
@@ -89,7 +114,9 @@ function setup(scroller: HTMLElement) {
     nudge(0);
     nudge(target - (edge(shown(copies[0])[0]) - edge(a[0])));
     period = target;
+    scroller.dataset.loopPeriod = String(period); // read by src/scripts/drag-scroll.ts to wrap a mouse drag
     speed = step / SECONDS_PER_ITEM;
+    stepPx = step;
     scroller.dispatchEvent(new Event("autoscroll:change"));
   };
   build();
@@ -116,15 +143,53 @@ function setup(scroller: HTMLElement) {
     document.hidden ||
     performance.now() < resumeAt;
 
-  const tick = (t: number) => {
-    const run = !paused() && period > 0;
-    // Starting or resuming: continue from where the row is (the visitor may have scrolled it meanwhile).
-    if (run && (!running || !last)) pos = read();
-    const dt = run && running && last ? Math.min(t - last, 64) : 0;
-    running = run;
+  // The pace eases in and out (EASE_MS) on hover / resume, so the row never starts or stops dead; a press, wheel or script
+  // scroll (autoscroll:hold) stops it at once so nothing fights the visitor.
+  let vel = 0; // px per second, now
+  // Step mode: a slide from `from` over `stepPx`, started at `s0` (0 = none); the next one may start at `nextAt`.
+  let from = 0,
+    s0 = 0,
+    nextAt = 0;
+  const stepTick = (t: number) => {
+    if (!last || (!s0 && !running)) pos = read();
     last = t;
-    if (run) {
-      pos += (speed * dt) / 1000;
+    if (touch || !visible || document.hidden || period <= 0) s0 = 0;
+    if (s0) {
+      const p = Math.min(1, (t - s0) / STEP_MS);
+      pos = from + stepPx * ease(p);
+      if (p >= 1) {
+        s0 = 0;
+        nextAt = t + STEP_DELAY_MS;
+      }
+    } else if (paused() || period <= 0) {
+      nextAt = t + STEP_DELAY_MS;
+    } else if (t >= nextAt) {
+      // next item boundary (the visitor may have left the row between two items)
+      from = Math.floor(pos / stepPx + 0.02) * stepPx;
+      s0 = t;
+    }
+    running = !!s0;
+    if (running) {
+      if (pos >= period) {
+        pos -= period;
+        from -= period;
+      }
+      scroller.scrollLeft = sign * pos;
+    }
+    requestAnimationFrame(stepTick);
+  };
+  const tick = (t: number) => {
+    const target = !paused() && period > 0 ? speed : 0;
+    const dt = last ? Math.min(t - last, 64) : 0;
+    // First frame after a stop (or a hidden tab): continue from where the row is (the visitor may have moved it).
+    if (!last || !running) pos = read();
+    last = t;
+    if (touch || !visible || document.hidden || period <= 0) vel = 0;
+    else vel += (target - vel) * (1 - Math.exp(-dt / EASE_MS));
+    if (vel < 0.5 && target === 0) vel = 0;
+    running = vel > 0;
+    if (running) {
+      pos += (vel * dt) / 1000;
       if (pos >= period) pos -= period;
       scroller.scrollLeft = sign * pos;
     }
@@ -133,6 +198,9 @@ function setup(scroller: HTMLElement) {
 
   const holdOff = () => {
     resumeAt = performance.now() + RESUME_MS;
+    vel = 0;
+    s0 = 0;
+    running = false;
   };
 
   scroller.addEventListener("mouseenter", () => (hover = true));
@@ -169,7 +237,7 @@ function setup(scroller: HTMLElement) {
     pos = read();
   }).observe(scroller);
 
-  requestAnimationFrame(tick);
+  requestAnimationFrame(stepMode ? stepTick : tick);
 }
 
 const motion = matchMedia("(prefers-reduced-motion: no-preference)");

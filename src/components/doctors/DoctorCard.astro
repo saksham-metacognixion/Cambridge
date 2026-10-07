@@ -53,9 +53,9 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
   <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</Name>
   <p class="role m-0 font-gotham font-normal text-body not-italic">{role}</p>
   <div class="actions">
-    <a href={href} class="btn btn-see hit font-gotham font-medium no-underline" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
+    <a href={href} class="btn btn-see hit btn-fill font-gotham font-medium no-underline" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
     {book && d.show_book_now && (
-      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book hit font-gotham font-normal no-underline" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
+      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book hit btn-fill font-gotham font-normal no-underline" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
     )}
   </div>
 </article>

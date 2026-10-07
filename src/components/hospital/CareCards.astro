@@ -28,8 +28,10 @@ interface Props {
   titleTone?: 'cyan' | 'navy';
   /** Figma x of the four columns */
   xs?: number[];
+  /** scroll entrance (data-aos fade-up, 0 / 50 / 100 / 150ms per column) — the live Our Care page has it, hospital pages don't */
+  reveal?: boolean;
 }
-const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51] } = Astro.props;
+const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false } = Astro.props;
 const s = content('home/services', edition.locale);
 const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).map((k) => ({
   ...k,
@@ -44,8 +46,8 @@ const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc($
   {c && <h2 id="care-heading" class="h">{c.heading}</h2>}
   {c && <p class="t">{c.text}</p>}
   <ul class:list={['grid', !c && 'bare']} role="list" aria-label={listLabel}>
-    {cards.map((k) => (
-      <li class="cell">
+    {cards.map((k, i) => (
+      <li class="cell" data-aos={reveal ? 'fade-up' : undefined} style={reveal ? `--aos-delay:${(i % 4) * 50}ms` : undefined}>
         <CareCard src={k.src} alt={k.alt} title={k.title} desc={k.desc} href={k.href} button={button} buttonLabel={`${button}: ${k.title}`} scale={K} titleTone={titleTone} />
       </li>
     ))}

@@ -1,10 +1,13 @@
+// Apple Vision subject mask for a flat hero banner (see split.py).
+//   swiftc -O tools/hero-layers/mask.swift -o /tmp/hero-mask && /tmp/hero-mask <banner.png> <out-dir>
+// Writes <out-dir>/mask-all.png (every subject) and <out-dir>/mask-<i>.png per instance, L8, same size as the banner.
 import Vision
 import CoreImage
 import AppKit
 
-let dir = CommandLine.arguments[1]
-let url = URL(fileURLWithPath: dir + "/banner3.png")
-let handler = VNImageRequestHandler(url: url)
+let src = CommandLine.arguments[1]
+let dir = CommandLine.arguments.count > 2 ? CommandLine.arguments[2] : (src as NSString).deletingLastPathComponent
+let handler = VNImageRequestHandler(url: URL(fileURLWithPath: src))
 let req = VNGenerateForegroundInstanceMaskRequest()
 try handler.perform([req])
 guard let obs = req.results?.first else { print("no subject"); exit(1) }

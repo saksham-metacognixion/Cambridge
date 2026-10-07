@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
-import { img } from '../../lib/images';
+import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
 import OutlineButton from './OutlineButton.astro';
 
@@ -15,9 +15,10 @@ import OutlineButton from './OutlineButton.astro';
  * Text is FLOW layout (title -> text -> button) so longer / Arabic copy pushes the next line down instead of overlapping.
  * Desktop positions in Figma px, relative to the stage: title top `titleTop` at x95 (w titleW), text `textGap` below the
  * title at x97 (w textW), button `buttonGap` below the text (or the title when there is no text) at x98, 164 x 30.
+ * `titleMinH` (optional): the Figma title box height, so a title with fewer lines than in Figma keeps the text in place.
  * Button label: Gotham Medium 13 cyan, box `labelW` wide at `labelX` inside the button (Figma: 145 at 8; 153 at 5).
  */
-interface Pos { titleTop: number; titleW: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
+interface Pos { titleTop: number; titleW: number; titleMinH?: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
 interface Props {
   /** button: absent = a hero without one (the calculator pages, as on the live site) */
   content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button?: { label: string; href: string } };
@@ -30,37 +31,60 @@ interface Props {
   button?: 'outline' | 'fill';
   /** RTL: Figma hero art is mirrored with the layout (default). false = a photo with real content (news post image) is never flipped. */
   mirror?: boolean;
+  /** RTL (bug 021): the hero art holds readable or directional content (a phone screen, a logo, a map), so it is never
+   *  flipped and its composition stays as in English: on desktop the copy block sits in the art's clear area (the same 95px
+   *  from the left edge as the English copy, its lines aligned right). Below 1024px the photo is its own block, so only
+   *  the flip is dropped there. Implies mirror = false. */
+  keepComposition?: boolean;
   /** extra attributes for the button link, e.g. { 'data-hospital': slug } so the Book pop-up knows the hospital */
   buttonAttrs?: Record<string, string>;
+  /** cursor-follow mode (scripts/hero-follow.ts, the live site's mouse parallax): 'people' (default) = the subject layer moves;
+   *  'map' (Our Hospitals) = the subject layer AND every `[data-hero-subject]` in the section (HeroMap's vector overlay) move together. */
+  follow?: 'people' | 'map';
+  /** Phones / tablets (< 1024px, where the photo is its own block above the copy; styles/global.css .hero-media): the strip of
+   *  the 1052x500 banner that must stay in view, in Figma px from its left edge (`x` = strip start, `w` = strip width). The photo
+   *  box takes the strip's aspect ratio (the whole strip is visible, nobody is cut), capped at `maxH` CSS px on wide tablets
+   *  (the top of the art is cropped first, never the feet). Default: a 72vw box showing the art at 80% 30%. Bug 027 (About:
+   *  the five staff stand at the right edge of the art, x 470-1052). */
+  small?: { x: number; w: number; maxH?: number };
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, buttonAttrs = {} } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', small } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
-const p = { textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
+const p = { titleMinH: 0, textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
 const imgH = variant === 'banner' ? 500 : 323;
+// Cursor-follow (live-site mouse parallax, scripts/hero-follow.ts): the people (subject layer) move over the static background layer; a banner
+// without layers (Our Hospitals, news photos) is one static picture.
+const layers = heroLayers(c.banner.image, edition.region);
+const imgClass = ['absolute start-0 w-full max-w-none object-cover', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover'];
+// Small-screen crop (see `small`): object-position X% = the strip's start as a share of the slack (art width - strip width),
+// so 100% = a strip that ends at the right edge; 100% vertically keeps the bottom (feet) when the box is capped.
+const BANNER_W = 1052, BANNER_H = 500;
+const smallStyle = small
+  ? `--hero-h:auto;--hero-aspect:${small.w} / ${BANNER_H};--hero-pos:${((small.x / Math.max(1, BANNER_W - small.w)) * 100).toFixed(2)}% 100%;${small.maxH ? `--hero-max-h:${small.maxH}px;` : ''}`
+  : undefined;
+const pic = {
+  formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052],
+  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+} as const;
 ---
 
-<section class="relative" style={`--h: ${h}`} aria-label={c.ariaLabel}>
+<section class:list={['relative', keepComposition && 'keep']} style={`--h: ${h}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${h}`}>
-    <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <Picture
-        src={banner}
-        formats={['avif']}
-        fallbackFormat="webp"
-        width={px(1052)}
-        height={px(imgH)}
-        widths={[720, 1052]}
-        sizes="(min-width: 1440px) 1440px, 100vw"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        alt={c.banner.alt}
-        class:list={['absolute start-0 w-full max-w-none object-cover', mirror && 'rtl:-scale-x-100', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover']}
-        pictureAttributes={{ class: 'contents' }}
-      />
+    <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
+         script's transform on the subject <img> never overrides it. -->
+    <div class:list={['hero-media absolute inset-0 overflow-hidden pointer-events-none', mirror && !keepComposition && 'rtl:-scale-x-100']} data-hero-follow={layers ? follow : undefined} style={smallStyle} aria-hidden="true">
+      {layers ? (
+        <>
+          <Picture src={layers.background} alt="" class:list={imgClass} {...pic} />
+          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" data-hero-subject class:list={imgClass} {...pic} />
+        </>
+      ) : (
+        <Picture src={banner} alt={c.banner.alt} fetchpriority="high" class:list={imgClass} {...pic} />
+      )}
     </div>
 
-    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
+    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--th:${p.titleMinH};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
       <h1 class:list={["title m-0 font-gotham font-medium text-f39 leading-37 not-italic", tone === "white" ? "text-navy lg:text-white" : "text-navy"]}>
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
@@ -71,15 +95,23 @@ const imgH = variant === 'banner' ? 500 : 323;
   </div>
 </section>
 
+<script>
+  import '../../scripts/hero-follow';
+</script>
+
 <style>
   .cover { top: calc(-1 * var(--u)); height: calc(323 * var(--u)); }
   .copy { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
   .title, .text { overflow-wrap: anywhere; }
   @media (min-width: 1024px) {
     .copy { position: absolute; inset-inline-start: calc(95 * var(--u)); top: calc(var(--tt) * var(--u)); }
-    .title { width: calc(var(--tw) * var(--u)); }
+    .title { width: calc(var(--tw) * var(--u)); min-height: calc(var(--th) * var(--u)); }
     .text { width: calc(var(--xw) * var(--u)); margin-top: calc(var(--xg) * var(--u)); margin-inline-start: calc(var(--xx) * var(--u)); }
     .copy :global(.btn) { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+    /* RTL inset-inline-end = the left edge: the copy keeps the English side, mirrored inside its own box. The lines are
+       right-aligned, so the box is only as wide as the English paragraph (the area that is clear of the art). */
+    :global([dir='rtl']) .keep .copy { inset-inline-start: auto; inset-inline-end: calc(95 * var(--u)); }
+    :global([dir='rtl']) .keep .title { width: calc((var(--xx) + var(--xw)) * var(--u)); }
   }
   @media (max-width: 1023.98px) {
     .cover { top: 0; height: 100%; }

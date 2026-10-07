@@ -1,10 +1,14 @@
 {
-  "$comment": "Doctor specialties = the live site's doctor_specialty terms that have doctors (WordPress export, 6 Oct 2026, tools/import-wp-cpt.mjs). id = term slug. No Arabic names in the export.",
+  "$comment": "Doctor specialties = the live site's doctor_specialty terms that have doctors (WordPress export, 6 Oct 2026, tools/import-wp-cpt.mjs). id = term slug. No Arabic names in the export. role = the line shown under a doctor's name when the doctor has no designation (user request 6 Oct 2026: full role, not the short filter name such as \"GP\").",
   "specialties": [
     {
       "id": "pmr",
       "name": {
         "en": "PM&R",
+        "ar": ""
+      },
+      "role": {
+        "en": "Physical Medicine & Rehab Specialist",
         "ar": ""
       }
     },
@@ -13,12 +17,20 @@
       "name": {
         "en": "Internal Medicine",
         "ar": ""
+      },
+      "role": {
+        "en": "Internal Medicine Specialist",
+        "ar": ""
       }
     },
     {
       "id": "pediatric",
       "name": {
         "en": "Pediatric",
+        "ar": ""
+      },
+      "role": {
+        "en": "Pediatrician",
         "ar": ""
       }
     },
@@ -27,12 +39,20 @@
       "name": {
         "en": "GP",
         "ar": ""
+      },
+      "role": {
+        "en": "General Practitioner",
+        "ar": ""
       }
     },
     {
       "id": "neurology",
       "name": {
         "en": "Neurology",
+        "ar": ""
+      },
+      "role": {
+        "en": "Neuro Specialist",
         "ar": ""
       }
     },
@@ -41,12 +61,20 @@
       "name": {
         "en": "Intensive Care",
         "ar": ""
+      },
+      "role": {
+        "en": "Intensive Care Specialist",
+        "ar": ""
       }
     },
     {
       "id": "psychiatry",
       "name": {
         "en": "Psychiatry",
+        "ar": ""
+      },
+      "role": {
+        "en": "Psychiatrist",
         "ar": ""
       }
     }

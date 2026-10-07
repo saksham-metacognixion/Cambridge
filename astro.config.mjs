@@ -14,5 +14,8 @@ export default defineConfig({
   devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
+    // Staging: the dev server is exposed through ngrok (finalist-tamale-rhyme.ngrok-free.dev);
+    // Vite blocks unknown Host headers unless listed here.
+    server: { allowedHosts: ['.ngrok-free.dev', '.ngrok-free.app', '.ngrok.app'] },
   },
 });

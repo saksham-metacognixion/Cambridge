@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { content } from '../../lib/content';
-import { img } from '../../lib/images';
+import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
 
 // Figma 188:964 hero: image "PAR-inside 1" 1052x323 at page y 118 (1 under the header). Values: page y minus 118.
@@ -14,34 +14,38 @@ import { parsePath } from '../../lib/editions';
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('forms/feedback', edition.locale).hero;
 const banner = img(c.image, edition.region);
+const layers = heroLayers(c.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
+const imgClass = 'absolute start-0 top-0 h-full w-full max-w-none object-cover object-[100%_0]';
+const pic = {
+  formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(323), widths: [720, 1052],
+  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', alt: '', pictureAttributes: { class: 'contents' },
+} as const;
 ---
 
 <section class="hero relative" aria-labelledby="feedback-title">
-  <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <Picture
-      src={banner}
-      formats={['avif']}
-      fallbackFormat="webp"
-      width={px(1052)}
-      height={px(323)}
-      widths={[720, 1052]}
-      sizes="(min-width: 1440px) 1440px, 100vw"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-      alt=""
-      class="absolute start-0 top-0 h-full w-full max-w-none object-cover object-[100%_0] rtl:-scale-x-100"
-      pictureAttributes={{ class: 'contents' }}
-    />
+  <!-- The person drifts with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the <img>. -->
+  <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} aria-hidden="true">
+    {layers ? (
+      <>
+        <Picture src={layers.background} class={imgClass} {...pic} />
+        <Picture src={layers.subject} fetchpriority="high" data-hero-subject class={imgClass} {...pic} />
+      </>
+    ) : (
+      <Picture src={banner} fetchpriority="high" class={imgClass} {...pic} />
+    )}
   </div>
   <div class="inner relative">
     <h1 id="feedback-title" class="title m-0 font-gotham font-medium text-f39 text-navy not-italic">{c.title.map((line: string) => <span class="block">{line}</span>)}</h1>
     {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
-    <a href={c.button.href} class="btn hit hair-card relative block rounded-r7 no-underline" style="--sw:1;--sc:var(--color-cyan)">
+    <a href={c.button.href} class="btn hit btn-outline hair-card relative block rounded-r7 no-underline" style="--sw:1;--sc:var(--color-cyan)">
       <span class="block font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
     </a>
   </div>
 </section>
+
+<script>
+  import '../../scripts/hero-follow';
+</script>
 
 <style>
   .hero { min-block-size: calc(323 * var(--u)); margin-block-start: calc(-1 * var(--u)); }

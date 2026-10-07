@@ -101,8 +101,9 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
         ))}
       </ul>
 
-      <a href={c.book.href} class="hit book a" style="--l:755;--t:69;--w:138;--ph:30" aria-label={c.book.ariaLabel}></a>
-      <span class="booklabel a text-f9 font-medium not-italic text-off-white" style="--l:766;--t:80;--w:118;--ph:15" aria-hidden="true">{c.book.label}</span>
+      <!-- Label inside the button, flex-centred both ways (bug 022: the old separate absolutely placed label, text-align start,
+           sat at the right in RTL). The visible label is the accessible name in each language. -->
+      <a href={c.book.href} class="hit book a btn-fill" style="--l:755;--t:69;--w:138;--ph:30"><span class="booklabel text-f9 font-medium not-italic text-off-white">{c.book.label}</span></a>
 
       {vlines.map(([l, t]) => (
         <span class="vl a deco" style={`--l:${l};--t:${t};--w:0;--ph:30`}><img src={line1.src} width="30" height="1" alt="" /></span>
@@ -116,8 +117,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .chip { background: #ededed; border-radius: calc(5 * var(--u)); }
   .pill { background: #00415a; border-radius: calc(5 * var(--u)); }
-  .book { background: #00b8ff; border-radius: calc(7 * var(--u)); }
-  .booklabel { pointer-events: none; }
+  .book { display: flex; align-items: center; justify-content: center; background: #00b8ff; border-radius: calc(7 * var(--u)); }
+  .booklabel { line-height: 1; white-space: nowrap; text-box: trim-both cap alphabetic; } /* caps centred, see bugfix 007 */
   .vl > img { position: absolute; inset-inline-start: 0; top: calc(30 * var(--u)); width: calc(30 * var(--u)); height: calc(1 * var(--u)); transform-origin: 0 0; transform: rotate(-90deg); max-width: none; }
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
   :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }
@@ -152,8 +153,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   @media (min-width: 1200px) {
     .a { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
     .menu, .toplinks, .lang { display: contents; }
-    .visit, .global, .booklabel { margin: 0; }
-    .book { display: block; }
+    .visit, .global { margin: 0; }
     .logo img { height: 100%; }
   }
 
@@ -171,7 +171,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
 
     .menu { display: none; position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
     #nav-toggle:checked ~ .stage .menu { display: flex; }
-    .deco, .chip, .pill, .booklabel { display: none; }
+    .deco, .chip, .pill { display: none; }
     .region { width: auto; height: auto; }
     .region-btn { width: auto; min-height: 44px; gap: calc(4 * var(--u)); }
     .rmenu { position: static; display: none; padding-top: 0; visibility: visible; opacity: 1; }
@@ -186,9 +186,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .lang { display: flex; gap: calc(12 * var(--u)); }
     .lang a { background: #ededed; border-radius: calc(5 * var(--u)); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
     .lang a[aria-current='true'] { background: #00415a; }
-    .book { position: relative; display: flex; align-items: center; justify-content: center; width: calc(138 * var(--u)); height: calc(30 * var(--u)); }
-    .book::after { content: "BOOK AN APPOINTMENT"; font-size: calc(9 * var(--u)); font-weight: 500; color: #fffdfd; white-space: nowrap; }
-    .book { width: calc(158 * var(--u)); }
+    .book { position: relative; width: calc(158 * var(--u)); height: calc(30 * var(--u)); }
     .visit { margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; --hit-h: 100%; } /* a menu row like the links above it (44px tap target); the lines stay stacked */
   }
 </style>

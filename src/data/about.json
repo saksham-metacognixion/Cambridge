@@ -1,8 +1,9 @@
 {
-  "_note": "About page switches. showTimeline: the 'Journey of Excellence' section (Figma 307:494) is ON since 5 Oct 2026: the client's About document supplies its 18 entries (docs/open-decisions.md A1 / CT8). video: source of the intro video (Figma has only the poster + play button, A3): host = youtube | vimeo | file, id = the video id, or the file URL for 'file'. Empty = the play button does nothing. The player loads only on click, in a lightbox (6 Oct 2026). Video = the live site's 'CMRC TimeLine' (https://www.youtube.com/watch?v=7cYs0xA9vEw), supplied by the user 6 Oct 2026.",
+  "_note": "About page switches. showTimeline: the 'Journey of Excellence' section (Figma 307:494) is ON since 5 Oct 2026: the client's About document supplies its 18 entries (docs/open-decisions.md A1 / CT8). video: source of the intro video (Figma has only the poster + play button, A3): host = youtube | vimeo | file, id = the video id, or the file URL for 'file'. Empty = the play button does nothing. The player loads only on click, in a lightbox (6 Oct 2026). Video = the live site's 'CMRC TimeLine' (https://www.youtube.com/watch?v=7cYs0xA9vEw), supplied by the user 6 Oct 2026; aspect = the video's own shape (bug 031, 7 Oct 2026): the lightbox frame takes it ('16:9' default, '9:16' for a portrait Short, any 'w:h', 'portrait' / 'landscape'). This Short is uploaded as a SQUARE picture (720x720 inside the 1280x720 thumbnail; a 9:16 frame still shows bars above and below), so '1:1' shows it without any bars; set '9:16' for the portrait Shorts look. The video still carries the old CMRC branding and Arabic text on the English page (A3).",
   "showTimeline": true,
   "video": {
     "host": "youtube",
-    "id": "7cYs0xA9vEw"
+    "id": "7cYs0xA9vEw",
+    "aspect": "1:1"
   }
 }

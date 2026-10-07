@@ -21,15 +21,14 @@ const cards = (s.cards as { image: string; alt: string; title: string; desc: str
      Heading: Figma sets 2 lines of Gotham Medium 28 on 27px lines (measured: text 42..96), centred; paragraph box at 106,
      LEFT-aligned in Figma (21:1398, start in RTL). -->
 <section class="relative bg-veil" style="--h: 582" aria-labelledby="services-heading">
-  <script is:inline>!function(s){"IntersectionObserver"in window&&(s.classList.add("rv-armed"),new IntersectionObserver(function(e){var r=e[e.length-1];r.intersectionRatio>=.2?s.classList.add("is-visible"):(!r.isIntersecting||r.boundingClientRect.top>0)&&s.classList.remove("is-visible")},{threshold:[0,.2]}).observe(s))}(document.currentScript.parentElement)</script>
   <div class="stage max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(42*var(--u))]">
-    <h2 id="services-heading" class="rv m-0 font-gotham font-medium not-italic text-f28 leading-27 text-navy text-center whitespace-normal [word-break:break-word] lg:absolute lg:start-319 lg:top-42 lg:w-387 lg:h-74 max-lg:mx-auto max-lg:max-w-[calc(387*var(--u))]">{s.heading}</h2>
+    <h2 id="services-heading" class="m-0 font-gotham font-medium not-italic text-f28 leading-27 text-navy text-center whitespace-normal [word-break:break-word] lg:absolute lg:start-319 lg:top-42 lg:w-387 lg:h-74 max-lg:mx-auto max-lg:max-w-[calc(387*var(--u))]">{s.heading}</h2>
 
-    <p class="rv m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body text-start whitespace-normal [word-break:break-word] lg:absolute lg:start-237 lg:top-106 lg:w-577 lg:h-56 max-lg:mx-auto max-lg:mt-[calc(16*var(--u))] max-lg:max-w-[calc(577*var(--u))]">{s.text}</p>
+    <p class="m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body text-start whitespace-normal [word-break:break-word] lg:absolute lg:start-237 lg:top-106 lg:w-577 lg:h-56 max-lg:mx-auto max-lg:mt-[calc(16*var(--u))] max-lg:max-w-[calc(577*var(--u))]">{s.text}</p>
 
     <ul class="cards m-0 flex list-none flex-wrap justify-center gap-x-[calc(24*var(--u))] gap-y-[calc(32*var(--u))] p-0 max-lg:mt-[calc(32*var(--u))]">
       {cards.map((c, i) => (
-        <li style={`--i:${i}`} class="rv rv-card cell">
+        <li data-aos="fade-up" style={`--aos-delay:${i * 50}ms`} class="cell">
           <CareCard src={c.img} alt={c.alt} title={c.title} desc={c.desc} href={c.href} button={s.cardButton} buttonLabel={`${s.cardButton}: ${c.title}`} />
         </li>
       ))}
@@ -37,16 +36,8 @@ const cards = (s.cards as { image: string; alt: string; title: string; desc: str
   </div>
 </section>
 <style>
-  /* Scroll reveal: armed by the inline script (so no-JS stays visible); opacity + transform only, space is reserved.
-     Replays on every entry: is-visible is added at 20% in view and removed once the section is off-screen (or back under
-     the fold, below 20%, where the cards are not yet visible).
-     The transition lives on the visible state only, so the reset happens instantly while nobody can see it. */
-  @media (prefers-reduced-motion: no-preference) {
-    .rv-armed .rv { opacity: 0; transform: translateY(24px); }
-    .rv-armed .rv-card { transform: translateY(40px); }
-    .rv-armed.is-visible .rv { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
-    .rv-armed.is-visible .rv-card { transition-delay: calc(var(--i) * 120ms + 150ms); }
-  }
+  /* Scroll entrance as on the live Home page (data-aos="fade-up", scripts/aos.ts + global.css): each card on its own, 0.8s,
+     delays 0 / 50 / 100 / 150ms, replays on every return. The heading, text and band do not move. */
   .cell { display: flex; width: calc(222 * var(--u)); flex: none; }
   @media (min-width: 1024px) {
     /* The stage keeps the Figma height as a minimum and grows with the card row. The grid starts at the photo top (Figma 169,

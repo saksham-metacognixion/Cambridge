@@ -36,7 +36,7 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
     <h2 id="faq-heading" class="h">{c.heading}</h2>
     <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={c.tabsLabel} data-tabs data-tabs-param="category">
       {cats.map((cat, i) => (
-        <button type="button" role="tab" id={`faq-tab-${cat.id}`} data-key={cat.id} aria-controls={`faq-panel-${cat.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} class="tab">{cat.label}</button>
+        <button type="button" role="tab" id={`faq-tab-${cat.id}`} data-key={cat.id} aria-controls={`faq-panel-${cat.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} class="tab ui-tab">{cat.label}</button>
       ))}
     </div>
   </div>
@@ -45,7 +45,7 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
       <div role="tabpanel" id={`faq-panel-${cat.id}`} aria-labelledby={`faq-tab-${cat.id}`} hidden={i !== 0} class="panel">
         {cat.items.length === 0 && <p class="ui-empty not-italic">{c.empty}</p>}
         {cat.items.map((it, k) => (
-          <details class="qa" open={k === 0}>
+          <details class="qa" name={`faq-${cat.id}`} open={k === 0}>
             <summary class="bar">
               <h3 class="q">{n(k)}{it.q}</h3>
               <img class="chev chev-open" src={chevOpen.src} width="9.661" height="5.806" alt="" />
@@ -63,6 +63,17 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
 
 <script>
   import '../../scripts/tabs';
+
+  // Accordion: the <details> of one category share name="faq-<category>", so the browser closes the open one when another
+  // opens (bug 025). Fallback for browsers without exclusive <details> (Chrome < 120, Safari < 17.2, Firefox < 130).
+  if (!('name' in HTMLDetailsElement.prototype)) {
+    document.addEventListener('toggle', (e) => {
+      const d = e.target;
+      const name = d instanceof HTMLDetailsElement && d.open && d.getAttribute('name');
+      if (!name) return;
+      document.querySelectorAll<HTMLDetailsElement>(`details[name="${name}"][open]`).forEach((o) => { if (o !== d) o.open = false; });
+    }, true);
+  }
 </script>
 
 <style>
@@ -77,7 +88,7 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
   .qa { position: relative; }
   .qa + .qa { margin-top: calc(17.255 * var(--u)); }
   .qa[open] + .qa { margin-top: calc(10 * var(--u)); }
-  .bar { position: relative; z-index: 1; display: flex; align-items: flex-start; box-sizing: border-box; min-height: calc(46.925 * var(--u)); padding: calc(8.97 * var(--u)) calc(35 * var(--u)) calc(8 * var(--u)) calc(19.32 * var(--u)); border-radius: calc(11.731 * var(--u)); background: rgba(231, 231, 231, 0.45); color: #003345; cursor: pointer; list-style: none; }
+  .bar { position: relative; z-index: 1; display: flex; align-items: flex-start; box-sizing: border-box; min-height: calc(46.925 * var(--u)); padding-block: calc(8.97 * var(--u)) calc(8 * var(--u)); padding-inline: calc(19.32 * var(--u)) calc(35 * var(--u)); border-radius: calc(11.731 * var(--u)); background: rgba(231, 231, 231, 0.45); color: #003345; cursor: pointer; list-style: none; }
   .bar::-webkit-details-marker { display: none; }
   .bar:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .qa[open] > .bar { background: #15adbf; color: #fff; }

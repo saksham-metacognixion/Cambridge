@@ -2,7 +2,7 @@
 import { getImage } from 'astro:assets';
 import { editions, editionFromBase } from '../../../lib/editions';
 import { content } from '../../../lib/content';
-import { allPostSlugs, postFor, badgeDate, NEWS_PATHS } from '../../../lib/news';
+import { allPostSlugs, postFor, postImage, badgeDate, NEWS_PATHS } from '../../../lib/news';
 import { sanitizeHtml } from '../../../lib/sanitize';
 import { img } from '../../../lib/images';
 import { showPendingNote } from '../../../lib/conditions';
@@ -43,7 +43,7 @@ const date = c.date.show ? { iso: post.date, text: badgeDate(post.date, loc).ful
 let image = '';
 let ogImage: string | undefined;
 try {
-  image = post.image;
+  image = postImage(post).key; // missing file -> temporary sample photo (NW1)
   img(image, edition.region);
   ogImage = (await getImage({ src: img(image, edition.region), width: 1200, format: 'webp' })).src;
 } catch {

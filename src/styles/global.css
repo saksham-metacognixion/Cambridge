@@ -169,8 +169,11 @@ body {
    photo or the navy pill bars. `.hero-media` = the photo wrapper, `.hero-copy` = title + text + button (display:contents from
    1024px, where Figma's absolute layout applies). */
 @media (max-width: 1023.98px) {
-  .hero-media { position: relative; width: 100%; height: min(72vw, calc(300 * var(--u))); }
-  .hero-media img { position: absolute; top: 0; inset-inline-start: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 80% 30%; }
+  /* A banner whose people stand against one edge of the 1052x500 art (About, bug 027) sets its own crop with the three
+     --hero-* variables (PageHero `small`): the box takes the aspect ratio of the strip that holds the whole group, capped in
+     height (the top of the art is cropped first, never the feet), and the art is anchored to that edge. */
+  .hero-media { position: relative; width: 100%; height: var(--hero-h, min(72vw, calc(300 * var(--u)))); aspect-ratio: var(--hero-aspect, auto); max-height: var(--hero-max-h, none); }
+  .hero-media img { position: absolute; top: 0; inset-inline-start: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: var(--hero-pos, 80% 30%); }
   .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
 }
 @media (min-width: 1024px) { .hero-copy { display: contents; } }
@@ -204,6 +207,11 @@ body {
 /* Chrome rounds the initial RTL snap position of a row that overhangs the frame by 1px, which breaks the exact
    mirror at desktop widths. Desktop RTL rows scroll without snapping; mobile/tablet rows snap in both directions. */
 @media (min-width: 1024px) { [dir='rtl'] .hscroll { scroll-snap-type: none; } }
+/* Mouse drag on the rows (src/scripts/drag-scroll.ts, as on the live site's timeline): open hand over a row that overflows,
+   closed hand while dragging. Snapping and smooth scrolling are off during the drag so the row follows the pointer. */
+@media (hover: hover) and (pointer: fine) { .hscroll[data-drag-scroll] { cursor: grab; } }
+.hscroll.is-dragging { scroll-snap-type: none !important; scroll-behavior: auto !important; user-select: none; -webkit-user-select: none; }
+.hscroll.is-dragging, .hscroll.is-dragging * { cursor: grabbing !important; }
 
 /* Doctor cards (Home row, Find a Doctor, the doctor rows on Care / Patient Hub / Hospitals / articles): the photo zooms a
    little on hover or when a link in the card has keyboard focus (bug 019, as on the live site). Only the photo scales, from
@@ -222,7 +230,6 @@ body {
    Width of .ui-box: set by the page (311 on Find a Doctor / Conditions). */
 .ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
 .ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--pill-on, var(--color-navy)); color: #fff; border: 0; }
-.ui-pill:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
 .ui-box { position: relative; flex: none; max-width: 100%; height: calc(35 * var(--u)); }
 .ui-field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
 .ui-field::placeholder { color: var(--color-navy); opacity: 1; }
@@ -231,30 +238,96 @@ body {
 [dir='rtl'] .ui-field { padding: 0 calc(15 * var(--u)) 0 calc(31 * var(--u)); }
 .ui-chev { position: absolute; inset-inline-end: calc(17 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); pointer-events: none; max-width: none; }
 
+/* ───────────── Interactive states of buttons, pills and tabs (user request 7 Oct 2026) ─────────────
+   ONE place for the hover / focus-visible look of every button, pill and tab on the site. A control carries one class:
+     .btn-fill        cyan fill (Header Book an Appointment, Book Now, See More, View More Stories, Send Message, SUBMIT, Read More,
+                      Start Your Care on the care cards, ...)         hover: navy #004059 fill, white label
+     .btn-fill-navy   navy / #00415a fill (View All, Calculate Now, Book Appointment on a profile, hospital / hub cards, ...)
+                                                                       hover: cyan fill, white label (the same pair, inverted)
+     .btn-fill-white  white fill on a navy band (Recovery, Careers Apply)   hover: cyan fill, white label
+     .btn-outline     navy or cyan outline (Learn More / Find a Doctor hero buttons, Visit Page, 404 links, A-Z sort, ...)
+                                                                       hover: cyan border + cyan label; a .hair-card outline grows
+                                                                       to 2px like the live site's .ctaBut1 (user request 6 Oct)
+     .btn-text        text-only button (footer Subscribe)                hover: cyan label
+     .ui-pill         ALL / KSA / UAE, Blogs / News / Events, Refer tabs  hover (not pressed / selected): cyan border + cyan label
+     .ui-tab          vertical tabs (detail topics, Careers, FAQ)         hover (not selected): #e7e7e7 fill, navy label
+   Pressed / selected states are untouched. Hover only where a pointer can hover (no stuck hover after a tap); disabled and
+   aria-disabled controls keep their look. 160ms colour transitions, off with prefers-reduced-motion. Every rule starts with
+   :root so it beats the component-scoped rules and the utility classes that set the resting colours. Labels inside a button
+   (`> *`) follow the button's hover colour where a utility class set theirs (text-navy, text-cyan). CSS only; RTL-neutral. */
+:root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab {
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+:root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color 160ms ease; }
+:root .btn-outline.hair-card::after { transition: border-color 160ms ease, border-width 160ms ease; }
+@media (hover: hover) {
+  :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-navy); color: #fff; }
+  :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
+  :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: #fff; }
+  :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
+  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: #fff; }
+  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
+  :root .btn-outline:not(:disabled):not([aria-disabled='true']):hover { border-color: var(--color-cyan); color: var(--color-cyan); }
+  :root .btn-outline:not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-cyan); }
+  :root .btn-outline.hair-card:not([aria-disabled='true']):hover::after { border: 2px solid var(--color-cyan); }
+  :root .btn-text:not(:disabled):not([aria-disabled='true']):hover { color: var(--color-cyan); }
+  :root .ui-pill:not([aria-pressed='true']):not([aria-selected='true']):not(:disabled):hover { border-color: var(--color-cyan); color: var(--color-cyan); }
+  :root .ui-tab:not([aria-selected='true']):not(:disabled):hover { background-color: var(--color-mist); color: var(--color-navy); }
+}
+/* Keyboard focus: the same colours as the hover, plus a 2px ring 2px outside the control (cyan on navy / white / outline
+   controls, navy on cyan ones so the ring is visible against the fill). Tabs keep their own rings (Tabs.astro inset, FAQ navy). */
+:root .btn-fill:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+:root .btn-fill-navy:focus-visible, :root .btn-fill-white:focus-visible, :root .btn-outline:focus-visible, :root .btn-text:focus-visible, :root .ui-pill:focus-visible {
+  outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u));
+}
+:root .btn-outline:focus-visible { border-color: var(--color-cyan); color: var(--color-cyan); }
+:root .btn-outline:focus-visible > * { color: var(--color-cyan); }
+:root .btn-outline.hair-card:focus-visible::after { border: 2px solid var(--color-cyan); }
+@media (prefers-reduced-motion: reduce) {
+  :root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab,
+  :root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > *, :root .btn-outline.hair-card::after { transition: none; }
+}
+
 /* Empty result of a client-side filter (Find a Doctor, Conditions, ...). No Figma design: body text style, centred.
    Wording + look flagged for Pramod's approval. */
 .ui-empty { margin: 0; padding: calc(40 * var(--u)) calc(16 * var(--u)); text-align: center; font: 400 calc(12 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
 .ui-empty[hidden] { display: none; }
 
 /* Video lightbox (src/scripts/video-facade.ts): About intro + hospital videos open here on play, as on the live site
-   (screen recording, 6 Oct 2026). Dark overlay, 16:9 player centred, round close button top corner, 250ms fade. */
-.video-lightbox { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 16px; border: 0; background: rgba(0, 0, 0, 0.7); opacity: 0; transition: opacity 250ms ease; }
+   (user decision, 6 Oct 2026). Native <dialog> + showModal; the overlay is the dialog itself (backdrop transparent).
+   Bug 031 (7 Oct 2026): the frame follows the video's shape. --vl-ratio (width / height, set by the script from the
+   facade's data-aspect: 16:9 by default, 9:16 for the About Short) drives both the aspect-ratio and the size: the stage is
+   as tall as --vl-max-h (85% of the viewport height, dynamic units on mobile) unless the viewport width caps it, so a
+   portrait video fills the height and a landscape one the width, never wider or taller than the screen, no padding bars.
+   The round close button sits on the stage's top inline-end corner (half outside), so it moves with the frame at every
+   size; the 24px dialog padding is what keeps it (22px overhang) inside the viewport. Logical inset: top-left in RTL. */
+.video-lightbox { --vl-ratio: 1.7777778; --vl-max-h: 85vh; --vl-pad: 24px; position: fixed; inset: 0; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: var(--vl-pad); border: 0; background: rgba(0, 0, 0, 0.7); opacity: 0; overflow: hidden; transition: opacity 250ms ease; }
+@supports (height: 1dvh) { .video-lightbox { --vl-max-h: 85dvh; } }
 .video-lightbox[open] { display: grid; place-items: center; }
 .video-lightbox.is-open { opacity: 1; }
 .video-lightbox::backdrop { background: transparent; }
-.video-lightbox-frame { width: min(64vw, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; background: #000; transform: scale(0.96); transition: transform 250ms ease; }
-.video-lightbox.is-open .video-lightbox-frame { transform: none; }
+.video-lightbox-stage { position: relative; width: min(100%, calc(var(--vl-max-h) * var(--vl-ratio))); max-height: 100%; aspect-ratio: var(--vl-ratio); transform: scale(0.96); transition: transform 250ms ease; }
+.video-lightbox.is-open .video-lightbox-stage { transform: none; }
+.video-lightbox-frame { width: 100%; height: 100%; background: #000; }
 .video-lightbox-player { display: block; width: 100%; height: 100%; border: 0; background: #000; }
-.video-lightbox-close { position: absolute; inset-block-start: 16px; inset-inline-end: 16px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: #fff; cursor: pointer; }
+.video-lightbox-close { position: absolute; z-index: 1; inset-block-start: -22px; inset-inline-end: -22px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: #fff; cursor: pointer; }
 .video-lightbox-close svg { width: 14px; height: 14px; }
 .video-lightbox-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-@media (max-width: 1023.98px) { .video-lightbox-frame { width: min(100%, calc((100vh - 120px) * 16 / 9)); } }
-@media (prefers-reduced-motion: reduce) { .video-lightbox, .video-lightbox-frame { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .video-lightbox, .video-lightbox-stage { transition: none; } }
 
-/* Play-button pulse (About intro, hospital video), as on the live site (screen recording 6 Oct 2026): a thin cyan double ring
-   grows from the button edge to ~1.4x and fades, every 2s. Sits on the play icon's box (.play); only when a video is set. */
+/* Play-button pulse (About intro, hospital video): the live site's `play_button_pulse` CSS verbatim (animation audit 7 Oct 2026):
+   two 1px cyan rings on the button edge, each grows to 1.5x while fading out over 2s, the second 0.5s behind the first.
+   Sits on the play icon's box (.play); only when a video is set. */
 .video-pulse { pointer-events: none; border-radius: 50%; }
-.video-pulse::before, .video-pulse::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--color-cyan); opacity: 0; animation: video-pulse 2s ease-out infinite; }
-.video-pulse::after { animation-delay: 0.15s; }
-@keyframes video-pulse { 0% { transform: scale(1); opacity: 0; } 8% { opacity: 0.9; } 50% { transform: scale(1.32); opacity: 0.6; } 62% { transform: scale(1.4); opacity: 0; } 100% { transform: scale(1.4); opacity: 0; } }
+.video-pulse::before, .video-pulse::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--color-cyan); animation: video-pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+.video-pulse::after { animation-delay: 0.5s; }
+@keyframes video-pulse { from { scale: 1; opacity: 1; } to { scale: 1.5; opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .video-pulse::before, .video-pulse::after { animation: none; } }
+
+/* Scroll entrances (scripts/aos.ts): the live site's Greenshift AOS CSS. Hidden = transparent and, for fade-up, max(50px, 15 %
+   of its own height) lower; shown = in place. 0.8s ease-in-out both ways (--aos-dur to change it); --aos-delay (stagger)
+   applies on the way in only. Only the element moves, never its section background. */
+.aos [data-aos] { transition-property: opacity, transform; transition-duration: var(--aos-dur, 800ms); transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
+.aos [data-aos]:not(.aos-animate) { opacity: 0; }
+.aos [data-aos='fade-up']:not(.aos-animate) { transform: translate3d(0, max(50px, 15%), 0); }
+.aos [data-aos].aos-animate { transition-delay: var(--aos-delay, 0ms); }

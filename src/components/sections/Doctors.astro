@@ -87,7 +87,7 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
             <Picture class="pos dr-photo object-cover" src={card.img} formats={['avif']} fallbackFormat="webp" width={px(card.ph[2])} height={px(card.ph[3])} widths={[px(card.ph[2]), px(card.ph[2]) * 2]} sizes={`${px(card.ph[2])}px`} loading="lazy" decoding="async" alt={card.alt} style={`--x:${card.phX};--y:${card.ph[1] - 1380};--w:${card.ph[2]};--h:${card.ph[3]}`} />
             <h3 class="pos font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`--x:15;--y:170;--w:${card.nameW};--h:15`}>{card.name}</h3>
             <p class="pos font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word]" style="--x:15;--y:185;--w:148;--h:20">{card.role}</p>
-            <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="hit pos bg-cyan rounded-r5" aria-label={`${card.btn} - ${card.name}`} style="--x:15;--y:202;--w:71;--h:13"></a>
+            <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="hit pos btn-fill bg-cyan rounded-r5" aria-label={`${card.btn} - ${card.name}`} style="--x:15;--y:202;--w:71;--h:13"></a>
             <span class="pos pointer-events-none font-gotham font-medium text-f8 leading-10 text-white text-center not-italic" style={`--x:${card.btnDX};--y:204;--w:45;--h:10`}>{card.btn}</span>
           </article>
         ))}
@@ -96,8 +96,9 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
 
     <!-- Pagination dots (Figma's dot divider sits at y 408, 41 x 9): the shared component, one button per page of the row
          (a page = one visible width; while the row loops, the pages tile one loop), filled by src/scripts/doctors-row.ts
-         (bug 012). Hidden when everything fits. -->
-    <div class="dpos dots" style="--x:0;--y:433;--w:1052;--h:17">
+         (bug 012). Hidden when everything fits. Below 1024 (stacked layout, no Figma frame) it gets room before the next
+         section (bug 023); below 600 only 7 dots around the current one show (Pagination.astro). -->
+    <div class="dpos dots max-lg:pb-[calc(20*var(--u))]" style="--x:0;--y:433;--w:1052;--h:17">
       <Pagination />
     </div>
   </div>

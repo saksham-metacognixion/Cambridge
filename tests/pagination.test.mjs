@@ -1,6 +1,6 @@
 // Run: npm run test:pagination   (Node 22.18+/24+ strips the TypeScript types natively)
 import assert from 'node:assert/strict';
-import { loopPageCount, loopPageIndex, loopPageStarts, pageCount, pageIndex, pageStarts } from '../src/lib/pagination.ts';
+import { loopPageCount, loopPageIndex, loopPageStarts, pageCount, pageIndex, pageStarts, windowStart } from '../src/lib/pagination.ts';
 
 // A row that fits (or overhangs by a rounding pixel) has no pages: the dots are hidden.
 assert.equal(pageCount(0, 1440), 0);
@@ -41,3 +41,12 @@ assert.equal(loopPageIndex(6984 + 1500, 6984, 1440), 1); // a position past one 
 assert.equal(loopPageIndex(-100, 6984, 1440), 0);
 
 console.log('pagination: all assertions passed');
+
+// Narrow-screen dot window (bug 023): 7 dots around the current one, clamped to the ends; short rows show every dot.
+assert.equal(windowStart(0, 18, 7), 0);
+assert.equal(windowStart(3, 18, 7), 0);
+assert.equal(windowStart(4, 18, 7), 1);
+assert.equal(windowStart(9, 18, 7), 6);
+assert.equal(windowStart(17, 18, 7), 11); // last window ends on the last dot
+assert.equal(windowStart(2, 5, 7), 0);
+assert.equal(windowStart(0, 0, 7), 0);

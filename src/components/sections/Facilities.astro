@@ -101,8 +101,8 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
                 <span class="block text-f10 leading-16 text-body">{r.city}</span>
               </h3>
               <div class="actions lg:contents">
-                <a href={c.book.href} data-hospital={r.slug} class="hit dpos2 book bg-cyan rounded-r3 flex items-center justify-center ps-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`} aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
-                <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="hit dpos2 visit rounded-r4 flex items-center justify-center ps-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>{c.visit.label}</a>
+                <a href={c.book.href} data-hospital={r.slug} class="hit dpos2 book btn-fill bg-cyan rounded-r3 flex items-center justify-center ps-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`} aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
+                <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="hit dpos2 visit btn-outline rounded-r4 flex items-center justify-center ps-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>{c.visit.label}</a>
               </div>
             </div>
             {i < 5 && <img class="dpos2 divider" src={line9.src} width={px(350)} height={px(1)} alt="" loading="lazy" decoding="async" style={`--x:0;--y:${cy(dividerY[i])};--w:350;--h:1`} />}

@@ -51,7 +51,7 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
 <div class:list={['topics', L.center && 'centered']} data-tabs style={`--pg:${gap};--pt:${top};--pw:${width};--th:${L.tabH};--tgp:${L.tabGap};--tfs:${L.fontSize};--tlh:${L.lineHeight};--taw:${L.activeWeight};--tsh:${L.shadow ? 1 : 0};--tps:${L.padStart};--tlw:${L.labelW}`}>
   <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={label}>
     {items.map((t, i) => (
-      <button type="button" role="tab" id={id('tab', i)} class="tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={id('panel', i)} tabindex={i === active ? 0 : -1}>
+      <button type="button" role="tab" id={id('tab', i)} class="tab ui-tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={id('panel', i)} tabindex={i === active ? 0 : -1}>
         <span class="tab-label">{t.label}</span>
       </button>
     ))}

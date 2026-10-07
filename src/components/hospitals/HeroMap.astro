@@ -8,13 +8,15 @@ import pin from '../../assets/hospitals/pin.svg';
  * at (832.47,166.17) (848.68,183.92) (676.61,256.45) (918.89,232.53) (935.1,214.78) (952.07,232.53); five labels Gotham Medium 8.112 white
  * (page x/y in the JSON). Decoration (aria-hidden): the same cities are listed as cards below. Hidden below 1024px (the hero photo
  * becomes its own block there). Never flipped on RTL: it is a map.
+ * Cursor-follow (the live site's map, gs-prlx-mouse xy 14): the whole group moves with the cursor together with the banner's
+ * baked-in map layer (PageHero follow="map", scripts/hero-follow.ts).
  */
 interface Props { labels: { text: string; x: number; y: number }[] }
 const { labels } = Astro.props;
 const pins = [[832.47, 285.17], [848.68, 302.92], [676.61, 375.45], [918.89, 351.53], [935.1, 333.78], [952.07, 351.53]];
 ---
 
-<div class="map" aria-hidden="true" slot="art">
+<div class="map" aria-hidden="true" slot="art" data-hero-subject>
   <img src={map.src} width="368.816" height="294.809" alt="" class="vec" />
   {pins.map(([x, y]) => <img src={pin.src} width="21.863" height="27.329" alt="" class="pin" style={`--x:${x + 5.46};--y:${y - 119 + 2.73}`} />)}
   {labels.map((l) => <span class="lbl" style={`--x:${l.x};--y:${l.y - 119}`}>{l.text}</span>)}

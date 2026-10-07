@@ -39,7 +39,7 @@ const pending = showPendingNote(INDEXABLE) ? c.pendingTab : null;
     <Header />
   </div>
   <main>
-    <div id="hero" class="relative"><PageHero content={{ ...c.hero, button: { ...c.hero.button, href: join } }} pos={{ titleTop: 141, titleW: 374, textGap: 12, textW: 374, textX: 98, buttonGap: 9 }} /></div>
+    <div id="hero" class="relative"><PageHero content={{ ...c.hero, button: { ...c.hero.button, href: join } }} pos={{ titleTop: 141, titleW: 374, textGap: 12, textW: 374, textX: 98, buttonGap: 9 }} keepComposition /></div>
     <Intro edition={edition} c={c.intro} />
     <div id="life"><Life c={c.life} joinHref={join} openRolesHref={openRoles} /></div>
     <div id="teams">

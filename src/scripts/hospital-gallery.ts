@@ -90,21 +90,32 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
         go(len - 1, true);
       }
     });
-    // Swipe (pointer events, horizontal only; vertical scrolling stays native thanks to touch-action: pan-y).
+    // Swipe (pointer events, horizontal only; vertical scrolling stays native thanks to touch-action: pan-y). The mouse
+    // swipes too (press and drag, src/scripts/drag-scroll.ts is the row equivalent); the click that ends a mouse swipe is
+    // swallowed so it does not also pick the photo under the pointer.
     let x0: number | null = null;
     list.addEventListener("pointerdown", (e) => {
-      if (e.pointerType !== "mouse") x0 = e.clientX;
+      if (e.pointerType !== "mouse" || e.button === 0) x0 = e.clientX;
     });
     list.addEventListener("pointerup", (e) => {
       if (x0 === null) return;
       const dx = e.clientX - x0;
       x0 = null;
       if (Math.abs(dx) < 40) return;
+      if (e.pointerType === "mouse") {
+        const stop = (ev: Event) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+        };
+        window.addEventListener("click", stop, { capture: true, once: true });
+        setTimeout(() => window.removeEventListener("click", stop, true), 0);
+      }
       go(active + (dx < 0 !== rtl ? 1 : -1));
     });
     list.addEventListener("pointercancel", () => {
       x0 = null;
     });
+    list.addEventListener("dragstart", (e) => e.preventDefault());
     states.set(area, { len, active: () => active, go: (i) => go(i) });
     render(false);
   }

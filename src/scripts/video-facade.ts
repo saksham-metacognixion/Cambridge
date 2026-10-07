@@ -1,12 +1,29 @@
 /*
- * Click-to-play videos (About intro, hospital "Environment of Care"): the page ships only a poster + play button. On click
- * the player (iframe or <video>) opens in a lightbox (user decision, 6 Oct 2026, screen recording of the live site): dark
- * overlay fades in, the 16:9 player autoplays in the centre, a round close button at the top corner; Esc, the close button
- * or a click on the overlay closes it (fade out), the player is removed (stops the sound) and focus goes back to the play
- * button. Nothing third-party loads before the click. Close label = data-close-label on the play button (forms/common close).
- * Source = data-host + data-id (src/data/about.json, hospital JSON).
- * Look: .video-lightbox rules in src/styles/global.css.
+ * Click-to-play videos (About intro, hospital "Environment of Care", news articles): the page ships only a poster + play
+ * button. On click the player (iframe or <video>) opens in a lightbox (user decision, 6 Oct 2026, screen recording of the
+ * live site): dark overlay fades in, the player autoplays in the centre, a round close button on the player's top corner;
+ * Esc, the close button or a click on the overlay closes it (fade out), the player is removed (stops the sound) and focus
+ * goes back to the play button. Nothing third-party loads before the click. Close label = data-close-label on the play
+ * button (forms/common close). Source = data-host + data-id (src/data/about.json, hospital JSON).
+ * Frame shape (bug 031, 7 Oct 2026): data-aspect on the facade ("16:9" default, "9:16" for a portrait Short, any "w:h" /
+ * "w/h", or "portrait" / "landscape") becomes the --vl-ratio custom property (width / height) on the dialog; the CSS sizes
+ * the frame from it, so a portrait video gets a portrait frame and a landscape one a 16:9 frame, both fitted to the
+ * viewport (85dvh tall at most, never wider than the screen). Look: .video-lightbox rules in src/styles/global.css.
  */
+const RATIOS: Record<string, number> = { landscape: 16 / 9, portrait: 9 / 16, square: 1 };
+
+/** "9:16" | "9/16" | "portrait" | "landscape" -> width / height (16:9 when missing or unreadable). */
+export function aspectRatio(spec: string | undefined): number {
+  const v = (spec ?? "").trim().toLowerCase();
+  if (v in RATIOS) return RATIOS[v];
+  const m = v.match(/^(\d+(?:\.\d+)?)\s*[:/x]\s*(\d+(?:\.\d+)?)$/);
+  if (m) {
+    const w = Number(m[1]);
+    const h = Number(m[2]);
+    if (w > 0 && h > 0) return w / h;
+  }
+  return RATIOS.landscape;
+}
 function embed(host: string, id: string): HTMLElement | null {
   if (!id) return null;
   if (host === "file") {
@@ -36,7 +53,7 @@ function embed(host: string, id: string): HTMLElement | null {
 const FADE_MS = 250;
 let box: HTMLDialogElement | null = null;
 let frame: HTMLElement | null = null;
-let opener: HTMLElement | null = null;
+let returnFocusTo: HTMLElement | null = null;
 let closeTimer = 0;
 
 function lightbox(label: string, closeLabel: string): HTMLDialogElement {
@@ -44,9 +61,10 @@ function lightbox(label: string, closeLabel: string): HTMLDialogElement {
   box = document.createElement("dialog");
   box.className = "video-lightbox";
   box.setAttribute("aria-modal", "true");
-  box.innerHTML = `<button type="button" class="video-lightbox-close" data-vl-close>
+  // The stage is sized from --vl-ratio; the close button is positioned on ITS top corner, so it follows the frame at every size.
+  box.innerHTML = `<div class="video-lightbox-stage" data-vl-stage><button type="button" class="video-lightbox-close" data-vl-close>
       <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
-    </button><div class="video-lightbox-frame" data-vl-frame></div>`;
+    </button><div class="video-lightbox-frame" data-vl-frame></div></div>`;
   document.body.append(box);
   frame = box.querySelector<HTMLElement>("[data-vl-frame]");
   box.querySelector("[data-vl-close]")!.addEventListener("click", close);
@@ -64,13 +82,15 @@ function lightbox(label: string, closeLabel: string): HTMLDialogElement {
   return box;
 }
 
-function open(player: HTMLElement, btn: HTMLElement) {
+function open(player: HTMLElement, btn: HTMLElement, ratio: number) {
   const d = lightbox(
     btn.getAttribute("aria-label") ?? "Video",
     btn.dataset.closeLabel ?? "Close",
   );
   window.clearTimeout(closeTimer);
-  opener = btn;
+  returnFocusTo = btn;
+  d.style.setProperty("--vl-ratio", String(ratio));
+  d.classList.toggle("is-portrait", ratio < 1);
   player.setAttribute("class", "video-lightbox-player");
   frame!.replaceChildren(player);
   d.classList.remove("is-open");
@@ -90,8 +110,8 @@ function close() {
       d.close();
       frame?.replaceChildren();
       document.documentElement.style.overflow = "";
-      opener?.focus();
-      opener = null;
+      returnFocusTo?.focus();
+      returnFocusTo = null;
     },
     reduce ? 0 : FADE_MS,
   );
@@ -104,6 +124,6 @@ document
     if (!btn) return;
     btn.addEventListener("click", () => {
       const el = embed(wrap.dataset.host ?? "", wrap.dataset.id ?? "");
-      if (el) open(el, btn);
+      if (el) open(el, btn, aspectRatio(wrap.dataset.aspect));
     });
   });

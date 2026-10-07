@@ -5,7 +5,7 @@ import line from '../../assets/news/line23.svg';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
-import { hasPost, NEWS_PATHS, postFor, postsFor, type Post as NewsPost } from '../../lib/news';
+import { hasPost, NEWS_PATHS, postFor, postImage, postsFor, type Post as NewsPost } from '../../lib/news';
 import { PAGE_PATHS } from '../../lib/paths';
 import news from '../../data/news.json';
 
@@ -15,7 +15,7 @@ const txt = content('home/news', edition.locale);
 // Default cards: the three slugs of home/news JSON with the Figma photos + crops (news.json); their title and excerpt come
 // from the post record in the edition's language (src/data/news/posts.json), so the Arabic editions show the Arabic post.
 // Tabs: each pill = a category of the export (filterCategories in home/news JSON); pressing it shows that category's three
-// latest posts of the edition's language. A post whose image file is not downloaded yet renders an empty image box (NW1).
+// latest posts of the edition's language. A post whose image file is not downloaded yet shows a temporary sample photo (src/data/news/sample-images.json, NW1).
 const articleHref = (slug: string) => (hasPost(slug) ? urlFor(edition, NEWS_PATHS.article(slug)) : urlFor(edition, PAGE_PATHS.notFound));
 
 // crop.ratio = intrinsic height/width of the source file. Hardcoded on purpose: reading c.src.width/height
@@ -56,7 +56,7 @@ const cards = design.map((d, i) => {
   };
 });
 const card = (post: NewsPost) => ({
-  src: safeImg(post.image, post.slug),
+  src: postImage(post).key ? safeImg(postImage(post).key, post.slug) : null, // missing file -> temporary sample photo (NW1)
   alt: post.image_alt || post.title,
   title: post.title,
   text: post.excerpt,

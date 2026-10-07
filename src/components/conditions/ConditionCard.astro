@@ -32,7 +32,7 @@ const { title, summary, href, button, headingId } = Astro.props;
     <h3 id={headingId} class="title">{title}</h3>
   </div>
   <p class="summary">{summary}</p>
-  <a class="btn hit" href={href} aria-describedby={headingId}>{button}</a>
+  <a class="btn hit btn-fill" href={href} aria-describedby={headingId}>{button}</a>
 </article>
 
 <style>
@@ -45,7 +45,6 @@ const { title, summary, href, button, headingId } = Astro.props;
   .title { margin: 0; width: calc(135.774 * var(--u)); font-weight: 500; font-size: calc(10.387 * var(--u)); line-height: calc(10.387 * var(--u)); color: #fff; overflow-wrap: anywhere; }
   .summary { position: relative; z-index: 2; margin: calc(33.62 * var(--u)) 0 0; margin-inline-start: calc(17.06 * var(--u)); width: calc(164.71 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(10.387 * var(--u)); color: #000; overflow-wrap: anywhere; }
   .btn { position: relative; z-index: 2; margin-top: auto; margin-inline-start: calc(49 * var(--u)); display: flex; align-items: center; justify-content: center; width: calc(100 * var(--u)); height: calc(21.333 * var(--u)); border-radius: calc(7 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(10 * var(--u)); line-height: normal; text-decoration: none; white-space: nowrap; }
-  .btn:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   /* Mirror the decoration in RTL (the tag's notch and the corner sit at the inline end). */
   :global([dir='rtl']) .tag-art { transform: scaleX(-1); }
   :global([dir='rtl']) .corner { transform: scale(-1, -1); }

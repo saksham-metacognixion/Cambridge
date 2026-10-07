@@ -11,9 +11,14 @@ import line from '../../assets/about/timeline-line.svg';
  * (year / title cyan, text #6b6b6b), even = cyan fill (all white). Year Book 28 at card + (21, 16); title Book 14 / 16 (2 lines) at
  * +43; text Book 11 / 14 at +80, width 154 (white cards) / 146 (cyan cards). "Line 33" (503 x 1, #418ea2) runs at y1148
  * (card + 83) from x307 behind the cards, so only the gaps between the cards show it. Arrows (36.528 circle, #00b8ff) at x71 and
- * x930, y1122 (row top + 57); the left one is the right one rotated 180. Each arrow scrolls the scroll-snap row by one card.
+ * x930, y1122 (row top + 57); the left one is the right one rotated 180. Each arrow moves the row by one card; the row loops and
+ * auto-advances every 6 s like the live site's Swiper (scripts/timeline.ts).
  * Content (5 Oct 2026): the client's About document supplies 18 entries whose titles and texts are longer than the four Figma
- * samples, so the card height is a MINIMUM (155) and a row's cards stretch to the tallest one; the title wraps freely.
+ * samples, so the card height is a MINIMUM (155) and a row's cards stretch to the tallest one; the title wraps freely. The text
+ * ends 16 Figma px above the card's bottom edge, the same as the top inset (bug 028).
+ * Below 1024px (no Figma frame, bug 028): the row shows `--n` whole cards between the arrows (1 on phones, 2 from 640px,
+ * 3 from 900px), each card (100% - gaps) / --n wide so no partial card ever shows, the row snaps one card at a time and the
+ * arrows are centred on the row. The connector line (drawn for the 187px desktop card) is hidden there.
  */
 interface Item { year: string; title: string[]; text: string }
 interface Props { c: { ariaLabel: string; heading: string; prevLabel: string; nextLabel: string; items: Item[] } }
@@ -49,7 +54,7 @@ const { c } = Astro.props;
   .line-row { margin-top: calc(41 * var(--u)); display: flex; align-items: flex-start; }
   .row { position: relative; display: flex; align-items: stretch; gap: calc(15.33 * var(--u)); min-width: 0; padding: 0; }
   .connector { position: absolute; inset-inline-start: calc(187 * var(--u)); top: calc(83 * var(--u)); width: calc(503 * var(--u)); height: calc(1 * var(--u)); max-width: none; pointer-events: none; }
-  .card { position: relative; flex: none; box-sizing: border-box; width: calc(187 * var(--u)); min-height: calc(155 * var(--u)); padding-bottom: calc(12 * var(--u)); border-radius: calc(14 * var(--u)); padding: calc(16 * var(--u)) calc(12 * var(--u)) 0 calc(21 * var(--u)); font-weight: 400; scroll-snap-align: start; }
+  .card { position: relative; flex: none; box-sizing: border-box; width: calc(187 * var(--u)); min-height: calc(155 * var(--u)); border-radius: calc(14 * var(--u)); padding: calc(16 * var(--u)) calc(12 * var(--u)) calc(16 * var(--u)) calc(21 * var(--u)); font-weight: 400; scroll-snap-align: start; }
   .card.outline { background: #fff; border: calc(1 * var(--u)) solid var(--color-cyan); padding-block-start: calc(15 * var(--u)); padding-inline-start: calc(20 * var(--u)); color: var(--color-cyan); }
   .card.fill { background: var(--color-cyan); color: #fff; }
   .year { margin: 0; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); }
@@ -74,8 +79,14 @@ const { c } = Astro.props;
     .tl { padding-inline-start: 0; }
   }
   @media (max-width: 1023.98px) {
-    .line-row { gap: calc(8 * var(--u)); padding-block-end: 4px; }
-    .row { flex: 1 1 auto; overflow-x: auto; scroll-snap-type: x mandatory; }
-    .arrow { margin-top: calc(59 * var(--u)); }
+    .line-row { --n: 1; gap: calc(6 * var(--u)); padding-block-end: 4px; align-items: center; }
+    .row { --gap: calc(15.33 * var(--u)); flex: 1 1 auto; overflow-x: auto; scroll-snap-type: x mandatory; scroll-snap-stop: always; gap: var(--gap); }
+    .card { width: calc((100% - (var(--n) - 1) * var(--gap)) / var(--n)); }
+    .outline .text, .fill .text { width: auto; }
+    .connector { display: none; }
+    /* Smaller arrows (36 CSS px, the 44px hit layer stays) so the card keeps the band's width on phones. */
+    .arrow { margin-top: 0; width: 36px; height: 36px; }
   }
+  @media (min-width: 640px) and (max-width: 1023.98px) { .line-row { --n: 2; } }
+  @media (min-width: 900px) and (max-width: 1023.98px) { .line-row { --n: 3; } }
 </style>

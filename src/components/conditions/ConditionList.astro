@@ -44,7 +44,7 @@ const options = specialties.filter((s) => conditions.some((x) => x.specialties.i
         </select>
         <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
       </div>
-      <button type="button" class="az hit" data-sort aria-pressed="false" aria-label={c.filters.sortSpecialtyAria}>
+      <button type="button" class="az hit btn-outline" data-sort aria-pressed="false" aria-label={c.filters.sortSpecialtyAria}>
         <img class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
         <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
       </button>
@@ -58,7 +58,7 @@ const options = specialties.filter((s) => conditions.some((x) => x.specialties.i
         </select>
         <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
       </div>
-      <button type="button" class="az hit" data-sort aria-pressed="false" aria-label={c.filters.sortConditionAria}>
+      <button type="button" class="az hit btn-outline" data-sort aria-pressed="false" aria-label={c.filters.sortConditionAria}>
         <img class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
         <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
       </button>
@@ -84,7 +84,6 @@ const options = specialties.filter((s) => conditions.some((x) => x.specialties.i
   .sel { flex: 1 1 auto; min-width: 0; width: calc(311 * var(--u)); }
   .az { flex: none; position: relative; display: flex; align-items: flex-start; box-sizing: border-box; width: calc(92 * var(--u)); height: calc(35 * var(--u)); margin: 0; padding: 0; padding-inline-start: calc(9.45 * var(--u)); /* + 0.5 border = Figma 9.95 */ background: transparent; border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); color: var(--color-navy); cursor: pointer; font: inherit; }
   .az[aria-pressed='true'] { background: var(--color-chip); } /* no pressed state in Figma: subtle chip fill, flagged */
-  .az:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
   .az-icon { flex: none; width: calc(21 * var(--u)); height: calc(17.327 * var(--u)); margin-top: calc(9.47 * var(--u)); max-width: none; } /* + 0.5 border = 9.97 */
   .az-label { margin-top: calc(11.5 * var(--u)); /* + 0.5 border = 12 */ margin-inline-start: calc(25.05 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(14 * var(--u)); white-space: nowrap; }
   .grid { list-style: none; margin: calc(56 * var(--u)) 0 0; padding: 0 calc(16 * var(--u)); display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(198.097 * var(--u))); column-gap: calc(24.903 * var(--u)); row-gap: calc(22 * var(--u)); }

@@ -39,7 +39,7 @@ const cards = nodes.map((s) => ({
           <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(291.178)} height={px(320.034)} widths={[px(291.178), px(291.178) * 2]} sizes={`(min-width: 1440px) ${px(291.178)}px, (min-width: 1024px) 27.7vw, ${px(291.178)}px`} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
           <h3 class="title">{k.title}</h3>
           <p class="desc">{k.text}</p>
-          <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}>{button}</a>
+          <a href={k.href} class="btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}>{button}</a>
         </article>
       </li>
     ))}
@@ -61,7 +61,6 @@ const cards = nodes.map((s) => ({
   .title { margin: calc(15.74 * var(--u)) 0 0; min-height: calc(19.674 * var(--u)); font-weight: 500; font-size: calc(19.674 * var(--u)); line-height: normal; color: var(--color-navy); overflow-wrap: anywhere; }
   .desc { margin: calc(9.19 * var(--u)) 0 0; min-height: calc(26.23 * var(--u)); font-size: calc(11.805 * var(--u)); line-height: calc(13.116 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .btn { display: flex; align-items: center; box-sizing: border-box; margin-top: calc(10.5 * var(--u)); width: calc(97.059 * var(--u)); height: calc(22.297 * var(--u)); padding-inline-start: calc(9.18 * var(--u)); border-radius: calc(3.935 * var(--u)); background: var(--color-navy); color: #fff; font-weight: 500; font-size: calc(10.493 * var(--u)); line-height: calc(13.116 * var(--u)); text-decoration: none; white-space: nowrap; --hit-h: 44px; --hit-w: 0px; }
-  .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); min-height: calc(52 * var(--u)); }

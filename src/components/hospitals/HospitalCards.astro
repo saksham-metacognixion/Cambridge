@@ -40,9 +40,9 @@ const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.f
       <li class="cell">
         <article class="card">
           <Picture src={h.src} formats={['avif']} fallbackFormat="webp" width={px(296.21)} height={px(325.564)} widths={[px(296.21), px(296.21) * 2]} sizes={`(min-width: 1440px) ${px(296.21)}px, (min-width: 1024px) 28.16vw, ${px(296.21)}px`} loading="lazy" decoding="async" alt="" class="img" pictureAttributes={{ class: 'contents' }} />
-          <h3 class="title m-0 font-gotham font-medium not-italic text-navy">{h.title.map((l) => <span class="block">{l}</span>)}</h3>
+          <h3 class="title m-0 font-gotham font-medium not-italic text-navy"><a href={h.href} class="tlink" tabindex="-1">{h.title.map((l) => <span class="block">{l}</span>)}</a></h3>
           <p class="addr m-0 font-gotham font-normal not-italic text-body">{h.address}</p>
-          <a href={h.href} class="btn hit font-gotham font-medium not-italic no-underline" aria-label={`${h.button}: ${h.title.join(' ')}`}>{h.button}</a>
+          <a href={h.href} class="btn hit btn-fill-navy font-gotham font-medium not-italic no-underline" aria-label={`${h.button}: ${h.title.join(' ')}`}>{h.button}</a>
         </article>
       </li>
     ))}
@@ -61,7 +61,17 @@ const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.f
   .title { margin-top: calc(16.1 * var(--u)); min-height: calc(39 * var(--u)); font-size: calc(20.014 * var(--u)); line-height: calc(22 * var(--u)); overflow-wrap: anywhere; }
   .addr { margin-top: calc(8 * var(--u)); margin-inline-start: calc(-0.32 * var(--u)); min-height: calc(19.62 * var(--u)); font-size: calc(12.008 * var(--u)); line-height: calc(13.343 * var(--u)); overflow-wrap: anywhere; }
   .btn { display: flex; align-items: center; box-sizing: border-box; margin-top: auto; margin-inline-start: calc(-0.32 * var(--u)); width: calc(98.737 * var(--u)); height: calc(22.683 * var(--u)); padding-inline-start: calc(9.34 * var(--u)); border-radius: calc(4.003 * var(--u)); background: var(--color-navy); color: #fff; font-size: calc(10.674 * var(--u)); line-height: calc(13.343 * var(--u)); white-space: nowrap; --hit-h: 44px; --hit-w: 0px; }
-  .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  /* Hover, as on the live page: the title is a link (out of the tab order; the button is the keyboard stop) that turns cyan.
+     The View button keeps the shared .btn-fill-navy hover (cyan fill, white label; user decision 7 Oct 2026 over the live #7AFFCE, WP17).
+     Timing = the live theme's link transition: 0.12s cubic-bezier(.455,.03,.515,.955). */
+  .tlink { color: inherit; text-decoration: none; transition: color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  :global(:root) .card .btn.btn-fill-navy { transition: background-color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955), color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  @media (hover: hover) {
+    .tlink:hover { color: var(--color-cyan); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tlink, :global(:root) .card .btn.btn-fill-navy { transition: none; }
+  }
   @media (max-width: 1023.98px) {
     .hosp { padding-inline: 16px; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(296.21 * var(--u))), calc(296.21 * var(--u)))); }

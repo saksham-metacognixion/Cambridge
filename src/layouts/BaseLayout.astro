@@ -54,6 +54,8 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
 
     {hasMainFont && <link rel="preload" href="/fonts/Gotham-Book.woff2" as="font" type="font/woff2" crossorigin />}
     <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W}}`}></style>
+    <!-- Scroll entrances (data-aos, scripts/aos.ts) are armed before first paint, so nothing flashes; no JS = all visible. -->
+    <script is:inline>"IntersectionObserver"in window&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&document.documentElement.classList.add("aos")</script>
     <slot name="head" />
   </head>
   <body>
@@ -65,5 +67,11 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
          The legal pages (privacy, cookies) are at PAGE_PATHS.privacyPolicy / cookiePolicy. -->
     <div id="consent-banner" hidden></div>
     <CountryPopupLogic />
+    <script>
+      // Mouse drag on every horizontal row (.hscroll), all pages.
+      import '../scripts/drag-scroll';
+      // Scroll entrances ([data-aos]), all pages.
+      import '../scripts/aos';
+    </script>
   </body>
 </html>

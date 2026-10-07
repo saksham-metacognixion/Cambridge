@@ -16,7 +16,9 @@ const { edition, c } = Astro.props;
 const stats = resolveStats(edition, c.stats);
 const photo = img(c.photo.image, edition.region);
 const cols = [469, 691, 863], rows = [158, 257];
-const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)] }));
+// Count-up seconds per stat, in order, from the live page's Greenshift counters (data-duration 1 / 1.5 / 2 per row; scripts/countup.ts).
+const countSecs = [1, 1.5, 2, 1, 1.5, 2];
+const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)], secs: countSecs[i] ?? 2 }));
 ---
 
 <section class="imp" aria-label={c.ariaLabel}>
@@ -27,12 +29,16 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
       <hr class="rule" />
       <ul class="stats" role="list">
         {items.map((s) => (
-          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="n">{s.number}</span><span class="l">{s.label}</span></li>
+          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="sr-only">{s.number}</span><span class="n" data-countup data-countup-duration={s.secs} aria-hidden="true">{s.number}</span><span class="l">{s.label}</span></li>
         ))}
       </ul>
     </div>
   </div>
 </section>
+
+<script>
+  import '../../scripts/countup';
+</script>
 
 <style>
   .imp { position: relative; background: rgba(231, 231, 231, 0.5); font-family: var(--font-gotham); font-style: normal; }

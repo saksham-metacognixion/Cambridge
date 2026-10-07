@@ -387,7 +387,7 @@
           "slug": "icu-critical-care",
           "title": {
             "en": "ICU and Critical Care",
-            "ar": ""
+            "ar": "العناية المركّزة ورعاية الحالات الحرجة"
           },
           "desc": {
             "en": "Advanced 24/7 care for patients with life threatening or unstable conditions, with continuous monitoring, medical treatment and critical support.",
@@ -398,14 +398,14 @@
           "children": [],
           "cardTitle": {
             "en": "ICU and Critical Care",
-            "ar": ""
+            "ar": "العناية المركّزة ورعاية الحالات الحرجة"
           }
         },
         {
           "slug": "palliative-care",
           "title": {
             "en": "Palliative Care",
-            "ar": ""
+            "ar": "الرعاية التلطيفيّة"
           },
           "desc": {
             "en": "Specialist care for patients living with serious or long-term illness, focused on managing symptoms, relieving discomfort and supporting patients and their families.",
@@ -416,7 +416,7 @@
           "children": [],
           "cardTitle": {
             "en": "Palliative Care",
-            "ar": ""
+            "ar": "الرعاية التلطيفيّة"
           }
         }
       ]
@@ -546,7 +546,7 @@
       "slug": "in-school",
       "title": {
         "en": "In-School Care",
-        "ar": "خدمة الرعاية المدرسية"
+        "ar": "الرعاية المدرسية"
       },
       "desc": {
         "en": "Specialist therapy and medical support delivered at school",

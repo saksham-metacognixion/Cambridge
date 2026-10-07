@@ -14,7 +14,8 @@ import type { Edition } from '../../lib/editions';
  * Copy column x552 (video end 522 + 30), width 407, top = poster top. Title Gotham Medium 28 (line 32), subtitle Book 23 with
  * line 1 = 28 and line 2 = 24 (Figma line heights, ::first-line), lead Book 15 cyan (lines 22 / 18; empty in the client's text,
  * 5 Oct 2026: not rendered), body Book 12 / 14 #6b6b6b, paragraphs separated by one empty 14px line.
- * The player is NOT loaded here: src/scripts/video-facade.ts creates it on click (config src/data/about.json -> video).
+ * The player is NOT loaded here: src/scripts/video-facade.ts creates it on click in a lightbox whose frame takes the video's shape
+ * (config src/data/about.json -> video { host, id, aspect }; the current Short is a square picture, aspect '1:1', bug 031).
  */
 interface Props { edition: Edition; c: { ariaLabel: string; video: { poster: string; alt: string; playLabel: string }; title: string; subtitle: string; lead?: string; text: string[] } }
 const { edition, c } = Astro.props;
@@ -25,7 +26,7 @@ const closeLabel = commonText(edition.locale).close as string;
 
 <Band label={c.ariaLabel}>
   <div class="row">
-    <div class="video" data-video-facade data-host={about.video.host} data-id={about.video.id}>
+    <div class="video" data-video-facade data-host={about.video.host} data-id={about.video.id} data-aspect={about.video.aspect}>
       <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
         <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(429)} height={px(264)} widths={[px(429)]} sizes={`(min-width: 1440px) ${px(429)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
         {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
@@ -51,7 +52,8 @@ const closeLabel = commonText(edition.locale).close as string;
 
 <style>
   .row { display: flex; flex-direction: column; gap: calc(24 * var(--u)); padding-block: 0; }
-  .video { position: relative; flex: none; width: calc(429 * var(--u)); max-width: 100%; aspect-ratio: 429 / 264; background: #e7e7e7; }
+  .video { position: relative; flex: none; width: calc(429 * var(--u)); max-width: 100%; aspect-ratio: 429 / 264; background: #e7e7e7; border-radius: calc(16 * var(--u)); overflow: hidden; }
+  /* Rounded corners (user request 6 Oct, as the live site's About video; not in Figma): ~22px at 1440, measured on the live page. */
   .poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
   .poster[aria-disabled='true'] { cursor: default; }
   .poster :global(.thumb) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }

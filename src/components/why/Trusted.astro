@@ -23,7 +23,7 @@ const more = urlFor(edition, pagePath(c.button.page));
   <div class="box">
     <h2 class="t">{c.title.map((l: string) => <span class="block">{l}</span>)}</h2>
     <div class="p">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
-    <a href={more} class="btn">{c.button.label}</a>
+    <a href={more} class="btn btn-fill-navy">{c.button.label}</a>
     <img src={bars.src} width="451.523" height="292.68" alt="" class="bars" loading="lazy" decoding="async" />
     <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(638)} height={px(399)} widths={[px(638), 1276]} sizes={`(min-width: 1440px) ${px(638)}px, 90vw`} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
   </div>

@@ -37,7 +37,7 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
   <div class="cc-body">
     <h3 class:list={['cc-title', titleTone === 'navy' ? 'text-navy' : 'text-cyan']}>{title}</h3>
     <p class="cc-desc">{desc}</p>
-    <a href={href} class="cc-btn hit" aria-label={buttonLabel}><span>{button}</span></a>
+    <a href={href} class="cc-btn hit btn-fill" aria-label={buttonLabel}><span>{button}</span></a>
   </div>
 </article>
 
@@ -49,5 +49,4 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
   .cc-desc { margin: calc(5 * var(--cu)) 0 calc(8 * var(--cu)); max-width: calc(154 * var(--cu)); font-weight: 400; font-size: calc(9 * var(--cu)); line-height: calc(10 * var(--cu)); color: var(--color-body); overflow-wrap: anywhere; }
   .cc-btn { margin-top: auto; flex: none; display: flex; align-items: center; justify-content: center; width: calc(74 * var(--cu)); height: calc(17 * var(--cu)); border-radius: calc(3 * var(--cu)); background: var(--color-cyan); text-decoration: none; }
   .cc-btn span { font-weight: 500; font-size: calc(8 * var(--cu)); line-height: 1; color: #fff; white-space: nowrap; text-box: trim-both cap alphabetic; } /* caps centred, see forms.css .f-submit */
-  .cc-btn:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
 </style>

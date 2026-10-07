@@ -47,11 +47,12 @@ const tiles = c.tiles.map((t: any, i: number) => ({
     <img src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="pointer-events-none absolute top-17 end-17 block w-7 h-[calc(4.207*var(--u))]" />
   </div>
 
-  <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below. -->
+  <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below.
+       Each tile fades in when it comes into view, as on the live Media Hub (data-aos="fade", 0.8s, scripts/aos.ts). -->
   <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-48 lg:pe-47" data-tiles>
     {
       tiles.map((t: any) => (
-        <li class="relative h-342 w-222 shrink-0 snap-start">
+        <li data-aos="fade" class="relative h-342 w-222 shrink-0 snap-start">
           <div class="absolute inset-0 overflow-hidden rounded-r15">
             <Picture
               src={t.src}

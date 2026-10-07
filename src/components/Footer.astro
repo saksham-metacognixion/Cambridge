@@ -33,11 +33,15 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
 });
 ---
 
+<div class="ft-clip">
 <footer class="ft relative bg-navy rounded-t-r30 font-gotham">
-  <!-- Reveal as on the live site: fade in + slide up when the footer enters view. Armed here so no-JS stays visible.
-       The parent clips while the footer is offset (it is the last thing on the page, so the offset would add scroll),
-       and the clip is dropped once the slide ends. -->
-  <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e,o){e[0].isIntersecting&&(f.classList.add("is-visible"),o.disconnect())},{threshold:.15}).observe(f);f.addEventListener("transitionend",function d(e){e.target===f&&e.propertyName==="transform"&&(w.style.overflow="",f.classList.remove("ft-armed","is-visible"),f.removeEventListener("transitionend",d))})}(document.currentScript.parentElement)</script>
+  <!-- Reveal as on the live site (its footer block: data-aos="fade-up", 0.6s, Greenshift AOS; audited 7 Oct 2026): fade in +
+       rise from max(50px, 15 % of its height) below, ease-in-out, as soon as it is inside the viewport minus the bottom 5 %.
+       Armed here so no-JS stays visible. Replays on every entry: is-visible is removed once the footer has left the screen,
+       where the reset happens instantly (the transition lives on the visible state only).
+       The footer's own wrapper (.ft-clip, the same box on every page) clips while the footer is offset (it is the last thing on
+       the page, so the offset would add scroll); the clip is dropped once the slide ends and set again on reset. -->
+  <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e){var r=e[e.length-1];r.isIntersecting?f.classList.add("is-visible"):(f.classList.remove("is-visible"),w.style.overflow="clip")},{threshold:0,rootMargin:"0px 0px -5% 0px"}).observe(f);f.addEventListener("transitionend",function(e){e.target===f&&e.propertyName==="transform"&&f.classList.contains("is-visible")&&(w.style.overflow="")})}(document.currentScript.parentElement)</script>
   <div class="stage" style="--h: 368">
     <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt={c.logo.alt} />
 
@@ -73,7 +77,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
       <div class="box">
         <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
         <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" />
-        <button type="submit" class="hit">{c.newsletter.submit}</button>
+        <button type="submit" class="hit btn-text">{c.newsletter.submit}</button>
       </div>
     </form>
 
@@ -84,10 +88,11 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={legal.compliance.href} class="hit">{legal.compliance.label}</a><span class="gap">       </span><a href={legal.privacy.href} class="hit">{legal.privacy.label}</a></p>
   </div>
 </footer>
+</div>
 
 <style>
-  .ft-armed { opacity: 0; transform: translateY(60px); transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
-  .ft-armed.is-visible { opacity: 1; transform: none; }
+  .ft-armed { opacity: 0; transform: translate3d(0, max(50px, 15%), 0); }
+  .ft-armed.is-visible { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(0.42, 0, 0.58, 1), transform 600ms cubic-bezier(0.42, 0, 0.58, 1); }
   .ft ul { margin: 0; padding: 0; list-style: none; }
   .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
   .ft h2.text-f13 { line-height: normal; }

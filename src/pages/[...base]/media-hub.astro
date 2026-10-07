@@ -5,7 +5,7 @@ import { PAGE_PATHS } from '../../lib/paths';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import MediaHero from '../../components/media-hub/MediaHero.astro';
+import PageHero from '../../components/shared/PageHero.astro';
 import ExploreMedia from '../../components/media-hub/ExploreMedia.astro';
 import LatestPosts from '../../components/media-hub/LatestPosts.astro';
 import Newsletter from '../../components/media-hub/Newsletter.astro';
@@ -13,10 +13,13 @@ import Newsletter from '../../components/media-hub/Newsletter.astro';
 export const getStaticPaths = editionPaths;
 
 const edition = editionFromBase(Astro.params.base);
-const page = content('media-hub/page', edition.locale).meta;
+const c = content('media-hub/page', edition.locale);
+const page = c.meta;
 
 /*
  * Media Hub list template (Figma 100:5522, drafts copy). Posts come from src/data/news/posts.json.
+ * Hero (Figma 46:7562): title 141 / w494 / h74 (two lines in Figma, one in the copy), text 219 / w374, button 265. The photo is a phone showing the News page and the
+ * logo, so on RTL it is never flipped (bug 021, keepComposition).
  * Vertical gaps between blocks are inside each component (Figma distances). Footer starts at Figma y 2273 = 53 below the
  * newsletter card (included in the Newsletter section's bottom padding), so no extra gap here.
  */
@@ -27,7 +30,7 @@ const page = content('media-hub/page', edition.locale).meta;
     <Header />
   </div>
   <main>
-    <MediaHero />
+    <PageHero content={c.hero} pos={{ titleTop: 141, titleW: 494, titleMinH: 74, textGap: 4, textW: 374, buttonGap: 18 }} keepComposition />
     <ExploreMedia />
     <LatestPosts />
     <Newsletter />

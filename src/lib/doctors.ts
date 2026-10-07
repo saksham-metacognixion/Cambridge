@@ -57,6 +57,12 @@ export const specialtyName = (id: string, locale: LocaleId) => {
 /** Everything the client filter needs per card, as data attributes. */
 export const filterHospitals = hospitals.map((h) => ({ slug: h.slug, country: h.region }));
 
-/** The line under a doctor's name: the designation, else (no designation in the WordPress export) the specialty names. */
+/** Full role for a specialty (e.g. "General Practitioner" for GP); falls back to the specialty name. */
+export const specialtyRole = (id: string, locale: LocaleId) => {
+  const s = specialties.find((x) => x.id === id);
+  return (s?.role && t(s.role, locale, 'specialties')) || specialtyName(id, locale);
+};
+
+/** The line under a doctor's name: the designation, else (no designation in the WordPress export) the specialty roles. */
 export const doctorRole = (d: Doctor, locale: LocaleId) =>
-  t(d.title, locale, 'doctors') || d.specialties.map((s) => specialtyName(s, locale)).join(', ');
+  t(d.title, locale, 'doctors') || d.specialties.map((s) => specialtyRole(s, locale)).join(', ');

@@ -1,14 +1,14 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/School/AR - In-School care.docx (6 Oct 2026), text exactly as in the document and in its order (the paragraph 'وقد تؤثر بعض الصعوبات' sits under 'نهجنا في العلاج' there, not under the first topic as in English). One slip corrected: 'د يحتاج' -> 'قد يحتاج' (flagged in docs/open-decisions.md).",
+  "_note": "Source: Website Content - Suhad/Our Care/School/AR - In-School care.docx (7 Oct 2026), text exactly as in the document and in its order (the paragraph 'وقد تؤثر بعض الصعوبات' sits under 'نهجنا العلاجي' there, not under the first topic as in English). One slip corrected: 'د يحتاج' -> 'قد يحتاج' (flagged in docs/open-decisions.md).",
   "hero": {
-    "ariaLabel": "خدمة الرعاية المدرسية",
+    "ariaLabel": "الرعاية المدرسية",
     "title": [
-      "خدمة الرعاية المدرسية"
+      "الرعاية المدرسية"
     ],
     "text": "برنامج علاج وتأهيل متخصص للأطفال، يُقدَّم داخل البيئة المدرسية ويُدمج ضمن أنشطتهم اليومية."
   },
   "overview": [
-    "يتيح برنامج العلاج داخل المدرسة في مستشفى كامبريدج للأطفال الحصول على رعاية تأهيلية منظمة بإشراف سريري، ضمن بيئتهم التعليمية اليومية.",
+    "تتيح خدمات الرعاية المدرسية في مستشفى كامبريدج للأطفال الحصول على رعاية تأهيلية منظمة بإشراف سريري، ضمن بيئتهم التعليمية اليومية.",
     "فبدلًا من أن يقتصر العلاج على العيادة، تُقدم الجلسات خلال اليوم الدراسي وتُدمج في الأنشطة الصفية والحياة المدرسية. ويساعد ذلك الطفل على تطوير المهارات التي يحتاج إليها وممارستها واستخدامها في الوقت والمكان اللذين يحتاج إليها فيهما، بما يجعل العلاج أكثر ارتباطًا باحتياجاته اليومية."
   ],
   "topics": [
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "label": "نهجنا في العلاج",
+      "label": "نهجنا العلاجي",
       "blocks": [
         {
           "type": "lead",

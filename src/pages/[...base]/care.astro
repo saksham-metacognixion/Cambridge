@@ -46,13 +46,13 @@ const pos = { titleTop: 144, titleW: 385, textGap: 5, textW: 374, textX: 97, but
       </div>
     </div>
     <div id="services" class="relative">
-      <CareCards edition={edition} listLabel={c.specializations.listLabel} button={c.specializations.button} scale={1} titleTone="navy" xs={[53, 295, 537, 779]} />
+      <CareCards edition={edition} listLabel={c.specializations.listLabel} button={c.specializations.button} scale={1} titleTone="navy" xs={[53, 295, 537, 779]} reveal />
     </div>
     <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
       <ContactRecovery content={shared.recovery} headTop={43} />
     </div>
     <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(62 * var(--u))">
-      <DoctorsRow content={c.doctors} id="care-doctors-heading" />
+      <DoctorsRow content={c.doctors} id="care-doctors-heading" slider />
     </div>
   </main>
   <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(52.54 * var(--u))">

@@ -32,5 +32,12 @@ const c = content('layout/pagination', edition.locale)[mode];
   .pgn-dot:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   @media (hover: hover) { .pgn-dot:hover::before { background: var(--pgn-on); } }
   @media (pointer: coarse) { .pgn { gap: max(0px, 24px - 11.1 * var(--u)); } }
+  /* Below 600px only a window of 7 dots around the current one is shown (bug 023, src/scripts/pagination.ts); the edge dots
+     with more beyond them are smaller. The line never gets wider than the phone and keeps a margin on both sides. */
+  @media (max-width: 599.98px) {
+    .pgn { max-width: calc(100% - 32px); margin-inline: auto; }
+    .pgn-dot[data-out] { display: none; }
+    .pgn-dot[data-edge]:not([aria-current='true'])::before { width: calc(4.5 * var(--u)); height: calc(4.5 * var(--u)); }
+  }
   @media (prefers-reduced-motion: reduce) { .pgn-dot::before { transition: none; } }
 </style>

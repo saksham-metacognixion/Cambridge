@@ -26,7 +26,7 @@ const c = content('international-patients/page', edition.locale);
     <Header />
   </div>
   <main>
-    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 12, textW: 374, textX: 98, buttonGap: 12 }} /></div>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 12, textW: 374, textX: 98, buttonGap: 12 }} keepComposition /></div>
     <div id="about" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))">
       <CenteredIntro id="intl-heading" heading={c.intro.heading} text={c.intro.text} cx={525.5} tx={525.5} hw={651} tw={937} lh={33} gap={12} alt />
     </div>

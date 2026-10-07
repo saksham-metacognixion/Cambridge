@@ -11,6 +11,13 @@ import cornerFill from '../../assets/contact-page/cta-corner-fill.svg';
 
 // Figma 86:842, page y 1271, h 268. Spec y values are page y minus 1271.
 // Layer order as in Figma: navy box, texts, tile 1, corner art, tiles 2-4, then labels and icons.
+// Tile icons as in Figma (contact-page-spec.md): calendar-clock = Book, stethoscope = Find a Doctor, magnifier ("Search / Magnifer")
+// = Refer a Patient, message-share = Send an Inquiry. Verified against 86:842 on 7 Oct 2026 (bug 029): the magnifier is correct.
+// Below 1024px (no Figma frame) the band stacks: copy, then the four tiles in a 2 x 2 grid. On narrow phones a tile is too narrow
+// for the unbreakable word "Appointment" (6.69 em in Gotham Medium = 119px at 13 Figma px; bug 029). Fix, all fluid so nothing
+// jumps: the box's side padding, the grid gap and the tile's side padding shrink with the band (percent, capped at their Figma
+// values), and each tile is a size container whose label font is capped at (tile content width / 6.9), i.e. the longest label word
+// always fits with ~3% slack plus the tile padding. From ~400px up the cap is above 13 Figma px and the label keeps its size.
 const { edition } = parsePath(Astro.url.pathname);
 // Default content = Contact page; other pages (Find a Doctor) pass their own `content` (same layout, other tile labels).
 const c = Astro.props.content ?? content('contact/page', edition.locale).recovery;
@@ -46,15 +53,15 @@ const tiles = [
 
       <!-- Tile backgrounds (desktop): tile 1 sits under the corner art, the other three above it. -->
       {tiles.map((t, i) => (
-        <div class:list={['hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-[calc(10*var(--u))]', i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
+        <div class:list={['tbg hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-[calc(10*var(--u))]', `tbg-${i}`, i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
       ))}
       <div class="art hidden lg:block absolute z-[1] start-505 w-433 h-[calc(265.8*var(--u))] top-[calc(-4*var(--u))]" aria-hidden="true">
         <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
       </div>
 
       <div class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
-        {tiles.map((t) => (
-          <a href={t.href} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-[calc(10*var(--u))] max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
+        {tiles.map((t, i) => (
+          <a href={t.href} data-tile={i} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-[calc(10*var(--u))] max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
             <img class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
             <span class="lbl block font-gotham font-medium text-f13 text-navy-alt text-center not-italic whitespace-nowrap max-lg:whitespace-normal">{t.label}</span>
           </a>
@@ -66,6 +73,12 @@ const tiles = [
 
 <style>
   .tile::after { border-radius: calc(10 * var(--u)); }
+  @media (max-width: 1023.98px) {
+    .box { padding-inline: min(calc(32 * var(--u)), 7%); }     /* 32 Figma px from ~670px up, ~19px at 320 */
+    .tiles { gap: min(calc(12 * var(--u)), 4%); }               /* 12 Figma px from ~450px up */
+    .tile { container-type: inline-size; padding-inline: min(calc(8 * var(--u)), 6%); } /* 8 Figma px from ~180px-wide tiles up */
+    .tile .lbl { font-size: min(calc(13 * var(--u)), calc(100cqw / 6.9)); }
+  }
   @media (min-width: 1024px) {
     .tile { inset-inline-start: calc(var(--tx) * var(--u)); top: calc(var(--ty) * var(--u)); background: transparent; }
     .tile .icon { position: absolute; inset-inline-start: calc(var(--ix) * var(--u)); top: calc(var(--iy) * var(--u)); }
@@ -73,6 +86,15 @@ const tiles = [
     .tile::after { display: none; }
     /* the tile box (border + hit) is drawn by the background div; only icon, label and the link area live here */
   }
+  /* Hover, as on the live CTA tiles: white -> #e7e7e7 fill, the live theme's link transition (0.12s cubic-bezier(.455,.03,.515,.955)).
+     Desktop draws the tile box on a separate background div (tile 1 sits under the corner art), so the hovered link recolours its div. */
+  .tile, .tbg { transition: background-color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  @media (hover: hover) {
+    @media (max-width: 1023.98px) { .tile:hover { background-color: var(--color-mist); } }
+    .box:has([data-tile='0']:hover) .tbg-0, .box:has([data-tile='1']:hover) .tbg-1,
+    .box:has([data-tile='2']:hover) .tbg-2, .box:has([data-tile='3']:hover) .tbg-3 { background-color: var(--color-mist); }
+  }
+  @media (prefers-reduced-motion: reduce) { .tile, .tbg { transition: none; } }
   .art { overflow: hidden; }
   :global([dir='rtl']) .art { scale: -1 1; }
   .art-fill {

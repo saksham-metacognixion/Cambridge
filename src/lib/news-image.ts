@@ -1,7 +1,7 @@
 import { getImage } from "astro:assets";
 import { img } from "./images";
 import type { Edition } from "./editions";
-import { badgeDate, NEWS_PATHS, type Post } from "./news";
+import { badgeDate, NEWS_PATHS, postImage, type Post } from "./news";
 import { urlFor } from "./editions";
 import { px } from "./scale";
 
@@ -32,12 +32,14 @@ export async function cardData(
   edition: Edition,
 ): Promise<CardData> {
   // A post without an image (or whose file is missing) renders its card with an empty image box instead of failing the build.
+  // Missing file -> a temporary sample photo (postImage, NW1); its Figma crop does not apply to the sample.
+  const pick = postImage(post);
   let src: ReturnType<typeof img> | null = null;
   try {
-    src = post.image ? img(post.image, edition.region) : null;
+    src = pick.key ? img(pick.key, edition.region) : null;
   } catch {
     console.warn(
-      `[news] ${post.slug}: image "${post.image}" not found in src/assets`,
+      `[news] ${post.slug}: image "${pick.key}" not found in src/assets`,
     );
   }
   let url = "";
@@ -45,7 +47,7 @@ export async function cardData(
   let crop = "";
   if (!src) {
     // nothing to process
-  } else if (post.image_crop) {
+  } else if (post.image_crop && !pick.sample) {
     // Figma placeholder crop: the source is drawn larger than the box and offset, so keep the original size.
     url = (await getImage({ src, width: 960, format: "webp" })).src;
     const c = post.image_crop;

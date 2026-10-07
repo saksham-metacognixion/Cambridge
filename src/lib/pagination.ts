@@ -46,6 +46,11 @@ export function loopPageIndex(pos: number, period: number, page: number): number
   });
 }
 
+/** First dot of a window of `size` dots shown around the current one (narrow screens, bug 023): centred, clamped to the ends. */
+export function windowStart(current: number, count: number, size: number): number {
+  return Math.max(0, Math.min(current - Math.floor(size / 2), count - size));
+}
+
 function nearest(pos: number, starts: number[], dist: (a: number, b: number) => number): number {
   let best = 0;
   for (let i = 1; i < starts.length; i++) if (dist(pos, starts[i]) < dist(pos, starts[best])) best = i;

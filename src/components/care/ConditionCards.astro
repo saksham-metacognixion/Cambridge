@@ -41,7 +41,7 @@ const list = cards.map((k, i) => ({
           {k.icon && <img src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
           <h3 class="title">{k.title}</h3>
           <p class="text">{k.text}</p>
-          <a href={k.href} class="btn hit" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
+          <a href={k.href} class="btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
         </article>
       </li>
     ))}
@@ -62,7 +62,6 @@ const list = cards.map((k, i) => ({
   .text { margin: calc(2 * var(--u)) 0 0; width: 100%; font-size: calc(9 * var(--u)); line-height: calc(10 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .btn { position: relative; display: block; flex: none; margin-top: auto; margin-inline-start: calc(1 * var(--u)); width: calc(74 * var(--u)); height: calc(17 * var(--u)); border-radius: calc(3 * var(--u)); background: var(--color-navy); text-decoration: none; --hit-h: 44px; --hit-w: 0px; }
   .btn span { position: absolute; inset-inline-start: calc(7 * var(--u)); top: calc(4 * var(--u)); width: calc(66 * var(--u)); font-weight: 500; font-size: calc(8 * var(--u)); line-height: calc(10 * var(--u)); color: #fff; white-space: nowrap; }
-  .btn:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }

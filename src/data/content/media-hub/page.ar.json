@@ -1,20 +1,21 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (content block 19447 'MediaHub-Archive AR'): hero, category names, 'What's Trending', newsletter. The live Arabic 'Explore' heading is 'المركز الإعلامي'. Tile titles (post titles) and the select label: no Arabic (English shown).",
+  "_note": "Hero, 'Explore' heading, category names and newsletter = Website Content - Suhad 2/Navigation Bar/AR - Media Hub.docx (7 Oct 2026), text exactly as in the document; meta.description = the hero text (as in English). 'What's Trending', button and newsletter heading split: live site Arabic (WordPress export, 6 Oct 2026). Tile titles (post titles) and the select label: no Arabic (English shown).",
   "meta": {
     "title": "المركز الإعلامي | مستشفى كامبريدج",
-    "description": "استكشف آخر التحديثات، والرؤى الطبية، والتطورات الرئيسية من مستشفى كامبريدج وما بعده."
+    "description": "اطّلع على أحدث أخبار مستشفى كامبريدج، والرؤى الطبية، وأبرز المستجدات في قطاع الرعاية الصحية وما حوله."
   },
   "hero": {
     "title": [
       "ابق على اطلاع مع كامبريدج"
     ],
-    "text": "استكشف آخر التحديثات، والرؤى الطبية، والتطورات الرئيسية من مستشفى كامبريدج وما بعده.",
+    "text": "اطّلع على أحدث أخبار مستشفى كامبريدج، والرؤى الطبية، وأبرز المستجدات في قطاع الرعاية الصحية وما حوله.",
     "button": {
       "label": "احجز موعد"
-    }
+    },
+    "ariaLabel": "ابق على اطلاع مع كامبريدج"
   },
   "explore": {
-    "title": "المركز الإعلامي",
+    "title": "استكشف محتوى مركزنا الإعلامي",
     "categories": [
       {
         "label": "الفعاليات"
@@ -26,7 +27,7 @@
         "label": "البيانات الصحفية"
       },
       {
-        "label": "مقالات صحية"
+        "label": "المقالات الصحية"
       }
     ]
   },
@@ -39,6 +40,6 @@
       "اشترك في ",
       "نشرتنا الإخبارية"
     ],
-    "text": "سجل مجانا، وابق على اطلاع بأحدث تطورات الأبحاث، ونصائح الصحة، والمزيد!"
+    "text": "اشترك في نشرتنا الإخبارية لتصلك أحدث أخبارنا ومستجداتنا، والمزيد!"
   }
 }

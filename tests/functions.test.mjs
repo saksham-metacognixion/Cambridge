@@ -56,6 +56,10 @@ const cases = [
   ['international: unknown country + missing gender', () => post('international-enquiry', { country: 'xx', consent: 'on', 'cf-turnstile-response': 't' }), (r, b) => r.status === 422 && b.fields.country === 'invalid' && b.fields.gender === 'required'],
   ['prototype key is not a form', () => post('constructor', good), (r, b) => r.status === 404],
   ['GET not allowed', async () => onRequest(), (r) => r.status === 405],
+  ['edition outside the whitelist never reaches the subject', () => post('send-enquiry', { ...good, edition: 'ae-en\r\nBcc: x@evil.test' }), (r, b) => r.status === 200 && sent.at(-1).subject.endsWith('(global-en)') && sent.at(-1).to[0] === 'g@x.test'],
+  ['cross-site Sec-Fetch-Site rejected', () => { const fd = new FormData(); for (const [k, v] of Object.entries(good)) fd.append(k, v); return onRequestPost({ request: new Request('https://site.test/api/forms/send-enquiry', { method: 'POST', body: fd, headers: { Accept: 'application/json', 'Sec-Fetch-Site': 'cross-site' } }), env, params: { form: 'send-enquiry' } }); }, (r, b) => r.status === 403 && b.error === 'origin'],
+  ['EMAIL_PROVIDER=none without LOCAL_DEV fails (no silent discard)', () => { env.EMAIL_PROVIDER = 'none'; return post('send-enquiry', good); }, (r, b) => r.status === 502 && b.error === 'send_failed'],
+  ['EMAIL_PROVIDER=none with LOCAL_DEV=true accepts (local dev)', () => { env.LOCAL_DEV = 'true'; return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; delete env.LOCAL_DEV; return r.status === 200 && b.ok; }],
 ];
 let pass = 0;
 for (const [name, run, check] of cases) {

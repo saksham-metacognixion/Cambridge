@@ -13,7 +13,8 @@
 //                     Kept from the current file per doctor: title (Figma role), photo + card_photo/home_* (Figma
 //                     design), bio / sub_specialities when already filled (Figma profile of Dr. Ahmad).
 //   specialties.json  the doctor_specialty terms that have at least one doctor (id = term slug).
-//   conditions.json   specialties[] from condition_specialty; old_slug = the live /condition/<slug>/ URL (301 map).
+//   conditions.json   specialties[] from condition_specialty; old_slug = the live /condition/<slug>/ URL (301 map);
+//                     doctors[] = the doctor profiles linked from the live condition page (doctors.json slugs).
 //   testimonials.json regions from testimonial_country (quotes stay as in Figma).
 //   insurers.json     slug + regions from WordPress; insurers missing from the file are appended (no logo yet).
 // A report goes to docs/wp-cpt-import.md.
@@ -120,12 +121,28 @@ const CONDITION_SLUG = {
   'multiple-sclerosis-2': 'multiple-sclerosis', 'musculoskeletal-and-orthopedic-rehabilitation': 'musculoskeletal-orthopaedic-rehabilitation',
   'hip-fracture-femoral-neck-fracture-rehabilitation': 'hip-fracture-rehabilitation', 'shoulder-injury-rotator-cuff-rehabilitation': 'shoulder-rotator-cuff-rehabilitation',
 };
+/** Doctors linked from a condition page's content on the live site (/<edition>/doctor/<old slug>/), mapped to doctors.json
+ *  slugs: exact slug, else the one doctor whose slug words all appear in the old slug (dr-saleh-awadh-mohamed-damnan ->
+ *  saleh-damnan). Live order kept; shown in "Expert Care, Trusted Doctors" on the condition page (bug 041). */
+const conditionDoctors = (w) => {
+  const out = [];
+  for (const m of w.content.rendered.matchAll(/\/doctor\/([a-z0-9-]+)\/?"/g)) {
+    const old = m[1];
+    const words = new Set(old.split('-'));
+    const hits = doctors.filter((d) => d.slug === old).concat(doctors.filter((d) => d.slug !== old && d.slug.split('-').every((x) => words.has(x))));
+    const hit = hits[0]?.slug === old ? hits[0] : hits.length === 1 ? hits[0] : null;
+    if (!hit) { report.push(`- condition \`${w.slug}\`: doctor link \`${old}\` matches ${hits.length ? hits.map((d) => d.slug).join(', ') : 'no doctor'}`); continue; }
+    if (!out.includes(hit.slug)) out.push(hit.slug);
+  }
+  return out;
+};
 for (const w of wpConds) {
   const slug = CONDITION_SLUG[w.slug] ?? w.slug;
   const c = condFile.conditions.find((x) => x.slug === slug);
   if (!c) { report.push(`- condition \`${w.slug}\` (${text(w.title.rendered)}) has no card on the site`); continue; }
   c.old_slug = w.slug;
   c.specialties = terms(w, 'condition_specialty');
+  c.doctors = conditionDoctors(w);
 }
 for (const c of condFile.conditions) if (!c.old_slug) report.push(`- condition card \`${c.slug}\` is not in WordPress`);
 write('src/data/conditions.json', condFile);

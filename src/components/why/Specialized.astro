@@ -14,8 +14,16 @@ import pills from '../../assets/why/pills.svg';
  * Band rgba(231,231,231,.5) full width. Title x98 (Gotham 37 / 42 #00415a: line 1 Book, lines 2-3 Medium), copy x502 (w495,
  * Book 14 / 17 #6b6b6b), 12 lower / 12 higher than each other (title top 638, copy top 626). Stats (Medium 35 / 12, line height 133.7 %,
  * #00415a) at x149 / 318 / 518 / 720, y823 (Figma x are irregular, kept as drawn). "Our Hospitals" button 118 x 30 at x481, y921
- * (border #00415a, radius 7, label Medium 13). Art: building drawing 1052 x 222 at the band bottom (page y1030), pill bars 346.6 x 356
- * at x361 y989 (under the drawing, cut at the band end, as in Figma).
+ * (border #00415a, radius 7, label Medium 13; now the shared .ui-btn size, its centre kept at Figma x540, bug 044/050). Art: building drawing 1052 x 222 at the band bottom (page y1030), pill bars 346.6 x 356
+ * at x361 y989 (under the drawing, cut at the band end, as in Figma; in flow 38 below the button since bug 044).
+ * Count-up (live page audit 7 Oct 2026, "Why Cambridge Hospital _ Cambridge Hospital.html"): every stat is a Greenshift .gs-counter,
+ * data-duration 1.5, postfix kept, counts once from 0 when 30 % in view (scripts/countup.ts Greenshift mode, as on Our Hospitals).
+ * An invisible copy of the final text (.size) sizes the number's box, the counting text (.live) sits on top of it, so the stat
+ * keeps its final width at every size and the count never reflows or rewraps the row.
+ * Below 1024px (bug 039, 7 Oct 2026): the four stats are a 2 x 2 grid (never 3 + 1 or one per row); each cell is an inline-size
+ * container and the number is capped from the longest value's character count (--chars) so it fits a 320px phone column;
+ * the drawing sits in the flow at its natural 1052 x 222 ratio after the button (desktop: absolute at the band bottom, 222 Figma px
+ * tall with the 693 px band height, which left a cropped, mostly empty box on phones), the pill bars are hidden.
  */
 interface Props { edition: Edition; c: any }
 const { edition, c } = Astro.props;
@@ -23,6 +31,8 @@ const stats = resolveStats(edition, c.stats);
 // Design only (Figma px): x of each stat and its text width, zipped by index with the JSON.
 const statBoxes = [{ x: 149, w: 136 }, { x: 318, w: 136 }, { x: 518, w: 193 }, { x: 720, w: 182 }];
 const items = stats.map((s, i) => ({ ...s, ...statBoxes[i] }));
+// Longest number (characters) of this block: below 1024px the number's font size is capped so this value fits a grid cell (see <style>).
+const maxChars = Math.max(...stats.map((s) => s.number.length));
 const hospitals = urlFor(edition, pagePath(c.button.page));
 ---
 
@@ -32,47 +42,60 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
       <h2 class="title"><span class="light">{c.titleLight}</span>{c.titleBold.map((l: string) => <span class="block">{l}</span>)}</h2>
       <div class="text">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
     </div>
-    <ul class="stats" role="list">
+    <ul class="stats" role="list" style={`--chars:${maxChars}`}>
       {items.map((s) => (
         <li class="stat" style={`--x:${s.x};--w:${s.w}`}>
-          <span class="n">{s.number}</span>
+          <span class="sr-only">{s.number}</span>
+          <span class="n" aria-hidden="true"><span class="size">{s.number}</span><span class="live" data-countup data-countup-duration="1.5">{s.number}</span></span>
           <span class="l">{s.label}</span>
         </li>
       ))}
     </ul>
-    <a href={hospitals} class="btn btn-outline">{c.button.label}</a>
+    <a href={hospitals} class="btn ui-btn btn-outline">{c.button.label}</a>
     <img src={pills.src} width="346.6" height="356" alt="" class="pills" loading="lazy" decoding="async" />
     <Picture src={wireframe} formats={['avif']} fallbackFormat="webp" width={px(1052)} height={px(222)} widths={[px(1052), 2104]} sizes="(min-width: 1440px) 1440px, 100vw" loading="lazy" decoding="async" alt={c.art.wireframeAlt} class="wire" pictureAttributes={{ class: 'contents' }} />
   </div>
 </Band>
 
+<script>
+  import '../../scripts/countup';
+</script>
+
 <style>
-  .sp { position: relative; min-height: calc(693 * var(--u)); padding-top: calc(67 * var(--u)); box-sizing: border-box; overflow: hidden; }
+  .sp { position: relative; padding-top: calc(67 * var(--u)); box-sizing: border-box; overflow: hidden; }
   .top { display: flex; flex-direction: column; gap: calc(20 * var(--u)); }
   .title { margin: 0; overflow-wrap: anywhere; font-weight: 500; font-style: normal; font-size: calc(37 * var(--u)); line-height: calc(42 * var(--u)); color: var(--color-navy-alt); }
   .title .light { display: block; font-weight: 400; }
   .text { margin: 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .text p { margin: 0; }
   .text p + p { margin-top: calc(17 * var(--u)); }
-  .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
-  .stat { color: var(--color-navy-alt); font-weight: 500; font-style: normal; padding-top: calc(3 * var(--u)); }
-  .n { display: block; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(24 * var(--u)); }
+  .stat { min-width: 0; color: var(--color-navy-alt); font-weight: 500; font-style: normal; padding-top: calc(3 * var(--u)); }
+  .n { display: block; position: relative; width: max-content; max-width: 100%; font-size: calc(35 * var(--u)); line-height: 1; }
+  .n .size { visibility: hidden; }
+  .n .live { position: absolute; inset-inline-start: 0; top: 0; white-space: nowrap; }
   .l { display: block; font-size: calc(12 * var(--u)); line-height: calc(12 * var(--u)); }
-  .btn { display: flex; align-items: center; justify-content: center; margin-top: calc(32 * var(--u)); width: calc(118 * var(--u)); height: calc(30 * var(--u)); box-sizing: border-box; border: calc(1 * var(--u)) solid var(--color-navy-alt); border-radius: calc(7 * var(--u)); color: var(--color-navy-alt); font-weight: 500; font-size: calc(13 * var(--u)); text-decoration: none; white-space: nowrap; }
+  .btn { display: flex; width: fit-content; margin-top: calc(32 * var(--u)); border: 1px solid var(--color-navy-alt); color: var(--color-navy-alt); } /* size from .ui-btn (bug 044/050) */
   .btn::before { content: ''; position: absolute; }
-  .wire { position: absolute; inset-inline: 0; bottom: 0; width: 100%; height: calc(222 * var(--u)); object-fit: cover; max-width: none; pointer-events: none; }
-  .pills { position: absolute; width: calc(346.6 * var(--u)); height: calc(356 * var(--u)); top: calc(430 * var(--u)); inset-inline-start: calc(361 * var(--u)); max-width: none; pointer-events: none; }
+  .wire { display: block; width: 100%; height: auto; aspect-ratio: 1052 / 222; margin-top: calc(32 * var(--u)); max-width: none; pointer-events: none; }
+  .pills { display: none; position: absolute; width: calc(346.6 * var(--u)); height: calc(356 * var(--u)); top: calc(430 * var(--u)); inset-inline-start: calc(361 * var(--u)); max-width: none; pointer-events: none; }
+  @media (max-width: 1023.98px) {
+    .stat { container-type: inline-size; }
+    /* Gotham Medium digits are ~0.63em wide ("340,000+" = 5.04em); 0.66 leaves a margin for commas / wider glyph mixes. */
+    .n { font-size: min(calc(35 * var(--u)), calc(100cqi / (var(--chars) * 0.66))); }
+  }
   @media (min-width: 1024px) {
-    .sp { padding-top: calc(67 * var(--u)); }
+    .sp { min-height: calc(693 * var(--u)); }
     .top { flex-direction: row; gap: 0; min-height: calc(153 * var(--u)); }
     .title { flex: none; width: calc(404 * var(--u)); margin-inline-start: calc(98 * var(--u)); margin-top: calc(12 * var(--u)); }
     .text { flex: none; width: calc(495 * var(--u)); }
     .stats { display: block; position: relative; height: calc(62 * var(--u)); margin-top: calc(44 * var(--u)); }
     .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(var(--w) * var(--u)); }
-    .btn { margin-top: calc(36 * var(--u)); margin-inline-start: calc(481 * var(--u)); }
-  }
-  @media (max-width: 1023.98px) {
-    .sp { padding-bottom: calc(240 * var(--u)); }
-    .pills { display: none; }
+    .btn { margin-top: calc(36 * var(--u)); margin-inline-start: calc(540 * var(--u)); translate: -50% 0; } /* centre at Figma x540 (481 + 118 / 2) */
+    :global([dir='rtl']) .btn { translate: 50% 0; }
+    .wire { position: absolute; inset-inline: 0; bottom: 0; height: calc(222 * var(--u)); aspect-ratio: auto; margin: 0; object-fit: cover; }
+    /* In flow 38 below the button (Figma: button bottom 392, bars top 430), its height cancelled by a negative margin so the band
+       keeps its height: a taller Arabic title pushes the bigger .ui-btn (bug 044/050) down, and the bars follow instead of covering it. */
+    .pills { display: block; position: relative; top: auto; inset-inline-start: auto; margin-top: calc(38 * var(--u)); margin-inline-start: calc(361 * var(--u)); margin-bottom: calc(-356 * var(--u)); }
   }
 </style>

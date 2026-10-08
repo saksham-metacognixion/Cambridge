@@ -26,7 +26,12 @@ const labelPos = [
   { x: 921, y: 2434 - 2054, w: 69 },
   { x: 580.18, y: 2471 - 2054, w: 69 },
 ];
-const labels = labelPos.map((d, i) => ({ ...d, t: c.mapLabels[i] as string }));
+// Country of each map label / pin (Figma order: Dhahran, Al Khobar, Abu Dhabi, Al Ain, Jeddah | pins: Dhahran, Al Khobar,
+// Jeddah, Abu Dhabi x 2, Al Ain). UAE / KSA editions show their own country's only (bug 048); the map art stays whole.
+const labelRegion = ['sa', 'sa', 'ae', 'ae', 'sa'];
+const pinRegion = ['sa', 'sa', 'sa', 'ae', 'ae', 'ae'];
+const own = (r: string) => edition.region === 'global' || r === edition.region;
+const labels = labelPos.map((d, i) => ({ ...d, t: c.mapLabels[i] as string, r: labelRegion[i] })).filter((l) => own(l.r));
 const pins = [
   { f: pin4243, x: 754, y: 2315.81 - 2054, w: 42, h: 43 },
   { f: pin4243, x: 775, y: 2338.81 - 2054, w: 42, h: 43 },
@@ -34,28 +39,25 @@ const pins = [
   { f: pin4342, x: 860, y: 2383.81 - 2054, w: 43, h: 42 },
   { f: pin4342, x: 887, y: 2370.81 - 2054, w: 43, h: 42 },
   { f: pin32, x: 894, y: 2410 - 2054, w: 32, h: 32 },
-];
+].filter((_, i) => own(pinRegion[i]));
 
-// Rows: page-y of each element (card top = 2124, card x = 64). Design only; which hospital comes from home/facilities JSON, zipped by index.
-const rowPos = [
-  { yImg: 2139, yName: 2150, yVisit: 2195, yBtn: 2186, yBtnT: 2194, yOut: 2189 },
-  { yImg: 2252, yName: 2268, yVisit: 2313, yBtn: 2304, yBtnT: 2312, yOut: 2307 },
-  { yImg: 2367, yName: 2381, yVisit: 2426, yBtn: 2417, yBtnT: 2425, yOut: 2420 },
-  { yImg: 2476, yName: 2491, yVisit: 2536, yBtn: 2527, yBtnT: 2535, yOut: 2530 },
-  { yImg: 2589, yName: 2604, yVisit: 2649, yBtn: 2640, yBtnT: 2648, yOut: 2643 },
-  { yImg: 2702, yName: 2717, yVisit: 2762, yBtn: 2753, yBtnT: 2761, yOut: 2756 },
-];
-const rows = rowPos.map((d, i) => {
-  const h = hospitalsData.hospitals.find((x) => x.slug === c.hospitals[i]);
-  if (!h) throw new Error(`home/facilities: unknown hospital slug "${c.hospitals[i]}"`);
+// Rows (card top = page y 2124, card x = 64): a flow list since bug 044/050. Figma rows sit at a 113 pitch (photo 116 x 91 at
+// card x 13, first at y 15; name 14 under the photo top, buttons at +47; divider 12 under the photo, 350 wide from x 0; 25
+// under the last photo); the CSS below reproduces that pitch, and a row grows where the bigger shared buttons wrap to two
+// lines (laptops under ~1440), so the card, and the section with it, grow instead of the rows overlapping.
+// Hospitals of this edition's country only (bug 048; Global = all six), in the JSON order; the white card ends under the last.
+const slugs = (c.hospitals as string[]).filter((slug) => {
+  const h = hospitalsData.hospitals.find((x) => x.slug === slug);
+  if (!h) throw new Error(`home/facilities: unknown hospital slug "${slug}"`);
+  return own(h.region);
+});
+const rows = slugs.map((slug) => {
+  const h = hospitalsData.hospitals.find((x) => x.slug === slug)!;
   const brand = t(h.brand, edition.locale, 'hospitals');
   const city = t(h.city, edition.locale, 'hospitals');
   // "Visit Page" -> the hospital's detail page (Figma 112:7721); "Book Appointment" opens the pop-up with the hospital noted.
-  return { ...d, img: img(h.photo, edition.region), name: `${brand} `, city, alt: `${brand} ${city}`, slug: h.slug, visitHref: hospitalHref(h.slug, edition) };
+  return { img: img(h.photo, edition.region), name: `${brand} `, city, alt: `${brand} ${city}`, slug: h.slug, visitHref: hospitalHref(h.slug, edition) };
 });
-const dividerY = [2242, 2355, 2468, 2581, 2694];
-const cy = (y: number) => y - 2124; // card-relative y
-const cx = (x: number) => x - 64; // card-relative x
 
 // Design only; number + label come from home/facilities JSON (stats), zipped by index.
 const statPos = [
@@ -87,25 +89,28 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     </div>
 
     <!-- Hospitals list -->
-    <div class="list dpos" style="--x:64;--y:30;--w:358;--h:734">
-      <div class="dpos2 bg-cyan rounded-t-r8 text-white" style="--x:0;--y:0;--w:149;--h:40">
+    <div class="list dpos" style="--x:64;--y:30;--w:358">
+      <!-- Tab + card corners: --radius-card (Figma r8, bug 049), same corners as Figma. -->
+      <div class="dpos2 bg-cyan rounded-t-(--radius-card) text-white" style="--x:0;--y:0;--w:149;--h:40">
         <span class="dpos2 font-gotham font-medium text-f13 leading-15 text-center not-italic" style="--x:33;--y:15;--w:78;--h:15">{c.listTab}</span>
       </div>
-      <ul class="card dpos2 m-0 list-none bg-white rounded-b-r8 rounded-se-r8" style="--x:0;--y:40;--w:358;--h:694">
+      <ul class="card m-0 list-none bg-white rounded-b-(--radius-card) rounded-se-(--radius-card)">
         {rows.map((r, i) => (
-          <li class="row lg:contents">
-            <div class="dpos2 imgw [&_picture]:block [&_picture]:h-full" style={`--x:${cx(77)};--y:${cy(r.yImg)};--w:116;--h:91`}><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(116)} height={px(91)} widths={[px(116), px(116) * 2]} sizes={`${px(116)}px`} loading="lazy" decoding="async" alt={r.alt} /></div>
-            <div class="info lg:contents">
-              <h3 class="dpos2 m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]" style={`--x:${cx(208)};--y:${cy(r.yName)};--w:148;--h:34`}>
+          <li class="row">
+            <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(116)} height={px(91)} widths={[px(116), px(116) * 2]} sizes={`${px(116)}px`} loading="lazy" decoding="async" alt={r.alt} /></div>
+            <div class="info">
+              <h3 class="m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]">
                 <span class="block text-f12 leading-15 text-navy-alt">{r.name}</span>
                 <span class="block text-f10 leading-16 text-body">{r.city}</span>
               </h3>
-              <div class="actions lg:contents">
-                <a href={c.book.href} data-hospital={r.slug} class="hit dpos2 book btn-fill bg-cyan rounded-r3 flex items-center justify-center ps-4 font-gotham font-medium text-f10 leading-10 text-white not-italic" style={`--x:${cx(208)};--y:${cy(r.yBtn)};--w:118;--h:25`} aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
-                <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="hit dpos2 visit btn-outline rounded-r4 flex items-center justify-center ps-4 hair-50 border-navy font-gotham font-medium text-f9 leading-8 text-navy not-italic" style={`--x:${cx(333)};--y:${cy(r.yOut)};--w:68;--h:20`}>{c.visit.label}</a>
+              <!-- Book Appointment + Visit Page (bug 044/050): the shared .ui-btn-sm pair in one wrapping row, instead of Figma's
+                   118 x 25 / 68 x 20 boxes with 10 / 9px labels. -->
+              <div class="actions">
+                <a href={c.book.href} data-hospital={r.slug} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-white" aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
+                <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="ui-btn ui-btn-sm hit btn-outline hair-50 border-navy text-navy">{c.visit.label}</a>
               </div>
             </div>
-            {i < 5 && <img class="dpos2 divider" src={line9.src} width={px(350)} height={px(1)} alt="" loading="lazy" decoding="async" style={`--x:0;--y:${cy(dividerY[i])};--w:350;--h:1`} />}
+            {i < rows.length - 1 && <img class="divider" src={line9.src} width={px(350)} height={px(1)} alt="" loading="lazy" decoding="async" />}
           </li>
         ))}
       </ul>
@@ -147,16 +152,21 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
   .info { grid-column: 2; grid-row: 1; }
   .actions { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); margin-top: calc(8 * var(--u)); }
   .imgw { width: calc(116 * var(--u)); height: calc(91 * var(--u)); }
-  .book, .visit { width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
   .list > .dpos2:first-child { position: relative; }
   .vline, .stats { display: none; }
   .stats { display: grid; }
   @media (min-width: 1024px) {
     .dpos, .dpos2 { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
-    .list { max-width: none; }
-    .card { display: block; padding: 0; }
-    .row { display: contents; }
-    .row > :global(img.divider) { margin: 0; }
+    /* The list is in the stage's flow at its Figma spot (64, 30), so a list grown by wrapped buttons makes the section taller
+       (the Figma 788 is the minimum); the tab stays on top of the card (absolute, 40 high). Figma row pitch 113 = photo 91 +
+       12 + divider 1 + 9; the name 14 under the photo top, the buttons 2 under the name (Figma +47). */
+    .stage { height: auto; min-height: calc(var(--h) * var(--u)); }
+    .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc(30 * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); padding-top: calc(40 * var(--u)); box-sizing: border-box; }
+    .card { padding-block: calc(15 * var(--u)) calc(25 * var(--u)); padding-inline: calc(13 * var(--u)) calc(4 * var(--u)); gap: calc(9 * var(--u)); } /* end padding 4: the button pair fits one line from 1440 */
+    .row { column-gap: calc(15 * var(--u)); }
+    .row > :global(img.divider) { margin: calc(12 * var(--u)) 0 0; margin-inline-start: calc(-13 * var(--u)); width: calc(350 * var(--u)); max-width: none; }
+    .info { padding-top: calc(14 * var(--u)); }
+    .actions { margin-top: calc(2 * var(--u)); }
     .stats { display: contents; }
     .vline { display: block; }
     .vline img { position: absolute; width: calc(38 * var(--u)); height: calc(0.15 * var(--u)); inset-inline-start: calc((0.15 - 38) / 2 * var(--u)); top: calc((38 - 0.15) / 2 * var(--u)); transform: rotate(90deg); }
@@ -169,7 +179,6 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     .mapbox { position: relative; }
     .list > .dpos2:first-child { width: calc(149 * var(--u)); height: calc(40 * var(--u)); display: flex; align-items: center; justify-content: center; }
     .list > .dpos2:first-child > .dpos2 { position: static; width: auto; height: auto; }
-    a.dpos2 { position: relative; inset: auto; }
     /* the two buttons are stacked 10px apart (6 Figma px = 8px was too tight for 44px targets): grow each hit layer by half the gap only, so they never overlap */
     .actions { gap: 10px; }
     .actions a { --hit-h: calc(100% + 10px); }

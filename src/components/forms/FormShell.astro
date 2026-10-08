@@ -14,8 +14,6 @@ interface Props {
   id: string;
   edition: Edition;
   submit: string;
-  /** submit button box (Figma px): width, height, radius, font size (label centred by flex) */
-  button: { w: number; h: number; r: number; fs: number };
   ariaLabelledby?: string;
   ariaLabel?: string;
   class?: string;
@@ -27,7 +25,7 @@ interface Props {
   /** Turnstile: 'interaction-only' (default, invisible unless a click is needed) or 'always' (where Figma draws a captcha). */
   captcha?: 'interaction-only' | 'always';
 }
-const { id, edition, submit, button, ariaLabelledby, ariaLabel, class: cls, gaps, consent, captcha = 'interaction-only' } = Astro.props;
+const { id, edition, submit, ariaLabelledby, ariaLabel, class: cls, gaps, consent, captcha = 'interaction-only' } = Astro.props;
 const c = commonText(edition.locale);
 const consentId = fieldId(id, 'consent');
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
@@ -69,8 +67,8 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
     <p class="f-alert" role="alert" hidden></p>
     <button
       type="submit"
-      class="f-submit btn-fill"
-      style={`margin-block-start:calc(${gaps.submit} * var(--u));--bw:${button.w};--bh:${button.h};--br:${button.r};--bfs:${button.fs}`}
+      class="f-submit ui-btn btn-fill"
+      style={`margin-block-start:calc(${gaps.submit} * var(--u))`}
     ><span>{submit}</span></button>
   </div>
 </form>

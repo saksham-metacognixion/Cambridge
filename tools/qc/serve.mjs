@@ -27,8 +27,20 @@ function send(req, res, hit, status = 200) {
   (gz ? s.pipe(zlib.createGzip()) : s).pipe(res);
 }
 
+// dist/_redirects (Cloudflare Pages format, src/pages/_redirects.ts): exact-path 301s, checked before anything else
+const redirects = new Map();
+try {
+  for (const line of fs.readFileSync(path.join(root, '_redirects'), 'utf8').split('\n')) {
+    const [from, to, code] = line.trim().split(/\s+/);
+    if (from && to) redirects.set(from, { to, code: Number(code) || 301 });
+  }
+} catch {}
+
 http.createServer((req, res) => {
   const url = new URL(req.url, 'http://x');
+  const r = redirects.get(url.pathname);
+  if (r) { res.writeHead(r.code, { Location: r.to }); return res.end(); }
+  if (url.pathname.startsWith('/_redirects')) { res.writeHead(404); return res.end(); }
   let p = decodeURIComponent(url.pathname);
   if (p.length > 1 && p.endsWith('/')) { res.writeHead(301, { Location: p.replace(/\/+$/, '') + url.search }); return res.end(); }
   const abs = path.join(root, p);

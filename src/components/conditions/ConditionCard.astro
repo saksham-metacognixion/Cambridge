@@ -8,10 +8,13 @@ import corner from '../../assets/conditions/corner.svg';
  *   grey box (#ededed, radius 15) 198.097 x 184 at y 4 | navy tag (tag.svg, drop shadow incl.) 180.5 x 55 at x 10, y 0
  *   corner (corner.svg, flipped vertically) 162.113 x 54.903 at x 30, y 0, UNDER the grey box: only its top 4px show
  *   title Gotham Medium 10.387/10.387 white, x 31, w 135.774, centred on y 27.19 (card 1 single line top 22)
- *   summary Gotham Book 10/10.387 black, x 17.06, y 88, w 164.71 | "Read More" 100 x 21.333 radius 7 cyan, x 49, y 154
+ *   summary Gotham Book 10/10.387 black, x 17.06, y 88, w 164.71 | "Read More" cyan, Figma 100 x 21.333 radius 7 at x 49
+ *   (= centred), y 154: now the shared .ui-btn size (bugs 044 / 050), centred in the card, corners --radius-btn (bug 049)
  * Normalised (designer offsets differ per card): title top 22/24 and two-line 19 -> one centre; summary top 88/84/82/80.13
  * -> 88; summary width 166 (card 2) -> 164.71. Layer order as in Figma: corner, grey box, button, tag, texts.
- * Flow layout: the grey box grows with longer (Arabic) text and the button stays 12.667 above its bottom.
+ * Title centred in the tab (bug 040, client request; Figma left-aligns it) so it lines up with the centred "Read More".
+ * Flow layout: the grey box grows with longer (Arabic) text and the bigger button; the button stays 12.667 above its bottom.
+ * Grey box corners: --radius-card (bug 049). The navy tag / corner artwork (SVG) is unchanged.
  */
 interface Props {
   slug: string;
@@ -32,19 +35,21 @@ const { title, summary, href, button, headingId } = Astro.props;
     <h3 id={headingId} class="title">{title}</h3>
   </div>
   <p class="summary">{summary}</p>
-  <a class="btn hit btn-fill" href={href} aria-describedby={headingId}>{button}</a>
+  <a class="btn ui-btn hit btn-fill" href={href} aria-describedby={headingId}>{button}</a>
 </article>
 
 <style>
   .ccard { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; width: calc(198.097 * var(--u)); min-height: calc(188 * var(--u)); box-sizing: border-box; padding-bottom: calc(12.667 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
   .corner { position: absolute; z-index: 0; inset-inline-start: calc(30 * var(--u)); top: 0; width: calc(162.113 * var(--u)); height: calc(54.903 * var(--u)); max-width: none; transform: scaleY(-1); }
-  .box { position: absolute; z-index: 1; inset: calc(4 * var(--u)) 0 0 0; background: var(--color-chip); border-radius: calc(15 * var(--u)); }
+  .box { position: absolute; z-index: 1; inset: calc(4 * var(--u)) 0 0 0; background: var(--color-chip); border-radius: var(--radius-card); } /* bug 049 */
   .tag { position: relative; z-index: 3; display: flex; align-items: center; box-sizing: border-box; margin-inline-start: calc(10 * var(--u)); width: calc(180.5 * var(--u)); min-height: calc(54.38 * var(--u)); padding-inline: calc(21 * var(--u)) calc(23.726 * var(--u)); }
   /* Tag art: the SVG (203.791 x 78.291) includes its drop shadow; its shape starts 7.762 in. Stretches if the title grows. */
   .tag-art { position: absolute; z-index: -1; top: calc(-7.762 * var(--u)); inset-inline-start: calc(-7.762 * var(--u)); width: calc(100% + 23.291 * var(--u)); height: calc(100% + 23.911 * var(--u)); max-width: none; }
-  .title { margin: 0; width: calc(135.774 * var(--u)); font-weight: 500; font-size: calc(10.387 * var(--u)); line-height: calc(10.387 * var(--u)); color: #fff; overflow-wrap: anywhere; }
+  .title { margin: 0; width: calc(135.774 * var(--u)); font-weight: 500; font-size: calc(10.387 * var(--u)); line-height: calc(10.387 * var(--u)); color: #fff; text-align: center; overflow-wrap: break-word; }
   .summary { position: relative; z-index: 2; margin: calc(33.62 * var(--u)) 0 0; margin-inline-start: calc(17.06 * var(--u)); width: calc(164.71 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(10.387 * var(--u)); color: #000; overflow-wrap: anywhere; }
-  .btn { position: relative; z-index: 2; margin-top: auto; margin-inline-start: calc(49 * var(--u)); display: flex; align-items: center; justify-content: center; width: calc(100 * var(--u)); height: calc(21.333 * var(--u)); border-radius: calc(7 * var(--u)); background: var(--color-cyan); color: #fff; font-weight: 500; font-size: calc(10 * var(--u)); line-height: normal; text-decoration: none; white-space: nowrap; }
+  /* bugs 044 / 050: shared .ui-btn size, centred under the centred title (bug 040); a gap above it when the text runs long */
+  .btn { position: relative; z-index: 2; margin-top: auto; align-self: center; background: var(--color-cyan); color: #fff; }
+  .summary { margin-bottom: calc(10 * var(--u)); }
   /* Mirror the decoration in RTL (the tag's notch and the corner sit at the inline end). */
   :global([dir='rtl']) .tag-art { transform: scaleX(-1); }
   :global([dir='rtl']) .corner { transform: scale(-1, -1); }

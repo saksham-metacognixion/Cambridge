@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import { DESIGN_W, TARGET_W } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
+import { allRoutes } from '../lib/routes';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 import Modals from '../components/forms/Modals.astro';
 
@@ -22,7 +23,10 @@ interface Props {
   robots?: string;
 }
 
-const { edition, path, title, description, ogImage, editionsWithPage, alternates: withAlternates = true, robots } = Astro.props;
+const { edition, path, title, description, ogImage, alternates: withAlternates = true, robots } = Astro.props;
+// Editions that have this page: the page's own list, else the route registry's (src/lib/routes.ts: hospital pages, region-only
+// care services, bug 047), so hreflang never points at a page that is not built.
+const editionsWithPage = Astro.props.editionsWithPage ?? allRoutes().find((r) => r.path === path.replace(/^\/+|\/+$/g, ''))?.editions;
 const robotsContent = !INDEXABLE ? 'noindex, nofollow' : robots;
 const canonical = absolute(urlFor(edition, path));
 const ogImageUrl = ogImage ? absolute(ogImage) : undefined;

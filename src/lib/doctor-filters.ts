@@ -57,6 +57,8 @@ export function parseState(
   search: string,
   region: string,
   hospitals: FilterHospital[] = [],
+  /** known specialty ids; when given, an unknown ?specialty= is ignored */
+  specialties?: string[],
 ): FilterState {
   const p = new URLSearchParams(search);
   const state = defaultState(region);
@@ -68,6 +70,11 @@ export function parseState(
   // A shared link with a hospital from another country keeps the country (the country wins, never the other way round).
   if (state.hospital && !hospitalFits(state.hospital, state.country, hospitals))
     state.hospital = "";
+  // Unknown ids (hand-edited or stale links) are ignored rather than filtering everything out.
+  if (state.hospital && hospitals.length && !hospitals.some((h) => h.slug === state.hospital))
+    state.hospital = "";
+  if (state.specialty && specialties && !specialties.includes(state.specialty))
+    state.specialty = "";
   return state;
 }
 

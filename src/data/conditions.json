@@ -1,5 +1,5 @@
 {
-  "$comment": "Conditions shown on Conditions & Specialities (Figma 40:318 layout). The 20 conditions, their card lines (summary) and titles = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md and AR-Conditions & Specialities.md (document order, 5 Oct 2026; Arabic text exactly as given). specialties = ids from specialties.json: the speciality-to-condition MAPPING is not in the documents (D16; empty = shown only when no speciality is selected). Detail pages: src/data/content/conditions/<slug>.<locale>.json (all 20, EN + AR).",
+  "$comment": "Conditions shown on Conditions & Specialities (Figma 40:318 layout). The 20 conditions, their card lines (summary) and titles = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md and AR-Conditions & Specialities.md (document order, 5 Oct 2026; Arabic text exactly as given). specialties = ids from specialties.json: the speciality-to-condition MAPPING is not in the documents (D16; empty = shown only when no speciality is selected). Detail pages: src/data/content/conditions/<slug>.<locale>.json (all 20, EN + AR). doctors = doctors.json slugs linked from the live condition page (WordPress specialty export, tools/import-wp-cpt.mjs; bug 041): shown in \"Expert Care, Trusted Doctors\" on the detail page, the edition's country first.",
   "conditions": [
     {
       "slug": "stroke-rehabilitation",
@@ -14,7 +14,11 @@
       "specialties": [
         "pmr"
       ],
-      "old_slug": "stroke-rehabilitation"
+      "old_slug": "stroke-rehabilitation",
+      "doctors": [
+        "ebtihal-mohammed",
+        "sami-alamin"
+      ]
     },
     {
       "slug": "amputation-prosthetic-rehabilitation",
@@ -27,7 +31,15 @@
         "ar": "بناء القوة والتوازن والثقة للحياة باستخدام طرف صناعي."
       },
       "specialties": [],
-      "old_slug": "amputation-prosthetic-rehabilitation"
+      "old_slug": "amputation-prosthetic-rehabilitation",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "hip-fracture-rehabilitation",
@@ -40,7 +52,10 @@
         "ar": "إعادة بناء الحركة والثبات بعد جراحة الكسور."
       },
       "specialties": [],
-      "old_slug": "hip-fracture-femoral-neck-fracture-rehabilitation"
+      "old_slug": "hip-fracture-femoral-neck-fracture-rehabilitation",
+      "doctors": [
+        "sami-alamin"
+      ]
     },
     {
       "slug": "fracture-rehabilitation",
@@ -53,7 +68,11 @@
         "ar": "استعادة القوة والحركة والوظيفة أثناء شفاء العظام."
       },
       "specialties": [],
-      "old_slug": "fracture-rehabilitation"
+      "old_slug": "fracture-rehabilitation",
+      "doctors": [
+        "ebtihal-mohammed",
+        "sami-alamin"
+      ]
     },
     {
       "slug": "shoulder-rotator-cuff-rehabilitation",
@@ -66,7 +85,10 @@
         "ar": "تخفيف الألم واستعادة حركة الكتف من خلال العلاج المستهدف."
       },
       "specialties": [],
-      "old_slug": "shoulder-injury-rotator-cuff-rehabilitation"
+      "old_slug": "shoulder-injury-rotator-cuff-rehabilitation",
+      "doctors": [
+        "ebtihal-mohammed"
+      ]
     },
     {
       "slug": "tennis-elbow",
@@ -79,7 +101,10 @@
         "ar": "تخفيف الألم وإعادة بناء قوة المرفق من خلال إعادة التأهيل المنظمة."
       },
       "specialties": [],
-      "old_slug": "tennis-elbow"
+      "old_slug": "tennis-elbow",
+      "doctors": [
+        "sami-alamin"
+      ]
     },
     {
       "slug": "neck-pain-cervical-rehabilitation",
@@ -92,7 +117,10 @@
         "ar": "تقليل آلام الرقبة واستعادة المرونة والوظيفة."
       },
       "specialties": [],
-      "old_slug": "neck-pain-cervical-rehabilitation"
+      "old_slug": "neck-pain-cervical-rehabilitation",
+      "doctors": [
+        "ebtihal-mohammed"
+      ]
     },
     {
       "slug": "back-pain-lumbar-rehabilitation",
@@ -105,7 +133,15 @@
         "ar": "إدارة الألم وتحسين الحركة والوضعية والوظائف اليومية."
       },
       "specialties": [],
-      "old_slug": "back-pain-lumbar-rehabilitation"
+      "old_slug": "back-pain-lumbar-rehabilitation",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "knee-ligament-cartilage-injuries",
@@ -118,7 +154,15 @@
         "ar": "استعادة استقرار الركبة وحركتها للعودة الواثقة إلى النشاط."
       },
       "specialties": [],
-      "old_slug": "knee-ligament-cartilage-injuries"
+      "old_slug": "knee-ligament-cartilage-injuries",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "traumatic-brain-injury",
@@ -131,7 +175,15 @@
         "ar": "دعم استعادة القدرات الذهنية والجسدية والوظيفية بعد الإصابة."
       },
       "specialties": [],
-      "old_slug": "traumatic-brain-injury"
+      "old_slug": "traumatic-brain-injury",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "hip-knee-replacement-recovery",
@@ -144,7 +196,10 @@
         "ar": "استعادة الحركة والقوة للعودة الآمنة إلى الحياة اليومية."
       },
       "specialties": [],
-      "old_slug": "hip-knee-replacement-recovery"
+      "old_slug": "hip-knee-replacement-recovery",
+      "doctors": [
+        "ebtihal-mohammed"
+      ]
     },
     {
       "slug": "musculoskeletal-orthopaedic-rehabilitation",
@@ -157,7 +212,15 @@
         "ar": "تحسين الحركة والقوة والوظيفة بعد الإصابة أو الجراحة."
       },
       "specialties": [],
-      "old_slug": "musculoskeletal-and-orthopedic-rehabilitation"
+      "old_slug": "musculoskeletal-and-orthopedic-rehabilitation",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "neurorehabilitation",
@@ -172,7 +235,15 @@
       "specialties": [
         "pmr"
       ],
-      "old_slug": "post-surgical-rehabilitation"
+      "old_slug": "post-surgical-rehabilitation",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "acquired-brain-injury",
@@ -185,7 +256,10 @@
         "ar": "إعادة بناء المهارات الذهنية والجسدية ومهارات الحياة اليومية من خلال الرعاية المنسقة."
       },
       "specialties": [],
-      "old_slug": "acquired-brain-injury"
+      "old_slug": "acquired-brain-injury",
+      "doctors": [
+        "sami-alamin"
+      ]
     },
     {
       "slug": "spinal-cord-injury",
@@ -198,7 +272,15 @@
         "ar": "تعظيم الحركة والاستقلالية والوظيفة من خلال إعادة التأهيل المتخصصة."
       },
       "specialties": [],
-      "old_slug": "spinal-cord-injury-2"
+      "old_slug": "spinal-cord-injury-2",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "parkinsons-disease",
@@ -211,7 +293,15 @@
         "ar": "تحسين الحركة والاستقلالية من خلال إعادة التأهيل المستهدفة."
       },
       "specialties": [],
-      "old_slug": "parkinsons-disease-2"
+      "old_slug": "parkinsons-disease-2",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "multiple-sclerosis",
@@ -224,7 +314,15 @@
         "ar": "إدارة الأعراض والحفاظ على الحركة والوظائف اليومية."
       },
       "specialties": [],
-      "old_slug": "multiple-sclerosis-2"
+      "old_slug": "multiple-sclerosis-2",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "epilepsy",
@@ -237,7 +335,15 @@
         "ar": "دعم إدارة النوبات والحياة اليومية الآمنة والمستقلة."
       },
       "specialties": [],
-      "old_slug": "epilepsy"
+      "old_slug": "epilepsy",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "guillain-barre-syndrome",
@@ -250,7 +356,15 @@
         "ar": "استعادة القوة والحركة والاستقلالية طوال فترة التعافي."
       },
       "specialties": [],
-      "old_slug": "guillain-barre-syndrome"
+      "old_slug": "guillain-barre-syndrome",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     },
     {
       "slug": "motor-neuron-diseases",
@@ -263,7 +377,15 @@
         "ar": "تعزيز الراحة والوظيفة وجودة الحياة من خلال الرعاية الداعمة."
       },
       "specialties": [],
-      "old_slug": "motor-neuron-diseases"
+      "old_slug": "motor-neuron-diseases",
+      "doctors": [
+        "saleh-damnan",
+        "mehnaz-abdul-ghafoor",
+        "nader-bin-taleb",
+        "ali-mahmoud",
+        "mohamed-bahrudeen",
+        "ahmad-almohamady"
+      ]
     }
   ]
 }

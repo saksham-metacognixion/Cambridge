@@ -1,5 +1,6 @@
 /**
- * Registry of page paths inside an edition. Every page exists in all 6 editions.
+ * Registry of page paths inside an edition. A page exists in all 6 editions unless its route lists `editions`
+ * (hospital pages: their own region + Global; region-only care services).
  * Templates filled from JSON (doctors, hospitals, news) add their dynamic paths here, so the
  * sitemaps and hreflang stay complete.
  */
@@ -9,9 +10,9 @@ import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
-import { CARE_PATHS, allCareNodes } from "./care";
+import { CARE_PATHS, allCareNodes, careInRegion } from "./care";
 import { calculators } from "./calculators";
-import { urlFor, type Edition } from "./editions";
+import { editions, urlFor, type Edition } from "./editions";
 
 export interface PageRoute {
   key: string;
@@ -46,6 +47,8 @@ function routes(): PageRoute[] {
     ...allCareNodes().map((p) => ({
       key: `care-${p.trail.join("-")}`,
       path: CARE_PATHS.of(p.trail),
+      // a service offered in one country only (care.json `regions`, bug 047: In-School Care = UAE) is not built elsewhere
+      editions: editions.filter((e) => careInRegion(p.node.slug, e.region)).map((e) => e.id),
     })),
     { key: "contact", path: PAGE_PATHS.contact },
     { key: "careers", path: PAGE_PATHS.careers },
@@ -83,13 +86,16 @@ function routes(): PageRoute[] {
 }
 
 /**
- * Language / region switch target: the same page path in the other edition when it exists there, else the nearest
- * ancestor that does (a KSA hospital page seen from /ae -> /ae/hospitals), else the edition home. Keeps the switches
- * from landing on a 404 (scope 2.2: "same page in the other language / region where it exists").
+ * Language / region switch target: the same page path in the other edition when it exists there, else (`fallback`)
+ *   - "ancestor" (header switches): the nearest ancestor that does (a KSA hospital page seen from /ae -> /ae/hospitals),
+ *   - "home" (country pop-up, bug 037): the edition home,
+ * else the edition home. Keeps the switches from landing on a 404 (scope 2.2: "same page in the other language / region
+ * where it exists").
  */
-export function switchHref(target: Edition, path: string): string {
+export function switchHref(target: Edition, path: string, fallback: "ancestor" | "home" = "ancestor"): string {
   const paths = new Set(allRoutes(target).map((r) => r.path));
   let p = path.replace(/^\/+|\/+$/g, "");
+  if (fallback === "home") p = paths.has(p) ? p : "";
   while (p && !paths.has(p)) p = p.includes("/") ? p.slice(0, p.lastIndexOf("/")) : "";
   return urlFor(target, p);
 }

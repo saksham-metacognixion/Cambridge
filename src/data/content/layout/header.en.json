@@ -71,7 +71,29 @@
     {
       "label": "About Cambridge",
       "href": "#",
-      "page": "about"
+      "page": "about",
+      "children": [
+        {
+          "label": "Who We Are",
+          "page": "whoWeAre"
+        },
+        {
+          "label": "Why Cambridge Hospital",
+          "page": "whyCambridge"
+        },
+        {
+          "label": "Meet the Team",
+          "page": "meetTheTeam"
+        },
+        {
+          "label": "Accreditations & Partnerships",
+          "page": "accreditations"
+        },
+        {
+          "label": "Career Hub",
+          "page": "careers"
+        }
+      ]
     },
     {
       "label": "Our Care",
@@ -81,7 +103,33 @@
     {
       "label": "Patient Hub",
       "href": "#",
-      "page": "patientHub"
+      "page": "patientHub",
+      "children": [
+        {
+          "label": "Conditions & Specialities",
+          "page": "conditions"
+        },
+        {
+          "label": "Find a Doctor",
+          "page": "findDoctor"
+        },
+        {
+          "label": "Refer a Patient",
+          "page": "referPatient"
+        },
+        {
+          "label": "International Patients",
+          "page": "internationalPatients"
+        },
+        {
+          "label": "Insurance Providers",
+          "page": "insuranceProviders"
+        },
+        {
+          "label": "Patient Testimonials",
+          "page": "patientTestimonials"
+        }
+      ]
     },
     {
       "label": "Our Hospitals",
@@ -99,5 +147,6 @@
     "ariaLabel": "Book an appointment",
     "href": "#book-appointment"
   },
-  "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Career Hub', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target. Region switch: `region.options` = every region in menu order (`region` = id in src/data/editions.json); the button label is the option of the page's own edition (no fixed label). `visit.href` = the Cambridge Health Group website, opened in a new tab (bug 010): the URL the live site's footer links for \"Cambridge Health Group\" (WordPress export, 6 Oct 2026; its /ar/ page does not exist, so the Arabic editions use the same URL). Not confirmed by the client as the header target."
+  "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Career Hub', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target. Region switch: `region.options` = every region in menu order (`region` = id in src/data/editions.json); the button label is the option of the page's own edition (no fixed label). `visit.href` = the Cambridge Health Group website, opened in a new tab (bug 010): the URL the live site's footer links for \"Cambridge Health Group\" (WordPress export, 6 Oct 2026; its /ar/ page does not exist, so the Arabic editions use the same URL). Not confirmed by the client as the header target.",
+  "_submenuNote": "mainLinks[].children = the dropdown under a main link (bug 046), from the live site's header menu (WordPress export 6 Oct 2026, headermain / headermain-arabic, same order). A child whose page key is not in PAGE_PATHS (src/lib/paths.ts) is not shown, so the list always matches the pages that exist (Meet the Team: no page yet). 'Conditions & Specialities' = the site's spelling (live menu: 'Specialties')."
 }

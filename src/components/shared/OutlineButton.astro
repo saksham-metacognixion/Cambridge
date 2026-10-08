@@ -1,21 +1,17 @@
 ---
 /*
- * Outline button used on every inner-page hero and on Careers: 164 x 30, radius 7, 1px cyan outline, label Gotham Medium 13
- * cyan centred in a box `labelW` wide at `labelX` inside the button, 9 below its top (Figma 108:6678 / 108:6679: 145 at 8;
- * Find a Doctor / FAQ hero: 153 at 5). Touch target 44px via .hit. Layout (margins) is the caller's: pass `class`.
+ * Outline button used on every inner-page hero, on Careers, the calculators, the hospital map band and the 404 page:
+ * 1px cyan outline, cyan label (Figma 108:6678 / 108:6679: 164 x 30, radius 7, label Medium 13). Size, label and corners
+ * = the shared .ui-btn (bugs 044 / 050: the button grows with its label from its padding; bug 049: --radius-btn), so
+ * the Figma 164 x 30 box and the label offsets (labelX / labelW) no longer apply. Touch target 44px via .hit.
+ * Layout (margins) is the caller's: pass `class`. Hover / focus: the shared .btn-outline / .btn-fill rules in global.css.
  */
 /* `fill`: the filled variant (Our Hospitals hero 81:1444): #00b8ff background, white label, no outline. */
-/* Any other attribute (data-hospital, target, rel ...) goes onto the <a>. */
+/* Any other attribute (data-hospital, target, rel ...) goes onto the <a>. labelX / labelW: accepted for old callers, unused. */
 interface Props { href: string; label: string; labelX?: number; labelW?: number; class?: string; fill?: boolean; [k: string]: unknown }
-const { href, label, labelX = 8, labelW = 145, class: cls, fill = false, ...rest } = Astro.props;
+const { href, label, labelX: _lx, labelW: _lw, class: cls, fill = false, ...rest } = Astro.props;
 ---
 
-<a href={href} class:list={['btn hit relative block rounded-r7 no-underline', fill ? 'bg-cyan btn-fill' : 'hair-card btn-outline', cls]} style={`--sw:1;--sc:var(--color-cyan);--lx:${labelX};--lw:${labelW}`} {...rest}>
-  <span class:list={["label absolute block h-15 font-gotham font-medium text-f13 text-center not-italic whitespace-nowrap", fill ? "text-white" : "text-cyan"]}>{label}</span>
+<a href={href} class:list={['btn ui-btn hit no-underline', fill ? 'bg-cyan btn-fill' : 'hair-card btn-outline', cls]} style="--sw:1;--sc:var(--color-cyan)" {...rest}>
+  <span class:list={['label', fill ? 'text-white' : 'text-cyan']}>{label}</span>
 </a>
-
-<style>
-  .btn { width: calc(164 * var(--u)); height: calc(30 * var(--u)); flex: none; }
-  .label { top: calc(9 * var(--u)); inset-inline-start: calc(var(--lx) * var(--u)); width: calc(var(--lw) * var(--u)); }
-  /* Hover / focus: the shared .btn-outline / .btn-fill rules in global.css (2px cyan outline on hover, as the live site's .ctaBut1). */
-</style>

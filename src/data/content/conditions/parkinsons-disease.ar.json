@@ -7,7 +7,10 @@
     "ariaLabel": "مرض باركنسون",
     "title": [
       "مرض باركنسون"
-    ]
+    ],
+    "button": {
+      "label": "احجز موعد"
+    }
   },
   "overviewHeading": "نبذة عن البرنامج",
   "overview": [

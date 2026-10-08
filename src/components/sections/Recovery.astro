@@ -12,22 +12,20 @@ const c = content('home/recovery', edition.locale);
   <div class="stage">
     <h2 class="r-title absolute start-176 top-38 w-701 h-27 m-0 font-gotham font-medium text-f30 text-white text-center not-italic">{c.title}</h2>
     <p class="r-sub absolute start-238 top-71 w-577 h-28 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{c.text}</p>
-    <a href={c.buttons[0].href} class="hit r-btn btn-fill-white absolute start-350 top-116 w-166 h-30 rounded-r7 bg-white">
-      <span class="r-l absolute start-11 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">{c.buttons[0].label}</span>
-    </a>
-    <a href={c.buttons[1].href} class="hit r-btn btn-fill-white absolute start-535 top-116 w-166 h-30 rounded-r7 bg-white">
-      <span class="r-l absolute start-9 top-9 w-145 h-15 font-gotham font-medium text-f13 text-navy text-center not-italic">{c.buttons[1].label}</span>
-    </a>
+    <!-- Buttons (bug 044/050): the shared .ui-btn pair, one centred row at Figma's top 116 with the Figma gap 19 (Figma: two
+         166 x 30 boxes at 350 / 535, 13px labels). -->
+    <div class="r-btns absolute inset-x-0 top-116 flex flex-wrap justify-center gap-19">
+      <a href={c.buttons[0].href} class="ui-btn hit btn-fill-white bg-white text-navy">{c.buttons[0].label}</a>
+      <a href={c.buttons[1].href} class="ui-btn hit btn-fill-white bg-white text-navy">{c.buttons[1].label}</a>
+    </div>
   </div>
 </section>
 
 <style>
-  .r-btn { text-decoration: none; }
   @media (max-width: 1023.98px) {
     .stage { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; padding: 32px 16px; box-sizing: border-box; }
-    .r-title, .r-sub { position: static; width: 100%; height: auto; }
+    .r-title, .r-sub, .r-btns { position: static; width: 100%; height: auto; }
     .r-sub { margin-bottom: 8px; }
-    .r-btn { position: relative; inset-inline-start: auto; top: auto; display: flex; align-items: center; justify-content: center; }
-    .r-l { position: static; width: auto; height: auto; }
+    .r-btns { gap: 16px; }
   }
 </style>

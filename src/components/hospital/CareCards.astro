@@ -4,7 +4,7 @@ import { img } from '../../lib/images';
 import { content } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
-import { CARE_PATHS } from '../../lib/care';
+import { CARE_PATHS, careInRegion } from '../../lib/care';
 
 /*
  * The four service cards (Home "Services" cards: photos + text from home/services JSON; one card = shared/CareCard.astro), reused on
@@ -33,7 +33,8 @@ interface Props {
 }
 const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false } = Astro.props;
 const s = content('home/services', edition.locale);
-const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).map((k) => ({
+// Only the services offered in this edition's country (bug 047: In-School Care is UAE-only).
+const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).filter((k) => !k.care || careInRegion(k.care, edition.region)).map((k) => ({
   ...k,
   src: img(k.image, edition.region),
   href: k.care ? urlFor(edition, CARE_PATHS.service(k.care)) : k.page ? urlFor(edition, pagePath(k.page)) : (k.href ?? '#'),

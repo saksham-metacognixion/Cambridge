@@ -3,7 +3,7 @@ import CareCard from '../shared/CareCard.astro';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { content } from '../../lib/content';
-import { CARE_PATHS } from '../../lib/care';
+import { CARE_PATHS, careInRegion } from '../../lib/care';
 
 const { edition } = parsePath(Astro.url.pathname);
 const s = content('home/services', edition.locale);
@@ -12,7 +12,8 @@ const target = (k: { care?: string; href?: string }) => (k.care ? urlFor(edition
 
 // Cards (shared/CareCard.astro) at Figma x 49 / 295 / 537 / 783, top 172 (photo 169): a grid with the Figma gaps as columns
 // (24 / 20 / 24), so the four cards share one row and stretch to the tallest (bug 011: the buttons stay level).
-const cards = (s.cards as { image: string; alt: string; title: string; desc: string; care?: string; href?: string }[]).map((k) => ({
+// Only the services offered in this edition's country (bug 047: In-School Care is UAE-only).
+const cards = (s.cards as { image: string; alt: string; title: string; desc: string; care?: string; href?: string }[]).filter((k) => !k.care || careInRegion(k.care, edition.region)).map((k) => ({
   img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: target(k),
 }));
 ---

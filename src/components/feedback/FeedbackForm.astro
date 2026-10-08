@@ -43,7 +43,6 @@ const cols = matrix[0]?.options ?? [];
       edition={edition}
       submit={c.submit}
       ariaLabel={c.ariaLabel}
-      button={{ w: 147.831, h: 50, r: 15, fs: 15 }}
       gaps={{ consent: 16, submit: 16 }}
       class="pf"
     >
@@ -157,10 +156,9 @@ const cols = matrix[0]?.options ?? [];
     padding: calc(69 * var(--u)) calc(37.6 * var(--u)) calc(49 * var(--u)) calc(47 * var(--u));
   }
   .card :global(.pf) { color: var(--color-navy); }
-  /* SUBMIT centred on the card (page x 529.92); the content box is centred 4.78 to its right */
-  .card :global(.f-submit) { inset-inline-start: calc(-4.78 * var(--u)); }
+  /* SUBMIT: the shared .ui-btn, centred on the content box (bugs 044 / 050) */
 
-  /* Fields: fill rgba(217,217,217,.5), radius 10.754, h 35; labels Gotham Book 15 / 18.82, text 8 below the box top */
+  /* Fields: fill rgba(217,217,217,.5), radius --radius-field (bug 049), h 35; labels Gotham Book 15 / 18.82, text 8 below the box top */
   .contact { display: grid; grid-template-columns: calc(465 * var(--u)) minmax(0, 1fr); row-gap: calc(19 * var(--u)); align-items: start; }
   .mobile .pf-row { margin-inline-start: calc(1 * var(--u)); }
 
@@ -192,10 +190,10 @@ const cols = matrix[0]?.options ?? [];
   :global([dir='rtl']) .m-cell::before { translate: 50% -50%; }
   .m-row .f-err { clear: both; }
 
-  /* Tell us more: label 22.36 below the last option, textarea (50, +39) 797x194 radius 8, placeholder Book 11 at (18, 17) */
+  /* Tell us more: label 22.36 below the last option, textarea (50, +39) 797x194 radius --radius-field (bug 049), placeholder Book 11 at (18, 17) */
   .improve { margin-block-start: calc(22.36 * var(--u)); }
   .q3 { min-block-size: calc(39 * var(--u)); }
-  .pf-area { inline-size: calc(797 * var(--u)); block-size: calc(194 * var(--u)); margin-inline-start: calc(3 * var(--u)); border-radius: calc(8 * var(--u)); padding: calc(17 * var(--u)) calc(18 * var(--u)); resize: none; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
+  .pf-area { inline-size: calc(797 * var(--u)); block-size: calc(194 * var(--u)); margin-inline-start: calc(3 * var(--u)); border-radius: var(--radius-field); padding: calc(17 * var(--u)) calc(18 * var(--u)); resize: none; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
   .card :global(.f-consent) { margin-inline-start: calc(3 * var(--u)); }
 
   /* Below 1024: one column; the satisfaction rows show each column name under its circle */
@@ -215,6 +213,5 @@ const cols = matrix[0]?.options ?? [];
   }
   @media (max-width: 767.98px) {
     .mobile .pf-row { grid-template-columns: auto minmax(0, 1fr); margin-inline-start: 0; }
-    .card :global(.f-submit) { inset-inline-start: 0; }
   }
 </style>

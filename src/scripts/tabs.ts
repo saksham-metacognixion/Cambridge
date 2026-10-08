@@ -4,6 +4,9 @@
  * RTL pages), Home/End jump to the first / last tab. Roving tabindex. Panels = the tabs' aria-controls targets.
  * Optional URL state: data-tabs-param="category" on the container + data-key on each tab -> ?category=<key> (the first
  * tab = no parameter), one history entry per change, back/forward and shared links restore it (FAQ).
+ * Selecting keeps the chosen tab where it was on screen: in the accordion layout (< 1024, bug 035) closing a tall panel
+ * above the tapped tab would otherwise pull the tab, and the panel opening under it, up and out of view. Measured after the
+ * change, so a browser's own scroll anchoring is not corrected twice; a no-op where nothing moves (desktop, horizontal tabs).
  */
 for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
   const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
@@ -26,12 +29,15 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-tabs]')) {
   };
 
   const select = (i: number, focus = false) => {
+    const was = tabs[i].getBoundingClientRect().top;
     tabs.forEach((t, k) => {
       const on = k === i;
       t.setAttribute('aria-selected', String(on));
       t.tabIndex = on ? 0 : -1;
       if (panels[k]) panels[k]!.hidden = !on;
     });
+    const moved = tabs[i].getBoundingClientRect().top - was;
+    if (Math.abs(moved) >= 1) window.scrollBy({ top: moved, behavior: 'instant' as ScrollBehavior });
     if (focus) tabs[i].focus();
   };
 

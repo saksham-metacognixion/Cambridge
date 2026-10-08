@@ -14,7 +14,7 @@ files are never overwritten). What the import does with each field is documented
 | field | notes |
 |---|---|
 | slug | URL slug of the article = the English `post_name`. The Arabic translation of a post has the SAME slug (that is how the language switch finds it) |
-| old_url | path of the post on the current site (`/slug/`, `/ar/slug/`), feeds the 301 map `/redirects-news.txt` |
+| old_url | path of the post on the current site (`/slug/`, `/ar/slug/`), feeds the 301 map `dist/_redirects` (src/lib/redirects.ts) |
 | title, excerpt | plain text. The export has no excerpts: the excerpt is the first paragraph, cut at 160 characters with "..." (empty for the video-only interviews) |
 | date | `YYYY-MM-DD` (post date, site time) |
 | category | `events`, `conferences`, `press-releases`, `health-articles` (keys of the Media Hub dropdown) or `interviews` (7 TV interviews; not in the dropdown, docs/open-decisions.md NW2) |

@@ -1,1 +1,11 @@
-{}
+{
+  "title": "احجز موعد",
+  "fields": {
+    "gender": {
+      "options": {
+        "male": "ذكر",
+        "female": "أنثى"
+      }
+    }
+  }
+}

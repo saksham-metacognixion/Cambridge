@@ -45,7 +45,7 @@ const tiles = [
 
 <section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>
   <div class="stage max-lg:px-[calc(16*var(--u))]">
-    <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-r15 max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
+    <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-(--radius-panel) max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
       <h2 class="m-0 font-gotham text-f28 leading-[calc(27.25*var(--u))] text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-52 lg:top-(--ht) lg:w-331 lg:h-109" style={`--ht:calc(${headTop} * var(--u))`}>
         <span class="font-normal">{c.lead}</span><span class="font-medium">{c.emphasis[0]}<br />{c.emphasis[1]}</span>
       </h2>
@@ -53,7 +53,7 @@ const tiles = [
 
       <!-- Tile backgrounds (desktop): tile 1 sits under the corner art, the other three above it. -->
       {tiles.map((t, i) => (
-        <div class:list={['tbg hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-[calc(10*var(--u))]', `tbg-${i}`, i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
+        <div class:list={['tbg hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-(--radius-card)', `tbg-${i}`, i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
       ))}
       <div class="art hidden lg:block absolute z-[1] start-505 w-433 h-[calc(265.8*var(--u))] top-[calc(-4*var(--u))]" aria-hidden="true">
         <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
@@ -61,7 +61,7 @@ const tiles = [
 
       <div class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
         {tiles.map((t, i) => (
-          <a href={t.href} data-tile={i} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-[calc(10*var(--u))] max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
+          <a href={t.href} data-tile={i} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-(--radius-card) max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
             <img class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
             <span class="lbl block font-gotham font-medium text-f13 text-navy-alt text-center not-italic whitespace-nowrap max-lg:whitespace-normal">{t.label}</span>
           </a>
@@ -72,7 +72,7 @@ const tiles = [
 </section>
 
 <style>
-  .tile::after { border-radius: calc(10 * var(--u)); }
+  .tile::after { border-radius: var(--radius-card); } /* corners: band --radius-panel, tiles --radius-card (bug 049) */
   @media (max-width: 1023.98px) {
     .box { padding-inline: min(calc(32 * var(--u)), 7%); }     /* 32 Figma px from ~670px up, ~19px at 320 */
     .tiles { gap: min(calc(12 * var(--u)), 4%); }               /* 12 Figma px from ~450px up */

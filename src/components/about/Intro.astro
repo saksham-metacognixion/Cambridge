@@ -52,8 +52,8 @@ const closeLabel = commonText(edition.locale).close as string;
 
 <style>
   .row { display: flex; flex-direction: column; gap: calc(24 * var(--u)); padding-block: 0; }
-  .video { position: relative; flex: none; width: calc(429 * var(--u)); max-width: 100%; aspect-ratio: 429 / 264; background: #e7e7e7; border-radius: calc(16 * var(--u)); overflow: hidden; }
-  /* Rounded corners (user request 6 Oct, as the live site's About video; not in Figma): ~22px at 1440, measured on the live page. */
+  .video { position: relative; flex: none; width: calc(429 * var(--u)); max-width: 100%; aspect-ratio: 429 / 264; background: #e7e7e7; border-radius: var(--radius-card); overflow: hidden; } /* bug 049 */
+  /* Rounded corners (user request 6 Oct, as the live site's About video; not in Figma); since bug 049 the shared --radius-card. */
   .poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
   .poster[aria-disabled='true'] { cursor: default; }
   .poster :global(.thumb) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }

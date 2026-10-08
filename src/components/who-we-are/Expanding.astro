@@ -9,6 +9,12 @@ import type { Edition } from '../../lib/editions';
  * Left: photo "Care 1" 463 x 444 at x0 (object-cover) with the heading over it, centred on x226 (w430), top +52, Gotham Medium 28
  * #00415a, 3 lines, full stop in #00b8ff. Right (x505, w489): lead Book 16/18 white at top +49; text Book 12/14 white at top +148,
  * paragraphs separated by one empty 14px line.
+ *
+ * Below 1024 (no Figma frame; bug 034, 7 Oct 2026) the photo would shrink to the viewport width while the heading kept its
+ * desktop size, so the dotted globe rose under the text. There the art block is a light panel (the photo's own background
+ * colour) with the heading IN FLOW at the top (16px sides, fluid size, wrapping only at spaces) and the photo below it,
+ * bottom-aligned and cropped to its lower 72 %: the dots fill the lower 63 % of the image, so only blank sky is trimmed and
+ * the strip of sky that remains is the gap between heading and globe. The forced line breaks only apply on desktop.
  */
 interface Props { edition: Edition; c: { ariaLabel: string; heading: string[]; headingDot: string; image: { image: string; alt: string }; lead: string; text: string[] } }
 const { edition, c } = Astro.props;
@@ -18,8 +24,8 @@ const photo = img(c.image.image, edition.region);
 <section class="exp" aria-label={c.ariaLabel}>
   <div class="in">
     <div class="art">
+      <h2 class="h">{c.heading.map((l, i) => <>{i > 0 && <><br class="br" />{' '}</>}{l}</>)}<span class="dot">{c.headingDot}</span></h2>
       <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(463)} height={px(444)} widths={[px(463), px(463) * 2]} sizes={`(min-width: 1024px) ${px(463)}px, 100vw`} loading="lazy" decoding="async" alt={c.image.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
-      <h2 class="h">{c.heading.map((l, i) => <>{i > 0 && <br />}{l}</>)}<span class="dot">{c.headingDot}</span></h2>
     </div>
     <div class="copy">
       <p class="lead">{c.lead}</p>
@@ -31,10 +37,12 @@ const photo = img(c.image.image, edition.region);
 <style>
   .exp { background: var(--color-navy-alt); font-family: var(--font-gotham); font-style: normal; }
   .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
-  .art { position: relative; }
-  .exp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 463 / 444; object-fit: cover; max-width: none; }
-  .h { position: absolute; inset-inline-start: calc(11 * var(--u)); top: calc(52 * var(--u)); width: calc(430 * var(--u)); max-width: calc(100% - 22 * var(--u)); margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: normal; color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
+  /* < 1024: light panel = the photo's background (#f2f5f7 at its top edge), heading in flow, photo below */
+  .art { position: relative; background: #f2f5f7; padding-top: clamp(28px, 4.5vw, 44px); }
+  .h { box-sizing: border-box; width: 100%; margin: 0; padding: 0 16px 12px; font-weight: 500; font-size: clamp(24px, 7vw, calc(28 * var(--u))); line-height: normal; color: var(--color-navy-alt); text-align: center; text-wrap: balance; overflow-wrap: normal; }
+  .br { display: none; }
   .dot { color: var(--color-cyan); }
+  .exp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 463 / 320; object-fit: cover; object-position: center bottom; max-width: none; }
   .copy { padding: calc(40 * var(--u)) 16px calc(48 * var(--u)); color: #fff; }
   .lead { margin: 0; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); overflow-wrap: anywhere; }
   .t { margin-top: calc(23 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
@@ -42,8 +50,10 @@ const photo = img(c.image.image, edition.region);
   .t p + p { margin-top: calc(14 * var(--u)); }
   @media (min-width: 1024px) {
     .in { height: calc(444 * var(--u)); }
-    .art { position: absolute; inset-inline-start: 0; top: 0; width: calc(463 * var(--u)); height: calc(444 * var(--u)); }
-    .exp :global(.photo) { width: calc(463 * var(--u)); height: calc(444 * var(--u)); }
+    .art { position: absolute; inset-inline-start: 0; top: 0; width: calc(463 * var(--u)); height: calc(444 * var(--u)); background: none; padding: 0; }
+    .h { position: absolute; inset-inline-start: calc(11 * var(--u)); top: calc(52 * var(--u)); width: calc(430 * var(--u)); max-width: calc(100% - 22 * var(--u)); padding: 0; font-size: calc(28 * var(--u)); text-wrap: wrap; }
+    .br { display: inline; }
+    .exp :global(.photo) { width: calc(463 * var(--u)); height: calc(444 * var(--u)); aspect-ratio: 463 / 444; object-position: 50% 50%; }
     .copy { position: absolute; inset-inline-start: calc(505 * var(--u)); top: calc(49 * var(--u)); width: calc(489 * var(--u)); padding: 0; }
     .t { margin-top: calc(23 * var(--u)); } /* lead 76 (4 lines) + 23 = text at +148 */
   }

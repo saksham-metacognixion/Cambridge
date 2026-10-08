@@ -7,7 +7,10 @@
     "ariaLabel": "الصرع",
     "title": [
       "الصرع"
-    ]
+    ],
+    "button": {
+      "label": "احجز موعد"
+    }
   },
   "overviewHeading": "نبذة عن البرنامج",
   "overview": [

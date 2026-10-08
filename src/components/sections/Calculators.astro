@@ -10,13 +10,9 @@ const { edition } = parsePath(Astro.url.pathname);
 const t = content('home/calculators', edition.locale);
 const care = img(t.photo.image, edition.region);
 
-// Design only; zipped by index with the content cards from home/calculators.json
-const layout = [
-  { x: 532, y: 100, tw: 148, bx: 30 },
-  { x: 768, y: 100, tw: 148, bx: 31 },
-  { x: 532, y: 245, tw: 148, bx: 30 },
-  { x: 768, y: 245, tw: 157, bx: 31 },
-];
+// Design only; zipped by index with the content cards from home/calculators.json. Figma cards at x 532 / 768, y 100 / 245: a
+// 2 x 2 grid from (532, 100) with the Figma gaps (18 across, 20 down), see the style below.
+const layout = [{ tw: 148 }, { tw: 148 }, { tw: 148 }, { tw: 157 }];
 const cards = layout.map((d, i) => ({ ...d, title: t.cards[i].title, desc: t.cards[i].desc, href: t.cards[i].page ? urlFor(edition, pagePath(t.cards[i].page)) : t.cards[i].href })); // `page` = key in PAGE_PATHS: each card opens its calculator page (bug 014, docs/open-decisions.md LA4)
 const u = (n: number) => `calc(${n} * var(--u))`;
 ---
@@ -34,12 +30,10 @@ const u = (n: number) => `calc(${n} * var(--u))`;
 
     <div class="c-grid">
       {cards.map((c) => (
-        <div class="c-card absolute w-218 h-125 bg-white hair-card rounded-r6 box-border" style={`inset-inline-start:${u(c.x)};top:${u(c.y)}`}>
-          <h3 class="absolute start-30 top-37 h-15 m-0 font-gotham font-medium text-f13 text-navy not-italic" style={`width:${u(c.tw)}`}>{c.title}</h3>
-          <p class="absolute start-30 top-55 w-138 h-19 m-0 font-gotham font-normal text-f9 leading-10 text-body not-italic">{c.desc}</p>
-          <a href={c.href} class="hit btn-fill-navy absolute top-85 w-74 h-17 rounded-r3 bg-navy" style={`inset-inline-start:${u(c.bx)}`} aria-label={`${t.cardButton}: ${c.title}`}>
-            <span class="absolute start-8 top-4 w-59 h-10 font-gotham font-medium text-f8 leading-10 text-white not-italic">{t.cardButton}</span>
-          </a>
+        <div class="c-card relative w-218 bg-white hair-card rounded-(--radius-card) box-border">
+          <h3 class="m-0 font-gotham font-medium text-f13 leading-15 text-navy not-italic" style={`max-width:${u(c.tw)}`}>{c.title}</h3>
+          <p class="mt-3 w-138 font-gotham font-normal text-f9 leading-10 text-body not-italic">{c.desc}</p>
+          <a href={c.href} class="ui-btn hit btn-fill-navy bg-navy text-white" aria-label={`${t.cardButton}: ${c.title}`}>{t.cardButton}</a>
         </div>
       ))}
     </div>
@@ -48,8 +42,15 @@ const u = (n: number) => `calc(${n} * var(--u))`;
 
 <style>
   .c-hero, .c-grid { display: contents; }
-  .c-card { margin: 0; }
-  .c-card a { text-decoration: none; }
+  /* Card (Figma 218 x 125 r6, bug 049: --radius-card): title at 37, text at 55, then the button at the bottom. The button is the
+     shared .ui-btn (bug 044/050; Figma 74 x 17 with an 8px label at 85) so the card is a flow column, at least the Figma 125
+     high, growing by the taller button; the cards of a grid row share the taller one's height so the buttons stay level. */
+  .c-card { margin: 0; display: flex; flex-direction: column; align-items: flex-start; min-height: calc(125 * var(--u)); padding: calc(37 * var(--u)) calc(30 * var(--u)) calc(14 * var(--u)); }
+  .c-card a { margin-top: auto; }
+  .c-card p { margin-bottom: calc(10 * var(--u)); }
+  @media (min-width: 1024px) {
+    .c-grid { position: absolute; inset-inline-start: calc(532 * var(--u)); top: calc(100 * var(--u)); display: grid; grid-template-columns: repeat(2, calc(218 * var(--u))); gap: calc(20 * var(--u)) calc(18 * var(--u)); }
+  }
   @media (max-width: 1023.98px) {
     .calc { padding: 24px 16px; }
     .stage { display: flex; flex-direction: column; align-items: center; gap: 20px; }
@@ -58,6 +59,5 @@ const u = (n: number) => `calc(${n} * var(--u))`;
     .c-img { width: 100%; height: 100%; }
     .c-head { inset-inline-start: 0; inset-inline-end: 0; top: 8%; width: 100%; height: auto; font-size: 6.05cqw; } /* 28 / 463 of the picture width: the heading keeps its desktop proportions over the photo instead of growing past it */
     .c-grid { order: 3; display: grid; grid-template-columns: repeat(auto-fit, calc(218 * var(--u))); justify-content: center; gap: 16px; width: 100%; }
-    .c-card { position: relative; inset-inline-start: auto !important; top: auto !important; }
   }
 </style>

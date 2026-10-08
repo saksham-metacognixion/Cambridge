@@ -12,7 +12,7 @@ const c = content('home/care-support', edition.locale);
 const FRAME_W = 1106;
 const FRAME_H = 356;
 const ROW_X = -22;
-// icon inset % = [top, right, bottom, left] of the frame. Design only; label + icon key come from home/care-support JSON, zipped by index.
+// Tile corners: --radius-card (Figma r5, bug 049). icon inset % = [top, right, bottom, left] of the frame. Design only; label + icon key come from home/care-support JSON, zipped by index.
 const design = [
   { x: 0, cx: 37, w: 60, inset: [58.99, 94.81, 29.66, 1.54] },
   { x: 113, cx: 157, w: 60, inset: [59.06, 84.41, 28.88, 12.84] },
@@ -48,7 +48,7 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
         <li class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></li>
         {tiles.map((t) => (
           <li data-loop-item class="tile relative shrink-0 snap-start" style={`--l:${t.x}`}>
-            <div class="pos bg-cyan rounded-r5 shadow-tile" style="--x:0;--y:0;--w:89;--h:87"></div>
+            <div class="pos bg-cyan rounded-(--radius-card) shadow-tile" style="--x:0;--y:0;--w:89;--h:87"></div>
             <img class="pos max-w-none" src={t.icon.src} width={px(t.iw)} height={px(t.ih)} alt="" loading="lazy" decoding="async" style={`--x:${t.ix};--y:${t.iy};--w:${t.iw};--h:${t.ih}`} />
             <p class="pos m-0 font-gotham font-normal text-f10 leading-10 text-navy text-center not-italic whitespace-normal [word-break:break-word]" style={`--x:${t.lx};--y:100;--w:${t.w};--h:10`}>{t.label}</p>
           </li>

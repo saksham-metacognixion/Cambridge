@@ -6,6 +6,7 @@ import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
+import insurerData from '../../data/insurers.json';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/insurance', edition.locale);
@@ -23,11 +24,23 @@ const design = [
   { w: 37, h: 62, x: 793, y: 71 },
   { w: 107, h: 33, x: 885, y: 94 },
 ];
-const logos = design.map((d, i) => {
-  const l: { image: string; alt: string } = txt.logos[i];
-  return { src: img(l.image, edition.region), alt: l.alt, ...d };
-});
-const dividers = [148, 273, 423, 568, 758, 864];
+// Insurers of this edition's country only (bug 048, src/data/insurers.json `regions`, the Insurance Providers page's data).
+// Global, and an edition that offers every Figma logo (UAE), keep the Figma strip; otherwise (KSA) the country's insurers
+// that have a logo sit in one centred row at the Figma logo band (y 71..133), logos 62 high, the Figma dividers between them.
+type Ins = { slug: string; name: { en: string; ar: string }; regions: string[]; logo?: { image: string; w: number; h: number } };
+const insurers = insurerData.insurers as Ins[];
+const regionOf = (image: string) => insurers.find((x) => x.logo?.image === image)?.regions ?? [];
+const figmaFits = edition.region === 'global' || (txt.logos as { image: string }[]).every((l) => regionOf(l.image).includes(edition.region));
+const logos = figmaFits
+  ? design.map((d, i) => {
+      const l: { image: string; alt: string } = txt.logos[i];
+      return { src: img(l.image, edition.region), alt: l.alt, ...d };
+    })
+  : insurers
+      .filter((x) => x.logo && x.regions.includes(edition.region))
+      .slice(0, 7)
+      .map((x) => ({ src: img(x.logo!.image, edition.region), alt: x.name[edition.locale] || x.name.en, w: (62 * x.logo!.w) / x.logo!.h, h: 62, x: 0, y: 71 }));
+const dividers = figmaFits ? [148, 273, 423, 568, 758, 864] : [];
 ---
 
 <section id="insurance" class="relative bg-white font-gotham" style="--h: 207">
@@ -35,9 +48,9 @@ const dividers = [148, 273, 423, 568, 758, 864];
     <h2 class="m-0 font-medium text-f28 leading-27 text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:max-w-430 lg:absolute lg:start-309 lg:top-0 lg:w-430 lg:h-27">{txt.title}</h2>
     <p class="m-0 font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:mt-10 max-lg:max-w-577 lg:absolute lg:start-235 lg:top-37 lg:w-577 lg:h-13">{txt.subtitle}</p>
 
-    <ul class="m-0 list-none p-0 max-lg:mt-30 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:justify-center max-lg:gap-x-30 max-lg:gap-y-20 lg:contents">
+    <ul class:list={['m-0 list-none p-0 max-lg:mt-30 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:justify-center max-lg:gap-x-30 max-lg:gap-y-20', figmaFits ? 'lg:contents' : 'flow']}>
       {logos.map((l) => (
-        <li class="relative shrink-0 lg:absolute" style={`--lw:${l.w}; --lh:${l.h}; --lx:${l.x + F}; --ly:${l.y}`} data-logo>
+        <li class:list={['relative shrink-0', figmaFits && 'lg:absolute']} style={`--lw:${l.w}; --lh:${l.h}; --lx:${l.x + F}; --ly:${l.y}`} data-logo>
           <Image src={l.src} format="webp" width={px(l.w)} height={px(l.h)} densities={[1, 2]} loading="lazy" decoding="async" alt={l.alt} class="block h-full w-full object-cover" />
         </li>
       ))}
@@ -49,15 +62,24 @@ const dividers = [148, 273, 423, 568, 758, 864];
       </div>
     ))}
 
-    <a href={viewAll} class="hit btn-fill-navy relative block bg-navy-alt rounded-r7 w-118 h-30 not-italic max-lg:mt-30 lg:absolute lg:start-469 lg:top-177 no-underline">
-      <span class="absolute top-9 w-145 h-15 block text-center font-medium text-f13 leading-15 text-white whitespace-normal [word-break:break-word] lg:start-[calc(-15*var(--u))] max-lg:left-1/2 max-lg:-translate-x-1/2">{txt.button.label}</span>
-    </a>
+    <!-- View All (bug 044/050): the shared .ui-btn, centred at Figma's top 177 (Figma: 118 x 30 at 469, 13px label). -->
+    <a href={viewAll} class="ui-btn hit ins-btn btn-fill-navy relative bg-navy-alt text-white lg:absolute lg:top-177">{txt.button.label}</a>
   </div>
 </section>
 
 <style>
   [data-logo] { width: calc(var(--lw) * var(--u)); height: calc(var(--lh) * var(--u)); }
+  .ins-btn { margin-top: calc(30 * var(--u)); }
+  @media (min-width: 1024px) { .ins-btn { inset-inline: 0; width: fit-content; margin: 0 auto; } }
+  /* Country strip on phones / tablets: the WordPress logo art carries its own white margin (136 x 75 box), so it is drawn at 74%
+     to sit two or three to a row like the Figma logos. */
+  @media (max-width: 1023.98px) { .flow [data-logo] { width: calc(var(--lw) * 0.74 * var(--u)); height: calc(var(--lh) * 0.74 * var(--u)); } }
   @media (min-width: 1024px) {
     [data-logo] { inset-inline-start: calc(var(--lx) * var(--u)); top: calc(var(--ly) * var(--u)); }
+    /* Country strip (not the Figma seven): one centred row in the logo band, dividers (Figma line 13: 48 long, #418ea2) between. */
+    .flow { position: absolute; inset-inline: 0; top: calc(71 * var(--u)); height: calc(62 * var(--u)); display: flex; align-items: center; justify-content: center; }
+    .flow [data-logo] { inset: auto; top: auto; }
+    .flow [data-logo] + [data-logo] { margin-inline-start: calc(96 * var(--u)); }
+    .flow [data-logo] + [data-logo]::before { content: ''; position: absolute; inset-inline-start: calc(-48 * var(--u)); top: calc(7 * var(--u)); height: calc(48 * var(--u)); border-inline-start: 1px solid color-mix(in srgb, #418ea2 25%, transparent); } /* a 0.15px Figma hairline drawn as 1px at its coverage, like .hair-card */
   }
 </style>

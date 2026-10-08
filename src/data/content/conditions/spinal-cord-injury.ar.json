@@ -7,7 +7,10 @@
     "ariaLabel": "إصابة الحبل الشوكي",
     "title": [
       "إصابة الحبل الشوكي"
-    ]
+    ],
+    "button": {
+      "label": "احجز موعد"
+    }
   },
   "overviewHeading": "نبذة عن البرنامج",
   "overview": [

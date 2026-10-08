@@ -13,7 +13,7 @@ import { chromium } from 'playwright-core';
 const base = process.argv[2] ?? 'http://localhost:4400';
 const out = process.argv[3] ?? 'docs/qc/browser.json';
 const WIDTHS = [360, 390, 414, 768, 1024, 1200, 1280, 1366, 1440, 1536, 1920];
-const TEMPLATES = ['/', '/about', '/about/why-cambridge-hospital', '/about/accreditations-partnerships', '/about/careers', '/care', '/care/inpatient', '/care/inpatient/post-acute-rehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation/stroke-rehabilitation', '/care/outpatient', '/care/home-healthcare', '/sa/care/home-healthcare', '/care/in-school', '/patient-hub/conditions-specialities', '/patient-hub/conditions-specialities/stroke-rehabilitation', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation', '/patient-hub', '/patient-hub/find-a-doctor', '/patient-hub/find-a-doctor/ahmad-al-khayer', '/hospitals', '/hospitals/cambridge-hospital-abu-dhabi', '/hospitals/cambridge-hospital-al-ain', '/media-hub', '/media-hub/first-patients-new-saudi-facility', '/contact-us', '/your-opinion-matters', '/patient-hub/refer-a-patient', '/patient-hub/international-patients', '/patient-hub/insurance-providers', '/patient-hub/testimonials', '/bmi-calculator', '/ar/stroke-risk-calculator', '/faqs', '/legal/privacy-policy', '/404'];
+const TEMPLATES = ['/', '/about', '/about/why-cambridge-hospital', '/about/accreditations-partnerships', '/about/careers', '/care', '/care/inpatient', '/care/inpatient/post-acute-rehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation/stroke-rehabilitation', '/care/outpatient', '/care/home-healthcare', '/sa/care/home-healthcare', '/care/in-school', '/patient-hub/conditions-specialities', '/patient-hub/conditions-specialities/stroke-rehabilitation', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation', '/patient-hub', '/patient-hub/find-a-doctor', '/patient-hub/find-a-doctor/ahmad-al-khayer', '/hospitals', '/hospitals/cambridge-hospital-abu-dhabi', '/hospitals/cambridge-hospital-al-ain', '/media-hub', '/media-hub/12-exercises-and-stretches-for-shoulder-pain', '/contact-us', '/your-opinion-matters', '/patient-hub/refer-a-patient', '/patient-hub/international-patients', '/patient-hub/insurance-providers', '/patient-hub/testimonials', '/bmi-calculator', '/ar/stroke-risk-calculator', '/faqs', '/legal/privacy-policy', '/404'];
 
 const results = { responsive: [], doctors: [], forms: [], keyboard: [] };
 const ok = (list, name, pass, note = '') => { list.push({ name, pass, note }); console.log(`${pass ? 'PASS' : 'FAIL'} ${name}${note ? ' - ' + note : ''}`); };
@@ -57,7 +57,7 @@ for (const url of TEMPLATES) {
 // 2. Find a Doctor filters --------------------------------------------------------------------------------------------
 {
   const page = await ctx.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(base + '/find-a-doctor', { waitUntil: 'load' });
+  await page.goto(base + '/patient-hub/find-a-doctor', { waitUntil: 'load' });
   const shown = () => page.evaluate(() => [...document.querySelectorAll('[data-doctor-list] > li')].filter((li) => !li.hidden).length);
   const pressed = () => page.evaluate(() => document.querySelector('[data-doctor-filters] [data-country][aria-pressed="true"]')?.dataset.country);
   const all = await shown();
@@ -78,14 +78,14 @@ for (const url of TEMPLATES) {
   await page.goto(u, { waitUntil: 'load' });
   ok(results.doctors, 'URL round trip restores country + speciality + query', (await pressed()) === 'sa' && (await page.inputValue('[data-doctor-filters] select[name="specialty"]')) === options[0] && (await page.inputValue('[data-doctor-filters] input[name="q"]')) === 'zzzzqqqq');
   // back button
-  await page.goto(base + '/find-a-doctor', { waitUntil: 'load' });
+  await page.goto(base + '/patient-hub/find-a-doctor', { waitUntil: 'load' });
   await page.click('[data-doctor-filters] [data-country="ae"]');
   await page.selectOption('[data-doctor-filters] select[name="specialty"]', options[0]);
   await page.goBack();
   await page.waitForTimeout(200);
   ok(results.doctors, 'back button restores the previous filter state', (await pressed()) === 'ae' && (await page.inputValue('[data-doctor-filters] select[name="specialty"]')) === '', `pressed=${await pressed()}`);
   // regional defaults
-  for (const [p, c] of [['/ae/find-a-doctor', 'ae'], ['/sa/find-a-doctor', 'sa']]) {
+  for (const [p, c] of [['/ae/patient-hub/find-a-doctor', 'ae'], ['/sa/patient-hub/find-a-doctor', 'sa']]) {
     await page.goto(base + p, { waitUntil: 'load' });
     const only = await page.evaluate((c) => [...document.querySelectorAll('[data-doctor-list] > li')].filter((li) => !li.hidden).every((li) => li.dataset.country === c), c);
     ok(results.doctors, `${p} lists only ${c.toUpperCase()} doctors by default`, only);

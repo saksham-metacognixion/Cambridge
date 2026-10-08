@@ -20,10 +20,11 @@
   -webkit-backdrop-filter: blur(calc(4 * min(100vw, 1440px) / 1052));
   backdrop-filter: blur(calc(4 * min(100vw, 1440px) / 1052));
 }
-/* Panel = Figma "Rectangle 4304": white 10% + GLASS radius 100 (approximated: background blur + light rim). */
+/* Panel = Figma "Rectangle 4304": white 10% + GLASS radius 100 (approximated: background blur + light rim). Corner: the
+   shared card radius (bug 049). */
 .modal-panel {
   position: relative; box-sizing: border-box;
-  border-radius: calc(17.051 * var(--u));
+  border-radius: var(--radius-card);
   background: rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(calc(50 * var(--u))) saturate(1.1);
   backdrop-filter: blur(calc(50 * var(--u))) saturate(1.1);
@@ -47,7 +48,7 @@
 }
 .gf-box {
   box-sizing: border-box; display: block; flex: 1 1 auto; min-inline-size: 0; block-size: calc(31.554 * var(--u)); margin: 0;
-  border: 0; border-radius: calc(9.695 * var(--u)); outline: 0; appearance: none; -webkit-appearance: none;
+  border: 0; border-radius: var(--radius-field); outline: 0; appearance: none; -webkit-appearance: none;
   background: rgba(255, 255, 255, 0.5);
   padding-block: 0; padding-inline: calc(8.24 * var(--u));
   font-family: var(--font-gotham); font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy);
@@ -99,15 +100,9 @@
 .gf-title { margin: 0; font-weight: 700; font-size: calc(13.523 * var(--u)); line-height: normal; color: var(--color-navy-alt); text-align: center; }
 .gf-section { margin: 0; font-weight: 700; font-size: calc(11.72 * var(--u)); line-height: normal; color: var(--color-navy); }
 
-/* Submit buttons: the label is centred by flex, no offsets (bug 007: a Figma text-box top offset sat it low with the real Gotham metrics) */
-.f-submit {
-  position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box; margin: 0 auto; padding: 0; border: 0; cursor: pointer;
-  inline-size: calc(var(--bw) * var(--u)); block-size: calc(var(--bh) * var(--u)); border-radius: calc(var(--br) * var(--u));
-  background: var(--color-cyan); color: #fff; font-family: var(--font-gotham); font-weight: 700; font-size: calc(var(--bfs) * var(--u)); line-height: 1; white-space: nowrap;
-}
-/* Centre the caps, not the font's line box: trim the label to cap height / baseline so the centring holds whatever the
-   font's ascent / descent (browsers without text-box keep the line-box centring, within ~1px). */
-.f-submit > span { text-box: trim-both cap alphabetic; }
+/* Submit buttons: the shared .ui-btn size, label and corners (bugs 044 / 050: no more per-frame Figma boxes of 8-15px
+   labels), centred under the form; the label <span> is cap-centred by .ui-btn (bug 007). Only the look is set here. */
+.ui-btn.f-submit { display: flex; inline-size: fit-content; margin-inline: auto; border: 0; background: var(--color-cyan); color: #fff; }
 /* hover / focus-visible: the shared .btn-fill rules in global.css */
 .f-submit[aria-disabled='true'] { cursor: progress; }
 
@@ -180,7 +175,7 @@
 .pf-box {
   box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
   inline-size: calc(var(--w, 319.889) * var(--u)); max-inline-size: 100%; block-size: calc(35 * var(--u)); padding: 0 calc(var(--pf-px, 9.17) * var(--u));
-  border-radius: calc(10.754 * var(--u)); background: rgba(217, 217, 217, 0.5);
+  border-radius: var(--radius-field); background: rgba(217, 217, 217, 0.5);
   font-family: var(--font-gotham); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); color: var(--color-navy);
 }
 .pf-box::placeholder { color: var(--color-body); opacity: 1; }
@@ -196,9 +191,9 @@
 .pf-dial .pf-chev { inset-inline-end: calc(var(--pf-dial-chev-x, 5.68) * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(var(--pf-dial-chev-w, 7.135) * var(--u)); }
 .pf-tel { margin-inline-start: calc(var(--pf-tel-gap, 9.85) * var(--u)); flex: 0 1 auto; min-inline-size: 0; }
 
-/* White form card (Patient Feedback 188:964, Refer a Patient 46:8029 "Rectangle 107"): radius 14.32 (top end 15),
-   drop shadow 0 0 15.696 rgba(0,0,0,.25). Size and padding: the page. */
-.pf-card { position: relative; box-sizing: border-box; background: #fff; border-radius: calc(14.32 * var(--u)); border-start-end-radius: calc(15 * var(--u)); box-shadow: 0 0 calc(15.696 * var(--u)) rgba(0, 0, 0, 0.25); }
+/* White form card (Patient Feedback 188:964, Refer a Patient 46:8029 "Rectangle 107"): drop shadow 0 0 15.696 rgba(0,0,0,.25),
+   corners the shared card radius (bug 049; Figma 14.32 / 15). Size and padding: the page. */
+.pf-card { position: relative; box-sizing: border-box; background: #fff; border-radius: var(--radius-card); box-shadow: 0 0 calc(15.696 * var(--u)) rgba(0, 0, 0, 0.25); }
 
 /* Questions / section labels: Gotham Bold 15 navy */
 .pf-q { display: block; margin: 0; padding: 0; font-weight: 700; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); }

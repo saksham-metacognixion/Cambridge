@@ -20,7 +20,7 @@ const pic = {
 <section class="relative" style="--h: 437" aria-label={c.ariaLabel}>
   <div class="stage">
     <!-- Banner PNG is 1052x500 and drawn 114.42% of the 437 box (top-left anchored), exactly as in Figma. -->
-    <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the <img>. -->
+    <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->
     <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} aria-hidden="true">
       {layers ? (
         <>
@@ -36,13 +36,13 @@ const pic = {
       <!-- Figma: Gotham Medium 39 on 37px lines (box 297..371, 2 lines), button at 384 = 13 under it; the line height is
            the inner-page hero one (Hero / PageHero `leading-37`): without it the font's own line box is ~47px and the
            title ran into the button (bug 015). -->
-      <h1 class="relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-178 lg:w-374">
+      <h1 class="hero-title relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal lg:absolute lg:start-95 lg:top-178 lg:w-374">
         <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
       </h1>
 
-      <a href={c.button.href} class="hit btn-outline hair-card relative block rounded-r7 no-underline lg:absolute lg:start-98 lg:top-265 lg:w-164 lg:h-30 max-lg:h-30 max-lg:w-164" style="--sw:1;--sc:var(--color-cyan)">
-        <span class="absolute top-9 start-8 block w-145 h-15 font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
-      </a>
+      <!-- Button (bug 044/050): the shared .ui-btn size instead of Figma's 164 x 30 box with an offset 13px label; anchored at
+           the Figma start / top on desktop, growing with its label. -->
+      <a href={c.button.href} class="ui-btn hit btn-outline hair-card relative no-underline text-cyan lg:absolute lg:start-98 lg:top-265" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
     </div>
   </div>
 </section>

@@ -2,7 +2,7 @@ import doctorData from '../data/doctors.json';
 import hospitalData from '../data/hospitals.json';
 import specialtyData from '../data/specialties.json';
 import { t, type Localized } from './content';
-import type { LocaleId } from './editions';
+import type { Edition, LocaleId } from './editions';
 
 /*
  * Doctors come from src/data/doctors.json (Pramod's export later; schema in the $comment of that file).
@@ -66,3 +66,16 @@ export const specialtyRole = (id: string, locale: LocaleId) => {
 /** The line under a doctor's name: the designation, else (no designation in the WordPress export) the specialty roles. */
 export const doctorRole = (d: Doctor, locale: LocaleId) =>
   t(d.title, locale, 'doctors') || d.specialties.map((s) => specialtyRole(s, locale)).join(', ');
+
+/** Country code of an edition as used in the data files ('ae' | 'sa'), null on Global. */
+export const editionCountry = (e: Edition): 'ae' | 'sa' | null => (e.country ? (e.country.toLowerCase() as 'ae' | 'sa') : null);
+
+/**
+ * A doctor list for one edition: on /ae and /sa the doctors of that country, if the list has any (bug 041 / 048);
+ * otherwise (Global, or none in that country) the whole list. Order kept.
+ */
+export function doctorsForEdition<T extends { country: string }>(list: T[], e: Edition): T[] {
+  const c = editionCountry(e);
+  const own = c ? list.filter((d) => d.country === c) : [];
+  return own.length ? own : list;
+}

@@ -26,3 +26,8 @@ pnpm-debug.log*
 # Cloudflare local dev
 .wrangler/
 .dev.vars
+
+# Vercel staging link
+.vercel/
+.vercel
+.env*

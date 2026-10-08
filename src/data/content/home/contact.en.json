@@ -7,8 +7,16 @@
     "800-692273 - MYCARE - UAE",
     "9200-13122 - KSA"
   ],
+  "phoneRegions": [
+    "ae",
+    "sa"
+  ],
   "addressLabel": "Address:",
   "address": "Prestige 17 Tower - Hamdan Bin Mohammed St - Mohamed Bin Zayed City - ME2 - Abu Dhabi",
+  "addressRegions": [
+    "global",
+    "ae"
+  ],
   "followLabel": "Follow us:",
   "social": {
     "image": "contact/social-icons",
@@ -21,5 +29,6 @@
     "messagePlaceholder": "Write Something...",
     "submit": "Send Message"
   },
-  "_note": "Home contact section (Figma). Phone lines = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026); the Figma numbers (800-2672 / 800-2772) were placeholders. Social icon links: src/data/social.json."
+  "_note": "Home contact section (Figma). Phone lines = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026); the Figma numbers (800-2672 / 800-2772) were placeholders. Social icon links: src/data/social.json.",
+  "_regionsNote": "phoneRegions[i] = the country of phones[i]; addressRegions = the editions that show the address (bug 048: each edition shows its own country's details, Global both phones). The Abu Dhabi address is the UAE office; no KSA address exists in the documents or the WordPress export, so /sa shows no address line until one is supplied (docs/open-decisions.md)."
 }

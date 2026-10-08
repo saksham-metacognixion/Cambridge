@@ -22,6 +22,9 @@ export interface CareNode {
   desc: Localized;
   image?: string;
   alt?: string;
+  /** countries that offer this service (bug 047): absent = every edition; e.g. ["ae"] = UAE only (In-School Care). Global
+   *  lists every service; a child inherits its ancestors' limits. */
+  regions?: RegionId[];
   children: CareNode[];
 }
 export interface CarePath {
@@ -54,9 +57,28 @@ export function allCareNodes(): CarePath[] {
   return out;
 }
 
-/** Nodes at a given depth (1 = services) with their trails. */
-export const careNodesAtDepth = (depth: number) =>
-  allCareNodes().filter((p) => p.trail.length === depth);
+/** Nodes at a given depth (1 = services) with their trails; with a region, only the ones offered there (careInRegion). */
+export const careNodesAtDepth = (depth: number, region?: RegionId) =>
+  allCareNodes().filter((p) => p.trail.length === depth && (!region || careInRegion(p.node.slug, region)));
+
+const bySlug = new Map(allCareNodes().map((p) => [p.node.slug, p]));
+/**
+ * Is the care page `slug` offered in this region (bug 047)? Global: always. UAE / KSA: unless the node or one of its
+ * ancestors has `regions` without that region. Unknown slugs are left alone (true). Pages that fail are not built in that
+ * edition, their cards / footer links are hidden, and the URL 301s to the edition's Our Care hub (src/lib/redirects.ts).
+ */
+export function careInRegion(slug: string, region: RegionId): boolean {
+  if (region === "global") return true;
+  const p = bySlug.get(slug);
+  if (!p) return true;
+  return p.trail.every((s) => {
+    const r = bySlug.get(s)!.node.regions;
+    return !r || r.includes(region);
+  });
+}
+/** Every care page that is NOT offered in `region`, as trails (for the redirects). */
+export const careOutsideRegion = (region: RegionId) =>
+  allCareNodes().filter((p) => !careInRegion(p.node.slug, region));
 
 export const service = (slug: string): CareNode => {
   const s = services.find((x) => x.slug === slug);

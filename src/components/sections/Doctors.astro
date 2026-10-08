@@ -23,12 +23,12 @@ const MASK_DY = 10.487;
 // x = card page x, clipL = "l" inset % of the masked group, photo = [x, y, size(w,h)] in page coords.
 // Design only; content (which doctor, button label) comes from home/doctors JSON, zipped by index.
 const design = [
-  { x: -118, clipL: -11.12, ph: [-99, 1394, 144, 144], btnX: -89, fill: fill1, nameW: 148 },
-  { x: 94, clipL: 9.22, ph: [128, 1406, 116, 132], btnX: 123, fill: fill1, nameW: 148 },
-  { x: 306, clipL: 29.09, ph: [327, 1394, 144, 144], btnX: 335, fill: fill1, nameW: 148 },
-  { x: 520, clipL: 49.52, ph: [542, 1392, 146, 146], btnX: 549, fill: fill1, nameW: 148 },
-  { x: 733, clipL: 69.68, ph: [755, 1388, 150, 150], btnX: 762, fill: fill1, nameW: 157 },
-  { x: 945, clipL: 90.02, ph: [966, 1388, 150, 150], btnX: 974, fill: fill2, nameW: 148 },
+  { x: -118, clipL: -11.12, ph: [-99, 1394, 144, 144], fill: fill1, nameW: 148 },
+  { x: 94, clipL: 9.22, ph: [128, 1406, 116, 132], fill: fill1, nameW: 148 },
+  { x: 306, clipL: 29.09, ph: [327, 1394, 144, 144], fill: fill1, nameW: 148 },
+  { x: 520, clipL: 49.52, ph: [542, 1392, 146, 146], fill: fill1, nameW: 148 },
+  { x: 733, clipL: 69.68, ph: [755, 1388, 150, 150], fill: fill1, nameW: 157 },
+  { x: 945, clipL: 90.02, ph: [966, 1388, 150, 150], fill: fill2, nameW: 148 },
 ];
 // Cards: the Figma six (home/doctors JSON) first, then every other doctor in src/data/doctors.json that has a photo (a
 // card without one would show an empty portrait; a doctor joins the row as soon as a photo is added). Every card is in the
@@ -56,10 +56,13 @@ const cards = [...figma, ...more].map((doc, i) => {
     role: t(doc.home_title ?? doc.title, edition.locale, 'doctors') || doctorRole(doc as any, edition.locale),
     img: img(doc.home_photo ?? doc.photo, edition.region), alt: name, btn: b.label, href, slug: doc.slug, book: b.action === 'book',
     // card-relative offsets (Figma page coords minus the card's x)
-    shapeX: (d.clipL * ROOT_W) / 100 + MASK_DX - d.x, phX: d.ph[0] - d.x, btnDX: d.btnX - d.x,
+    shapeX: (d.clipL * ROOT_W) / 100 + MASK_DX - d.x, phX: d.ph[0] - d.x,
   };
 });
 const countries = ['all', 'sa', 'ae'];
+// UAE / KSA editions open on their own country's pill (bug 048); Global on ALL. The cards outside it start hidden (no flash);
+// scripts/doctors-row.ts applies the pressed pill again on start so the auto-scroll copies match.
+const initial = edition.region === 'global' ? 'all' : edition.region;
 
 const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.src}");mask-mode:alpha;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-size:calc(182.127*var(--u)) calc(161.519*var(--u));-webkit-mask-size:calc(182.127*var(--u)) calc(161.519*var(--u));mask-position:calc(-${MASK_DX}*var(--u)) calc(-${MASK_DY}*var(--u));-webkit-mask-position:calc(-${MASK_DX}*var(--u)) calc(-${MASK_DY}*var(--u));`;
 ---
@@ -72,23 +75,27 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
     <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:56">{c.intro}</p>
 
     <div class="dpos flex max-lg:flex-wrap max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label={c.filterLabel} data-row-pills style="--x:371;--y:108;--w:279;--h:25">
-      <button type="button" aria-pressed="true" class="hit ui-pill pill" data-country={countries[0]} style="--x:0">{c.filters[0]}</button>
-      <button type="button" aria-pressed="false" class="hit ui-pill pill" data-country={countries[1]} style="--x:99">{c.filters[1]}</button>
-      <button type="button" aria-pressed="false" class="hit ui-pill pill" data-country={countries[2]} style="--x:200">{c.filters[2]}</button>
+      <button type="button" aria-pressed={String(countries[0] === initial)} class="hit ui-pill pill" data-country={countries[0]} style="--x:0">{c.filters[0]}</button>
+      <button type="button" aria-pressed={String(countries[1] === initial)} class="hit ui-pill pill" data-country={countries[1]} style="--x:99">{c.filters[1]}</button>
+      <button type="button" aria-pressed={String(countries[2] === initial)} class="hit ui-pill pill" data-country={countries[2]} style="--x:200">{c.filters[2]}</button>
     </div>
 
     <!-- Auto-scrolls in a slow loop as on the live site (src/scripts/autoscroll.ts, user decision 6 Oct 2026, bug 018). -->
     <div class="hscroll dpos w-full max-lg:self-stretch" data-row data-autoscroll style="--x:0;--y:168;--w:1052;--h:231">
       <div class="row flex gap-[calc(27*var(--u))] px-4" data-loop-row>
         {cards.map((card) => (
-          <article class="card dr-card relative shrink-0 snap-start bg-white rounded-r15 hair-card" data-loop-item data-sets={card.sets}>
-            <div class="pos rounded-r15 bg-veil" style="--x:3;--y:3;--w:179;--h:155"></div>
+          <article class="card dr-card relative shrink-0 snap-start bg-white rounded-(--radius-card) hair-card" data-loop-item data-sets={card.sets} hidden={!card.sets.split(' ').includes(initial)}>
+            <div class="pos rounded-(--radius-card) bg-veil" style="--x:3;--y:3;--w:179;--h:155"></div>
             <div class="pos shape" aria-hidden="true" style={`--x:${card.shapeX};--y:${MASK_DY - 4};--w:168.409;--h:170.657;background:url("${(card.fill as any).src}") center/100% 100% no-repeat;${maskStyle}`}></div>
             <Picture class="pos dr-photo object-cover" src={card.img} formats={['avif']} fallbackFormat="webp" width={px(card.ph[2])} height={px(card.ph[3])} widths={[px(card.ph[2]), px(card.ph[2]) * 2]} sizes={`${px(card.ph[2])}px`} loading="lazy" decoding="async" alt={card.alt} style={`--x:${card.phX};--y:${card.ph[1] - 1380};--w:${card.ph[2]};--h:${card.ph[3]}`} />
-            <h3 class="pos font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`--x:15;--y:170;--w:${card.nameW};--h:15`}>{card.name}</h3>
-            <p class="pos font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word]" style="--x:15;--y:185;--w:148;--h:20">{card.role}</p>
-            <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="hit pos btn-fill bg-cyan rounded-r5" aria-label={`${card.btn} - ${card.name}`} style="--x:15;--y:202;--w:71;--h:13"></a>
-            <span class="pos pointer-events-none font-gotham font-medium text-f8 leading-10 text-white text-center not-italic" style={`--x:${card.btnDX};--y:204;--w:45;--h:10`}>{card.btn}</span>
+            <!-- Name, role and button in flow from the Figma name top (170), button at the card bottom (bug 044/050: the shared
+                 .ui-btn-sm, Figma's 71 x 13 box with an 8px label was unreadable), so the card grows by the taller button and
+                 a long role pushes the button down instead of running into it; the cards of the row stay level. -->
+            <div class="info">
+              <h3 class="m-0 font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`max-width:calc(${card.nameW} * var(--u))`}>{card.name}</h3>
+              <p class="m-0 font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word] max-w-148">{card.role}</p>
+              <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-white" aria-label={`${card.btn} - ${card.name}`}>{card.btn}</a>
+            </div>
           </article>
         ))}
       </div>
@@ -113,7 +120,12 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
   /* Look (size, outline, pressed fill, centred label) = the shared .ui-pill rule in global.css; only the position is local. */
   .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; }
-  .card { width: calc(185 * var(--u)); height: calc(231 * var(--u)); }
+  /* Card: Figma 185 x 231 (r15; --radius-card, bug 049). Height = the info column (min 231). */
+  .card { width: calc(185 * var(--u)); min-height: calc(231 * var(--u)); box-sizing: border-box; }
+  .card:not([hidden]) { display: flex; flex-direction: column; }
+  .info { position: relative; flex: 1; display: flex; flex-direction: column; align-items: flex-start; padding: calc(170 * var(--u)) calc(15 * var(--u)) calc(14 * var(--u)); }
+  .info > a { margin-top: auto; }
+  .info > p { margin-bottom: calc(6 * var(--u)); }
   .dots { display: flex; justify-content: center; align-items: center; }
   @media (max-width: 1023.98px) {
     .pill { position: relative; inset-inline-start: auto; }
@@ -124,7 +136,8 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
   @media (min-width: 1024px) {
     .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
     .hscroll { scroll-padding-inline: calc(94 * var(--u)); }
-    .row { gap: calc(27.6 * var(--u)); padding-inline: calc(94 * var(--u)); height: calc(231 * var(--u)); }
+    .row { gap: calc(27.6 * var(--u)); padding-inline: calc(94 * var(--u)); }
+    .hscroll.dpos { height: auto; } /* the cards are taller than Figma's 231 by the bigger button (bug 044); they still end above the dots (433) */
   }
   /* RTL: flip the decorative masked shape itself (its box is already mirrored) */
   :global([dir='rtl']) .shape { scale: -1 1; }

@@ -6,7 +6,7 @@ import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
 
 // Figma 188:964 hero: image "PAR-inside 1" 1052x323 at page y 118 (1 under the header). Values: page y minus 118.
-// Title (95,100) Gotham Medium 39 / 37 (the line height the other heroes use), w 385 | button (98,180) 164x30, label top 9.
+// Title (95,100) Gotham Medium 39 / 37 (the line height the other heroes use), w 385 | button at (98,180): the shared .ui-btn (bug 044/050; Figma 164x30).
 // The client's text (5 Oct 2026) adds a paragraph under the title: the shared inner-page hero text style (Book 12/14 #6b6b6b,
 // w374 at x97, 13 below the title; button 17 below it, as on the condition pages), flow layout.
 // The image in Figma is only 1052x323 (no larger original), and there is no KSA (red ghutra) version yet:
@@ -23,7 +23,7 @@ const pic = {
 ---
 
 <section class="hero relative" aria-labelledby="feedback-title">
-  <!-- The person drifts with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the <img>. -->
+  <!-- The person drifts with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->
   <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} aria-hidden="true">
     {layers ? (
       <>
@@ -35,11 +35,9 @@ const pic = {
     )}
   </div>
   <div class="inner relative">
-    <h1 id="feedback-title" class="title m-0 font-gotham font-medium text-f39 text-navy not-italic">{c.title.map((line: string) => <span class="block">{line}</span>)}</h1>
+    <h1 id="feedback-title" class="title hero-title m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic">{c.title.map((line: string) => <span class="block">{line}</span>)}</h1>
     {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
-    <a href={c.button.href} class="btn hit btn-outline hair-card relative block rounded-r7 no-underline" style="--sw:1;--sc:var(--color-cyan)">
-      <span class="block font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
-    </a>
+    <a href={c.button.href} class="btn ui-btn hit btn-outline hair-card relative no-underline text-cyan" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
   </div>
 </section>
 
@@ -51,15 +49,14 @@ const pic = {
   .hero { min-block-size: calc(323 * var(--u)); margin-block-start: calc(-1 * var(--u)); }
   @media (max-width: 1023.98px) { .hero { min-block-size: 0; } }
   .inner { box-sizing: border-box; max-inline-size: calc(var(--target-w) * 1px); margin-inline: auto; padding-block: calc(100 * var(--u)) calc(24 * var(--u)); padding-inline-start: calc(95 * var(--u)); }
-  .title { inline-size: calc(385 * var(--u)); max-inline-size: 100%; min-block-size: calc(80 * var(--u)); line-height: calc(37 * var(--u)); overflow-wrap: break-word; }
+  .title { inline-size: calc(385 * var(--u)); max-inline-size: 100%; min-block-size: calc(80 * var(--u)); }
   .text { inline-size: calc(374 * var(--u)); max-inline-size: 100%; margin-block-start: calc(13 * var(--u)); margin-inline-start: calc(2 * var(--u)); overflow-wrap: anywhere; }
   .title + .btn { margin-block-start: 0; }
   .text + .btn { margin-block-start: calc(17 * var(--u)); }
-  .btn { box-sizing: border-box; inline-size: calc(164 * var(--u)); block-size: calc(30 * var(--u)); margin-inline-start: calc(3 * var(--u)); padding-block-start: calc(9 * var(--u)); }
-  .btn span { line-height: normal; }
+  .btn { margin-inline-start: calc(3 * var(--u)); } /* size, label, corners: the shared .ui-btn (bug 044/050; Figma 164 x 30, label 13) */
   @media (max-width: 1023.98px) {
     .inner { padding-inline: calc(24 * var(--u)); padding-block: calc(28 * var(--u)) calc(40 * var(--u)); }
-    .title { inline-size: auto; max-inline-size: 100%; }
+    .title { inline-size: auto; max-inline-size: 100%; min-block-size: 0; }
     .btn { margin-block-start: 12px; }
   }
 </style>

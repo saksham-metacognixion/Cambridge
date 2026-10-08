@@ -115,6 +115,13 @@ test('empty state: nothing matches -> empty list (country is still kept)', () =>
   assert.deepEqual(slugs(s), []);
   assert.equal(s.country, 'ae');
 });
+test('invalid URL values are ignored (unknown country, hospital, specialty)', () => {
+  const s = parseState('?country=zz&hospital=999&specialty=foo', 'ae', hospitals, ['gp', 'icu']);
+  assert.equal(s.country, 'ae');
+  assert.equal(s.hospital, '');
+  assert.equal(s.specialty, '');
+  assert.equal(parseState('?specialty=gp', 'global', hospitals, ['gp']).specialty, 'gp');
+});
 
 console.log(failed ? `\n${failed} test(s) FAILED` : '\nAll filter tests passed');
 process.exit(failed ? 1 : 0);

@@ -15,6 +15,8 @@ import ruleSection from '../../assets/doctor-profile/rule-section.svg';
  * the bio grow with the data; only the bars behind the photo are absolute. The profile shows exactly what Figma shows:
  * breadcrumb, photo, name, role, Book an Appointment, sub specialities, professional summary (no hospital, languages or contact).
  * Sections without data (no sub-specialities / no bio) are left out, not filled with invented text.
+ * Book an Appointment (Figma 131 x 28, radius 5.766, label 9): the shared .ui-btn (bugs 044 / 050). Photo card corners
+ * --radius-card (bug 049).
  */
 interface Props { doctor: Doctor; }
 const { doctor: d } = Astro.props;
@@ -61,7 +63,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
         <h1 id="dr-name" class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</h1>
         <p class="role m-0 font-gotham font-normal not-italic">{role}</p>
       </div>
-      <a href="#book-appointment" data-doctor={d.slug} class="book hit btn-fill-navy font-gotham font-medium no-underline">{c.book}</a>
+      <a href="#book-appointment" data-doctor={d.slug} class="book ui-btn hit btn-fill-navy">{c.book}</a>
     </div>
     <img class="rule-top" src={ruleTop.src} width="571" height="0.5" alt="" />
     {subs.length > 0 && (
@@ -95,8 +97,8 @@ const bio = t(d.bio, edition.locale, 'doctors');
   .crumbs li { white-space: pre-wrap; }
 
   .intro { display: flex; align-items: flex-start; margin-top: calc(54 * var(--u)); margin-inline-start: calc(104 * var(--u)); }
-  .card { flex: none; width: calc(244.577 * var(--u)); height: calc(215 * var(--u)); border-radius: calc(17.298 * var(--u)); box-sizing: border-box; --sw: .288; }
-  .panel { position: absolute; inset: calc(3.96 * var(--u)) auto auto calc(3.96 * var(--u)); width: calc(236.482 * var(--u)); height: calc(204.775 * var(--u)); border-radius: calc(17.298 * var(--u)); background: var(--color-veil); }
+  .card { flex: none; width: calc(244.577 * var(--u)); height: calc(215 * var(--u)); border-radius: var(--radius-card); box-sizing: border-box; --sw: .288; }
+  .panel { position: absolute; inset: calc(3.96 * var(--u)) auto auto calc(3.96 * var(--u)); width: calc(236.482 * var(--u)); height: calc(204.775 * var(--u)); border-radius: var(--radius-card); background: var(--color-veil); }
   .shape { position: absolute; inset-inline-start: 0; top: 0; width: calc(240.613 * var(--u)); height: calc(204.222 * var(--u)); -webkit-mask: var(--mask) 0 0 / 100% 100% no-repeat; mask: var(--mask) 0 0 / 100% 100% no-repeat; mask-mode: alpha; pointer-events: none; }
   .shape img { position: absolute; inset-inline-start: calc(8.811 * var(--u)); top: calc(4.689 * var(--u)); width: calc(222.49 * var(--u)); height: calc(225.461 * var(--u)); max-width: none; }
   :global([dir='rtl']) .shape { scale: -1 1; }
@@ -108,7 +110,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
   .head { display: flex; align-items: flex-start; justify-content: space-between; gap: calc(16 * var(--u)); }
   .name { font-size: calc(20 * var(--u)); line-height: calc(25 * var(--u)); overflow-wrap: anywhere; }
   .role { margin-top: calc(2 * var(--u)); font-size: calc(9.226 * var(--u)); line-height: calc(11.532 * var(--u)); color: #359446; overflow-wrap: anywhere; }
-  .book { flex: none; box-sizing: border-box; margin-top: calc(8 * var(--u)); width: calc(131 * var(--u)); min-height: calc(28 * var(--u)); padding: calc(9 * var(--u)) calc(6 * var(--u)) 0; border-radius: calc(5.766 * var(--u)); background: var(--color-navy); color: #fff; text-align: center; font-size: calc(9 * var(--u)); line-height: calc(11.532 * var(--u)); }
+  .book { margin-top: calc(8 * var(--u)); background: var(--color-navy); color: #fff; } /* bugs 044 / 050: .ui-btn size */
   .rule-top { display: block; margin-top: calc(16.5 * var(--u)); margin-inline-start: calc(2 * var(--u)); width: calc(571 * var(--u)); height: calc(0.5 * var(--u)); max-width: none; }
   .sub-h { margin-top: calc(11.5 * var(--u)); margin-inline-start: calc(2 * var(--u)); font-size: calc(12.75 * var(--u)); line-height: calc(16.337 * var(--u)); }
   .subs { list-style: none; margin: calc(10.7 * var(--u)) 0 0; padding: 0 0 0 calc(20 * var(--u)); display: grid; grid-template-columns: calc(183 * var(--u)) calc(186 * var(--u)) 1fr; row-gap: calc(11.3 * var(--u)); }

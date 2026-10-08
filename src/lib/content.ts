@@ -38,6 +38,9 @@ function merge(en: any, loc: any, where: string): any {
   // An Arabic array replaces the English one with ITS length (an Arabic text can have a different number of paragraphs /
   // title lines); each element still falls back element-wise.
   if (Array.isArray(en)) {
+    // One Arabic string for an English paragraph list = one paragraph (indexing a string would give its first letters;
+    // Why Cambridge team / trusted text, found 7 Oct 2026).
+    if (typeof loc === 'string' && loc) loc = [loc];
     if (Array.isArray(loc) && loc.length) return loc.map((v, i) => merge(en[i] ?? en[en.length - 1] ?? '', v, where));
     return en.map((v, i) => merge(v, loc?.[i], where));
   }

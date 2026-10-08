@@ -14,9 +14,10 @@ import OutlineButton from './OutlineButton.astro';
  *     (Figma top 118; the header covers that row).
  * Text is FLOW layout (title -> text -> button) so longer / Arabic copy pushes the next line down instead of overlapping.
  * Desktop positions in Figma px, relative to the stage: title top `titleTop` at x95 (w titleW), text `textGap` below the
- * title at x97 (w textW), button `buttonGap` below the text (or the title when there is no text) at x98, 164 x 30.
+ * title at x97 (w textW), button `buttonGap` below the text (or the title when there is no text) at x98 (Figma 164 x 30).
  * `titleMinH` (optional): the Figma title box height, so a title with fewer lines than in Figma keeps the text in place.
- * Button label: Gotham Medium 13 cyan, box `labelW` wide at `labelX` inside the button (Figma: 145 at 8; 153 at 5).
+ * Button: OutlineButton = the shared .ui-btn (bugs 044 / 050): its top-left keeps the Figma anchor, it grows with its label.
+ * `labelX` / `labelW` (Figma label offsets) are no longer used.
  */
 interface Pos { titleTop: number; titleW: number; titleMinH?: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
 interface Props {
@@ -72,7 +73,7 @@ const pic = {
 <section class:list={['relative', keepComposition && 'keep']} style={`--h: ${h}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${h}`}>
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
-         script's transform on the subject <img> never overrides it. -->
+         script's transform on the subject image never overrides it. -->
     <div class:list={['hero-media absolute inset-0 overflow-hidden pointer-events-none', mirror && !keepComposition && 'rtl:-scale-x-100']} data-hero-follow={layers ? follow : undefined} style={smallStyle} aria-hidden="true">
       {layers ? (
         <>
@@ -85,11 +86,11 @@ const pic = {
     </div>
 
     <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--th:${p.titleMinH};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
-      <h1 class:list={["title m-0 font-gotham font-medium text-f39 leading-37 not-italic", tone === "white" ? "text-navy lg:text-white" : "text-navy"]}>
+      <h1 class:list={["title hero-title m-0 font-gotham font-medium text-f39 leading-37 not-italic", tone === "white" ? "text-navy lg:text-white" : "text-navy"]}>
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
       {c.text && <p class:list={["text m-0 font-gotham font-normal text-f12 leading-14 not-italic", tone === "white" ? "text-body lg:text-white" : "text-body"]}>{c.text}</p>}
-      {c.button && <OutlineButton href={c.button.href} label={c.button.label} labelX={p.labelX} labelW={p.labelW} class="btn" fill={button === "fill"} {...buttonAttrs} />}
+      {c.button && <OutlineButton href={c.button.href} label={c.button.label} class="btn" fill={button === "fill"} {...buttonAttrs} />}
     </div>
     <slot name="art" />
   </div>
@@ -102,7 +103,7 @@ const pic = {
 <style>
   .cover { top: calc(-1 * var(--u)); height: calc(323 * var(--u)); }
   .copy { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
-  .title, .text { overflow-wrap: anywhere; }
+  .text { overflow-wrap: anywhere; }
   @media (min-width: 1024px) {
     .copy { position: absolute; inset-inline-start: calc(95 * var(--u)); top: calc(var(--tt) * var(--u)); }
     .title { width: calc(var(--tw) * var(--u)); min-height: calc(var(--th) * var(--u)); }

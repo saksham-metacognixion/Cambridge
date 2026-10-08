@@ -14,6 +14,9 @@ import SocialIcons from '../shared/SocialIcons.astro';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/contact', edition.locale);
+// This edition's phone(s) and address only (bug 048): Global shows both phones; an edition outside addressRegions has no address.
+const phones = (txt.phones as string[]).filter((_, i) => edition.region === 'global' || txt.phoneRegions[i] === edition.region);
+const showAddress = (txt.addressRegions as string[]).includes(edition.region);
 const social = img(txt.social.image, edition.region);
 const common = commonText(edition.locale);
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
@@ -43,29 +46,29 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
   <div class="absolute inset-x-0 top-4 h-423 bg-veil max-lg:inset-y-0 max-lg:h-auto max-lg:top-0" aria-hidden="true"></div>
 
   <div class="stage max-lg:px-16 max-lg:py-40">
-    <!-- Corner art (placed BELOW the card: see report): box 324x348 @ (0,95), clipped, rounded bottom-left 16 -->
-    <div class="corner hidden lg:block absolute start-0 top-95 w-324 h-348 overflow-clip rounded-es-r16 pointer-events-none" aria-hidden="true">
+    <!-- Corner art (placed BELOW the card: see report): box 324x348 @ (0,95), clipped, rounded bottom-start (Figma r16; --radius-card, bug 049) -->
+    <div class="corner hidden lg:block absolute start-0 top-95 w-324 h-348 overflow-clip rounded-es-(--radius-card) pointer-events-none" aria-hidden="true">
       <div class="corner-art" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
     </div>
 
-    <div class="card relative bg-white max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:start-177 lg:top-35 lg:w-698 lg:min-h-318">
+    <div class="card relative bg-white rounded-(--radius-card) max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:start-177 lg:top-35 lg:w-698 lg:min-h-318">
       <h2 id="home-contact-title" class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:start-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
 
       <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
         <p class:list={[label, 'm-0 lg:absolute lg:start-54 lg:top-82 lg:w-31']}>{txt.emailLabel}</p>
         <p class:list={[value, 'lg:absolute lg:start-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="hit text-body no-underline">{txt.email}</a></p>
         <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-126']}>{txt.phoneLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-144 lg:w-193 lg:h-30']}>{txt.phones[0]}<br />{txt.phones[1]}</p>
-        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-198 lg:w-193 lg:h-42']}>{txt.address}</p>
+        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-144 lg:w-193 lg:h-30']}>{phones.map((p, i) => <>{i > 0 && <br />}{p}</>)}</p>
+        {showAddress && <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>}
+        {showAddress && <p class:list={[value, 'lg:absolute lg:start-54 lg:top-198 lg:w-193 lg:h-42']}>{txt.address}</p>}
         <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-253 lg:w-49']}>{txt.followLabel}</p>
         <!-- The six icons are one svg image (Figma); each icon gets the live site's profile link (src/data/social.json). -->
         <div class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))"><SocialIcons src={social.src} width={social.width} height={social.height} alt={txt.social.alt} /></div>
       </div>
 
-      <!-- Own form id "home-contact" (fields = what Figma shows; src/data/forms.json), inbox FORM_TO_SEND_ENQUIRY.
+      {/* Own form id "home-contact" (fields = what Figma shows; src/data/forms.json), inbox FORM_TO_SEND_ENQUIRY.
            Errors sit in the Figma gaps under each box; the consent row (no Figma design here: Contact page style) and the
-           button flow from the button's Figma top (263), so the white card grows by the consent row. -->
+           button flow from the button's Figma top (263), so the white card grows by the consent row. */}
       <form action="/api/forms/home-contact" method="POST" novalidate data-form="home-contact" data-config={clientConfig('home-contact', edition.locale)} aria-labelledby="home-contact-title" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
         <input type="hidden" name="edition" value={edition.id} />
 
@@ -98,9 +101,9 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
           </div>
           {siteKey && <div class="ts-slot" data-sitekey={siteKey} data-language={edition.locale}></div>}
           <p class="f-alert" role="alert" hidden></p>
-          <button type="submit" class="hit btn-fill-navy relative block border-0 p-0 m-0 mt-8 bg-navy rounded-r8 h-26 w-full cursor-pointer not-italic">
-            <span class="absolute block top-7 w-65 h-13 text-start max-lg:left-1/2 max-lg:-translate-x-1/2 lg:start-111 font-normal text-f9 leading-14 text-white whitespace-nowrap">{txt.form.submit}</span>
-          </button>
+          <!-- Send (bug 044/050): the shared .ui-btn height and label (Figma 284 x 26, 9px label), still the full width of the
+               form column; the span is the label forms.ts swaps for "Sending". -->
+          <button type="submit" class="ui-btn hit submit btn-fill-navy relative border-0 bg-navy text-white"><span>{txt.form.submit}</span></button>
         </div>
       </form>
       <div class="f-success max-lg:py-0 lg:absolute lg:start-371 lg:top-47 lg:w-284" data-success-for="home-contact" role="status" tabindex="-1" hidden>
@@ -120,7 +123,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
   @media (min-width: 1024px) { .social { inset-inline-start: calc(53.09 * var(--u)); } }
   .field {
     box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0;
-    background: var(--color-field); border-radius: calc(8 * var(--u));
+    background: var(--color-field); border-radius: var(--radius-field); /* Figma r8 (bug 049) */
     height: calc(26 * var(--u)); padding: 0 calc(8 * var(--u));
     font-family: var(--font-gotham); font-weight: 400; font-size: calc(9 * var(--u)); line-height: calc(14 * var(--u));
     color: var(--color-body);
@@ -138,6 +141,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
     padding: calc(10 * var(--u)) calc(11 * var(--u));
     font-size: calc(7 * var(--u)); line-height: calc(14 * var(--u));
   }
+  .submit { width: 100%; margin-top: calc(8 * var(--u)); }
   .field::placeholder { color: var(--color-body); opacity: 1; }
   .corner-art {
     position: absolute;

@@ -29,7 +29,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
       <hr class="rule" />
       <ul class="stats" role="list">
         {items.map((s) => (
-          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="sr-only">{s.number}</span><span class="n" data-countup data-countup-duration={s.secs} aria-hidden="true">{s.number}</span><span class="l">{s.label}</span></li>
+          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="sr-only">{s.number}</span><span class="n" aria-hidden="true"><span class="size">{s.number}</span><span class="live" data-countup data-countup-duration={s.secs}>{s.number}</span></span><span class="l">{s.label}</span></li>
         ))}
       </ul>
     </div>
@@ -50,7 +50,11 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
   .rule { margin: calc(13 * var(--u)) 0 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid var(--color-teal-border); }
   .stats { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
   .stat { color: var(--color-navy-alt); font-weight: 500; padding-top: calc(3 * var(--u)); }
-  .n { display: block; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  /* An invisible copy of the final text (.size) sizes the box; the counting text (.live) sits on top, so the count-up never
+     changes the stat's width or the row's wrapping (no layout shift; same pattern as why/Team.astro). */
+  .n { display: block; position: relative; width: max-content; max-width: 100%; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  .n .size { visibility: hidden; }
+  .n .live { position: absolute; inset-inline-start: 0; top: 0; white-space: nowrap; }
   .l { display: block; font-size: calc(12 * var(--u)); line-height: calc(12 * var(--u)); margin-top: calc(6 * var(--u)); }
   @media (min-width: 1024px) {
     .in { height: calc(385 * var(--u)); }

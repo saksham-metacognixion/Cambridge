@@ -51,8 +51,8 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
   .list { display: flex; flex-direction: column; gap: calc(40 * var(--u)); }
   .row { position: relative; display: flex; flex-direction: column; gap: calc(24 * var(--u)); font-style: normal; }
   .pattern { display: none; }
-  .card { position: relative; flex: none; box-sizing: border-box; width: calc(214.9 * var(--u)); height: calc(268.3 * var(--u)); background: #fff; border-radius: calc(17.3 * var(--u)); box-shadow: 0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13); }
-  .card :global(.photo) { position: absolute; inset-inline-start: calc(var(--px) * var(--u)); top: calc(3 * var(--u)); width: calc(208 * var(--u)); height: calc(262 * var(--u)); object-fit: cover; max-width: none; border-radius: calc(17.3 * var(--u)); display: block; }
+  .card { position: relative; flex: none; box-sizing: border-box; width: calc(214.9 * var(--u)); height: calc(268.3 * var(--u)); background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13); }
+  .card :global(.photo) { position: absolute; inset-inline-start: calc(var(--px) * var(--u)); top: calc(3 * var(--u)); width: calc(208 * var(--u)); height: calc(262 * var(--u)); object-fit: cover; max-width: none; border-radius: var(--radius-card); display: block; } /* card + photo corners: bug 049 */
   .t { margin: 0; font-weight: 500; font-size: calc(29 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .p { margin: calc(var(--g) * var(--u)) 0 0; font-weight: 400; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .p p { margin: 0; }

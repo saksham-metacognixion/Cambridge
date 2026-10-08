@@ -30,7 +30,6 @@ const radios = fieldsIn(ID, 'gender');
     edition={edition}
     submit={c.submit}
     ariaLabelledby={`${ID}-title`}
-    button={{ w: 99.169, h: 33.056, r: 9.917, fs: 9.917 }}
     gaps={{ consent: 13.52, submit: 13.52 }}
   >
     <div class="f-grid b-choose">
@@ -74,8 +73,6 @@ const radios = fieldsIn(ID, 'gender');
   /* Panel 586 x 399.38 (grows by the consent row, which Figma doesn't draw). Content x 31.55..555.34. */
   :global(.p-book) { inline-size: calc(586 * var(--u)); padding: calc(21.64 * var(--u)) calc(30.656 * var(--u)) calc(14.72 * var(--u)) calc(31.55 * var(--u)); }
   /* Title centred 3.4 left of the panel centre: top 21.64, next block at 54.09. */
-  /* SUBMIT is centred on the panel (293), the content box is centred 0.45 to its right. */
-  :global(.p-book .f-submit) { inset-inline-start: calc(-0.45 * var(--u)); }
   .b-title { min-block-size: calc(32.45 * var(--u)); margin-inline-end: calc(7.694 * var(--u)); }
   .b-choose { display: grid; grid-template-columns: repeat(2, calc(256.037 * var(--u))); column-gap: calc(11.72 * var(--u)); }
   /* "Patient Details:" top 105.48 (19.836 below the selects), next row at 136.13 */

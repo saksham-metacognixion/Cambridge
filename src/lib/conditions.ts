@@ -16,8 +16,10 @@ export interface Condition {
   summary: Localized;
   /** specialty ids (src/data/specialties.json), from the WordPress condition_specialty terms */
   specialties: string[];
-  /** slug of the live site's /condition/<old_slug>/ page (301 map, src/pages/redirects-pages.txt.ts) */
+  /** slug of the live site's /condition/<old_slug>/ page (301 map, src/lib/redirects.ts) */
   old_slug?: string;
+  /** doctors.json slugs linked from the live condition page (tools/import-wp-cpt.mjs); "Expert Care, Trusted Doctors" */
+  doctors?: string[];
 }
 
 export const conditions: Condition[] = data.conditions as Condition[];

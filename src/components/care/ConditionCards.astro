@@ -12,8 +12,9 @@ import accident from '../../assets/care/post-acute/icon-accident.svg';
  * H2 Medium 28 #00415a at x56 (box 33) | 24 | cards 222 x 187, radius 10, border .5 #004059 at x 61 / 298 / 536 / 773 (gaps 15 / 16 / 15,
  * normalised to the Figma x's). Inside (Figma px from the card's top-left; the designer nudged each card a little, normalised to card 1):
  * icon at (15, 23), its own size (41.8 x 38.2 / 36.4 x 36.6 / 34.6 x 36.5 / 38.3 x 38.3); title Book 15 #004059 at x15, top 78 (Figma 77-84;
- * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 74 x 17 r3 at (16, 152), label "Know More" Medium 8 white
- * at +7 / +4. Card target: `href` (a care page, CarePage), `condition` (detail slug) or `page` (PAGE_PATHS).
+ * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 (Figma 74 x 17 r3 at (16, 152), label "Know More"
+ * Medium 8): now the shared .ui-btn (bugs 044 / 050), at the card's bottom. Card corners --radius-card (bug 049).
+ * Card target: `href` (a care page, CarePage), `condition` (detail slug) or `page` (PAGE_PATHS).
  * `icon` is optional: the client's programme lists (Our Care documents, 5 Oct 2026) have no icons, so those cards start with the
  * title at the icon's top (docs/open-decisions.md CT6). `text` = optional intro paragraphs under the heading (Outpatient Care:
  * heading + two paragraphs + six text cards, same geometry as SubServiceGrid's intro).
@@ -41,7 +42,7 @@ const list = cards.map((k, i) => ({
           {k.icon && <img src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
           <h3 class="title">{k.title}</h3>
           <p class="text">{k.text}</p>
-          <a href={k.href} class="btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
+          <a href={k.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
         </article>
       </li>
     ))}
@@ -56,12 +57,11 @@ const list = cards.map((k, i) => ({
   .t p + p { margin-top: calc(14 * var(--u)); }
   .grid { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--u))); column-gap: calc(15.33 * var(--u)); row-gap: calc(24 * var(--u)); }
   .cell { display: flex; }
-  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: calc(187 * var(--u)); padding: calc(23 * var(--u)) calc(15 * var(--u)) calc(18 * var(--u)); border-radius: calc(10 * var(--u)); background: #fff; }
+  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: calc(187 * var(--u)); padding: calc(23 * var(--u)) calc(15 * var(--u)) calc(18 * var(--u)); border-radius: var(--radius-card); background: #fff; } /* bug 049 */
   .ico { display: block; max-width: none; flex: none; }
   .title { margin: 0; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
   .text { margin: calc(2 * var(--u)) 0 0; width: 100%; font-size: calc(9 * var(--u)); line-height: calc(10 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
-  .btn { position: relative; display: block; flex: none; margin-top: auto; margin-inline-start: calc(1 * var(--u)); width: calc(74 * var(--u)); height: calc(17 * var(--u)); border-radius: calc(3 * var(--u)); background: var(--color-navy); text-decoration: none; --hit-h: 44px; --hit-w: 0px; }
-  .btn span { position: absolute; inset-inline-start: calc(7 * var(--u)); top: calc(4 * var(--u)); width: calc(66 * var(--u)); font-weight: 500; font-size: calc(8 * var(--u)); line-height: calc(10 * var(--u)); color: #fff; white-space: nowrap; }
+  .btn { margin-top: auto; background: var(--color-navy); color: #fff; } /* bugs 044 / 050: shared .ui-btn size */
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }

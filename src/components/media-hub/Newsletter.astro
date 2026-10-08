@@ -17,19 +17,21 @@ const pattern = img('media-hub/newsletter-pattern', edition.region);
     <Picture src={pattern} formats={['avif']} fallbackFormat="webp" width={px(1045)} height={px(497)} widths={[px(1045)]} sizes="1440px" loading="lazy" decoding="async" alt="" class="block h-full w-full object-cover" pictureAttributes={{ class: 'contents' }} />
   </div>
 
-  <div class="relative mx-auto h-267 w-772 max-w-[calc(100%-32px)] rounded-r20 bg-white shadow-nl-card max-lg:h-auto max-lg:px-24 max-lg:py-32">
+  <div class="relative mx-auto h-267 w-772 max-w-[calc(100%-32px)] rounded-(--radius-panel) bg-white shadow-nl-card max-lg:h-auto max-lg:px-24 max-lg:py-32">
     <h2 class="m-0 font-gotham font-medium text-f36 leading-[1.01] tracking-[calc(0.36*var(--u))] text-navy not-italic lg:absolute lg:start-68 lg:top-33 lg:w-402">
       <span class="block">{c.heading[0]}</span><span class="block">{c.heading[1]}</span>
     </h2>
     <p class="m-0 font-gotham font-normal text-f15 leading-[calc(18.264*var(--u))] text-black not-italic max-lg:mt-16 lg:absolute lg:start-68 lg:top-121 lg:w-641 lg:text-center">{c.text}</p>
 
-    <form action="/api/forms/newsletter" method="POST" class="nl relative rounded-r15 bg-white shadow-nl-form max-lg:mt-24 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:gap-12 max-lg:p-12 lg:absolute lg:start-119 lg:top-163 lg:h-[calc(75.247*var(--u))] lg:w-[calc(535.497*var(--u))]">
+    <form action="/api/forms/newsletter" method="POST" class="nl relative rounded-(--radius-card) bg-white shadow-nl-form max-lg:mt-24 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:gap-12 max-lg:p-12 lg:absolute lg:start-119 lg:top-163 lg:h-[calc(75.247*var(--u))] lg:w-[calc(535.497*var(--u))]">
       <!-- Same as the footer newsletter: not one of the scope's 4 forms, the function rejects it until Pramod decides. -->
       <input type="hidden" name="edition" value={edition.id} />
-      <span class="max-lg:static max-lg:shrink-0 lg:absolute lg:start-[calc(17.53*var(--u))] lg:top-[calc(17.53*var(--u))] flex h-[calc(39.45*var(--u))] w-[calc(39.45*var(--u))] items-center justify-center rounded-r19p725 bg-[#f8f8f8]" aria-hidden="true"><span class="nl-icon">✉️</span></span>
+      <span class="max-lg:static max-lg:shrink-0 lg:absolute lg:start-[calc(17.53*var(--u))] lg:top-[calc(17.53*var(--u))] flex h-[calc(39.45*var(--u))] w-[calc(39.45*var(--u))] items-center justify-center rounded-full bg-[#f8f8f8]" aria-hidden="true"><span class="nl-icon">✉️</span></span>
       <label class="sr-only" for="nl-email">{c.emailLabel}</label>
       <input id="nl-email" type="email" name="email" required autocomplete="email" placeholder={c.emailPlaceholder} class="h-44 max-lg:min-w-0 max-lg:flex-1 lg:absolute lg:start-75.25 lg:top-[calc(15.6*var(--u))] lg:w-280 lg:max-w-[calc(100%-240px)] border-0 bg-transparent p-0 font-gotham font-normal text-f13p15 text-[#57656c] outline-0 placeholder:text-[#57656c] placeholder:opacity-100 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan" />
-      <button type="submit" class="hit btn-fill max-lg:h-44 max-lg:w-full max-lg:ps-0 max-lg:pt-0 max-lg:text-center lg:absolute lg:end-[calc(11.69*var(--u))] lg:top-[calc(11.69*var(--u))] lg:h-[calc(51.869*var(--u))] lg:w-[calc(150.494*var(--u))] cursor-pointer rounded-r15 border-0 bg-cyan p-0 ps-[calc(40.69*var(--u))] pt-[calc(22.31*var(--u))] text-start font-gotham font-bold text-f11p689 leading-14 text-white not-italic">{c.submit}</button>
+      <!-- Subscribe (bug 044/050): the shared .ui-btn size instead of Figma's 150 x 52 box with an offset 11.7px label; kept at the
+           Figma end inset, centred on the field's height. -->
+      <button type="submit" class="ui-btn hit btn-fill max-lg:w-full lg:absolute lg:end-[calc(11.69*var(--u))] lg:top-1/2 lg:-translate-y-1/2 border-0 bg-cyan text-white">{c.submit}</button>
     </form>
   </div>
 </section>

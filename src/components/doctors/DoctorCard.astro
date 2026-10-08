@@ -12,6 +12,9 @@ import fill from '../../assets/doctors-page/card-fill.svg';
  * Doctor card, Figma 62:223 / 62:310 (215 x 268.459, radius 17.432). FLOW layout: the panel is fixed (180.135), the text
  * under it grows with the name and role, the card grows with it. Absolute only for the decorative bars and the photo.
  * All numbers below are Figma px (scaled by --u). Text sizes are the card's own (13.946 / 9.297), not the Home card's.
+ * Buttons (Figma 82.514 x 15.108, radius 5.811, label 9.297): the shared small size .ui-btn.ui-btn-sm (bugs 044 / 050: two buttons
+ * share the card), level at the card's bottom, wrapping onto two lines of buttons if they do not fit side by side.
+ * Card + panel corners --radius-card (bug 049).
  */
 /* `heading`: the name's level in the page outline (h2 on Find a Doctor, h3 under a section h2 elsewhere). `book`: false hides Book Now. */
 interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; heading?: 'h2' | 'h3'; book?: boolean; }
@@ -53,16 +56,16 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
   <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</Name>
   <p class="role m-0 font-gotham font-normal text-body not-italic">{role}</p>
   <div class="actions">
-    <a href={href} class="btn btn-see hit btn-fill font-gotham font-medium no-underline" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
+    <a href={href} class="btn btn-see ui-btn ui-btn-sm hit btn-fill" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
     {book && d.show_book_now && (
-      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book hit btn-fill font-gotham font-normal no-underline" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
+      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book ui-btn ui-btn-sm hit btn-fill" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
     )}
   </div>
 </article>
 
 <style>
-  .card { width: calc(215 * var(--u)); min-height: calc(268.459 * var(--u)); border-radius: calc(17.432 * var(--u)); padding-bottom: calc(18.59 * var(--u)); box-sizing: border-box; }
-  .panel { margin: calc(3.487 * var(--u)) calc(3.487 * var(--u)) 0; height: calc(180.135 * var(--u)); border-radius: calc(17.432 * var(--u)); background: var(--color-veil); flex: none; }
+  .card { width: calc(215 * var(--u)); min-height: calc(268.459 * var(--u)); border-radius: var(--radius-card); padding-bottom: calc(18.59 * var(--u)); box-sizing: border-box; }
+  .panel { margin: calc(3.487 * var(--u)) calc(3.487 * var(--u)) 0; height: calc(180.135 * var(--u)); border-radius: var(--radius-card); background: var(--color-veil); flex: none; }
   /* Decorative bars: the fill artwork is clipped by the panel-shaped mask (mask 208.027 x 179.576, art offset 6.589 / 4.052). */
   .shape { position: absolute; inset-inline-start: 0; top: 0; width: calc(208.027 * var(--u)); height: calc(179.576 * var(--u)); -webkit-mask: var(--mask) 0 0 / 100% 100% no-repeat; mask: var(--mask) 0 0 / 100% 100% no-repeat; mask-mode: alpha; pointer-events: none; }
   .shape img { position: absolute; inset-inline-start: calc(6.589 * var(--u)); top: calc(4.052 * var(--u)); width: calc(195.719 * var(--u)); height: calc(198.331 * var(--u)); max-width: none; }
@@ -71,8 +74,8 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
   :global([dir='rtl']) .photo { translate: 50% 0; inset-inline-start: calc(50% - var(--dx) * var(--u)); }
   .name { margin-top: calc(13.81 * var(--u)); margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); font-size: calc(13.946 * var(--u)); line-height: calc(17.432 * var(--u)); overflow-wrap: anywhere; }
   .role { margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); min-height: calc(11.622 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); overflow-wrap: anywhere; }
-  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline-start: calc(17.43 * var(--u)); display: flex; gap: calc(7.06 * var(--u)); }
-  .btn { display: block; box-sizing: border-box; min-width: calc(82.514 * var(--u)); height: calc(15.108 * var(--u)); padding: calc(2.32 * var(--u)) calc(13.95 * var(--u)) 0 calc(16.27 * var(--u)); border-radius: calc(5.811 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); color: #fff; text-align: center; white-space: nowrap; }
+  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline: calc(17.43 * var(--u)) calc(6 * var(--u)); display: flex; flex-wrap: wrap; gap: 8px calc(7.06 * var(--u)); }
+  .btn { color: #fff; } /* bugs 044 / 050: .ui-btn-sm size */
   .btn-see { background: var(--color-cyan); }
   .btn-book { background: #21b573; }
 </style>

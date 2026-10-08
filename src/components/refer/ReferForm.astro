@@ -40,7 +40,7 @@ const tabs = [
 
   {tabs.map((t, i) => (
     <div class="card pf-card" role="tabpanel" id={`refer-panel-${t.key}`} aria-labelledby={`refer-tab-${t.key}`} hidden={i !== 0}>
-      <FormShell id={t.form} edition={edition} submit={c.submit} ariaLabel={c.ariaLabel[t.key]} button={{ w: 150, h: 50, r: 15, fs: 15 }} gaps={{ consent: 37, submit: 22 }} class="pf rf">
+      <FormShell id={t.form} edition={edition} submit={c.submit} ariaLabel={c.ariaLabel[t.key]} gaps={{ consent: 37, submit: 22 }} class="pf rf">
         <ReferFields form={t.form} edition={edition} />
       </FormShell>
     </div>

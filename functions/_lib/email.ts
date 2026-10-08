@@ -50,8 +50,13 @@ const sendgrid: Adapter = async (m, env) => {
   if (!r.ok) throw new Error(`sendgrid ${r.status}`);
 };
 
-/** Local development only: accepts the submission and sends nothing (and logs nothing). */
-const none: Adapter = async () => {};
+/**
+ * Local development only: accepts the submission and sends nothing (and logs nothing). Refused unless LOCAL_DEV=true
+ * (.dev.vars), so a production deployment with EMAIL_PROVIDER=none cannot silently discard submissions (-> 502 send_failed).
+ */
+const none: Adapter = async (_m, env) => {
+  if (env.LOCAL_DEV !== 'true') throw new Error('EMAIL_PROVIDER "none" is for local development only (set LOCAL_DEV=true)');
+};
 
 const adapters: Record<string, Adapter> = { resend, postmark, sendgrid, none };
 

@@ -11,7 +11,7 @@ import Band from '../careers/Band.astro';
  * "Trusted Standards & Global Partnerships" (Figma 55:10015), page y 2985-3728, box x90 w869 h743, radius 30, rgba(237,237,237,.5),
  * shadow 0 4 4 rgba(0,0,0,.13). Inside (relative to the box): title Medium 37 / 42 #00415a, centred in a 758 box at x65, top 76;
  * copy Book 16 / 18 #6b6b6b centred in a 670 box at x96, 15 below the title; Read More 118 x 30 (#00415a, radius 7, label Medium 13 white)
- * at x377, 12 below the copy; photo 638 x 399 at x117, 18 below the button, ends 1 above the box bottom; the pill bars behind the two men (11 loose vectors, 451.5 x 292.7 at (205, 450)) are one SVG under the photo.
+ * at x377 (now the shared .ui-btn size, centred in the box, bug 044/050; box corners --radius-panel, bug 049), 12 below the copy; photo 638 x 399 at x117, 18 below the button, ends 1 above the box bottom; the pill bars behind the two men (11 loose vectors, 451.5 x 292.7 at (205, 450)) are one SVG under the photo.
  */
 interface Props { edition: Edition; c: any }
 const { edition, c } = Astro.props;
@@ -23,19 +23,19 @@ const more = urlFor(edition, pagePath(c.button.page));
   <div class="box">
     <h2 class="t">{c.title.map((l: string) => <span class="block">{l}</span>)}</h2>
     <div class="p">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
-    <a href={more} class="btn btn-fill-navy">{c.button.label}</a>
+    <a href={more} class="btn ui-btn btn-fill-navy">{c.button.label}</a>
     <img src={bars.src} width="451.523" height="292.68" alt="" class="bars" loading="lazy" decoding="async" />
     <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(638)} height={px(399)} widths={[px(638), 1276]} sizes={`(min-width: 1440px) ${px(638)}px, 90vw`} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
   </div>
 </Band>
 
 <style>
-  .box { position: relative; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; background: rgba(237, 237, 237, 0.5); border-radius: calc(30 * var(--u)); box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13); padding: calc(40 * var(--u)) calc(24 * var(--u)) 0; font-style: normal; text-align: center; overflow: hidden; }
+  .box { position: relative; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; background: rgba(237, 237, 237, 0.5); border-radius: var(--radius-panel); box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13); padding: calc(40 * var(--u)) calc(24 * var(--u)) 0; font-style: normal; text-align: center; overflow: hidden; }
   .t { margin: 0; overflow-wrap: anywhere; font-weight: 500; font-size: min(calc(37 * var(--u)), 8.4vw); line-height: 1.14; color: var(--color-navy-alt); }
   .p { margin: calc(15 * var(--u)) 0 0; font-weight: 400; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .p p { margin: 0; }
   .p p + p { margin-top: calc(18 * var(--u)); }
-  .btn { display: flex; align-items: center; justify-content: center; margin-top: calc(12 * var(--u)); width: calc(118 * var(--u)); height: calc(30 * var(--u)); border-radius: calc(7 * var(--u)); background: var(--color-navy-alt); color: #fff; font-weight: 500; font-size: calc(13 * var(--u)); text-decoration: none; white-space: nowrap; }
+  .btn { margin-top: calc(12 * var(--u)); background: var(--color-navy-alt); color: #fff; } /* size from .ui-btn (bug 044/050) */
   .box :global(.img) { position: relative; display: block; margin-top: calc(18 * var(--u)); width: 100%; max-width: calc(638 * var(--u)); height: auto; aspect-ratio: 638 / 399; }
   .bars { display: none; }
   @media (min-width: 1024px) {
@@ -44,7 +44,7 @@ const more = urlFor(edition, pagePath(c.button.page));
     .t { margin-inline-start: calc(65 * var(--u)); width: calc(758 * var(--u)); }
     .p { margin-inline-start: calc(96 * var(--u)); width: calc(670 * var(--u)); min-height: calc(108 * var(--u)); }
     .bars { display: block; position: absolute; inset-inline-start: calc(205 * var(--u)); top: calc(450 * var(--u)); width: calc(451.523 * var(--u)); height: calc(292.68 * var(--u)); max-width: none; pointer-events: none; }
-    .btn { margin-inline-start: calc(377 * var(--u)); }
+    .btn { align-self: center; } /* Figma x377 = the box centre; the padding-sized button stays centred */
     .box :global(.img) { margin-inline-start: calc(117 * var(--u)); width: calc(638 * var(--u)); max-width: none; }
   }
 </style>

@@ -88,6 +88,10 @@ for (const section of document.querySelectorAll<HTMLElement>(
   new ResizeObserver(() => pg.update()).observe(row);
   row.addEventListener("autoscroll:change", () => pg.update());
 
+  // UAE / KSA editions render with their country's pill pressed (Doctors.astro, bug 048): apply it so the row, the
+  // auto-scroll copies and the dots all match it.
+  const pressed = pills.find((p) => p.getAttribute("aria-pressed") === "true")?.dataset.country;
+  if (pressed && pressed !== "all") show(pressed);
   if (desktop.matches) scroll(pitch(), false);
   pg.update();
 }

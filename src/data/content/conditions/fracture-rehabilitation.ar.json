@@ -7,7 +7,10 @@
     "ariaLabel": "إعادة تأهيل الكسور",
     "title": [
       "إعادة تأهيل الكسور"
-    ]
+    ],
+    "button": {
+      "label": "احجز موعد"
+    }
   },
   "overviewHeading": "نبذة عن البرنامج",
   "overview": [

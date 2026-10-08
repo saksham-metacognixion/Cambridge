@@ -2,9 +2,9 @@
 /*
  * One health calculator (bug 014; no Figma frame): the inner-page intro block (CenteredIntro, as on Refer a Patient /
  * Insurance / International) over the white page-form card (Refer a Patient 46:8029: 968 wide at x 42, padding 56 / 43 / 52 /
- * 44, radius 14.32, shadow) with the grey-box page fields (forms.css `pf-*`: Gotham Book 15 labels, 35-high boxes, radius
- * 10.754) in the two 410-wide columns of the Refer form, the label above its box because the live questions are long
- * ("Are you taking blood pressure medication?"), the Refer SUBMIT button (150 x 50, radius 15, Bold 15) and, after a
+ * 44, --radius-card, shadow) with the grey-box page fields (forms.css `pf-*`: Gotham Book 15 labels, 35-high boxes,
+ * --radius-field) in the two 410-wide columns of the Refer form, the label above its box because the live questions are long
+ * ("Are you taking blood pressure medication?"), the SUBMIT button (the shared .ui-btn, bug 044/050) and, after a
  * calculation, the result (section-heading style value, Bold 15 category, Book 12/14 note) with the inner-page outline
  * button that opens the Book an Appointment pop-up (the live calculators end with the same call to action).
  * Fields: src/data/calculators.json; text: src/data/content/calculators/<key>.<locale>.json; logic: src/scripts/calculator.ts.
@@ -53,7 +53,7 @@ const config = JSON.stringify({ key: calc.key, invalid: common.errors.invalid, f
         })}
       </div>
       <p id={id('alert')} class="f-alert" role="alert" hidden></p>
-      <button type="submit" class="f-submit btn-fill" style="--bw:150;--bh:50;--br:15;--bfs:15"><span>{c.form.submit}</span></button>
+      <button type="submit" class="f-submit ui-btn btn-fill"><span>{c.form.submit}</span></button>
     </form>
 
     <div class="result" data-calc-result role="status" aria-live="polite" hidden>
@@ -81,8 +81,8 @@ const config = JSON.stringify({ key: calc.key, invalid: common.errors.invalid, f
   .cf :global(input[type='number']) { -moz-appearance: textfield; }
   .cf :global(input[type='number']::-webkit-inner-spin-button), .cf :global(input[type='number']::-webkit-outer-spin-button) { -webkit-appearance: none; margin: 0; }
   .cf :global(.f-alert) { margin-block-start: calc(16 * var(--u)); text-align: start; }
-  /* the live labels are longer than the Refer SUBMIT ("Calculate Heart Health Age", Arabic): the button grows with its label, 150 at least */
-  .cf :global(.f-submit) { margin-block-start: calc(37 * var(--u)); inline-size: auto; min-inline-size: calc(var(--bw) * var(--u)); padding-inline: calc(24 * var(--u)); }
+  /* the live labels are long ("Calculate Heart Health Age", Arabic): the .ui-btn grows with its label */
+  .cf :global(.f-submit) { margin-block-start: calc(37 * var(--u)); } /* size, label, corners: the shared .ui-btn (bug 044/050) */
   .result { margin-block-start: calc(32 * var(--u)); text-align: center; }
   .result[hidden] { display: none; }
   .r-value { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }

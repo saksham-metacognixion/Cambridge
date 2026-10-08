@@ -118,10 +118,10 @@ export const onRequestPost = async ({
   if (!human) return fail(403, "turnstile");
 
   // Recipient for this form type in this region.
-  const edition = String(data.get("edition") ?? "global-en");
-  const region = REGIONS.includes(edition.split("-")[0])
-    ? edition.split("-")[0]
-    : "global";
+  // Edition id from the hidden field, whitelisted before it reaches the email subject (never raw user input there).
+  const rawEdition = String(data.get("edition") ?? "");
+  const edition = /^(global|ae|sa)-(en|ar)$/.test(rawEdition) ? rawEdition : "global-en";
+  const region = edition.split("-")[0];
   const to = recipients(
     env[form.inboxEnv ?? `FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`],
     region,
@@ -246,6 +246,8 @@ function sameOrigin(url: string, req: Request) {
   }
 }
 function originAllowed(req: Request, allowed?: string) {
+  // Modern browsers label cross-site posts; reject those outright (Turnstile still applies to the rest).
+  if (req.headers.get("Sec-Fetch-Site") === "cross-site") return false;
   const origin = req.headers.get("Origin");
   if (!origin) return true; // same-origin form posts from older browsers may omit it; Turnstile still applies
   const list = allowed

@@ -41,7 +41,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
               {v.buttons.map((b, i) => (
                 <>
                   {i === 1 && <p class="cp-or" aria-hidden="true">{t.or}</p>}
-                  <button type="button" class:list={['cp-btn hit', b.style, b.style === 'primary' ? 'btn-fill-navy' : 'btn-outline']} data-target={b.target}>{t[b.key]}</button>
+                  <button type="button" class:list={['cp-btn ui-btn hit', b.style, b.style === 'primary' ? 'btn-fill-navy' : 'btn-outline']} data-target={b.target}>{t[b.key]}</button>
                 </>
               ))}
             </div>
@@ -75,37 +75,35 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
 )}
 
 <style>
-  /* Card = Figma "Rectangle 4304": rgba(219,214,209,.2), radius 18.913, GLASS 60 (approximated: blur + light rim) */
+  /* Card = Figma "Rectangle 4304": rgba(219,214,209,.2), GLASS 60 (approximated: blur + light rim), corners --radius-card
+     (bug 049; Figma 18.913). The left column is the Figma 157.34 at least and grows with the .ui-btn buttons (bug 044/050). */
   .cp-card {
-    position: relative; box-sizing: border-box; display: grid; grid-template-columns: calc(157.34 * var(--u)) calc(238.229 * var(--u));
-    inline-size: calc(400 * var(--u)); min-block-size: calc(287.324 * var(--u));
+    position: relative; box-sizing: border-box; display: grid; grid-template-columns: minmax(calc(157.34 * var(--u)), max-content) calc(238.229 * var(--u));
+    min-inline-size: calc(400 * var(--u)); min-block-size: calc(287.324 * var(--u));
     padding: calc(5.95 * var(--u)) calc(4.431 * var(--u)) calc(5.72 * var(--u)) 0;
-    border-radius: calc(18.913 * var(--u)); background: rgba(219, 214, 209, 0.2);
+    border-radius: var(--radius-card); background: rgba(219, 214, 209, 0.2);
     -webkit-backdrop-filter: blur(calc(30 * var(--u))); backdrop-filter: blur(calc(30 * var(--u)));
     box-shadow: inset 0 0 0 calc(0.6 * var(--u)) rgba(255, 255, 255, 0.55);
     font-family: var(--font-gotham); color: var(--color-navy-alt);
   }
   /* Left column: everything centred on x 81 (logo 24..138); tops: logo 59, text 145, buttons 167 / 205, OR 193 */
-  .cp-left { display: flex; flex-direction: column; align-items: center; padding-inline-start: calc(4.66 * var(--u)); padding-block-start: calc(53.05 * var(--u)); }
+  .cp-left { display: flex; flex-direction: column; align-items: center; padding-inline: calc(14 * var(--u)) calc(10 * var(--u)); padding-block-start: calc(53.05 * var(--u)); }
   .cp-logo { display: block; inline-size: calc(114 * var(--u)); block-size: calc(63.26 * var(--u)); max-inline-size: none; margin-block-end: calc(22.74 * var(--u)); }
   .cp-title { margin: 0; min-block-size: calc(22 * var(--u)); font-weight: 700; font-size: calc(9.066 * var(--u)); line-height: normal; text-align: center; margin-inline-start: calc(-1 * var(--u)); }
-  .cp-btn {
-    box-sizing: border-box; display: block; inline-size: calc(98.994 * var(--u)); block-size: calc(19.316 * var(--u)); margin: 0; padding: 0;
-    border-radius: calc(11.871 * var(--u)); border: 0; cursor: pointer;
-    font-family: var(--font-gotham); font-weight: 400; font-size: calc(7.054 * var(--u)); line-height: normal; text-align: center;
-  }
+  /* Buttons: the shared .ui-btn size, label and corners (bug 044/050; Figma 99 x 19.3, label 7); both as wide as the column. */
+  .cp-btn { align-self: stretch; border: 0; }
   .cp-btn.primary { background: var(--color-navy-alt); color: #fff; }
   .cp-btn.secondary { background: #f2f2f2; color: var(--color-navy-alt); box-shadow: inset 0 0 0 calc(0.402 * var(--u)) currentColor; } /* the ring follows the label colour (cyan on hover, shared .btn-outline rule) */
   .cp-or { box-sizing: border-box; margin: calc(6.684 * var(--u)) 0 0; min-block-size: calc(12 * var(--u)); font-weight: 700; font-size: calc(4.829 * var(--u)); line-height: normal; }
 
-  /* Map: rounded 14.085 clip 238.229 x 275.654; image 253.119 x 276.861 offset (-7.243, -0.805). Pin + chip in map px. */
-  .cp-map { position: relative; overflow: hidden; inline-size: calc(238.229 * var(--u)); block-size: calc(275.654 * var(--u)); border-radius: calc(14.085 * var(--u)); }
+  /* Map: rounded (--radius-card, bug 049; Figma 14.085) clip 238.229 x 275.654; image 253.119 x 276.861 offset (-7.243, -0.805). Pin + chip in map px. */
+  .cp-map { position: relative; overflow: hidden; inline-size: calc(238.229 * var(--u)); block-size: calc(275.654 * var(--u)); border-radius: var(--radius-card); }
   .cp-map :global(.cp-map-img) { position: absolute; max-inline-size: none; inset-inline-start: calc(-7.243 * var(--u)); inset-block-start: calc(-0.805 * var(--u)); inline-size: calc(253.119 * var(--u)); block-size: calc(276.861 * var(--u)); object-fit: cover; }
   .cp-pin { position: absolute; max-inline-size: none; inset-inline-start: calc(105.84 * var(--u)); inset-block-start: calc(98.59 * var(--u)); inline-size: calc(0.805 * var(--u)); block-size: calc(34.205 * var(--u)); }
   .cp-chip {
     position: absolute; box-sizing: border-box; display: flex; align-items: center; gap: calc(7.649 * var(--u));
     inset-inline-start: calc(94.17 * var(--u)); inset-block-start: calc(89.74 * var(--u)); inline-size: calc(64.789 * var(--u)); block-size: calc(23.742 * var(--u));
-    padding-inline-start: calc(3.62 * var(--u)); border-radius: calc(11.871 * var(--u)); background: #d8d8d8;
+    padding-inline-start: calc(3.62 * var(--u)); border-radius: var(--radius-pill); background: #d8d8d8;
     font-family: 'Gotham', var(--font-gotham); font-weight: 900; font-size: calc(10.272 * var(--u)); line-height: normal; color: var(--color-navy-alt);
   }
   .cp-chip img { display: block; inline-size: calc(16.901 * var(--u)); block-size: calc(16.901 * var(--u)); max-inline-size: none; }
@@ -114,8 +112,14 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
   :global([dir='rtl']) .cp-map > * { direction: ltr; }
 
   @media (max-width: 599.98px) {
-    .cp-card { grid-template-columns: minmax(0, 1fr); align-content: start; inline-size: 100%; padding: 16px; gap: 24px; }
+    .cp-card { grid-template-columns: minmax(0, 1fr); align-content: start; inline-size: 100%; min-inline-size: 0; padding: 16px; gap: 24px; }
     .cp-left { padding: 0; order: 2; }
-    .cp-map { order: 1; justify-self: center; }
+    /* Bug 037 QA: the map keeps its Figma size (1 Figma px = --u) unless the phone is narrower than it (320 wide) or too
+       short to show the buttons without scrolling (568 high); then ITS --u shrinks so map, pin and chip scale together.
+       32px = card padding, 300px = left column (~226) + card padding + gap + room for longer Arabic text. */
+    .cp-map {
+      order: 1; justify-self: center;
+      --u: max(0.7px, min(calc(var(--target-w) * 1px / var(--design-w)), calc((100vw - 32px) / 238.229), calc((100dvh - 300px) / 275.654)));
+    }
   }
 </style>

@@ -148,15 +148,31 @@ function setup(scroller: HTMLElement) {
   let vel = 0; // px per second, now
   // Step mode: a slide from `from` over `stepPx`, started at `s0` (0 = none); the next one may start at `nextAt`.
   let from = 0,
+    dist = 0,
     s0 = 0,
     nextAt = 0;
+  // The frame loop sleeps while the row is off screen or the tab is hidden (no idle rAF work); IO / visibilitychange wake it.
+  let sleeping = false;
+  const frame = (fn: FrameRequestCallback) => {
+    if (!visible || document.hidden) {
+      sleeping = true;
+      last = 0;
+      return;
+    }
+    requestAnimationFrame(fn);
+  };
+  const wake = () => {
+    if (!sleeping || !visible || document.hidden) return;
+    sleeping = false;
+    requestAnimationFrame(stepMode ? stepTick : tick);
+  };
   const stepTick = (t: number) => {
     if (!last || (!s0 && !running)) pos = read();
     last = t;
     if (touch || !visible || document.hidden || period <= 0) s0 = 0;
     if (s0) {
       const p = Math.min(1, (t - s0) / STEP_MS);
-      pos = from + stepPx * ease(p);
+      pos = from + dist * ease(p);
       if (p >= 1) {
         s0 = 0;
         nextAt = t + STEP_DELAY_MS;
@@ -164,8 +180,11 @@ function setup(scroller: HTMLElement) {
     } else if (paused() || period <= 0) {
       nextAt = t + STEP_DELAY_MS;
     } else if (t >= nextAt) {
-      // next item boundary (the visitor may have left the row between two items)
-      from = Math.floor(pos / stepPx + 0.02) * stepPx;
+      // Slide on to the next item boundary. From a boundary that is one item; from mid-item (an interrupted slide, or the
+      // visitor left the row between two items) it is the rest of the way, never a jump back to the previous boundary.
+      const next = Math.ceil(pos / stepPx - 0.02) * stepPx;
+      from = pos;
+      dist = next - pos > 1 ? next - pos : stepPx;
       s0 = t;
     }
     running = !!s0;
@@ -176,7 +195,7 @@ function setup(scroller: HTMLElement) {
       }
       scroller.scrollLeft = sign * pos;
     }
-    requestAnimationFrame(stepTick);
+    frame(stepTick);
   };
   const tick = (t: number) => {
     const target = !paused() && period > 0 ? speed : 0;
@@ -193,7 +212,7 @@ function setup(scroller: HTMLElement) {
       if (pos >= period) pos -= period;
       scroller.scrollLeft = sign * pos;
     }
-    requestAnimationFrame(tick);
+    frame(tick);
   };
 
   const holdOff = () => {
@@ -228,9 +247,11 @@ function setup(scroller: HTMLElement) {
 
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
+    wake();
   }).observe(scroller);
   document.addEventListener("visibilitychange", () => {
     last = 0;
+    wake();
   });
   new ResizeObserver(() => {
     build();

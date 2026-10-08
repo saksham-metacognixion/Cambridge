@@ -15,6 +15,8 @@ export interface Env {
   [key: `FORM_TO_${string}`]: string | undefined;
   /** Comma-separated origins allowed to post (defaults to the request's own origin). */
   ALLOWED_ORIGINS?: string;
+  /** "true" only in .dev.vars: lets EMAIL_PROVIDER=none accept submissions without sending (never in production). */
+  LOCAL_DEV?: string;
 }
 
 export interface PagesContext<P extends string = string> {

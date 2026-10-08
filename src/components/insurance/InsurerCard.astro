@@ -5,7 +5,7 @@ import { img } from '../../lib/images';
 import type { RegionId } from '../../lib/editions';
 
 /*
- * Insurer card, Figma 46:7195 (Al Buhaira, first card): white 194.77 x 125.311, radius 14.321, shadow 0 0 15.696 -4.296
+ * Insurer card, Figma 46:7195 (Al Buhaira, first card): white 194.77 x 125.311, radius 14.321 (-> --radius-card, bug 049), shadow 0 0 15.696 -4.296
  * rgba(0,0,0,.25); navy #004059 bar 36.519 high at the bottom (bottom radius 14.321, shadow 5.234 5.234 15.696 -4.296);
  * name Gotham Medium 7.877 / 14.823 #f9f9f9, centred (Figma label tops 10.03 / 10.74 / 12.18 in the bar: centred = 10.85).
  * Logo: per insurer (src/data/insurers.json) box w x h at x, y in the card; crop = the Figma image fill inside the box.
@@ -39,10 +39,10 @@ else if (logo.fit === 'contain' && logo.ratio) { const r = logo.ratio; if (r > l
 </article>
 
 <style>
-  .icard { position: relative; display: flex; flex-direction: column; width: calc(194.77 * var(--u)); min-height: calc(125.311 * var(--u)); border-radius: calc(14.321 * var(--u)); background: #fff; box-shadow: 0 0 calc(15.696 * var(--u)) calc(-4.296 * var(--u)) rgba(0, 0, 0, 0.25); font-family: var(--font-gotham); font-style: normal; }
+  .icard { position: relative; display: flex; flex-direction: column; width: calc(194.77 * var(--u)); min-height: calc(125.311 * var(--u)); border-radius: var(--radius-card); background: #fff; box-shadow: 0 0 calc(15.696 * var(--u)) calc(-4.296 * var(--u)) rgba(0, 0, 0, 0.25); font-family: var(--font-gotham); font-style: normal; }
   .logo { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); overflow: hidden; }
   .fill { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
   .contain { object-fit: contain; }
   .crop { position: absolute; max-width: none; }
-  .name { box-sizing: border-box; display: flex; align-items: center; justify-content: center; margin: auto 0 0; min-height: calc(36.519 * var(--u)); padding: calc(4 * var(--u)) calc(8 * var(--u)); border-radius: 0 0 calc(14.321 * var(--u)) calc(14.321 * var(--u)); background: var(--color-navy); box-shadow: calc(5.234 * var(--u)) calc(5.234 * var(--u)) calc(15.696 * var(--u)) calc(-4.296 * var(--u)) rgba(0, 0, 0, 0.25); color: #f9f9f9; font-weight: 500; font-size: calc(7.877 * var(--u)); line-height: calc(14.823 * var(--u)); text-align: center; overflow-wrap: anywhere; }
+  .name { box-sizing: border-box; display: flex; align-items: center; justify-content: center; margin: auto 0 0; min-height: calc(36.519 * var(--u)); padding: calc(4 * var(--u)) calc(8 * var(--u)); border-radius: 0 0 var(--radius-card) var(--radius-card); background: var(--color-navy); box-shadow: calc(5.234 * var(--u)) calc(5.234 * var(--u)) calc(15.696 * var(--u)) calc(-4.296 * var(--u)) rgba(0, 0, 0, 0.25); color: #f9f9f9; font-weight: 500; font-size: calc(7.877 * var(--u)); line-height: calc(14.823 * var(--u)); text-align: center; overflow-wrap: anywhere; }
 </style>

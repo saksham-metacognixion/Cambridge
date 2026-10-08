@@ -40,7 +40,13 @@
   },
   "map": {
     "image": "contact-page/map",
-    "alt": ""
+    "alt": "",
+    "overview": {
+      "global": "Cambridge Medical and Rehabilitation Center",
+      "ae": "Cambridge Hospital, United Arab Emirates",
+      "sa": "Cambridge Hospital, Saudi Arabia"
+    },
+    "_note": "Bug 051: the static image is the placeholder until the Google map loads (lazy, when the section is near the screen). overview = the map shown on load per edition (Google Maps search, tuned 7 Oct 2026: it shows the group's pins, not one marker per hospital — that needs the Maps JavaScript API + coordinates). Selecting a hospital in the form shows that hospital (hospitals.json map). The map's accessible name = the header's 'Our Hospitals' label (EN / AR)."
   },
   "details": {
     "email": "info@cambridgehospital.com",

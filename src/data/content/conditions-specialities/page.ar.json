@@ -8,7 +8,10 @@
     "title": [
       "الحالات والتخصصات"
     ],
-    "text": "برامج إعادة تأهيل متخصصة ورعاية طويلة الأمد لمجموعة واسعة من الحالات العصبية، والعظمية، والحالات الطبية المعقدة."
+    "text": "برامج إعادة تأهيل متخصصة ورعاية طويلة الأمد لمجموعة واسعة من الحالات العصبية، والعظمية، والحالات الطبية المعقدة.",
+    "button": {
+      "label": "احجز موعد"
+    }
   },
   "_note": "Hero + meta = the client's Arabic Conditions & Specialities document (5 Oct 2026, CT16). Card button and CTA band = the live site's Arabic page (WordPress export page 19031, 6 Oct 2026).",
   "card": {

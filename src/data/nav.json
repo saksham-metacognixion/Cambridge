@@ -1,4 +1,4 @@
 {
-  "_note": "Header 'We are listening' link (scope 2.5, not in the Figma header, approval: Padmavathi, docs/open-decisions.md A2). Target = { page, hash } (key in PAGE_PATHS, edition-aware) or { href }. Now: the 'Your Opinion Matters' pop-up (the Contact/Feedback form, scope 2.7). When the About section is designed, change it to { \"page\": \"about\", \"hash\": \"we-are-listening\" } (= /about#we-are-listening). That is the only change needed.",
-  "weAreListeningTarget": { "href": "#your-opinion" }
+  "_note": "Header 'We are listening' link (scope 2.5, not in the Figma header). OFF since 7 Oct 2026 (bug 045, user decision): it duplicated 'Your Opinion Matters' and its About section is not designed. To bring it back set weAreListeningTarget to { page, hash } (key in PAGE_PATHS, edition-aware, e.g. { \"page\": \"about\", \"hash\": \"we-are-listening\" }) or { href }; null = no link.",
+  "weAreListeningTarget": null
 }

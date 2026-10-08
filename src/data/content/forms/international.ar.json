@@ -1,1 +1,13 @@
-{}
+{
+  "fields": {
+    "age": {
+      "label": "العمر"
+    },
+    "gender": {
+      "options": {
+        "male": "ذكر",
+        "female": "أنثى"
+      }
+    }
+  }
+}

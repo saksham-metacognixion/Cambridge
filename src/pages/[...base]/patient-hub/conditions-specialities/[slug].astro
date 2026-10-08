@@ -10,6 +10,7 @@ import PageHero from '../../../../components/shared/PageHero.astro';
 import DetailBody from '../../../../components/condition-detail/DetailBody.astro';
 import ContactRecovery from '../../../../components/contact/ContactRecovery.astro';
 import DoctorsRow from '../../../../components/shared/DoctorsRow.astro';
+import { profileDoctors, doctorsForEdition } from '../../../../lib/doctors';
 
 /*
  * Condition / service detail template (Figma 41:2373 Accidents Rehabilitation = reference, 67:3070 Stroke Rehabilitation).
@@ -38,6 +39,10 @@ const page = full ?? {
   overview: [t(card!.summary, loc, 'conditions')],
 };
 const pendingTab = showPendingNote(INDEXABLE) ? shared.pending.tab : null;
+// Doctors linked from this condition on the live site (conditions.json `doctors`, bug 041), this edition's country first;
+// the shared Figma sample list only when a condition has none.
+const linked = (card?.doctors ?? []).map((s) => profileDoctors.find((d) => d.slug === s)).filter((d) => d !== undefined);
+const doctors = { ...shared.doctors, slugs: linked.length ? doctorsForEdition(linked, edition).map((d) => d.slug) : shared.doctors.slugs };
 ---
 
 <BaseLayout edition={edition} path={CONDITION_PATHS.detail(slug)} title={page.meta.title} description={page.meta.description}>
@@ -54,7 +59,7 @@ const pendingTab = showPendingNote(INDEXABLE) ? shared.pending.tab : null;
       <ContactRecovery content={shared.recovery} headTop={50} />
     </div>
     <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(59 * var(--u))">
-      <DoctorsRow content={shared.doctors} />
+      <DoctorsRow content={doctors} />
     </div>
   </main>
   <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(33.54 * var(--u))">
@@ -67,5 +72,5 @@ const pendingTab = showPendingNote(INDEXABLE) ? shared.pending.tab : null;
 
 <style>
   /* Staging-only marker (PUBLIC_SHOW_PENDING_NOTE): not part of the design, never rendered in production. */
-  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); border-radius: var(--radius-btn); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
 </style>

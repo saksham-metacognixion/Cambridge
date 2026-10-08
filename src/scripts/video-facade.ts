@@ -10,7 +10,11 @@
  * the frame from it, so a portrait video gets a portrait frame and a landscape one a 16:9 frame, both fitted to the
  * viewport (85dvh tall at most, never wider than the screen). Look: .video-lightbox rules in src/styles/global.css.
  */
-const RATIOS: Record<string, number> = { landscape: 16 / 9, portrait: 9 / 16, square: 1 };
+const RATIOS: Record<string, number> = {
+  landscape: 16 / 9,
+  portrait: 9 / 16,
+  square: 1,
+};
 
 /** "9:16" | "9/16" | "portrait" | "landscape" -> width / height (16:9 when missing or unreadable). */
 export function aspectRatio(spec: string | undefined): number {
@@ -43,7 +47,9 @@ function embed(host: string, id: string): HTMLElement | null {
   if (!src) return null;
   const f = document.createElement("iframe");
   f.src = src;
-  f.allow = "autoplay; fullscreen; picture-in-picture; encrypted-media";
+  // clipboard-write: the player's "Copy link" fails without it; web-share: its Share button.
+  f.allow =
+    "autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write; web-share";
   f.allowFullscreen = true;
   f.title = "Video";
   f.referrerPolicy = "strict-origin-when-cross-origin";

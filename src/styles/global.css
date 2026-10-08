@@ -177,6 +177,16 @@ body {
   .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
 }
 @media (min-width: 1024px) { .hero-copy { display: contents; } }
+/* Inner-page hero title (Figma Gotham Medium 39 on 37px lines: PageHero, ContactHero, FeedbackHero). Bug 038: below 1024px
+   --u is fixed, so the 39px style is 53px on a phone and "Rehabilitation" was split mid-word to fit the column. The title now
+   scales with the viewport instead, capped at its design size: 8vw lets the longest hero word, "Neurorehabilitation" (9.8em in
+   Gotham Medium), fit the copy column (100vw - 2 x 24u padding) from 320px up, and keeps "Rehabilitation Care" on its Figma
+   line on every phone. Lines keep the Figma 37/39 ratio. break-word (never anywhere / break-all) only splits a word that is
+   wider than the whole column on its own, so a word is never broken to tidy a line. */
+.hero-title { overflow-wrap: break-word; word-break: normal; }
+@media (max-width: 1023.98px) {
+  .hero-title { font-size: min(calc(39 * var(--u)), 8vw); line-height: calc(37 / 39); }
+}
 
 @media (min-resolution: 2dppx) { :root { --hair-dpr: 2; } }
 @media (min-resolution: 3dppx) { :root { --hair-dpr: 3; } }
@@ -228,20 +238,64 @@ body {
    Insurance, Testimonials, Refer tabs): no padding or offset, the label is centred by flex (bug 003).
    .ui-box > .ui-field + .ui-chev: 35 tall box, radius 10, 0.5px #418ea2, Gotham Book 10/14 navy, chevron 17 from the end.
    Width of .ui-box: set by the page (311 on Find a Doctor / Conditions). */
-.ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
+.ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: var(--radius-pill); box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
 .ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--pill-on, var(--color-navy)); color: #fff; border: 0; }
 .ui-box { position: relative; flex: none; max-width: 100%; height: calc(35 * var(--u)); }
-.ui-field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
+.ui-field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: var(--radius-field); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
 .ui-field::placeholder { color: var(--color-navy); opacity: 1; }
 .ui-field::-webkit-calendar-picker-indicator, .ui-field::-webkit-list-button { display: none !important; opacity: 0; }
 .ui-field:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
 [dir='rtl'] .ui-field { padding: 0 calc(15 * var(--u)) 0 calc(31 * var(--u)); }
 .ui-chev { position: absolute; inset-inline-end: calc(17 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); pointer-events: none; max-width: none; }
 
+/* ───────────── Button sizes and corner radii (bugs 044 / 049 / 050, client request 7 Oct 2026) ─────────────
+   Deviation from Figma requested by the client (VOC): Figma's buttons were too small to read (9-10px labels in ~96 x 22 boxes)
+   and every frame had its own size and corner. ONE set of values for the whole site, all here so a client change is one line:
+     .ui-btn      every action button (filled, outline, white): label 14-16px (15px at 1440 and on phones, 14px on small
+                  laptops), height 40px on desktop (36px at 1024), 44px on phones / tablets (touch), width from padding (the
+                  button grows with its label and never wraps it), corners --radius-btn.
+     .ui-btn-sm   the one smaller size, only where two buttons share a narrow card (doctor cards, hospital rows): label 14px,
+                  34px high on desktop, 40px below 1024 (its .hit layer keeps the 44px touch target).
+   The look (fill colour, outline, hover / focus) stays on the .btn-fill / .btn-fill-navy / .btn-fill-white / .btn-outline
+   classes below. Radii by element type (rounded everywhere, the bug 049 values): buttons and form fields 8px, cards and boxes
+   16px, large panels and bands 28px, pills / chips fully round. Circles (avatars, dots, round icons) keep 50%. */
+:root {
+  --radius-btn: 8px;
+  --radius-field: 8px;
+  --radius-card: 16px;
+  --radius-panel: 28px;
+  --radius-pill: 999px;
+  --btn-fs: clamp(14px, calc(11 * var(--u)), 16px);
+  --btn-h: 44px;
+  --btn-px: 20px;
+  --btn-sm-h: 40px;
+  --btn-sm-px: 14px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --btn-h: clamp(36px, calc(29 * var(--u)), 40px);
+    --btn-px: clamp(14px, calc(16 * var(--u)), 22px);
+    --btn-sm-h: clamp(32px, calc(25 * var(--u)), 34px);
+    --btn-sm-px: clamp(10px, calc(12 * var(--u)), 16px);
+  }
+}
+.ui-btn {
+  box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: none;
+  min-width: 0; max-width: 100%; min-height: var(--btn-h); margin: 0; padding: 0 var(--btn-px); border-radius: var(--radius-btn);
+  font-family: var(--font-gotham); font-style: normal; font-weight: 500; font-size: var(--btn-fs); line-height: 1.2;
+  letter-spacing: normal; text-align: center; text-transform: none; white-space: nowrap; text-decoration: none; cursor: pointer;
+}
+.ui-btn.ui-btn-sm { min-height: var(--btn-sm-h); padding-inline: var(--btn-sm-px); font-size: 14px; }
+/* The label (a direct text node or one <span>) sits on the button's centre line: the Gotham caps are centred (bug 007). */
+.ui-btn > span { display: block; line-height: 1; text-box: trim-both cap alphabetic; }
+.ui-btn > svg, .ui-btn > img { flex: none; }
+
 /* ───────────── Interactive states of buttons, pills and tabs (user request 7 Oct 2026) ─────────────
    ONE place for the hover / focus-visible look of every button, pill and tab on the site. A control carries one class:
      .btn-fill        cyan fill (Header Book an Appointment, Book Now, See More, View More Stories, Send Message, SUBMIT, Read More,
-                      Start Your Care on the care cards, ...)         hover: navy #004059 fill, white label
+                      Start Your Care on the care cards, ...)         hover: navy #004059 fill, white label; a button whose live
+                                                                       twin goes elsewhere sets --btn-fill-hover (Why Cambridge Read
+                                                                       More: #0087bd, live .gsbp-99f91d8)
      .btn-fill-navy   navy / #00415a fill (View All, Calculate Now, Book Appointment on a profile, hospital / hub cards, ...)
                                                                        hover: cyan fill, white label (the same pair, inverted)
      .btn-fill-white  white fill on a navy band (Recovery, Careers Apply)   hover: cyan fill, white label
@@ -252,16 +306,19 @@ body {
      .ui-pill         ALL / KSA / UAE, Blogs / News / Events, Refer tabs  hover (not pressed / selected): cyan border + cyan label
      .ui-tab          vertical tabs (detail topics, Careers, FAQ)         hover (not selected): #e7e7e7 fill, navy label
    Pressed / selected states are untouched. Hover only where a pointer can hover (no stuck hover after a tap); disabled and
-   aria-disabled controls keep their look. 160ms colour transitions, off with prefers-reduced-motion. Every rule starts with
+   aria-disabled controls keep their look. Colour transitions = the live theme's link transition (Blocksy --theme-transition:
+   0.12s cubic-bezier(.455,.03,.515,.955), the same on every live page; Why Cambridge animation audit 7 Oct 2026), off with
+   prefers-reduced-motion. Every rule starts with
    :root so it beats the component-scoped rules and the utility classes that set the resting colours. Labels inside a button
    (`> *`) follow the button's hover colour where a utility class set theirs (text-navy, text-cyan). CSS only; RTL-neutral. */
+:root { --ui-ease: 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
 :root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab {
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition: background-color var(--ui-ease), color var(--ui-ease), border-color var(--ui-ease), box-shadow var(--ui-ease);
 }
-:root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color 160ms ease; }
-:root .btn-outline.hair-card::after { transition: border-color 160ms ease, border-width 160ms ease; }
+:root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color var(--ui-ease); }
+:root .btn-outline.hair-card::after { transition: border-color var(--ui-ease), border-width var(--ui-ease); }
 @media (hover: hover) {
-  :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-navy); color: #fff; }
+  :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--btn-fill-hover, var(--color-navy)); color: #fff; }
   :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
   :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: #fff; }
   :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }

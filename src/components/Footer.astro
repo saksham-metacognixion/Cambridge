@@ -9,7 +9,7 @@ import { content, t } from '../lib/content';
 import { img } from '../lib/images';
 import hospitalData from '../data/hospitals.json';
 import { hospitalHref } from '../lib/hospitals';
-import { CARE_PATHS } from '../lib/care';
+import { CARE_PATHS, careInRegion } from '../lib/care';
 import SocialIcons from './shared/SocialIcons.astro';
 
 const { edition } = parsePath(Astro.url.pathname);
@@ -21,12 +21,14 @@ type Link = { label: string; href: string; path?: string; page?: string; query?:
 const target = (x: Link) => (x.page !== undefined ? urlFor(edition, pagePath(x.page)) : x.path !== undefined ? urlFor(edition, x.path) : x.href) + (x.query ?? '');
 const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: target(x) })));
 // Services column: each entry links to its service page (`care` = slug in src/data/care.json -> our-care/<slug>).
-const services: Link[] = c.services.links.map((x: Link) => ({ ...x, href: x.care ? urlFor(edition, CARE_PATHS.service(x.care)) : x.href }));
+// Services offered in this edition's country only (bug 047).
+const services: Link[] = c.services.links.filter((x: Link) => !x.care || careInRegion(x.care, edition.region)).map((x: Link) => ({ ...x, href: x.care ? urlFor(edition, CARE_PATHS.service(x.care)) : x.href }));
 // Legal links (bottom right): `path` = the legal pages (src/data/legal.json), edition-aware.
 const legal = { compliance: { ...c.legal.compliance, href: target(c.legal.compliance) }, privacy: { ...c.legal.privacy, href: target(c.legal.privacy) } };
 // Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
 // Each links to its detail page (in this edition, or in the hospital's own region when this edition has no page for it).
-const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
+// UAE / KSA editions list their own country's hospitals only (bug 048); Global lists all six.
+const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.region === 'global' || hospitalData.hospitals.find((x) => x.slug === slug)?.region === edition.region).map((slug) => {
   const h = hospitalData.hospitals.find((x) => x.slug === slug);
   if (!h) throw new Error(`Footer: unknown hospital slug "${slug}"`);
   return { name: t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals'), href: hospitalHref(slug, edition) };
@@ -34,7 +36,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
 ---
 
 <div class="ft-clip">
-<footer class="ft relative bg-navy rounded-t-r30 font-gotham">
+<footer class="ft relative bg-navy rounded-t-(--radius-panel) font-gotham">
   <!-- Reveal as on the live site (its footer block: data-aos="fade-up", 0.6s, Greenshift AOS; audited 7 Oct 2026): fade in +
        rise from max(50px, 15 % of its height) below, ease-in-out, as soon as it is inside the viewport minus the bottom 5 %.
        Armed here so no-JS stays visible. Replays on every entry: is-visible is removed once the footer has left the screen,
@@ -77,7 +79,7 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
       <div class="box">
         <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
         <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" />
-        <button type="submit" class="hit btn-text">{c.newsletter.submit}</button>
+        <button type="submit" class="ui-btn hit btn-text">{c.newsletter.submit}</button>
       </div>
     </form>
 
@@ -99,10 +101,12 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
   .links { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #e7e7e7; white-space: nowrap; }
   .links a, .bot a { color: inherit; text-decoration: none; }
   .col .links { margin-top: calc(3 * var(--u)); }
-  .nl .box { position: relative; background: #fff; border-radius: calc(8 * var(--u)); width: calc(213 * var(--u)); height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
-  .nl input[type="email"] { position: absolute; inset-inline-start: calc(10 * var(--u)); top: calc(9 * var(--u)); width: calc(150 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  /* Newsletter field: email + Subscribe in one white box (Figma 213 x 26, corners --radius-field, bug 049). Subscribe = the
+     shared .ui-btn size (bug 044/050; Figma 36 x 15, label 9) with the .btn-text look, so the box is as tall as the button. */
+  .nl .box { position: relative; display: flex; align-items: center; background: #fff; border-radius: var(--radius-field); width: calc(213 * var(--u)); min-height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
+  .nl input[type="email"] { flex: 1 1 auto; min-width: 0; align-self: stretch; padding: 0; padding-inline-start: calc(10 * var(--u)); border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; border-radius: inherit; }
   .nl input::placeholder { color: #004059; opacity: 1; }
-  .nl button { position: absolute; inset-inline-start: calc(169 * var(--u)); top: calc(9 * var(--u)); width: calc(36 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; background: transparent; cursor: pointer; text-align: start; font: 500 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  .nl button { border: 0; background: transparent; color: #004059; }
   .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
   .bot { margin: 0; font-size: calc(7 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; white-space: pre; }
   .bot.right { text-align: end; }
@@ -133,9 +137,6 @@ const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
     .links li a { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; }
     .links br { display: none; }
     .bot a { display: inline-flex; align-items: center; min-height: 44px; }
-    .nl .box { height: max(44px, calc(26 * var(--u))); }
-    .nl input[type="email"], .nl button { top: 0; height: 100%; }
-    .nl input[type="email"] { width: calc(100% - 60 * var(--u)); }
   }
   /* link lists are 12 Figma px apart: the hit layer can't grow taller than the line without overlapping */
   .dense { --hit-h: 100%; }

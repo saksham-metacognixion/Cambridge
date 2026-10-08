@@ -120,7 +120,7 @@ for (const [p, page] of pages) {
       const exact = '/' + [e2.base, rest].filter(Boolean).join('/');
       const ex = pages.get(exact) ?? (await fetchPage(exact));
       pages.set(exact, ex);
-      if (ex.status === 404 && (rest2 === '' || rest.startsWith(rest2 + '/'))) { switchOk++; nearest++; }
+      if ((ex.status === 404 || ex.status === 301) && (rest2 === '' || rest.startsWith(rest2 + '/'))) { switchOk++; nearest++; }
       else switchProblems.push({ from: p, href: l.href, note: `switch lands on "${rest2}" instead of "${rest}"` });
     } else switchOk++;
   }

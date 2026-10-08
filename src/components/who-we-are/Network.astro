@@ -8,7 +8,7 @@ import lines from '../../assets/who-we-are/lines.svg';
 
 /*
  * "Six Hospitals. Two Countries. One Standard of Care." (Figma 55:9241-9272), page y 849-1282.
- * Navy pill #004059 (x57, w938, h96, radius 15) with the heading centred, Gotham Medium 30 white, full stops in #00b8ff
+ * Navy pill #004059 (x57, w938, h96, radius 15; now --radius-panel, bug 049) with the heading centred, Gotham Medium 30 white, full stops in #00b8ff
  * (text top +34). 48 below the pill top a full-width band rgba(231,231,231,.5), h385 (y 897-1282): the pill overlaps it.
  * Inside the band: the pill-outline lines (55:9247, 554.5 x 562 at x-128.7, y-26.4, clipped to 449 x 357 at x0, y+28),
  * photo "Care 1" 410 x 336 at x-11, y+49 (object-cover, bottom-aligned: Figma shows the lower 86% of the image), six stats
@@ -46,7 +46,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 <style>
   .net { font-family: var(--font-gotham); font-style: normal; }
   .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
-  .pill { position: relative; z-index: 1; box-sizing: border-box; margin-inline: 16px; padding: calc(30 * var(--u)) calc(16 * var(--u)); border-radius: calc(15 * var(--u)); background: var(--color-navy); }
+  .pill { position: relative; z-index: 1; box-sizing: border-box; margin-inline: 16px; padding: calc(30 * var(--u)) calc(16 * var(--u)); border-radius: var(--radius-panel); background: var(--color-navy); } /* bug 049 */
   /* < 1024: fluid size between 21px and the Figma 30 so the three sentences wrap at their spaces (no mid-word breaks) */
   .h { margin: 0; font-weight: 500; font-size: clamp(21px, 6.5vw, calc(30 * var(--u))); line-height: 1.2; color: #fff; text-align: center; text-wrap: balance; }
   /* each sentence wraps as a unit when it fits the line (inline-block), and at its spaces when it does not (max-width) */

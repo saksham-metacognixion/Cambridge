@@ -38,9 +38,9 @@ const tiles = c.tiles.map((t: any, i: number) => ({
   {c.text && <p class="m-0 mx-auto mt-10 min-h-32 max-w-577 text-center font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] max-lg:px-16">{c.text}</p>}
 
   <!-- Category dropdown. The visible box is 311x35 like Figma; the <select> is 44px tall (touch target) and transparent. -->
-  <div class="relative mx-auto mt-37 h-35 w-311 max-w-[calc(100%-32px)] rounded-r10 hair-50 border-teal-border">
+  <div class="relative mx-auto mt-37 h-35 w-311 max-w-[calc(100%-32px)] rounded-(--radius-field) hair-50 border-teal-border">
     <label for="media-category" class="sr-only">{c.select.label}</label>
-    <select id="media-category" data-category-select class="absolute inset-x-0 -top-4.5 h-44 w-full cursor-pointer appearance-none rounded-r10 border-0 bg-transparent ps-15 pe-30 font-gotham font-normal text-f10 leading-14 text-navy not-italic outline-offset-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan">
+    <select id="media-category" data-category-select class="absolute inset-x-0 -top-4.5 h-44 w-full cursor-pointer appearance-none rounded-(--radius-field) border-0 bg-transparent ps-15 pe-30 font-gotham font-normal text-f10 leading-14 text-navy not-italic outline-offset-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan">
       <option value="">{c.select.label}</option>
       {c.categories.map((x: any) => <option value={x.key}>{x.label}</option>)}
     </select>
@@ -53,7 +53,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
     {
       tiles.map((t: any) => (
         <li data-aos="fade" class="relative h-342 w-222 shrink-0 snap-start">
-          <div class="absolute inset-0 overflow-hidden rounded-r15">
+          <div class="absolute inset-0 overflow-hidden rounded-(--radius-card)">
             <Picture
               src={t.src}
               formats={['avif']}
@@ -72,7 +72,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
             <Image src={overlay} width={px(222)} height={px(342)} format="webp" alt="" loading="lazy" class="absolute inset-0 block h-full w-full max-w-none" />
           </div>
           <div class="absolute inset-0 flex flex-col items-start justify-end ps-16 pe-10 pb-22">
-            <span class="block rounded-r5p044 bg-cyan px-[calc(4.2*var(--u))] py-[calc(3.7*var(--u))] font-gotham font-medium text-f12p61 leading-[calc(15.367*var(--u))] text-white uppercase not-italic whitespace-nowrap">{t.label}</span>
+            <span class="block rounded-(--radius-btn) bg-cyan px-[calc(4.2*var(--u))] py-[calc(3.7*var(--u))] font-gotham font-medium text-f12p61 leading-[calc(15.367*var(--u))] text-white uppercase not-italic whitespace-nowrap">{t.label}</span>
             <h3 class="m-0 mt-5 w-190 max-w-full font-gotham font-medium text-f20p26 leading-24 text-white not-italic [word-break:break-word]">
               <a href={t.href} class="tile-link text-inherit no-underline">{t.title}</a>
             </h3>
@@ -94,7 +94,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
 </script>
 
 <style>
-  .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: calc(15 * var(--u)); }
+  .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-card); } /* corners: bug 049 tokens */
   .tile-link:focus-visible { outline: none; }
   .tile-link:focus-visible::after { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
 </style>

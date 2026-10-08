@@ -1,6 +1,6 @@
 ---
 import { content, t } from '../../lib/content';
-import { careContent, CARE_PATHS, type CarePath } from '../../lib/care';
+import { careContent, careInRegion, CARE_PATHS, type CarePath } from '../../lib/care';
 import { showPendingNote } from '../../lib/conditions';
 import { INDEXABLE } from '../../lib/seo';
 import { urlFor, type Edition } from '../../lib/editions';
@@ -54,7 +54,7 @@ const pending = !own && showPendingNote(INDEXABLE) ? (isService ? shared.pending
 const overview: string[] = own?.overview ?? (isService && node.children.length > 0 ? [] : [t(node.desc, loc, 'care')]);
 const topics = own?.topics?.length ? { active: 0, items: own.topics } : undefined;
 // Children cards: photo cards when every child has a photo (Figma 83:226), else text cards (Figma 41:1730 look)
-const kids = node.children;
+const kids = node.children.filter((k) => careInRegion(k.slug, edition.region)); // bug 047: services of this country only
 const photoCards = kids.length > 0 && kids.every((k) => k.image);
 const cards = kids.map((k) => ({
   title: t(k.cardTitle ?? k.title, loc, 'care'),
@@ -107,5 +107,5 @@ const meta = { title: own?.meta?.title ?? fill(shared.meta.title), description: 
 
 <style>
   /* Staging-only marker (PUBLIC_SHOW_PENDING_NOTE): not part of the design, never rendered in production. */
-  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+  .pending-note { margin: calc(8 * var(--u)) auto 0; max-width: calc(937 * var(--u)); padding: calc(6 * var(--u)) calc(10 * var(--u)); border: 1px dashed var(--color-teal-border); border-radius: var(--radius-btn); font: italic 400 calc(11 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
 </style>

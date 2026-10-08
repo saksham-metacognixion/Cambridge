@@ -8,7 +8,7 @@ import { img } from "./images";
  * Every edition lists ALL posts (region rule still to be confirmed with Pramod; `region` stays in the data).
  * URL pattern in ONE place: list = Media Hub, article = media-hub/<slug>. UNCONFIRMED with Pramod (the current site's
  * post URLs could not be read, docs/open-decisions.md D7 / AR2); `old_url` on each post feeds the 301 map
- * (/redirects-news.txt).
+ * (src/lib/redirects.ts -> dist/_redirects).
  */
 export const NEWS_PATHS = {
   list: "media-hub",

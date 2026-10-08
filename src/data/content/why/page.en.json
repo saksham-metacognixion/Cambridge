@@ -64,7 +64,7 @@
     ],
     "button": {
       "label": "Read More",
-      "page": "conditions"
+      "page": "findDoctor"
     },
     "stats": [
       {

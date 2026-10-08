@@ -11,7 +11,7 @@ import patMask from '../../assets/testimonials/pattern-mask.svg';
 /*
  * Testimonial card, Figma 62:2398 (Patient Testimonials, first card). Same design as the landing page cards (81:...), which
  * are this card at 185/257.723: `s` scales everything (page = 1). Figma px at s = 1, card-relative:
- *   card 257.723 x 321.805 white, 0.348px #418ea2 stroke, radius 20.896 | quote icon 16.717 at 18.11 / 12.54 |
+ *   card 257.723 x 321.805 white, 0.348px #418ea2 stroke, radius 20.896 (-> --radius-card, bug 049) | quote icon 16.717 at 18.11 / 12.54 |
  *   quote Gotham Book 12.538 / 18.11 #00415a at 18.11 / 43.19, w221.502, box 72.441 | name Gotham BOLD 12.538 / 18.11
  *   #00b8ff 6.96 below the quote box (122.59) | pattern box 149.061 x 160.206 at 0 / 161.6 (radius bottom-start 22.29):
  *   masked bar pieces A-D (pattern-mask 188.618 x 164.285 at -6.909 / -10.666) | photo: per story (data) |
@@ -61,8 +61,8 @@ const ih = photo ? (photo.crop ? photo.w * pct(photo.crop.w) / (photo.ratio ?? 1
 </article>
 
 <style>
-  .tcard { --k: calc(var(--s) * var(--u)); position: relative; isolation: isolate; box-sizing: border-box; width: calc(257.723 * var(--k)); min-height: calc(321.805 * var(--k)); border-radius: calc(20.896 * var(--k)); background: #fff; font-family: var(--font-gotham); font-style: normal; }
-  .pat { position: absolute; inset-inline-start: 0; top: calc(161.6 * var(--k)); width: calc(149.061 * var(--k)); height: calc(160.206 * var(--k)); overflow: hidden; border-end-start-radius: calc(22.29 * var(--k)); }
+  .tcard { --k: calc(var(--s) * var(--u)); position: relative; isolation: isolate; box-sizing: border-box; width: calc(257.723 * var(--k)); min-height: calc(321.805 * var(--k)); border-radius: var(--radius-card); background: #fff; font-family: var(--font-gotham); font-style: normal; }
+  .pat { position: absolute; inset-inline-start: 0; top: calc(161.6 * var(--k)); width: calc(149.061 * var(--k)); height: calc(160.206 * var(--k)); overflow: hidden; border-end-start-radius: var(--radius-card); }
   .pm { position: absolute; -webkit-mask-image: var(--m); mask-image: var(--m); mask-mode: alpha; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: calc(188.618 * var(--k)) calc(164.285 * var(--k)); mask-size: calc(188.618 * var(--k)) calc(164.285 * var(--k)); -webkit-mask-position: calc(-6.909 * var(--k)) calc(-10.666 * var(--k)); mask-position: calc(-6.909 * var(--k)) calc(-10.666 * var(--k)); }
   .pm img { display: block; width: 100%; height: 100%; }
   :global([dir='rtl']) .pm { scale: -1 1; }
@@ -71,7 +71,7 @@ const ih = photo ? (photo.crop ? photo.w * pct(photo.crop.w) / (photo.ratio ?? 1
   .txt > p { position: relative; margin: 0; width: calc(221.502 * var(--k)); max-width: 100%; font-size: calc(12.538 * var(--k)); line-height: calc(18.11 * var(--k)); overflow-wrap: anywhere; }
   .quote { min-height: calc(72.441 * var(--k)); color: var(--color-navy-alt); font-weight: 400; }
   .name { margin-top: calc(6.959 * var(--k)) !important; color: var(--color-cyan); font-weight: 700; }
-  .photo { position: absolute; inset-inline-start: calc(var(--x) * var(--k)); top: calc(var(--y) * var(--k)); width: calc(var(--w) * var(--k)); height: calc(var(--h) * var(--k)); overflow: hidden; border-end-end-radius: calc(var(--r) * var(--k)); }
+  .photo { position: absolute; inset-inline-start: calc(var(--x) * var(--k)); top: calc(var(--y) * var(--k)); width: calc(var(--w) * var(--k)); height: calc(var(--h) * var(--k)); overflow: hidden; border-end-end-radius: calc(min(var(--r), 1) * var(--radius-card)); } /* photo in the card corner: card radius (bug 049) */
   .photo :global(img) { display: block; max-width: none; }
   .photo :global(img.cover) { width: 100%; height: 100%; object-fit: cover; }
   .photo :global(img.crop) { position: absolute; }

@@ -21,13 +21,17 @@ if (root) {
     hospital: el.dataset.hospital ?? '',
     specialties: (el.dataset.specialties ?? '').split(' ').filter(Boolean),
   }));
-  const pills = [...root.querySelectorAll<HTMLButtonElement>('[data-country]')];
+  // Buttons only: the doctor cards (<li data-country>) carry the same attribute and must not become pills.
+  const pills = [...root.querySelectorAll<HTMLButtonElement>('button[data-country]')];
   const nameInput = root.querySelector<HTMLInputElement>('input[name="q"]');
   const specialtySelect = root.querySelector<HTMLSelectElement>('select[name="specialty"]');
   const empty = root.querySelector<HTMLElement>('[data-doctor-empty]');
   const status = root.querySelector<HTMLElement>('[data-doctor-status]');
 
-  let state: FilterState = parseState(location.search, region, hospitals);
+  // A URL value that matches no option (?specialty=foo) is dropped, so a bad link never empties the list without a visible cause.
+  const specialties = specialtySelect ? [...specialtySelect.options].map((o) => o.value).filter(Boolean) : undefined;
+  const read = () => parseState(location.search, region, hospitals, specialties);
+  let state: FilterState = read();
   let announce = false; // the first render is the page load, not a change: do not announce it
 
   function render() {
@@ -51,7 +55,7 @@ if (root) {
   for (const p of pills) p.addEventListener('click', () => commit(setCountry(state, p.dataset.country as Country, hospitals)));
   specialtySelect?.addEventListener('change', () => commit(setSpecialty(state, specialtySelect.value)));
   nameInput?.addEventListener('input', () => commit(setQuery(state, nameInput.value), 'replace'));
-  window.addEventListener('popstate', () => { state = parseState(location.search, region, hospitals); announce = true; render(); });
+  window.addEventListener('popstate', () => { state = read(); announce = true; render(); });
 
   render();
 }

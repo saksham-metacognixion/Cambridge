@@ -1,6 +1,6 @@
 ---
 // One News card in a Figma slot (x positions from News.astro). The Figma posts keep their exact image crop;
-// any other post (tab filters) fills the same image box with object-cover.
+// any other post (tab filters) fills the same image box with object-cover. Image box corners: --radius-card (Figma r21.9, bug 049).
 import { Picture } from 'astro:assets';
 import { px } from '../lib/scale';
 import arrow from '../assets/news/arrow-icon-group33.svg';
@@ -17,7 +17,7 @@ const iw = crop ? crop.iw : c.w;
 ---
 
 <article class="relative w-full max-w-289 lg:absolute lg:top-113 lg:h-[calc(var(--u)*362)]" style={`--cx:${c.x + F}; --w:${c.w}`} data-card>
-  <div class="relative overflow-hidden rounded-r21 shadow-news aspect-[289/220] lg:aspect-auto lg:h-220 w-full">
+  <div class="relative overflow-hidden rounded-(--radius-card) shadow-news aspect-[289/220] lg:aspect-auto lg:h-220 w-full">
     {!src ? null : crop ? (
       <Picture
         src={src}

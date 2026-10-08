@@ -5,7 +5,7 @@ import CarePage from '../../../../../components/care/CarePage.astro';
 
 /* Our Care pages at depth 3 under /care (src/data/care.json), every edition. One template: components/care/CarePage.astro. */
 export function getStaticPaths() {
-  return editions.flatMap((e) => careNodesAtDepth(3).map((p) => ({ params: { base: e.base || undefined, a: p.trail[0], b: p.trail[1], c: p.trail[2] }, props: { path: p } })));
+  return editions.flatMap((e) => careNodesAtDepth(3, e.region).map((p) => ({ params: { base: e.base || undefined, a: p.trail[0], b: p.trail[1], c: p.trail[2] }, props: { path: p } })));
 }
 const { path } = Astro.props as { path: CarePath };
 const edition = editionFromBase(Astro.params.base);

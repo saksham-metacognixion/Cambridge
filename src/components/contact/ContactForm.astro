@@ -18,6 +18,8 @@ import cornerFill from '../../assets/contact-page/card-corner-fill.svg';
 // Figma 86:773 + 86:808 + grey band 86:432: section starts at page y 556, h 667. Spec y values are page y minus 556.
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('contact/page', edition.locale);
+// Email / web / phone line of this edition (details.byRegion: the KSA phone on /sa), never another country's number.
+const details = { ...c.details, ...(c.details.byRegion?.[edition.region] ?? {}) };
 const f = c.form;
 // Shared form behaviour (src/scripts/forms.ts): EN/AR validation, JSON submit, success message. Field rules = forms.json 'send-enquiry'.
 const common = commonText(edition.locale);
@@ -138,15 +140,15 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     <ul class="details m-0 list-none p-0 max-lg:flex max-lg:flex-col max-lg:items-start max-lg:gap-[calc(14*var(--u))] lg:contents">
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(597.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`mailto:${c.details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-598']}>{c.details.email}</a>
+        <a href={`mailto:${details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-598']}>{details.email}</a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-598" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={c.details.webHref} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-601']}>{c.details.web}</a>
+        <a href={details.webHref} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-601']}>{details.web}</a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-596" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`tel:${c.details.phoneHref}`} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(596.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}>{c.details.phone}</a>
+        <a href={`tel:${details.phoneHref}`} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(596.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}>{details.phone}</a>
       </li>
     </ul>
   </div>

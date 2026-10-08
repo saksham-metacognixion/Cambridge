@@ -1,6 +1,7 @@
 ---
 import map from '../../assets/hospitals/map.svg';
 import pin from '../../assets/hospitals/pin.svg';
+import { parsePath } from '../../lib/editions';
 
 /*
  * Map art on the Our Hospitals hero (Figma 101:6609, inside the 437 hero: page y minus 119). Vector 368.816 x 294.809 at
@@ -12,8 +13,14 @@ import pin from '../../assets/hospitals/pin.svg';
  * baked-in map layer (PageHero follow="map", scripts/hero-follow.ts).
  */
 interface Props { labels: { text: string; x: number; y: number }[] }
-const { labels } = Astro.props;
-const pins = [[832.47, 285.17], [848.68, 302.92], [676.61, 375.45], [918.89, 351.53], [935.1, 333.78], [952.07, 351.53]];
+const { edition } = parsePath(Astro.url.pathname);
+// Country of each label / pin (Figma order, as on the Home map: labels Dhahran, Al Khobar, Abu Dhabi, Al Ain, Jeddah | pins
+// Dhahran, Al Khobar, Jeddah, then the three UAE facilities). /ae and /sa show their own country's only; the map art stays whole.
+const labelRegion = ['sa', 'sa', 'ae', 'ae', 'sa'];
+const pinRegion = ['sa', 'sa', 'sa', 'ae', 'ae', 'ae'];
+const own = (r: string) => edition.region === 'global' || r === edition.region;
+const labels = Astro.props.labels.filter((_, i) => own(labelRegion[i]));
+const pins = [[832.47, 285.17], [848.68, 302.92], [676.61, 375.45], [918.89, 351.53], [935.1, 333.78], [952.07, 351.53]].filter((_, i) => own(pinRegion[i]));
 ---
 
 <div class="map" aria-hidden="true" slot="art" data-hero-subject>

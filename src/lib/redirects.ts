@@ -9,7 +9,7 @@ import { editions, urlFor } from "./editions";
 import { PAGE_PATHS } from "./paths";
 import { NEWS_PATHS } from "./news";
 import { conditions, CONDITION_PATHS } from "./conditions";
-import { DOCTOR_PATHS, profileDoctors } from "./doctors";
+import { DOCTOR_PATHS, profileDoctors, doctorEditions } from "./doctors";
 import { careOutsideRegion, CARE_PATHS } from "./care";
 import posts from "../data/news/posts.json";
 
@@ -29,6 +29,7 @@ const globalOf = (locale: "en" | "ar") => editions.find((e) => e.region === "glo
  *   - /legal (the live legal index) -> the Privacy Policy, the first legal page
  *   - /condition/<WordPress slug> -> the condition's detail page
  *   - a care page not offered in the edition's country (care.json `regions`, bug 047) -> that edition's Our Care hub
+ *   - another country's doctor profile (e.g. /sa/patient-hub/find-a-doctor/<UAE doctor>) -> that edition's Find a Doctor list
  * The four health calculators keep their live URLs (PAGE_PATHS, bug 014): no redirect.
  */
 export function pageRedirects(): Redirect[] {
@@ -44,6 +45,8 @@ export function pageRedirects(): Redirect[] {
     for (const c of conditions) if (c.old_slug) add(`/condition/${c.old_slug}`, urlFor(e, CONDITION_PATHS.detail(c.slug)));
     // Care pages not offered in this edition's country (bug 047, e.g. /sa/care/in-school) -> the edition's Our Care hub.
     for (const p of careOutsideRegion(e.region)) out.push({ from: urlFor(e, CARE_PATHS.of(p.trail)), to: urlFor(e, CARE_PATHS.hub) });
+    // Doctor profiles exist on Global + the doctor's own country only (no UAE / KSA mixing).
+    for (const d of profileDoctors) if (!doctorEditions(d).includes(e.id)) out.push({ from: urlFor(e, DOCTOR_PATHS.profile(d.slug)), to: urlFor(e, DOCTOR_PATHS.list) });
   }
   // The live Arabic home page was a WordPress page with its own slug.
   out.push({ from: "/ar/cambridge-hospital", to: urlFor(globalOf("ar")) });

@@ -1,10 +1,10 @@
 /**
  * Registry of page paths inside an edition. A page exists in all 6 editions unless its route lists `editions`
- * (hospital pages: their own region + Global; region-only care services).
+ * (hospital and doctor pages: their own region + Global; region-only care services).
  * Templates filled from JSON (doctors, hospitals, news) add their dynamic paths here, so the
  * sitemaps and hreflang stay complete.
  */
-import { DOCTOR_PATHS, profileDoctors } from "./doctors";
+import { DOCTOR_PATHS, profileDoctors, doctorEditions } from "./doctors";
 import { PAGE_PATHS, pagePath } from "./paths";
 import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
@@ -81,6 +81,7 @@ function routes(): PageRoute[] {
     ...profileDoctors.map((d) => ({
       key: `doctor-${d.slug}`,
       path: DOCTOR_PATHS.profile(d.slug),
+      editions: doctorEditions(d),
     })),
   ];
 }

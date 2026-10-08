@@ -1,15 +1,18 @@
 ---
 import { editions, editionFromBase, urlFor } from '../../../../lib/editions';
 import { content, t } from '../../../../lib/content';
-import { profileDoctors, DOCTOR_PATHS } from '../../../../lib/doctors';
+import { profileDoctors, doctorEditions, DOCTOR_PATHS } from '../../../../lib/doctors';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Header from '../../../../components/Header.astro';
 import Footer from '../../../../components/Footer.astro';
 import DoctorProfile from '../../../../components/doctors/DoctorProfile.astro';
 
-/* One static page per doctor in every edition: /find-a-doctor/<slug>, /ae/find-a-doctor/<slug>, /ae/ar/..., see DOCTOR_PATHS. */
+/* One static page per doctor on Global and in the doctor's own country (doctorEditions): /find-a-doctor/<slug>, /ae/find-a-doctor/<slug>,
+   /ae/ar/..., see DOCTOR_PATHS. A UAE doctor has no /sa page (no UAE / KSA mixing); links from /sa go to the /ae page (doctorHref). */
 export function getStaticPaths() {
-  return editions.flatMap((e) => profileDoctors.map((d) => ({ params: { base: e.base || undefined, slug: d.slug }, props: { doctor: d } })));
+  return editions.flatMap((e) =>
+    profileDoctors.filter((d) => doctorEditions(d).includes(e.id)).map((d) => ({ params: { base: e.base || undefined, slug: d.slug }, props: { doctor: d } })),
+  );
 }
 
 const { doctor } = Astro.props;

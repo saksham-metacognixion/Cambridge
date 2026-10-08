@@ -1,7 +1,7 @@
 ---
 import { content } from '../../lib/content';
 import { parsePath } from '../../lib/editions';
-import { profileDoctors } from '../../lib/doctors';
+import { profileDoctors, rowDoctorsForEdition } from '../../lib/doctors';
 import DoctorCard from '../doctors/DoctorCard.astro';
 import SectionIntro from './SectionIntro.astro';
 
@@ -21,11 +21,12 @@ interface Props {
 const { edition } = parsePath(Astro.url.pathname);
 const { content: d, id = 'doctors-heading', slider = false } = Astro.props;
 const labels = content('doctors/page', edition.locale).card;
-const doctors = d.slugs.map((slug: string) => {
+// /ae and /sa: only that country's doctors (rowDoctorsForEdition), never the other country's.
+const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
   const doc = profileDoctors.find((x) => x.slug === slug);
   if (!doc) throw new Error(`DoctorsRow: unknown doctor slug "${slug}" (src/data/doctors.json)`);
   return doc;
-});
+}), edition);
 ---
 
 <section class="docs" aria-labelledby={id}>

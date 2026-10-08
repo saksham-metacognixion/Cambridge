@@ -1,4 +1,4 @@
-import type { LocaleId } from './editions';
+import type { LocaleId } from "./editions";
 
 /*
  * Content lives in JSON so a CMS can be added later (CLAUDE.md §4):
@@ -7,23 +7,30 @@ import type { LocaleId } from './editions';
  * English text = Figma / the client's documents. Arabic = the live site's Arabic pages (WordPress export, 6 Oct 2026) where the
  * export has them; every missing Arabic value falls back to English and the build prints one warning per file.
  */
-const files = import.meta.glob<Record<string, unknown>>('../data/content/**/*.json', { eager: true, import: 'default' });
+const files = import.meta.glob<Record<string, unknown>>(
+  "../data/content/**/*.json",
+  { eager: true, import: "default" },
+);
 
 /** content('home/hero', 'ar') -> merged object (Arabic where present, English otherwise). */
 export function content<T = any>(name: string, locale: LocaleId): T {
   const en = files[`../data/content/${name}.en.json`];
   if (!en) throw new Error(`Missing src/data/content/${name}.en.json`);
-  if (locale === 'en') return en as T;
+  if (locale === "en") return en as T;
   const loc = files[`../data/content/${name}.${locale}.json`] ?? {};
   return merge(en, loc, `${name}.${locale}`) as T;
 }
 
 /** Localized entity field: { en: "...", ar: "..." } -> string for the locale (English fallback). */
 export type Localized = { en: string; ar?: string };
-export function t(field: Localized, locale: LocaleId, where = 'entity'): string {
+export function t(
+  field: Localized,
+  locale: LocaleId,
+  where = "entity",
+): string {
   const v = field[locale];
   if (v) return v;
-  if (locale !== 'en') warn(where);
+  if (locale !== "en") warn(where);
   return field.en;
 }
 
@@ -31,7 +38,9 @@ const warned = new Set<string>();
 function warn(where: string) {
   if (warned.has(where)) return;
   warned.add(where);
-  console.warn(`[content] ${where}: Arabic text missing, English shown (no Arabic for it in the live site's export, docs/open-decisions.md WP2)`);
+  console.warn(
+    `[content] ${where}: Arabic text missing, English shown (no Arabic for it in the live site's export, docs/open-decisions.md WP2)`,
+  );
 }
 
 function merge(en: any, loc: any, where: string): any {
@@ -40,17 +49,32 @@ function merge(en: any, loc: any, where: string): any {
   if (Array.isArray(en)) {
     // One Arabic string for an English paragraph list = one paragraph (indexing a string would give its first letters;
     // Why Cambridge team / trusted text, found 7 Oct 2026).
-    if (typeof loc === 'string' && loc) loc = [loc];
-    if (Array.isArray(loc) && loc.length) return loc.map((v, i) => merge(en[i] ?? en[en.length - 1] ?? '', v, where));
+    if (typeof loc === "string" && loc) loc = [loc];
+    if (Array.isArray(loc) && loc.length)
+      return loc.map((v, i) =>
+        merge(en[i] ?? en[en.length - 1] ?? "", v, where),
+      );
     return en.map((v, i) => merge(v, loc?.[i], where));
   }
-  if (en && typeof en === 'object') {
+  if (en && typeof en === "object") {
+    // A typed block whose Arabic is another kind (the Arabic document has a paragraph where the English has a list, 8 Oct
+    // 2026) is taken as is: mixing them would drop its text or leak English items.
+    if (
+      loc &&
+      typeof loc === "object" &&
+      "type" in loc &&
+      "type" in en &&
+      loc.type !== en.type
+    )
+      return loc;
     const out: any = {};
     for (const k of Object.keys(en)) out[k] = merge(en[k], loc?.[k], where);
+    if (loc && typeof loc === "object" && !Array.isArray(loc))
+      for (const k of Object.keys(loc)) if (!(k in out)) out[k] = loc[k];
     return out;
   }
-  if (loc === undefined || loc === null || loc === '') {
-    if (typeof en === 'string' && /[A-Za-z]/.test(en)) warn(where);
+  if (loc === undefined || loc === null || loc === "") {
+    if (typeof en === "string" && /[A-Za-z]/.test(en)) warn(where);
     return en;
   }
   return loc;

@@ -31,7 +31,7 @@
               "slug": "neurorehabilitation",
               "title": {
                 "en": "Neurorehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل العصبي"
               },
               "desc": {
                 "en": "Rehabilitation for patients with neurological conditions affecting movement, cognition, balance and daily function.",
@@ -46,12 +46,12 @@
                   },
                   "desc": {
                     "en": "Tailored rehabilitation for neurological conditions affecting movement, cognition, balance and daily function",
-                    "ar": ""
+                    "ar": "إعادة تأهيل مصممة وفق احتياجات المرضى الذين تؤثر حالتهم العصبية في الحركة والقدرات الإدراكية والتوازن والقدرة على أداء المهام اليومية."
                   },
                   "children": [],
                   "cardTitle": {
                     "en": "Stroke Rehabilitation",
-                    "ar": ""
+                    "ar": "السكتة الدماغية"
                   }
                 },
                 {
@@ -62,12 +62,12 @@
                   },
                   "desc": {
                     "en": "Multidisciplinary rehabilitation to support recovery following traumatic brain injury and address physical, cognitive, communication and functional difficulties",
-                    "ar": ""
+                    "ar": "إعادة تأهيل متعددة التخصصات لدعم التعافي بعد إصابات الدماغ الرضحية والتعامل مع الصعوبات الجسدية والإدراكية والتواصلية والوظيفية المصاحبة لها."
                   },
                   "children": [],
                   "cardTitle": {
                     "en": "Traumatic Brain Injury Rehabilitation",
-                    "ar": ""
+                    "ar": "إصابات الدماغ الرضحية"
                   }
                 },
                 {
@@ -78,25 +78,25 @@
                   },
                   "desc": {
                     "en": "Specialised rehabilitation to support mobility, function and independence following spinal cord injury and its associated complications",
-                    "ar": ""
+                    "ar": "إعادة تأهيل متخصصة لدعم الحركة والقدرة على أداء الوظائف اليومية والاستقلالية بعد إصابات الحبل الشوكي والمضاعفات المرتبطة بها."
                   },
                   "children": [],
                   "cardTitle": {
                     "en": "Spinal Cord Injury Rehabilitation",
-                    "ar": ""
+                    "ar": "إصابات الحبل الشوكي"
                   }
                 }
               ],
               "cardTitle": {
                 "en": "Neurorehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل العصبي"
               }
             },
             {
               "slug": "musculoskeletal-rehabilitation",
               "title": {
                 "en": "Musculoskeletal Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل العضلي الهيكلي"
               },
               "desc": {
                 "en": "Rehabilitation for patients with musculoskeletal injuries, chronic conditions and post-surgical limitations affecting movement and strength.",
@@ -105,14 +105,14 @@
               "children": [],
               "cardTitle": {
                 "en": "Musculoskeletal Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل العضلي الهيكلي"
               }
             },
             {
               "slug": "post-surgical-rehabilitation",
               "title": {
                 "en": "Post-Surgical Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل بعد الجراحة"
               },
               "desc": {
                 "en": "Rehabilitation for patients recovering from surgery, to restore mobility and reduce the risk of post-surgical complications.",
@@ -121,14 +121,14 @@
               "children": [],
               "cardTitle": {
                 "en": "Post-Surgical Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل بعد الجراحة"
               }
             },
             {
               "slug": "road-traffic-accident-rehabilitation",
               "title": {
                 "en": "Road Traffic Accident Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل بعد حوادث المرور"
               },
               "desc": {
                 "en": "Rehabilitation for patients recovering from traumatic injuries following road traffic accidents, supporting recovery of movement and function.",
@@ -137,7 +137,7 @@
               "children": [],
               "cardTitle": {
                 "en": "Road Traffic Accident Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل بعد حوادث المرور"
               }
             }
           ],
@@ -163,7 +163,7 @@
               "slug": "long-term-care",
               "title": {
                 "en": "Long-Term Care",
-                "ar": ""
+                "ar": "الرعاية طويلة الأمد"
               },
               "desc": {
                 "en": "Comprehensive ongoing care for patients with chronic illness, disability or prolonged recovery needs.",
@@ -172,14 +172,14 @@
               "children": [],
               "cardTitle": {
                 "en": "Long-Term Care",
-                "ar": ""
+                "ar": "الرعاية طويلة الأمد"
               }
             },
             {
               "slug": "long-term-acute-care",
               "title": {
                 "en": "Long-Term Acute Care",
-                "ar": ""
+                "ar": "الرعاية طويلة الأمد وما بعد الحالات الحادة"
               },
               "desc": {
                 "en": "High-dependency medical care for clinically complex patients who require specialist oversight and intensive coordination.",
@@ -188,14 +188,14 @@
               "children": [],
               "cardTitle": {
                 "en": "Long-Term Acute Care",
-                "ar": ""
+                "ar": "الرعاية طويلة الأمد وما بعد الحالات الحادة"
               }
             },
             {
               "slug": "geriatric-care",
               "title": {
                 "en": "Geriatric Care",
-                "ar": ""
+                "ar": "رعاية كبار السن"
               },
               "desc": {
                 "en": "Integrated compassionate care for older adults with complex or age-related health needs.",
@@ -204,14 +204,14 @@
               "children": [],
               "cardTitle": {
                 "en": "Geriatric Care",
-                "ar": ""
+                "ar": "رعاية كبار السن"
               }
             },
             {
               "slug": "paediatric-long-term-care",
               "title": {
                 "en": "Paediatric Long-Term Care",
-                "ar": ""
+                "ar": "الرعاية طويلة الأمد للأطفال"
               },
               "desc": {
                 "en": "Specialised long-term care for children with chronic medical, neurological or developmental needs.",
@@ -220,7 +220,7 @@
               "children": [],
               "cardTitle": {
                 "en": "Paediatric Long-Term Care",
-                "ar": ""
+                "ar": "الرعاية طويلة الأمد للأطفال"
               }
             }
           ],
@@ -233,7 +233,7 @@
           "slug": "ventilated-patients-care",
           "title": {
             "en": "Ventilated Patients Care",
-            "ar": ""
+            "ar": "رعاية مرضى أجهزة التنفس الصناعي"
           },
           "desc": {
             "en": "Care for patients who require mechanical ventilation, providing respiratory support, continuous monitoring and management according to their clinical needs.",
@@ -246,38 +246,38 @@
               "slug": "weaning-programme",
               "title": {
                 "en": "Weaning Programme",
-                "ar": ""
+                "ar": "برنامج الفطام عن جهاز التنفس الصناعي"
               },
               "desc": {
                 "en": "Structured respiratory management aimed at reducing and eventually removing dependence on mechanical ventilation, where clinically possible.",
-                "ar": ""
+                "ar": "برنامج علاجي تنفسي منظم يهدف إلى تقليل اعتماد المريض على جهاز التنفس الصناعي وصولًا إلى الاستغناء عنه، متى كان ذلك ممكنًا من الناحية السريرية."
               },
               "children": [],
               "cardTitle": {
                 "en": "Ventilator Weaning Programme",
-                "ar": ""
+                "ar": "برنامج الفطام عن جهاز التنفس الصناعي"
               }
             },
             {
               "slug": "long-term-ventilated-care",
               "title": {
                 "en": "Long-Term Ventilated Care",
-                "ar": ""
+                "ar": "رعاية المرضى الخاضعين للتنفس الصناعي طويل الأمد"
               },
               "desc": {
                 "en": "Ongoing respiratory and medical support for patients who require long-term mechanical ventilation.",
-                "ar": ""
+                "ar": "رعاية تنفسية وطبية مستمرة للمرضى الذين يحتاجون إلى التنفس الصناعي لفترات طويلة."
               },
               "children": [],
               "cardTitle": {
                 "en": "Long-Term Ventilation Programme",
-                "ar": ""
+                "ar": "برنامج التنفس الصناعي طويل الأمد"
               }
             }
           ],
           "cardTitle": {
             "en": "Ventilated Patients Care",
-            "ar": ""
+            "ar": "رعاية مرضى أجهزة التنفس الصناعي"
           }
         },
         {
@@ -297,11 +297,11 @@
               "slug": "pulmonary-rehab",
               "title": {
                 "en": "Paediatric Pulmonary Rehabilitation",
-                "ar": ""
+                "ar": "إعادة التأهيل الرئوي للأطفال"
               },
               "desc": {
                 "en": "For children with chronic respiratory conditions requiring monitored therapy and long-term management, to help children breathe easier.",
-                "ar": ""
+                "ar": "برنامج موجه للأطفال الذين يعانون من حالات تنفسية مزمنة ويحتاجون المراقبة الطبية طويلة الأمد، يهدف إلى تسهيل عملية التنفس وتحسين جودة حياتهم."
               },
               "children": []
             },
@@ -452,7 +452,7 @@
           "slug": "pediatric-care",
           "title": {
             "en": "Paediatric Care",
-            "ar": ""
+            "ar": "الرعاية للأطفال"
           },
           "desc": {
             "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement, function and daily activities.",
@@ -461,14 +461,14 @@
           "children": [],
           "cardTitle": {
             "en": "Paediatric Care",
-            "ar": ""
+            "ar": "الرعاية للأطفال"
           }
         },
         {
           "slug": "physiotherapy",
           "title": {
             "en": "Physiotherapy",
-            "ar": ""
+            "ar": "العلاج الطبيعي"
           },
           "desc": {
             "en": "Movement based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
@@ -477,7 +477,7 @@
           "children": [],
           "cardTitle": {
             "en": "Physiotherapy",
-            "ar": ""
+            "ar": "العلاج الطبيعي"
           }
         },
         {

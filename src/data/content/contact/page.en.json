@@ -10,7 +10,7 @@
       "alt": ""
     },
     "title": [
-      "Speak with",
+      "Reach Out to",
       "Our Care Team"
     ],
     "button": {
@@ -18,7 +18,7 @@
       "href": "#contact-form"
     }
   },
-  "heading": "Contact US",
+  "heading": "Contact Us",
   "form": {
     "ariaLabel": "Send an enquiry",
     "nameLabel": "Full Name*",
@@ -53,7 +53,11 @@
     "web": "www.cambridgehospital.com",
     "webHref": "https://cambridgehospital.com/",
     "phone": "800-692273",
-    "phoneHref": "800692273"
+    "phoneHref": "800692273",
+    "byRegion": {
+      "sa": { "phone": "9200-13122", "phoneHref": "920013122" }
+    },
+    "_byRegionNote": "Per-edition override of the details above: /sa shows the KSA line (the live site's number, as in home/contact and the FAQ), Global and /ae the UAE line."
   },
   "recovery": {
     "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",

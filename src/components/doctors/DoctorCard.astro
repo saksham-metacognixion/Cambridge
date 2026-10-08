@@ -2,9 +2,9 @@
 import { Picture } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
-import { urlFor, type Edition } from '../../lib/editions';
+import type { Edition } from '../../lib/editions';
 import { t } from '../../lib/content';
-import { DOCTOR_PATHS, doctorRole, type Doctor } from '../../lib/doctors';
+import { doctorHref, doctorRole, type Doctor } from '../../lib/doctors';
 import mask from '../../assets/doctors-page/card-mask.svg';
 import fill from '../../assets/doctors-page/card-fill.svg';
 
@@ -27,7 +27,7 @@ const photo = d.photo ? img(d.photo, edition.region) : null;
 const w = d.card_photo?.w ?? d.card_photo?.size ?? 169;
 const h = d.card_photo?.h ?? d.card_photo?.size ?? 169;
 const dx = d.card_photo?.dx ?? 0;
-const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
+const href = doctorHref(d, edition);
 ---
 
 <article class="card dr-card hair-card relative flex flex-col bg-white" style="--sw:.291" aria-label={name}>

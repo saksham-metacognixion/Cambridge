@@ -2,7 +2,8 @@ import doctorData from '../data/doctors.json';
 import hospitalData from '../data/hospitals.json';
 import specialtyData from '../data/specialties.json';
 import { t, type Localized } from './content';
-import type { Edition, LocaleId } from './editions';
+import homeDoctors from '../data/content/home/doctors.en.json';
+import { editions, getEdition, urlFor, type Edition, type LocaleId } from './editions';
 
 /*
  * Doctors come from src/data/doctors.json (Pramod's export later; schema in the $comment of that file).
@@ -79,3 +80,32 @@ export function doctorsForEdition<T extends { country: string }>(list: T[], e: E
   const own = c ? list.filter((d) => d.country === c) : [];
   return own.length ? own : list;
 }
+
+/**
+ * Edition ids where a doctor's profile page exists: Global always, plus the doctor's own country (like the hospital pages),
+ * so /sa never shows a UAE doctor and the KSA switch on a UAE profile goes to the KSA Find a Doctor list. No country = all.
+ */
+export const doctorEditions = (d: { country: string }) =>
+  editions.filter((e) => e.region === 'global' || !d.country || e.region === d.country).map((e) => e.id);
+
+/** Profile URL seen from an edition: the same edition when the page exists there, else the doctor's own country, same language. */
+export function doctorHref(d: { slug: string; country: string }, edition: Edition): string {
+  const e = doctorEditions(d).includes(edition.id) ? edition : getEdition(d.country as 'ae' | 'sa', edition.locale);
+  return urlFor(e, DOCTOR_PATHS.profile(d.slug));
+}
+
+/**
+ * The doctors of a fixed row ("Expert Care, Trusted Doctors": the Figma four, all UAE) for one edition. On /ae and /sa only
+ * that country's doctors; when the list has none there, the first `list.length` doctors of the Home row under that
+ * country's pill (the Home six from home/doctors JSON, then every other doctor with a photo, doctors.json order).
+ */
+export function rowDoctorsForEdition(list: Doctor[], e: Edition): Doctor[] {
+  const c = editionCountry(e);
+  if (!c) return list;
+  const own = list.filter((d) => d.country === c);
+  if (own.length) return own;
+  const home = homeDoctors.doctors.map((s: string) => profileDoctors.find((d) => d.slug === s)!).filter(Boolean);
+  const order = [...home, ...profileDoctors.filter((d) => d.photo && !home.includes(d))];
+  return order.filter((d) => d.country === c && d.listed !== false).slice(0, list.length);
+}
+

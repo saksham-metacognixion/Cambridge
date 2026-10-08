@@ -1,5 +1,5 @@
 {
-  "$comment": "Doctors from the live site (WordPress REST export docs/doctor.json, 6 Oct 2026) via tools/import-wp-cpt.mjs; do not edit by hand, re-run the importer. Schema: id (wp-<post id>), slug (WordPress slug), old_url (empty: the live site has no public doctor pages), name{en,ar}, title{en,ar} (designation; WordPress keeps it in the doctor_designation field, which is not in the export: filled for the 15 Figma doctors only, the card falls back to the specialty name), specialties[] (ids in specialties.json = doctor_specialty term slugs), hospital_id (not in WordPress, empty), country ae|sa (\"\" = no country in WordPress: Global list only), languages[], bio{en,ar} (HTML), sub_specialities[{en,ar}] (doctor_condition terms), photo (image key under src/assets; Figma photos for the 15 Figma doctors), photo_alt, wp_media (WordPress featured image id, for the image import). DESIGN-ONLY extras from Figma: card_photo, home_photo, home_title, show_book_now.",
+  "$comment": "Doctors from the live site (WordPress REST export docs/doctor.json, 6 Oct 2026) via tools/import-wp-cpt.mjs; do not edit by hand, re-run the importer. Schema: id (wp-<post id>), slug (WordPress slug), old_url (the live profile URL /<ae|sa>/doctor/<live slug>/ where known: bug 059, from the live Our Care page and condition-page links; kept on re-import; 301 map in src/lib/redirects.ts), name{en,ar}, title{en,ar} (designation; WordPress keeps it in the doctor_designation field, which is not in the export: filled for the 15 Figma doctors only, the card falls back to the specialty name), specialties[] (ids in specialties.json = doctor_specialty term slugs), hospital_id (not in WordPress, empty), country ae|sa (\"\" = no country in WordPress: Global list only), languages[], bio{en,ar} (HTML), sub_specialities[{en,ar}] (doctor_condition terms), photo (image key under src/assets; Figma photos for the 15 Figma doctors), photo_alt, wp_media (WordPress featured image id, for the image import). DESIGN-ONLY extras from Figma: card_photo, home_photo, home_title, show_book_now.",
   "doctors": [
     {
       "id": "wp-19833",
@@ -282,7 +282,7 @@
     {
       "id": "wp-18747",
       "slug": "sami-alamin",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/ae/doctor/sami-alamin/",
       "name": {
         "en": "Dr. Sami Alamin",
         "ar": ""
@@ -475,7 +475,7 @@
     {
       "id": "wp-18749",
       "slug": "ebtihal-mohammed",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/ae/doctor/ebtihal-mohammed/",
       "name": {
         "en": "Dr. Ebtihal Mohammed",
         "ar": ""
@@ -660,7 +660,7 @@
     {
       "id": "wp-20262",
       "slug": "saleh-damnan",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-saleh-awadh-mohamed-damnan/",
       "name": {
         "en": "Dr. Saleh Damnan",
         "ar": ""
@@ -689,7 +689,7 @@
     {
       "id": "wp-20261",
       "slug": "mehnaz-abdul-ghafoor",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-mehnaz-abdul-ghafoor/",
       "name": {
         "en": "Dr. Mehnaz Abdul Ghafoor",
         "ar": ""
@@ -718,7 +718,7 @@
     {
       "id": "wp-20260",
       "slug": "nader-bin-taleb",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-nader-yaslam-mubarak-bin-taleb/",
       "name": {
         "en": "Dr. Nader Bin Taleb",
         "ar": ""
@@ -747,7 +747,7 @@
     {
       "id": "wp-20258",
       "slug": "ali-mahmoud",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-ali-mohamed-ali-mahmoud/",
       "name": {
         "en": "Dr. Ali Mahmoud",
         "ar": ""
@@ -776,7 +776,7 @@
     {
       "id": "wp-20256",
       "slug": "mohamed-bahrudeen",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-mohamed-arshadh-mohamed-bahrudeen/",
       "name": {
         "en": "Dr. Mohamed Bahrudeen",
         "ar": ""
@@ -805,7 +805,7 @@
     {
       "id": "wp-20253",
       "slug": "ahmad-almohamady",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-ahmad-mohamad-almohamady/",
       "name": {
         "en": "Dr. Ahmad Almohamady",
         "ar": ""
@@ -834,7 +834,7 @@
     {
       "id": "wp-20252",
       "slug": "hesham-mustafa",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-hesham-abdulhai-mohammed-mustafa/",
       "name": {
         "en": "Dr. Hesham Mustafa",
         "ar": ""
@@ -863,7 +863,7 @@
     {
       "id": "wp-20247",
       "slug": "wafaa-farag",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-wafaa-elsayed-abdelmageed-farag/",
       "name": {
         "en": "Dr. Wafaa Farag",
         "ar": ""
@@ -892,7 +892,7 @@
     {
       "id": "wp-20245",
       "slug": "abdulaziz-alqutub",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-abdulaziz-tariq-abdulsalam-alqutub/",
       "name": {
         "en": "Dr. Abdulaziz Alqutub",
         "ar": ""
@@ -921,7 +921,7 @@
     {
       "id": "wp-20241",
       "slug": "setelnesa-mohamed",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-setelnesa-elzubeir-saeed-mohamed/",
       "name": {
         "en": "Dr. Setelnesa Mohamed",
         "ar": ""
@@ -950,7 +950,7 @@
     {
       "id": "wp-20239",
       "slug": "majed-osaylan",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-majed-taha-majed-osaylan/",
       "name": {
         "en": "Dr. Majed Osaylan",
         "ar": ""
@@ -979,7 +979,7 @@
     {
       "id": "wp-20238",
       "slug": "wissam-al-safi",
-      "old_url": "",
+      "old_url": "https://cambridgehospital.com/sa/doctor/dr-wissam-abdullah-al-safi/",
       "name": {
         "en": "Dr. Wissam Al Safi",
         "ar": ""

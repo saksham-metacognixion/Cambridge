@@ -19,12 +19,17 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
   <p class="m-0 mx-auto h-17 max-w-282 text-center font-gotham font-light text-f14p173 leading-17 tracking-[calc(1.4173*var(--u))] text-navy uppercase not-italic">{c.eyebrow}</p>
   <h2 id="latest-title" class="m-0 mx-auto max-lg:box-border max-lg:px-[16px] mt-[calc(27.64*var(--u))] max-w-[calc(457.328*var(--u))] text-center font-gotham font-bold text-f29p076 leading-[calc(34.336*var(--u))] text-navy not-italic [word-break:break-word]">{c.title}</h2>
 
-  <!-- Swipe / scroll row (no arrows): padding keeps the card shadows from being clipped, margins cancel it out. -->
-  <ul id="latest-posts" class="hscroll m-0 mt-[calc(1.64*var(--u))] -mb-30 flex list-none gap-[calc(36.6*var(--u))] p-0 py-30 ps-16 pe-16 scroll-ps-16 lg:ps-115 lg:pe-115 lg:scroll-ps-115" data-row aria-label={c.indexLabel}>
-    {cards.map((card) => <li class="flex"><PostCard card={card} /></li>)}
-    <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
-  </ul>
-  <template data-card-template><li class="flex"><PostCard /></li></template>
+  <!-- Swipe / scroll row (no arrows in Figma), auto-scrolling in a slow seamless loop like Testimonials / Care Support (bug 064,
+       src/scripts/autoscroll.ts: scroller [data-autoscroll] > [data-loop-row] > [data-loop-item]; pauses on hover / focus /
+       touch, off with prefers-reduced-motion). The script appends more posts to the loop row as it nears its end
+       (scripts/media-hub.ts) and rebuilds the copies. Padding keeps the card shadows from being clipped, margins cancel it out. -->
+  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:scroll-ps-115" data-row data-autoscroll>
+    <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-115 lg:pe-115" data-loop-row aria-label={c.indexLabel}>
+      {cards.map((card) => <li class="flex" data-loop-item><PostCard card={card} /></li>)}
+      <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
+    </ul>
+  </div>
+  <template data-card-template><li class="flex" data-loop-item><PostCard /></li></template>
 
   <!-- Pagination dots of the post row (Figma's dot divider, 58.83 below the cards): shared component, bug 012; recounted as
        the script appends more posts or a category is chosen. -->
@@ -34,4 +39,5 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
 <script>
   import '../../scripts/media-hub';
   import '../../scripts/pagination';
+  import '../../scripts/autoscroll';
 </script>

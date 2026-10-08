@@ -1,0 +1,120 @@
+---
+import chevron from '../../assets/doctors-page/chevron.svg';
+
+/*
+ * Shared custom dropdown (bug 053): replaces the browser's <datalist> / <select> lists, which every browser drew differently
+ * (bright-blue selection, narrow datalist popup, the placeholder listed as an option). No dropdown design exists in Figma:
+ * the field is the Figma box (.ui-box > .ui-field, 311 x 35), the list reuses its border, corner, font and navy text.
+ *   editable  - a text input (type to filter the names), WAI-ARIA "combobox with list autocomplete"
+ *   otherwise - a select-only combobox (APG pattern); the placeholder is the field's text only, never an option
+ * Options are rendered here from the page's data; the page script decides which are available (setAvailable) and listens
+ * for `combobox:select` / `combobox:input`. Behaviour: src/scripts/combobox.ts.
+ */
+interface Props {
+  id: string;
+  name: string;
+  /** visible placeholder and accessible name */
+  label: string;
+  options: { value: string; label: string }[];
+  editable?: boolean;
+  /** shown in the list when no option fits */
+  emptyText: string;
+  /** editable only (bug 054): accessible name of the clear (x) button shown while the field has text */
+  clearLabel?: string;
+}
+const { id, name, label, options, editable = false, emptyText, clearLabel = 'Clear' } = Astro.props;
+const listId = `${id}-list`;
+---
+
+<div class="ui-box cb" data-combobox data-name={name} data-editable={editable ? '' : undefined}>
+  <span id={`${id}-label`} class="sr-only">{label}</span>
+  {editable ? (
+    <input id={id} name={name} type="text" class="ui-field cb-field" role="combobox" aria-autocomplete="list" aria-expanded="false"
+      aria-controls={listId} aria-labelledby={`${id}-label`} placeholder={label} autocomplete="off" autocapitalize="off"
+      spellcheck="false" enterkeyhint="search" data-cb-field />
+  ) : (
+    <div id={id} class="ui-field cb-field cb-select" role="combobox" tabindex="0" aria-haspopup="listbox" aria-expanded="false"
+      aria-controls={listId} aria-labelledby={`${id}-label ${id}`} data-cb-field>
+      <span class="cb-value" data-cb-value data-placeholder={label}>{label}</span>
+    </div>
+  )}
+  {editable && (
+    <>
+      <!-- Bug 054: x clears the name (and ?q=) in one press; a real button, so Tab reaches it and Enter / Space press it. -->
+      <button type="button" class="cb-clear" aria-label={clearLabel} aria-controls={id} hidden data-cb-clear>
+        <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M1 1l8 8M9 1l-8 8" /></svg>
+      </button>
+      <!-- The arrow toggles the list like a native dropdown arrow. Out of the tab order and hidden from screen readers
+           (APG: the keyboard opens the list with Down / Alt+Down on the field). -->
+      <button type="button" class="cb-toggle" tabindex="-1" aria-hidden="true" data-cb-toggle></button>
+    </>
+  )}
+  <img class="ui-chev cb-chev" src={chevron.src} width="7" height="4.2" alt="" />
+  <ul id={listId} role="listbox" class="cb-list" aria-labelledby={`${id}-label`} tabindex="-1" hidden data-cb-list>
+    {options.map((o, i) => (
+      <li id={`${id}-opt-${i}`} role="option" class="cb-opt" aria-selected="false" data-value={o.value}>{o.label}</li>
+    ))}
+    <li class="cb-none" role="presentation" hidden data-cb-none>{emptyText}</li>
+  </ul>
+</div>
+
+<style>
+  /* Field: .ui-field (global.css). Select-only box shows its value / placeholder on one line like the input. */
+  .cb-select { display: flex; align-items: center; cursor: pointer; user-select: none; white-space: nowrap; overflow: hidden; }
+  .cb-value { overflow: hidden; text-overflow: ellipsis; }
+  .cb-chev { transition: transform 0.15s ease; }
+  .cb.is-open { z-index: 10; }
+  .cb.is-open .cb-chev { transform: rotate(180deg); }
+
+  /* List: directly under the field, exactly its width (inset-inline 0 = left/right edges in LTR and RTL), same border + corner.
+     ~7.5 rows visible, then it scrolls inside itself (the half row shows there is more). 44px rows on touch screens. */
+  .cb-list {
+    --row: 40px;
+    position: absolute; inset-inline: 0; top: calc(100% + 4px); z-index: 10;
+    margin: 0; padding: 4px 0; list-style: none; box-sizing: border-box;
+    max-height: min(calc(7.5 * var(--row) + 8px), 60vh); overflow-y: auto; overscroll-behavior: contain;
+    background: #fff; color: var(--color-navy);
+    border: max(1px, calc(0.5 * var(--u))) solid var(--color-teal-border); border-radius: var(--radius-field);
+    box-shadow: 0 6px 18px rgb(0 64 89 / 0.12);
+    font: 400 max(14px, min(15px, calc(10 * var(--u)))) / 1.25 var(--font-gotham);
+    text-align: start;
+    scrollbar-width: thin; scrollbar-color: var(--color-steel) transparent;
+  }
+  .cb-list[hidden], .cb-list > [hidden] { display: none; }
+  .cb-list::-webkit-scrollbar { width: 6px; }
+  .cb-list::-webkit-scrollbar-thumb { background: var(--color-steel); border-radius: 3px; }
+  .cb-list::-webkit-scrollbar-track { background: transparent; }
+  @media (pointer: coarse), (max-width: 1023.98px) { .cb-list { --row: 44px; } }
+
+  .cb-opt, .cb-none { display: flex; align-items: center; min-height: var(--row); box-sizing: border-box; padding: 6px calc(15 * var(--u)); }
+  .cb-opt { cursor: pointer; overflow-wrap: anywhere; -webkit-tap-highlight-color: transparent; }
+  .cb-none { cursor: default; color: var(--color-teal-border); }
+  /* Brand tints instead of the browser's bright blue: hover / keyboard focus = light mist, selected = soft cyan (same weight as the field). */
+  .cb-opt.is-active { background: var(--color-mist-50); }
+  @media (hover: hover) { .cb-opt:hover { background: var(--color-mist-50); } }
+  .cb-opt[aria-selected='true'] { background: color-mix(in srgb, var(--color-cyan) 14%, #fff); }
+  .cb-opt[aria-selected='true'].is-active { background: color-mix(in srgb, var(--color-cyan) 22%, #fff); }
+  @media (hover: hover) { .cb-opt[aria-selected='true']:hover { background: color-mix(in srgb, var(--color-cyan) 22%, #fff); } }
+  @media (prefers-reduced-motion: reduce) { .cb-chev { transition: none; } }
+
+  /* Bug 054: arrow + clear buttons at the end of the name box (logical insets: mirrored in RTL). The arrow's hit area is the
+     31 Figma px end padding the chevron sits in; the x sits just before it and the text stops before both. */
+  .cb { --cb-end: calc(31 * var(--u)); --cb-x: max(28px, calc(26 * var(--u))); }
+  .cb-toggle, .cb-clear {
+    position: absolute; top: 0; height: 100%; margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer;
+    -webkit-tap-highlight-color: transparent; color: var(--color-navy);
+  }
+  .cb-toggle { inset-inline-end: 0; width: var(--cb-end); border-start-end-radius: var(--radius-field); border-end-end-radius: var(--radius-field); }
+  .cb-clear { inset-inline-end: var(--cb-end); width: var(--cb-x); display: flex; align-items: center; justify-content: center; border-radius: var(--radius-field); }
+  .cb-clear[hidden] { display: none; }
+  .cb-clear svg { width: max(10px, calc(8 * var(--u))); height: auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+  @media (hover: hover) { .cb-clear:hover { background: var(--color-mist-50); } }
+  .cb-clear:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
+  .cb.has-clear .cb-field { padding-inline-end: calc(var(--cb-end) + var(--cb-x)); }
+  /* Touch: 44px-wide target for the x (the box itself is 48px tall below 1024px). iOS zooms the page into any focused text
+     field under 16px and stays zoomed: the field text is 16px on touch screens (both boxes, so they match). */
+  @media (pointer: coarse) {
+    .cb { --cb-x: 44px; }
+    .cb-field { font-size: max(16px, calc(10 * var(--u))); }
+  }
+</style>

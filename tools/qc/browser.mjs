@@ -12,8 +12,8 @@ import { chromium } from 'playwright-core';
 
 const base = process.argv[2] ?? 'http://localhost:4400';
 const out = process.argv[3] ?? 'docs/qc/browser.json';
-const WIDTHS = [360, 390, 414, 768, 1024, 1200, 1280, 1366, 1440, 1536, 1920];
-const TEMPLATES = ['/', '/about', '/about/why-cambridge-hospital', '/about/accreditations-partnerships', '/about/careers', '/care', '/care/inpatient', '/care/inpatient/post-acute-rehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation/stroke-rehabilitation', '/care/outpatient', '/care/home-healthcare', '/sa/care/home-healthcare', '/care/in-school', '/patient-hub/conditions-specialities', '/patient-hub/conditions-specialities/stroke-rehabilitation', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation', '/patient-hub', '/patient-hub/find-a-doctor', '/patient-hub/find-a-doctor/ahmad-al-khayer', '/hospitals', '/hospitals/cambridge-hospital-abu-dhabi', '/hospitals/cambridge-hospital-al-ain', '/media-hub', '/media-hub/12-exercises-and-stretches-for-shoulder-pain', '/contact-us', '/your-opinion-matters', '/patient-hub/refer-a-patient', '/patient-hub/international-patients', '/patient-hub/insurance-providers', '/patient-hub/testimonials', '/bmi-calculator', '/ar/stroke-risk-calculator', '/faqs', '/legal/privacy-policy', '/404'];
+const WIDTHS = [360, 390, 414, 768, 820, 1024, 1200, 1280, 1366, 1440, 1536, 1920];
+const TEMPLATES = ['/', '/about/', '/about/why-cambridge-hospital/', '/about/accreditations-partnerships/', '/about/careers/', '/care/', '/care/inpatient/', '/care/inpatient/post-acute-rehab/', '/care/inpatient/post-acute-rehab/neuro-rehab/', '/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/', '/care/outpatient/', '/care/home-healthcare/', '/sa/care/home-healthcare/', '/care/in-school/', '/patient-hub/conditions-specialities/', '/patient-hub/conditions-specialities/stroke-rehabilitation/', '/ar/patient-hub/conditions-specialities/stroke-rehabilitation/', '/patient-hub/', '/patient-hub/find-a-doctor/', '/patient-hub/find-a-doctor/ahmad-al-khayer/', '/hospitals/', '/hospitals/cambridge-hospital-abu-dhabi/', '/hospitals/cambridge-hospital-al-ain/', '/media-hub/', '/media-hub/12-exercises-and-stretches-for-shoulder-pain/', '/contact-us/', '/your-opinion-matters/', '/patient-hub/refer-a-patient/', '/patient-hub/international-patients/', '/patient-hub/insurance-providers/', '/patient-hub/testimonials/', '/bmi-calculator/', '/ar/stroke-risk-calculator/', '/faqs/', '/legal/privacy-policy/', '/404'];
 
 const results = { responsive: [], doctors: [], forms: [], keyboard: [] };
 const ok = (list, name, pass, note = '') => { list.push({ name, pass, note }); console.log(`${pass ? 'PASS' : 'FAIL'} ${name}${note ? ' - ' + note : ''}`); };
@@ -55,9 +55,10 @@ for (const url of TEMPLATES) {
 }
 
 // 2. Find a Doctor filters --------------------------------------------------------------------------------------------
-{
+// Since bugs 052/053 the filters are Combobox widgets, not <select>s: their QA is .astro/qc-bug052/qa.mjs (3 engines).
+if (await (async () => { const p = await ctx.newPage(); await p.goto(base + '/patient-hub/find-a-doctor/', { waitUntil: 'load' }); const n = await p.$$('[data-doctor-filters] select[name="specialty"]'); await p.close(); return n.length; })()) {
   const page = await ctx.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(base + '/patient-hub/find-a-doctor', { waitUntil: 'load' });
+  await page.goto(base + '/patient-hub/find-a-doctor/', { waitUntil: 'load' });
   const shown = () => page.evaluate(() => [...document.querySelectorAll('[data-doctor-list] > li')].filter((li) => !li.hidden).length);
   const pressed = () => page.evaluate(() => document.querySelector('[data-doctor-filters] [data-country][aria-pressed="true"]')?.dataset.country);
   const all = await shown();
@@ -78,14 +79,14 @@ for (const url of TEMPLATES) {
   await page.goto(u, { waitUntil: 'load' });
   ok(results.doctors, 'URL round trip restores country + speciality + query', (await pressed()) === 'sa' && (await page.inputValue('[data-doctor-filters] select[name="specialty"]')) === options[0] && (await page.inputValue('[data-doctor-filters] input[name="q"]')) === 'zzzzqqqq');
   // back button
-  await page.goto(base + '/patient-hub/find-a-doctor', { waitUntil: 'load' });
+  await page.goto(base + '/patient-hub/find-a-doctor/', { waitUntil: 'load' });
   await page.click('[data-doctor-filters] [data-country="ae"]');
   await page.selectOption('[data-doctor-filters] select[name="specialty"]', options[0]);
   await page.goBack();
   await page.waitForTimeout(200);
   ok(results.doctors, 'back button restores the previous filter state', (await pressed()) === 'ae' && (await page.inputValue('[data-doctor-filters] select[name="specialty"]')) === '', `pressed=${await pressed()}`);
   // regional defaults
-  for (const [p, c] of [['/ae/patient-hub/find-a-doctor', 'ae'], ['/sa/patient-hub/find-a-doctor', 'sa']]) {
+  for (const [p, c] of [['/ae/patient-hub/find-a-doctor/', 'ae'], ['/sa/patient-hub/find-a-doctor/', 'sa']]) {
     await page.goto(base + p, { waitUntil: 'load' });
     const only = await page.evaluate((c) => [...document.querySelectorAll('[data-doctor-list] > li')].filter((li) => !li.hidden).every((li) => li.dataset.country === c), c);
     ok(results.doctors, `${p} lists only ${c.toUpperCase()} doctors by default`, only);
@@ -95,18 +96,18 @@ for (const url of TEMPLATES) {
 
 // 3. forms ------------------------------------------------------------------------------------------------------------
 const FORMS = [
-  { url: '/contact-us', form: 'form[data-form="send-enquiry"]', open: null, name: 'Contact page (Send an Enquiry)' },
+  { url: '/contact-us/', form: 'form[data-form="send-enquiry"]', open: null, name: 'Contact page (Send an Enquiry)' },
   { url: '/', form: 'form[data-form="home-contact"]', open: null, name: 'Home "Get in touch" form' },
   { url: '/', form: '#book-appointment form[data-form]', open: 'a[href="#book-appointment"]', name: 'Book an Appointment pop-up' },
   { url: '/', form: '#send-enquiry-popup form[data-form]', open: 'a[href="#send-inquiry"]', name: 'Send an Inquiry pop-up' },
   { url: '/', form: '#feedback-popup form[data-form]', open: 'a[href="#your-opinion"]', name: 'Your Opinion Matters pop-up' },
-  { url: '/your-opinion-matters', form: 'form[data-form="feedback"]', open: null, name: 'Patient Feedback page' },
-  { url: '/patient-hub/refer-a-patient', form: 'form[data-form="refer-patient"]', open: null, name: 'Refer a Patient (For Healthcare Professionals)' },
-  { url: '/patient-hub/international-patients', form: 'form[data-form="international-enquiry"]', open: null, name: 'International Patients' },
+  { url: '/your-opinion-matters/', form: 'form[data-form="feedback"]', open: null, name: 'Patient Feedback page' },
+  { url: '/patient-hub/refer-a-patient/', form: 'form[data-form="refer-patient"]', open: null, name: 'Refer a Patient (For Healthcare Professionals)' },
+  { url: '/patient-hub/international-patients/', form: 'form[data-form="international-enquiry"]', open: null, name: 'International Patients' },
 ];
 async function formChecks(locale) {
   for (const f of FORMS) {
-    const url = (locale === 'ar' ? '/ar' : '') + (f.url === '/' ? '' : f.url) || '/';
+    const url = (locale === 'ar' ? '/ar/' : '') + (f.url === '/' ? '' : f.url) || '/';
     const page = await ctx.newPage({ viewport: { width: 1440, height: 900 } });
     let posted = null;
     await page.route('**/api/forms/**', (route) => { posted = route.request().postData() ?? ''; route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true }) }); });
@@ -175,7 +176,7 @@ await formChecks('ar');
   const restored = await page.evaluate(() => document.activeElement?.getAttribute('href') === '#book-appointment');
   ok(results.keyboard, 'Book pop-up: Enter opens, focus inside, Tab trapped, Escape closes and restores focus', inside1 && inside2 && closed && restored, `inside=${inside1}/${inside2} closed=${closed} restored=${restored}`);
   // tabs: arrow keys on the condition detail topics
-  await page.goto(base + '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', { waitUntil: 'load' });
+  await page.goto(base + '/care/inpatient/post-acute-rehab/neuro-rehab/', { waitUntil: 'load' });
   await page.focus('[data-tabs] [role="tab"][aria-selected="true"]');
   await page.keyboard.press('ArrowDown');
   const t2 = await page.evaluate(() => ({ sel: [...document.querySelectorAll('[data-tabs] [role="tab"]')].findIndex((t) => t.getAttribute('aria-selected') === 'true'), foc: [...document.querySelectorAll('[data-tabs] [role="tab"]')].indexOf(document.activeElement) }));
@@ -183,7 +184,7 @@ await formChecks('ar');
   const t3 = await page.evaluate(() => ({ sel: [...document.querySelectorAll('[data-tabs] [role="tab"]')].findIndex((t) => t.getAttribute('aria-selected') === 'true'), n: document.querySelectorAll('[data-tabs] [role="tab"]').length, panelVisible: !document.querySelector('[data-tabs] [role="tabpanel"]:not([hidden])')?.hidden }));
   ok(results.keyboard, 'Tabs: ArrowDown / End move selection and focus, panel follows', t2.sel === t2.foc && t2.sel === 1 && t3.sel === t3.n - 1 && t3.panelVisible, JSON.stringify({ t2, t3 }));
   // keyboard through the contact form: every field reachable, checkbox toggles with Space
-  await page.goto(base + '/contact-us', { waitUntil: 'load' });
+  await page.goto(base + '/contact-us/', { waitUntil: 'load' });
   await page.focus('form[data-form="send-enquiry"] [name="name"]');
   const reached = new Set();
   for (let i = 0; i < 12; i++) { reached.add(await page.evaluate(() => document.activeElement.getAttribute('name') || document.activeElement.tagName)); await page.keyboard.press('Tab'); }

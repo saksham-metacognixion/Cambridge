@@ -85,18 +85,22 @@ const subjectTablet = 'md:max-lg:object-right';
       pictureAttributes={{ class: 'contents' }}
     />
 
-    <!-- Text block: a stacked column below 1024px (phones: in the stage's flow; tablets: grid column 1, centred);
-         on the desktop canvas the wrapper disappears (contents) and each child sits at its Figma position. -->
-    <div class="relative flex flex-col gap-[calc(16*var(--u))] md:max-lg:col-start-1 md:max-lg:row-start-1 md:max-lg:justify-center md:max-lg:py-[calc(32*var(--u))] lg:contents">
+    <!-- Text block: one column in flow at every width (bug 065): heading, paragraph, then the buttons --hero-btn-gap (the
+         shared hero text -> button gap, src/styles/global.css; Figma: paragraph box 219..246, buttons at 265) under the
+         paragraph's real end, so a paragraph that wraps to more lines (Arabic, narrow widths) pushes the buttons down
+         instead of running into them. Below 1024px: phones in the stage's flow, tablets in grid column 1, centred; on the
+         desktop canvas the column sits at the heading's Figma position (95, 141) with the paragraph / buttons inset as in
+         Figma (97 / 98). -->
+    <div class="home-copy relative flex flex-col gap-[calc(16*var(--u))] md:max-lg:col-start-1 md:max-lg:row-start-1 md:max-lg:justify-center md:max-lg:py-[calc(32*var(--u))] lg:absolute lg:start-95 lg:top-141 lg:gap-0">
       <!-- Figma: Gotham Medium 39 on 37px lines (box 258..332), paragraph box at 336 = 4px under it. Below 1024px the
            heading steps down to 28/27 (the Figma section-heading size) so it stays on two lines at 360px. -->
-      <h1 class="relative m-0 font-gotham font-medium not-italic text-f39 leading-37 max-lg:text-f28 max-lg:leading-27 text-navy lg:absolute lg:start-95 lg:top-141 lg:w-374 lg:h-74 whitespace-normal [word-break:break-word]">{c.title[0]}<br />{c.title[1]}</h1>
+      <h1 class="relative m-0 font-gotham font-medium not-italic text-f39 leading-37 max-lg:text-f28 max-lg:leading-27 text-navy lg:w-374 lg:min-h-74 whitespace-normal [word-break:break-word]">{c.title[0]}<br />{c.title[1]}</h1>
 
-      <p class="relative m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body lg:absolute lg:start-97 lg:top-219 lg:w-374 lg:h-27 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">{textLines.map((line, i) => (<>{i > 0 && <><br class="max-lg:hidden" />{' '}</>}{line}</>))}</p>
+      <p class="relative m-0 font-gotham font-normal not-italic text-f12 leading-14 text-body lg:mt-4 lg:ms-2 lg:w-374 max-lg:max-w-[calc(374*var(--u))] whitespace-normal [word-break:break-word]">{textLines.map((line, i) => (<>{i > 0 && <><br class="max-lg:hidden" />{' '}</>}{line}</>))}</p>
 
       <!-- Buttons (bug 044/050): the shared .ui-btn size instead of Figma's 138 x 30 boxes with 13px labels, so the pair is one
-           flow row (gap 14) whose start sits at the first button's Figma position (98, 265) on the desktop canvas. -->
-      <div class="relative flex flex-wrap gap-[calc(14*var(--u))] lg:absolute lg:start-98 lg:top-265">
+           flow row (gap 14) starting at the first button's Figma x (98). -->
+      <div class="home-btns relative flex flex-wrap gap-[calc(14*var(--u))] lg:ms-3">
         <a href={target(c.buttons[0])} style="--sw:1;--sc:var(--color-cyan)" class="ui-btn hit btn-outline hair-card relative text-navy">{c.buttons[0].label}</a>
         <a href={target(c.buttons[1])} style="--sw:1;--sc:var(--color-cyan)" class="ui-btn hit btn-outline hair-card relative text-navy">{c.buttons[1].label}</a>
       </div>
@@ -109,3 +113,10 @@ const subjectTablet = 'md:max-lg:object-right';
 <script>
   import '../../scripts/hero-follow';
 </script>
+
+<style>
+  /* Bug 065: the buttons --hero-btn-gap under the paragraph (global.css, shared with PageHero); below 1024px the column's
+     flex gap (16 Figma px) is already between them, so only the rest is added. */
+  .home-btns { margin-top: calc(var(--hero-btn-gap) - 16 * var(--u)); }
+  @media (min-width: 1024px) { .home-btns { margin-top: var(--hero-btn-gap); } }
+</style>

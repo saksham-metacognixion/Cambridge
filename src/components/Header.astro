@@ -3,10 +3,10 @@ import line1 from '../assets/header/line1.svg';
 import line2 from '../assets/header/line2.svg';
 import vector from '../assets/header/vector.svg';
 import { parsePath, getEdition, urlFor, type RegionId } from '../lib/editions';
-import { pagePath, PAGE_PATHS } from '../lib/paths';
+import { pagePath } from '../lib/paths';
 import { content } from '../lib/content';
 import { img } from '../lib/images';
-import { weAreListeningHref } from '../lib/nav';
+import { weAreListeningHref, headerSubmenu, type MainLinkSource, type NavItem } from '../lib/nav';
 import { switchHref } from '../lib/routes';
 
 // Current edition and page path, so the language switch lands on the same page in the other language (or the nearest
@@ -20,7 +20,11 @@ const logo = img(c.logo.image, edition.region);
 // Figma top-row boxes. The first box = "We are listening" (scope 2.5, not in the Figma header): only used while that link is on
 // (src/data/nav.json weAreListeningTarget; off since bug 045), placed between the logo (ends 293) and the Opinion icon (394).
 const listeningBox = { l: 305, w: 72 };
-const topLinkBoxes = [ { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
+// Arabic (GE SS Two, BG2, 8 Oct 2026): the labels are wider than the English boxes (Careers ran into Articles, FAQs past the
+// separator at 828), so the last four sit evenly between 532 and 820 at their measured GE SS Two widths (59 / 58 / 65 / 63).
+const topLinkBoxes = edition.locale === 'ar'
+  ? [ { l: 408, w: 96 }, { l: 532, w: 59 }, { l: 606, w: 58 }, { l: 678, w: 65 }, { l: 757, w: 63 } ]
+  : [ { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
 // `path` = page inside the edition (+ optional `query`, e.g. Knowledge Center -> Media Hub health articles, docs/open-decisions.md LA1).
 // `page` = key in PAGE_PATHS (preferred), `path` = literal path inside the edition.
 const target = (x: { href: string; path?: string; page?: string; query?: string }) => (x.page !== undefined ? urlFor(edition, pagePath(x.page)) : x.path !== undefined ? urlFor(edition, x.path) : x.href) + (x.query ?? '');
@@ -29,16 +33,18 @@ type TopLink = { label: string; href: string; path?: string; page?: string; quer
 const topLinks = c.topLinks
   .filter((x: TopLink) => x.nav !== 'weAreListeningTarget' || listeningHref)
   .map((x: TopLink, i: number) => x.nav === 'weAreListeningTarget' ? { ...x, href: listeningHref!, ...listeningBox } : { ...x, href: target(x), ...topLinkBoxes[listeningHref ? i - 1 : i] });
-const mainLinkWidths = [84, 41, 54, 62, 51];
-// Dropdowns (bug 046, as on the live site): `children` from layout/header JSON; a child whose page is not built yet (key not in
-// PAGE_PATHS, e.g. Meet the Team) is left out, so the menu only ever lists pages that exist.
-type MainLink = { label: string; href: string; path?: string; page?: string; children?: { label: string; page: string }[] };
-const mainLinks = c.mainLinks.map((x: MainLink, i: number) => ({
+// Figma widths of the main links, by page (they follow a link when the menu order changes: bug 046 put Our Hospitals before
+// Patient Hub, the live site's order).
+const mainLinkWidths: Record<string, number> = { about: 84, ourCare: 41, hospitals: 62, patientHub: 54, contact: 51 };
+// Dropdowns (bug 046): items from src/lib/nav.ts headerSubmenu (fixed `children` page lists or a data `menu`: Our Care with its
+// fly-outs, Our Hospitals), only pages built in this edition, two levels at most.
+type MainLink = MainLinkSource & { label: string; href: string; path?: string; page?: string };
+const mainLinks: (MainLink & { w: number; id: string; children: NavItem[] })[] = c.mainLinks.map((x: MainLink, i: number) => ({
   ...x,
   href: target(x),
-  w: mainLinkWidths[i],
+  w: mainLinkWidths[x.page ?? ''] ?? 51,
   id: `nav-${x.page ?? i}`,
-  children: (x.children ?? []).filter((k) => k.page in PAGE_PATHS).map((k) => ({ label: k.label, href: urlFor(edition, pagePath(k.page)), current: path === pagePath(k.page) })),
+  children: headerSubmenu(x, edition, path),
 }));
 // Region switch: same page in the chosen region, same language (the language switch does the reverse); a page that does
 // not exist there (hospital of another region) lands on its nearest existing parent.
@@ -121,7 +127,23 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
             </div>
             <div class="sub" id={`${x.id}-menu`} data-submenu-menu>
               <ul class="sub-list">
-                {x.children.map((k) => (
+                {x.children.map((k, j) => k.children.length ? (
+                  <li class="has-fly" data-flyout>
+                    <div class="fly-head">
+                      <a id={`${x.id}-${j}`} href={k.href} class="hit sub-item block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={k.current ? 'page' : undefined}>{k.label}</a>
+                      <button type="button" class="hit fly-btn text-navy" aria-expanded="false" aria-controls={`${x.id}-${j}-menu`} aria-labelledby={`${x.id}-${j}`} data-flyout-btn>
+                        <svg class="fly-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                      </button>
+                    </div>
+                    <div class="fly" id={`${x.id}-${j}-menu`} data-flyout-menu>
+                      <ul class="fly-list">
+                        {k.children.map((g) => (
+                          <li><a href={g.href} class="hit sub-item fly-item block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={g.current ? 'page' : undefined}>{g.label}</a></li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                ) : (
                   <li><a href={k.href} class="hit sub-item block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={k.current ? 'page' : undefined}>{k.label}</a></li>
                 ))}
               </ul>
@@ -136,7 +158,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
            sat at the right in RTL). The visible label is the accessible name in each language. Size, label and corners: the
            shared .ui-btn (bug 044/050; Figma 138 x 30 with a 9px label). The 14-15px label needs ~180 Figma px, more than Figma's
            755..916 slot holds next to the nav, so the button ends 11 before the separator line (x 905) and grows toward the nav,
-           which starts 48 earlier (345, was 393) to make room (English only: the Arabic label is short, its nav keeps 393); vertical
+           which starts earlier (Figma 393; 331 since bug 046, see .mainnav) to make room; vertical
            centre = the Figma box's (84). -->
       <a href={c.book.href} class="hit book a ui-btn btn-fill text-navy" style="--l:755;--t:69;--w:138;--ph:30"><span>{c.book.label}</span></a>
 
@@ -158,13 +180,14 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
   :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }
   .hd ul { margin: 0; padding: 0; list-style: none; }
-  /* The list's Figma box (595 wide, at x 345 since bug 044, Figma 393) runs under the "Visit Cambridge Health Group" block (x 932..1043) and would
-     take the clicks meant for it (bug 010): the box lets pointer events through, only its links take them. */
-  .mainnav { display: flex; gap: calc(11 * var(--u)); pointer-events: none; --l: 345; }
-  :global([dir='rtl']) .mainnav { --l: 393; } /* bug 044: only the long English Book label needs the nav moved (see the Book button) */
-  /* The rule between the two rows starts with the main nav (English 345 since bug 044, Figma 393) and keeps its Figma end (988). */
-  .rule { --l: 345; --w: 643; }
-  :global([dir='rtl']) .rule { --l: 393; --w: 595; }
+  /* The list's Figma box (595 wide, Figma x 393) runs under the "Visit Cambridge Health Group" block (x 932..1043) and would
+     take the clicks meant for it (bug 010): the box lets pointer events through, only its links take them.
+     Start x: Figma 393; 345 for English since bug 044 (the long Book label); 331 in both languages since bug 046 (four dropdown
+     chevrons, 11 Figma px each, and the wider GE SS Two Arabic labels ran into the Book button: -8px at 1200 English, -16px
+     Arabic). 331 keeps >= 8px before Book from 1200px up and 38 Figma px after the logo (ends 293). */
+  .mainnav { display: flex; gap: calc(11 * var(--u)); pointer-events: none; --l: 331; }
+  /* The rule between the two rows starts with the main nav and keeps its Figma end (988). */
+  .rule { --l: 331; --w: 657; }
   .mainnav a { pointer-events: auto; }
   /* Figma width as a minimum: a longer label (Arabic "حول مستشفى كامبريدج") takes its own width instead of running into the next link. */
   .mainnav li { flex: none; min-width: calc(var(--w) * var(--u)); height: calc(15 * var(--u)); }
@@ -178,6 +201,14 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .has-sub[data-open] .sub-chev { transform: rotate(180deg); }
   .sub-btn:focus-visible, .sub-item:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   .sub-item:hover, .sub-item[aria-current='page'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* brand AA: Deep Teal + cyan underline, never cyan text */
+  /* Second level (Our Care: Inpatient / Outpatient sections). The row = the service link + a chevron button that opens a
+     fly-out beside the panel on desktop (chevron points to the inline end, so it mirrors in Arabic), or an indented list
+     below the row on mobile (chevron points down). Never a third level (src/lib/nav.ts). */
+  .fly-head { display: flex; align-items: center; }
+  .fly-btn { pointer-events: auto; display: flex; align-items: center; justify-content: center; flex: none; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
+  .fly-chev { transition: transform .2s; }
+  .fly-btn:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
+  .has-fly[data-open] > .fly-head > .sub-item { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; }
   .burger { display: none; }
   .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
   .region { z-index: 60; }
@@ -215,6 +246,17 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .has-sub[data-open] .sub { visibility: visible; opacity: 1; transition: opacity .15s; } /* visible at once on open, so a link can take focus (keyboard) */
     .hd .sub-list { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(10 * var(--u)) calc(12 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); min-width: calc(140 * var(--u)); }
     .sub-item { --hit-h: calc(100% + 10 * var(--u)); }
+    /* Fly-out: starts at the panel's inline edge (the row ends 12 inside it, the list padding), its first item level with the
+       service row. The wrapper's padding is a transparent bridge, so the pointer can cross from the row into the fly-out.
+       Only shown while its dropdown is open too (a fly-out left open never shows on its own). */
+    .has-fly { position: relative; }
+    .fly-head { gap: calc(10 * var(--u)); }
+    .fly-btn { margin-inline-start: auto; width: calc(9 * var(--u)); height: calc(9 * var(--u)); --hit-w: 24px; --hit-h: calc(100% + 10 * var(--u)); }
+    .fly-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transform: rotate(-90deg); }
+    :global([dir='rtl']) .fly-chev { transform: rotate(90deg); }
+    .fly { visibility: hidden; opacity: 0; transition: opacity .15s, visibility 0s linear .15s; position: absolute; inset-inline-start: 100%; top: calc(-10 * var(--u)); padding-inline-start: calc(16 * var(--u)); z-index: 1; }
+    .has-sub[data-open] .has-fly[data-open] > .fly { visibility: visible; opacity: 1; transition: opacity .15s; }
+    .hd .fly-list { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(10 * var(--u)) calc(12 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); min-width: calc(140 * var(--u)); }
   }
 
   @media (max-width: 1199.98px) {
@@ -252,6 +294,14 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .has-sub[data-open] .sub { display: block; }
     .hd .sub-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; }
     .menu .sub-item { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; white-space: normal; }
+    /* Second level on mobile: the service row works like a main row (link + 44px chevron), its sections indent once more. */
+    .fly-head { justify-content: space-between; gap: 8px; }
+    .fly-btn { width: 44px; height: 44px; }
+    .fly-chev { width: 18px; height: 18px; }
+    .has-fly[data-open] .fly-chev { transform: rotate(180deg); }
+    .fly { display: none; }
+    .has-fly[data-open] > .fly { display: block; }
+    .hd .fly-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
     .lang a { background: var(--color-mist); border-radius: var(--radius-btn); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
     .lang a[aria-current='true'] { background: #004059; }

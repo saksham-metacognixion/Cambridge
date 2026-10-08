@@ -245,8 +245,10 @@ function setup(scroller: HTMLElement) {
     pos = read();
   });
 
-  new IntersectionObserver(([e]) => {
-    visible = e.isIntersecting;
+  // The LAST entry is the current state: one callback can carry several (e.g. a #hash jump and a rebuild of the copies in
+  // the same frame), and reading the first one left the loop asleep on a stale "not intersecting" (bug 064).
+  new IntersectionObserver((entries) => {
+    visible = entries[entries.length - 1].isIntersecting;
     wake();
   }).observe(scroller);
   document.addEventListener("visibilitychange", () => {

@@ -7,7 +7,7 @@ import path from 'node:path';
 
 const base = process.argv[2] ?? 'http://localhost:4400';
 const out = process.argv[3] ?? 'docs/qc/lighthouse.json';
-const PAGES = ['/', '/patient-hub/find-a-doctor', '/hospitals/cambridge-hospital-abu-dhabi', '/care/inpatient/post-acute-rehabilitation/neurorehabilitation', '/ar'];
+const PAGES = ['/', '/patient-hub/find-a-doctor', '/hospitals/cambridge-hospital-abu-dhabi', '/care/inpatient/post-acute-rehab/neuro-rehab', '/ar'];
 const rows = [];
 for (const p of PAGES) {
   for (const form of ['mobile', 'desktop']) {

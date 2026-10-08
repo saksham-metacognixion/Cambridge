@@ -27,6 +27,8 @@ export function img(key: string, region?: RegionId): ImageMetadata {
  * Cursor-follow layers of a hero banner (scripts/hero-follow.ts): `<key>-bg` (gradient + pills, static) and `<key>-subject`
  * (the people, transparent elsewhere), made from the flat Figma banner by tools/hero-layers. null = no layers, the hero is
  * static (Our Hospitals, news post photos). A region's own flat banner never borrows another region's layers.
+ * A region may also bring only its own people: regions/<r>/<key>-subject (+ optionally a cleaned <key>-bg) over the shared
+ * background (KSA, bug 063: tools/region-photos/run-sa.sh).
  */
 export function heroLayers(key: string, region?: RegionId): { background: ImageMetadata; subject: ImageMetadata } | null {
   const find = (k: string, r?: RegionId) => { try { return img(k, r); } catch { return null; } };

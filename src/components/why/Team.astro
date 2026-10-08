@@ -86,6 +86,8 @@ const more = urlFor(edition, pagePath(c.button.page));
     .btn { margin-top: calc(11 * var(--u)); }
     .stats { display: block; margin: 0; }
     .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); }
-    .nv :global(.photo) { position: absolute; inset-inline-start: calc(115 * var(--u)); top: calc(312 * var(--u)); width: calc(700.8 * var(--u)); height: calc(361.4 * var(--u)); max-width: none; margin: 0; }
+    /* The photo's box overlaps the Read More box as drawn (x 115 vs 49-167); clicks pass through it to the button, which the
+       longer Arabic label puts fully under the photo (found in the bug 057 click-through QA, 8 Oct 2026). */
+    .nv :global(.photo) { position: absolute; inset-inline-start: calc(115 * var(--u)); top: calc(312 * var(--u)); width: calc(700.8 * var(--u)); height: calc(361.4 * var(--u)); max-width: none; margin: 0; pointer-events: none; }
   }
 </style>

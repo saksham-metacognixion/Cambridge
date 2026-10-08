@@ -18,6 +18,7 @@ import type { Edition } from '../../lib/editions';
  * "**bold**" lead-ins).
  * `look` (Accreditations 55:12215: tabs 311 x 78, pitch 80.43, label Book 17 (active Bold) centred vertically, no text shadow):
  * overrides the tab geometry; defaults = the values above. `item.image` = a picture placed inside the panel (page px x, y).
+ * Selected fill = the --tab-selected token in global.css (bug 056, 8 Oct 2026: #418ea2 as in Figma, not navy).
  * Corners (bug 049, client request 7 Oct 2026; square in Figma): tabs --radius-btn, panel (its focus ring) --radius-card.
  * `pending`: the text shown in an empty panel (staging only; the caller passes null in production).
  * Below 1024 (bug 035, 7 Oct 2026; no Figma frame) the two columns are NOT stacked: the container is a grid of 2n rows
@@ -99,9 +100,10 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
   .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
   .tablist { display: flex; flex-direction: column; gap: calc(var(--tgp, 2) * var(--u)); }
   .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(var(--th, 63) * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(var(--tps, 24) * var(--u)) calc(22 * var(--u)); border: 0; border-radius: var(--radius-btn); background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(var(--tfs, 13) * var(--u)) / calc(var(--tlh, 14) * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
-  .tab[aria-selected='true'] { background: var(--color-navy); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
+  .tab[aria-selected='true'] { background: var(--tab-selected); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
   .centered .tab { align-items: center; padding-block: 0; }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
+  .tab[aria-selected='true']:focus-visible { outline-color: var(--color-navy); } /* cyan on the #418ea2 fill is 1.7:1; Deep Teal 3:1 */
   .tab-label { max-width: calc(var(--tlw, 265) * var(--u)); overflow-wrap: anywhere; }
   .panel { position: relative; border-radius: var(--radius-card); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
   .panel:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(4 * var(--u)); }

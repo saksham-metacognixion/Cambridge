@@ -19,7 +19,13 @@
  * start (the right edge). Positions are therefore taken as |scrollLeft| and the sign is put back when scrolling, so dot 1
  * is always the logical first page in both directions.
  */
-import { pageCount, pageIndex, windowStart } from "../lib/pagination";
+import {
+  loopPageCount,
+  loopPageIndex,
+  pageCount,
+  pageIndex,
+  windowStart,
+} from "../lib/pagination";
 
 export interface Source {
   /** number of pages (0 or 1 hides the dots) */
@@ -82,20 +88,35 @@ export function createPagination(nav: HTMLElement, src: Source): Pagination {
   return { update, mark };
 }
 
-/** Horizontal scroller as a page source; `watch` keeps the dots in step with scrolling, resizing and content changes. */
+/**
+ * Horizontal scroller as a page source; `watch` keeps the dots in step with scrolling, resizing and content changes.
+ * A row that loops (src/scripts/autoscroll.ts sets [data-loop-period] on it, e.g. the Media Hub Latest row, bug 064) has
+ * no end: its pages tile one loop period (every card once, the copies excluded) and the position is taken inside it, as in
+ * the Home doctors row (doctors-row.ts); a dot click pauses the loop ('autoscroll:hold') so the smooth scroll is not
+ * overridden, and every rebuild of the copies ('autoscroll:change') recounts the pages.
+ */
 export function scrollSource(
   row: HTMLElement,
 ): Source & { watch(pg: Pagination): void } {
   const sign = () => (getComputedStyle(row).direction === "rtl" ? -1 : 1);
   const max = () => row.scrollWidth - row.clientWidth;
+  const period = () => Number(row.dataset.loopPeriod) || 0;
   return {
-    count: () => pageCount(max(), row.clientWidth),
-    current: () => pageIndex(Math.abs(row.scrollLeft), max(), row.clientWidth),
-    go: (i) =>
+    count: () =>
+      period()
+        ? loopPageCount(period(), row.clientWidth)
+        : pageCount(max(), row.clientWidth),
+    current: () =>
+      period()
+        ? loopPageIndex(Math.abs(row.scrollLeft), period(), row.clientWidth)
+        : pageIndex(Math.abs(row.scrollLeft), max(), row.clientWidth),
+    go: (i) => {
+      row.dispatchEvent(new Event("autoscroll:hold"));
       row.scrollTo({
         left: sign() * Math.min(i * row.clientWidth, max()),
         behavior: reduced ? "auto" : "smooth",
-      }),
+      });
+    },
     watch(pg) {
       let raf = 0;
       row.addEventListener(
@@ -106,6 +127,7 @@ export function scrollSource(
         },
         { passive: true },
       );
+      row.addEventListener("autoscroll:change", pg.update);
       new ResizeObserver(pg.update).observe(row);
       new MutationObserver(pg.update).observe(row, {
         childList: true,

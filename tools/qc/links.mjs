@@ -19,7 +19,7 @@ const EDITIONS = [
 const POPUPS = new Set(['#book-appointment', '#send-inquiry', '#your-opinion']);
 
 const pages = new Map(); // path -> { status, html, ids:Set, links:[{href, text}] }
-const queue = EDITIONS.map((e) => '/' + e.base).map((p) => (p === '/' ? '/' : p));
+const queue = EDITIONS.map((e) => (e.base ? `/${e.base}/` : '/')); // bug 057: every page URL ends in a slash
 const seen = new Set(queue);
 
 const attr = (tag, name) => { const m = tag.match(new RegExp(`\\s${name}\\s*=\\s*("([^"]*)"|'([^']*)'|([^\\s>]+))`, 'i')); return m ? (m[2] ?? m[3] ?? m[4] ?? '') : null; };
@@ -47,8 +47,8 @@ async function fetchPage(p) {
 const normalize = (href, from) => {
   const u = new URL(href, base + from);
   if (u.origin !== new URL(base).origin) return null;
-  let p = u.pathname.replace(/\.html$/, '');
-  if (p.length > 1) p = p.replace(/\/+$/, '');
+  // Kept as written (bug 057): a page link without its trailing slash answers 301 and is reported as a problem.
+  const p = u.pathname;
   return { path: p, hash: u.hash, search: u.search };
 };
 
@@ -102,7 +102,7 @@ let switchOk = 0;
 let nearest = 0;
 const editionOf = (p) => { const clean = p.replace(/^\/+|\/+$/g, ''); const sorted = [...EDITIONS].sort((a, b) => b.base.length - a.base.length); for (const e of sorted) { if (e.base === '') return { e, rest: clean }; if (clean === e.base || clean.startsWith(e.base + '/')) return { e, rest: clean.slice(e.base.length).replace(/^\//, '') }; } return { e: EDITIONS[0], rest: clean }; };
 for (const [p, page] of pages) {
-  if (page.status !== 200 || p.endsWith('/404')) continue;
+  if (page.status !== 200 || p.endsWith('/404') || p.endsWith('/404/')) continue;
   const { e, rest } = editionOf(p);
   const langLinks = [...page.html.matchAll(/<a href="([^"]+)" hreflang="([^"]+)" lang="(en|ar)"/g)].map((m) => ({ href: m[1], lang: m[3] }));
   const regionLinks = [...page.html.matchAll(/<a href="([^"]+)" hreflang="([^"]+)" class="hit ritem/g)].map((m) => ({ href: m[1], hreflang: m[2] }));
@@ -117,7 +117,7 @@ for (const [p, page] of pages) {
       // Allowed only when the exact page does not exist in the other edition (a hospital of another region): the switch then
       // lands on the nearest parent that exists (src/lib/routes.ts switchHref). Anything else is a wrong landing page.
       const { e: e2 } = editionOf(n.path);
-      const exact = '/' + [e2.base, rest].filter(Boolean).join('/');
+      const exact = '/' + [e2.base, rest].filter(Boolean).join('/') + (e2.base || rest ? '/' : '');
       const ex = pages.get(exact) ?? (await fetchPage(exact));
       pages.set(exact, ex);
       if ((ex.status === 404 || ex.status === 301) && (rest2 === '' || rest.startsWith(rest2 + '/'))) { switchOk++; nearest++; }

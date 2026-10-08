@@ -1,12 +1,15 @@
 /*
- * Find a Doctor filter island (scope 2.6). The list is already in the HTML; this only shows/hides cards.
+ * Find a Doctor filter island (scope 2.6). The list is already in the HTML; this shows/hides cards and, on every change,
+ * narrows the two dropdowns to the options that still give results (bug 052: country first, then specialty <-> name).
+ * A country change clears a specialty / doctor of the other country (prune), and so does a hand-edited URL.
  * State lives in the URL (?country=&hospital=&specialty=&q=): every change pushes a history entry, back/forward restore it.
- * Logic (and its tests): src/lib/doctor-filters.ts.
+ * Logic (and its tests): src/lib/doctor-filters.ts. Dropdowns: src/scripts/combobox.ts.
  */
 import {
-  applyFilters, parseState, setCountry, setQuery, setSpecialty, toSearch,
+  applyFilters, nameOptions, parseState, prune, setCountry, setQuery, setSpecialty, specialtyOptions, toSearch,
   type Country, type FilterDoctor, type FilterHospital, type FilterState,
 } from '../lib/doctor-filters';
+import { createCombobox } from './combobox';
 
 const root = document.querySelector<HTMLElement>('[data-doctor-filters]');
 if (root) {
@@ -23,23 +26,35 @@ if (root) {
   }));
   // Buttons only: the doctor cards (<li data-country>) carry the same attribute and must not become pills.
   const pills = [...root.querySelectorAll<HTMLButtonElement>('button[data-country]')];
-  const nameInput = root.querySelector<HTMLInputElement>('input[name="q"]');
-  const specialtySelect = root.querySelector<HTMLSelectElement>('select[name="specialty"]');
+  const nameBox = root.querySelector<HTMLElement>('[data-combobox][data-name="q"]');
+  const specialtyBox = root.querySelector<HTMLElement>('[data-combobox][data-name="specialty"]');
   const empty = root.querySelector<HTMLElement>('[data-doctor-empty]');
   const status = root.querySelector<HTMLElement>('[data-doctor-status]');
 
-  // A URL value that matches no option (?specialty=foo) is dropped, so a bad link never empties the list without a visible cause.
-  const specialties = specialtySelect ? [...specialtySelect.options].map((o) => o.value).filter(Boolean) : undefined;
-  const read = () => parseState(location.search, region, hospitals, specialties);
+  // A URL value that matches no option (?specialty=foo) is dropped, and so is one the country does not allow
+  // (?country=sa&q=<a UAE doctor>): a link never empties the list without a visible cause. The cleaned URL replaces it.
+  const specialties = specialtyBox
+    ? [...specialtyBox.querySelectorAll<HTMLElement>('[role="option"]')].map((o) => o.dataset.value ?? '').filter(Boolean)
+    : undefined;
+  const read = () => prune(parseState(location.search, region, hospitals, specialties), doctors);
   let state: FilterState = read();
   let announce = false; // the first render is the page load, not a change: do not announce it
+
+  const nameCb = nameBox && createCombobox(nameBox, {
+    onSelect: (v) => commit(setQuery(state, v)),
+    onInput: (text) => commit(setQuery(state, text), 'replace'),
+  });
+  const specialtyCb = specialtyBox && createCombobox(specialtyBox, { onSelect: (v) => commit(setSpecialty(state, v)) });
 
   function render() {
     const shown = new Set(applyFilters(doctors, state).map((d) => d.slug));
     for (const d of doctors) d.el.hidden = !shown.has(d.slug);
     for (const p of pills) p.setAttribute('aria-pressed', String(p.dataset.country === state.country));
-    if (nameInput && nameInput.value.trim() !== state.q) nameInput.value = state.q;
-    if (specialtySelect && specialtySelect.value !== state.specialty) specialtySelect.value = state.specialty;
+    // Each dropdown offers only what fits the other filters, so no pick can end in "No doctors match your search".
+    nameCb?.setAvailable(nameOptions(doctors, state));
+    nameCb?.setValue(state.q);
+    specialtyCb?.setAvailable(specialtyOptions(doctors, state));
+    specialtyCb?.setValue(state.specialty);
     if (empty) empty.hidden = shown.size > 0;
     if (status && announce) status.textContent = (status.dataset.template ?? '').replace('{n}', String(shown.size));
   }
@@ -52,10 +67,12 @@ if (root) {
     render();
   }
 
-  for (const p of pills) p.addEventListener('click', () => commit(setCountry(state, p.dataset.country as Country, hospitals)));
-  specialtySelect?.addEventListener('change', () => commit(setSpecialty(state, specialtySelect.value)));
-  nameInput?.addEventListener('input', () => commit(setQuery(state, nameInput.value), 'replace'));
+  for (const p of pills) p.addEventListener('click', () => commit(prune(setCountry(state, p.dataset.country as Country, hospitals), doctors)));
   window.addEventListener('popstate', () => { state = read(); announce = true; render(); });
 
+  // A stale / invalid link is corrected in place (no extra history entry).
+  const clean = toSearch(state, region);
+  if (clean !== location.search) history.replaceState(null, '', location.pathname + clean + location.hash);
   render();
+  root.dataset.ready = ""; // hydrated (QA scripts wait for this)
 }

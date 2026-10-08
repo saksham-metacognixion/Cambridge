@@ -35,8 +35,10 @@ export interface Hospital {
   phone?: string;
   /** opening hours text per language; empty = not shown (B3) */
   hours?: Localized;
-  /** "Open in Google Maps" target; empty = a Google Maps search for the address */
+  /** "Open in Google Maps" target; empty = the hospital's position (location), else a Google Maps search for the address */
   mapUrl?: string;
+  /** exact position (bug 051): lat / lng null = not supplied yet (no marker, no directions link); placeId optional */
+  location: { lat: number | null; lng: number | null; placeId: string; source: string };
 }
 
 export const hospitals = hospitalData.hospitals as Hospital[];
@@ -88,10 +90,44 @@ export function viewHospitalHref(slug: string, edition: Edition): string {
     : urlFor(edition, pagePath(v.page ?? "contact"));
 }
 
-/** Google Maps target: the hospital's own URL, else a Maps search for its address. */
-export const mapsHref = (h: Hospital, locale: LocaleId) =>
-  h.mapUrl ||
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hospitalName(h, "en")}, ${t(h.address, locale, "hospitals")}`)}`;
+/** The hospital's exact position, or null while it is not supplied (hospitals.json location; never a search). */
+export const hospitalPosition = (h: Hospital) =>
+  h.location.lat != null && h.location.lng != null
+    ? { lat: h.location.lat, lng: h.location.lng }
+    : null;
+
+const placeParam = (h: Hospital, name: string) =>
+  h.location.placeId
+    ? `&${name}=${encodeURIComponent(h.location.placeId)}`
+    : "";
+
+/** Google Maps directions to the hospital's exact position (+ Place ID when set); empty while the position is missing. */
+export function directionsHref(h: Hospital): string {
+  const p = hospitalPosition(h);
+  return p
+    ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}${placeParam(h, "destination_place_id")}`
+    : "";
+}
+
+/** Google Maps target: the hospital's own URL, else its exact position, else a Maps search for its address. */
+export function mapsHref(h: Hospital, locale: LocaleId): string {
+  if (h.mapUrl) return h.mapUrl;
+  const p = hospitalPosition(h);
+  return p
+    ? `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}${placeParam(h, "query_place_id")}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hospitalName(h, "en")}, ${t(h.address, locale, "hospitals")}`)}`;
+}
+
+/** One hospital as the Contact Us form + map see it (same list, same names, same edition filter as everywhere else). */
+export const mapSpots = (edition: Edition) =>
+  hospitalsIn(edition).map((h) => ({
+    id: h.slug,
+    name: hospitalName(h, edition.locale),
+    address: t(h.address, edition.locale, "hospitals"),
+    position: hospitalPosition(h),
+    placeId: h.location.placeId,
+    directions: directionsHref(h),
+  }));
 
 const detailFiles = import.meta.glob(
   "../data/content/hospital-detail/*.en.json",

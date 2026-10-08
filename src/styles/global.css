@@ -40,6 +40,10 @@
 @media (min-width: 1024px) {
   :root { --u: calc(min(100cqw, var(--target-w) * 1px) / var(--design-w)); }
 }
+/* Hero text -> button gap, ONE value for every hero with a paragraph (Home: Hero.astro, bug 065; inner pages: PageHero,
+   bug 055): 18 Figma px (24.6px at 1440, the Figma Home / Find a Doctor gap), kept within 24-32px at every width so the
+   buttons never sit against the text. Applied as a margin after the paragraph, in flow, so longer text pushes them down. */
+:root { --hero-btn-gap: clamp(24px, calc(18 * var(--u)), 32px); }
 
 @theme {
   /* Full navigation from 1200px up, hamburger below (scope 2.8). Gives the nav: / max-nav: variants. */
@@ -60,6 +64,7 @@
   --color-cyan: #00b8ff;          /* Bright Healthcare Blue: CTAs, digital UI, accents */
   --color-green: #21b573;         /* Medical Green: highlights, recovery messaging, icons */
   --color-teal-border: #418ea2;   /* Muted Teal Blue: UI, hairlines */
+  --tab-selected: var(--color-teal-border); /* selected .ui-tab fill, every tab list (Tabs.astro, FAQ); bug 056: Figma 55:12215 */
   --color-steel: #799fb9;         /* Soft Steel Blue: backgrounds, large sections, subtle UI */
   --color-mist: #e7e7e7;          /* Light Cool Grey: footer links, header hairlines */
   /* Text and neutrals (brand guidelines, user decision 8 Oct 2026). The guide sets all copy in Deep Teal and has no grey,
@@ -132,9 +137,10 @@
 
 /* Arabic typeface (Brand Guidelines p.35): GE SS Two for Arabic text. Gotham stays first so Latin words, digits and
    e-mail addresses on Arabic pages keep Gotham; Gotham has no Arabic glyphs, so Arabic letters fall through to GE SS Two.
-   The GE SS Two web files are not in public/fonts/ yet (docs/open-decisions.md BG2), so there is no @font-face (no 404s):
-   the name is used when installed locally, otherwise the system Arabic font renders as before. When the files arrive add
-   @font-face rules for "GE SS Two" (300 / 500 / 700) pointing at public/fonts/. */
+   Files = the live site's Medium / Bold (wp-content/uploads/2026/06, 8 Oct 2026; docs/open-decisions.md BG2). No Light file
+   exists, so Light / Book Arabic text resolves to Medium. unicode-range keeps the files off pages with no Arabic text. */
+@font-face { font-family: "GE SS Two"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoMedium.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+@font-face { font-family: "GE SS Two"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoBold.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
 html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
 
 html { -webkit-text-size-adjust: 100%; }
@@ -275,7 +281,7 @@ body {
                   laptops), height 40px on desktop (36px at 1024), 44px on phones / tablets (touch), width from padding (the
                   button grows with its label and never wraps it), corners --radius-btn.
      .ui-btn-sm   the one smaller size, only where two buttons share a narrow card (doctor cards, hospital rows): label 14px,
-                  34px high on desktop, 40px below 1024 (its .hit layer keeps the 44px touch target).
+                  34-36px high on desktop (36 from ~1366), 40px below 1024 (its .hit layer keeps the 44px touch target).
    The look (fill colour, outline, hover / focus) stays on the .btn-fill / .btn-fill-navy / .btn-fill-white / .btn-outline
    classes below. Radii by element type (rounded everywhere, the bug 049 values): buttons and form fields 8px, cards and boxes
    16px, large panels and bands 28px, pills / chips fully round. Circles (avatars, dots, round icons) keep 50%. */
@@ -295,7 +301,7 @@ body {
   :root {
     --btn-h: clamp(36px, calc(29 * var(--u)), 40px);
     --btn-px: clamp(14px, calc(16 * var(--u)), 22px);
-    --btn-sm-h: clamp(32px, calc(25 * var(--u)), 34px);
+    --btn-sm-h: clamp(34px, calc(27 * var(--u)), 36px);
     --btn-sm-px: clamp(10px, calc(12 * var(--u)), 16px);
   }
 }
@@ -323,7 +329,8 @@ body {
                                                                        to 2px like the live site's .ctaBut1 (user request 6 Oct)
      .btn-text        text-only button (footer Subscribe)                hover: cyan underline
      .ui-pill         ALL / KSA / UAE, Blogs / News / Events, Refer tabs  hover (not pressed / selected): cyan border
-     .ui-tab          vertical tabs (detail topics, Careers, FAQ)         hover (not selected): #e7e7e7 fill, navy label
+     .ui-tab          vertical tabs (detail topics, Careers, FAQ)         hover (not selected): #e7e7e7 fill, navy label;
+                                                                       selected: --tab-selected (#418ea2) fill, white label
    Brand AA (8 Oct 2026): a label is never cyan or white on cyan; cyan marks a state as a fill, border or underline.
    Pressed / selected states are untouched. Hover only where a pointer can hover (no stuck hover after a tap); disabled and
    aria-disabled controls keep their look. Colour transitions = the live theme's link transition (Blocksy --theme-transition:

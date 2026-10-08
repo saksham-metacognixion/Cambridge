@@ -38,6 +38,7 @@
       }
     ],
     "nameLabel": "Search for Doctors by Name",
+    "clearName": "Clear doctor name",
     "specialtyLabel": "Search for Specialities"
   },
   "card": {

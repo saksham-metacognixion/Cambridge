@@ -6,7 +6,7 @@ import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
 import { clientConfig, commonText } from '../../lib/forms';
-import hospitalData from '../../data/hospitals.json';
+import { mapSpots } from '../../lib/hospitals';
 import chevron from '../../assets/contact-page/select-chevron.svg';
 import checkbox from '../../assets/contact-page/checkbox.svg';
 import mailIcon from '../../assets/contact-page/icon-mail.svg';
@@ -26,16 +26,18 @@ const common = commonText(edition.locale);
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const err = 'f-err cf-err lg:absolute lg:start-205 lg:w-322';
 const map = img(c.map.image, edition.region);
-// Hospital options come from hospitals.json (one spelling everywhere): the region's own hospitals, all of them on Global.
-const hospitals = hospitalData.hospitals
-  .filter((h) => edition.region === 'global' || h.region === edition.region)
-  .map((h) => ({ value: h.slug, label: t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals') }));
-// Google map (bug 051): the Figma map image is the placeholder; scripts/contact-map.ts loads the map when the section nears the
-// screen and moves it to the hospital chosen in the form. Keyless Google Maps embed by default (a search that was checked to
-// land on each hospital's own Google place); with PUBLIC_GOOGLE_MAPS_KEY the Maps Embed API, by Place ID when one is set.
-const mapKey = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? '';
-const mapPlaces = Object.fromEntries(hospitalData.hospitals.map((h) => [h.slug, { q: h.map.query, ll: `${h.map.lat},${h.map.lng}`, id: h.map.placeId }]));
-const mapConfig = JSON.stringify({ key: mapKey, hl: edition.locale, overview: c.map.overview[edition.region], places: mapPlaces });
+// Hospitals (bug 051): ONE list for the Hospital select and the map (lib/hospitals.ts mapSpots: hospitals.json, the edition's own
+// hospitals, all six on Global, the site's own names and addresses). scripts/contact-map.ts loads Google Maps JavaScript API when the
+// map nears the screen (or a hospital is chosen first), drops a marker per hospital with a position and fits them; choosing a
+// hospital zooms to its marker and fills the card below. No key = keyless embed by position (one pin at a time).
+const spots = mapSpots(edition);
+const hospitals = spots.map((h) => ({ value: h.id, label: h.name }));
+const mapConfig = JSON.stringify({
+  key: import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? '',
+  lang: edition.locale,
+  region: edition.region === 'global' ? '' : edition.region.toUpperCase(),
+  spots,
+});
 const mapTitle = content('layout/header', edition.locale).mainLinks[3].label;
 
 const label = 'font-gotham font-normal text-[calc(15*var(--u))] leading-[calc(18.82*var(--u))] text-navy not-italic whitespace-nowrap max-lg:whitespace-normal';
@@ -132,7 +134,13 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
           class="absolute inset-0 h-full w-full max-w-none object-cover"
           pictureAttributes={{ class: 'contents' }}
         />
-        <iframe class="gmap" title={mapTitle} data-map-frame data-config={mapConfig} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen hidden></iframe>
+        <div class="gmap" data-map-canvas role="region" aria-label={mapTitle} data-config={mapConfig} hidden></div>
+        <!-- The card: the selected hospital as the site names it (never Google's place name), its address and the directions link. -->
+        <div class="mcard" data-map-card aria-live="polite" hidden>
+          <p class="mcard-name" data-map-name></p>
+          <p class="mcard-addr" data-map-addr></p>
+          <a class="mcard-link hit" data-map-link target="_blank" rel="noopener" hidden>{c.map.directions}</a>
+        </div>
       </div>
     </div>
 
@@ -162,6 +170,26 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
   /* Google map over the Figma placeholder image (bug 051): fades in once Google has drawn it; the box keeps the Figma size and corners. */
   .gmap { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s; }
   .gmap.is-ready { opacity: 1; }
+  .gmap :global(iframe) { display: block; width: 100%; height: 100%; border: 0; }
+  /* Card at the top of the map (Google's logo and terms stay visible at the bottom); brand colours, Book / Medium as the form. */
+  .mcard {
+    position: absolute; inset-inline: calc(8 * var(--u)); top: calc(8 * var(--u)); z-index: 1; box-sizing: border-box;
+    padding: calc(9 * var(--u)) calc(11 * var(--u)); background: #fff; border-radius: var(--radius-field);
+    box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgb(0 64 89 / .18); font-family: var(--font-gotham); color: var(--color-navy);
+    overflow-wrap: anywhere;
+  }
+  .mcard[hidden] { display: none; }
+  .mcard p { margin: 0; }
+  .mcard-name { font-weight: 500; font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
+  .mcard-addr { margin-top: calc(3 * var(--u)) !important; font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(13 * var(--u)); }
+  .mcard-link {
+    display: inline-flex; align-items: center; min-height: 44px; margin-block: calc(-6 * var(--u)) calc(-9 * var(--u));
+    font-weight: 500; font-size: calc(10 * var(--u)); line-height: calc(13 * var(--u)); color: var(--color-navy);
+    text-decoration: underline; text-underline-offset: calc(2 * var(--u));
+  }
+  .mcard-link[hidden] { display: none; }
+  .mcard-link:hover { text-decoration-thickness: 2px; }  /* no cyan text: 2.26:1 on white (brand AA) */
+  .mcard-link:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
   @media (prefers-reduced-motion: reduce) { .gmap { transition: none; } }
   .field {
     box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;

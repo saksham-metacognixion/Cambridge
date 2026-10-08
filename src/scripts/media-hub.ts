@@ -2,6 +2,9 @@
 // The page ships with the newest posts. Choosing a category (or scrolling to the end of the row) loads posts.json once,
 // which holds ALL posts of the edition, and renders cards from the <template>. Filter state is in the URL
 // (?category=events): the back button works and the URL can be shared.
+// The row auto-scrolls in a loop (bug 064, src/scripts/autoscroll.ts): `row` is the scroller, the cards live in its
+// [data-loop-row] list (the auto-scroll copies come after it). New cards go into that list, then 'autoscroll:refresh'
+// rebuilds the copies, so the loop grows as the visitor (or the auto-scroll) nears the end of the loaded posts.
 
 type Card = {
   slug: string; category: string; href: string; title: string; excerpt: string; iso: string;
@@ -13,14 +16,15 @@ const root = document.querySelector<HTMLElement>('[data-latest]');
 const select = document.querySelector<HTMLSelectElement>('[data-category-select]');
 const row = root?.querySelector<HTMLElement>('[data-row]');
 const tpl = root?.querySelector<HTMLTemplateElement>('template[data-card-template]');
-const sentinel = row?.querySelector<HTMLElement>('[data-sentinel]');
+const list = row?.querySelector<HTMLElement>('[data-loop-row]') ?? row;
+const sentinel = list?.querySelector<HTMLElement>('[data-sentinel]');
 
-if (root && select && row && tpl && sentinel) {
+if (root && select && row && list && tpl && sentinel) {
   const valid = new Set(Array.from(select.options).map((o) => o.value));
   let all: Card[] | null = null;
   let index: Promise<Card[]> | null = null;
-  let list: Card[] = [];
-  let shown = row.querySelectorAll('[data-card]').length; // cards rendered at build time = newest posts, all categories
+  let posts: Card[] = [];
+  let shown = list.querySelectorAll('[data-card]').length; // cards rendered at build time = newest posts, all categories
   let category = '';
   let run = 0;
 
@@ -54,11 +58,12 @@ if (root && select && row && tpl && sentinel) {
   };
 
   const append = () => {
-    const next = list.slice(shown, shown + CHUNK);
-    next.forEach((c) => row.insertBefore(make(c), sentinel));
+    const next = posts.slice(shown, shown + CHUNK);
+    next.forEach((c) => list.insertBefore(make(c), sentinel));
     shown += next.length;
+    row.dispatchEvent(new Event('autoscroll:refresh'));
     io.unobserve(sentinel); // re-observe so a sentinel that is still in view loads the next chunk
-    if (shown < list.length) io.observe(sentinel);
+    if (shown < posts.length) io.observe(sentinel);
   };
 
   const io = new IntersectionObserver(
@@ -67,7 +72,7 @@ if (root && select && row && tpl && sentinel) {
       const id = run;
       await load();
       if (id !== run) return;
-      list = all!.filter((c) => !category || c.category === category);
+      posts = all!.filter((c) => !category || c.category === category);
       append();
     },
     { root: row, rootMargin: '0px 400px' },
@@ -85,9 +90,9 @@ if (root && select && row && tpl && sentinel) {
     }
     await load();
     if (id !== run) return;
-    row.querySelectorAll('li:not([data-sentinel])').forEach((n) => n.remove());
+    list.querySelectorAll('li:not([data-sentinel])').forEach((n) => n.remove());
     row.scrollTo({ left: 0 });
-    list = all!.filter((c) => !cat || c.category === cat);
+    posts = all!.filter((c) => !cat || c.category === cat);
     shown = 0;
     append();
   };

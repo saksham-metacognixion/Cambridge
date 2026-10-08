@@ -3,7 +3,7 @@
  * and by the tests (tests/doctor-filters.test.mjs).
  *
  * THE RULE: the selected country is never cleared by a change to any other filter. Only a country change may clear
- * the hospital, and only when that hospital belongs to another country.
+ * the hospital, specialty or name, and only when it no longer fits that country (prune(), bug 052).
  *
  * URL: ?country=ae|sa|all &hospital=<hospital slug> &specialty=<specialty id> &q=<name text>
  *   - `country` is left out of the URL when it equals the edition's default (/ae -> ae, /sa -> sa, Global -> all).
@@ -71,7 +71,11 @@ export function parseState(
   if (state.hospital && !hospitalFits(state.hospital, state.country, hospitals))
     state.hospital = "";
   // Unknown ids (hand-edited or stale links) are ignored rather than filtering everything out.
-  if (state.hospital && hospitals.length && !hospitals.some((h) => h.slug === state.hospital))
+  if (
+    state.hospital &&
+    hospitals.length &&
+    !hospitals.some((h) => h.slug === state.hospital)
+  )
     state.hospital = "";
   if (state.specialty && specialties && !specialties.includes(state.specialty))
     state.specialty = "";
@@ -152,4 +156,48 @@ export function applyFilters<T extends FilterDoctor>(
   s: FilterState,
 ): T[] {
   return doctors.filter((d) => matches(d, s));
+}
+
+/* ── dependent dropdowns (bug 052) ──
+ * Each dropdown offers only the values of the doctors that pass EVERY OTHER filter, so no option can lead to
+ * "No doctors match your search": the specialty list follows country + name, the name list follows country + specialty. */
+
+/** Specialty ids offered for a state: the specialties of the doctors that match everything except the specialty. */
+export function specialtyOptions(
+  doctors: FilterDoctor[],
+  s: FilterState,
+): Set<string> {
+  return new Set(
+    applyFilters(doctors, { ...s, specialty: "" }).flatMap(
+      (d) => d.specialties,
+    ),
+  );
+}
+
+/** Doctor names offered for a state: the doctors that match everything except the name text. */
+export function nameOptions(
+  doctors: FilterDoctor[],
+  s: FilterState,
+): Set<string> {
+  return new Set(applyFilters(doctors, { ...s, q: "" }).map((d) => d.name));
+}
+
+/** True when `name` contains the typed text (case and accents ignored), the rule the name dropdown filters with. */
+export const nameMatches = (name: string, text: string) =>
+  norm(name).includes(norm(text));
+
+/**
+ * Clears what the country no longer allows: a specialty no doctor of that country has, then a name that matches no doctor
+ * of that country (+ specialty). Run after a country change and on a URL from outside, never on typing (typed text with no
+ * match is a legitimate empty search). The country itself is never touched.
+ */
+export function prune(s: FilterState, doctors: FilterDoctor[]): FilterState {
+  const next = { ...s };
+  if (
+    next.specialty &&
+    !specialtyOptions(doctors, { ...next, q: "" }).has(next.specialty)
+  )
+    next.specialty = "";
+  if (next.q && applyFilters(doctors, next).length === 0) next.q = "";
+  return next;
 }

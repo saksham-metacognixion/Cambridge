@@ -81,7 +81,7 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
   .h { margin: 0; font-weight: 500; font-size: calc(22.866 * var(--u)); line-height: calc(25.533 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .tablist { display: flex; flex-direction: column; gap: calc(7.017 * var(--u)); margin-top: calc(43.3 * var(--u)); }
   .tab { box-sizing: border-box; display: block; width: calc(217.372 * var(--u)); max-width: 100%; min-height: calc(28.983 * var(--u)); margin: 0; padding: calc(7 * var(--u)) calc(13.5 * var(--u)) calc(4 * var(--u)); border: 0; border-radius: var(--radius-btn); background: transparent; color: var(--color-body); font: 400 calc(10.351 * var(--u)) / normal var(--font-gotham); text-align: start; cursor: pointer; }
-  .tab[aria-selected='true'] { padding-top: calc(8.97 * var(--u)); background: var(--color-navy); color: #fff; font-size: calc(12 * var(--u)); }
+  .tab[aria-selected='true'] { padding-top: calc(8.97 * var(--u)); background: var(--tab-selected); color: #fff; font-size: calc(12 * var(--u)); }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .panel[hidden] { display: none; }
   @media (max-width: 1023.98px) { .tab { min-height: 44px; } } /* tap target */

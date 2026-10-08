@@ -98,7 +98,14 @@
     {
       "label": "Our Care",
       "href": "#",
-      "page": "ourCare"
+      "page": "ourCare",
+      "menu": "care"
+    },
+    {
+      "label": "Our Hospitals",
+      "href": "#",
+      "page": "hospitals",
+      "menu": "hospitals"
     },
     {
       "label": "Patient Hub",
@@ -132,11 +139,6 @@
       ]
     },
     {
-      "label": "Our Hospitals",
-      "href": "#",
-      "page": "hospitals"
-    },
-    {
       "label": "Contact Us",
       "href": "#",
       "page": "contact"
@@ -148,5 +150,5 @@
     "href": "#book-appointment"
   },
   "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Career Hub', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target. Region switch: `region.options` = every region in menu order (`region` = id in src/data/editions.json); the button label is the option of the page's own edition (no fixed label). `visit.href` = the Cambridge Health Group website, opened in a new tab (bug 010): the URL the live site's footer links for \"Cambridge Health Group\" (WordPress export, 6 Oct 2026; its /ar/ page does not exist, so the Arabic editions use the same URL). Not confirmed by the client as the header target.",
-  "_submenuNote": "mainLinks[].children = the dropdown under a main link (bug 046), from the live site's header menu (WordPress export 6 Oct 2026, headermain / headermain-arabic, same order). A child whose page key is not in PAGE_PATHS (src/lib/paths.ts) is not shown, so the list always matches the pages that exist (Meet the Team: no page yet). 'Conditions & Specialities' = the site's spelling (live menu: 'Specialties')."
+  "_submenuNote": "Main menu order (bug 046 reopened, 8 Oct 2026, client): About Cambridge, Our Care, Our Hospitals, Patient Hub, Contact Us (the live site order). Dropdowns: `children` = fixed page list from the live site header menu (WordPress export 6 Oct 2026, headermain / headermain-arabic, same order); `menu` = list generated from data: \"care\" = the Our Care services in src/data/care.json with their direct children as a fly-out (2 levels, never deeper), \"hospitals\" = the hospitals in src/data/hospitals.json. Every item is checked against the edition's route registry (src/lib/nav.ts headerSubmenu), so the menu only lists pages built there: Meet Our Team (no page yet), In-School Care on /sa and the other country's hospitals on /ae and /sa are left out automatically. Conditions & Specialities = the site spelling (live menu: Specialties). The Arabic file only carries labels, merged by position: keep both files in the same order."
 }

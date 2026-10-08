@@ -79,7 +79,7 @@ const doctors = ordered.map((w, i) => {
   const rec = {
     id: `wp-${w.id}`,
     slug: w.slug,
-    old_url: '',
+    old_url: old?.old_url ?? '',
     name: { en: name, ar: old?.name?.ar ?? '' },
     title: { en: old?.title?.en ?? '', ar: old?.title?.ar ?? '' },
     specialties: specs,
@@ -97,7 +97,7 @@ const doctors = ordered.map((w, i) => {
 });
 docFile.$comment =
   'Doctors from the live site (WordPress REST export docs/doctor.json, 6 Oct 2026) via tools/import-wp-cpt.mjs; do not edit by hand, re-run the importer. ' +
-  'Schema: id (wp-<post id>), slug (WordPress slug), old_url (empty: the live site has no public doctor pages), name{en,ar}, ' +
+  'Schema: id (wp-<post id>), slug (WordPress slug), old_url (the live profile URL /<ae|sa>/doctor/<live slug>/ where known: bug 059, from the live Our Care page and condition-page links; kept on re-import; 301 map in src/lib/redirects.ts), name{en,ar}, ' +
   'title{en,ar} (designation; WordPress keeps it in the doctor_designation field, which is not in the export: filled for the 15 Figma doctors only, ' +
   'the card falls back to the specialty name), specialties[] (ids in specialties.json = doctor_specialty term slugs), hospital_id (not in WordPress, empty), ' +
   'country ae|sa ("" = no country in WordPress: Global list only), languages[], bio{en,ar} (HTML), sub_specialities[{en,ar}] (doctor_condition terms), ' +

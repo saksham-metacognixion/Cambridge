@@ -10,6 +10,7 @@ cd "$(dirname "$0")/.."
 npm run build
 # nginx has no _redirects support: turn dist/_redirects ("from to 301") into a map file the server config includes
 # (deploy/nginx/cambridge-staging.conf, map $uri $ch_redirect).
-awk 'NF>=2 { printf "\"%s\" \"%s\";\n", $1, $2 }' dist/_redirects > dist/_redirects.nginx-map
+# A splat source ("/sa/doctor/*", bug 059 / 060) becomes a regex key; nginx checks the exact keys before the regex ones.
+awk 'NF>=2 { k = $1; if (k ~ /\*$/) { sub(/\*$/, "", k); k = "~^" k } printf "\"%s\" \"%s\";\n", k, $2 }' dist/_redirects > dist/_redirects.nginx-map
 rsync -avz --delete dist/ "$DEPLOY_HOST:$REMOTE_DIR/"
 echo "Deployed $(git rev-parse --short HEAD) to $DEPLOY_HOST:$REMOTE_DIR"

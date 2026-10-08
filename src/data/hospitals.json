@@ -1,5 +1,5 @@
 {
-  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format), hours ({en, ar}) and mapUrl are NOT in Figma or the documents and wait for Pramod (empty = not shown; empty mapUrl = Google Maps search for the address). Arabic names, list titles, addresses and 'View Centre' = the live site's Arabic Our Hospitals page and footer (WordPress export pages 19104 / 19153 / block 19169, 6 Oct 2026). map (bug 051, Contact Us Google Map): query = a Google Maps search that was checked on 7 Oct 2026 to land on the hospital's own Google place (name, address and pin shown; English pages); lat / lng = that Google place's position (Arabic pages pin it by position: Google's Arabic interface matches the names differently); placeId = the exact Google Place ID from the client (empty until supplied; used instead of the query when set, together with PUBLIC_GOOGLE_MAPS_KEY).",
+  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format), hours ({en, ar}) and mapUrl are NOT in Figma or the documents and wait for Pramod (empty = not shown; empty mapUrl = Google Maps search for the address). Arabic names, list titles, addresses and 'View Centre' = the live site's Arabic Our Hospitals page and footer (WordPress export pages 19104 / 19153 / block 19169, 6 Oct 2026). location (bug 051, the ONE place for hospital positions: Contact Us map markers, directions links, hospital-page 'Open in Google Maps'): lat / lng = the hospital's exact position (required for a marker), placeId = its Google Place ID (optional, sharpens the directions link), source = where the value comes from. Five positions = the hospital's own Google place, checked 7 Oct 2026 (client approval pending, R051). Jeddah has NO verified position: lat / lng are null on purpose (no marker, no directions link) until the client supplies the exact coordinates or Place ID; never fill it with a guess or a Google search result.",
   "hospitals": [
     {
       "slug": "abu-dhabi",
@@ -29,11 +29,11 @@
         "ar": ""
       },
       "mapUrl": "",
-      "map": {
-        "query": "Cambridge Hospital Abu Dhabi",
+      "location": {
         "lat": 24.3507866,
         "lng": 54.6375318,
-        "placeId": ""
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
       }
     },
     {
@@ -64,11 +64,11 @@
         "ar": ""
       },
       "mapUrl": "",
-      "map": {
-        "query": "Cambridge Hospital Al Ain, Al Khabisi, Al Ain - UAE",
+      "location": {
         "lat": 24.2311383,
         "lng": 55.6805982,
-        "placeId": ""
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
       }
     },
     {
@@ -99,11 +99,11 @@
         "ar": ""
       },
       "mapUrl": "",
-      "map": {
-        "query": "Cambridge Hospital Dhahran",
+      "location": {
         "lat": 26.3191904,
         "lng": 50.1556885,
-        "placeId": ""
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
       }
     },
     {
@@ -134,11 +134,11 @@
         "ar": ""
       },
       "mapUrl": "",
-      "map": {
-        "query": "Cambridge Hospital Al Khobar, Al Tahliyah, Al Khobar",
+      "location": {
         "lat": 26.1862228,
         "lng": 50.2090257,
-        "placeId": ""
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
       }
     },
     {
@@ -169,11 +169,11 @@
         "ar": ""
       },
       "mapUrl": "",
-      "map": {
-        "query": "Cambridge Hospital - Jeddah",
-        "lat": 21.515867,
-        "lng": 39.1800471,
-        "placeId": ""
+      "location": {
+        "lat": null,
+        "lng": null,
+        "placeId": "",
+        "source": "MISSING: client to supply the exact coordinates (and Place ID) of Cambridge Hospital Jeddah"
       }
     },
     {
@@ -208,11 +208,11 @@
         "ar": ""
       },
       "mapUrl": "",
-      "map": {
-        "query": "Al Mudeef Centre Abu Dhabi",
+      "location": {
         "lat": 24.3239001,
         "lng": 54.6089327,
-        "placeId": ""
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
       }
     }
   ]

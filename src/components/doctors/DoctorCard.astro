@@ -74,7 +74,9 @@ const href = doctorHref(d, edition);
   :global([dir='rtl']) .photo { translate: 50% 0; inset-inline-start: calc(50% - var(--dx) * var(--u)); }
   .name { margin-top: calc(13.81 * var(--u)); margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); font-size: calc(13.946 * var(--u)); line-height: calc(17.432 * var(--u)); overflow-wrap: anywhere; }
   .role { margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); min-height: calc(11.622 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); overflow-wrap: anywhere; }
-  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline: calc(17.43 * var(--u)) calc(6 * var(--u)); display: flex; flex-wrap: wrap; gap: 8px calc(7.06 * var(--u)); }
+  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline: calc(17.43 * var(--u)) calc(6 * var(--u)); display: flex; flex-wrap: wrap; gap: 8px calc(7.06 * var(--u)); width: fit-content; max-width: 100%; }
+  /* bug 044: on one line each button keeps its own width; stacked (narrow cards, ~1024) both take the row width, aligned */
+  .actions > .btn { flex-grow: 1; }
   .btn { color: #fff; } /* white only on Deep Teal; the cyan button carries a Deep Teal label (brand AA) */ /* bugs 044 / 050: .ui-btn-sm size */
   .btn-see { background: var(--color-cyan); color: var(--color-navy); }
   .btn-book { background: var(--color-navy); } /* was Medical Green: white on green is 2.65:1 */

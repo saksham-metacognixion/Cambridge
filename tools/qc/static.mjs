@@ -3,11 +3,12 @@
 // loading="lazy"), robots on the 404 pages. Prints a summary and writes JSON for the QC report.
 // Usage: node tools/qc/static.mjs [dist=dist] [out=docs/qc/static.json]
 import fs from 'node:fs';
+import { SITE_URL } from '../../site.config.mjs';
 import path from 'node:path';
 
 const dist = process.argv[2] ?? 'dist';
 const out = process.argv[3] ?? 'docs/qc/static.json';
-const SITE = 'https://cambridgehospital.example';
+const SITE = SITE_URL; // site.config.mjs (bug 057: https://cambridgehospital.com)
 
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith('.html') ? [path.join(d, e.name)] : []));
 const files = walk(dist).filter((f) => !f.includes('/_astro/'));
@@ -18,7 +19,7 @@ const isRaster = (tag) => /\.(png|jpe?g|webp|avif|gif)(\?|"|'|\s|$)/i.test(attr(
 const results = [];
 for (const f of files) {
   const html = fs.readFileSync(f, 'utf8');
-  const url = '/' + path.relative(dist, f).replace(/\.html$/, '').replace(/(^|\/)index$/, '');
+  const url = '/' + path.relative(dist, f).replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, ''); // bug 057: /contact-us/ (dir/index.html), /ae/404
   const is404 = /(^|\/)404$/.test(url);
   const title = html.match(/<title>([^<]*)<\/title>/)?.[1]?.trim() ?? '';
   const desc = html.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? '';

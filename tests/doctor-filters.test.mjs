@@ -1,7 +1,8 @@
 // Run: npm run test:filters   (Node 22.18+/24+ strips the TypeScript types natively)
 import assert from 'node:assert/strict';
 import {
-  applyFilters, defaultState, hospitalsFor, parseState, setCountry, setHospital, setQuery, setSpecialty, toSearch,
+  applyFilters, defaultState, hospitalsFor, nameMatches, nameOptions, parseState, prune, setCountry, setHospital, setQuery,
+  setSpecialty, specialtyOptions, toSearch,
 } from '../src/lib/doctor-filters.ts';
 
 const hospitals = [
@@ -121,6 +122,61 @@ test('invalid URL values are ignored (unknown country, hospital, specialty)', ()
   assert.equal(s.hospital, '');
   assert.equal(s.specialty, '');
   assert.equal(parseState('?specialty=gp', 'global', hospitals, ['gp']).specialty, 'gp');
+});
+
+console.log('\nDependent dropdowns (bug 052)');
+const sorted = (set) => [...set].sort();
+test('specialty options follow the country', () => {
+  assert.deepEqual(sorted(specialtyOptions(doctors, defaultState('global'))), ['gp', 'icu', 'rehab']);
+  assert.deepEqual(sorted(specialtyOptions(doctors, defaultState('ae'))), ['icu', 'rehab']);
+  assert.deepEqual(sorted(specialtyOptions(doctors, defaultState('sa'))), ['gp', 'icu']);
+});
+test('name options follow the country and the specialty', () => {
+  assert.deepEqual(sorted(nameOptions(doctors, defaultState('sa'))), ['Dr. Ebtihal Rahma Ahmed', 'Dr. Rasha Hassan']);
+  assert.deepEqual(sorted(nameOptions(doctors, setSpecialty(defaultState('sa'), 'icu'))), ['Dr. Ebtihal Rahma Ahmed']);
+  assert.equal(nameOptions(doctors, defaultState('global')).size, 4);
+});
+test('specialty options follow the selected doctor', () => {
+  assert.deepEqual(sorted(specialtyOptions(doctors, setQuery(defaultState('sa'), 'Dr. Ebtihal Rahma Ahmed'))), ['gp', 'icu']);
+  assert.deepEqual(sorted(specialtyOptions(doctors, setQuery(defaultState('global'), 'Dr. Ahmad Al Khayer'))), ['rehab']);
+});
+test('every offered option gives at least one doctor (no conflicting combination possible)', () => {
+  for (const country of ['all', 'ae', 'sa']) {
+    const base = { ...defaultState('global'), country };
+    for (const sp of specialtyOptions(doctors, base)) {
+      const s = setSpecialty(base, sp);
+      assert.ok(slugs(s).length > 0, `${country}/${sp}`);
+      for (const n of nameOptions(doctors, s)) assert.ok(slugs(setQuery(s, n)).length > 0, `${country}/${sp}/${n}`);
+    }
+  }
+});
+test('country change clears a doctor and a specialty from the other country, keeps valid ones', () => {
+  let s = setQuery(defaultState('global'), 'Dr. Ahmad Al Khayer');
+  s = prune(setCountry(s, 'sa', hospitals), doctors);
+  assert.deepEqual(s, { country: 'sa', hospital: '', specialty: '', q: '' });
+  s = prune(setCountry(setSpecialty(defaultState('global'), 'rehab'), 'sa', hospitals), doctors);
+  assert.equal(s.specialty, '');
+  s = prune(setCountry(setSpecialty(defaultState('global'), 'icu'), 'sa', hospitals), doctors);
+  assert.equal(s.specialty, 'icu'); // KSA has icu: kept
+  s = prune(setCountry(setQuery(defaultState('global'), 'Rasha'), 'sa', hospitals), doctors);
+  assert.equal(s.q, 'Rasha');
+  s = prune(setCountry(setQuery(defaultState('sa'), 'Rasha'), 'all', hospitals), doctors);
+  assert.equal(s.q, 'Rasha'); // to ALL nothing is ever cleared
+});
+test('a hand-edited link with a doctor from another country is cleaned (?country=sa&q=Dr.+Ahmad+Al+Khayer)', () => {
+  const s = prune(parseState('?country=sa&q=Dr.+Ahmad+Al+Khayer', 'global', hospitals), doctors);
+  assert.deepEqual(s, { country: 'sa', hospital: '', specialty: '', q: '' });
+  assert.equal(toSearch(s, 'global'), '?country=sa');
+  const t2 = prune(parseState('?country=ae&specialty=gp', 'global', hospitals), doctors);
+  assert.equal(t2.specialty, '');
+});
+test('prune never changes the country and is a no-op on a valid state', () => {
+  const s = { country: 'sa', hospital: '', specialty: 'icu', q: 'ebtihal' };
+  assert.deepEqual(prune(s, doctors), s);
+});
+test('name matching ignores case and accents', () => {
+  assert.ok(nameMatches('Dr. Ebtíhal', 'EBTI'));
+  assert.ok(!nameMatches('Dr. Rasha', 'khayer'));
 });
 
 console.log(failed ? `\n${failed} test(s) FAILED` : '\nAll filter tests passed');

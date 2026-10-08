@@ -41,12 +41,8 @@
   "map": {
     "image": "contact-page/map",
     "alt": "",
-    "overview": {
-      "global": "Cambridge Medical and Rehabilitation Center",
-      "ae": "Cambridge Hospital, United Arab Emirates",
-      "sa": "Cambridge Hospital, Saudi Arabia"
-    },
-    "_note": "Bug 051: the static image is the placeholder until the Google map loads (lazy, when the section is near the screen). overview = the map shown on load per edition (Google Maps search, tuned 7 Oct 2026: it shows the group's pins, not one marker per hospital — that needs the Maps JavaScript API + coordinates). Selecting a hospital in the form shows that hospital (hospitals.json map). The map's accessible name = the header's 'Our Hospitals' label (EN / AR)."
+    "_note": "Bug 051: the static image is the placeholder until the Google map loads (lazy, when the section is near the screen or a hospital is chosen). On load the map shows a marker for every hospital of the edition (Global: all, /ae: UAE, /sa: KSA) and fits them; choosing a hospital in the form zooms to its marker and shows our card (name + address from hospitals.json, never Google's place name, and the directions link). Positions: hospitals.json location (no searches). directions = the card link label ('Open in Google Maps', the approved label of the hospital pages; no approved Arabic yet, R053). The map's accessible name = the header's 'Our Hospitals' label (EN / AR).",
+    "directions": "Open in Google Maps"
   },
   "details": {
     "email": "info@cambridgehospital.com",
@@ -55,7 +51,10 @@
     "phone": "800-692273",
     "phoneHref": "800692273",
     "byRegion": {
-      "sa": { "phone": "9200-13122", "phoneHref": "920013122" }
+      "sa": {
+        "phone": "9200-13122",
+        "phoneHref": "920013122"
+      }
     },
     "_byRegionNote": "Per-edition override of the details above: /sa shows the KSA line (the live site's number, as in home/contact and the FAQ), Global and /ae the UAE line."
   },

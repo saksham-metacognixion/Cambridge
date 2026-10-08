@@ -58,9 +58,19 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
     <script>
       // Opens the detected country's pop-up on a Global visit (html[data-country-popup] = ISO country, set by
       // CountryPopupLogic.astro from the edge cookie). No dialog for that country = nothing shown.
-      const open = (iso?: string) => {
+      // Bug 061: a URL that asks for a form pop-up (/book-an-appointment/ -> /#book-appointment, Modals.astro) shows that
+      // pop-up first; the country pop-up waits until it is closed, so it can never cover it whichever script runs first.
+      const FORM_HASHES: Record<string, string> = { '#book-appointment': 'book-appointment', '#send-inquiry': 'send-enquiry-popup', '#your-opinion': 'feedback-popup' };
+      const open = (iso?: string, waited = false) => {
         const dlg = iso ? (document.getElementById(`country-popup-${iso}`) as HTMLDialogElement | null) : null;
         if (!dlg || dlg.open) return;
+        const form = waited ? null : ((document.getElementById(FORM_HASHES[location.hash] ?? '') ?? document.querySelector('dialog[data-modal][open]')) as HTMLDialogElement | null);
+        if (form) {
+          // Opened later by Modals.astro (the form script loads on demand): wait for its close, however it gets opened.
+          // `waited`: this listener runs before forms.ts drops the #hash, so the hash must not be checked again.
+          form.addEventListener('close', () => open(iso, true), { once: true });
+          return;
+        }
         const choose = (region: string) => (window as unknown as { chooseEdition?: (r: string) => void }).chooseEdition?.(region);
         dlg.querySelectorAll<HTMLButtonElement>('[data-target]').forEach((b) => b.addEventListener('click', () => { choose(b.dataset.target!); dlg.close(); }));
         // Esc: the visitor stays where they are (remembered like a choice, see CountryPopupLogic).

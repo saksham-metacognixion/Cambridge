@@ -43,8 +43,8 @@ const pins = [
 
 // Rows (card top = page y 2124, card x = 64): a flow list since bug 044/050. Figma rows sit at a 113 pitch (photo 116 x 91 at
 // card x 13, first at y 15; name 14 under the photo top, buttons at +47; divider 12 under the photo, 350 wide from x 0; 25
-// under the last photo); the CSS below reproduces that pitch, and a row grows where the bigger shared buttons wrap to two
-// lines (laptops under ~1440), so the card, and the section with it, grow instead of the rows overlapping.
+// under the last photo); the CSS below reproduces that pitch (photo narrowed under 1440 so the button pair stays on one line
+// from 1280), and a row grows where the pair stacks (1024-1279, phones), so the card and the section grow instead of overlapping.
 // Hospitals of this edition's country only (bug 048; Global = all six), in the JSON order; the white card ends under the last.
 const slugs = (c.hospitals as string[]).filter((slug) => {
   const h = hospitalsData.hospitals.find((x) => x.slug === slug);
@@ -146,12 +146,17 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
   .pm:is(span) { height: auto; }
   .list { width: 100%; max-width: calc(358 * var(--u)); }
   .card { padding: calc(13 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
-  .row { display: grid; grid-template-columns: calc(116 * var(--u)) minmax(0, 1fr); column-gap: calc(12 * var(--u)); align-items: start; }
+  /* Photo column = Figma 116 unless the text column would be narrower than its widest button (phones ~360): then the photo
+     gives way (min-content), so "Book Appointment" keeps its padding instead of being squeezed. */
+  .row { display: grid; grid-template-columns: minmax(0, calc(116 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); align-items: start; }
   .row > .imgw { grid-column: 1; grid-row: 1; }
   .row > :global(img.divider) { grid-column: 1 / -1; margin-top: calc(10 * var(--u)); max-width: 100%; height: auto; }
   .info { grid-column: 2; grid-row: 1; }
-  .actions { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); margin-top: calc(8 * var(--u)); }
-  .imgw { width: calc(116 * var(--u)); height: calc(91 * var(--u)); }
+  /* fit-content: on one line the pair keeps its own widths; once it wraps the box is the full column and both buttons grow to
+     it, so stacked buttons are the same width, aligned (1024-1279 and phones). */
+  .actions { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); margin-top: calc(8 * var(--u)); width: fit-content; max-width: 100%; }
+  .actions > a { flex-grow: 1; }
+  .imgw { width: 100%; height: calc(91 * var(--u)); }
   .list > .dpos2:first-child { position: relative; }
   .vline, .stats { display: none; }
   .stats { display: grid; }
@@ -164,10 +169,16 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc(30 * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); padding-top: calc(40 * var(--u)); box-sizing: border-box; }
     .card { padding-block: calc(15 * var(--u)) calc(25 * var(--u)); padding-inline: calc(13 * var(--u)) calc(4 * var(--u)); gap: calc(9 * var(--u)); } /* end padding 4: the button pair fits one line from 1440 */
     .row { column-gap: calc(15 * var(--u)); }
-    .row > :global(img.divider) { margin: calc(12 * var(--u)) 0 0; margin-inline-start: calc(-13 * var(--u)); width: calc(350 * var(--u)); max-width: none; }
+    .row > :global(img.divider) { margin: calc(12 * var(--u)) 0 0; margin-inline-start: calc(-13 * var(--u)); width: calc(100% + 9 * var(--u)); max-width: none; } /* = 350: row 341 (358 - 13 - 4) + 9; a % width so the line does not size the grid columns */
     .info { padding-top: calc(14 * var(--u)); }
     .actions { margin-top: calc(2 * var(--u)); }
     .stats { display: contents; }
+    /* Bug 044 regression: under 1440 the Figma photo (116) left ~256px at 1280 / ~273px at 1366 for the ~275px button pair,
+       so the pair stacked. Narrower photo (same height, cropped) + tighter gap: the pair stays on one line from 1280 (about
+       10px to spare); 1024-1279 may stack (see .actions below). 1440+ keeps the Figma values. */
+    @media (max-width: 1439.98px) {
+      .row { grid-template-columns: minmax(0, calc(96 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); }
+    }
     .vline { display: block; }
     .vline img { position: absolute; width: calc(38 * var(--u)); height: calc(0.15 * var(--u)); inset-inline-start: calc((0.15 - 38) / 2 * var(--u)); top: calc((38 - 0.15) / 2 * var(--u)); transform: rotate(90deg); }
     .mapbox { --m: var(--u); }

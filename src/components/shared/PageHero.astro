@@ -14,7 +14,11 @@ import OutlineButton from './OutlineButton.astro';
  *     (Figma top 118; the header covers that row).
  * Text is FLOW layout (title -> text -> button) so longer / Arabic copy pushes the next line down instead of overlapping.
  * Desktop positions in Figma px, relative to the stage: title top `titleTop` at x95 (w titleW), text `textGap` below the
- * title at x97 (w textW), button `buttonGap` below the text (or the title when there is no text) at x98 (Figma 164 x 30).
+ * title at x97 (w textW), button at x98 (Figma 164 x 30) below the text.
+ * Text -> button gap (bug 055, client request 8 Oct 2026): ONE gap for every hero with a paragraph, --hero-btn-gap (global.css) below
+ *   (18 Figma px = the Find a Doctor / Conditions / Refer heroes, 24.6px at 1440, kept within 24-32px at every width). The
+ *   per-page Figma gaps (0 on Accreditations, 4 on Insurance ... 24 on Our Hospitals) put the button against the text.
+ *   `buttonGap` now applies only to a hero WITHOUT text (title -> button, the FAQ page).
  * `titleMinH` (optional): the Figma title box height, so a title with fewer lines than in Figma keeps the text in place.
  * Button: OutlineButton = the shared .ui-btn (bugs 044 / 050): its top-left keeps the Figma anchor, it grows with its label.
  * `labelX` / `labelW` (Figma label offsets) are no longer used.
@@ -102,13 +106,17 @@ const pic = {
 
 <style>
   .cover { top: calc(-1 * var(--u)); height: calc(323 * var(--u)); }
-  .copy { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
+  .copy { --copy-gap: 0px; position: relative; display: flex; flex-direction: column; align-items: flex-start; }
   .text { overflow-wrap: anywhere; }
+  /* Bug 055: in flow right after the paragraph, so a longer / wrapped (Arabic) text pushes the button down with it.
+     --copy-gap = the flex gap the stacked layout (< 1024px) already puts between the items. */
+  .copy .text + :global(.btn) { margin-top: calc(var(--hero-btn-gap) - var(--copy-gap)); }
   @media (min-width: 1024px) {
     .copy { position: absolute; inset-inline-start: calc(95 * var(--u)); top: calc(var(--tt) * var(--u)); }
     .title { width: calc(var(--tw) * var(--u)); min-height: calc(var(--th) * var(--u)); }
     .text { width: calc(var(--xw) * var(--u)); margin-top: calc(var(--xg) * var(--u)); margin-inline-start: calc(var(--xx) * var(--u)); }
     .copy :global(.btn) { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+    .copy .text + :global(.btn) { margin-top: var(--hero-btn-gap); }
     /* RTL inset-inline-end = the left edge: the copy keeps the English side, mirrored inside its own box. The lines are
        right-aligned, so the box is only as wide as the English paragraph (the area that is clear of the art). */
     :global([dir='rtl']) .keep .copy { inset-inline-start: auto; inset-inline-end: calc(95 * var(--u)); }
@@ -116,7 +124,7 @@ const pic = {
   }
   @media (max-width: 1023.98px) {
     .cover { top: 0; height: 100%; }
-    .copy { gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
+    .copy { --copy-gap: calc(16 * var(--u)); gap: var(--copy-gap); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
     .text { max-width: calc(var(--xw) * var(--u)); }
   }
 </style>

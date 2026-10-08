@@ -204,3 +204,5 @@ SUMMARY: Who We Are session 1 call (#127, 6 Oct 2026). Running total since #68: 
 SUMMARY: Bug 001/002 reopen session 2 calls (#128-129, 6 Oct 2026). Total logged in this file: 129. Next free number: 130.
 130. get_metadata 1:2 (page root) to check for mobile / tablet frames added since #41 (bug 004 reopened, 6 Oct 2026) -> none: every page frame is still 1052 wide ("Mobile" / "Phone:" matches are form field labels)
 SUMMARY: Bug 004 reopen session 1 call (#130, 6 Oct 2026). Total logged in this file: 130. Next free number: 131.
+131. get_metadata (no node) to list pages (bug 063 KSA photography, 8 Oct 2026) -> one page, 1:2 "Page 2"
+132. get_metadata 1:2 page root (bug 063: KSA frames?) -> saved raw/page-root-131.xml

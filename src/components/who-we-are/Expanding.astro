@@ -5,9 +5,9 @@ import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 
 /*
- * "Expanding Services to Communities Regionally." (Figma 46:5813-5839), page y 1656-2100: full-width band #00415a, h444.
+ * "Expanding Services to Communities Regionally." (Figma 46:5813-5839), page y 1656-2100: full-width band #004059, h444.
  * Left: photo "Care 1" 463 x 444 at x0 (object-cover) with the heading over it, centred on x226 (w430), top +52, Gotham Medium 28
- * #00415a, 3 lines, full stop in #00b8ff. Right (x505, w489): lead Book 16/18 white at top +49; text Book 12/14 white at top +148,
+ * #004059, 3 lines, full stop in #00b8ff. Right (x505, w489): lead Book 16/18 white at top +49; text Book 12/14 white at top +148,
  * paragraphs separated by one empty 14px line.
  *
  * Below 1024 (no Figma frame; bug 034, 7 Oct 2026) the photo would shrink to the viewport width while the heading kept its
@@ -42,6 +42,7 @@ const photo = img(c.image.image, edition.region);
   .h { box-sizing: border-box; width: 100%; margin: 0; padding: 0 16px 12px; font-weight: 500; font-size: clamp(24px, 7vw, calc(28 * var(--u))); line-height: normal; color: var(--color-navy-alt); text-align: center; text-wrap: balance; overflow-wrap: normal; }
   .br { display: none; }
   .dot { color: var(--color-cyan); }
+  @media (max-width: 1023.98px) { .dot { color: var(--color-teal-border); } } /* light photo panel on phones: cyan is 2.06:1 there */
   .exp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 463 / 320; object-fit: cover; object-position: center bottom; max-width: none; }
   .copy { padding: calc(40 * var(--u)) 16px calc(48 * var(--u)); color: #fff; }
   .lead { margin: 0; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); overflow-wrap: anywhere; }

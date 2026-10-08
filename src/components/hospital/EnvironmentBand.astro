@@ -11,7 +11,7 @@ import pattern from '../../assets/hospital-detail/pattern-full-1.svg';
  * "Experience the Environment of Care" (Figma 112:7721, page y 587-1206). Section top = the video top (587, 31 below the hero).
  * Video poster 565 x 348 (Figma r15 -> --radius-card, bug 049) centred (x244), play icon 57.929 at (248.73, 134.72) inside it; the veil band
  * rgba(231,231,231,.5) starts 135 below the video top (722) and ends at 1206. Pattern Full 1 (423 x 433) at (-126, 39) in the band,
- * decoration clipped by the frame. Heading Medium 28 #00415a centred 30 below the video (965); text Book 12 #6b6b6b centred w539
+ * decoration clipped by the frame. Heading Medium 28 #004059 centred 30 below the video (965); text Book 12 #6b6b6b centred w539
  * 13 below the heading box (1010), 3 paragraphs: lines 14, each new paragraph 5 lower (Figma 19px first lines); "Take a Tour"
  * cyan button (Figma 100 x 21.333 r7, Medium 10: now the shared .ui-btn size, bugs 044/050) 17 below the text (1149); band bottom
  * 35.67 below it.
@@ -67,7 +67,7 @@ const closeLabel = commonText(edition.locale).close as string;
   .text { position: relative; z-index: 1; margin-top: calc(13 * var(--u)); width: calc(539 * var(--u)); max-width: 100%; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); text-align: center; }
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(5 * var(--u)); }
-  .tour { position: relative; z-index: 1; margin-top: calc(17 * var(--u)); background: var(--color-cyan); color: #fff; } /* size / label / corners: .ui-btn (bugs 044/050) */
+  .tour { position: relative; z-index: 1; margin-top: calc(17 * var(--u)); background: var(--color-cyan); color: var(--color-navy); } /* size / label / corners: .ui-btn (bugs 044/050) */
   @media (min-width: 1024px) {
     .in { padding-inline: 0; }
     .pattern { display: block; position: absolute; inset-inline-start: calc(-126 * var(--u)); top: calc(39 * var(--u)); width: calc(423 * var(--u)); height: calc(433 * var(--u)); max-width: none; pointer-events: none; }

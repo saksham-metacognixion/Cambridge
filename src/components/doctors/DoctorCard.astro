@@ -58,7 +58,7 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
   <div class="actions">
     <a href={href} class="btn btn-see ui-btn ui-btn-sm hit btn-fill" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
     {book && d.show_book_now && (
-      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book ui-btn ui-btn-sm hit btn-fill" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
+      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book ui-btn ui-btn-sm hit btn-fill-navy" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
     )}
   </div>
 </article>
@@ -75,7 +75,7 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
   .name { margin-top: calc(13.81 * var(--u)); margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); font-size: calc(13.946 * var(--u)); line-height: calc(17.432 * var(--u)); overflow-wrap: anywhere; }
   .role { margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); min-height: calc(11.622 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); overflow-wrap: anywhere; }
   .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline: calc(17.43 * var(--u)) calc(6 * var(--u)); display: flex; flex-wrap: wrap; gap: 8px calc(7.06 * var(--u)); }
-  .btn { color: #fff; } /* bugs 044 / 050: .ui-btn-sm size */
-  .btn-see { background: var(--color-cyan); }
-  .btn-book { background: #21b573; }
+  .btn { color: #fff; } /* white only on Deep Teal; the cyan button carries a Deep Teal label (brand AA) */ /* bugs 044 / 050: .ui-btn-sm size */
+  .btn-see { background: var(--color-cyan); color: var(--color-navy); }
+  .btn-book { background: var(--color-navy); } /* was Medical Green: white on green is 2.65:1 */
 </style>

@@ -12,7 +12,7 @@ import type { Edition } from '../../lib/editions';
  * Look (Figma px): tabs 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25; active #418ea2, white text with
  * text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059. The panel sits `gap` right of the tabs
  * (18 on detail pages, 24 on Careers), `top` below the tabs top (1 / 27), `width` wide (610 / 529 / 441), Book 12/14 #6b6b6b.
- * Block types: p (paragraph) | h (sub-heading, Medium) | sec (sub-heading, Book, #00415a: Accreditations) | lead (teal line, 22) |
+ * Block types: p (paragraph) | h (sub-heading, Medium) | sec (sub-heading, Book, #004059: Accreditations) | lead (teal line, 22) |
  * note (teal line, 14) | ul (bullets) | lines (several lines, line breaks kept) | bullets (lines starting with a literal bullet,
  * first line 19 tall: Accreditations). One empty 14px line between blocks. Text goes through RichText ("[label](href)" links,
  * "**bold**" lead-ins).
@@ -99,7 +99,7 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
   .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
   .tablist { display: flex; flex-direction: column; gap: calc(var(--tgp, 2) * var(--u)); }
   .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(var(--th, 63) * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(var(--tps, 24) * var(--u)) calc(22 * var(--u)); border: 0; border-radius: var(--radius-btn); background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(var(--tfs, 13) * var(--u)) / calc(var(--tlh, 14) * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
-  .tab[aria-selected='true'] { background: var(--color-teal-border); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
+  .tab[aria-selected='true'] { background: var(--color-navy); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
   .centered .tab { align-items: center; padding-block: 0; }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
   .tab-label { max-width: calc(var(--tlw, 265) * var(--u)); overflow-wrap: anywhere; }
@@ -117,8 +117,8 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
   .panel > :global(picture:first-child) + * { margin-top: 0; }
   @media (min-width: 1024px) { .panel > :global(picture:first-child) + * { margin-top: 0; } .panel :global(.art) { position: absolute; z-index: 1; margin: 0; max-width: none; object-fit: cover; width: calc(var(--aw) * var(--u)); height: calc(var(--ah) * var(--u)); inset-inline-start: calc(var(--ax) * var(--u)); top: calc(var(--ay) * var(--u)); } }
   .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
-  .lead { color: var(--color-teal-border); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
-  .note { color: var(--color-teal-border); }
+  .lead { color: var(--color-navy); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
+  .note { color: var(--color-navy); }
   .ul { list-style: disc; padding: 0; }
   .ul li { margin-inline-start: calc(18 * var(--u)); }
   .ul li:first-child { padding-block: calc(2 * var(--u)); } /* Figma: first line box 18 (14 + 2 + 2) */

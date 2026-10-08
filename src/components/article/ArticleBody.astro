@@ -1,11 +1,11 @@
 ---
 /*
  * Article body (Health Article Layout, Figma 170:839), section top = the "Overview" H2 top (page y 475 = hero end 441 + 34).
- * Figma px: H2 Medium 28 #00415a at x56 (box 33) | 12 | intro Book 12/14 #6b6b6b at x58, w937 | 33 | body.
+ * Figma px: H2 Medium 28 #004059 at x56 (box 33) | 12 | intro Book 12/14 #6b6b6b at x58, w937 | 33 | body.
  * Body typography = the "How It's Managed at Cambridge" block of the frame:
- *   h2  Medium 28/33 #00415a at x56; 33 above, 9 below (H2 867 -> para 909)
+ *   h2  Medium 28/33 #004059 at x56; 33 above, 9 below (H2 867 -> para 909)
  *   p   Book 12/14 #6b6b6b at x58, w937; one empty 14px line between paragraphs
- *   h3  Medium 16 #00415a (box 19) at x58; 40 above (para end 951 -> H3 991), 3 below (-> list 1013)
+ *   h3  Medium 16 #004059 (box 19) at x58; 40 above (para end 951 -> H3 991), 3 below (-> list 1013)
  *   ul/ol at x78 (20 in), w610: item lead line (li > strong:first-child, "Patient-Centered Care:") Book 12/22 #418ea2,
  *       item text Book 12/18 #6b6b6b; 22 below a list (list end 1227 -> H3 1249); the frame's items carry no bullet marker
  *       because each starts with a lead line; plain items keep the disc marker of the condition tabs (41:2373)
@@ -75,14 +75,14 @@ if (at < html.length) segs.push({ html: html.slice(at) });
   .body :global(ul) { list-style: disc; }
   .body :global(li) { margin-inline-start: calc(18 * var(--u)); }
   .body :global(li:has(> strong:first-child)) { list-style: none; margin-inline-start: 0; }
-  .body :global(li > strong:first-child) { display: block; font-weight: 400; line-height: calc(22 * var(--u)); color: var(--color-teal-border); }
+  .body :global(li > strong:first-child) { display: block; font-weight: 400; line-height: calc(22 * var(--u)); color: var(--color-navy); }
   .body :global(li > strong:first-child + br) { display: none; } /* the lead line already breaks */
   .body :global(ul + *), .body :global(ol + *) { margin-top: calc(22 * var(--u)); }
   .body :global(ul + p), .body :global(ol + p) { margin-top: calc(14 * var(--u)); }
   .body :global(strong) { font-weight: 500; }
   .body :global(a) { color: inherit; text-decoration: underline; text-decoration-skip-ink: none; text-underline-position: from-font; }
   .body :global(a:focus-visible) { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(1 * var(--u)); }
-  .body :global(blockquote) { margin-inline: calc(20 * var(--u)) 0; max-width: calc(610 * var(--u)); color: var(--color-teal-border); line-height: calc(22 * var(--u)); }
+  .body :global(blockquote) { margin-inline: calc(20 * var(--u)) 0; max-width: calc(610 * var(--u)); color: var(--color-navy); line-height: calc(22 * var(--u)); }
   .body :global(blockquote > *) { margin: 0; }
   .body :global(figure) { margin: calc(14 * var(--u)) 0 0; }
   .body :global(img) { display: block; max-width: 100%; height: auto; }

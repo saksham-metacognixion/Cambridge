@@ -9,17 +9,17 @@ import chevClosed from '../../assets/faq/chevron-closed.svg';
 
 /*
  * FAQ body (Figma 100:5509), section top = the first question's top (page y 516, 75 below the hero).
- * Left column: H2 81:2408 Gotham Medium 22.866 / 25.533 #00415a at x 82.76, 3.62 below the section top, w208.056 |
- * 43.3 | category tabs 81:2396: 217.372 x 28.983 at x 86.45, pitch 36; selected = #15adbf fill, radius 4.14 (-> --radius-btn, bug 049), Gotham Book 12
+ * Left column: H2 81:2408 Gotham Medium 22.866 / 25.533 #004059 at x 82.76, 3.62 below the section top, w208.056 |
+ * 43.3 | category tabs 81:2396: 217.372 x 28.983 at x 86.45, pitch 36; selected = #418ea2 fill, radius 4.14 (-> --radius-btn, bug 049), Gotham Book 12
  * white; others Gotham Book 10.351 #6b6b6b; label 13.5 in (text tops 8.97 / 7). Tabs: ARIA tabs + ?category= in the URL
  * (src/scripts/tabs.ts).
  * Right column (x 343, w 628.652): native <details> per question (keyboard + no JS). Question bar 46.925 high, radius
- * 11.731 (-> --radius-card, bug 049), Gotham Book 11.041 / 26.7 at x +19.32, top +8.97, chevron 9.661 x 5.806 at x +593.46, top +17.94: open = #15adbf
- * bar, white text, chevron pointing DOWN; closed = rgba(231,231,231,.45) bar, #003345 text, chevron pointing UP (as in
+ * 11.731 (-> --radius-card, bug 049), Gotham Book 11.041 / 26.7 at x +19.32, top +8.97, chevron 9.661 x 5.806 at x +593.46, top +17.94: open = #418ea2
+ * bar, white text, chevron pointing DOWN; closed = rgba(231,231,231,.45) bar, #004059 text, chevron pointing UP (as in
  * Figma: the reverse of the usual convention, flagged). Open answer panel: #f7f7f7, radius 10 (-> --radius-card), 629 wide, starting 9 below
- * the bar top, answer Gotham Book 11.041 / 17.252 #00415a at x +23, 13.075 below the bar, w600, 15.24 above the panel end
+ * the bar top, answer Gotham Book 11.041 / 17.252 #004059 at x +23, 13.075 below the bar, w600, 15.24 above the panel end
  * (min panel 118). Gaps: 10 after an open panel, 17.255 after a closed bar (Figma 17.26 / 11.03 / 17.26: normalised to
- * the first). Closed chevron colour #21b5be (Figma: first closed item; the others #15adbf, normalised).
+ * the first). Closed chevron colour #418ea2 (Figma: first closed item; the others #418ea2, normalised).
  */
 const { edition } = parsePath(Astro.url.pathname);
 const loc = edition.locale;
@@ -81,22 +81,22 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
   .h { margin: 0; font-weight: 500; font-size: calc(22.866 * var(--u)); line-height: calc(25.533 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .tablist { display: flex; flex-direction: column; gap: calc(7.017 * var(--u)); margin-top: calc(43.3 * var(--u)); }
   .tab { box-sizing: border-box; display: block; width: calc(217.372 * var(--u)); max-width: 100%; min-height: calc(28.983 * var(--u)); margin: 0; padding: calc(7 * var(--u)) calc(13.5 * var(--u)) calc(4 * var(--u)); border: 0; border-radius: var(--radius-btn); background: transparent; color: var(--color-body); font: 400 calc(10.351 * var(--u)) / normal var(--font-gotham); text-align: start; cursor: pointer; }
-  .tab[aria-selected='true'] { padding-top: calc(8.97 * var(--u)); background: #15adbf; color: #fff; font-size: calc(12 * var(--u)); }
+  .tab[aria-selected='true'] { padding-top: calc(8.97 * var(--u)); background: var(--color-navy); color: #fff; font-size: calc(12 * var(--u)); }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .panel[hidden] { display: none; }
   @media (max-width: 1023.98px) { .tab { min-height: 44px; } } /* tap target */
   .qa { position: relative; }
   .qa + .qa { margin-top: calc(17.255 * var(--u)); }
   .qa[open] + .qa { margin-top: calc(10 * var(--u)); }
-  .bar { position: relative; z-index: 1; display: flex; align-items: flex-start; box-sizing: border-box; min-height: calc(46.925 * var(--u)); padding-block: calc(8.97 * var(--u)) calc(8 * var(--u)); padding-inline: calc(19.32 * var(--u)) calc(35 * var(--u)); border-radius: var(--radius-card); background: rgba(231, 231, 231, 0.45); color: #003345; cursor: pointer; list-style: none; }
+  .bar { position: relative; z-index: 1; display: flex; align-items: flex-start; box-sizing: border-box; min-height: calc(46.925 * var(--u)); padding-block: calc(8.97 * var(--u)) calc(8 * var(--u)); padding-inline: calc(19.32 * var(--u)) calc(35 * var(--u)); border-radius: var(--radius-card); background: rgba(231, 231, 231, 0.45); color: #004059; cursor: pointer; list-style: none; }
   .bar::-webkit-details-marker { display: none; }
   .bar:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
-  .qa[open] > .bar { background: #15adbf; color: #fff; }
+  .qa[open] > .bar { background: var(--color-navy); color: #fff; } /* brand AA: white only on Deep Teal */
   .q { margin: 0; font-weight: 400; font-size: calc(11.041 * var(--u)); line-height: calc(26.7 * var(--u)); overflow-wrap: anywhere; }
   .chev { position: absolute; inset-inline-start: calc(593.46 * var(--u)); top: calc(17.94 * var(--u)); width: calc(9.661 * var(--u)); height: calc(5.806 * var(--u)); max-width: none; }
   .chev-closed { transform: scaleY(-1); }
   .qa[open] .chev-closed, .qa:not([open]) .chev-open { display: none; }
-  .ans { position: relative; box-sizing: border-box; min-height: calc(118 * var(--u)); margin-top: calc(-37.925 * var(--u)); padding: calc(51 * var(--u)) calc(6 * var(--u)) calc(15.24 * var(--u)) calc(23 * var(--u)); border-radius: var(--radius-card); background: #f7f7f7; width: calc(629 * var(--u)); max-width: 100%; }
+  .ans { position: relative; box-sizing: border-box; min-height: calc(118 * var(--u)); margin-top: calc(-37.925 * var(--u)); padding: calc(51 * var(--u)) calc(6 * var(--u)) calc(15.24 * var(--u)) calc(23 * var(--u)); border-radius: var(--radius-card); background: var(--color-mist-25); width: calc(629 * var(--u)); max-width: 100%; }
   .ans p + p { margin-top: calc(8 * var(--u)); }
   .ans p { margin: 0; width: calc(600 * var(--u)); max-width: 100%; color: var(--color-navy-alt); font-size: calc(11.041 * var(--u)); line-height: calc(17.252 * var(--u)); overflow-wrap: anywhere; }
   .ans .pending { font-style: italic; color: var(--color-body); }

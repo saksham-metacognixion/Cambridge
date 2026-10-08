@@ -20,7 +20,7 @@ import Band from '../careers/Band.astro';
  * Below 1024px (bug 039, 7 Oct 2026): the four stats are a 2 x 2 grid (never 3 + 1 or one per row); each cell is an inline-size
  * container and the number is capped from the longest value's character count (--chars) so it fits a 320px phone column (as Specialized).
  * Read More: the shared .ui-btn size (bug 044/050), start-anchored at (49, ...) as drawn; box bottom corners --radius-panel (bug 049).
- * Read More hover: the live button (.gsbp-99f91d8) goes cyan -> #0087bd, not the shared cyan -> navy, so --btn-fill-hover overrides it.
+ * Read More hover: the shared cyan -> Deep Teal hover. The live button went to #0087bd, which is not a brand colour (brand guidelines, 8 Oct 2026).
  */
 interface Props { edition: Edition; c: any }
 const { edition, c } = Astro.props;
@@ -39,7 +39,7 @@ const more = urlFor(edition, pagePath(c.button.page));
     <div class="copy">
       <h2 class="title">{c.title.map((l: string) => <span class="block">{l}</span>)}</h2>
       <div class="text">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
-      <a href={more} class="btn ui-btn btn-fill" style="--btn-fill-hover:#0087bd">{c.button.label}</a>
+      <a href={more} class="btn ui-btn btn-fill">{c.button.label}</a>
     </div>
     <ul class="stats" role="list" style={`--chars:${maxChars}`}>
       {items.map((s) => (
@@ -66,7 +66,7 @@ const more = urlFor(edition, pagePath(c.button.page));
   .text { margin: calc(13 * var(--u)) 0 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); overflow-wrap: anywhere; }
   .text p { margin: 0; }
   .text p + p { margin-top: calc(17 * var(--u)); }
-  .btn { display: flex; width: fit-content; margin-top: calc(11 * var(--u)); background: var(--color-cyan); color: #fff; } /* size from .ui-btn (bug 044/050) */
+  .btn { display: flex; width: fit-content; margin-top: calc(11 * var(--u)); background: var(--color-cyan); color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
   .stats { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(24 * var(--u)); }
   .stat { min-width: 0; font-weight: 500; padding-top: calc(3 * var(--u)); }
   .n { display: block; position: relative; width: max-content; max-width: 100%; font-size: calc(35 * var(--u)); line-height: 1; }

@@ -9,7 +9,7 @@ import type { Edition } from '../../lib/editions';
  * "Real Impact. Real Outcomes." (Figma 101:6235-6244), page y 1660-2045: full-width band rgba(231,231,231,.5), h385.
  * Photo "Care 1" 410 x 385 at x-11 (crop of the 1052x1008 original: y from 2.04 %, pre-cut in care.png). Heading x469 y+72 w481,
  * Gotham Medium 30 #418ea2 with the two full stops in #00b8ff; hairline 616 x .5 #418ea2 at x472 y+121; six stats Medium 35 / 12
- * (line height 133.7 %) #00415a in two rows: (469, 691, 863) x (+158, +257).
+ * (line height 133.7 %) #004059 in two rows: (469, 691, 863) x (+158, +257).
  */
 interface Props { edition: Edition; c: { ariaLabel: string; heading: [string, string][]; photo: { image: string; alt: string }; stats: any[] } }
 const { edition, c } = Astro.props;
@@ -46,7 +46,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
   .imp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 410 / 385; object-fit: cover; max-width: none; }
   .copy { padding: calc(32 * var(--u)) 16px calc(40 * var(--u)); }
   .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); color: var(--color-teal-border); overflow-wrap: anywhere; }
-  .dot { color: var(--color-cyan); }
+  .dot { color: var(--color-teal-border); } /* large accent: Muted Teal 3.74:1 passes AA large text; cyan (2.26) does not */
   .rule { margin: calc(13 * var(--u)) 0 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid var(--color-teal-border); }
   .stats { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(24 * var(--u)) calc(40 * var(--u)); }
   .stat { color: var(--color-navy-alt); font-weight: 500; padding-top: calc(3 * var(--u)); }

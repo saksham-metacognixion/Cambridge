@@ -46,9 +46,9 @@ const { title, summary, href, button, headingId } = Astro.props;
   /* Tag art: the SVG (203.791 x 78.291) includes its drop shadow; its shape starts 7.762 in. Stretches if the title grows. */
   .tag-art { position: absolute; z-index: -1; top: calc(-7.762 * var(--u)); inset-inline-start: calc(-7.762 * var(--u)); width: calc(100% + 23.291 * var(--u)); height: calc(100% + 23.911 * var(--u)); max-width: none; }
   .title { margin: 0; width: calc(135.774 * var(--u)); font-weight: 500; font-size: calc(10.387 * var(--u)); line-height: calc(10.387 * var(--u)); color: #fff; text-align: center; overflow-wrap: break-word; }
-  .summary { position: relative; z-index: 2; margin: calc(33.62 * var(--u)) 0 0; margin-inline-start: calc(17.06 * var(--u)); width: calc(164.71 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(10.387 * var(--u)); color: #000; overflow-wrap: anywhere; }
+  .summary { position: relative; z-index: 2; margin: calc(33.62 * var(--u)) 0 0; margin-inline-start: calc(17.06 * var(--u)); width: calc(164.71 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(10.387 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
   /* bugs 044 / 050: shared .ui-btn size, centred under the centred title (bug 040); a gap above it when the text runs long */
-  .btn { position: relative; z-index: 2; margin-top: auto; align-self: center; background: var(--color-cyan); color: #fff; }
+  .btn { position: relative; z-index: 2; margin-top: auto; align-self: center; background: var(--color-cyan); color: var(--color-navy); }
   .summary { margin-bottom: calc(10 * var(--u)); }
   /* Mirror the decoration in RTL (the tag's notch and the corner sit at the inline end). */
   :global([dir='rtl']) .tag-art { transform: scaleX(-1); }

@@ -79,7 +79,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
       <ul class="toplinks">
         {topLinks.map((x) => (
           <li class="a" style={`--l:${x.l};--t:33;--w:${x.w};--ph:15`}>
-            <a href={x.href} class="hit block whitespace-nowrap text-f9 font-normal not-italic text-cyan">{x.label}</a>
+            <a href={x.href} class="hit block whitespace-nowrap text-f9 font-normal not-italic text-navy">{x.label}</a>
           </li>
         ))}
       </ul>
@@ -138,7 +138,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
            755..916 slot holds next to the nav, so the button ends 11 before the separator line (x 905) and grows toward the nav,
            which starts 48 earlier (345, was 393) to make room (English only: the Arabic label is short, its nav keeps 393); vertical
            centre = the Figma box's (84). -->
-      <a href={c.book.href} class="hit book a ui-btn btn-fill text-off-white" style="--l:755;--t:69;--w:138;--ph:30"><span>{c.book.label}</span></a>
+      <a href={c.book.href} class="hit book a ui-btn btn-fill text-navy" style="--l:755;--t:69;--w:138;--ph:30"><span>{c.book.label}</span></a>
 
       {vlines.map(([l, t]) => (
         <span class="vl a deco" style={`--l:${l};--t:${t};--w:0;--ph:30`}><img src={line1.src} width="30" height="1" alt="" /></span>
@@ -151,8 +151,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
 <style>
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   /* Corners (bug 049): language chip + its active pill = small chips (--radius-btn), dropdown panels = --radius-card. */
-  .chip { background: #ededed; border-radius: var(--radius-btn); }
-  .pill { background: #00415a; border-radius: var(--radius-btn); }
+  .chip { background: var(--color-mist); border-radius: var(--radius-btn); }
+  .pill { background: #004059; border-radius: var(--radius-btn); }
   .book { background: #00b8ff; }
   .vl > img { position: absolute; inset-inline-start: 0; top: calc(30 * var(--u)); width: calc(30 * var(--u)); height: calc(1 * var(--u)); transform-origin: 0 0; transform: rotate(-90deg); max-width: none; }
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
@@ -177,7 +177,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .sub-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transition: transform .2s; }
   .has-sub[data-open] .sub-chev { transform: rotate(180deg); }
   .sub-btn:focus-visible, .sub-item:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
-  .sub-item:hover, .sub-item[aria-current='page'] { color: #00b8ff; }
+  .sub-item:hover, .sub-item[aria-current='page'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* brand AA: Deep Teal + cyan underline, never cyan text */
   .burger { display: none; }
   .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
   .region { z-index: 60; }
@@ -194,9 +194,9 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   /* .hd .rlist, not .rlist: `.hd ul { padding: 0 }` above is more specific and used to strip the list's padding. */
   .hd .rlist { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(6 * var(--u)) calc(10 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
   .ritem { --hit-h: calc(100% + 10 * var(--u)); }
-  .ritem:hover, .ritem[aria-current='true'] { color: #00b8ff; } /* current region: the header's highlight colour */
+  .ritem:hover, .ritem[aria-current='true'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* current region: the header's highlight colour */
   .visit { cursor: pointer; transition: color .15s; }
-  .visit:hover { color: #00b8ff; } /* like the region menu's items */
+  .visit:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* like the region menu's items */
   .visit:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   .deco { pointer-events: none; } /* decorative lines must not swallow clicks meant for the links next to them */
 
@@ -253,8 +253,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .hd .sub-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; }
     .menu .sub-item { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; white-space: normal; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
-    .lang a { background: #ededed; border-radius: var(--radius-btn); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
-    .lang a[aria-current='true'] { background: #00415a; }
+    .lang a { background: var(--color-mist); border-radius: var(--radius-btn); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
+    .lang a[aria-current='true'] { background: #004059; }
     .book { position: relative; }
     .visit { margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; --hit-h: 100%; } /* a menu row like the links above it (44px tap target); the lines stay stacked */
   }

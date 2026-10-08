@@ -1,7 +1,7 @@
 ---
 /*
  * "Submit Your Inquiry" + form card of International Patients (Figma 54:9239), section top = the H3 top (page y 772).
- * H3 52:9237 Gotham Medium 18 #00415a, centred on x 525.5 (box w651, h23) | 16 | card 48:8825 x 42, 968 wide, #F1F1F1,
+ * H3 52:9237 Gotham Medium 18 #004059, centred on x 525.5 (box w651, h23) | 16 | card 48:8825 x 42, 968 wide, #F1F1F1,
  * no shadow, radius 14.32 (top end 15). Card-relative Figma px: "Patient Details:" (Bold 15) at 44 / 48 | 20 below its line |
  * field rows 35 high, 57 apart (Figma 57 / 59: normalised to the first) in two 410 columns 60 apart (labels 86 / 556 on the
  * page). Label -> box: Name 85.42, E-mail 88, Mobile 88 (dial 76 + 10), Age 88 (Figma 85, normalised to the right column),
@@ -71,7 +71,7 @@ const id = (n: string) => fieldId(ID, n);
 <style>
   .intl { max-width: calc(var(--target-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; color: var(--color-navy); }
   .h3 { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(18 * var(--u)); line-height: calc(23 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
-  .card { margin: calc(16 * var(--u)) 16px 0; padding: 24px 16px; background: #f1f1f1; box-shadow: none; }
+  .card { margin: calc(16 * var(--u)) 16px 0; padding: 24px 16px; background: var(--color-mist-50); box-shadow: none; }
   .card :global(.intl-form) { --rf-row: 22; }
   .card :global(.sec) { margin-block-end: calc(20 * var(--u)); }
   .card :global(.intl-country select) { padding-inline-start: calc(12 * var(--u)); }

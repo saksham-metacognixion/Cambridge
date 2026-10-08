@@ -28,8 +28,8 @@ const { card = {} } = Astro.props;
       />
     </div>
     <time class="pc-badge absolute top-0 start-[calc(36.53*var(--u))] flex h-[calc(36.528*var(--u))] flex-col items-center gap-[calc(3.653*var(--u))] rounded-b-(--radius-btn) bg-white p-[calc(7.306*var(--u))] text-center not-italic whitespace-nowrap" datetime={card.iso} aria-label={card.dateFull} data-time>
-      <span class="pc-day font-medium text-f14p173 text-[#2b2b2b]" data-day>{card.day}</span>
-      <span class="pc-wd font-normal text-f11p689 leading-[calc(18.994*var(--u))] text-[#808080]" data-weekday>{card.weekday}</span>
+      <span class="pc-day font-medium text-f14p173 text-navy" data-day>{card.day}</span>
+      <span class="pc-wd font-normal text-f11p689 leading-[calc(18.994*var(--u))] text-navy" data-weekday>{card.weekday}</span>
     </time>
   </div>
   <h3 class="m-0 mt-[calc(22.9*var(--u))] font-medium text-f18p264 leading-21.75 text-navy not-italic [word-break:break-word]"><a href={card.href} class="pc-link text-inherit no-underline" data-title>{card.title}</a></h3>

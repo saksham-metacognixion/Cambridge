@@ -91,7 +91,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     <!-- Hospitals list -->
     <div class="list dpos" style="--x:64;--y:30;--w:358">
       <!-- Tab + card corners: --radius-card (Figma r8, bug 049), same corners as Figma. -->
-      <div class="dpos2 bg-cyan rounded-t-(--radius-card) text-white" style="--x:0;--y:0;--w:149;--h:40">
+      <div class="dpos2 bg-cyan rounded-t-(--radius-card) text-navy" style="--x:0;--y:0;--w:149;--h:40">
         <span class="dpos2 font-gotham font-medium text-f13 leading-15 text-center not-italic" style="--x:33;--y:15;--w:78;--h:15">{c.listTab}</span>
       </div>
       <ul class="card m-0 list-none bg-white rounded-b-(--radius-card) rounded-se-(--radius-card)">
@@ -106,7 +106,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
               <!-- Book Appointment + Visit Page (bug 044/050): the shared .ui-btn-sm pair in one wrapping row, instead of Figma's
                    118 x 25 / 68 x 20 boxes with 10 / 9px labels. -->
               <div class="actions">
-                <a href={c.book.href} data-hospital={r.slug} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-white" aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
+                <a href={c.book.href} data-hospital={r.slug} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-navy" aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
                 <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="ui-btn ui-btn-sm hit btn-outline hair-50 border-navy text-navy">{c.visit.label}</a>
               </div>
             </div>

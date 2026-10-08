@@ -100,7 +100,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         {siteKey && <div class="ts-slot lg:absolute lg:start-117 lg:top-[calc(536*var(--u))]" data-sitekey={siteKey} data-language={edition.locale} data-appearance="interaction-only"></div>}
         <p class="f-alert cf-err lg:absolute lg:start-[calc(234*var(--u))] lg:top-[calc(503*var(--u))] lg:w-[calc(293*var(--u))] lg:text-start" role="alert" hidden></p>
         <!-- Shared button size (bugs 044 / 050): .ui-btn, anchored at the Figma top-left of the 108 x 36 button. -->
-        <button type="submit" class="hit btn-fill ui-btn cf-submit relative border-0 bg-cyan text-white lg:absolute lg:start-117 lg:top-493">
+        <button type="submit" class="hit btn-fill ui-btn cf-submit relative border-0 bg-cyan text-navy lg:absolute lg:start-117 lg:top-493">
           <span>{f.submit}</span>
           <span class="spin" aria-hidden="true"></span>
         </button>
@@ -163,7 +163,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
   @media (prefers-reduced-motion: reduce) { .gmap { transition: none; } }
   .field {
     box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
-    background: #ececec; border-radius: var(--radius-field); /* bug 049 (Figma 10.754) */
+    background: var(--color-mist); border-radius: var(--radius-field); /* bug 049 (Figma 10.754) */
     width: 100%; height: calc(35 * var(--u)); padding: 0 calc(11 * var(--u));
     font-family: var(--font-gotham); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u));
     color: var(--color-body);
@@ -216,7 +216,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
 
   /* ── Motion, matched to the live Contact Us form (bitform-custom-4.css + bitform JS, audited 7 Oct 2026). Figma has no states.
      Fields: 1px transparent border; background and border colour ease over .25s; focus = white fill + cyan border; a field
-     reported invalid (aria-invalid, scripts/forms.ts) = white fill + the live error red #c0392b. The 1px border sits inside the
+     reported invalid (aria-invalid, scripts/forms.ts) = white fill + the site error red (--color-error, one red site-wide since 8 Oct 2026). The 1px border sits inside the
      box (border-box), so nothing moves. Button: shared .btn-fill hover (navy) but with the live .25s ease, a soft shadow on
      hover, scale(.985) over .18s while pressed and a spinning ring (live .bf-spinner: 1s linear) while the message is sent
      (aria-disabled). Consent: the dot fades over .25s; the circle shrinks to .98 over .12s while pressed and gets the live
@@ -225,7 +225,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
      All off with prefers-reduced-motion. Directions are symmetric, so RTL needs nothing extra. */
   .field { border: calc(1 * var(--u)) solid transparent; transition: background-color 0.25s ease, border-color 0.25s ease; }
   .field:focus { background: #fff; border-color: var(--color-cyan); }
-  .field[aria-invalid='true'], .field[aria-invalid='true']:focus { background: #fff; border-color: #c0392b; }
+  .field[aria-invalid='true'], .field[aria-invalid='true']:focus { background: #fff; border-color: var(--color-error); }
   button.cf-submit { transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.18s ease; }
   button.cf-submit:not([aria-disabled='true']):active { transform: scale(0.985); }
   @media (hover: hover) {

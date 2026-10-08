@@ -94,7 +94,7 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
             <div class="info">
               <h3 class="m-0 font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`max-width:calc(${card.nameW} * var(--u))`}>{card.name}</h3>
               <p class="m-0 font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word] max-w-148">{card.role}</p>
-              <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-white" aria-label={`${card.btn} - ${card.name}`}>{card.btn}</a>
+              <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-navy" aria-label={`${card.btn} - ${card.name}`}>{card.btn}</a>
             </div>
           </article>
         ))}

@@ -30,8 +30,8 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
     <div class="t-head">
       <div class="t-panel absolute start-62 top-0 rounded-(--radius-panel) bg-cyan" style="width:calc(927.828 * var(--u));height:calc(232.906 * var(--u))"></div>
       <img class="t-art absolute start-62 top-4" style="width:calc(927.828 * var(--u));height:calc(232.906 * var(--u))" src={ellipses.src} width="928" height="233" alt="" loading="lazy" decoding="async" />
-      <h2 class="t-title absolute start-306 top-34 w-439 m-0 font-gotham font-medium text-f28 text-white capitalize text-center not-italic">{txt.title}</h2>
-      <p class="t-sub absolute start-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-white text-center not-italic">{txt.subtitle}</p>
+      <h2 class="t-title absolute start-306 top-34 w-439 m-0 font-gotham font-medium text-f28 text-navy capitalize text-center not-italic">{txt.title}</h2>
+      <p class="t-sub absolute start-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-navy text-center not-italic">{txt.subtitle}</p>
     </div>
 
     <div data-autoscroll class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
@@ -45,7 +45,7 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
     </div>
 
     <!-- View More Stories (bug 044/050): the shared .ui-btn, centred at Figma's top 391 (Figma: 166 x 30 at 443, 13px label). -->
-    <a href={txt.button.page ? urlFor(edition, pagePath(txt.button.page)) : txt.button.href} class="ui-btn hit t-btn btn-fill absolute top-391 bg-cyan text-white">{txt.button.label}</a>
+    <a href={txt.button.page ? urlFor(edition, pagePath(txt.button.page)) : txt.button.href} class="ui-btn hit t-btn btn-fill absolute top-391 bg-cyan text-navy">{txt.button.label}</a>
   </div>
 </section>
 

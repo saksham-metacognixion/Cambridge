@@ -69,9 +69,9 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
      (the title link is the one they use). */
   .t .block, .btn { position: relative; z-index: 1; }
   .t a { transition: color 160ms ease; }
-  @media (hover: hover) { .t:has(.block:hover) a { color: var(--color-cyan); } }
+  @media (hover: hover) { .t:has(.block:hover) a { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   .card:has(.stretch:focus-visible) { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
-  .btn { margin-top: auto; background: var(--color-cyan); color: #fff; } /* size from .ui-btn (bug 044/050) */
+  .btn { margin-top: auto; background: var(--color-cyan); color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
   @media (min-width: 1024px) {
     .grid { grid-template-columns: repeat(4, calc(222 * var(--u))); column-gap: calc(20 * var(--u)); }
   }

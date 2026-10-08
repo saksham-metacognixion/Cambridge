@@ -37,7 +37,7 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
 <article class="cc hair-card" style={`--k:${K};--sw:${0.25 * K}`}>
   <Picture src={src} formats={['avif']} fallbackFormat="webp" width={px(222 * K)} height={px(244 * K)} widths={[px(222 * K), px(222 * K) * 2]} sizes={`${px(222 * K)}px`} loading="lazy" decoding="async" alt={alt} class="cc-img" pictureAttributes={{ class: 'contents' }} />
   <div class="cc-body">
-    <h3 class:list={['cc-title', titleTone === 'navy' ? 'text-navy' : 'text-cyan']}>{title}</h3>
+    <h3 class:list={['cc-title', 'text-navy']}>{title}</h3>
     <p class="cc-desc">{desc}</p>
     <a href={href} class="cc-btn ui-btn hit btn-fill" aria-label={buttonLabel}>{button}</a>
   </div>
@@ -49,5 +49,5 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
   .cc-body { position: relative; display: flex; flex-direction: column; flex: 1; box-sizing: border-box; padding: calc(257 * var(--cu)) calc(24 * var(--cu)) calc(16 * var(--cu)); }
   .cc-title { margin: 0; font-weight: 500; font-size: calc(19 * var(--cu)); line-height: 1; overflow-wrap: anywhere; }
   .cc-desc { margin: calc(5 * var(--cu)) 0 calc(8 * var(--cu)); max-width: calc(154 * var(--cu)); font-weight: 400; font-size: calc(9 * var(--cu)); line-height: calc(10 * var(--cu)); color: var(--color-body); overflow-wrap: anywhere; }
-  .cc-btn { margin-top: auto; align-self: flex-start; background: var(--color-cyan); color: #fff; } /* size, label, corners: .ui-btn */
+  .cc-btn { margin-top: auto; align-self: flex-start; background: var(--color-cyan); color: var(--color-navy); } /* size, label, corners: .ui-btn */
 </style>

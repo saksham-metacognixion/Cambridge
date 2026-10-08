@@ -9,7 +9,7 @@ import Band from '../careers/Band.astro';
 /*
  * The three "Why Cambridge" blocks (Figma Group 202 + 55:10340...), page y 1994-2941. Card 214.9 x 268.3 (white, radius 17.3,
  * shadow 0 1 4 rgba(0,0,0,.13)) with the photo 208 x 262 (radius 17.3) inset by (4, 3) / (3, 3) / (4, 3). Cards at x156 / 154 / 154 (the first block,
- * with its text, sits 2 right of the other two in Figma, kept), text column 25.1 right of the card. Title Gotham Medium 29 / 32 #00415a at
+ * with its text, sits 2 right of the other two in Figma, kept), text column 25.1 right of the card. Title Gotham Medium 29 / 32 #004059 at
  * card top +45 / +33 / +45, copy Book 16 / 18 #6b6b6b 8 / 6 / 8 below the title. The pill-stripe pattern (234 x 239) sits at x69,
  * card top +15 / +14 / +16, under the card. Rows: block 1 top 1994, block 2 +325, hairline (707 x .5 #bcbcbc, x158) 42.7 below block 2,
  * block 3 43 below the hairline.
@@ -57,7 +57,7 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
   .p { margin: calc(var(--g) * var(--u)) 0 0; font-weight: 400; font-size: calc(16 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .p p { margin: 0; }
   .p p + p { margin-top: calc(18 * var(--u)); }
-  .rule { margin: 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid #bcbcbc; }
+  .rule { margin: 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid var(--color-steel); }
   @media (min-width: 1024px) {
     .list { gap: 0; }
     .row { flex-direction: row; align-items: flex-start; gap: 0; }

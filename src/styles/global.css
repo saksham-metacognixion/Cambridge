@@ -48,19 +48,32 @@
   /* 1 spacing step = 1 Figma px, so  w-185  start-[-118]  top-1380  gap-11  are Figma values, scaled. */
   --spacing: var(--u);
 
-  /* Colours: exact hex values from Figma */
-  --color-navy: #004059;          /* headings, nav text, outline/fill accents */
-  --color-navy-alt: #00415a;      /* CTA labels, some fills (distinct in Figma: #00415a) */
-  --color-cyan: #00b8ff;
-  --color-body: #6b6b6b;
-  --color-teal-border: #418ea2;
-  --color-mist: #e7e7e7;          /* footer links, header hairlines */
-  --color-chip: #ededed;
-  --color-off-white: #fffdfd;
+  /* Colours: the brand palette (Cambridge Hospital Brand Guidelines, May 2026, p.33). Use these exact values, never a
+     visually matched shade. Primary: Deep Teal, Medical Green, Bright Healthcare Blue. Secondary: Muted Teal Blue,
+     Soft Steel Blue, Light Cool Grey.
+     Contrast (the guide: "ensure all color applications meet accessibility standards"; user decision 8 Oct 2026):
+       text on Bright Healthcare Blue = Deep Teal (4.95:1), never white (2.26:1);
+       text on white is Deep Teal; cyan / green / muted teal are never small text on white (2.26 / 2.65 / 3.74:1);
+       small white text only on Deep Teal (11.2:1); a cyan accent on light backgrounds = a fill, border or underline. */
+  --color-navy: #004059;          /* Deep Teal: logo, headings, nav text, outline/fill accents */
+  --color-navy-alt: #004059;      /* was Figma #00415a (a visual match of Deep Teal); kept as an alias for existing classes */
+  --color-cyan: #00b8ff;          /* Bright Healthcare Blue: CTAs, digital UI, accents */
+  --color-green: #21b573;         /* Medical Green: highlights, recovery messaging, icons */
+  --color-teal-border: #418ea2;   /* Muted Teal Blue: UI, hairlines */
+  --color-steel: #799fb9;         /* Soft Steel Blue: backgrounds, large sections, subtle UI */
+  --color-mist: #e7e7e7;          /* Light Cool Grey: footer links, header hairlines */
+  /* Text and neutrals (brand guidelines, user decision 8 Oct 2026). The guide sets all copy in Deep Teal and has no grey,
+     so body text is Deep Teal; neutral surfaces are Light Cool Grey or a tint of it on white (mist-25 / mist-50). */
+  --color-body: #004059;          /* body copy = Deep Teal (was Figma grey #6b6b6b) */
+  --color-mist-25: color-mix(in srgb, #e7e7e7 25%, #fff);   /* lightest neutral surface (was #f7f7f7-#f9f9f9) */
+  --color-mist-50: color-mix(in srgb, #e7e7e7 50%, #fff);   /* light neutral surface (was #f1f1f1 / #f2f2f2) */
+  --color-error: #ff4e4e;         /* the one colour outside the palette: form error state, non-text only (3.25:1 on white) */
+  --color-chip: #e7e7e7;
+  --color-off-white: #fff;
   --color-veil: rgba(231, 231, 231, 0.5);
-  --color-field: rgba(217, 217, 217, 0.5);
-  --color-dot-light: #f9f9f9;
-  --color-dot-grey: #d9d9d9;
+  --color-field: rgba(231, 231, 231, 0.8);
+  --color-dot-light: var(--color-mist-25);
+  --color-dot-grey: #e7e7e7;
 
   --font-gotham: "Gotham", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif;
 
@@ -116,6 +129,13 @@
   --shadow-nl-form: 0 calc(2.922 * var(--u)) calc(87.667 * var(--u)) 0 rgba(142, 131, 113, 0.15);
   --shadow-news: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13);
 }
+
+/* Arabic typeface (Brand Guidelines p.35): GE SS Two for Arabic text. Gotham stays first so Latin words, digits and
+   e-mail addresses on Arabic pages keep Gotham; Gotham has no Arabic glyphs, so Arabic letters fall through to GE SS Two.
+   The GE SS Two web files are not in public/fonts/ yet (docs/open-decisions.md BG2), so there is no @font-face (no 404s):
+   the name is used when installed locally, otherwise the system Arabic font renders as before. When the files arrive add
+   @font-face rules for "GE SS Two" (300 / 500 / 700) pointing at public/fonts/. */
+html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
 
 html { -webkit-text-size-adjust: 100%; }
 body {
@@ -293,18 +313,18 @@ body {
 /* ───────────── Interactive states of buttons, pills and tabs (user request 7 Oct 2026) ─────────────
    ONE place for the hover / focus-visible look of every button, pill and tab on the site. A control carries one class:
      .btn-fill        cyan fill (Header Book an Appointment, Book Now, See More, View More Stories, Send Message, SUBMIT, Read More,
-                      Start Your Care on the care cards, ...)         hover: navy #004059 fill, white label; a button whose live
-                                                                       twin goes elsewhere sets --btn-fill-hover (Why Cambridge Read
-                                                                       More: #0087bd, live .gsbp-99f91d8)
-     .btn-fill-navy   navy / #00415a fill (View All, Calculate Now, Book Appointment on a profile, hospital / hub cards, ...)
-                                                                       hover: cyan fill, white label (the same pair, inverted)
-     .btn-fill-white  white fill on a navy band (Recovery, Careers Apply)   hover: cyan fill, white label
+                      Start Your Care on the care cards, ...)         hover: navy #004059 fill, white label (--btn-fill-hover can
+                                                                       override it, with brand colours only)
+     .btn-fill-navy   navy / #004059 fill (View All, Calculate Now, Book Appointment on a profile, hospital / hub cards, ...)
+                                                                       hover: cyan fill, Deep Teal label
+     .btn-fill-white  white fill on a navy band (Recovery, Careers Apply)   hover: cyan fill, Deep Teal label
      .btn-outline     navy or cyan outline (Learn More / Find a Doctor hero buttons, Visit Page, 404 links, A-Z sort, ...)
-                                                                       hover: cyan border + cyan label; a .hair-card outline grows
+                                                                       hover: cyan border (label unchanged); a .hair-card outline grows
                                                                        to 2px like the live site's .ctaBut1 (user request 6 Oct)
-     .btn-text        text-only button (footer Subscribe)                hover: cyan label
-     .ui-pill         ALL / KSA / UAE, Blogs / News / Events, Refer tabs  hover (not pressed / selected): cyan border + cyan label
+     .btn-text        text-only button (footer Subscribe)                hover: cyan underline
+     .ui-pill         ALL / KSA / UAE, Blogs / News / Events, Refer tabs  hover (not pressed / selected): cyan border
      .ui-tab          vertical tabs (detail topics, Careers, FAQ)         hover (not selected): #e7e7e7 fill, navy label
+   Brand AA (8 Oct 2026): a label is never cyan or white on cyan; cyan marks a state as a fill, border or underline.
    Pressed / selected states are untouched. Hover only where a pointer can hover (no stuck hover after a tap); disabled and
    aria-disabled controls keep their look. Colour transitions = the live theme's link transition (Blocksy --theme-transition:
    0.12s cubic-bezier(.455,.03,.515,.955), the same on every live page; Why Cambridge animation audit 7 Oct 2026), off with
@@ -315,20 +335,21 @@ body {
 :root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab {
   transition: background-color var(--ui-ease), color var(--ui-ease), border-color var(--ui-ease), box-shadow var(--ui-ease);
 }
+/* Cyan (.btn-fill) buttons carry a Deep Teal label at rest (brand AA, 8 Oct 2026: white on #00b8ff is 2.26:1). */
+:root .btn-fill, :root .btn-fill > * { color: var(--color-navy); }
 :root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color var(--ui-ease); }
 :root .btn-outline.hair-card::after { transition: border-color var(--ui-ease), border-width var(--ui-ease); }
 @media (hover: hover) {
   :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--btn-fill-hover, var(--color-navy)); color: #fff; }
   :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
-  :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: #fff; }
-  :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
-  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: #fff; }
-  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }
-  :root .btn-outline:not(:disabled):not([aria-disabled='true']):hover { border-color: var(--color-cyan); color: var(--color-cyan); }
-  :root .btn-outline:not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-cyan); }
+  :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: var(--color-navy); }
+  :root .btn-fill-navy:not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-navy); }
+  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: var(--color-navy); }
+  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-navy); }
+  :root .btn-outline:not(:disabled):not([aria-disabled='true']):hover { border-color: var(--color-cyan); }
   :root .btn-outline.hair-card:not([aria-disabled='true']):hover::after { border: 2px solid var(--color-cyan); }
-  :root .btn-text:not(:disabled):not([aria-disabled='true']):hover { color: var(--color-cyan); }
-  :root .ui-pill:not([aria-pressed='true']):not([aria-selected='true']):not(:disabled):hover { border-color: var(--color-cyan); color: var(--color-cyan); }
+  :root .btn-text:not(:disabled):not([aria-disabled='true']):hover { text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; }
+  :root .ui-pill:not([aria-pressed='true']):not([aria-selected='true']):not(:disabled):hover { border-color: var(--color-cyan); }
   :root .ui-tab:not([aria-selected='true']):not(:disabled):hover { background-color: var(--color-mist); color: var(--color-navy); }
 }
 /* Keyboard focus: the same colours as the hover, plus a 2px ring 2px outside the control (cyan on navy / white / outline
@@ -337,8 +358,7 @@ body {
 :root .btn-fill-navy:focus-visible, :root .btn-fill-white:focus-visible, :root .btn-outline:focus-visible, :root .btn-text:focus-visible, :root .ui-pill:focus-visible {
   outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u));
 }
-:root .btn-outline:focus-visible { border-color: var(--color-cyan); color: var(--color-cyan); }
-:root .btn-outline:focus-visible > * { color: var(--color-cyan); }
+:root .btn-outline:focus-visible { border-color: var(--color-cyan); }
 :root .btn-outline.hair-card:focus-visible::after { border: 2px solid var(--color-cyan); }
 @media (prefers-reduced-motion: reduce) {
   :root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab,

@@ -12,7 +12,7 @@ import lines from '../../assets/who-we-are/lines.svg';
  * (text top +34). 48 below the pill top a full-width band rgba(231,231,231,.5), h385 (y 897-1282): the pill overlaps it.
  * Inside the band: the pill-outline lines (55:9247, 554.5 x 562 at x-128.7, y-26.4, clipped to 449 x 357 at x0, y+28),
  * photo "Care 1" 410 x 336 at x-11, y+49 (object-cover, bottom-aligned: Figma shows the lower 86% of the image), six stats
- * Medium 35 / 12 (line height 133.7%) #00415a at x 504 / 660 / 802, y +125 / +243.
+ * Medium 35 / 12 (line height 133.7%) #004059 at x 504 / 660 / 802, y +125 / +243.
  *
  * Below 1024 (no Figma frame): the lines are a layer of the photo figure, sized in % of the photo so the composition scales
  * with it and ends at the photo's bottom edge (bugs 032/033, 7 Oct 2026) — they never reach the stats. Stats = one grid
@@ -51,7 +51,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
   .h { margin: 0; font-weight: 500; font-size: clamp(21px, 6.5vw, calc(30 * var(--u))); line-height: 1.2; color: #fff; text-align: center; text-wrap: balance; }
   /* each sentence wraps as a unit when it fits the line (inline-block), and at its spaces when it does not (max-width) */
   .s { display: inline-block; max-width: 100%; }
-  .dot { color: var(--color-cyan); }
+  .dot { color: var(--color-cyan); } /* on the Deep Teal pill: 4.95:1 */
   .band { position: relative; margin-top: calc(-48 * var(--u)); background: rgba(231, 231, 231, 0.5); overflow: clip; padding: calc(72 * var(--u)) 16px calc(40 * var(--u)); }
   /* Photo figure = the 410 x 336 Figma photo box; the lines and their clip are laid out in % of it so they scale with the photo.
      Clip (Figma 449 x 357 from the band edge, y+28): from 41 before the photo (cut by the band edge) to 50 after, 21 above, ending

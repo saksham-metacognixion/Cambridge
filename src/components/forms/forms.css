@@ -56,7 +56,7 @@
 .gf-box.strong { background: rgba(255, 255, 255, 0.7); }           /* Figma: the Name box is 70% white, the others 50% */
 .gf-box::placeholder { color: var(--color-body); opacity: 1; }
 .gf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: 0; }
-.gf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+.gf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) var(--color-error); }
 
 /* Selects with the placeholder as their visible label (Select Speciality / Select a Doctor) */
 .gf-select { position: relative; inline-size: calc(256.037 * var(--u)); max-inline-size: 100%; }
@@ -93,7 +93,7 @@
 
 /* Error under a field (no Figma design: Gotham Book in the label navy; the box gets a thin red line, Figma red #ff4e4e) */
 .f-err { margin: calc(3 * var(--u)) 0 0; font-weight: 400; font-size: calc(9.917 * var(--u)); line-height: calc(12 * var(--u)); color: var(--color-navy); }
-.f-err::before { content: ''; display: inline-block; inline-size: calc(5 * var(--u)); block-size: calc(5 * var(--u)); margin-inline-end: calc(4 * var(--u)); border-radius: 50%; background: #ff4e4e; vertical-align: middle; }
+.f-err::before { content: ''; display: inline-block; inline-size: calc(5 * var(--u)); block-size: calc(5 * var(--u)); margin-inline-end: calc(4 * var(--u)); border-radius: 50%; background: var(--color-error); vertical-align: middle; }
 .f-err[hidden] { display: none; }
 
 /* Title + section labels */
@@ -102,7 +102,7 @@
 
 /* Submit buttons: the shared .ui-btn size, label and corners (bugs 044 / 050: no more per-frame Figma boxes of 8-15px
    labels), centred under the form; the label <span> is cap-centred by .ui-btn (bug 007). Only the look is set here. */
-.ui-btn.f-submit { display: flex; inline-size: fit-content; margin-inline: auto; border: 0; background: var(--color-cyan); color: #fff; }
+.ui-btn.f-submit { display: flex; inline-size: fit-content; margin-inline: auto; border: 0; background: var(--color-cyan); color: var(--color-navy); }
 /* hover / focus-visible: the shared .btn-fill rules in global.css */
 .f-submit[aria-disabled='true'] { cursor: progress; }
 
@@ -114,7 +114,7 @@
 .f-consent .dot { position: absolute; inset-inline-start: calc(4.867 * var(--u)); inset-block-start: calc(4.867 * var(--u)); inline-size: calc(5.733 * var(--u)); block-size: calc(5.733 * var(--u)); border-radius: 50%; background: var(--color-navy); opacity: 0; }
 .f-consent input:checked ~ .box .dot { opacity: 1; }
 .f-consent input:focus-visible ~ .box { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
-.f-consent input[aria-invalid='true'] ~ .box img { filter: drop-shadow(0 0 calc(0.6 * var(--u)) #ff4e4e); }
+.f-consent input[aria-invalid='true'] ~ .box img { filter: drop-shadow(0 0 calc(0.6 * var(--u)) var(--color-error)); }
 .f-consent a { font-weight: 400; color: var(--color-navy); text-decoration: underline; text-decoration-thickness: from-font; text-underline-position: from-font; }
 .f-consent .txt { padding-block-start: calc(2 * var(--u)); }
 /* Page-specific consent look (FormShell `consent`): a radio-style circle (--cs Figma px box) with the Figma images */
@@ -180,7 +180,7 @@
 }
 .pf-box::placeholder { color: var(--color-body); opacity: 1; }
 .pf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
-.pf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+.pf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) var(--color-error); }
 .pf-select { position: relative; inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; }
 .pf-select select { inline-size: 100%; padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
 .pf-select .pf-chev { inset-inline-end: calc(var(--pf-sel-chev-x, 16.2) * var(--u)); inset-block-start: calc(var(--pf-sel-chev-y, 18) * var(--u)); inline-size: calc(var(--pf-sel-chev-w, 7.24) * var(--u)); }

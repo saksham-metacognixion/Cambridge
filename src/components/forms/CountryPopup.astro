@@ -93,7 +93,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
   /* Buttons: the shared .ui-btn size, label and corners (bug 044/050; Figma 99 x 19.3, label 7); both as wide as the column. */
   .cp-btn { align-self: stretch; border: 0; }
   .cp-btn.primary { background: var(--color-navy-alt); color: #fff; }
-  .cp-btn.secondary { background: #f2f2f2; color: var(--color-navy-alt); box-shadow: inset 0 0 0 calc(0.402 * var(--u)) currentColor; } /* the ring follows the label colour (cyan on hover, shared .btn-outline rule) */
+  .cp-btn.secondary { background: var(--color-mist-50); color: var(--color-navy-alt); box-shadow: inset 0 0 0 calc(0.402 * var(--u)) currentColor; } /* the ring follows the label colour (cyan on hover, shared .btn-outline rule) */
   .cp-or { box-sizing: border-box; margin: calc(6.684 * var(--u)) 0 0; min-block-size: calc(12 * var(--u)); font-weight: 700; font-size: calc(4.829 * var(--u)); line-height: normal; }
 
   /* Map: rounded (--radius-card, bug 049; Figma 14.085) clip 238.229 x 275.654; image 253.119 x 276.861 offset (-7.243, -0.805). Pin + chip in map px. */
@@ -103,7 +103,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
   .cp-chip {
     position: absolute; box-sizing: border-box; display: flex; align-items: center; gap: calc(7.649 * var(--u));
     inset-inline-start: calc(94.17 * var(--u)); inset-block-start: calc(89.74 * var(--u)); inline-size: calc(64.789 * var(--u)); block-size: calc(23.742 * var(--u));
-    padding-inline-start: calc(3.62 * var(--u)); border-radius: var(--radius-pill); background: #d8d8d8;
+    padding-inline-start: calc(3.62 * var(--u)); border-radius: var(--radius-pill); background: var(--color-mist);
     font-family: 'Gotham', var(--font-gotham); font-weight: 900; font-size: calc(10.272 * var(--u)); line-height: normal; color: var(--color-navy-alt);
   }
   .cp-chip img { display: block; inline-size: calc(16.901 * var(--u)); block-size: calc(16.901 * var(--u)); max-inline-size: none; }

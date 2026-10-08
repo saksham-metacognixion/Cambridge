@@ -15,7 +15,7 @@ const cards = await Promise.all(postsFor(edition).slice(0, FIRST).map((p) => car
 const indexUrl = urlFor(edition, 'media-hub/posts.json');
 ---
 
-<section id="latest" data-latest data-index={indexUrl} class="relative mt-[calc(44.28*var(--u))] bg-[#f2f2f2] pt-65 pb-72" aria-labelledby="latest-title">
+<section id="latest" data-latest data-index={indexUrl} class="relative mt-[calc(44.28*var(--u))] bg-mist-50 pt-65 pb-72" aria-labelledby="latest-title">
   <p class="m-0 mx-auto h-17 max-w-282 text-center font-gotham font-light text-f14p173 leading-17 tracking-[calc(1.4173*var(--u))] text-navy uppercase not-italic">{c.eyebrow}</p>
   <h2 id="latest-title" class="m-0 mx-auto max-lg:box-border max-lg:px-[16px] mt-[calc(27.64*var(--u))] max-w-[calc(457.328*var(--u))] text-center font-gotham font-bold text-f29p076 leading-[calc(34.336*var(--u))] text-navy not-italic [word-break:break-word]">{c.title}</h2>
 

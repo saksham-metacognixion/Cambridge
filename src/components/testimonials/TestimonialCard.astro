@@ -12,7 +12,7 @@ import patMask from '../../assets/testimonials/pattern-mask.svg';
  * Testimonial card, Figma 62:2398 (Patient Testimonials, first card). Same design as the landing page cards (81:...), which
  * are this card at 185/257.723: `s` scales everything (page = 1). Figma px at s = 1, card-relative:
  *   card 257.723 x 321.805 white, 0.348px #418ea2 stroke, radius 20.896 (-> --radius-card, bug 049) | quote icon 16.717 at 18.11 / 12.54 |
- *   quote Gotham Book 12.538 / 18.11 #00415a at 18.11 / 43.19, w221.502, box 72.441 | name Gotham BOLD 12.538 / 18.11
+ *   quote Gotham Book 12.538 / 18.11 #004059 at 18.11 / 43.19, w221.502, box 72.441 | name Gotham BOLD 12.538 / 18.11
  *   #00b8ff 6.96 below the quote box (122.59) | pattern box 149.061 x 160.206 at 0 / 161.6 (radius bottom-start 22.29):
  *   masked bar pieces A-D (pattern-mask 188.618 x 164.285 at -6.909 / -10.666) | photo: per story (data) |
  *   corner badge 73.834 at 190.85 / 259.12, mirrored (Figma rotate 180 + flip Y), overhangs the card as in Figma.
@@ -70,7 +70,7 @@ const ih = photo ? (photo.crop ? photo.w * pct(photo.crop.w) / (photo.ratio ?? 1
   .txt { position: relative; padding: calc(43.19 * var(--k)) calc(18.111 * var(--k)) 0; }
   .txt > p { position: relative; margin: 0; width: calc(221.502 * var(--k)); max-width: 100%; font-size: calc(12.538 * var(--k)); line-height: calc(18.11 * var(--k)); overflow-wrap: anywhere; }
   .quote { min-height: calc(72.441 * var(--k)); color: var(--color-navy-alt); font-weight: 400; }
-  .name { margin-top: calc(6.959 * var(--k)) !important; color: var(--color-cyan); font-weight: 700; }
+  .name { margin-top: calc(6.959 * var(--k)) !important; color: var(--color-navy); font-weight: 700; }
   .photo { position: absolute; inset-inline-start: calc(var(--x) * var(--k)); top: calc(var(--y) * var(--k)); width: calc(var(--w) * var(--k)); height: calc(var(--h) * var(--k)); overflow: hidden; border-end-end-radius: calc(min(var(--r), 1) * var(--radius-card)); } /* photo in the card corner: card radius (bug 049) */
   .photo :global(img) { display: block; max-width: none; }
   .photo :global(img.cover) { width: 100%; height: 100%; object-fit: cover; }

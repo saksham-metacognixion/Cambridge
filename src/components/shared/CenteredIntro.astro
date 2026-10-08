@@ -6,7 +6,7 @@
  * Text may be several paragraphs (an array), separated by one empty 14px line.
  */
 interface Props { id: string; heading: string; text: string | string[]; cx: number; tx: number; tw?: number; hw?: number; lh?: number; gap?: number; alt?: boolean }
-// International Patients / Testimonials variant: H2 box w651, line 33, colour #00415a, text w937, 12 below (alt + values).
+// International Patients / Testimonials variant: H2 box w651, line 33, colour #004059, text w937, 12 below (alt + values).
 const { id, heading, text, cx, tx, tw = 577, hw = 430, lh = 27, gap = 10, alt = false } = Astro.props;
 const paras = Array.isArray(text) ? text : [text];
 ---

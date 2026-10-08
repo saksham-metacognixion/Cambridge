@@ -1,5 +1,5 @@
 {
-  "_note": "404 page (scope 2.5). NO Figma frame: built from existing parts only (inner-page title style Medium 39 #004059, body text Book 12/14 #6b6b6b, the outline button of the inner heroes). ALL text here is a PLACEHOLDER for Pramod's approval (docs/open-decisions.md NF1). Links = key sections (page keys in PAGE_PATHS; home = edition home).",
+  "_note": "404 page (scope 2.5). NO Figma frame: built from existing parts only (inner-page title style Medium 39 #004059, body text Book 12/14 var(--color-body), the outline button of the inner heroes). ALL text here is a PLACEHOLDER for Pramod's approval (docs/open-decisions.md NF1). Links = key sections (page keys in PAGE_PATHS; home = edition home).",
   "meta": { "title": "Page not found | Cambridge Hospital", "description": "The page you are looking for does not exist or has moved." },
   "title": "Page not found",
   "text": "The page you are looking for does not exist or has moved. These links will take you back to the main sections of the site.",

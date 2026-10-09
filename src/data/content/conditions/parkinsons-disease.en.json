@@ -1,5 +1,5 @@
 {
-  "_note": "Parkinson's Disease (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/parkinsons-disease (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/parkinsons-disease.png exists (tools/condition-banners/run.sh makes it from the live photo).",
+  "_note": "Parkinson's Disease (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the live site's own photo for this condition (Parkinsons-Disease.avif, downloaded 9 Oct 2026 with the user's approval, docs/cambridge-images-conditions), composed in the Figma Stroke treatment by tools/condition-banners/run.sh -> src/assets/conditions/parkinsons-disease.png (bug 042).",
   "meta": {
     "title": "Parkinson's Disease | Cambridge Hospital",
     "description": "Improving movement and independence through targeted rehabilitation."
@@ -21,7 +21,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "Parkinson’s disease progressively affects movement, balance, speech and daily function. While it cannot be cured, the right combination of therapy and medical management can significantly slow its impact.",

@@ -22,7 +22,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "A stroke can change a person’s life in an instant, affecting movement, speech, swallowing, cognition and emotional well-being. Timely, intensive rehabilitation is the single most important factor in how much function a patient regains.",

@@ -45,7 +45,7 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
       <div role="tabpanel" id={`faq-panel-${cat.id}`} aria-labelledby={`faq-tab-${cat.id}`} hidden={i !== 0} class="panel">
         {cat.items.length === 0 && <p class="ui-empty not-italic">{c.empty}</p>}
         {cat.items.map((it, k) => (
-          <details class="qa" name={`faq-${cat.id}`} open={k === 0}>
+          <details class:list={['qa', k === 0 && 'is-open']} name={`faq-${cat.id}`} open={k === 0}>
             <summary class="bar">
               <h3 class="q">{n(k)}{it.q}</h3>
               <img class="chev chev-open" src={chevOpen.src} width="9.661" height="5.806" alt="" />
@@ -65,15 +65,38 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
   import '../../scripts/tabs';
 
   // Accordion: the <details> of one category share name="faq-<category>", so the browser closes the open one when another
-  // opens (bug 025). Fallback for browsers without exclusive <details> (Chrome < 120, Safari < 17.2, Firefox < 130).
-  if (!('name' in HTMLDetailsElement.prototype)) {
-    document.addEventListener('toggle', (e) => {
-      const d = e.target;
-      const name = d instanceof HTMLDetailsElement && d.open && d.getAttribute('name');
-      if (!name) return;
-      document.querySelectorAll<HTMLDetailsElement>(`details[name="${name}"][open]`).forEach((o) => { if (o !== d) o.open = false; });
-    }, true);
-  }
+  // opens (bug 025); without JS that is the whole behaviour. With JS the open / close is animated like the live Greenshift
+  // accordion (animation audit, saved live FAQs page 9 Oct 2026: answer max-height 0 -> 5000px and opacity 0 -> 1 over .25s
+  // ease-out, the chevron turning over .3s): the script takes over the exclusivity (the name attribute is dropped, since the
+  // browser would close the other item at once), keeps `open` until the collapse has run, and sets .is-open a frame after
+  // opening so the transition has a start state. Off with prefers-reduced-motion (plain toggle).
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const MS = 260;
+  const closers = new WeakMap<HTMLDetailsElement, number>();
+  const collapse = (d: HTMLDetailsElement) => {
+    d.classList.remove('is-open');
+    if (reduce) { d.open = false; return; }
+    closers.set(d, window.setTimeout(() => { if (!d.classList.contains('is-open')) d.open = false; closers.delete(d); }, MS));
+  };
+  const expand = (d: HTMLDetailsElement) => {
+    window.clearTimeout(closers.get(d));
+    d.open = true;
+    if (reduce) { d.classList.add('is-open'); return; }
+    requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('is-open')));
+  };
+  document.querySelectorAll<HTMLDetailsElement>('details.qa').forEach((d) => {
+    const group = d.getAttribute('name') ?? '';
+    d.removeAttribute('name');
+    d.dataset.group = group;
+    d.querySelector('summary')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (d.classList.contains('is-open')) collapse(d);
+      else {
+        document.querySelectorAll<HTMLDetailsElement>(`details.qa.is-open[data-group="${group}"]`).forEach((o) => { if (o !== d) collapse(o); });
+        expand(d);
+      }
+    });
+  });
 </script>
 
 <style>
@@ -92,10 +115,21 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
   .bar::-webkit-details-marker { display: none; }
   .bar:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .qa[open] > .bar { background: var(--color-navy); color: #fff; } /* brand AA: white only on Deep Teal */
+  /* Motion = the live Greenshift accordion (saved FAQs page, 9 Oct 2026): title all .3s ease-in-out, icon transform .3s
+     ease-in-out, answer max-height / opacity all .25s ease-out (the live 5000px max-height: the height is in place almost at
+     once, the fade is what shows). Open-state colours wait for .is-open so the bar and the answer move together. */
+  .bar { transition: background-color .3s ease-in-out, color .3s ease-in-out; }
+  .qa[open]:not(.is-open) > .bar { background: rgba(231, 231, 231, 0.45); color: #004059; } /* = the closed bar: the open colours arrive with .is-open */
+  .chev-open { display: block; transition: transform .3s ease-in-out; }
+  .qa:not(.is-open) .chev-open { transform: rotate(180deg); }
+  .chev-closed { display: none; }
+  .ans { overflow: hidden; max-height: 5000px; transition: max-height .25s ease-out, opacity .25s ease-out, padding .25s ease-out, min-height .25s ease-out; }
+  .qa:not(.is-open) .ans { max-height: 0; min-height: 0; opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .bar, .chev-open, .ans { transition: none; } }
   .q { margin: 0; font-weight: 400; font-size: calc(11.041 * var(--u)); line-height: calc(26.7 * var(--u)); overflow-wrap: anywhere; }
   .chev { position: absolute; inset-inline-start: calc(593.46 * var(--u)); top: calc(17.94 * var(--u)); width: calc(9.661 * var(--u)); height: calc(5.806 * var(--u)); max-width: none; }
   .chev-closed { transform: scaleY(-1); }
-  .qa[open] .chev-closed, .qa:not([open]) .chev-open { display: none; }
+  .qa:not([open]) .chev-open { display: none; }
   .ans { position: relative; box-sizing: border-box; min-height: calc(118 * var(--u)); margin-top: calc(-37.925 * var(--u)); padding: calc(51 * var(--u)) calc(6 * var(--u)) calc(15.24 * var(--u)) calc(23 * var(--u)); border-radius: var(--radius-card); background: var(--color-mist-25); width: calc(629 * var(--u)); max-width: 100%; }
   .ans p + p { margin-top: calc(8 * var(--u)); }
   .ans p { margin: 0; width: calc(600 * var(--u)); max-width: 100%; color: var(--color-navy-alt); font-size: calc(11.041 * var(--u)); line-height: calc(17.252 * var(--u)); overflow-wrap: anywhere; }

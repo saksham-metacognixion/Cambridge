@@ -72,7 +72,7 @@ const careText = { ...shared.care };
       <MapBand c={shared.map} hospital={h} city={city} locale={loc} />
     </div>
     <div id="care" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(66 * var(--u))">
-      <CareCards edition={edition} c={careText} listLabel={shared.care.listLabel} button={shared.care.button} />
+      <CareCards edition={edition} c={careText} listLabel={shared.care.listLabel} button={shared.care.button} overrides={shared.care.cards} reveal />
     </div>
     <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">
       <ContactRecovery headTop={50} />

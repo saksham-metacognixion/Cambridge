@@ -3,7 +3,7 @@ import { allRedirects } from "../lib/redirects";
 
 /*
  * Cloudflare Pages `_redirects` (dist/_redirects), generated from src/lib/redirects.ts. Every rule is written for the URL
- * with and without the trailing slash (the live site's URLs end in "/"), all 301, both straight to the target (one hop;
+ * with and without the trailing slash (and, for the Arabic post slugs, in both percent-encoding cases) (the live site's URLs end in "/"), all 301, both straight to the target (one hop;
  * the target is a slash URL from urlFor, bug 057). Cloudflare's limits: 2000 static + 100 dynamic (splat) rules.
  * deploy/deploy.sh converts this file into an nginx map for the QA staging server.
  * A dynamic route with ONE static path: Astro skips page files whose name starts with "_", so src/pages/_redirects.ts was
@@ -18,7 +18,12 @@ export const GET: APIRoute = () => {
   const lines = allRedirects().flatMap((r) => {
     if (r.from.endsWith("/*")) return [`${r.from} ${r.to} 301`];
     const from = r.from.replace(/\/+$/, "");
-    return [`${from} ${r.to} 301`, `${from}/ ${r.to} 301`];
+    // A percent-encoded (Arabic post) source in both hex cases (bug 060): hosts compare the encoded path literally, browsers
+    // send uppercase (%D8%B9), the WordPress export and old links carry lowercase (%d8%b9). allRedirects() emits uppercase.
+    const forms = /%[0-9A-F]{2}/.test(from)
+      ? [from, from.replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase())]
+      : [from];
+    return forms.flatMap((f) => [`${f} ${r.to} 301`, `${f}/ ${r.to} 301`]);
   });
   const dynamic = lines.filter((l) => l.split(" ")[0].endsWith("*")).length;
   if (lines.length - dynamic > 2000) throw new Error(`_redirects: ${lines.length - dynamic} static rules, over Cloudflare's 2000 limit`);

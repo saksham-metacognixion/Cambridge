@@ -52,7 +52,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
         <img src={shape.src} alt="" width="222" height="225" loading="eager" decoding="async" />
       </div>
       {photo && (
-        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 240px, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 240px, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" data-aos="fade" pictureAttributes={{ class: 'contents' }} />
       )}
     </div>
   </div>

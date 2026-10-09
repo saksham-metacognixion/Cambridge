@@ -309,11 +309,11 @@
               "slug": "speech-language-rehab",
               "title": {
                 "en": "Speech and Language Rehabilitation",
-                "ar": ""
+                "ar": "إعادة تأهيل النطق واللغة"
               },
               "desc": {
                 "en": "For children and adults with communication, speech or swallowing difficulties, to help patients communicate more clearly, confidently and independently.",
-                "ar": ""
+                "ar": "برنامج موجّه للأطفال والبالغين الذين يعانون من صعوبات في التواصل، أو النطق، أو البلع، لمساعدتهم على التواصل بوضوح وثقة واستقلالية أكبر."
               },
               "children": []
             },
@@ -456,7 +456,7 @@
           },
           "desc": {
             "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement, function and daily activities.",
-            "ar": ""
+            "ar": "للأطفال الذين لديهم احتياجات أو صعوبات تتعلق بالنمو، أو الحالات العصبية، أو الجسدية، لتقييم احتياجاتهم الفردية وتوفير العلاج والدعم المناسبين."
           },
           "children": [],
           "cardTitle": {
@@ -472,7 +472,7 @@
           },
           "desc": {
             "en": "Movement based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
-            "ar": ""
+            "ar": "للمرضى الذين يعانون من الألم، أو محدودية الحركة، أو ضعف العضلات، أو صعوبات في التوازن، لتحسين قدرتهم على الحركة وقوتهم وتوازنهم وتناسقهم الحركي."
           },
           "children": [],
           "cardTitle": {
@@ -484,16 +484,16 @@
           "slug": "occupational-therapy",
           "title": {
             "en": "Occupational Therapy",
-            "ar": ""
+            "ar": "العلاج الوظيفي"
           },
           "desc": {
             "en": "Functional therapy for patients who need support with daily activities, independence, self care or participation at home, school or work.",
-            "ar": ""
+            "ar": "برنامج مخصّصٌ للمرضى الذين يحتاجون إلى الدعم في الحركة والأنشطة اليومية، لاستعادة الوظائف الحركية والاستقلالية، والمهارات اللازمة لحياتهم اليومية."
           },
           "children": [],
           "cardTitle": {
             "en": "Occupational Therapy",
-            "ar": ""
+            "ar": "العلاج الوظيفي"
           }
         },
         {

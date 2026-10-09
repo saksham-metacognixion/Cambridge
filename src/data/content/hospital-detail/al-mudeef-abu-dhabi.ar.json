@@ -1,1 +1,6 @@
-{}
+{
+  "_note": "Arabic = the live site's Arabic page text (captured 9 Oct 2026) where its English matches ours; the rest falls back to English. Replace with the client Arabic document when it arrives.",
+  "hero": {
+    "text": "خدمات الرعاية طويلة الأمد والتأهيل في إمارة أبوظبي، المخصصة لليافعين والبالغين من ذوي التحديات الطبية والذهنية المركّبة التي تستلزم إشرافاً سريرياً تخصصياً متواصلاً."
+  }
+}

@@ -32,7 +32,9 @@
   },
   "profile": {
     "list": "ابحث عن طبيب",
-    "book": "احجز موعد"
+    "book": "احجز موعد",
+    "subSpecialities": "التخصصات الفرعية",
+    "summary": "الملخص المهني"
   },
   "recovery": {
     "ariaLabel": "إن تعافيك يهمنا",

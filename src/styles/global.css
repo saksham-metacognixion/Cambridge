@@ -346,6 +346,13 @@ body {
 :root .btn-fill, :root .btn-fill > * { color: var(--color-navy); }
 :root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color var(--ui-ease); }
 :root .btn-outline.hair-card::after { transition: border-color var(--ui-ease), border-width var(--ui-ease); }
+/* Tab buttons = the live Greenshift tabs (.t-btn { transition: all .4s ease-in-out }; saved FAQs / Who We Are pages, 9 Oct 2026). */
+:root .ui-tab { transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
+/* Tab panels on phones (< 768, the live vertical tabs): the shown panel rises 8px and fades in over .28s
+   (Code Snippet 19964.css: .t-panel.active { animation: gs-panel-in .28s cubic-bezier(.22,1,.36,1) both }). */
+@keyframes ui-panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 767.98px) { .topics [role='tabpanel']:not([hidden]), .faq [role='tabpanel']:not([hidden]) { animation: ui-panel-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; } }
+@media (prefers-reduced-motion: reduce) { .topics [role='tabpanel'], .faq [role='tabpanel'] { animation: none; } }
 @media (hover: hover) {
   :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--btn-fill-hover, var(--color-navy)); color: #fff; }
   :root .btn-fill:not(:disabled):not([aria-disabled='true']):hover > * { color: #fff; }

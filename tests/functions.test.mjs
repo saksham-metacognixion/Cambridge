@@ -13,11 +13,18 @@ const bundle = async (entry, name) => {
 };
 const { onRequestPost, onRequest } = await bundle('functions/api/forms/[form].ts', 'form.mjs');
 const { onRequest: mw } = await bundle('functions/_middleware.ts', 'mw.mjs');
-let sent = [], tsOk = true;
+let sent = [], tsOk = true, tsReply = null, tsCalls = 0, providerFail = null;
+const logs = [];
+const realError = console.error;
+console.error = (...a) => { logs.push(a.join(' ')); realError(...a); };
 const realFetch = globalThis.fetch;
 globalThis.fetch = async (url, init) => {
-  if (String(url).includes('turnstile')) return new Response(JSON.stringify({ success: tsOk }));
-  if (String(url).includes('api.resend.com')) { sent.push(JSON.parse(init.body)); return new Response('{}', { status: 200 }); }
+  if (String(url).includes('turnstile')) { tsCalls++; return new Response(JSON.stringify(tsReply ?? { success: tsOk })); }
+  if (/api\.(resend|postmarkapp|sendgrid)\.com/.test(String(url))) {
+    if (providerFail === 'throw') throw new TypeError('fetch failed');
+    if (providerFail) return new Response(providerFail.body, { status: providerFail.status });
+    sent.push(JSON.parse(init.body)); return new Response('{}', { status: 200 });
+  }
   return realFetch(url, init);
 };
 const env = { TURNSTILE_SECRET_KEY: 's', EMAIL_PROVIDER: 'resend', EMAIL_API_KEY: 'k', MAIL_FROM: 'Site <no-reply@x.test>',
@@ -58,8 +65,21 @@ const cases = [
   ['GET not allowed', async () => onRequest(), (r) => r.status === 405],
   ['edition outside the whitelist never reaches the subject', () => post('send-enquiry', { ...good, edition: 'ae-en\r\nBcc: x@evil.test' }), (r, b) => r.status === 200 && sent.at(-1).subject.endsWith('(global-en)') && sent.at(-1).to[0] === 'g@x.test'],
   ['cross-site Sec-Fetch-Site rejected', () => { const fd = new FormData(); for (const [k, v] of Object.entries(good)) fd.append(k, v); return onRequestPost({ request: new Request('https://site.test/api/forms/send-enquiry', { method: 'POST', body: fd, headers: { Accept: 'application/json', 'Sec-Fetch-Site': 'cross-site' } }), env, params: { form: 'send-enquiry' } }); }, (r, b) => r.status === 403 && b.error === 'origin'],
-  ['EMAIL_PROVIDER=none without LOCAL_DEV fails (no silent discard)', () => { env.EMAIL_PROVIDER = 'none'; return post('send-enquiry', good); }, (r, b) => r.status === 502 && b.error === 'send_failed'],
+  ['EMAIL_PROVIDER=none without LOCAL_DEV fails (no silent discard)', () => { env.EMAIL_PROVIDER = 'none'; return post('send-enquiry', good); }, (r, b) => r.status === 500 && b.error === 'not_configured' && !b.ok],
   ['EMAIL_PROVIDER=none with LOCAL_DEV=true accepts (local dev)', () => { env.LOCAL_DEV = 'true'; return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; delete env.LOCAL_DEV; return r.status === 200 && b.ok; }],
+  // Deployment settings: answered "not_configured" before Turnstile is called (its token is single-use), logged by name only.
+  ['no Turnstile secret -> not_configured, logged, nothing sent', () => { tsCalls = 0; env.TURNSTILE_SECRET_KEY = ''; return post('send-enquiry', good); }, (r, b) => { env.TURNSTILE_SECRET_KEY = 's'; return r.status === 500 && b.error === 'not_configured' && tsCalls === 0 && logs.at(-1).includes('TURNSTILE_SECRET_KEY missing'); }],
+  ['no email settings (Vercel project without env) -> not_configured before Turnstile', () => { tsCalls = 0; const n = sent.length; delete env.EMAIL_PROVIDER; delete env.EMAIL_API_KEY; return post('send-enquiry', good).then((r) => ((r.n = n), r)); }, (r, b) => { Object.assign(env, { EMAIL_PROVIDER: 'resend', EMAIL_API_KEY: 'k' }); return r.status === 500 && b.error === 'not_configured' && tsCalls === 0 && sent.length === r.n && logs.at(-1).includes('EMAIL_PROVIDER ""'); }],
+  ['MAIL_FROM missing -> not_configured', () => { delete env.MAIL_FROM; return post('send-enquiry', good); }, (r, b) => { env.MAIL_FROM = 'Site <no-reply@x.test>'; return r.status === 500 && b.error === 'not_configured' && logs.at(-1).includes('MAIL_FROM missing'); }],
+  ['unknown EMAIL_PROVIDER (prototype key) -> not_configured', () => { env.EMAIL_PROVIDER = 'constructor'; return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; return r.status === 500 && b.error === 'not_configured'; }],
+  ['Turnstile rejects OUR secret -> not_configured (not "complete the check")', () => { tsReply = { success: false, 'error-codes': ['invalid-input-secret'] }; return post('send-enquiry', good); }, (r, b) => { tsReply = null; return r.status === 500 && b.error === 'not_configured' && logs.at(-1).includes('TURNSTILE_SECRET_KEY'); }],
+  ['provider error -> 502 send_failed, no success, reason logged with addresses masked', () => { providerFail = { status: 403, body: '{"message":"Testing emails only to owner@corp.test; reply a@b.test"}' }; return post('send-enquiry', good); }, (r, b) => { providerFail = null; const l = logs.at(-1); return r.status === 502 && b.error === 'send_failed' && !b.ok && l.includes('resend 403') && l.includes('<email>') && !l.includes('a@b.test') && !l.includes('owner@corp.test'); }],
+  ['provider unreachable -> 502 send_failed', () => { providerFail = 'throw'; return post('send-enquiry', good); }, (r, b) => { providerFail = null; return r.status === 502 && b.error === 'send_failed'; }],
+  ['no-JS post with failed send redirects with form=error', () => { providerFail = { status: 500, body: '' }; return post('send-enquiry', good, { json: false }); }, (r) => { providerFail = null; return r.status === 303 && r.headers.get('Location') === 'https://site.test/ae?form=error'; }],
+  ['sendgrid: "Name <address>" MAIL_FROM sent as { email, name }', () => { env.EMAIL_PROVIDER = 'sendgrid'; return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; const m = sent.at(-1); return r.status === 200 && b.ok && m.from.email === 'no-reply@x.test' && m.from.name === 'Site' && m.personalizations[0].to[0].email === 'ae@x.test' && m.reply_to.email === 'a@b.test'; }],
+  ['smtp without SMTP_HOST / SMTP_PASS -> not_configured (named in the log)', () => { env.EMAIL_PROVIDER = 'smtp'; env.SMTP_USER = 'u@x.test'; return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; delete env.SMTP_USER; return r.status === 500 && b.error === 'not_configured' && logs.at(-1).includes('SMTP_HOST / SMTP_PASS missing'); }],
+  ['smtp server down -> 502 send_failed, no success', () => { Object.assign(env, { EMAIL_PROVIDER: 'smtp', SMTP_HOST: '127.0.0.1', SMTP_PORT: '1', SMTP_USER: 'u@x.test', SMTP_PASS: 'p' }); return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; for (const k of ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS']) delete env[k]; return r.status === 502 && b.error === 'send_failed' && !b.ok; }],
+  ['postmark: From / To / ReplyTo', () => { env.EMAIL_PROVIDER = 'postmark'; return post('book-appointment', { ...book, email: 'p@b.test' }); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; const m = sent.at(-1); return r.status === 200 && b.ok && m.From === 'Site <no-reply@x.test>' && m.To === 'book@x.test,book2@x.test' && m.ReplyTo === 'p@b.test'; }],
 ];
 let pass = 0;
 for (const [name, run, check] of cases) {

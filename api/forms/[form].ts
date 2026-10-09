@@ -1,20 +1,13 @@
 /*
  * Vercel staging entry for POST /api/forms/<form>. Vercel does not run Cloudflare Pages Functions (functions/), so this
- * edge function wraps the same handler: validation, Turnstile and email stay in ONE place
- * (functions/api/forms/[form].ts). Env vars are the ones in .env.example, set in the Vercel project settings.
- * Nothing is stored, same as on Cloudflare.
+ * function wraps the same handler: validation, Turnstile and email stay in ONE place (functions/api/forms/[form].ts).
+ * Env vars are the ones in .env.example, set in the Vercel project settings. Nothing is stored, same as on Cloudflare.
+ * Node.js runtime (not edge): the SMTP adapter needs TCP sockets (node:net / node:tls), which the edge runtime has not.
  */
 import { onRequestPost } from "../../functions/api/forms/[form]";
 import type { Env } from "../../functions/_lib/types";
 
-export const config = { runtime: "edge" };
-
-export default async function handler(request: Request): Promise<Response> {
-  if (request.method !== "POST")
-    return new Response("Method Not Allowed", {
-      status: 405,
-      headers: { Allow: "POST" },
-    });
+export async function POST(request: Request): Promise<Response> {
   const form = decodeURIComponent(
     new URL(request.url).pathname.split("/").pop() ?? "",
   );
@@ -32,3 +25,13 @@ export default async function handler(request: Request): Promise<Response> {
     next: () => Promise.resolve(new Response(null, { status: 404 })),
   });
 }
+
+const notAllowed = () =>
+  new Response("Method Not Allowed", {
+    status: 405,
+    headers: { Allow: "POST" },
+  });
+export const GET = notAllowed;
+export const PUT = notAllowed;
+export const DELETE = notAllowed;
+export const PATCH = notAllowed;

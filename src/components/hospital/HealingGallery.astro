@@ -107,7 +107,8 @@ const pos = (len: number, active: number, i: number) => {
   .pick-slide:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
   .dots { margin-top: calc(21.63 * var(--u)); align-self: stretch; }
   @media (prefers-reduced-motion: no-preference) {
-    .slide { transition: inset-inline-start .45s cubic-bezier(.22,1,.36,1), top .45s cubic-bezier(.22,1,.36,1), width .45s cubic-bezier(.22,1,.36,1), height .45s cubic-bezier(.22,1,.36,1), opacity .45s, visibility .45s; }
+    /* Slide timing = the live hospital page's Swiper (saved Abu Dhabi page, 9 Oct 2026: speed 800, wrapper timing CSS ease). */
+    .slide { transition: inset-inline-start .8s ease, top .8s ease, width .8s ease, height .8s ease, opacity .8s ease, visibility .8s; }
   }
   /* Desktop: the Figma composition (positions in Figma px from the frame's left edge; the row is the full 1052 stage). */
   @media (min-width: 1024px) {

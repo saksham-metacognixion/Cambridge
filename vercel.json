@@ -195,16 +195,6 @@
       "statusCode": 301
     },
     {
-      "source": "/condition/post-surgical-rehabilitation",
-      "destination": "/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/condition/post-surgical-rehabilitation/",
-      "destination": "/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
       "source": "/condition/acquired-brain-injury",
       "destination": "/patient-hub/conditions-specialities/acquired-brain-injury/",
       "statusCode": 301
@@ -272,6 +262,96 @@
     {
       "source": "/condition/motor-neuron-diseases/",
       "destination": "/patient-hub/conditions-specialities/motor-neuron-diseases/",
+      "statusCode": 301
+    },
+    {
+      "source": "/condition/post-surgical-rehabilitation",
+      "destination": "/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/condition/post-surgical-rehabilitation/",
+      "destination": "/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
+      "destination": "/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/",
+      "destination": "/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab",
+      "destination": "/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/",
+      "destination": "/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab",
+      "destination": "/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/",
+      "destination": "/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/musculoskeletal-rehab",
+      "destination": "/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/post-acute-rehab/musculoskeletal-rehab/",
+      "destination": "/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab",
+      "destination": "/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/",
+      "destination": "/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab",
+      "destination": "/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/",
+      "destination": "/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/pediatric-transitional-care",
+      "destination": "/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/pediatric-transitional-care/",
+      "destination": "/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/post-acute-care",
+      "destination": "/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/inpatient/pediatric-rehab/post-acute-care/",
+      "destination": "/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
       "statusCode": 301
     },
     {
@@ -465,16 +545,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/condition/post-surgical-rehabilitation",
-      "destination": "/ar/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/condition/post-surgical-rehabilitation/",
-      "destination": "/ar/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
       "source": "/ar/condition/acquired-brain-injury",
       "destination": "/ar/patient-hub/conditions-specialities/acquired-brain-injury/",
       "statusCode": 301
@@ -542,6 +612,96 @@
     {
       "source": "/ar/condition/motor-neuron-diseases/",
       "destination": "/ar/patient-hub/conditions-specialities/motor-neuron-diseases/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/condition/post-surgical-rehabilitation",
+      "destination": "/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/condition/post-surgical-rehabilitation/",
+      "destination": "/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
+      "destination": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/",
+      "destination": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab",
+      "destination": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/",
+      "destination": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab",
+      "destination": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/",
+      "destination": "/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehab",
+      "destination": "/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehab/",
+      "destination": "/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab",
+      "destination": "/ar/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/",
+      "destination": "/ar/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab",
+      "destination": "/ar/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/",
+      "destination": "/ar/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/pediatric-transitional-care",
+      "destination": "/ar/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/pediatric-transitional-care/",
+      "destination": "/ar/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/post-acute-care",
+      "destination": "/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/inpatient/pediatric-rehab/post-acute-care/",
+      "destination": "/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
       "statusCode": 301
     },
     {
@@ -735,16 +895,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/condition/post-surgical-rehabilitation",
-      "destination": "/ae/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/condition/post-surgical-rehabilitation/",
-      "destination": "/ae/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/condition/acquired-brain-injury",
       "destination": "/ae/patient-hub/conditions-specialities/acquired-brain-injury/",
       "statusCode": 301
@@ -812,6 +962,96 @@
     {
       "source": "/ae/condition/motor-neuron-diseases/",
       "destination": "/ae/patient-hub/conditions-specialities/motor-neuron-diseases/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/condition/post-surgical-rehabilitation",
+      "destination": "/ae/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/condition/post-surgical-rehabilitation/",
+      "destination": "/ae/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
+      "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/",
+      "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab",
+      "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/",
+      "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab",
+      "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/",
+      "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/musculoskeletal-rehab",
+      "destination": "/ae/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/post-acute-rehab/musculoskeletal-rehab/",
+      "destination": "/ae/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab",
+      "destination": "/ae/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/",
+      "destination": "/ae/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab",
+      "destination": "/ae/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/",
+      "destination": "/ae/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/pediatric-transitional-care",
+      "destination": "/ae/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/pediatric-transitional-care/",
+      "destination": "/ae/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/post-acute-care",
+      "destination": "/ae/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/inpatient/pediatric-rehab/post-acute-care/",
+      "destination": "/ae/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
       "statusCode": 301
     },
     {
@@ -1455,16 +1695,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/ar/condition/post-surgical-rehabilitation",
-      "destination": "/ae/ar/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/condition/post-surgical-rehabilitation/",
-      "destination": "/ae/ar/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/ar/condition/acquired-brain-injury",
       "destination": "/ae/ar/patient-hub/conditions-specialities/acquired-brain-injury/",
       "statusCode": 301
@@ -1532,6 +1762,96 @@
     {
       "source": "/ae/ar/condition/motor-neuron-diseases/",
       "destination": "/ae/ar/patient-hub/conditions-specialities/motor-neuron-diseases/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/condition/post-surgical-rehabilitation",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/condition/post-surgical-rehabilitation/",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehab",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehab/",
+      "destination": "/ae/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/pediatric-transitional-care",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/pediatric-transitional-care/",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/post-acute-care",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/inpatient/pediatric-rehab/post-acute-care/",
+      "destination": "/ae/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
       "statusCode": 301
     },
     {
@@ -2175,16 +2495,6 @@
       "statusCode": 301
     },
     {
-      "source": "/sa/condition/post-surgical-rehabilitation",
-      "destination": "/sa/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/condition/post-surgical-rehabilitation/",
-      "destination": "/sa/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
       "source": "/sa/condition/acquired-brain-injury",
       "destination": "/sa/patient-hub/conditions-specialities/acquired-brain-injury/",
       "statusCode": 301
@@ -2255,6 +2565,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sa/condition/post-surgical-rehabilitation",
+      "destination": "/sa/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/condition/post-surgical-rehabilitation/",
+      "destination": "/sa/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
       "source": "/sa/care/in-school",
       "destination": "/sa/care/",
       "statusCode": 301
@@ -2262,6 +2582,86 @@
     {
       "source": "/sa/care/in-school/",
       "destination": "/sa/care/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
+      "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/",
+      "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab",
+      "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/",
+      "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab",
+      "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/",
+      "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/musculoskeletal-rehab",
+      "destination": "/sa/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/post-acute-rehab/musculoskeletal-rehab/",
+      "destination": "/sa/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab",
+      "destination": "/sa/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/",
+      "destination": "/sa/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab",
+      "destination": "/sa/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/",
+      "destination": "/sa/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/pediatric-transitional-care",
+      "destination": "/sa/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/pediatric-transitional-care/",
+      "destination": "/sa/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/post-acute-care",
+      "destination": "/sa/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/inpatient/pediatric-rehab/post-acute-care/",
+      "destination": "/sa/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
       "statusCode": 301
     },
     {
@@ -2675,16 +3075,6 @@
       "statusCode": 301
     },
     {
-      "source": "/sa/ar/condition/post-surgical-rehabilitation",
-      "destination": "/sa/ar/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/ar/condition/post-surgical-rehabilitation/",
-      "destination": "/sa/ar/patient-hub/conditions-specialities/neurorehabilitation/",
-      "statusCode": 301
-    },
-    {
       "source": "/sa/ar/condition/acquired-brain-injury",
       "destination": "/sa/ar/patient-hub/conditions-specialities/acquired-brain-injury/",
       "statusCode": 301
@@ -2755,6 +3145,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sa/ar/condition/post-surgical-rehabilitation",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/condition/post-surgical-rehabilitation/",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
       "source": "/sa/ar/care/in-school",
       "destination": "/sa/ar/care/",
       "statusCode": 301
@@ -2762,6 +3162,86 @@
     {
       "source": "/sa/ar/care/in-school/",
       "destination": "/sa/ar/care/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehab",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehab/",
+      "destination": "/sa/ar/care/inpatient/post-acute-rehab/musculoskeletal-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/central-nervous-system/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/long-term-cardiac/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/pediatric-transitional-care",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/pediatric-transitional-care/",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/paediatric-transitional/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/post-acute-care",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/inpatient/pediatric-rehab/post-acute-care/",
+      "destination": "/sa/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
       "statusCode": 301
     },
     {
@@ -4815,6 +5295,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/5-%D8%B3%D9%86%D9%88%D8%A7%D8%AA-%D9%85%D9%86-%D8%A7%D9%84%D9%86%D8%AC%D8%A7%D8%AD-%D8%AF-%D8%A5%D9%8A%D9%87%D8%A7%D8%A8-%D8%A7%D9%84%D8%BA%D9%86%D9%8A%D9%85%D9%89",
+      "destination": "/ar/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/5-%D8%B3%D9%86%D9%88%D8%A7%D8%AA-%D9%85%D9%86-%D8%A7%D9%84%D9%86%D8%AC%D8%A7%D8%AD-%D8%AF-%D8%A5%D9%8A%D9%87%D8%A7%D8%A8-%D8%A7%D9%84%D8%BA%D9%86%D9%8A%D9%85%D9%89/",
+      "destination": "/ar/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/5-%d8%b3%d9%86%d9%88%d8%a7%d8%aa-%d9%85%d9%86-%d8%a7%d9%84%d9%86%d8%ac%d8%a7%d8%ad-%d8%af-%d8%a5%d9%8a%d9%87%d8%a7%d8%a8-%d8%a7%d9%84%d8%ba%d9%86%d9%8a%d9%85%d9%89",
       "destination": "/ar/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
       "statusCode": 301
@@ -4845,6 +5335,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%A5%D9%8A%D9%87%D8%A7%D8%A8-%D8%A7%D9%84%D8%BA%D9%86%D9%8A%D9%85%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7",
+      "destination": "/ar/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%A5%D9%8A%D9%87%D8%A7%D8%A8-%D8%A7%D9%84%D8%BA%D9%86%D9%8A%D9%85%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7/",
+      "destination": "/ar/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%a7%d9%84%d8%af%d9%83%d8%aa%d9%88%d8%b1-%d8%a5%d9%8a%d9%87%d8%a7%d8%a8-%d8%a7%d9%84%d8%ba%d9%86%d9%8a%d9%85%d9%8a-%d9%82%d9%86%d8%a7%d8%a9-%d8%a7",
       "destination": "/ar/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
       "statusCode": 301
@@ -4852,6 +5352,16 @@
     {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%a7%d9%84%d8%af%d9%83%d8%aa%d9%88%d8%b1-%d8%a5%d9%8a%d9%87%d8%a7%d8%a8-%d8%a7%d9%84%d8%ba%d9%86%d9%8a%d9%85%d9%8a-%d9%82%d9%86%d8%a7%d8%a9-%d8%a7/",
       "destination": "/ar/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84-%D8%B9%D9%8A%D8%AA%D8%A7%D9%86%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7%D9%84%D9%81",
+      "destination": "/ar/media-hub/dr-jamil-itani-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84-%D8%B9%D9%8A%D8%AA%D8%A7%D9%86%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7%D9%84%D9%81/",
+      "destination": "/ar/media-hub/dr-jamil-itani-interview-fujairah-tv/",
       "statusCode": 301
     },
     {
@@ -4865,6 +5375,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84-%D8%B9%D9%8A%D8%AA%D8%A7%D9%86%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A5%D9%85-%D8%A8",
+      "destination": "/ar/media-hub/dr-jamil-itani-interview-mbc-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84-%D8%B9%D9%8A%D8%AA%D8%A7%D9%86%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A5%D9%85-%D8%A8/",
+      "destination": "/ar/media-hub/dr-jamil-itani-interview-mbc-tv/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%a7%d9%84%d8%af%d9%83%d8%aa%d9%88%d8%b1-%d8%ac%d9%85%d9%8a%d9%84-%d8%b9%d9%8a%d8%aa%d8%a7%d9%86%d9%8a-%d9%82%d9%86%d8%a7%d8%a9-%d8%a5%d9%85-%d8%a8",
       "destination": "/ar/media-hub/dr-jamil-itani-interview-mbc-tv/",
       "statusCode": 301
@@ -4875,6 +5395,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%AF-%D8%B1%D9%88%D8%A8%D9%8A%D8%B1-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9",
+      "destination": "/ar/media-hub/dr-rober-interview-al-arabiya-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%AF-%D8%B1%D9%88%D8%A8%D9%8A%D8%B1-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9/",
+      "destination": "/ar/media-hub/dr-rober-interview-al-arabiya-tv/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%af-%d8%b1%d9%88%d8%a8%d9%8a%d8%b1-%d9%82%d9%86%d8%a7%d8%a9-%d8%a7%d9%84%d8%b9%d8%b1%d8%a8%d9%8a%d8%a9",
       "destination": "/ar/media-hub/dr-rober-interview-al-arabiya-tv/",
       "statusCode": 301
@@ -4882,6 +5412,16 @@
     {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%af-%d8%b1%d9%88%d8%a8%d9%8a%d8%b1-%d9%82%d9%86%d8%a7%d8%a9-%d8%a7%d9%84%d8%b9%d8%b1%d8%a8%d9%8a%d8%a9/",
       "destination": "/ar/media-hub/dr-rober-interview-al-arabiya-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D8%AA%D8%BA%D8%B7%D9%8A%D8%A9-%D9%85%D8%A4%D8%AA%D9%85%D8%B1-%D8%A7%D9%84%D8%A5%D9%85%D8%A7%D8%B1%D8%A7%D8%AA-%D9%84%D9%84%D8%B1%D8%B9%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%AD%D8%B1%D8%AC%D8%A9",
+      "destination": "/ar/media-hub/eccc-2019-coverage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D8%AA%D8%BA%D8%B7%D9%8A%D8%A9-%D9%85%D8%A4%D8%AA%D9%85%D8%B1-%D8%A7%D9%84%D8%A5%D9%85%D8%A7%D8%B1%D8%A7%D8%AA-%D9%84%D9%84%D8%B1%D8%B9%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%AD%D8%B1%D8%AC%D8%A9/",
+      "destination": "/ar/media-hub/eccc-2019-coverage/",
       "statusCode": 301
     },
     {
@@ -4902,6 +5442,16 @@
     {
       "source": "/ar/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
       "destination": "/ar/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AA%D8%B3%D8%A7%D9%85%D8%AD-%D8%AF-%D8%A5%D9%8A%D9%87%D8%A7%D8%A8-%D8%A7%D9%84%D8%BA%D9%86%D9%8A%D9%85%D9%8A",
+      "destination": "/ar/media-hub/year-of-tolerance-dr-ihab-el-ghonimi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%AA%D8%B3%D8%A7%D9%85%D8%AD-%D8%AF-%D8%A5%D9%8A%D9%87%D8%A7%D8%A8-%D8%A7%D9%84%D8%BA%D9%86%D9%8A%D9%85%D9%8A/",
+      "destination": "/ar/media-hub/year-of-tolerance-dr-ihab-el-ghonimi/",
       "statusCode": 301
     },
     {
@@ -7335,92 +7885,92 @@
       "statusCode": 301
     },
     {
-      "source": "/doctor/:splat*",
+      "source": "/doctor/:splat(.*)",
       "destination": "/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
-      "source": "/testimonial/:splat*",
+      "source": "/testimonial/:splat(.*)",
       "destination": "/patient-hub/testimonials/",
       "statusCode": 301
     },
     {
-      "source": "/leadership/:splat*",
+      "source": "/leadership/:splat(.*)",
       "destination": "/about/",
       "statusCode": 301
     },
     {
-      "source": "/ar/doctor/:splat*",
+      "source": "/ar/doctor/:splat(.*)",
       "destination": "/ar/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
-      "source": "/ar/testimonial/:splat*",
+      "source": "/ar/testimonial/:splat(.*)",
       "destination": "/ar/patient-hub/testimonials/",
       "statusCode": 301
     },
     {
-      "source": "/ar/leadership/:splat*",
+      "source": "/ar/leadership/:splat(.*)",
       "destination": "/ar/about/",
       "statusCode": 301
     },
     {
-      "source": "/ae/doctor/:splat*",
+      "source": "/ae/doctor/:splat(.*)",
       "destination": "/ae/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
-      "source": "/ae/testimonial/:splat*",
+      "source": "/ae/testimonial/:splat(.*)",
       "destination": "/ae/patient-hub/testimonials/",
       "statusCode": 301
     },
     {
-      "source": "/ae/leadership/:splat*",
+      "source": "/ae/leadership/:splat(.*)",
       "destination": "/ae/about/",
       "statusCode": 301
     },
     {
-      "source": "/ae/ar/doctor/:splat*",
+      "source": "/ae/ar/doctor/:splat(.*)",
       "destination": "/ae/ar/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
-      "source": "/ae/ar/testimonial/:splat*",
+      "source": "/ae/ar/testimonial/:splat(.*)",
       "destination": "/ae/ar/patient-hub/testimonials/",
       "statusCode": 301
     },
     {
-      "source": "/ae/ar/leadership/:splat*",
+      "source": "/ae/ar/leadership/:splat(.*)",
       "destination": "/ae/ar/about/",
       "statusCode": 301
     },
     {
-      "source": "/sa/doctor/:splat*",
+      "source": "/sa/doctor/:splat(.*)",
       "destination": "/sa/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
-      "source": "/sa/testimonial/:splat*",
+      "source": "/sa/testimonial/:splat(.*)",
       "destination": "/sa/patient-hub/testimonials/",
       "statusCode": 301
     },
     {
-      "source": "/sa/leadership/:splat*",
+      "source": "/sa/leadership/:splat(.*)",
       "destination": "/sa/about/",
       "statusCode": 301
     },
     {
-      "source": "/sa/ar/doctor/:splat*",
+      "source": "/sa/ar/doctor/:splat(.*)",
       "destination": "/sa/ar/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
-      "source": "/sa/ar/testimonial/:splat*",
+      "source": "/sa/ar/testimonial/:splat(.*)",
       "destination": "/sa/ar/patient-hub/testimonials/",
       "statusCode": 301
     },
     {
-      "source": "/sa/ar/leadership/:splat*",
+      "source": "/sa/ar/leadership/:splat(.*)",
       "destination": "/sa/ar/about/",
       "statusCode": 301
     },

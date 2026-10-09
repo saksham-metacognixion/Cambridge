@@ -3,6 +3,8 @@
 # (Apple Vision). Output: src/assets/<key>-subject.png + <key>-bg.png next to the flat Figma banner, picked up by
 # heroLayers() in src/lib/images.ts. Not listed: hospitals/banner (no person: Vision picks the map, which must stay under the
 # vector pins of HeroMap: handled as described below) and news post photos (no subject / background split, static).
+# Condition banners other than Accidents / Stroke (bug 042, 9 Oct 2026) are composed with their layers by
+# tools/condition-banners/run.sh from the live site's cut-outs and are not split here.
 # hospitals/banner: Vision's "subject" is the baked-in map + pins; that layer drifts together with HeroMap's vector overlay
 # (PageHero follow="map", the live site's map motion), so the two maps never separate.
 set -e

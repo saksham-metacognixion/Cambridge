@@ -1,5 +1,5 @@
 {
-  "_note": "Hip Fracture & Femoral Neck Fracture Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/hip-fracture-rehabilitation (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/hip-fracture-rehabilitation.png exists (tools/condition-banners/run.sh makes it from the live photo).",
+  "_note": "Hip Fracture & Femoral Neck Fracture Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the live site's own photo for this condition (Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif, downloaded 9 Oct 2026 with the user's approval, docs/cambridge-images-conditions), composed in the Figma Stroke treatment by tools/condition-banners/run.sh -> src/assets/conditions/hip-fracture-rehabilitation.png (bug 042).",
   "meta": {
     "title": "Hip Fracture & Femoral Neck Fracture Rehabilitation | Cambridge Hospital",
     "description": "Rebuilding mobility and stability after fracture surgery."
@@ -24,7 +24,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "Hip fractures, particularly femoral neck fractures, are serious injuries that frequently affect older adults and require prompt, specialist rehabilitation to prevent long-term loss of function and independence.",

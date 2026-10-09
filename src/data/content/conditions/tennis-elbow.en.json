@@ -1,5 +1,5 @@
 {
-  "_note": "Tennis Elbow (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/tennis-elbow (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/tennis-elbow.png exists (tools/condition-banners/run.sh makes it from the live photo).",
+  "_note": "Tennis Elbow (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the live site's own photo for this condition (Tennis-Elbow.avif, downloaded 9 Oct 2026 with the user's approval, docs/cambridge-images-conditions), composed in the Figma Stroke treatment by tools/condition-banners/run.sh -> src/assets/conditions/tennis-elbow.png (bug 042).",
   "meta": {
     "title": "Tennis Elbow | Cambridge Hospital",
     "description": "Easing pain and rebuilding elbow strength through structured rehabilitation."
@@ -21,7 +21,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "Tennis elbow is a painful condition caused by overuse or repetitive strain of the forearm muscles and tendons, causing pain and tenderness on the outside of the elbow. Despite the name, it affects far more non-athletes than tennis players.",

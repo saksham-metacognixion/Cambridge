@@ -12,8 +12,11 @@ const redirects = readFileSync('dist/_redirects', 'utf8')
   .split('\n')
   .map((line) => line.trim().split(/\s+/))
   .filter(([from, to]) => from && to)
-  // A Cloudflare splat source "/sa/doctor/*" (bug 059 / 060) = Vercel "/sa/doctor/:splat*"; order kept (splats come last).
-  .map(([from, to, code]) => ({ source: from.replace(/\/\*$/, '/:splat*'), destination: to, statusCode: Number(code) || 301 }));
+  // A Cloudflare splat source "/sa/doctor/*" (bug 059 / 060) = Vercel "/sa/doctor/:splat(.*)"; order kept (splats come last).
+  // Not ":splat*": Vercel compiles sources with path-to-regexp in strict mode, where ":splat*" matches "/testimonial/amani"
+  // but NOT the live "/testimonial/amani/" (the trailing slash is not a segment) -> 404 on staging (bug 061, 9 Oct 2026).
+  // "(.*)" takes any rest, slash included. The Arabic sources are already listed in both hex cases (src/pages/[redirects].ts).
+  .map(([from, to, code]) => ({ source: from.replace(/\/\*$/, '/:splat(.*)'), destination: to, statusCode: Number(code) || 301 }));
 
 const config = {
   $schema: 'https://openapi.vercel.sh/vercel.json',

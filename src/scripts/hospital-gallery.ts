@@ -5,6 +5,9 @@
  * active photo marked, a dot click shows that photo; hidden with a single photo). The area dropdown shows another set
  * (text + photos). State is per area; positions are written as data-pos (0 active, ±1 neighbours, ±2 far, 9 hidden) and
  * the CSS places them.
+ * Autoplay (animation audit, saved live hospital page 9 Oct 2026: Greenshift Swiper autoplay delay 8000, speed 800,
+ * pauseOnMouseEnter, disableOnInteraction): the shown area moves to the next photo every 8 s; the mouse over the photos
+ * holds it; a swipe / drag ends it for good; a click, key or dot only restarts the 8 s. Off with prefers-reduced-motion.
  */
 import { createPagination, type Pagination } from "./pagination";
 
@@ -22,6 +25,19 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
   const shown = (): State | undefined =>
     states.get(areas.find((a) => !a.hidden) ?? areas[0]);
   let pg: Pagination | undefined;
+  const AUTO_MS = 8000;
+  const auto = matchMedia("(prefers-reduced-motion: no-preference)").matches;
+  let timer = 0;
+  let hover = false;
+  let stopped = false;
+  const arm = () => {
+    window.clearTimeout(timer);
+    if (!auto || stopped) return;
+    timer = window.setTimeout(() => {
+      if (!hover && !document.hidden) shown()?.go((shown()?.active() ?? 0) + 1);
+      arm();
+    }, AUTO_MS);
+  };
 
   for (const area of areas) {
     const list = area.querySelector<HTMLElement>("[data-slides]");
@@ -64,6 +80,7 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
     const go = (i: number, focus = false) => {
       active = mod(i, len);
       render(true);
+      arm();
       if (focus)
         slides[active]
           .querySelector<HTMLElement>("button")
@@ -102,6 +119,7 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
       const dx = e.clientX - x0;
       x0 = null;
       if (Math.abs(dx) < 40) return;
+      stopped = true; // a swipe / drag ends the autoplay (Swiper disableOnInteraction)
       if (e.pointerType === "mouse") {
         const stop = (ev: Event) => {
           ev.preventDefault();
@@ -116,6 +134,8 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
       x0 = null;
     });
     list.addEventListener("dragstart", (e) => e.preventDefault());
+    list.addEventListener("mouseenter", () => (hover = true));
+    list.addEventListener("mouseleave", () => (hover = false));
     states.set(area, { len, active: () => active, go: (i) => go(i) });
     render(false);
   }
@@ -130,5 +150,8 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
   select?.addEventListener("change", () => {
     for (const a of areas) a.hidden = a.dataset.galleryArea !== select.value;
     pg?.update();
+    arm();
   });
+  document.addEventListener("visibilitychange", arm);
+  if (states.size) arm();
 }

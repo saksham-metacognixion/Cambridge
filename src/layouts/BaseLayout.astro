@@ -5,6 +5,7 @@ import { DESIGN_W, TARGET_W } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
 import { allRoutes } from '../lib/routes';
+import { pages as seoPages } from '../data/seo.json';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 import Modals from '../components/forms/Modals.astro';
 
@@ -23,7 +24,11 @@ interface Props {
   robots?: string;
 }
 
-const { edition, path, title, description, ogImage, alternates: withAlternates = true, robots } = Astro.props;
+const { edition, path, ogImage, alternates: withAlternates = true, robots } = Astro.props;
+// Live-site SEO (src/data/seo.json, keyed by page URL): the live <title> / meta description win over the template's own.
+const seo = (seoPages as Record<string, { title?: string; description?: string }>)[urlFor(edition, path)];
+const title = seo?.title || Astro.props.title;
+const description = seo?.description || Astro.props.description;
 // Editions that have this page: the page's own list, else the route registry's (src/lib/routes.ts: hospital pages, region-only
 // care services, bug 047), so hreflang never points at a page that is not built.
 const editionsWithPage = Astro.props.editionsWithPage ?? allRoutes().find((r) => r.path === path.replace(/^\/+|\/+$/g, ''))?.editions;

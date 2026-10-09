@@ -1,5 +1,5 @@
 {
-  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403). name/quote = Website Content - Suhad/Patient Hub/EN-Patient Testimonials.md (12 stories, document order, 5 Oct 2026). The first six keep their Figma photos and card geometry; the other six have NO photo yet (card without the photo layer, docs/open-decisions.md CT12). regions: editions where the story is shown; all 'ae' until Pramod confirms each one's region (D15). photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop; pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. `home` = the six stories of the landing page's Testimonials row (Figma 2007:342 order; the row renders this card at 185 / 257.723).",
+  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403). name/quote = Website Content - Suhad/Patient Hub/EN-Patient Testimonials.md (12 stories, document order, 5 Oct 2026). The first six keep their Figma photos and card geometry; the other six have NO photo yet (card without the photo layer, docs/open-decisions.md CT12). regions: editions where the story is shown; all 'ae' until Pramod confirms each one's region (D15). photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop; pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. `home` = the six stories of the landing page's Testimonials row (Figma 2007:342 order; the row renders this card at 185 / 257.723). Arabic name/quote/alt (empty until 9 Oct 2026) = the live /ar/patient-hub/testimonials page, same 12 stories in the same order.",
   "home": [
     "mohamed-al-menhali",
     "mohamed-al-bloushi",
@@ -13,11 +13,11 @@
       "slug": "mohamed-al-menhali",
       "name": {
         "en": "Mohamed Al Menhali",
-        "ar": ""
+        "ar": "محمد المنهالي"
       },
       "quote": {
         "en": "With the help of God, and then Cambridge Hospital, I was able to return to my normal life, stronger and more determined than ever.",
-        "ar": ""
+        "ar": "بمساعدة الله، ثم كامبريدج، تمكنت من العودة إلى حياتي الطبيعية، أقوى وأكثر عزيمة من أي وقت مضى."
       },
       "regions": [
         "ae"
@@ -26,7 +26,7 @@
         "image": "testimonials/patient-6",
         "alt": {
           "en": "Mohamed Al Menhali",
-          "ar": ""
+          "ar": "محمد المنهالي"
         },
         "w": 162.941,
         "h": 203.456,
@@ -51,11 +51,11 @@
       "slug": "nujood-saeed",
       "name": {
         "en": "Nujood Saeed",
-        "ar": ""
+        "ar": "نجود سعيد"
       },
       "quote": {
         "en": "I recommend that anyone facing a medical problem always hold on to hope and never lose faith in recovery, even during difficult times.",
-        "ar": ""
+        "ar": "أنصح أي شخص يواجه مشكلة طبية أن يتمسك دائما بالأمل ولا يفقد إيمانه بالتعافي، حتى في الأوقات الصعبة."
       },
       "regions": [
         "ae"
@@ -64,7 +64,7 @@
         "image": "testimonials/patient-5",
         "alt": {
           "en": "Nujood Saeed",
-          "ar": ""
+          "ar": "نجود سعيد"
         },
         "w": 172.837,
         "h": 215.813,
@@ -92,11 +92,11 @@
       "slug": "shammas-mother",
       "name": {
         "en": "Shamma’s Mother",
-        "ar": ""
+        "ar": "والدة شمامة"
       },
       "quote": {
         "en": "Shamma’s ability to communicate improved remarkably thanks to Cambridge Hospital, and we are deeply grateful.",
-        "ar": ""
+        "ar": "والدة شما: “تحسنت قدرة شاما على التواصل بشكل ملحوظ بفضل كامبريدج، ونحن ممتنون جدا.”"
       },
       "regions": [
         "ae"
@@ -105,7 +105,7 @@
         "image": "testimonials/shamma",
         "alt": {
           "en": "Shamma’s Mother",
-          "ar": ""
+          "ar": "والدة شمامة"
         },
         "w": 218.716,
         "h": 243.792,
@@ -140,11 +140,11 @@
       "slug": "tamams-mother",
       "name": {
         "en": "Tamam’s Mother",
-        "ar": ""
+        "ar": "والدة تامام"
       },
       "quote": {
         "en": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities over time.",
-        "ar": ""
+        "ar": "نحن ممتنون حقا للتطورات الكبيرة التي لاحظناها في قدرات تمام في التواصل مع مرور الوقت."
       },
       "regions": [
         "ae"
@@ -153,7 +153,7 @@
         "image": "testimonials/patient-2",
         "alt": {
           "en": "Tamam’s Mother",
-          "ar": ""
+          "ar": "والدة تامام"
         },
         "w": 176.601,
         "h": 220.512,
@@ -178,11 +178,11 @@
       "slug": "mohamed-al-bloushi",
       "name": {
         "en": "Mohamed Al Bloushi",
-        "ar": ""
+        "ar": "محمد البلوشي"
       },
       "quote": {
         "en": "Thank God, I was able to get back to walking within almost four months, with God’s will and the help of the team at Cambridge Hospital.",
-        "ar": ""
+        "ar": "الحمد لله، تمكنت من العودة للمشي خلال فترة زمنية تقارب 4 أشهر بمشيئة الله وبمساعدة الفريق."
       },
       "regions": [
         "ae"
@@ -191,7 +191,7 @@
         "image": "testimonials/patient-1",
         "alt": {
           "en": "Mohamed Al Bloushi",
-          "ar": ""
+          "ar": "محمد البلوشي"
         },
         "w": 158.62,
         "h": 198.061,
@@ -216,11 +216,11 @@
       "slug": "salem-bin-saleh",
       "name": {
         "en": "Salem Bin Saleh",
-        "ar": ""
+        "ar": "سالم بن صالح"
       },
       "quote": {
         "en": "Previously, my daughter would walk three or four steps and then fall. Now, thank God, she walks without relying on anyone, covering thirty to forty metres.",
-        "ar": ""
+        "ar": "في السابق، كانت تمشي ثلاث أو أربع خطوات، ثم تسقط. الآن، الحمد لله، تمشي دون الاعتماد على أحد، من ثلاثين إلى أربعين مترا."
       },
       "regions": [
         "ae"
@@ -229,7 +229,7 @@
         "image": "testimonials/patient-4",
         "alt": {
           "en": "Salem Bin Saleh",
-          "ar": ""
+          "ar": "سالم بن صالح"
         },
         "w": 183.889,
         "h": 220.109,
@@ -265,11 +265,11 @@
       "slug": "amani",
       "name": {
         "en": "Amani",
-        "ar": ""
+        "ar": "أماني"
       },
       "quote": {
         "en": "At Cambridge Hospital, I regained my strength and hope, returning to my normal life, stronger and more determined than ever.",
-        "ar": ""
+        "ar": "في مستشفى كامبريدج، استعدت قوتي وأملي، وعدت إلى حياتي الطبيعية، أقوى وأكثر عزيمة من أي وقت مضى."
       },
       "regions": [
         "sa"
@@ -291,7 +291,7 @@
         "image": "testimonials/wp/amani",
         "alt": {
           "en": "Amani",
-          "ar": ""
+          "ar": "أماني"
         },
         "w": 162.941,
         "h": 203.456,
@@ -303,11 +303,11 @@
       "slug": "abdullah-jayoul",
       "name": {
         "en": "Abdullah Jayoul",
-        "ar": ""
+        "ar": "عبد الله جيول"
       },
       "quote": {
         "en": "After three months of care at Cambridge Hospital, I was able to come off the ventilator and breathe normally again.",
-        "ar": ""
+        "ar": "بعد ثلاثة أشهر في مستشفى كامبريدج، تمكنت من التوقف عن جهاز التنفس الصناعي والتنفس بشكل طبيعي مرة أخرى."
       },
       "regions": [
         "sa"
@@ -328,11 +328,11 @@
       "slug": "yousef-al-mobbed",
       "name": {
         "en": "Yousef Al Mobbed",
-        "ar": ""
+        "ar": "يوسف الموبد"
       },
       "quote": {
         "en": "After my stroke, Cambridge Hospital helped me recover through specialised rehabilitation and regain my independence.",
-        "ar": ""
+        "ar": "بعد السكتة الدماغية، ساعدني مستشفى كامبريدج على التعافي من خلال إعادة التأهيل المتخصصة واستعادة استقلاليتي."
       },
       "regions": [
         "sa"
@@ -354,7 +354,7 @@
         "image": "testimonials/wp/yousef-al-mobbed",
         "alt": {
           "en": "Yousef Al Mobbed",
-          "ar": ""
+          "ar": "يوسف الموبد"
         },
         "w": 162.941,
         "h": 203.456,
@@ -366,11 +366,11 @@
       "slug": "mohamed-ghafil",
       "name": {
         "en": "Mohamed Ghafil",
-        "ar": ""
+        "ar": "محمد غفيل"
       },
       "quote": {
         "en": "After suffering from a neurological disease, Cambridge Hospital helped me recover through rehabilitation and regain my independence.",
-        "ar": ""
+        "ar": "بعد معاناتي من مرض عصبي، ساعدني مستشفى كامبريدج على التعافي من خلال إعادة التأهيل واستعادة الاستقلالية."
       },
       "regions": [
         "sa"
@@ -392,7 +392,7 @@
         "image": "testimonials/wp/mohamed-ghafil",
         "alt": {
           "en": "Mohamed Ghafil",
-          "ar": ""
+          "ar": "محمد غفيل"
         },
         "w": 162.941,
         "h": 203.456,
@@ -404,11 +404,11 @@
       "slug": "naeema-al-blooshi",
       "name": {
         "en": "Naeema Al Blooshi",
-        "ar": ""
+        "ar": "نعيمة البلوشي"
       },
       "quote": {
         "en": "Cambridge Hospital helped my wife recover from a rare neurological disease through specialised rehabilitation and regain her independence.",
-        "ar": ""
+        "ar": "ساعدني مستشفى كامبريدج على التعافي من مرض عصبي نادر من خلال إعادة التأهيل المتخصصة واستعادة الاستقلالية."
       },
       "regions": [
         "sa"
@@ -430,7 +430,7 @@
         "image": "testimonials/wp/naeema-al-blooshi",
         "alt": {
           "en": "Naeema Al Blooshi",
-          "ar": ""
+          "ar": "نعيمة البلوشي"
         },
         "w": 162.941,
         "h": 203.456,
@@ -442,11 +442,11 @@
       "slug": "ahmed-al-shamsi",
       "name": {
         "en": "Ahmed Al Shamsi",
-        "ar": ""
+        "ar": "أحمد الشمساي"
       },
       "quote": {
         "en": "Ahmed Al Shamsi suffered a thigh fracture, causing left-side weakness and diabetes, but now lives normally with his family.",
-        "ar": ""
+        "ar": "تعرض أحمد الشمسي لكسر في الفخذ، مما تسبب في ضعف في الجهة اليسرى ومرض السكري، لكنه يعيش الآن بشكل طبيعي مع عائلته."
       },
       "regions": [
         "sa"
@@ -468,7 +468,7 @@
         "image": "testimonials/wp/ahmed-al-shamsi",
         "alt": {
           "en": "Ahmed Al Shamsi",
-          "ar": ""
+          "ar": "أحمد الشمساي"
         },
         "w": 162.941,
         "h": 203.456,

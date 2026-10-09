@@ -58,7 +58,13 @@
     "heading": "Delivering Excellence Across Every Stage of Care",
     "text": "At Cambridge Hospitals, we are committed to delivering advanced, patient-centric care with clinical excellence, providing a full spectrum of services designed around each patient’s individual needs.",
     "listLabel": "Our services",
-    "button": "Start Your Care"
+    "button": "Start Your Care",
+    "_cardsNote": "cards = per-card text for the hospital pages only, keyed by the Home services card's care slug (CareCards overrides). The hospital documents (EN - UAE Hospitals / EN - KSA Hospitals, 'Delivering Excellence Across Every Stage of Care') word the Inpatient card '24/7 Specialised medical and rehabilitation care' where the Homepage document has '24/7 hospital care with specialist medical and rehabilitation services'; the other three cards are identical (CT29, 9 Oct 2026).",
+    "cards": {
+      "inpatient": {
+        "desc": "24/7 Specialised medical and rehabilitation care"
+      }
+    }
   },
   "doctors": {
     "heading": "Expert Care, Trusted Doctors",

@@ -1,0 +1,22 @@
+Saved 2026-10-09T05:00:17.107Z with .astro/qc-bug042/fetch-live.mjs (bug 042, user approval 9 Oct 2026)
+acquired-brain-injury                        53152 B image/avif  wp-content/uploads/2026/07/Acquired-Brain-Injury.avif
+amputation-prosthetic-rehabilitation         39641 B image/avif  wp-content/uploads/2026/07/Amputation-Prosthetic-Rehabilitation.avif
+back-pain-lumbar-rehabilitation              30173 B image/avif  wp-content/uploads/2026/07/Back-Pain-Lumbar-Rehabilitation.avif
+epilepsy                                     42800 B image/avif  wp-content/uploads/2026/07/Epilepsy.avif
+fracture-rehabilitation                      32956 B image/avif  wp-content/uploads/2026/07/Fracture-Rehabilitation.avif
+guillain-barre-syndrome                      33559 B image/avif  wp-content/uploads/2026/07/Guillain-Barre-Syndrome.avif
+hip-fracture-rehabilitation                  34754 B image/avif  wp-content/uploads/2026/07/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif
+hip-knee-replacement-recovery                35666 B image/avif  wp-content/uploads/2026/07/Hip-Knee-Replacement-Recovery.avif
+knee-ligament-cartilage-injuries             33164 B image/avif  wp-content/uploads/2026/07/Knee-Ligament-Cartilage-Injuries.avif
+motor-neuron-diseases                        44778 B image/avif  wp-content/uploads/2026/07/Motor-Neuron-Diseases.avif
+multiple-sclerosis                           48914 B image/avif  wp-content/uploads/2026/07/Multiple-Sclerosis.avif
+musculoskeletal-orthopaedic-rehabilitation   25629 B image/avif  wp-content/uploads/2026/07/Musculoskeletal-Orthopedic-Rehabilitation.avif
+neck-pain-cervical-rehabilitation            25492 B image/avif  wp-content/uploads/2026/07/Neck-Pain-Cervical-Rehabilitation.avif
+neurorehabilitation                          46992 B image/avif  wp-content/uploads/2026/07/Neurorehabilitation.avif
+parkinsons-disease                           48408 B image/avif  wp-content/uploads/2026/07/Parkinsons-Disease.avif
+shoulder-rotator-cuff-rehabilitation         29466 B image/avif  wp-content/uploads/2026/07/Shoulder-Injury-Rotator-Cuff-Rehabilitation.avif
+spinal-cord-injury                           58096 B image/avif  wp-content/uploads/2026/07/Spinal-Cord-Injury.avif
+stroke-rehabilitation                        39743 B image/avif  wp-content/uploads/2026/07/Stroke-Rehabilitation.avif
+tennis-elbow                                 37548 B image/avif  wp-content/uploads/2026/07/Tennis-Elbow.avif
+Saved 2026-10-09T05:03:01.054Z with .astro/qc-bug042/fetch-live.mjs (bug 042, user approval 9 Oct 2026)
+traumatic-brain-injury                       37860 B image/avif  sa/wp-content/uploads/sites/3/2026/07/Chiropractic-Therapy-KSA-1.avif

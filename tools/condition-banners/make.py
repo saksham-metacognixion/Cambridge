@@ -8,7 +8,8 @@ gradient on the left (the title side). Every other condition page gets the same 
     background layer with tools/region-photos/compose-subject.py (footprint = the Stroke man), like the KSA people (bug 063)
   - an opaque photo is cover-cropped to 1052x323 keeping its right side, then blended into that background with a left fade
 Output: <out-dir>/<slug>.png (flat banner) + <slug>-subject.png + <slug>-bg.png (cursor-follow layers, heroLayers() in
-src/lib/images.ts). The content file already points at the key conditions/<slug>; nothing else to wire.
+src/lib/images.ts) + heroLayout.small (the strip kept in view below 1024px, small-crop.py) in the content file, which already
+points at the key conditions/<slug>; nothing else to wire.
 """
 import os, subprocess, sys, tempfile
 import numpy as np
@@ -62,4 +63,6 @@ else:
 flat.save(f'{out_dir}/{slug}.png')
 if bg_out is not None:
     bg_out.save(f'{out_dir}/{slug}-bg.png')
+# small-screen crop centred on the people (heroLayout.small in the content file)
+subprocess.run([sys.executable, '-I', 'tools/condition-banners/small-crop.py', slug, subject_path], check=True)
 print(f'{out_dir}/{slug}.png ({"cut-out" if cutout else "photo"}) + -subject + -bg')

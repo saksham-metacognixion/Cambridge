@@ -1,5 +1,5 @@
 {
-  "$comment": "Images of the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, attachment URLs) that would fill a placeholder or an empty image slot here. The export carries URLs only and wp-content/uploads sits behind a Cloudflare bot check (403 to scripts, NW1): download with `node tools/download-news-images.mjs --browser --headed` (fetches these too, into src/assets/<key>.<ext>) or copy the uploads folder from Pramod. After the download, point the JSON named in `usedBy` at `key` (and crop / box values for insurer logos). Nothing in this list is wired yet: the site keeps the Figma photos until then.",
+  "$comment": "Images of the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, attachment URLs) that would fill a placeholder or an empty image slot here. The export carries URLs only and wp-content/uploads sits behind a Cloudflare bot check (403 to scripts, NW1): download with `node tools/download-news-images.mjs --browser --headed` (fetches these too, into src/assets/<key>.<ext>) or copy the uploads folder from Pramod. After the download, point the JSON named in `usedBy` at `key` (and crop / box values for insurer logos). Group `conditions` is wired (bug 042, 9 Oct 2026: saved through a real Chrome with the user's approval into docs/cambridge-images-conditions, composed by tools/condition-banners/run.sh). The other groups are not: the site keeps the Figma photos until then.",
   "images": [
     {
       "group": "conditions",
@@ -114,6 +114,12 @@
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Tennis-Elbow.avif",
       "key": "conditions/tennis-elbow",
       "usedBy": "src/data/content/conditions/tennis-elbow.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
+    },
+    {
+      "group": "conditions",
+      "source": "https://cambridgehospital.com/sa/wp-content/uploads/sites/3/2026/07/Chiropractic-Therapy-KSA-1.avif",
+      "key": "conditions/traumatic-brain-injury",
+      "usedBy": "src/data/content/conditions/traumatic-brain-injury.en.json hero.banner.image (bug 042). The export has no featured image for this condition; this is the photo the live /condition/traumatic-brain-injury/ page shows in its hero (read 9 Oct 2026): a KSA-folder file named Chiropractic Therapy, reused by the live site. Client to confirm (R042)."
     },
     {
       "group": "care",

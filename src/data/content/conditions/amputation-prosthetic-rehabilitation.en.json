@@ -1,5 +1,5 @@
 {
-  "_note": "Amputation & Prosthetic Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/amputation-prosthetic-rehabilitation (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/amputation-prosthetic-rehabilitation.png exists (tools/condition-banners/run.sh makes it from the live photo).",
+  "_note": "Amputation & Prosthetic Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the live site's own photo for this condition (Amputation-Prosthetic-Rehabilitation.avif, downloaded 9 Oct 2026 with the user's approval, docs/cambridge-images-conditions), composed in the Figma Stroke treatment by tools/condition-banners/run.sh -> src/assets/conditions/amputation-prosthetic-rehabilitation.png (bug 042).",
   "meta": {
     "title": "Amputation & Prosthetic Rehabilitation | Cambridge Hospital",
     "description": "Building strength, balance and confidence for life with a prosthesis."
@@ -23,7 +23,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "Life after amputation demands structured physical rehabilitation alongside significant emotional adjustment.",

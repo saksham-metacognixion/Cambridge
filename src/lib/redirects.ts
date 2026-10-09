@@ -14,7 +14,12 @@ import { PAGE_PATHS } from "./paths";
 import { NEWS_PATHS } from "./news";
 import { conditions, CONDITION_PATHS } from "./conditions";
 import { DOCTOR_PATHS, profileDoctors, doctorEditions } from "./doctors";
-import { careOutsideRegion, CARE_PATHS } from "./care";
+import {
+  allCareNodes,
+  careInRegion,
+  careOutsideRegion,
+  CARE_PATHS,
+} from "./care";
 import posts from "../data/news/posts.json";
 
 export interface Redirect {
@@ -27,11 +32,43 @@ export interface Redirect {
  * `meetTheTeam: "about/meet-the-team"` to PAGE_PATHS: the /about/meet-the-team rule then drops out (the page answers
  * itself) and /leadership/* points at the new page, still one hop.
  */
-const MEET_THE_TEAM = (PAGE_PATHS as Record<string, string>).meetTheTeam as string | undefined;
-const meetTheTeamFor = (e: (typeof editions)[number]) => urlFor(e, MEET_THE_TEAM ?? PAGE_PATHS.about);
+const MEET_THE_TEAM = (PAGE_PATHS as Record<string, string>).meetTheTeam as
+  string | undefined;
+const meetTheTeamFor = (e: (typeof editions)[number]) =>
+  urlFor(e, MEET_THE_TEAM ?? PAGE_PATHS.about);
 
-const pathOf = (url: string) => new URL(url, "https://x.invalid").pathname.replace(/\/+$/, "");
-const globalOf = (locale: "en" | "ar") => editions.find((e) => e.region === "global" && e.locale === locale)!;
+/** Our care.json slug -> the live site's slug, where they differ (the live /ae and /sa page sitemaps, 9 Oct 2026). */
+const LIVE_CARE_SLUGS: Record<string, string> = {
+  "central-nervous-system": "central-nervous-system-anomalies-rehab",
+  "long-term-cardiac": "long-term-cardiac-anomalies-rehab",
+  "paediatric-post-acute-rehab": "post-acute-care",
+  "paediatric-transitional": "pediatric-transitional-care",
+  "musculoskeletal-rehabilitation": "musculoskeletal-rehab",
+  "spinal-cord-injury-rehabilitation": "spinal-cord-injury-rehab",
+  "stroke-rehabilitation": "stroke-rehab",
+  "traumatic-brain-injury-rehabilitation": "traumatic-brain-injury-rehab",
+};
+
+/**
+ * Live /condition/<slug>/ URLs that must NOT land on the condition carrying that `old_slug` (bug 060, 9 Oct 2026). The live
+ * record at /condition/post-surgical-rehabilitation/ is titled "Neurorehabilitation" (docs/specialty.json, id 18781: retitled
+ * in WordPress, slug kept), so tools/import-wp-cpt.mjs attached that slug to our Neurorehabilitation condition and the URL
+ * opened it. The client wants the URL to open Post-Surgical Rehabilitation, which exists only as the Our Care page
+ * (care.json `post-surgical-rehab`; there is no condition of that name, U8). Value = care.json slug; not offered in the
+ * edition's country -> that edition's Our Care hub (as bug 047).
+ */
+const CONDITION_URL_TO_CARE: Record<string, string> = {
+  "post-surgical-rehabilitation": "post-surgical-rehab",
+};
+
+/** RFC 3986 normal form of a percent-encoded path: uppercase hex, what browsers send (bug 060; WordPress exported lowercase). */
+const canonical = (p: string) =>
+  p.replace(/%[0-9a-f]{2}/gi, (m) => m.toUpperCase());
+
+const pathOf = (url: string) =>
+  new URL(url, "https://x.invalid").pathname.replace(/\/+$/, "");
+const globalOf = (locale: "en" | "ar") =>
+  editions.find((e) => e.region === "global" && e.locale === locale)!;
 
 /**
  * Live page URLs without a page of their own here, per edition language:
@@ -48,17 +85,65 @@ export function pageRedirects(): Redirect[] {
   const out: Redirect[] = [];
   for (const e of editions) {
     const base = e.base ? `/${e.base}` : "";
-    const add = (from: string, to: string) => out.push({ from: `${base}${from}`, to });
-    for (const cat of ["events", "conferences", "press-releases", "health-articles"])
+    const add = (from: string, to: string) =>
+      out.push({ from: `${base}${from}`, to });
+    for (const cat of [
+      "events",
+      "conferences",
+      "press-releases",
+      "health-articles",
+    ])
       add(`/${cat}`, urlFor(e, NEWS_PATHS.list) + `?category=${cat}#latest`);
     add("/book-an-appointment", urlFor(e) + "#book-appointment");
     if (!MEET_THE_TEAM) add("/about/meet-the-team", meetTheTeamFor(e));
     add("/legal", urlFor(e, PAGE_PATHS.privacyPolicy));
-    for (const c of conditions) if (c.old_slug) add(`/condition/${c.old_slug}`, urlFor(e, CONDITION_PATHS.detail(c.slug)));
+    for (const c of conditions)
+      if (c.old_slug && !CONDITION_URL_TO_CARE[c.old_slug])
+        add(
+          `/condition/${c.old_slug}`,
+          urlFor(e, CONDITION_PATHS.detail(c.slug)),
+        );
+    for (const [live, slug] of Object.entries(CONDITION_URL_TO_CARE)) {
+      const p = allCareNodes().find((x) => x.node.slug === slug);
+      if (!p)
+        throw new Error(
+          `redirects: CONDITION_URL_TO_CARE "${live}" -> unknown care slug "${slug}"`,
+        );
+      add(
+        `/condition/${live}`,
+        careInRegion(slug, e.region)
+          ? urlFor(e, CARE_PATHS.of(p.trail))
+          : urlFor(e, CARE_PATHS.hub),
+      );
+    }
     // Care pages not offered in this edition's country (bug 047, e.g. /sa/care/in-school) -> the edition's Our Care hub.
-    for (const p of careOutsideRegion(e.region)) out.push({ from: urlFor(e, CARE_PATHS.of(p.trail)), to: urlFor(e, CARE_PATHS.hub) });
+    const outside = new Set(
+      careOutsideRegion(e.region).map((p) => p.node.slug),
+    );
+    for (const p of careOutsideRegion(e.region))
+      out.push({
+        from: urlFor(e, CARE_PATHS.of(p.trail)),
+        to: urlFor(e, CARE_PATHS.hub),
+      });
+    // Care pages whose slug differs from the live site's (live sitemaps, 9 Oct 2026) -> the page under our slug.
+    for (const p of allCareNodes()) {
+      const live = LIVE_CARE_SLUGS[p.node.slug];
+      if (!live) continue;
+      const to = outside.has(p.node.slug)
+        ? urlFor(e, CARE_PATHS.hub)
+        : urlFor(e, CARE_PATHS.of(p.trail));
+      out.push({
+        from: urlFor(e, CARE_PATHS.of([...p.trail.slice(0, -1), live])),
+        to,
+      });
+    }
     // Doctor profiles exist on Global + the doctor's own country only (no UAE / KSA mixing).
-    for (const d of profileDoctors) if (!doctorEditions(d).includes(e.id)) out.push({ from: urlFor(e, DOCTOR_PATHS.profile(d.slug)), to: urlFor(e, DOCTOR_PATHS.list) });
+    for (const d of profileDoctors)
+      if (!doctorEditions(d).includes(e.id))
+        out.push({
+          from: urlFor(e, DOCTOR_PATHS.profile(d.slug)),
+          to: urlFor(e, DOCTOR_PATHS.list),
+        });
   }
   // The live Arabic home page was a WordPress page with its own slug.
   out.push({ from: "/ar/cambridge-hospital", to: urlFor(globalOf("ar")) });
@@ -69,7 +154,13 @@ export function pageRedirects(): Redirect[] {
 export function newsRedirects(): Redirect[] {
   return (posts as { slug: string; old_url: string; language: string }[])
     .filter((p) => p.old_url)
-    .map((p) => ({ from: pathOf(p.old_url), to: urlFor(globalOf(p.language === "ar" ? "ar" : "en"), NEWS_PATHS.article(p.slug)) }));
+    .map((p) => ({
+      from: pathOf(p.old_url),
+      to: urlFor(
+        globalOf(p.language === "ar" ? "ar" : "en"),
+        NEWS_PATHS.article(p.slug),
+      ),
+    }));
 }
 
 /**
@@ -85,7 +176,10 @@ export function doctorRedirects(): Redirect[] {
     const live = d.old_url ? pathOf(d.old_url).split("/").pop()! : "";
     for (const e of editions.filter((x) => x.region === d.country))
       for (const slug of new Set([live, d.slug].filter(Boolean)))
-        out.push({ from: `/${e.base}/doctor/${slug}`, to: urlFor(e, DOCTOR_PATHS.profile(d.slug)) });
+        out.push({
+          from: `/${e.base}/doctor/${slug}`,
+          to: urlFor(e, DOCTOR_PATHS.profile(d.slug)),
+        });
   }
   return out;
 }
@@ -116,14 +210,26 @@ export function sectionRedirects(): Redirect[] {
 
 /**
  * All rules, deduplicated by source, without no-op rules. Sources are compared without their trailing slash (bug 057:
- * "/media-hub/x" and the target "/media-hub/x/" are the same page, a rule between them would loop).
+ * "/media-hub/x" and the target "/media-hub/x/" are the same page, a rule between them would loop) and with their
+ * percent-encoding in uppercase (bug 060: the seven Arabic post slugs; src/pages/[redirects].ts also writes the lowercase twin).
  */
 export function allRedirects(): Redirect[] {
   const seen = new Set<string>();
   const bare = (p: string) => p.replace(/\/+$/, "");
   const isSplat = (r: Redirect) => r.from.endsWith("/*");
-  const rules = [...pageRedirects(), ...newsRedirects(), ...doctorRedirects(), ...sectionRedirects()];
+  const rules = [
+    ...pageRedirects(),
+    ...newsRedirects(),
+    ...doctorRedirects(),
+    ...sectionRedirects(),
+  ];
   return [...rules.filter((r) => !isSplat(r)), ...rules.filter(isSplat)]
-    .map((r) => ({ ...r, from: bare(r.from) }))
-    .filter((r) => r.from && r.from !== bare(r.to) && !seen.has(r.from) && !!seen.add(r.from));
+    .map((r) => ({ ...r, from: canonical(bare(r.from)) }))
+    .filter(
+      (r) =>
+        r.from &&
+        r.from !== bare(r.to) &&
+        !seen.has(r.from) &&
+        !!seen.add(r.from),
+    );
 }

@@ -63,10 +63,11 @@ const imgH = variant === 'banner' ? 500 : 323;
 const layers = heroLayers(c.banner.image, edition.region);
 const imgClass = ['absolute start-0 w-full max-w-none object-cover', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover'];
 // Small-screen crop (see `small`): object-position X% = the strip's start as a share of the slack (art width - strip width),
+// the box's aspect = strip width / the variant's banner height (500 banner, 323 cover: condition pages, bug 042),
 // so 100% = a strip that ends at the right edge; 100% vertically keeps the bottom (feet) when the box is capped.
 const BANNER_W = 1052, BANNER_H = 500;
 const smallStyle = small
-  ? `--hero-h:auto;--hero-aspect:${small.w} / ${BANNER_H};--hero-pos:${((small.x / Math.max(1, BANNER_W - small.w)) * 100).toFixed(2)}% 100%;${small.maxH ? `--hero-max-h:${small.maxH}px;` : ''}`
+  ? `--hero-h:auto;--hero-aspect:${small.w} / ${imgH};--hero-pos:${((small.x / Math.max(1, BANNER_W - small.w)) * 100).toFixed(2)}% 100%;${small.maxH ? `--hero-max-h:${small.maxH}px;` : ''}`
   : undefined;
 const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052],

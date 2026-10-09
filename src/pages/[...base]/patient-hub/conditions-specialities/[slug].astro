@@ -61,7 +61,7 @@ const doctors = { ...shared.doctors, slugs: linked.length ? doctorsForEdition(li
     <Header />
   </div>
   <main>
-    <div id="hero" class="relative"><PageHero content={hero} pos={page.heroLayout} h={322} variant="cover" /></div>
+    <div id="hero" class="relative"><PageHero content={hero} pos={page.heroLayout} h={322} variant="cover" small={page.heroLayout.small} /></div>
     {pending && <p class="pending-note" role="note">{shared.pending.note}</p>}
     {bannerPending && <p class="pending-note" role="note">{shared.pending.banner}</p>}
     <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">

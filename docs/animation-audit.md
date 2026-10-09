@@ -8,8 +8,10 @@ spacing, type, colour, image, route or form logic. Source of truth for motion = 
 - The five saved live pages in `~/Downloads` (About, Our Care, Our Hospitals, Why Cambridge, Contact Us) with their `_files`:
   Blocksy theme CSS (`main.min.css`), Greenshift scripts (`gsap-mousemove-init.js`, `aoslight.js`, Swiper `init.js`,
   `index.js` counters / lightbox), Bit Form CSS, Code Snippets (`287.css`, `19964.css`, `19967.js`), `sticky.js`, `back-to-top`.
-- cambridgehospital.com itself was **not** opened (standing instruction, 7 Oct 2026). Where neither source shows a value
-  (plugin CSS of the Greenshift tabs / accordion, the hospital / doctor / post single templates) the row says UNVERIFIED.
+- cambridgehospital.com itself was **not** opened by script (standing instruction, 7 Oct 2026; a permitted attempt on 8 Oct hit
+  Cloudflare's challenge). On 9 Oct 2026 the user saved four more live pages (FAQs, Who We Are, Cambridge Hospital Abu Dhabi,
+  Dr. Sami Alamin) into ~/Downloads, which closed every UNVERIFIED row: Greenshift tabs / accordion CSS, the hospital and
+  doctor templates. The article template was fetched live on 8 Oct.
 
 Earlier audits already matched About, Our Hospitals, Why Cambridge and Contact Us (7 Oct 2026, see docs/open-decisions.md
 WP17-WP19); their rows are repeated here as PASS with the verified values.
@@ -35,7 +37,7 @@ counterpart (Figma-only element) or no motion on either side.
 | Back-to-top button (`back-to-top.min.css`, .3s fade) | square button fades in after scrolling | none | OPEN | WP18 |
 | Footer (`Footer-En` block) | `data-aos="fade-up"` 600 ms, ease, rise max(50px, 15 %), replays | Footer.astro: same values | PASS | none |
 | Footer links | colour → white on hover (.12s) | none | FIXED | `.links a:hover` → white, .12s |
-| Footer social icons | stroke → #e7e7e7, 38 → 39 px (.12s) | icons are one Figma image with transparent hit links | OPEN (AN9) | needs per-icon SVGs |
+| Footer / Home contact social icons | `width_hover` / `height_hover` 38 → 39 px with the theme .12s (the `stroke_hover` targets an `<img>` and has no visible effect) | icons are one Figma image with transparent hit links; no hover | FIXED (9 Oct 2026) | each link redraws its own icon from the same strip image (a background slice shown only while hovered) scaled by 39 / 38 over .12s; strip image and layout untouched; mouse only, off with reduced motion; EN + AR checked (AN9 closed) |
 | Footer newsletter button (form 1 `.bf-btn`) | hover opacity .7 (.25s), pressed scale(.98) .18s | hover = brand cyan underline (BG3) | FIXED (motion) | pressed scale(.98) .18s added; the hover look stays the brand decision |
 | Footer columns on phones (`287.css`, < 768) | headings collapse / expand the link lists, max-height + opacity .3s cubic-bezier(.25,.8,.25,1), `+` / `−` glyphs | columns always open | OPEN (AN8) | a layout / content change (toggle glyphs), not built |
 | Cookie notice (`ct-fade-start`) | fade | none | N/A | analytics / cookie banner still "to be confirmed" (scope) |
@@ -53,8 +55,8 @@ counterpart (Figma-only element) or no motion on either side.
 | Blocksy `[data-reveal]` archive entrance (1.5 s) | Blocksy blog archive only | not used on the live Cambridge templates (Media Hub archive is a Greenshift block) | N/A | — |
 | Bit Form (all live forms, `bitform-1.css`) | `.bf-spinner` 1 s linear ring while sending; `.bf-form-msg.active` fades in 1 s ease-out; field items `all .2s ease` | Contact form had it (WP19); the shared FormShell forms (Refer, International, Your Opinion Matters, pop-ups) had no spinner / fade | FIXED | FormShell submit shows a 1 s linear ring while `aria-disabled`; `.f-success` fades in 1 s ease-out |
 | Bit Form field focus / invalid / button shadow (per-form custom CSS) | known for the Contact form (form 4) and the footer form (form 1) only | Contact form matched (WP19) | UNVERIFIED for Refer / International / Opinion | custom CSS of those forms is not in the local sources |
-| Greenshift tabs (`gspb-tabs`, Who We Are, Accreditations, Careers, FAQs) | panels are Swiper slides (`gswipertabs`); exact transition in plugin CSS / JS not available locally; < 768 the Code Snippet `19967.js` turns tabs into a bottom sheet (`gs-panel-in`, transform .42s cubic-bezier(.22,1,.36,1)) | shared Tabs: instant panel switch; < 1024 = accordion (bug 035, user decision) | UNVERIFIED / OPEN (AN6, AN7) | needs the plugin CSS or a live check; the accordion is a recorded decision |
-| Greenshift accordion (FAQs, `gsclose` / `gsopen`) | open / close in plugin CSS / JS, not available locally | native `<details>`, instant | UNVERIFIED (AN6) | as above |
+| Greenshift tabs (`gspb-tabs`, Who We Are, Accreditations, Careers, FAQs, hospital gallery areas) | saved pages 9 Oct 2026: `.t-btn { transition: all .4s ease-in-out }`; the panels are NOT a swiper here (`tabscroll`, no `tabswiper`): `tabs.js` toggles `display:none` / `.active`, so the switch is instant; < 768 the vertical tabs become a bottom sheet (`19967.js`, sheet slides up .42s cubic-bezier(.22,1,.36,1)) and the chosen panel plays `gs-panel-in` .28s cubic-bezier(.22,1,.36,1) (opacity 0 → 1, translateY 8px → 0) | tab buttons eased .12s; panel switch instant; < 1024 accordion (bug 035) with no entrance | FIXED | `.ui-tab` now eases .4s ease-in-out (every tab list); < 768 the shown panel of the shared Tabs and the FAQ plays the same .28s rise (`ui-panel-in`, global.css). The bottom sheet itself stays the bug 035 accordion (AN7) |
+| Greenshift accordion (FAQs, `gsclose` / `gsopen`) | saved page 9 Oct 2026: answer `max-height: 0 → 5000px` + `opacity 0 → 1`, `transition: all .25s ease-out` (the height is in place almost at once, the fade shows); title `transition: all .3s ease-in-out`; icon `transform: rotate(90deg)` over .3s ease-in-out; `toggleone` = one open per group | native `<details>`, instant, chevron swapped | FIXED | FaqSection: the script runs the group (name attribute dropped with JS, kept without), keeps `open` through the .25s collapse, `.is-open` a frame after opening; bar colours .3s ease-in-out; one chevron turning 180° over .3s; off with reduced motion. Measured: cross-fade 0.25 s, first item closes at 0.3 s, keyboard Enter / Space works |
 | Country pop-up, Book / Enquiry / Opinion pop-ups | no live counterpart (live links to pages) | Figma pop-ups, no motion | N/A | — |
 
 ## Pages
@@ -79,7 +81,7 @@ counterpart (Figma-only element) or no motion on either side.
 | Calculators "Calculate Now" | → cyan fill + white | `.btn-fill-navy` (→ cyan, Deep Teal label BG3) | PASS (motion) | — |
 | News and Insights slider | 3 per view, **speed 800, autoplay 8000**, centered, loop, pause on hover, no restore; title → cyan | Figma: three fixed cards + category pills + dots; no slider, title not a link | OPEN (AN2, AN10) | turning the cards into a carousel changes the layout |
 | Insurance Providers | static logo strip (the "Insurance Providers" block has no swiper); "View All" → cyan fill | static strip, `.btn-fill-navy` | PASS | — |
-| Contact (social icons) | stroke #e7e7e7, 39 px | one image | OPEN (AN9) | — |
+| Contact (social icons) | 38 → 39 px on hover, .12s | per-icon slice of the strip scales 39 / 38 (see site-wide) | FIXED | — |
 | Footer | fade-up 600 | same | PASS | — |
 
 ### About (`/about`)
@@ -96,12 +98,12 @@ counterpart (Figma-only element) or no motion on either side.
 |---|---|---|---|
 | Hero | prlx 14 | follow | PASS |
 | Counter grid (1,300+ · 715+ · 15+ · 60 % · 85 % · 91 %) | `.gs-counter` 1 / 1.5 / 2 / 1 / 1.5 / 2 s, linear, once, 30 % | **no count-up** | FIXED: Network.astro stats count with the live durations (invisible size copy keeps the grid stable; sr-only final value) |
-| Our Mission tabs (3) | Greenshift tabs (Swiper panels); bottom sheet < 768 | shared Tabs, accordion < 1024 | UNVERIFIED / OPEN (AN6, AN7) |
+| Our Mission tabs (3) | `.t-btn` .4s ease-in-out, instant panel switch, < 768 bottom sheet + `gs-panel-in` .28s | shared Tabs: buttons .4s, instant switch, < 768 panel rise .28s; accordion layout (bug 035) | FIXED / AN7 |
 | Expanding globe, Foundation, CTA tiles | no content motion live; tiles #e7e7e7 | same | PASS |
 
 ### Why Cambridge Hospital — PASS (7 Oct audit WP18: 8 counters 1.5 s, hover colours per BG3, footer). No change.
-### Accreditations & Partnerships — hero PASS; 8 tabs UNVERIFIED (AN6); CTA tiles PASS.
-### Career Hub — hero PASS; "UAE / KSA vacancies" border → navy + label → cyan (.12s): `.btn-outline` .12s PASS (colours BG3); two tab sets UNVERIFIED (AN6).
+### Accreditations & Partnerships — hero PASS; 8 tabs = the Greenshift tabs (buttons .4s ease-in-out, instant switch, phone panel rise .28s) FIXED; CTA tiles PASS.
+### Career Hub — hero PASS; "UAE / KSA vacancies" border → navy + label → cyan (.12s): `.btn-outline` .12s PASS (colours BG3); two tab sets FIXED as above.
 ### Our Care (`/care`) and care section pages
 | Section / element | Live | Ours | Status |
 |---|---|---|---|
@@ -113,11 +115,27 @@ counterpart (Figma-only element) or no motion on either side.
 | Section pages (inpatient, outpatient, home, in-school) | live: hero prlx only (in the export, no AOS / counters) | PageHero follow; topic tabs (shared Tabs) | PASS (hero); tabs UNVERIFIED (AN6) |
 
 ### Our Hospitals — PASS (7 Oct audit: map group follows in both axes, 6 counters 1 / 1.5 / 2 s once, title → cyan, card button → cyan (WP17 resolved), tiles #e7e7e7, footer). No change.
-### Hospital detail — live single template not in the export (CPT): hero follow kept (user decision HF1); gallery `.45s cubic-bezier(.22,1,.36,1)`, video lightbox FIXED timing; UNVERIFIED otherwise (AN11). Live check attempted 8 Oct 2026 with user permission: Cloudflare's challenge page blocked the automated browser for this page, the doctor profile, FAQs and Who We Are (only the article page cleared); a saved copy of each page (browser "Save as, Webpage complete", like the five in ~/Downloads) would close AN6 / AN11.
+### Hospital detail (saved live Cambridge Hospital Abu Dhabi page, 9 Oct 2026)
+| Section / element | Live | Ours | Status |
+|---|---|---|---|
+| Hero | prlx 14 | follow | PASS |
+| Hero button | → white border + label (.12s) | `.btn-outline` / shared, .12s (colour per BG3) | PASS (motion) |
+| Environment video | GSLightbox .3s ease-in-out, pulse rings | same (FIXED earlier) | PASS |
+| Healing Environment gallery (4 Swipers, one per area tab) | 1.5 per view centered, **speed 800** (CSS ease), loop, **autoplay 8000**, pause on mouse enter, no `autoplayrestore` (a drag ends it), no grab cursor; area tabs `.t-btn` .4s | slides moved in .45s cubic-bezier(.22,1,.36,1), no autoplay | FIXED | slides .8s ease; the shown area advances every 8 s, the mouse over the photos holds it, a swipe / drag ends it, click / key / dot restart the 8 s; off with reduced motion (measured: 8 s step, hover hold, drag stop) |
+| Map band | no motion (static map + link) | same | PASS |
+| Care cards ("Inpatient … In School") | `data-aos="fade-up"` 800, delays 0 / 50 / 100 / 150; titles → cyan, buttons → navy | CareCards without `reveal` | FIXED | `reveal` on hospital pages (4 cards 0 / 50 / 100 / 150) |
+| CTA tiles, footer | #e7e7e7 / fade-up 600 | same | PASS |
 ### Patient Hub — hero PASS; six hub cards: title → cyan (.12s) and button → #7AFFCE + white live → ours `.btn-fill-navy` (cyan per the 7 Oct hospitals decision / BG3), title not a link (AN10); CTA tiles PASS.
-### Find a Doctor — hero PASS; search box icon → Muted Teal on hover (live `fillhover`): ours Combobox arrow has no hover (minor, AN12); doctor cards: photo FIXED (.5s), name OPEN (AN10), buttons PASS; CTA tiles PASS.
-### Doctor profile — template not in the export (AN11); hero follow kept; Book button `.btn-fill-navy` .12s.
-### Conditions & Specialties — hero PASS; search icon hover AN12; condition cards: title → cyan live (no underline), ours heading not a link (AN10); "Read More" → navy: `.btn-fill` PASS; CTA tiles PASS.
+### Find a Doctor — hero PASS; the live magnifier search field (icon → Muted Teal on hover) has no counterpart: ours is the dropdown combobox of R056, whose clear ✕ already tints on hover (AN12 closed, N/A); doctor cards: photo FIXED (.5s), name OPEN (AN10), buttons PASS; CTA tiles PASS.
+### Doctor profile (saved live Dr. Sami Alamin page, 9 Oct 2026)
+| Section / element | Live | Ours | Status |
+|---|---|---|---|
+| Banner | none live (breadcrumb + photo card; no `gs-prlx-mouse`) | PageHero follow (HF1 decision, every page hero) | PASS (decision) |
+| Photo (`dynamic-post-image`) | `data-aos="fade"` 800 ms ease: fades in on load | no entrance | FIXED | the profile photo carries `data-aos="fade"` (aos.ts, 0.8 s) |
+| Book an Appointment | → cyan fill (.12s) | `.btn-fill-navy` → cyan, .12s | PASS |
+| Sub specialties / summary | no motion | none | PASS |
+| Footer | fade-up 600 | same | PASS |
+### Conditions & Specialties — hero PASS; no magnifier search field on ours (selects + A-Z sort buttons with the shared outline hover, AN12 N/A); condition cards: title → cyan live (no underline), ours heading not a link (AN10); "Read More" → navy: `.btn-fill` PASS; CTA tiles PASS.
 ### Condition detail (specialty CPT, `docs/specialty.json`) — hero prlx PASS; one of 20 live pages (Stroke) has a doctors Swiper 1000 / 1000 no-restore: our condition pages list doctors as a grid / DoctorsRow (FIXED where it slides); topic tabs UNVERIFIED (AN6).
 ### Refer a Patient / International Patients / Your Opinion Matters / Book an Appointment (live page) — hero PASS; forms = Bit Forms: spinner + success fade FIXED (shared), field focus / invalid UNVERIFIED (custom CSS per form); the refer pills (shared Tabs) switch instantly (AN6).
 ### Insurance Providers / Patient Testimonials — hero PASS; no content motion live (hover keys empty); ours none. PASS.
@@ -131,7 +149,7 @@ counterpart (Figma-only element) or no motion on either side.
 | Article page | **Live checked 8 Oct 2026 (headed Chrome, user permission; `.astro/qc-anim8/live/feeding_difficulties.*`)**: plain Blocksy single post, no hero parallax, no entrance on the content; the only motion is the theme chrome (sticky shrink header, back-to-top, AN1), the related-posts images (`data-hover="zoom-in"`, Blocksy `img { transition: transform .5s ease }`, a section not in Figma / not built) and the footer fade-up 600 | hero follow (HF1 decision), footer fade-up, ArticleVideo lightbox FIXED timing | PASS (article) / related posts N/A |
 
 ### Contact Us — PASS (7 Oct audit WP19: Bit Form field / button / consent / error / success motion, tiles, footer). Console shows the pre-existing "no Google Maps API key" notice on the static build (not animation).
-### FAQs — hero PASS; 4 tabs + 18 accordion items UNVERIFIED (AN6); CTA tiles PASS.
+### FAQs — hero PASS; 4 tabs (buttons .4s, phone panel rise .28s) FIXED; 18 accordion items (.25s ease-out fade + height, .3s bar + chevron, one open per group) FIXED; CTA tiles PASS.
 ### Calculators (BMI, Lung, Heart, Stroke) — hero PASS; result motion live = Bit Form / unknown, ours none. UNVERIFIED.
 ### Legal pages — live: no hero block, no motion; ours: no hero follow, no motion. PASS. 404: Figma only. N/A.
 
@@ -146,15 +164,28 @@ counterpart (Figma-only element) or no motion on either side.
 - `shared/Pagination.astro` — dot size .4s ease-out.
 - `forms/FormShell.astro` + `forms/forms.css` — `.f-spin` ring (1 s linear) while sending, `.f-success` 1 s ease-out fade.
 - `Footer.astro` — link hover → white .12s, Subscribe pressed scale(.98) .18s. `media-hub/PostCard.astro` — title hover (.12s).
+- 9 Oct 2026 (AN9): `shared/SocialIcons.astro` hover slice (39 / 38 scale, .12s) for the footer and Home contact strips; QA `.astro/qc-anim8/an9.mjs` (EN, AR, Contact, phone).
+- 9 Oct 2026 (four saved pages): `styles/global.css` `.ui-tab` .4s ease-in-out + `ui-panel-in` (.28s, < 768) for the shared Tabs and FAQ panels; `faq/FaqSection.astro` animated accordion (script + CSS); `hospitals/[path].astro` CareCards `reveal`; `hospital/HealingGallery.astro` slides .8s ease + `scripts/hospital-gallery.ts` 8 s autoplay (hover hold, drag stop); `doctors/DoctorProfile.astro` photo `data-aos="fade"`.
 
 ## QA (`.astro/qc-anim8/`, against a static serve of `dist` on :8080)
 
 `node .astro/qc-anim8/qa.mjs [rows,counters,header,mobile,lightbox,misc,pages,rtl,reduced]` (`AR=1` adds the Arabic / ae / sa
 pages to the sweep), `care-curve.mjs` (12 s easing trace), `mobile-rows.mjs` (rows at 390 / 768, AR, care page), `resize.mjs`
 (1440 → 390 resize must not animate the closed menu; open / close must).
+`live4.mjs` = the 9 Oct checks (FAQ accordion + keyboard, tab buttons, phone panel rise, hospital cards / gallery autoplay, doctor photo), run on a scratch build in `.astro/qc-anim8/build` (the working tree's BaseLayout was mid-edit by another session).
 Checked: Chrome, 1440 desktop, 768 tablet, 390 phone (touch), EN + AR, Global / ae / sa; reduced motion (no loops, counters
 final, no header transitions); no console / page errors except the pre-existing Contact map key notice; no horizontal
 overflow with the mobile menu closed or open. Final run: see `.astro/qc-anim8/full-run.log`.
 
 Live-site pace of the three Home rows measured on our build: doctors one card per 2.0 s (1 s still + 1 s eased), Care Support
 one tile per 12.0 s, Testimonials one card per 15.0 s; both continuous rows keep moving under the mouse.
+
+## Remaining items after the AN1-AN12 pass (9 Oct 2026)
+
+Reviewed once more with the brief "animation-only, verified on the original". Done: AN4, AN5 (earlier), AN6, AN7 panel rise,
+AN11 (four saved pages), AN9 (icon grow). Closed as not applicable: AN12 (the live search field does not exist on ours).
+Left unchanged because they are element, layout or decision changes, not animations (reported for Pramod / the client):
+AN1 sticky shrinking header + back-to-top button (new header behaviour and a new element), AN2 Home news slider (three fixed
+Figma cards would become a carousel), AN3 Media Hub Latest (client decision R061 keeps the glide over the live 6 s step),
+AN7 phone bottom sheet (bug 035 accordion kept; its panel rise is built), AN8 collapsing footer columns on phones (toggle
+glyphs + collapsing layout), AN10 card titles as links (structure; the Figma cards link from their buttons).

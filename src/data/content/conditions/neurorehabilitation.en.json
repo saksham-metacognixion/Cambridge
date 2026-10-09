@@ -1,5 +1,5 @@
 {
-  "_note": "Neurorehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/neurorehabilitation (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/neurorehabilitation.png exists (tools/condition-banners/run.sh makes it from the live photo).",
+  "_note": "Neurorehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the live site's own photo for this condition (Neurorehabilitation.avif, downloaded 9 Oct 2026 with the user's approval, docs/cambridge-images-conditions), composed in the Figma Stroke treatment by tools/condition-banners/run.sh -> src/assets/conditions/neurorehabilitation.png (bug 042).",
   "meta": {
     "title": "Neurorehabilitation | Cambridge Hospital",
     "description": "Restoring movement, independence and quality of life after neurological injury."
@@ -21,7 +21,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "At Cambridge Hospital, our neurology and neurorehabilitation service supports adults and children living with conditions affecting the brain, spinal cord and nervous system.",

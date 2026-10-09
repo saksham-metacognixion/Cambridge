@@ -18,7 +18,7 @@ import countriesData from "../../../src/data/countries.json";
 import dialData from "../../../src/data/dial-codes.json";
 import type { PagesContext } from "../../_lib/types";
 import { verifyTurnstile } from "../../_lib/turnstile";
-import { sendMail } from "../../_lib/email";
+import { mailConfigError, sendMail } from "../../_lib/email";
 import { resolveForms, type RawForm } from "../../../src/lib/form-config";
 
 type Field = {
@@ -108,25 +108,33 @@ export const onRequestPost = async ({
     fields.consent = "required";
   if (Object.keys(fields).length) return fail(422, "validation", fields);
 
-  // Spam protection.
-  if (!env.TURNSTILE_SECRET_KEY) return fail(500, "not_configured");
-  const human = await verifyTurnstile(
-    String(data.get("cf-turnstile-response") ?? ""),
-    env.TURNSTILE_SECRET_KEY,
-    request.headers.get("CF-Connecting-IP"),
-  );
-  if (!human) return fail(403, "turnstile");
-
-  // Recipient for this form type in this region.
+  // Server settings: checked before Turnstile (whose token is single-use), and logged by variable NAME only, so a
+  // deployment without its environment variables shows up in the function log instead of failing silently.
   // Edition id from the hidden field, whitelisted before it reaches the email subject (never raw user input there).
   const rawEdition = String(data.get("edition") ?? "");
   const edition = /^(global|ae|sa)-(en|ar)$/.test(rawEdition) ? rawEdition : "global-en";
   const region = edition.split("-")[0];
-  const to = recipients(
-    env[form.inboxEnv ?? `FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`],
-    region,
+  const inboxEnv =
+    form.inboxEnv ?? `FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`;
+  const to = recipients(env[inboxEnv as keyof typeof env], region);
+  const setup = [
+    env.TURNSTILE_SECRET_KEY ? "" : "TURNSTILE_SECRET_KEY missing",
+    to.length ? "" : `${inboxEnv} has no valid address for region ${region}`,
+    mailConfigError(env) ?? "",
+  ].filter(Boolean);
+  if (setup.length) {
+    console.error(`form ${formId}: not configured (${setup.join("; ")})`);
+    return fail(500, "not_configured");
+  }
+
+  // Spam protection.
+  const human = await verifyTurnstile(
+    String(data.get("cf-turnstile-response") ?? ""),
+    env.TURNSTILE_SECRET_KEY!,
+    request.headers.get("CF-Connecting-IP"),
   );
-  if (!to.length) return fail(500, "not_configured");
+  if (human === "config") return fail(500, "not_configured");
+  if (human !== "ok") return fail(403, "turnstile");
 
   rows.push(["Edition", edition], ["Consent", "yes"]);
   const email = String(data.get("email") ?? "").trim();

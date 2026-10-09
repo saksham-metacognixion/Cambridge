@@ -28,14 +28,17 @@ interface Props {
   titleTone?: 'cyan' | 'navy';
   /** Figma x of the four columns */
   xs?: number[];
-  /** scroll entrance (data-aos fade-up, 0 / 50 / 100 / 150ms per column) — the live Our Care page has it, hospital pages don't */
+  /** scroll entrance (data-aos fade-up, 0 / 50 / 100 / 150ms per column) — the live Our Care page and the live hospital pages (saved Abu Dhabi page, 9 Oct 2026) have it */
   reveal?: boolean;
+  /** Per-page card text, keyed by the card's `care` slug (hospital pages: the hospital documents' own card lines, CT29) */
+  overrides?: Record<string, { title?: string; desc?: string }>;
 }
-const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false } = Astro.props;
+const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false, overrides = {} } = Astro.props;
 const s = content('home/services', edition.locale);
 // Only the services offered in this edition's country (bug 047: In-School Care is UAE-only).
 const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).filter((k) => !k.care || careInRegion(k.care, edition.region)).map((k) => ({
   ...k,
+  ...(k.care ? overrides[k.care] : undefined),
   src: img(k.image, edition.region),
   href: k.care ? urlFor(edition, CARE_PATHS.service(k.care)) : k.page ? urlFor(edition, pagePath(k.page)) : (k.href ?? '#'),
 }));

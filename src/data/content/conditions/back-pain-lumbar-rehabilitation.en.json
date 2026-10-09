@@ -1,5 +1,5 @@
 {
-  "_note": "Back Pain & Lumbar Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/back-pain-lumbar-rehabilitation (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/back-pain-lumbar-rehabilitation.png exists (tools/condition-banners/run.sh makes it from the live photo).",
+  "_note": "Back Pain & Lumbar Rehabilitation (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: the live site's own photo for this condition (Back-Pain-Lumbar-Rehabilitation.avif, downloaded 9 Oct 2026 with the user's approval, docs/cambridge-images-conditions), composed in the Figma Stroke treatment by tools/condition-banners/run.sh -> src/assets/conditions/back-pain-lumbar-rehabilitation.png (bug 042).",
   "meta": {
     "title": "Back Pain & Lumbar Rehabilitation | Cambridge Hospital",
     "description": "Managing pain and improving movement, posture and daily function."
@@ -22,7 +22,11 @@
   "heroLayout": {
     "titleTop": 99,
     "titleW": 385,
-    "buttonGap": 16
+    "buttonGap": 16,
+    "small": {
+      "x": 604,
+      "w": 448
+    }
   },
   "overview": [
     "Chronic and acute lower back pain, including disc prolapse, facet joint pain and sciatica, affects quality of life profoundly and is one of the leading causes of disability worldwide.",

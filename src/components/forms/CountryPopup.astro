@@ -7,6 +7,8 @@
  * functions/_middleware.ts (Cloudflare country -> ch_geo cookie) + CountryPopupLogic.astro (html[data-country-popup],
  * window.chooseEdition saves the choice for as long as country-popup.json `remember` says; default: per tab). Values: Figma px from the card's
  * top-left (card 400 x 287.324 at frame 326,177).
+ * Performance audit (9 Oct 2026): the pop-up opens on every Global page load and covers the hero, so its map is the
+ * largest first paint (LCP) there; it loads eagerly with fetchpriority=high instead of waiting for the dialog to open.
  */
 import { Picture } from 'astro:assets';
 import config from '../../data/country-popup.json';
@@ -36,7 +38,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
         <dialog id={`country-popup-${iso}`} class="modal cp" aria-labelledby={titleId} aria-modal="true" data-country-dialog={iso}>
           <div class="cp-card" data-panel>
             <div class="cp-left">
-              <img class="cp-logo" src={logo.src} width="114" height="64" alt={c.logoAlt} />
+              <img loading="lazy" class="cp-logo" src={logo.src} width="114" height="64" alt={c.logoAlt} />
               <p id={titleId} class="cp-title">{t.title}</p>
               {v.buttons.map((b, i) => (
                 <>
@@ -46,10 +48,10 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
               ))}
             </div>
             <div class="cp-map" aria-hidden="true">
-              <Picture src={map} formats={['avif']} fallbackFormat="webp" width={px(253.119)} height={px(276.861)} widths={[px(253.119), px(253.119) * 2]} sizes="347px" loading="lazy" decoding="async" alt="" class="cp-map-img" pictureAttributes={{ class: 'contents' }} />
-              <img class="cp-pin" src={pinLine.src} width="0.805" height="34.205" alt="" />
-              <span class="cp-chip"><img src={flag.src} width="16.901" height="16.901" alt="" /><span>{t.chip}</span></span>
-              <img class="cp-dot" src={pinDot.src} width="3.219" height="3.219" alt="" />
+              <Picture src={map} formats={['avif']} fallbackFormat="webp" width={px(253.119)} height={px(276.861)} widths={[px(253.119), px(253.119) * 2]} sizes={`${px(253.119)}px`} loading="eager" fetchpriority="high" decoding="async" alt="" class="cp-map-img" pictureAttributes={{ class: 'contents' }} />
+              <img loading="lazy" class="cp-pin" src={pinLine.src} width="0.805" height="34.205" alt="" />
+              <span class="cp-chip"><img loading="lazy" src={flag.src} width="16.901" height="16.901" alt="" /><span>{t.chip}</span></span>
+              <img loading="lazy" class="cp-dot" src={pinDot.src} width="3.219" height="3.219" alt="" />
             </div>
           </div>
         </dialog>

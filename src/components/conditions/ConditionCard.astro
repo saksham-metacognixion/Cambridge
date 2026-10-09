@@ -28,11 +28,11 @@ const { title, summary, href, button, headingId } = Astro.props;
 ---
 
 <article class="ccard" aria-labelledby={headingId}>
-  <img class="corner" src={corner.src} width="162.113" height="54.903" alt="" aria-hidden="true" />
+  <img loading="lazy" class="corner" src={corner.src} width="162.113" height="54.903" alt="" aria-hidden="true" />
   <div class="box" aria-hidden="true"></div>
   <div class="tag">
-    <img class="tag-art" src={tag.src} width="203.791" height="78.291" alt="" aria-hidden="true" />
-    <h3 id={headingId} class="title">{title}</h3>
+    <img loading="lazy" class="tag-art" src={tag.src} width="203.791" height="78.291" alt="" aria-hidden="true" />
+    <h3 id={headingId} class="title"><a href={href} class="title-link" tabindex="-1">{title}</a></h3>
   </div>
   <p class="summary">{summary}</p>
   <a class="btn ui-btn hit btn-fill" href={href} aria-describedby={headingId}>{button}</a>

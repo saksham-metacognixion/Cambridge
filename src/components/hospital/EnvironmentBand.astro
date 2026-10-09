@@ -33,12 +33,12 @@ const closeLabel = commonText(edition.locale).close as string;
 <section class="env" aria-label={c.ariaLabel}>
   <div class="band">
     <div class="in">
-      <img src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
+      <img loading="lazy" src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
       <div id="hospital-video" class="video" data-video-facade data-host={video.host} data-id={video.id} data-aspect={video.aspect}>
         <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
           <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565)]} sizes={`(min-width: 1440px) ${px(565)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
           {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
-          <img src={play.src} width={play.width} height={play.height} alt="" class="play" />
+          <img loading="lazy" src={play.src} width={play.width} height={play.height} alt="" class="play" />
         </button>
       </div>
       <h2 class="h">{c.heading}</h2>

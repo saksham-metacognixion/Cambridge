@@ -66,7 +66,7 @@ const cols = matrix[0]?.options ?? [];
                   <option value="" selected></option>
                   {hospitals.map((h) => <option value={h.value}>{h.label}</option>)}
                 </select>
-                <img src={chevHospital.src} alt="" width="7.24" height="4.207" class="pf-chev" />
+                <img loading="lazy" src={chevHospital.src} alt="" width="7.24" height="4.207" class="pf-chev" />
               </div>
             </div>
             <p id={`${id('hospital')}-error`} class="f-err" hidden></p>
@@ -107,7 +107,7 @@ const cols = matrix[0]?.options ?? [];
                 {f.options!.map((o) => (
                   <label class="m-cell">
                     <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
-                    <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
+                    <span class="pf-radio" aria-hidden="true"><img loading="lazy" class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img loading="lazy" class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
                     <span class="m-name">{c.matrix.columns[o].join(' ')}</span>
                   </label>
                 ))}
@@ -125,7 +125,7 @@ const cols = matrix[0]?.options ?? [];
             {recommend.options!.map((o) => (
               <label class="nps-opt">
                 <input class="sr-only" type="radio" name={recommend.name} value={o} required={recommend.required} />
-                <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
+                <span class="pf-radio" aria-hidden="true"><img loading="lazy" class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img loading="lazy" class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
                 <span>{c.fields[recommend.name].options[o]}</span>
               </label>
             ))}

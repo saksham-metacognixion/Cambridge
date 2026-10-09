@@ -43,10 +43,10 @@ const options = specialties.filter((s) => conditions.some((x) => x.specialties.i
           <option value="">{c.filters.specialtyLabel}</option>
           {options.map((s) => <option value={s.id}>{t(s.name, loc, 'specialties')}</option>)}
         </select>
-        <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
+        <img loading="lazy" class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
       </div>
       <button type="button" class="az ui-btn hit btn-outline" data-sort aria-pressed="false" aria-label={c.filters.sortSpecialtyAria}>
-        <img class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
+        <img loading="lazy" class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
         <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
       </button>
     </div>
@@ -57,10 +57,10 @@ const options = specialties.filter((s) => conditions.some((x) => x.specialties.i
           <option value="">{c.filters.conditionLabel}</option>
           {items.map((x) => <option value={x.slug}>{x.title}</option>)}
         </select>
-        <img class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
+        <img loading="lazy" class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
       </div>
       <button type="button" class="az ui-btn hit btn-outline" data-sort aria-pressed="false" aria-label={c.filters.sortConditionAria}>
-        <img class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
+        <img loading="lazy" class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
         <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
       </button>
     </div>

@@ -71,7 +71,7 @@ const pillL = langBoxes[edition.locale].l - 5;
 const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
 ---
 
-<header class="hd relative z-50 bg-white shadow-bar font-gotham">
+<header class="hd relative z-50 bg-white shadow-bar font-gotham" data-sticky-header>
   <input type="checkbox" id="nav-toggle" class="sr-only" aria-label={c.navToggleLabel} />
   <div class="stage" style="--h: 119">
     <a href={homeHref} class="logo a" style="--l:41;--t:47;--w:252;--ph:45" aria-label={c.logo.homeLabel}>
@@ -180,6 +180,20 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
   :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }
   .hd ul { margin: 0; padding: 0; list-style: none; }
+  /* Sticky header = the live Blocksy header (AN1, 9 Oct 2026; data-sticky="shrink" without shrink values, so nothing shrinks):
+     the top row scrolls away and the main row sticks at the top; stuck = the live row shadow 0 10px 20px rgba(0,64,89,.05),
+     .2s theme curve (scripts/sticky-header.ts sets .is-stuck and html scroll-padding-top). Below 1200px the whole bar sticks. */
+  .hd { position: sticky; top: 0; transition: box-shadow 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .hd.is-stuck { box-shadow: var(--shadow-bar), 0 10px 20px rgba(0, 64, 89, 0.05); }
+  @media (min-width: 1200px) {
+    .hd { top: calc(-51 * var(--u)); } /* Figma: the top row's lowest box (language chip) ends at 51 */
+    /* The Figma logo starts at 47, 4 above the cut: while stuck it sits 4 lower (.2s) so it is never clipped, and the top row's
+       vertical separators (which reach 56) are hidden with the row they belong to. */
+    .logo { transition: transform 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+    .hd.is-stuck .logo { transform: translateY(calc(4 * var(--u))); }
+    .hd.is-stuck .vl { visibility: hidden; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hd, .logo { transition: none; } }
   /* The list's Figma box (595 wide, Figma x 393) runs under the "Visit Cambridge Health Group" block (x 932..1043) and would
      take the clicks meant for it (bug 010): the box lets pointer events through, only its links take them.
      Start x: Figma 393; 345 for English since bug 044 (the long Book label); 331 in both languages since bug 046 (four dropdown

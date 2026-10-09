@@ -1,0 +1,1610 @@
+[
+ {
+  "page": "/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.8 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.0 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.5 s",
+  "si": "1.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.iPGfC7Tv_KuAgt.avif\" srcset=\"/_astro/banner-bg.iPGfC7Tv_ZAAO4O.webp 720w, /_astro/banner-bg.iPGfC7Tv_V6…\" alt=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/",
+  "form": "mobile",
+  "performance": 90,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.0 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "2.0 s",
+  "si": "4.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.iPGfC7Tv_KuAgt.avif\" srcset=\"/_astro/banner-bg.iPGfC7Tv_ZAAO4O.webp 720w, /_astro/banner-bg.iPGfC7Tv_V6…\" alt=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/accreditations-partnerships/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.D1s0dC9B_Z14pNV5.avif\" srcset=\"/_astro/banner-bg.D1s0dC9B_XPQiK.webp 720w, /_astro/banner-bg.D1s0dC9B_ZSO…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/accreditations-partnerships/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.4 s",
+  "si": "1.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/careers/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.CYt17XdL_Z1IySeI.avif\" srcset=\"/_astro/banner-bg.CYt17XdL_Z1OxN5i.webp 720w, /_astro/banner-bg.CYt17XdL_Z…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/careers/",
+  "form": "mobile",
+  "performance": 91,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "3.1 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "2.2 s",
+  "si": "2.2 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/who-we-are/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0.003",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-subject.DE8VmGxu_Z1bJVlp.avif\" srcset=\"/_astro/banner-subject.DE8VmGxu_Z2imYA9.webp 720w, /_astro/banner-subject.…",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/who-we-are/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.9 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 17 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/why-cambridge-hospital/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.BLctaaXa_ZVijNo.avif\" srcset=\"/_astro/banner-bg.BLctaaXa_O6rpg.webp 720w, /_astro/banner-bg.BLctaaXa_ZKG…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 66 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/about/why-cambridge-hospital/",
+  "form": "mobile",
+  "performance": 92,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.4 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.4 s",
+  "si": "1.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 56 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Defer offscreen images (Est savings of 23 KiB)",
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "3.0 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "2.1 s",
+  "si": "2.1 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/ar/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "0.8 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/ar/",
+  "form": "mobile",
+  "performance": 92,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "3.0 s",
+  "cls": "0.014",
+  "tbt": "0 ms",
+  "fcp": "2.2 s",
+  "si": "2.2 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Defer offscreen images (Est savings of 23 KiB)",
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/ar/contact-us/",
+  "form": "desktop",
+  "performance": 99,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "0.7 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "1.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-subject.B6DnQTeW_Z1otqpc.avif\" srcset=\"/_astro/banner-subject.B6DnQTeW_Z1NKQP7.webp 720w, /_astro/banner-subject.…",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/ar/contact-us/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "2.0 s",
+  "si": "2.0 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.CN58Ry8y_ZdWjiN.avif\" srcset=\"/_astro/banner-bg.CN58Ry8y_Zix08D.webp 720w, /_astro/banner-bg.CN58Ry8y_Z3…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 30 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/hospitals/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.DA5kLZqS_Z1iMWjO.avif\" srcset=\"/_astro/banner-bg.DA5kLZqS_Z1XItOm.webp 720w, /_astro/banner-bg.DA5kLZqS_Z…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/ae/hospitals/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "2.7 s",
+  "cls": "0.01",
+  "tbt": "0 ms",
+  "fcp": "1.9 s",
+  "si": "1.9 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.DA5kLZqS_Z1iMWjO.avif\" srcset=\"/_astro/banner-bg.DA5kLZqS_Z1XItOm.webp 720w, /_astro/banner-bg.DA5kLZqS_Z…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 19 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/ar/",
+  "form": "desktop",
+  "performance": 99,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.8 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.6 s",
+  "si": "0.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/ar/",
+  "form": "mobile",
+  "performance": 91,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "3.1 s",
+  "cls": "0.013",
+  "tbt": "0 ms",
+  "fcp": "2.3 s",
+  "si": "2.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/bmi-calculator/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.5 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.B3cqnOtM_JE4Yz.avif\" srcset=\"/_astro/banner-bg.B3cqnOtM_Z15DE8e.webp 720w, /_astro/banner-bg.B3cqnOtM_U…\" alt=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/bmi-calculator/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "3.0 s",
+  "cls": "0.002",
+  "tbt": "0 ms",
+  "fcp": "1.3 s",
+  "si": "1.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.7 s",
+  "cls": "0.007",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-our-care-bg.CMVfVxZi_27waeq.avif\" srcset=\"/_astro/banner-our-care-bg.CMVfVxZi_ZtUggd.webp 720w, /_astro/banner-our",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/inpatient/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-inpatient-care-bg.jnG8IcoT_Z2ws4O6.avif\" srcset=\"/_astro/banner-inpatient-care-bg.jnG8IcoT_Z1Fu9lf.webp 720w, /_as",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/inpatient/",
+  "form": "mobile",
+  "performance": 92,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.2 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/inpatient/post-acute-rehab/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-post-acute-care-subject.U3qjNXST_Z1ba3…\" srcset=\"/_astro/banner-post-acute-care-subject.U3qjNXST_Z1DcWys.webp 720w",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/inpatient/post-acute-rehab/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/inpatient/post-acute-rehab/neuro-rehab/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-post-acute-care-bg.CIXx8R_D_AiIPz.avif\" srcset=\"/_astro/banner-post-acute-care-bg.CIXx8R_D_Wj9r9.webp 720w, /_astr",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/care/inpatient/post-acute-rehab/neuro-rehab/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.9 s",
+  "si": "1.9 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/contact-us/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.3 s",
+  "si": "0.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.CN58Ry8y_ZdWjiN.avif\" srcset=\"/_astro/banner-bg.CN58Ry8y_Zix08D.webp 720w, /_astro/banner-bg.CN58Ry8y_Z3…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/contact-us/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.9 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.4 s",
+  "si": "1.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 30 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/faqs/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/hero-bg.BOd2wbPd_ocOCD.avif\" srcset=\"/_astro/hero-bg.BOd2wbPd_LlOOT.webp 720w, /_astro/hero-bg.BOd2wbPd_Z3d9ga.…\" alt=\"\" ",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/faqs/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "10 ms",
+  "fcp": "1.8 s",
+  "si": "4.1 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/hospitals/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.7 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.DA5kLZqS_Z1iMWjO.avif\" srcset=\"/_astro/banner-bg.DA5kLZqS_Z1XItOm.webp 720w, /_astro/banner-bg.DA5kLZqS_Z…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/hospitals/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.9 s",
+  "cls": "0.01",
+  "tbt": "0 ms",
+  "fcp": "2.0 s",
+  "si": "2.0 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/hospitals/cambridge-hospital-abu-dhabi/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-abu-dhabi-bg.BbcsubSw_ZkYJ3y.avif\" srcset=\"/_astro/banner-abu-dhabi-bg.BbcsubSw_ZuWliS.webp 720w, /_astro/banner-a",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 145 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/hospitals/cambridge-hospital-abu-dhabi/",
+  "form": "mobile",
+  "performance": 90,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.5 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.9 s",
+  "si": "1.9 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 72 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/legal/privacy-policy/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 93,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Background and foreground colors do not have a sufficient contrast ratio."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/legal/privacy-policy/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 93,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.7 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "2.0 s",
+  "si": "2.0 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Background and foreground colors do not have a sufficient contrast ratio."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/media-hub/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.5 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.3 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.DFjLUfKJ_1X74o6.avif\" srcset=\"/_astro/banner-bg.DFjLUfKJ_zNLiv.webp 720w, /_astro/banner-bg.DFjLUfKJ_28H…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 53 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/media-hub/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.9 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/media-hub/12-exercises-and-stretches-for-shoulder-pain/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/patient.DkFD08Cd_Z25aQGV.avif\" srcset=\"/_astro/patient.DkFD08Cd_ZBzbPc.webp 720w, /_astro/patient.DkFD08Cd_Z2wAPA…\" alt=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/media-hub/12-exercises-and-stretches-for-shoulder-pain/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Defer offscreen images (Est savings of 23 KiB)",
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/nope-404/",
+  "form": "desktop",
+  "performance": 0,
+  "accessibility": 0,
+  "bestPractices": 0,
+  "seo": 0,
+  "opportunities": [],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/nope-404/",
+  "form": "mobile",
+  "performance": 0,
+  "accessibility": 0,
+  "bestPractices": 0,
+  "seo": 0,
+  "opportunities": [],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.5 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.3 s",
+  "si": "0.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.BuPzuydJ_13LOAF.avif\" srcset=\"/_astro/banner-bg.BuPzuydJ_o1uMM.webp 720w, /_astro/banner-bg.BuPzuydJ_1en…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.8 s",
+  "cls": "0.011",
+  "tbt": "0 ms",
+  "fcp": "1.5 s",
+  "si": "1.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/conditions-specialities/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.ookrN3yi_1dG2UL.avif\" srcset=\"/_astro/banner-bg.ookrN3yi_13myks.webp 720w, /_astro/banner-bg.ookrN3yi_1o…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/conditions-specialities/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "2.7 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/conditions-specialities/epilepsy/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/accidents-rehabilitation-bg.BPIAjxjb_24KWv8.a…\" srcset=\"/_astro/accidents-rehabilitation-bg.BPIAjxjb_WGI5.webp 720w, /_as",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/conditions-specialities/epilepsy/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.0 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/find-a-doctor/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.5 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.B3cqnOtM_JE4Yz.avif\" srcset=\"/_astro/banner-bg.B3cqnOtM_Z15DE8e.webp 720w, /_astro/banner-bg.B3cqnOtM_U…\" alt=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/find-a-doctor/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.0 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.5 s",
+  "si": "1.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/find-a-doctor/ahmad-al-khayer/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/find-a-doctor/ahmad-al-khayer/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.9 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.4 s",
+  "si": "1.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/insurance-providers/",
+  "form": "desktop",
+  "performance": 99,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "1.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.B9dl-Ghs_Z1iUgok.avif\" srcset=\"/_astro/banner-bg.B9dl-Ghs_Z1DHVpD.webp 720w, /_astro/banner-bg.B9dl-Ghs_Z…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/insurance-providers/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.8 s",
+  "cls": "0.009",
+  "tbt": "0 ms",
+  "fcp": "1.3 s",
+  "si": "1.3 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Defer offscreen images (Est savings of 23 KiB)",
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/international-patients/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0.005",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.7 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.CYt17XdL_Z1IySeI.avif\" srcset=\"/_astro/banner-bg.CYt17XdL_Z1OxN5i.webp 720w, /_astro/banner-bg.CYt17XdL_Z…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/international-patients/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "3.1 s",
+  "cls": "0.005",
+  "tbt": "0 ms",
+  "fcp": "1.6 s",
+  "si": "1.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/refer-a-patient/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.BomG2WfW_Z1tIxsx.avif\" srcset=\"/_astro/banner-bg.BomG2WfW_1C3Cej.webp 720w, /_astro/banner-bg.BomG2WfW_Z1…\" alt",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/refer-a-patient/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 58,
+  "lcp": "3.1 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "1.7 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/testimonials/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.CgUBolHd_1BQnes.avif\" srcset=\"/_astro/banner-bg.CgUBolHd_1e9vkH.webp 720w, /_astro/banner-bg.CgUBolHd_1M…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/patient-hub/testimonials/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.8 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/",
+  "form": "desktop",
+  "performance": 99,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "0.9 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.6 s",
+  "si": "0.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/",
+  "form": "mobile",
+  "performance": 94,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "2.7 s",
+  "cls": "0",
+  "tbt": "10 ms",
+  "fcp": "2.2 s",
+  "si": "2.2 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/ar/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/ar/",
+  "form": "mobile",
+  "performance": 92,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "3.3 s",
+  "cls": "0.014",
+  "tbt": "0 ms",
+  "fcp": "1.7 s",
+  "si": "1.7 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner3-bg.Dos1nbQu_g7nFG.avif\" srcset=\"/_astro/banner3-bg.Dos1nbQu_Z1wNyW2.webp 720w, /_astro/banner3-bg.Dos1nbQu…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/ar/about/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "0.6 s",
+  "cls": "0.003",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.D89cFAVL_ZlKJ2A.avif\" srcset=\"/_astro/banner-bg.D89cFAVL_Z26QFtL.webp 720w, /_astro/banner-bg.D89cFAVL_Z…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/ar/about/",
+  "form": "mobile",
+  "performance": 92,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "3.0 s",
+  "cls": "0.003",
+  "tbt": "0 ms",
+  "fcp": "2.1 s",
+  "si": "2.1 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.D89cFAVL_ZlKJ2A.avif\" srcset=\"/_astro/banner-bg.D89cFAVL_Z26QFtL.webp 720w, /_astro/banner-bg.D89cFAVL_Z…\" alt=",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/ar/patient-hub/find-a-doctor/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 97,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.B3cqnOtM_JE4Yz.avif\" srcset=\"/_astro/banner-bg.B3cqnOtM_Z15DE8e.webp 720w, /_astro/banner-bg.B3cqnOtM_U…\" alt=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/ar/patient-hub/find-a-doctor/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 69,
+  "lcp": "2.9 s",
+  "cls": "0.004",
+  "tbt": "0 ms",
+  "fcp": "2.0 s",
+  "si": "3.0 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-bg.B3cqnOtM_JE4Yz.avif\" srcset=\"/_astro/banner-bg.B3cqnOtM_Z15DE8e.webp 720w, /_astro/banner-bg.B3cqnOtM_U…\" alt=\"",
+  "opportunities": [
+   "Defer offscreen images (Est savings of 23 KiB)",
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/hospitals/cambridge-hospital-jeddah/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 96,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "0.6 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-abu-dhabi-subject.CHMOl_jF_Z17xDTz.avif\" srcset=\"/_astro/banner-abu-dhabi-subject.CHMOl_jF_28pT5M.webp 720w, /_ast",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [
+   "Touch targets do not have sufficient size or spacing."
+  ],
+  "bpFails": []
+ },
+ {
+  "page": "/sa/hospitals/cambridge-hospital-jeddah/",
+  "form": "mobile",
+  "performance": 95,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 61,
+  "lcp": "2.8 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.8 s",
+  "si": "1.8 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/banner-abu-dhabi-bg.BbcsubSw_ZkYJ3y.avif\" srcset=\"/_astro/banner-abu-dhabi-bg.BbcsubSw_ZuWliS.webp 720w, /_astro/banner-a",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/your-opinion-matters/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "0.6 s",
+  "cls": "0.001",
+  "tbt": "0 ms",
+  "fcp": "0.5 s",
+  "si": "0.5 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/hero-bg.BOd2wbPd_ocOCD.avif\" srcset=\"/_astro/hero-bg.BOd2wbPd_LlOOT.webp 720w, /_astro/hero-bg.BOd2wbPd_Z3d9ga.…\" sizes=\"",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ },
+ {
+  "page": "/your-opinion-matters/",
+  "form": "mobile",
+  "performance": 93,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 66,
+  "lcp": "2.9 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "2.0 s",
+  "si": "2.6 s",
+  "lcpElement": "<img src=\"http://localhost:4480/_astro/map.KUchT1ES_dWg3U.avif\" srcset=\"/_astro/map.KUchT1ES_1xgJU4.webp 346w, /_astro/map.KUchT1ES_dnBte.webp 692w\" sizes=\"347p",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "diagnostics": [],
+  "a11yFails": [],
+  "bpFails": []
+ }
+]

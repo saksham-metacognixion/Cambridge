@@ -43,25 +43,42 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
        where the reset happens instantly (the transition lives on the visible state only).
        The footer's own wrapper (.ft-clip, the same box on every page) clips while the footer is offset (it is the last thing on
        the page, so the offset would add scroll); the clip is dropped once the slide ends and set again on reset. -->
+  <script>
+    // AN8: phone footer columns (< 768px) open one at a time, as the live footer script; wider screens keep the headings as plain text.
+    const cols = [...document.querySelectorAll<HTMLElement>('.ft .col')];
+    const tgls = cols.map((col) => col.querySelector<HTMLButtonElement>('.ft-tgl'));
+    const phone = matchMedia('(max-width: 767.98px)');
+    const apply = () => {
+      tgls.forEach((t, i) => { if (!t) return; t.disabled = !phone.matches; if (!phone.matches) { cols[i].classList.remove('is-open'); t.setAttribute('aria-expanded', 'false'); } });
+    };
+    tgls.forEach((t, i) => t?.addEventListener('click', () => {
+      if (!phone.matches) return;
+      cols.forEach((o, k) => { if (k !== i) { o.classList.remove('is-open'); tgls[k]?.setAttribute('aria-expanded', 'false'); } });
+      const open = cols[i].classList.toggle('is-open');
+      t.setAttribute('aria-expanded', String(open));
+    }));
+    phone.addEventListener('change', apply);
+    apply();
+  </script>
   <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e){var r=e[e.length-1];r.isIntersecting?f.classList.add("is-visible"):(f.classList.remove("is-visible"),w.style.overflow="clip")},{threshold:0,rootMargin:"0px 0px -5% 0px"}).observe(f);f.addEventListener("transitionend",function(e){e.target===f&&e.propertyName==="transform"&&f.classList.contains("is-visible")&&(w.style.overflow="")})}(document.currentScript.parentElement)</script>
   <div class="stage" style="--h: 368">
-    <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt={c.logo.alt} />
+    <img loading="lazy" class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt={c.logo.alt} />
 
     <nav class="col c1 a" style="--l:329;--t:76;--w:148;--ph:193" aria-labelledby="ft-quick">
-      <h2 id="ft-quick" class="hd text-f13 font-medium text-white">{c.quickLinks.heading}</h2>
-      <ul class="links" style="--w:138">
+      <h2 id="ft-quick" class="hd text-f13 font-medium text-white"><button type="button" class="ft-tgl" aria-expanded="false" aria-controls="ft-quick-list" disabled>{c.quickLinks.heading}</button></h2>
+      <ul id="ft-quick-list" class="links" style="--w:138">
         {quick.map((g) => (
           <li>{g.map((x, i) => (<>{i > 0 && <br />}<a href={x.href} class="hit dense">{x.label}</a></>))}</li>
         ))}
       </ul>
     </nav>
     <nav class="col c2 a" style="--l:452;--t:76;--w:148;--ph:193" aria-labelledby="ft-serv">
-      <h2 id="ft-serv" class="hd text-f13 font-medium text-white">{c.services.heading}</h2>
-      <ul class="links">{services.map((s) => <li><a href={s.href} class="hit dense">{s.label}</a></li>)}</ul>
+      <h2 id="ft-serv" class="hd text-f13 font-medium text-white"><button type="button" class="ft-tgl" aria-expanded="false" aria-controls="ft-serv-list" disabled>{c.services.heading}</button></h2>
+      <ul id="ft-serv-list" class="links">{services.map((s) => <li><a href={s.href} class="hit dense">{s.label}</a></li>)}</ul>
     </nav>
     <nav class="col c3 a" style="--l:562;--t:76;--w:148;--ph:193" aria-labelledby="ft-hosp">
-      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">{c.hospitals.heading}</h2>
-      <ul class="links">{hospitals.map((s) => <li><a href={s.href} class="hit dense">{s.name}</a></li>)}</ul>
+      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white"><button type="button" class="ft-tgl" aria-expanded="false" aria-controls="ft-hosp-list" disabled>{c.hospitals.heading}</button></h2>
+      <ul id="ft-hosp-list" class="links">{hospitals.map((s) => <li><a href={s.href} class="hit dense">{s.name}</a></li>)}</ul>
     </nav>
 
     <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">
@@ -83,7 +100,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
       </div>
     </form>
 
-    <img class="a" style="--l:62;--t:319;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
+    <img loading="lazy" class="a" style="--l:62;--t:319;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
     <div class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24"><SocialIcons src={group53.src} width="161" height="16.24" alt="" /></div>
 
     <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">{c.copyright}</p>
@@ -96,6 +113,8 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   .ft-armed { opacity: 0; transform: translate3d(0, max(50px, 15%), 0); }
   .ft-armed.is-visible { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(0.42, 0, 0.58, 1), transform 600ms cubic-bezier(0.42, 0, 0.58, 1); }
   .ft ul { margin: 0; padding: 0; list-style: none; }
+  /* Column headings are a button only on phones (AN8 below); elsewhere it is the heading text (disabled, not focusable). */
+  .ft-tgl { all: unset; display: inline; color: inherit; font: inherit; cursor: default; }
   .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
   .ft h2.text-f13 { line-height: normal; }
   .links { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #e7e7e7; white-space: nowrap; }
@@ -137,6 +156,20 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     .bot { flex: 1 1 auto; white-space: pre-wrap; }
     .bot.right { text-align: start; }
     /* Tap targets: every footer link row is 44px high (text size, colour and order unchanged). */
+    /* AN8 (9 Oct 2026) = the live footer below 768px (Code Snippet 287.css + its script): the three link columns start closed,
+       the heading is the toggle with a "+" (24px) at the inline end, "−" while open, colour .2s ease; the list slides open
+       (max-height + opacity, all .3s cubic-bezier(.25,.8,.25,1)) with 10px below; opening one closes the others. Live caps the
+       list at 400px; ours is 1000px because every link row here is 44px high (tap targets) and the Arabic labels wrap. The button is 44px high for the same
+       reason. Off with reduced motion. */
+    @media (max-width: 767.98px) {
+      .col h2 { height: auto; white-space: normal; }
+      .ft-tgl { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 44px; padding: 0 0 10px; cursor: pointer; transition: color 0.2s ease; }
+      .ft-tgl::after { content: '+'; font-size: 24px; line-height: 1; }
+      .col.is-open .ft-tgl::after { content: '−'; }
+      .col .links { max-height: 0; overflow: hidden; opacity: 0; margin: 0; padding: 0; transition: max-height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      .col.is-open .links { max-height: 1000px; opacity: 1; padding: 0 0 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .ft-tgl, .col .links { transition: none; } }
     .links li a { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; }
     .links br { display: none; }
     .bot a { display: inline-flex; align-items: center; min-height: 44px; }

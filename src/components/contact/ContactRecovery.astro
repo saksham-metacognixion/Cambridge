@@ -62,7 +62,7 @@ const tiles = [
       <div class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
         {tiles.map((t, i) => (
           <a href={t.href} data-tile={i} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-(--radius-card) max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
-            <img class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
+            <img loading="lazy" class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
             <span class="lbl block font-gotham font-medium text-f13 text-navy-alt text-center not-italic whitespace-nowrap max-lg:whitespace-normal">{t.label}</span>
           </a>
         ))}

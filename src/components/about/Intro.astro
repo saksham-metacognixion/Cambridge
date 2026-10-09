@@ -30,7 +30,7 @@ const closeLabel = commonText(edition.locale).close as string;
       <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
         <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(429)} height={px(264)} widths={[px(429)]} sizes={`(min-width: 1440px) ${px(429)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
         {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
-        <img src={play.src} width="44" height="44" alt="" class="play" />
+        <img loading="lazy" src={play.src} width="44" height="44" alt="" class="play" />
       </button>
     </div>
     <div class="copy">

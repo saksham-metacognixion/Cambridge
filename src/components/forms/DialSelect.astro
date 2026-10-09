@@ -28,6 +28,6 @@ const box = variant === 'popup' ? 'gf-box' : 'pf-box';
     {dial.countries.map((c) => <option value={c.iso} data-code={c.code} selected={c.iso === preset}>{`${t(c.name, edition.locale, 'dial-codes')} (${c.code})`}</option>)}
   </select>
   <span class="dial-code" aria-hidden="true">{current.code}</span>
-  <img src={flag.src} alt="" class={variant === 'popup' ? 'gf-flag' : 'pf-flag'} width={variant === 'popup' ? 14.875 : 16.261} height={variant === 'popup' ? 9.917 : 11} data-flag-for="AE" hidden={preset !== 'AE'} />
-  <img src={chev.src} alt="" class={variant === 'popup' ? 'gf-chev' : 'pf-chev'} width={variant === 'popup' ? 6.527 : 7.135} height={variant === 'popup' ? 3.793 : 4.207} />
+  <img loading="lazy" src={flag.src} alt="" class={variant === 'popup' ? 'gf-flag' : 'pf-flag'} width={variant === 'popup' ? 14.875 : 16.261} height={variant === 'popup' ? 9.917 : 11} data-flag-for="AE" hidden={preset !== 'AE'} />
+  <img loading="lazy" src={chev.src} alt="" class={variant === 'popup' ? 'gf-chev' : 'pf-chev'} width={variant === 'popup' ? 6.527 : 7.135} height={variant === 'popup' ? 3.793 : 4.207} />
 </div>

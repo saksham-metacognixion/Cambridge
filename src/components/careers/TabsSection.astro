@@ -33,7 +33,7 @@ const { edition, id, heading, sub, tabsLabel, tabs, active, pending, panelWidth,
 ---
 
 <Band labelledby={`${id}-heading`}>
-  <img src={pattern.src} alt="" aria-hidden="true" width="447" height="458.67" class="pattern" style={`top:calc(${patternTop} * var(--u))`} />
+  <img loading="lazy" src={pattern.src} alt="" aria-hidden="true" width="447" height="458.67" class="pattern" style={`top:calc(${patternTop} * var(--u))`} />
   <div class="sec" style={`--pt:${padTop};--pb:${padBottom};--tg:${tabsGap}`}>
     <h2 id={`${id}-heading`} class="h">{heading}</h2>
     {sub && <p class="sub">{sub}</p>}

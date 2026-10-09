@@ -43,7 +43,7 @@ const config = JSON.stringify({ key: calc.key, invalid: common.errors.invalid, f
                     <option value="" selected>{t.placeholder}</option>
                     {(f.options ?? []).map((o) => <option value={o}>{t.options[o]}</option>)}
                   </select>
-                  <img src={chevSel.src} alt="" width="7" height="4.207" class="pf-chev" />
+                  <img loading="lazy" src={chevSel.src} alt="" width="7" height="4.207" class="pf-chev" />
                 </div>
               ) : (
                 <input id={id(f.name)} name={f.name} type="number" inputmode="decimal" required min={f.min} step={f.step} placeholder={t.placeholder} aria-describedby={id('alert')} class="pf-box" />

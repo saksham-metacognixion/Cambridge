@@ -36,7 +36,7 @@ const options = f.type === 'select' ? sourceOptions(f.source, edition) : [];
         <option value="" selected>{text.placeholder}</option>
         {options.map((o) => <option value={o.value} data-specialties={o.specialties} data-region={o.region}>{o.label}</option>)}
       </select>
-      <img src={isDoctor ? chevDoctor.src : chevSpeciality.src} alt="" class="gf-chev" width={isDoctor ? 6.311 : 6.527} height="3.793" style={`inline-size:calc(${isDoctor ? 6.311 : 6.527} * var(--u))`} />
+      <img loading="lazy" src={isDoctor ? chevDoctor.src : chevSpeciality.src} alt="" class="gf-chev" width={isDoctor ? 6.311 : 6.527} height="3.793" style={`inline-size:calc(${isDoctor ? 6.311 : 6.527} * var(--u))`} />
     </div>
     <p id={err} class="f-err" hidden></p>
   </div>
@@ -58,7 +58,7 @@ const options = f.type === 'select' ? sourceOptions(f.source, edition) : [];
         data-empty={f.type === 'date' ? '' : undefined}
         data-past={f.name === 'dob' ? '' : undefined}
       />
-      {f.type === 'date' && <img src={calendar.src} alt="" class="gf-cal" width="17.85" height="19.834" />}
+      {f.type === 'date' && <img loading="lazy" src={calendar.src} alt="" class="gf-cal" width="17.85" height="19.834" />}
     </div>
     <p id={err} class="f-err" hidden></p>
   </div>

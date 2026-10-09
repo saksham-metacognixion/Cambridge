@@ -13,8 +13,9 @@ import path from 'node:path';
 
 const read = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const write = (f, d) => fs.writeFileSync(f, JSON.stringify(d, null, 2) + '\n');
-const dirs = fs.readdirSync('docs').filter((d) => d.startsWith('cambridge-images') && fs.statSync(`docs/${d}`).isDirectory()).map((d) => `docs/${d}`);
-if (!dirs.length) throw new Error('no docs/cambridge-images*/ folder (unpack cambridge-images.tar there)');
+// Only folders with a media.json (grabber output): docs/cambridge-images-ksa holds flat live-site files without one (bug 063).
+const dirs = fs.readdirSync('docs').filter((d) => d.startsWith('cambridge-images') && fs.existsSync(`docs/${d}/media.json`)).map((d) => `docs/${d}`);
+if (!dirs.length) throw new Error('no docs/cambridge-images*/ folder with a media.json (unpack cambridge-images.tar there)');
 
 /** upload path (wp-content/uploads/...) -> local file, original bytes preferred */
 const files = new Map();

@@ -5,6 +5,7 @@ import { DESIGN_W, TARGET_W } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
 import { allRoutes } from '../lib/routes';
+import { content } from '../lib/content';
 import { pages as seoPages } from '../data/seo.json';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 import Modals from '../components/forms/Modals.astro';
@@ -50,8 +51,10 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     {robotsContent && <meta name="robots" content={robotsContent} />}
     <link rel="canonical" href={canonical} />
     {withAlternates && alternates(path, editionsWithPage).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Tab icon on every page = the logo mark (public/favicon.*, built from src/assets/header/logo.svg) -->
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -62,6 +65,8 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <meta name="twitter:card" content="summary_large_image" />
 
     {hasMainFont && <link rel="preload" href="/fonts/Gotham-Book.woff2" as="font" type="font/woff2" crossorigin />}
+    <!-- Arabic pages: the body face (GE SS Two Medium, global.css) is preloaded too, so its text swaps in before the hero settles (CLS seen on /ae/ar in the 9 Oct 2026 performance audit). -->
+    {edition.dir === 'rtl' && <link rel="preload" href="/fonts/GESSTwoMedium.woff2" as="font" type="font/woff2" crossorigin />}
     <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W}}`}></style>
     <!-- Scroll entrances (data-aos, scripts/aos.ts) are armed before first paint, so nothing flashes; no JS = all visible. -->
     <script is:inline>"IntersectionObserver"in window&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&document.documentElement.classList.add("aos")</script>
@@ -75,12 +80,20 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <!-- Cookie consent banner mounts here once the analytics decision is made (docs/open-decisions.md B9); nothing is built yet.
          The legal pages (privacy, cookies) are at PAGE_PATHS.privacyPolicy / cookiePolicy. -->
     <div id="consent-banner" hidden></div>
+    <!-- "Go to top" = the live Blocksy back-to-top button (AN1, 9 Oct 2026): fixed at the bottom inline end, shown once the page is
+         scrolled (scripts/back-to-top.ts), smooth scroll to the top on click; not on phones (live .ct-hidden-sm). -->
+    <button type="button" class="to-top" data-to-top aria-label={content('layout/header', edition.locale).toTop}>
+      <svg width="12" height="12" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2.3 15.2L10 7.5l7.7 7.6c.6.7 1.2.7 1.8 0 .6-.6.6-1.3 0-1.9l-8.6-8.6c-.2-.3-.5-.4-.9-.4s-.7.1-.9.4L.5 13.2c-.6.6-.6 1.2 0 1.9.6.8 1.2.7 1.8.1z" /></svg>
+    </button>
     <CountryPopupLogic />
     <script>
       // Mouse drag on every horizontal row (.hscroll), all pages.
       import '../scripts/drag-scroll';
       // Scroll entrances ([data-aos]), all pages.
       import '../scripts/aos';
+      // Sticky header state + "Go to top" button (AN1, animation audit 9 Oct 2026).
+      import '../scripts/sticky-header';
+      import '../scripts/back-to-top';
     </script>
   </body>
 </html>

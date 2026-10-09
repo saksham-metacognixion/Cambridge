@@ -23,7 +23,7 @@ const { c, openRolesHref, applyHref } = Astro.props;
     <p class="t">{c.text}</p>
     <a href={openRolesHref} class="field hit hair-card">
       <span class="fl">{c.openRoles.label}</span>
-      <img src={chevron.src} alt="" aria-hidden="true" width="7" height="4.207" class="chev" />
+      <img loading="lazy" src={chevron.src} alt="" aria-hidden="true" width="7" height="4.207" class="chev" />
     </a>
     <a href={applyHref} class="apply ui-btn hit btn-fill-white"><span>{c.apply.label}</span></a>
   </div>

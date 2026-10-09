@@ -48,8 +48,8 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
           <details class:list={['qa', k === 0 && 'is-open']} name={`faq-${cat.id}`} open={k === 0}>
             <summary class="bar">
               <h3 class="q">{n(k)}{it.q}</h3>
-              <img class="chev chev-open" src={chevOpen.src} width="9.661" height="5.806" alt="" />
-              <img class="chev chev-closed" src={chevClosed.src} width="9.661" height="5.806" alt="" />
+              <img loading="lazy" class="chev chev-open" src={chevOpen.src} width="9.661" height="5.806" alt="" />
+              <img loading="lazy" class="chev chev-closed" src={chevClosed.src} width="9.661" height="5.806" alt="" />
             </summary>
             <div class="ans">
               {it.a ? paras(it.a).map((lines) => <p>{lines.map((l, j) => (<>{j > 0 && <br />}{l}</>))}</p>) : pending && <p class="pending">{c.answerPending}</p>}

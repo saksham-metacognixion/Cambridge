@@ -35,7 +35,7 @@ const { card = {} } = Astro.props;
   <h3 class="m-0 mt-[calc(22.9*var(--u))] font-medium text-f18p264 leading-21.75 text-navy not-italic [word-break:break-word]"><a href={card.href} class="pc-link text-inherit no-underline" data-title>{card.title}</a></h3>
   <p class="m-0 mt-9 mb-[calc(16.1*var(--u))] font-normal text-f11p689 leading-[calc(18.994*var(--u))] text-body not-italic [word-break:break-word]" data-excerpt>{card.excerpt}</p>
   <a href={card.href} class="hit mt-auto ms-219 block h-[calc(36.528*var(--u))] w-[calc(36.528*var(--u))]" aria-hidden="true" data-arrow tabindex="-1">
-    <img src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block h-full w-full" />
+    <img loading="lazy" src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block h-full w-full" />
   </a>
 </article>
 

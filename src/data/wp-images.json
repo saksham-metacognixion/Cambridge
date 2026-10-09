@@ -178,62 +178,62 @@
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/enaya-insurance-uae.avif",
-      "key": "insurance/live/enaya-insurance-uae",
-      "usedBy": "src/data/insurers.json logo of \"Enaya Insurance\" (name-only card today)"
+      "key": "insurance/wp/enaya-insurance",
+      "usedBy": "src/data/insurers.json logo of \"Enaya Insurance\" (wired 9 Oct 2026: saved through a hand-started Chrome, tools/import-wp-images.mjs)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/bupa-insurance-ksa.avif",
-      "key": "insurance/live/bupa-insurance-ksa",
-      "usedBy": "src/data/insurers.json logo of \"Bupa\" (name-only card today)"
+      "key": "insurance/wp/bupa-insurance",
+      "usedBy": "src/data/insurers.json logo of \"Bupa\" (wired 6 Oct 2026 by tools/import-wp-images.mjs from docs/cambridge-images)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Gulf-Union-KSA-1.avif",
-      "key": "insurance/live/gulf-union-ksa",
-      "usedBy": "src/data/insurers.json logo of \"Gulf Union\" (name-only card today)"
+      "key": "insurance/wp/gulf-union",
+      "usedBy": "src/data/insurers.json logo of \"Gulf Union\" (wired: file from docs/cambridge-images-ksa, 9 Oct 2026)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/tawuniya-ksa-1.avif",
-      "key": "insurance/live/tawuniya-ksa",
-      "usedBy": "src/data/insurers.json logo of \"Tawuniya\" (name-only card today)"
+      "key": "insurance/wp/tawuniya-insurance",
+      "usedBy": "src/data/insurers.json logo of \"Tawuniya\" (wired 6 Oct 2026 by tools/import-wp-images.mjs from docs/cambridge-images)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/alrajhi-takaful-ksa-1.avif",
-      "key": "insurance/live/alrajhi-takaful-ksa",
-      "usedBy": "src/data/insurers.json logo of \"Al Rajhi Takaful\" (name-only card today)"
+      "key": "insurance/wp/alrajhi-takaful",
+      "usedBy": "src/data/insurers.json logo of \"Al Rajhi Takaful\" (wired: file from docs/cambridge-images-ksa, 9 Oct 2026)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/TCS-ksa-1.avif",
-      "key": "insurance/live/tcs-ksa",
-      "usedBy": "src/data/insurers.json logo of \"TCS\" (name-only card today)"
+      "key": "insurance/wp/tcs-insurance",
+      "usedBy": "src/data/insurers.json logo of \"TCS\" (wired: file from docs/cambridge-images-ksa, 9 Oct 2026)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/globemed-ksa-1.avif",
-      "key": "insurance/live/globemed-ksa",
-      "usedBy": "src/data/insurers.json logo of \"GlobeMed\" (name-only card today)"
+      "key": "insurance/wp/globemed-insurance",
+      "usedBy": "src/data/insurers.json logo of \"GlobeMed\" (wired 6 Oct 2026 by tools/import-wp-images.mjs from docs/cambridge-images)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/malath-insurance-ksa-1.avif",
-      "key": "insurance/live/malath-insurance-ksa",
-      "usedBy": "src/data/insurers.json logo of \"Malath\" (name-only card today)"
+      "key": "insurance/wp/malath-insurance",
+      "usedBy": "src/data/insurers.json logo of \"Malath\" (wired: file from docs/cambridge-images-ksa, 9 Oct 2026)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/medgulf-ksa-1.avif",
-      "key": "insurance/live/medgulf-ksa",
-      "usedBy": "src/data/insurers.json logo of \"MedGulf (not in the live FAQ list; logo only)\" (name-only card today)"
+      "key": "insurance/wp/medgulf-insurance",
+      "usedBy": "src/data/insurers.json logo of \"MEDGULF Insurance\" (wired: file from docs/cambridge-images-ksa, 9 Oct 2026)"
     },
     {
       "group": "insurers",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/walaa-ksa-1.avif",
-      "key": "insurance/live/walaa-ksa",
-      "usedBy": "src/data/insurers.json logo of \"Walaa (not in the live FAQ list; logo only)\" (name-only card today)"
+      "key": "insurance/wp/walaa-insurance",
+      "usedBy": "src/data/insurers.json logo of \"Walaa Insurance\" (wired: file from docs/cambridge-images-ksa, 9 Oct 2026)"
     },
     {
       "group": "hospitals",

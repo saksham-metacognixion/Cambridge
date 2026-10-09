@@ -29,9 +29,9 @@ const { c } = Astro.props;
   <div class="tl" data-timeline>
     <h2 id="about-timeline-heading" class="h">{c.heading}</h2>
     <div class="line-row">
-      <button type="button" class="arrow prev hit" data-timeline-dir="-1" aria-label={c.prevLabel}><img src={arrow.src} width="36.5278" height="36.5278" alt="" /></button>
+      <button type="button" class="arrow prev hit" data-timeline-dir="-1" aria-label={c.prevLabel}><img loading="lazy" src={arrow.src} width="36.5278" height="36.5278" alt="" /></button>
       <div class="row hscroll" data-timeline-row tabindex="0" role="group" aria-label={c.ariaLabel}>
-        <img class="connector" src={line.src} width="503" height="1" alt="" aria-hidden="true" />
+        <img loading="lazy" class="connector" src={line.src} width="503" height="1" alt="" aria-hidden="true" />
         {c.items.map((x, i) => (
           <article class:list={['card', i % 2 === 0 ? 'outline' : 'fill']} data-timeline-card>
             <p class="year">{x.year}</p>
@@ -40,7 +40,7 @@ const { c } = Astro.props;
           </article>
         ))}
       </div>
-      <button type="button" class="arrow next hit" data-timeline-dir="1" aria-label={c.nextLabel}><img src={arrow.src} width="36.5278" height="36.5278" alt="" /></button>
+      <button type="button" class="arrow next hit" data-timeline-dir="1" aria-label={c.nextLabel}><img loading="lazy" src={arrow.src} width="36.5278" height="36.5278" alt="" /></button>
     </div>
   </div>
 </Band>

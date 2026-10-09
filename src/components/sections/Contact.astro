@@ -94,7 +94,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
           <div data-field="consent">
             <label class="f-consent">
               <input id="contact-consent" type="checkbox" name="consent" required aria-describedby="contact-consent-error" />
-              <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
+              <span class="box" aria-hidden="true"><img loading="lazy" src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
               <span class="txt">{common.consent.before}<a href={common.consent.link.page ? urlFor(edition, pagePath(common.consent.link.page)) : common.consent.link.href}>{common.consent.link.label}</a>{common.consent.after} {common.consent.line2}</span>
             </label>
             <p id="contact-consent-error" class="f-err hc-err" hidden></p>

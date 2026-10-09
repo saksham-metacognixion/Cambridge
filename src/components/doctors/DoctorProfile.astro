@@ -65,13 +65,13 @@ const bio = t(d.bio, edition.locale, 'doctors');
       </div>
       <a href="#book-appointment" data-doctor={d.slug} class="book ui-btn hit btn-fill-navy">{c.book}</a>
     </div>
-    <img class="rule-top" src={ruleTop.src} width="571" height="0.5" alt="" />
+    <img loading="lazy" class="rule-top" src={ruleTop.src} width="571" height="0.5" alt="" />
     {subs.length > 0 && (
       <>
         <h2 class="sub-h m-0 font-gotham font-medium text-navy-alt not-italic">{c.subSpecialities}</h2>
         <ul class="subs" role="list">
           {subs.map((s) => (
-            <li><img src={arrow.src} width="10" height="10" alt="" /><span>{s}</span></li>
+            <li><img loading="lazy" src={arrow.src} width="10" height="10" alt="" /><span>{s}</span></li>
           ))}
         </ul>
       </>
@@ -81,10 +81,10 @@ const bio = t(d.bio, edition.locale, 'doctors');
 
 {bio && (
   <section class="summary" aria-labelledby="dr-summary">
-    <img class="rule-sec" src={ruleSection.src} width="857" height="0.5" alt="" />
+    <img loading="lazy" class="rule-sec" src={ruleSection.src} width="857" height="0.5" alt="" />
     <h2 id="dr-summary" class="m-0 font-gotham font-medium not-italic">{c.summary}</h2>
     <div class="bio font-gotham font-normal not-italic" set:html={bio} />
-    <img class="rule-sec rule-end" src={ruleSection.src} width="857" height="0.5" alt="" />
+    <img loading="lazy" class="rule-sec rule-end" src={ruleSection.src} width="857" height="0.5" alt="" />
   </section>
 )}
 </div>

@@ -43,7 +43,7 @@ const cards = s.cards.map((c: any) => ({ ...c, src: img(c.image, edition.region)
             class="img"
             pictureAttributes={{ class: 'contents' }}
           />
-          <h3 class="title m-0 font-gotham font-medium not-italic text-navy">{c.title}</h3>
+          <h3 class="title m-0 font-gotham font-medium not-italic text-navy"><a href={c.href} class="title-link" tabindex="-1">{c.title}</a></h3>
           <p class="lines m-0 font-gotham font-normal not-italic text-body">{c.lines.map((l: string) => <span class="block">{l}</span>)}</p>
           <a href={c.href} class="btn ui-btn hit btn-fill-navy">{c.button}</a>
         </article>

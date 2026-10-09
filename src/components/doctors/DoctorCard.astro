@@ -53,7 +53,7 @@ const href = doctorHref(d, edition);
       />
     )}
   </div>
-  <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</Name>
+  <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic"><a href={href} class="title-link title-link-grow" tabindex="-1">{name}</a></Name>
   <p class="role m-0 font-gotham font-normal text-body not-italic">{role}</p>
   <div class="actions">
     <a href={href} class="btn btn-see ui-btn ui-btn-sm hit btn-fill" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>

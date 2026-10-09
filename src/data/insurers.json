@@ -1,5 +1,5 @@
 {
-  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded.",
+  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded. 9 Oct 2026: the six remaining KSA logos (Gulf Union, Al Rajhi Takaful, TCS, Malath, MEDGULF, Walaa) copied from docs/cambridge-images-ksa/ (the live /sa files saved 8 Oct 2026 with the user's approval, bug 063) into src/assets/insurance/wp/<slug>.avif with the importer's box (live 325x180 tile centred above the name bar). JHAH and MOH have no insurer record or logo on the live site (names from the FAQ text): their official marks were taken from jhah.com / moh.gov.sa on 9 Oct 2026 (user request; logoSource), composed into the live tile format (white 325x180 tile, logo 80 % wide, src/assets/insurance/wp/<slug>.png: the Home KSA logo strip and the card both expect that tile) with the importer's box - client to confirm (R-item in docs/open-decisions.md). Enaya: the live file saved 9 Oct 2026 through a hand-started debugging Chrome (.astro/qc-ins/fetch-enaya.mjs, user-run) and wired by tools/import-wp-images.mjs. Every insurer now has a logo. homeStrip: shown in the Home 'Accepted Insurance Providers' strip of an edition that does not use the Figma seven (KSA): the six logos the live /sa Home shows (docs/cambridge-images-ksa/_pages.json), in this file's order; without any flag the first seven with a logo are used.",
   "insurers": [
     {
       "slug": "al-buhaira",
@@ -305,7 +305,14 @@
       ],
       "logoSource": "https://cambridgehospital.com/wp-content/uploads/enaya-insurance-uae.avif",
       "slug": "enaya-insurance",
-      "wp_media": 18539
+      "wp_media": 18539,
+      "logo": {
+        "image": "insurance/wp/enaya-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
     },
     {
       "name": {
@@ -324,7 +331,8 @@
         "h": 75.32,
         "x": 29.39,
         "y": 6.74
-      }
+      },
+      "homeStrip": true
     },
     {
       "name": {
@@ -336,7 +344,14 @@
       ],
       "logoSource": "https://cambridgehospital.com/wp-content/uploads/Gulf-Union-KSA.avif",
       "slug": "gulf-union",
-      "wp_media": 18559
+      "wp_media": 18559,
+      "logo": {
+        "image": "insurance/wp/gulf-union",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
     },
     {
       "name": {
@@ -355,7 +370,8 @@
         "h": 75.32,
         "x": 29.39,
         "y": 6.74
-      }
+      },
+      "homeStrip": true
     },
     {
       "name": {
@@ -365,7 +381,15 @@
       "regions": [
         "sa"
       ],
-      "slug": "jhah"
+      "slug": "jhah",
+      "logo": {
+        "image": "insurance/wp/jhah",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      },
+      "logoSource": "https://www.jhah.com/dist/assets/img/jhah-logo.svg"
     },
     {
       "name": {
@@ -375,7 +399,15 @@
       "regions": [
         "sa"
       ],
-      "slug": "moh"
+      "slug": "moh",
+      "logo": {
+        "image": "insurance/wp/moh",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      },
+      "logoSource": "https://www.moh.gov.sa/_layouts/15/moh/internet/new/enterprise/img/logo.png"
     },
     {
       "name": {
@@ -387,7 +419,15 @@
       ],
       "logoSource": "https://cambridgehospital.com/wp-content/uploads/alrajhi-takaful-ksa.avif",
       "slug": "alrajhi-takaful",
-      "wp_media": 18556
+      "wp_media": 18556,
+      "logo": {
+        "image": "insurance/wp/alrajhi-takaful",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      },
+      "homeStrip": true
     },
     {
       "name": {
@@ -399,7 +439,15 @@
       ],
       "logoSource": "https://cambridgehospital.com/wp-content/uploads/TCS-ksa.avif",
       "slug": "tcs-insurance",
-      "wp_media": 18563
+      "wp_media": 18563,
+      "logo": {
+        "image": "insurance/wp/tcs-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      },
+      "homeStrip": true
     },
     {
       "name": {
@@ -418,7 +466,8 @@
         "h": 75.32,
         "x": 29.39,
         "y": 6.74
-      }
+      },
+      "homeStrip": true
     },
     {
       "name": {
@@ -430,7 +479,14 @@
       ],
       "logoSource": "https://cambridgehospital.com/wp-content/uploads/malath-insurance-ksa.avif",
       "slug": "malath-insurance",
-      "wp_media": 18560
+      "wp_media": 18560,
+      "logo": {
+        "image": "insurance/wp/malath-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
     },
     {
       "name": {
@@ -441,7 +497,15 @@
         "sa"
       ],
       "slug": "medgulf-insurance",
-      "wp_media": 18561
+      "wp_media": 18561,
+      "logo": {
+        "image": "insurance/wp/medgulf-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      },
+      "homeStrip": true
     },
     {
       "name": {
@@ -452,7 +516,14 @@
         "sa"
       ],
       "slug": "walaa-insurance",
-      "wp_media": 18564
+      "wp_media": 18564,
+      "logo": {
+        "image": "insurance/wp/walaa-insurance",
+        "w": 136,
+        "h": 75.32,
+        "x": 29.39,
+        "y": 6.74
+      }
     }
   ]
 }

@@ -69,7 +69,7 @@ const id = (n: string) => fieldId(form, n);
               <option value="" selected>{c.fields[n].placeholder}</option>
               {(n === 'doctor' ? doctors : specialties).map((o) => <option value={o.value} data-specialties={o.specialties} data-region={o.region}>{o.label}</option>)}
             </select>
-            <img src={chevSpec.src} alt="" width="7.24" height="4.207" class="pf-chev" />
+            <img loading="lazy" src={chevSpec.src} alt="" width="7.24" height="4.207" class="pf-chev" />
           </div>
           <p id={`${id(n)}-error`} class="f-err" hidden></p>
         </div>

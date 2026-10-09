@@ -54,7 +54,7 @@ const cards = [...figma, ...more].map((doc, i) => {
   return {
     ...d, name, sets,
     role: t(doc.home_title ?? doc.title, edition.locale, 'doctors') || doctorRole(doc as any, edition.locale),
-    img: img(doc.home_photo ?? doc.photo, edition.region), alt: name, btn: b.label, href, slug: doc.slug, book: b.action === 'book',
+    img: img(doc.home_photo ?? doc.photo, edition.region), alt: name, btn: b.label, href, profile: doctorHref(doc, edition), slug: doc.slug, book: b.action === 'book',
     // card-relative offsets (Figma page coords minus the card's x)
     shapeX: (d.clipL * ROOT_W) / 100 + MASK_DX - d.x, phX: d.ph[0] - d.x,
   };
@@ -94,7 +94,7 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
                  .ui-btn-sm, Figma's 71 x 13 box with an 8px label was unreadable), so the card grows by the taller button and
                  a long role pushes the button down instead of running into it; the cards of the row stay level. -->
             <div class="info">
-              <h3 class="m-0 font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`max-width:calc(${card.nameW} * var(--u))`}>{card.name}</h3>
+              <h3 class="m-0 font-gotham font-medium text-f12 leading-15 text-navy-alt not-italic whitespace-normal [word-break:break-word]" style={`max-width:calc(${card.nameW} * var(--u))`}><a href={card.profile} class="title-link title-link-grow" tabindex="-1">{card.name}</a></h3>
               <p class="m-0 font-gotham font-normal text-f8 leading-10 text-body not-italic whitespace-normal [word-break:break-word] max-w-148">{card.role}</p>
               <a href={card.href} data-doctor={card.book ? card.slug : undefined} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-navy" aria-label={`${card.btn} - ${card.name}`}>{card.btn}</a>
             </div>

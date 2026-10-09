@@ -1,0 +1,7 @@
+{"page":"/","form":"mobile","scores":[96,95,100],"median":96,"lcps":[2178,2344,1727],"lcpMedian":2178}
+{"page":"/about/","form":"mobile","scores":[99,99,95],"median":99,"lcps":[1876,1884,2289],"lcpMedian":1884}
+{"page":"/patient-hub/find-a-doctor/","form":"mobile","scores":[97,97,97],"median":97,"lcps":[2176,2188,2175],"lcpMedian":2176}
+{"page":"/","form":"desktop","scores":[100],"median":100,"lcps":[571],"lcpMedian":571}
+{"page":"/about/","form":"desktop","scores":[100],"median":100,"lcps":[483],"lcpMedian":483}
+{"page":"/patient-hub/find-a-doctor/","form":"desktop","scores":[100],"median":100,"lcps":[461],"lcpMedian":461}
+done

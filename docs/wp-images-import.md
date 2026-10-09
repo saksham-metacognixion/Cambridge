@@ -20,6 +20,9 @@ Only empty slots are filled: Figma images stay.
 - insurer bupa-insurance: logo wp-content/uploads/2026/07/bupa-insurance-ksa.avif
 - insurer tawuniya-insurance: logo wp-content/uploads/2026/07/tawuniya-ksa-1.avif
 - insurer globemed-insurance: logo wp-content/uploads/2026/07/globemed-ksa-1.avif
+- insurer gulf-union, alrajhi-takaful, tcs-insurance, malath-insurance, medgulf-insurance, walaa-insurance: logos copied by hand on 9 Oct 2026 from docs/cambridge-images-ksa/ (the live /sa files saved 8 Oct 2026, bug 063; that folder has no media.json so the importer skips it), same box as above.
+- insurer jhah, moh (no logo on the live site): official marks from jhah.com (SVG) and moh.gov.sa (PNG), composed into the same 325x180 white tile (logo 80 % wide) on 9 Oct 2026 (R063).
+- insurer enaya-insurance: logo wp-content/uploads/2026/07/enaya-insurance-uae.avif (saved 9 Oct 2026 through a hand-started debugging Chrome, `.astro/qc-ins/fetch-enaya.mjs`; wired by the importer).
 - news news/16th-hot-topics-in-pediatrics-conference-and-exhibition
 - news news/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation
 - news news/cambridge-health-group-announces-sar-100-million-jeddah-expansion
@@ -28,3 +31,6 @@ Only empty slots are filled: Figma images stay.
 - news news/cambridge-hospital-jeddah-completes-major-200-bed-expansion
 - news news/cambridge-hospital-marks-emirati-womens-day
 - news news/world-occupational-therapy-day-at-cambridge-hospital-dhahran
+
+
+Note: each importer run rewrites this file with only the slots it filled in that run (the lines above were restored by hand on 9 Oct 2026); the importer's own 9 Oct output listed the Enaya logo and the 8 news images again (same bytes).

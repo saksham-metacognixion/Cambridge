@@ -87,5 +87,7 @@
   ],
   "book": {
     "label": "احجز موعد"
-  }
+  },
+  "toTop": "Go to top",
+  "_toTopNote": "toTop = the aria-label of the \"Go to top\" button (AN1, live Blocksy back-to-top, 9 Oct 2026). No approved Arabic yet (not in the WordPress export): English on the Arabic editions until Padmavathi sends it."
 }

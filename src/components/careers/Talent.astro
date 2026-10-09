@@ -42,7 +42,7 @@ const photo = img(c.photo.image, edition.region);
         ))}
       </div>
       <div class="card-wrap">
-        <img src={lines.src} alt="" aria-hidden="true" width="220.117" height="168.514" class="art" />
+        <img loading="lazy" src={lines.src} alt="" aria-hidden="true" width="220.117" height="168.514" class="art" />
         <div class="card">
           <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={285} height={359} widths={[285, 570]} sizes="285px" loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
         </div>

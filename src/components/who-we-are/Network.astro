@@ -34,7 +34,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
     <div class="pill"><h2 class="h">{c.heading.map(([w, dot]) => <><span class="s">{w}<span class="dot">{dot.trim()}</span></span>{dot.endsWith(' ') ? ' ' : ''}</>)}</h2></div>
     <div class="band">
       <div class="figure">
-        <div class="clip" aria-hidden="true"><img src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
+        <div class="clip" aria-hidden="true"><img loading="lazy" src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
         <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
       </div>
       <ul class="stats" role="list">

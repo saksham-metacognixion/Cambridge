@@ -34,7 +34,7 @@ const opts: Option[] = f.source ? sourceOptions(f.source, edition) : (f.options 
       {opts.map((o) => (
         <label class="rf-opt">
           <input class="sr-only" type="radio" name={f.name} value={o.value} required={f.required} />
-          <span class="pf-radio" aria-hidden="true"><img class="off" src={radioOff.src} alt="" width="11" height="11" /><img class="on" src={radioOn.src} alt="" width="16.467" height="16.467" /></span>
+          <span class="pf-radio" aria-hidden="true"><img loading="lazy" class="off" src={radioOff.src} alt="" width="11" height="11" /><img loading="lazy" class="on" src={radioOn.src} alt="" width="16.467" height="16.467" /></span>
           <span>{o.label}</span>
         </label>
       ))}
@@ -56,12 +56,12 @@ const opts: Option[] = f.source ? sourceOptions(f.source, edition) : (f.options 
             <option value="" selected>{text.placeholder}</option>
             {opts.map((o) => <option value={o.value}>{o.label}</option>)}
           </select>
-          <img src={chevSel.src} alt="" width="7" height="4.207" class="pf-chev" />
+          <img loading="lazy" src={chevSel.src} alt="" width="7" height="4.207" class="pf-chev" />
         </div>
       ) : f.type === 'date' ? (
         <div class="rf-date rf-grow">
           <input id={id} name={f.name} type="date" data-past data-empty required={f.required} aria-describedby={err} class="pf-box rf-date-box" />
-          <img src={calendar.src} alt="" width="19.8" height="22" class="rf-cal" />
+          <img loading="lazy" src={calendar.src} alt="" width="19.8" height="22" class="rf-cal" />
         </div>
       ) : (
         <input id={id} name={f.name} type={f.type === 'email' ? 'email' : 'text'} required={f.required} maxlength={f.max} autocomplete={f.autocomplete ?? (f.type === 'email' ? 'email' : 'off')} placeholder={text.placeholder} aria-describedby={err} class:list={['pf-box rf-grow', text.placeholder && 'rf-ph-in']} />

@@ -72,7 +72,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
               <option value="" selected disabled>{f.hospitalPlaceholder}</option>
               {hospitals.map((h) => <option value={h.value}>{h.label}</option>)}
             </select>
-            <img src={chevron.src} width="7" height="4.207" alt="" class="chev" />
+            <img loading="lazy" src={chevron.src} width="7" height="4.207" alt="" class="chev" />
           </div>
           <p id="cf-hospital-error" class:list={[err, 'lg:top-[calc(272*var(--u))]']} hidden></p>
         </div>
@@ -90,7 +90,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         <label class="consent max-lg:flex max-lg:items-start max-lg:gap-[calc(10*var(--u))] lg:contents">
           <input type="checkbox" name="consent" required class="consent-input" aria-describedby="cf-consent-error" />
           <span class="box pointer-events-none max-lg:relative max-lg:shrink-0 max-lg:mt-[calc(-1.7*var(--u))] max-lg:ms-[calc(-1.7*var(--u))] lg:absolute lg:start-[calc(122.267*var(--u))] lg:top-[calc(454.267*var(--u))]" aria-hidden="true">
-            <img src={checkbox.src} width="15.4667" height="15.4667" alt="" class="block max-w-none" style="width:calc(15.4667*var(--u));height:calc(15.4667*var(--u))" />
+            <img loading="lazy" src={checkbox.src} width="15.4667" height="15.4667" alt="" class="block max-w-none" style="width:calc(15.4667*var(--u));height:calc(15.4667*var(--u))" />
             <span class="dot"></span>
           </span>
           <span class="font-gotham font-light text-[calc(9.87*var(--u))] leading-10.5 text-navy not-italic lg:absolute lg:start-147 lg:top-452 lg:whitespace-nowrap">
@@ -147,15 +147,15 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     <!-- Contact details row (Figma 86:808). Text tops differ by a few px in Figma and are kept as they are. -->
     <ul class="details m-0 list-none p-0 max-lg:flex max-lg:flex-col max-lg:items-start max-lg:gap-[calc(14*var(--u))] lg:contents">
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(597.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
+        <img loading="lazy" src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(597.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
         <a href={`mailto:${details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-598']}>{details.email}</a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-598" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
+        <img loading="lazy" src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-598" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
         <a href={details.webHref} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-601']}>{details.web}</a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-596" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
+        <img loading="lazy" src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-596" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
         <a href={`tel:${details.phoneHref}`} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(596.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}>{details.phone}</a>
       </li>
     </ul>

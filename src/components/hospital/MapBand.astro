@@ -28,7 +28,7 @@ const phone = h.phone ?? '';
   <div class="in">
     <h2 class="h">
       <span class="lead">{c.lead}</span>
-      <img src={pin.src} width={pin.width} height={pin.height} alt="" class="pin" />
+      <img loading="lazy" src={pin.src} width={pin.width} height={pin.height} alt="" class="pin" />
       <span class="city">{city}</span>
     </h2>
     <OutlineButton href={mapsHref(h, locale)} label={c.button} class="btn" {...{ target: '_blank', rel: 'noopener' }} />

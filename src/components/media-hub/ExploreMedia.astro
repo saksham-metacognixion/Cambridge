@@ -44,7 +44,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
       <option value="">{c.select.label}</option>
       {c.categories.map((x: any) => <option value={x.key}>{x.label}</option>)}
     </select>
-    <img src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="pointer-events-none absolute top-17 end-17 block w-7 h-[calc(4.207*var(--u))]" />
+    <img loading="lazy" src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="pointer-events-none absolute top-17 end-17 block w-7 h-[calc(4.207*var(--u))]" />
   </div>
 
   <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below.
@@ -78,7 +78,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
             </h3>
           </div>
           <span class="pointer-events-none absolute flex items-center justify-center" style={`inset-inline-start:calc(${t.corner.x} * var(--u));top:calc(${t.corner.y} * var(--u));width:calc(${t.corner.w} * var(--u));height:calc(${t.corner.h} * var(--u))`} aria-hidden="true">
-            <img src={t.corner.icon.src} width={t.corner.icon.width} height={t.corner.icon.height} alt="" class="block flex-none" style={`width:calc(29.6 * var(--u));height:calc(29.6 * var(--u));transform:${t.corner.rot}`} />
+            <img loading="lazy" src={t.corner.icon.src} width={t.corner.icon.width} height={t.corner.icon.height} alt="" class="block flex-none" style={`width:calc(29.6 * var(--u));height:calc(29.6 * var(--u));transform:${t.corner.rot}`} />
           </span>
         </li>
       ))

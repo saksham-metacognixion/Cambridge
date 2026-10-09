@@ -64,8 +64,8 @@ const faces: Record<string, { off: ImageMetadata; on: ImageMetadata; size: numbe
                   <label class="o-opt hit">
                     <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
                     <span class="o-ico" aria-hidden="true">
-                      <img class="off" src={faces[o].off.src} alt="" width={faces[o].size} height={faces[o].size} style={`--s:${faces[o].size}`} />
-                      <img class="on" src={faces[o].on.src} alt="" width={faces[o].size} height={faces[o].size} style={`--s:${faces[o].size}`} />
+                      <img loading="lazy" class="off" src={faces[o].off.src} alt="" width={faces[o].size} height={faces[o].size} style={`--s:${faces[o].size}`} />
+                      <img loading="lazy" class="on" src={faces[o].on.src} alt="" width={faces[o].size} height={faces[o].size} style={`--s:${faces[o].size}`} />
                     </span>
                     <span class="o-txt">{c.ratingOptions[o]}</span>
                   </label>

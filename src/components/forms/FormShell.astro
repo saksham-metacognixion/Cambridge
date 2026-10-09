@@ -51,13 +51,13 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
       {consent ? (
         <label class="f-consent f-consent-own" style={`--cs:${consent.size}`}>
           <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
-          <span class="own" aria-hidden="true"><img class="off" src={consent.off.src} width={consent.off.width} height={consent.off.height} alt="" /><img class="on" src={consent.on.src} width={consent.on.width} height={consent.on.height} alt="" /></span>
+          <span class="own" aria-hidden="true"><img loading="lazy" class="off" src={consent.off.src} width={consent.off.width} height={consent.off.height} alt="" /><img loading="lazy" class="on" src={consent.on.src} width={consent.on.width} height={consent.on.height} alt="" /></span>
           <span class="txt">{consent.before}<a href={privacyHref}>{consent.link}</a>{consent.after}</span>
         </label>
       ) : (
         <label class="f-consent">
           <input id={consentId} type="checkbox" name="consent" required aria-describedby={`${consentId}-error`} />
-          <span class="box" aria-hidden="true"><img src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
+          <span class="box" aria-hidden="true"><img loading="lazy" src={checkbox.src} width="15.4667" height="15.4667" alt="" /><span class="dot"></span></span>
           <span class="txt">{c.consent.before}<a href={privacyHref}>{c.consent.link.label}</a>{c.consent.after} {c.consent.line2}</span>
         </label>
       )}

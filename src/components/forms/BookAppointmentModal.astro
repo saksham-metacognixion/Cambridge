@@ -51,8 +51,8 @@ const radios = fieldsIn(ID, 'gender');
               <label class="b-opt hit">
                 <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
                 <span class="b-ico" aria-hidden="true">
-                  <img class="on" src={radioOn.src} alt="" width="14.845" height="14.845" />
-                  <img class="off" src={radioOff.src} alt="" width="9.917" height="9.917" />
+                  <img loading="lazy" class="on" src={radioOn.src} alt="" width="14.845" height="14.845" />
+                  <img loading="lazy" class="off" src={radioOff.src} alt="" width="9.917" height="9.917" />
                 </span>
                 <span class="b-txt" style={`--gap:${i === 0 ? 7.21 : 4.96}`}>{t.options[o]}</span>
               </label>

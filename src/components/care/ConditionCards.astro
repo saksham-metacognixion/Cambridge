@@ -39,7 +39,7 @@ const list = cards.map((k, i) => ({
     {list.map((k) => (
       <li class="cell">
         <article class:list={['card', 'hair-card', !k.icon && 'no-icon']} style="--sw:.5;--sc:var(--color-navy)">
-          {k.icon && <img src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
+          {k.icon && <img loading="lazy" src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
           <h3 class="title">{k.title}</h3>
           <p class="text">{k.text}</p>
           <a href={k.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>

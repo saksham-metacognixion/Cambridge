@@ -16,7 +16,7 @@ const links = social.links as { id: string; label: string; href: string }[];
 ---
 
 <div class:list={['soc', cls]} style={`--soc-src:url("${src}");${style}`}>
-  <img src={src} width={width} height={height} alt={alt} class="soc-img" />
+  <img loading="lazy" src={src} width={width} height={height} alt={alt} class="soc-img" />
   <ul class="soc-links" role="list">
     {links.map((l, i) => (
       <li style={`--i:${i}`}>{l.href && <a href={l.href} target="_blank" rel="noopener" class:list={['soc-a', dense && 'dense']}><span class="sr-only">{l.label}</span></a>}</li>

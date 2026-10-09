@@ -49,12 +49,12 @@ const pos = (len: number, active: number, i: number) => {
       <select id="hospital-area" class="ui-field" data-gallery-select>
         {areas.map((a) => <option value={a.key}>{a.label}</option>)}
       </select>
-      <img src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="ui-chev" />
+      <img loading="lazy" src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="ui-chev" />
     </div>
   ) : (
     <div class="ui-box pick" aria-hidden="true">
       <span class="ui-field one">{areas[0]?.label}</span>
-      <img src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="ui-chev" />
+      <img loading="lazy" src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="ui-chev" />
     </div>
   )}
 

@@ -1,7 +1,7 @@
 # Bug 066: KSA-specific images on Saudi pages (9 Oct 2026)
 
-Status: **open**. The local fixes are verified in a scratch build. The bug can't be closed until they're deployed and re-checked on
-staging, and two items are waiting for the client (see "Waiting for the client").
+Status: **confirmed fixes verified on staging** (commit 271ff60, deployed 9 Oct 2026 to https://cambridge-hospital-staging.vercel.app).
+Two items are still waiting for the client (see "Waiting for the client").
 
 Sources checked: the live KSA site's own files (`docs/cambridge-images-ksa/` + `_pages.json`, saved 8 Oct, and
 `docs/cambridge-images-live/` + `_pages/sa/*.html`, saved 9 Oct), the WordPress export (`docs/cambridgehospital.WordPress.2026-10-06.xml`)
@@ -31,8 +31,9 @@ Global and UAE: nothing changed. The only asset this bug edits is `src/assets/re
   SVG is hidden by design.
 - Evidence: `docs/qc/bug066/testimonials-before-after.png`, `desktop-1440.png` (Jeddah EN, Al Khobar AR, Testimonials EN + AR),
   `mobile-tablet.png` (390 and 768), `care-ksa-subject.png`.
-- The bug is **not yet verified on staging**. Staging still serves the previous deploy (Abu Dhabi placeholder on the KSA hospitals).
-  After redeploying, re-run the same checks against `https://cambridge-hospital-staging.vercel.app/`.
+- **Staging (9 Oct 2026, after deploying 271ff60):** the same script against https://cambridge-hospital-staging.vercel.app/ passed on
+  all 40 page/width checks (KSA hospitals EN + AR show their own banners, testimonials pill clean, `/ae` Abu Dhabi unchanged), with no
+  console errors or failed requests. Smoke checks: `/`, `/ae/` and `/sa/ar/` return 200, and `/events` returns a 301.
 
 ## Noted, not changed (outside this bug's files)
 

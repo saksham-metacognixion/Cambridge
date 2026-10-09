@@ -12,7 +12,7 @@ Scripts: `.astro/qc-perf/` (not tracked: lh-matrix, lh-repeat, lh-table, compare
 - Lighthouse 12.8 via `npx lighthouse@12`, default mobile (simulated Moto G Power, 4G, 4x CPU) and `--preset=desktop`,
   39 URLs = every page template x editions (Global EN/AR, UAE EN/AR, KSA EN/AR), one run each before and after
   (`lighthouse-before.json`, `lighthouse-after.json`), plus 3-run medians on the key pages.
-- Real host: the SAME Lighthouse against the staging link (Vercel, HTTP/2) for the before state (`staging-before.jsonl`).
+- Real host: the SAME Lighthouse against the staging link (Vercel, HTTP/2), before and after (`staging-before.jsonl`, `staging-after.jsonl`).
   Google's PageSpeed Insights API was tried for both states and refused every call (shared anonymous quota exhausted:
   `Queries per day` for pagespeedonline.googleapis.com); a Google API key would be needed to use it from here.
 - Noise: identical content scored 91-96 across repeated mobile runs, so single-run differences under ~3 points are noise.
@@ -24,7 +24,7 @@ Scripts: `.astro/qc-perf/` (not tracked: lh-matrix, lh-repeat, lh-table, compare
 | Requirement | Status | Evidence |
 |---|---|---|
 | PageSpeed 95+ desktop, every template | **Pass** | 38/38 pages 100 after (99-100 before). |
-| PageSpeed 95+ mobile, every template | **Partial → mostly Pass** | Local HTTP/1.1: before avg 93.5, 25/38 pages under 95 (min 90); after avg 96.5, 35/38 at 95+ (Home 94, `/ar` 93, `/ae/ar` 93). On the real HTTP/2 host the before build already scored Home 96 / About 99 / Find a Doctor 97 (3-run medians); the after build is expected to be ≥ 97 there but could not be measured (see blockers). |
+| PageSpeed 95+ mobile, every template | **Pass on the real host** (Lighthouse; Google PSI itself not reachable) | Local HTTP/1.1: before avg 93.5, 25/38 pages under 95 (min 90); after avg 96.5, 35/38 at 95+ (Home 94, `/ar` 93, `/ae/ar` 93). Real HTTP/2 host after deploy (b885aa8): Home 96, About 100, Find a Doctor 99 (3-run medians), 8 more templates 96-100 (table below). |
 | Core Web Vitals | **Pass** | CLS 0-0.011 everywhere (the /ae/ar hero shift 0.014 is gone), TBT 0-28 ms, LCP mobile 2.1-2.8 s simulated (desktop 0.4-0.7 s). |
 | Images: 1x + 2x for the rendered size | **Partial** | Every raster `<Picture>` emits 2-3 width candidates with `sizes`. Where the SOURCE file is only Figma-frame size the 2x cannot exist: hero banners (1052 px source shown at 1440 = 0.73x on desktop, 0.55x at 1920), the About / hospital video thumbnail (429 px source shown at 587-773 px), the hospital map band (1052 px), the Media Hub tile overlay (222 px), the "Dr Ahmad" placeholder (281 px) and the insurer logos (1x WebP from the live site). All need higher-resolution exports (Figma at 2x / client originals); nothing was fabricated. Phones get the 2x candidate (3x screens are capped at 2x by design). |
 | Images: WebP / AVIF | **Pass** | 7 718 `<picture>` elements on 1 592 pages, every one AVIF + WebP fallback (`html-scan-*.json`: pictureNoAvif 0). Only the WordPress logo imports are WebP-only (lossless sources). |
@@ -107,18 +107,25 @@ scored by Lighthouse (it refuses a 404 status); its HTML follows the same templa
 
 3-run medians on the after build (local): Home mobile 94 (LCP 2.7 s), About 97, hospital detail 96.
 
-### Real host (staging link, Vercel HTTP/2), before build, 3-run medians
+### Real host (staging link, Vercel HTTP/2), before → after
 
-| Page | Mobile | Desktop |
-|---|---|---|
-| `/` | 96 (95, 96, 100) | 100 |
-| `/about/` | 99 (99, 99, 95) | 100 |
-| `/patient-hub/find-a-doctor/` | 97 (97, 97, 97) | 100 |
+The after build is commit b885aa8 on develop. It contains these fixes together with the sticky header / back-to-top /
+footer (animation session), favicon, insurer logos, SEO meta, redirects, Contact map and content work, each confirmed
+complete by its owning session. Deployed to cambridge-hospital-staging.vercel.app on 9 Oct 2026. Verified on the host:
+optimised logo and 21 KB Gotham served over HTTP/2, pop-up map eager + high priority, Arabic font preload, Turnstile
+sitekey on Contact, form endpoint answers a handled 400/303 (no 500). Chrome check of the combined build: sticky header,
+Go to top, phone footer columns, hero follow, no console errors.
 
-The after build was deployed as a Vercel preview, but preview deployments on this project are behind Vercel SSO
-(302 to vercel.com/sso-api), so Lighthouse could not reach it; creating a protection-bypass token was not permitted from
-this session. To record the after numbers on the real host: redeploy staging (commands in the Vercel memory note /
-`BUILD.md`) and run `node .astro/qc-perf/lh-repeat.mjs https://cambridge-hospital-staging.vercel.app <dir> 3 mobile / /about/ /patient-hub/find-a-doctor/`.
+3-run medians (`staging-before.jsonl`, `staging-after.jsonl`):
+
+| Page | Mobile before | Mobile after | Mobile LCP after | Desktop before | Desktop after |
+|---|---|---|---|---|---|
+| `/` | 96 (95, 96, 100) | **96** (99, 96, 96) | 2.0 s | 100 | **100** |
+| `/about/` | 99 (99, 99, 95) | **100** (100, 98, 100) | 1.7 s | 100 | **100** |
+| `/patient-hub/find-a-doctor/` | 97 (97, 97, 97) | **99** (99, 98, 99) | 1.8 s | 100 | **100** |
+
+Single runs, after build, mobile: hospital detail 96, Why Cambridge 98, Our Care inpatient 99, `/ae/ar/` 100, `/sa/ar/` 96,
+Media Hub 99, Contact 98, FAQs 99. Every measured page is 95+ on mobile and 100 on desktop on the real host.
 
 ## What still holds the mobile score back (structural, not bugs)
 
@@ -135,7 +142,7 @@ this session. To record the after numbers on the real host: redeploy staging (co
 1. Higher-resolution sources for the 2x requirement on desktop: 21 hero banners (export the Figma banners at 2x and re-run
    `tools/hero-layers/run-all.sh`), the About / hospital video thumbnail, the hospital map band, the Media Hub tile overlay,
    the "Dr Ahmad" placeholder photo and the insurer logos (live-site uploads, 1x).
-2. PageSpeed Insights numbers from Google itself need an API key (or manual runs at pagespeed.web.dev against staging).
+2. PageSpeed Insights numbers from Google itself need an API key (or manual runs at pagespeed.web.dev against staging); the staging numbers above are the same Lighthouse engine run from here.
 3. Google Maps API key (removes the Contact page console error, Best Practices 96 → 100).
 4. Hosting target (B6): the final numbers depend on an HTTP/2 host with gzip/brotli and immutable caching for `/_astro/`
    and `/fonts/` (Vercel staging has both; the nginx config in `deploy/` and Cloudflare Pages do too).

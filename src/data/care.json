@@ -442,6 +442,8 @@
             "en": "Physician led care for adults and children with conditions affecting movement, function, pain and physical wellbeing.",
             "ar": ""
           },
+          "image": "care/outpatient/physical-medicine-rehab-care",
+          "alt": "",
           "children": [],
           "cardTitle": {
             "en": "Physical Medicine Care",
@@ -458,6 +460,8 @@
             "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement, function and daily activities.",
             "ar": "للأطفال الذين لديهم احتياجات أو صعوبات تتعلق بالنمو، أو الحالات العصبية، أو الجسدية، لتقييم احتياجاتهم الفردية وتوفير العلاج والدعم المناسبين."
           },
+          "image": "care/outpatient/pediatric-care",
+          "alt": "",
           "children": [],
           "cardTitle": {
             "en": "Paediatric Care",
@@ -474,6 +478,8 @@
             "en": "Movement based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
             "ar": "للمرضى الذين يعانون من الألم، أو محدودية الحركة، أو ضعف العضلات، أو صعوبات في التوازن، لتحسين قدرتهم على الحركة وقوتهم وتوازنهم وتناسقهم الحركي."
           },
+          "image": "care/outpatient/physiotherapy",
+          "alt": "",
           "children": [],
           "cardTitle": {
             "en": "Physiotherapy",
@@ -490,6 +496,8 @@
             "en": "Functional therapy for patients who need support with daily activities, independence, self care or participation at home, school or work.",
             "ar": "برنامج مخصّصٌ للمرضى الذين يحتاجون إلى الدعم في الحركة والأنشطة اليومية، لاستعادة الوظائف الحركية والاستقلالية، والمهارات اللازمة لحياتهم اليومية."
           },
+          "image": "care/outpatient/occupational-therapy",
+          "alt": "",
           "children": [],
           "cardTitle": {
             "en": "Occupational Therapy",
@@ -506,6 +514,8 @@
             "en": "Specialist therapy for patients with difficulties affecting speech, language, communication, voice, feeding or swallowing.",
             "ar": ""
           },
+          "image": "care/outpatient/speech-language-therapy",
+          "alt": "",
           "children": [],
           "cardTitle": {
             "en": "Speech and Language Therapy",
@@ -522,6 +532,8 @@
             "en": "Specialised rehabilitation for children and adults with cerebral palsy, addressing movement, muscle control, function and independence.",
             "ar": ""
           },
+          "image": "care/outpatient/cerebral-palsy-program",
+          "alt": "",
           "children": [],
           "cardTitle": {
             "en": "Cerebral Palsy Programme",

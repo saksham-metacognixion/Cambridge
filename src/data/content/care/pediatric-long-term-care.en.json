@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Paediatric long term care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Paediatric long term care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/long-term-care-rehab/pediatric-long-term-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/long-term-care-rehab/pediatric-long-term-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Paediatric Long-Term Care",
     "title": [
       "Paediatric",
       "Long-Term Care"
     ],
-    "text": "For children with chronic medical, neurological or developmental needs, to support their health, development and quality of life in a comfortable, home-like environment."
+    "text": "For children with chronic medical, neurological or developmental needs, to support their health, development and quality of life in a comfortable, home-like environment.",
+    "banner": {
+      "image": "care/heroes/pediatric-long-term-care",
+      "alt": ""
+    }
   },
   "overview": [
     "For a child with complex, long-lasting medical needs, the right care can make a meaningful difference not only to the child, but to the whole family. Paediatric long-term care at Cambridge Hospital provides specialised, 24/7 care for children living with chronic medical, neurological or developmental conditions, in an environment built around their medical needs, comfort and development.",
@@ -112,5 +116,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 604,
+      "w": 448
+    }
+  }
 }

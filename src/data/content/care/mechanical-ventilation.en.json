@@ -1,16 +1,26 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Ventilated Patients/EN- Main Page.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Ventilated Patients/EN- Main Page.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/mechanical-ventilation/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/mechanical-ventilation/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Ventilated Patients Care",
     "title": [
       "Ventilated Patients",
       "Care"
     ],
-    "text": "Specialised care for patients who require respiratory support, mechanical ventilation, critical monitoring or step-down care after ICU admission."
+    "text": "Specialised care for patients who require respiratory support, mechanical ventilation, critical monitoring or step-down care after ICU admission.",
+    "banner": {
+      "image": "care/heroes/mechanical-ventilation",
+      "alt": ""
+    }
   },
   "overview": [
     "Ventilated patients care at Cambridge Hospital provides specialised support for patients with complex respiratory needs following critical illness or prolonged hospitalisation. This is one of the most clinically demanding areas of long-term care, requiring close coordination between physicians, respiratory therapists, nursing teams, rehabilitation professionals and case managers.",
     "Our ventilated care model is designed not only to maintain clinical stability, but also to optimise function, reduce complications, and, where possible, support patients in reducing their dependence on mechanical ventilation or transitioning to another level of care."
   ],
-  "cardsHeading": "Our Ventilation Programmes"
+  "cardsHeading": "Our Ventilation Programmes",
+  "heroLayout": {
+    "small": {
+      "x": 604,
+      "w": 448
+    }
+  }
 }

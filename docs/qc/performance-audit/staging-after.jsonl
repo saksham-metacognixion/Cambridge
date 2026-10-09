@@ -1,0 +1,14 @@
+{"page":"/","form":"mobile","scores":[99,96,96],"median":96,"lcps":[1795,1990,2015],"lcpMedian":1990}
+{"page":"/about/","form":"mobile","scores":[100,98,100],"median":100,"lcps":[1576,2074,1666],"lcpMedian":1666}
+{"page":"/patient-hub/find-a-doctor/","form":"mobile","scores":[99,98,99],"median":99,"lcps":[1802,2002,1819],"lcpMedian":1819}
+{"page":"/","form":"desktop","scores":[100],"median":100,"lcps":[400],"lcpMedian":400}
+{"page":"/about/","form":"desktop","scores":[100],"median":100,"lcps":[399],"lcpMedian":399}
+{"page":"/patient-hub/find-a-doctor/","form":"desktop","scores":[100],"median":100,"lcps":[477],"lcpMedian":477}
+{"page":"/hospitals/cambridge-hospital-abu-dhabi/","form":"mobile","scores":[96],"median":96,"lcps":[2046],"lcpMedian":2046}
+{"page":"/care/inpatient/","form":"mobile","scores":[99],"median":99,"lcps":[1713],"lcpMedian":1713}
+{"page":"/ae/ar/","form":"mobile","scores":[100],"median":100,"lcps":[1539],"lcpMedian":1539}
+{"page":"/sa/ar/","form":"mobile","scores":[96],"median":96,"lcps":[1856],"lcpMedian":1856}
+{"page":"/contact-us/","form":"mobile","scores":[98],"median":98,"lcps":[2019],"lcpMedian":2019}
+{"page":"/faqs/","form":"mobile","scores":[99],"median":99,"lcps":[1865],"lcpMedian":1865}
+{"page":"/about/why-cambridge-hospital/","form":"mobile","scores":[98],"median":98,"lcps":[1994],"lcpMedian":1994}
+{"page":"/media-hub/","form":"mobile","scores":[99],"median":99,"lcps":[2024],"lcpMedian":2024}

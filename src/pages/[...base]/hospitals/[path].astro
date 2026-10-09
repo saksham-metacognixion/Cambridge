@@ -55,7 +55,7 @@ const careText = { ...shared.care };
   </div>
   <main>
     <div id="hero" class="relative">
-      <PageHero content={hero} pos={pos} buttonAttrs={{ 'data-hospital': h.slug }} />
+      <PageHero content={hero} pos={pos} buttonAttrs={{ 'data-hospital': h.slug }} small={own?.heroLayout?.small} />
     </div>
     {pending && <p class="pending-note" role="note">{pending}</p>}
     {own && (

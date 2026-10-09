@@ -1,5 +1,5 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Post acute care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Post acute care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/post-acute-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/post-acute-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Paediatric Post-Acute Rehabilitation",
     "title": [
@@ -7,7 +7,11 @@
       "Post-Acute",
       "Rehabilitation"
     ],
-    "text": "For children recovering from serious illness or injury, or living with complex long-term conditions, to support recovery, manage their condition and improve quality of life."
+    "text": "For children recovering from serious illness or injury, or living with complex long-term conditions, to support recovery, manage their condition and improve quality of life.",
+    "banner": {
+      "image": "care/heroes/paediatric-post-acute-rehab",
+      "alt": ""
+    }
   },
   "overview": [
     "Paediatric post-acute care provides long-term, high-quality care for children recovering from severe illness or serious injury, as well as those living with long-term or lifelong chronic conditions. Children require particular care, not only because they are more vulnerable, but also because their risk of complications from chronic conditions and prolonged hospitalisation can be higher."
@@ -99,5 +103,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 580,
+      "w": 448
+    }
+  }
 }

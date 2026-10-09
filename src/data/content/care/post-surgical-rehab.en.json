@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Post Surgical Rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Post Surgical Rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/post-acute-rehab/post-surgical-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/post-acute-rehab/post-surgical-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Post-Surgical Rehabilitation",
     "title": [
       "Post-Surgical",
       "Rehabilitation"
     ],
-    "text": "For patients recovering from surgery, to restore mobility, rebuild strength and support a safe return to everyday activities."
+    "text": "For patients recovering from surgery, to restore mobility, rebuild strength and support a safe return to everyday activities.",
+    "banner": {
+      "image": "care/heroes/post-surgical-rehab",
+      "alt": ""
+    }
   },
   "overview": [
     "Postsurgical rehabilitation is a guided recovery pathway designed to help patients regain strength, mobility and independence after an operation. It bridges the gap between the surgical procedure and a safe return to daily life, ensuring healing happens in a controlled, progressive and functional way."
@@ -58,5 +62,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 538,
+      "w": 448
+    }
+  }
 }

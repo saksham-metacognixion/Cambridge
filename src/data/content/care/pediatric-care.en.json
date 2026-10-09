@@ -1,11 +1,15 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Paediatric.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Paediatric.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/pediatric-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/pediatric-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Paediatric Care",
     "title": [
       "Paediatric Care"
     ],
-    "text": "For children with developmental, neurological or physical concerns, to assess their individual needs, provide appropriate therapy and support their progress and development."
+    "text": "For children with developmental, neurological or physical concerns, to assess their individual needs, provide appropriate therapy and support their progress and development.",
+    "banner": {
+      "image": "care/heroes/pediatric-care",
+      "alt": ""
+    }
   },
   "overview": [
     "A paediatric consultation is where a child’s care begins. Our paediatrician assesses the child and determines the most appropriate care programme based on their individual needs. This may include physiotherapy, occupational therapy, speech and language therapy, or our cerebral palsy programme, with the paediatrician remaining involved through follow-up reviews as therapy progresses."
@@ -78,5 +82,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 596,
+      "w": 448
+    }
+  }
 }

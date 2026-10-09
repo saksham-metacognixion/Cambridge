@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Transitional Care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Transitional Care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/pediatric-transitional-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/pediatric-transitional-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Paediatric Transitional Care",
     "title": [
       "Paediatric",
       "Transitional Care"
     ],
-    "text": "For infants transitioning from hospital to home or between stages of care, to support a safe transition and healthy development."
+    "text": "For infants transitioning from hospital to home or between stages of care, to support a safe transition and healthy development.",
+    "banner": {
+      "image": "care/heroes/paediatric-transitional",
+      "alt": ""
+    }
   },
   "overview": [
     "When a child is born early or faces complex medical needs at the start of life, the journey can bring uncertainty and a need for expert and compassionate support. Our paediatric transitional care programme supports infants and their families as they move from specialised hospital care towards a safe and confident return home, while ensuring continuity of care, knowledge and guidance throughout the transition."
@@ -94,5 +98,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 568,
+      "w": 448
+    }
+  }
 }

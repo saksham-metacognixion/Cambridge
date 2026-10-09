@@ -1,12 +1,12 @@
 {
-  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/cambridge-hospital-al-ain/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. The live page lists the same photos under every tab; they are sorted into the tabs here by their file names (to be confirmed by the client). Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/cambridge-hospital-al-ain/, Cambridge-Hospital-Al-Ain-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers).",
   "hero": {
     "title": [
       "Al Ain Hospital"
     ],
     "text": "Recovery-focused care combining rehabilitation, extended support and structured clinical coordination.",
     "banner": {
-      "image": "hospital-detail/banner-abu-dhabi",
+      "image": "hospital-detail/banner-al-ain",
       "alt": ""
     }
   },
@@ -21,6 +21,74 @@
     ]
   },
   "healing": {
-    "areas": []
+    "areas": [
+      {
+        "key": "outdoor-spaces",
+        "label": "Outdoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-facility-recreational-garden",
+            "alt": "Cambridge Hospital Al Ain - Facility Recreational Garden"
+          },
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-backyard",
+            "alt": "Cambridge Hospital Al Ain - Backyard"
+          },
+          {
+            "image": "hospital-detail/al-ain/cmrc-hospital-al-ain-facility-recreational-garden",
+            "alt": "Cambridge Hospital Al Ain - Facility Recreational Garden"
+          }
+        ]
+      },
+      {
+        "key": "indoor-spaces",
+        "label": "Indoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-inpatient-room-1",
+            "alt": "Cambridge Hospital Al Ain - Inpatient Room 1"
+          },
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-inpatient-room-2",
+            "alt": "Cambridge Hospital Al Ain - Inpatient Room 2"
+          },
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-waiting-area-1",
+            "alt": "Cambridge Hospital Al Ain - Waiting Area 1"
+          }
+        ]
+      },
+      {
+        "key": "gyms",
+        "label": "Gyms",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-gait-rehabilitation",
+            "alt": "Cambridge Hospital Al Ain - Gait Rehabilitation"
+          },
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-kozyavkin-rehabilitation",
+            "alt": "Cambridge Hospital Al Ain - Kozyavkin Rehabilitation"
+          },
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-pediatric-rehabilitation-2",
+            "alt": "Cambridge Hospital Al Ain - Pediatric Rehabilitation 2"
+          },
+          {
+            "image": "hospital-detail/al-ain/cambridge-hospital-al-ain-rehabilitation-gym-3",
+            "alt": "Cambridge Hospital Al Ain - Rehabilitation Gym 3"
+          }
+        ]
+      }
+    ]
+  },
+  "heroLayout": {
+    "small": {
+      "x": 506,
+      "w": 448
+    }
   }
 }

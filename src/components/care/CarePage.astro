@@ -71,7 +71,7 @@ const meta = { title: own?.meta?.title ?? fill(shared.meta.title), description: 
   </div>
   <main>
     <div id="hero" class="relative">
-      {isService ? <PageHero content={hero} pos={pos} /> : <PageHero content={hero} pos={pos} h={322} variant="cover" />}
+      {isService ? <PageHero content={hero} pos={pos} small={own?.heroLayout?.small} /> : <PageHero content={hero} pos={pos} h={322} variant="cover" small={own?.heroLayout?.small} />}
     </div>
     {pending && <p class="pending-note" role="note">{pending}</p>}
     {isService && (hasIntro || kids.length > 0) && (

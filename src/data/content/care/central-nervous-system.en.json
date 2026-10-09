@@ -1,5 +1,5 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Central Nervous system.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Central Nervous system.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Central Nervous System Anomalies Rehabilitation",
     "title": [
@@ -7,7 +7,11 @@
       "System Anomalies",
       "Rehabilitation"
     ],
-    "text": "For children affected by neurological and developmental conditions, to help manage symptoms, support development and improve quality of life"
+    "text": "For children affected by neurological and developmental conditions, to help manage symptoms, support development and improve quality of life",
+    "banner": {
+      "image": "care/heroes/central-nervous-system",
+      "alt": ""
+    }
   },
   "overview": [
     "The central nervous system (CNS), primarily the brain and spinal cord, underpins nearly every process in a child’s body, from movement and sensation to thought, memory and awareness. In newborns it is still developing, and anomalies can arise that affect development or lead to long-term complications. Our paediatric CNS rehabilitation programme supports children living with these conditions, whether congenital or acquired, providing early, expert and long-term care designed to reduce symptoms, support development and improve quality of life."
@@ -80,5 +84,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 555,
+      "w": 448
+    }
+  }
 }

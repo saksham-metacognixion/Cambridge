@@ -1,0 +1,397 @@
+Saved 2026-10-09T09:56:26.185Z with tools/live-images/fetch.mjs (job1.json)
+pages  /about/ -> 177893 B
+pages  /ae/about/ -> 177831 B
+pages  /ae/care/ -> 166110 B
+pages  /ae/care/home-healthcare/ -> 168471 B
+pages  /ae/care/in-school/ -> 171012 B
+pages  /ae/care/inpatient/ -> 168447 B
+pages  /ae/care/inpatient/icu-critical-care/ -> 168946 B
+pages  /ae/care/inpatient/long-term-care-rehab/ -> 165426 B
+pages  /ae/care/inpatient/long-term-care-rehab/geriatric-care/ -> 168901 B
+pages  /ae/care/inpatient/long-term-care-rehab/long-term-acute-care/ -> 169454 B
+pages  /ae/care/inpatient/long-term-care-rehab/long-term-care/ -> 168910 B
+pages  /ae/care/inpatient/long-term-care-rehab/pediatric-long-term-care/ -> 169453 B
+pages  /ae/care/inpatient/mechanical-ventilation/ -> 161075 B
+pages  /ae/care/inpatient/mechanical-ventilation/long-term-ventilated-care/ -> 169556 B
+pages  /ae/care/inpatient/mechanical-ventilation/weaning-program/ -> 167115 B
+pages  /ae/care/inpatient/palliative-care/ -> 167302 B
+pages  /ae/care/inpatient/pediatric-rehab/ -> 172842 B
+pages  /ae/care/inpatient/pediatric-rehab/neuromuscular-rehab/ -> 170971 B
+pages  /ae/care/inpatient/pediatric-rehab/pulmonary-rehab/ -> 171764 B
+pages  /ae/care/inpatient/pediatric-rehab/speech-language-rehab/ -> 167539 B
+pages  /ae/care/inpatient/post-acute-rehab/ -> 165475 B
+pages  /ae/care/inpatient/post-acute-rehab/neuro-rehab/ -> 178884 B
+pages  /ae/care/inpatient/post-acute-rehab/post-surgical-rehab/ -> 165634 B
+pages  /ae/care/inpatient/post-acute-rehab/road-traffic-accident-rehab/ -> 168007 B
+pages  /ae/care/outpatient/ -> 169430 B
+pages  /ae/care/outpatient/cerebral-palsy-program/ -> 169896 B
+pages  /ae/care/outpatient/occupational-therapy/ -> 168800 B
+pages  /ae/care/outpatient/pediatric-care/ -> 166325 B
+pages  /ae/care/outpatient/physical-medicine-rehab-care/ -> 166852 B
+pages  /ae/care/outpatient/physiotherapy/ -> 166239 B
+pages  /ae/care/outpatient/speech-language-therapy/ -> 168025 B
+pages  /ae/hospitals/ -> 145404 B
+pages  /ae/hospitals/al-mudeef-center-abu-dhabi/ -> 183031 B
+pages  /ae/hospitals/cambridge-hospital-abu-dhabi/ -> 184768 B
+pages  /ae/hospitals/cambridge-hospital-al-ain/ -> 199530 B
+pages  /ae/patient-hub/find-a-doctor/ -> 166415 B
+pages  /ae/patient-hub/testimonials/ -> fail
+pages  /care/ -> 175982 B
+pages  /hospitals/ -> 152634 B
+pages  /patient-hub/testimonials/ -> 146448 B
+pages  /sa/care/ -> 169534 B
+pages  /sa/care/home-healthcare/ -> 175888 B
+pages  /sa/care/inpatient/ -> 174732 B
+pages  /sa/care/inpatient/icu-critical-care/ -> 174521 B
+pages  /sa/care/inpatient/long-term-care-rehab/ -> 170812 B
+pages  /sa/care/inpatient/long-term-care-rehab/geriatric-care/ -> 175618 B
+pages  /sa/care/inpatient/long-term-care-rehab/long-term-acute-care/ -> 174931 B
+pages  /sa/care/inpatient/long-term-care-rehab/long-term-care/ -> 174300 B
+pages  /sa/care/inpatient/long-term-care-rehab/pediatric-long-term-care/ -> 174702 B
+pages  /sa/care/inpatient/mechanical-ventilation/ -> 166510 B
+pages  /sa/care/inpatient/mechanical-ventilation/long-term-ventilated-care/ -> 174859 B
+pages  /sa/care/inpatient/mechanical-ventilation/weaning-program/ -> 172426 B
+pages  /sa/care/inpatient/palliative-care/ -> 172662 B
+pages  /sa/care/inpatient/pediatric-rehab/ -> 178185 B
+pages  /sa/care/inpatient/pediatric-rehab/neuromuscular-rehab/ -> 176279 B
+pages  /sa/care/inpatient/pediatric-rehab/pulmonary-rehab/ -> 176225 B
+pages  /sa/care/inpatient/pediatric-rehab/speech-language-rehab/ -> 172939 B
+pages  /sa/care/inpatient/post-acute-rehab/ -> 171105 B
+pages  /sa/care/inpatient/post-acute-rehab/neuro-rehab/ -> 184425 B
+pages  /sa/care/inpatient/post-acute-rehab/post-surgical-rehab/ -> 171097 B
+pages  /sa/care/inpatient/post-acute-rehab/road-traffic-accident-rehab/ -> 173567 B
+pages  /sa/care/outpatient/ -> 174830 B
+pages  /sa/care/outpatient/cerebral-palsy-program/ -> 174782 B
+pages  /sa/care/outpatient/occupational-therapy/ -> 174167 B
+pages  /sa/care/outpatient/pediatric-care/ -> 171727 B
+pages  /sa/care/outpatient/physical-medicine-rehab-care/ -> 171909 B
+pages  /sa/care/outpatient/physiotherapy/ -> 171625 B
+pages  /sa/care/outpatient/speech-language-therapy/ -> 173322 B
+pages  /sa/hospitals/ -> 145698 B
+pages  /sa/hospitals/cambridge-hospital-al-khobar/ -> 178586 B
+pages  /sa/hospitals/cambridge-hospital-dhahran/ -> 176728 B
+pages  /sa/hospitals/cambridge-hospital-jeddah/ -> 179190 B
+pages  /sa/patient-hub/find-a-doctor/ -> 173488 B
+json   /wp-json/wp/v2/doctor?per_page=100 -> fail
+json   /ae/wp-json/wp/v2/doctor?per_page=100 -> 52742 B
+json   /sa/wp-json/wp/v2/doctor?per_page=100 -> 430213 B
+json   /wp-json/wp/v2/testimonial?per_page=100 -> fail
+json   /ae/wp-json/wp/v2/testimonial?per_page=100 -> 10232 B
+json   /wp-json/wp/v2/media?per_page=100&search=Dr -> fail
+json   /ae/wp-json/wp/v2/media?per_page=100&search=Dr -> 69769 B
+json   /sa/wp-json/wp/v2/media?per_page=100&search=Dr -> 152323 B
+image  wp-content/uploads/2026/07/17th-SEHA-International-Paediatric-Conference.avif -> 161784 B image/avif
+image  wp-content/uploads/2026/07/1st-EHS-International-Critical-Care-Organ-Donation-and-Transplant-Conference.avif -> 217366 B image/avif
+image  wp-content/uploads/2026/07/1st-SEHA-National-Corporate-Case-Management-Symposium.avif -> 225566 B image/avif
+image  wp-content/uploads/2026/07/20th-Emirates-Critical-Care-Conference.avif -> 118715 B image/avif
+image  wp-content/uploads/2026/07/2nd-International-Paediatric-Neurodisability-and-Neurorehabilitation-Conference.avif -> 122533 B image/avif
+image  wp-content/uploads/2026/07/3rd-International-Paediatric-Neurodisability-and-Neurorehabilitation-Conference.avif -> 156049 B image/avif
+image  wp-content/uploads/2026/07/5th-International-Patient-Experience-Symposium.avif -> 164755 B image/avif
+image  wp-content/uploads/2026/07/7th-International-Physical-and-Rehabilitation-Medicine-Conference.avif -> 235080 B image/avif
+image  wp-content/uploads/2026/07/Cambridhe-Hospital-Logo.avif -> 12494 B image/avif
+image  wp-content/uploads/2026/07/Best-of-SCCM.avif -> 167715 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Health-Group-continues-expansion-across-Saudi-Arabia-with-capacity-increase-at-Cambridge-Hospital-Al-Khobar.avif -> 123473 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Achieves-JCI-Reaccreditation-Across-Its-UAE-Facilities.avif -> 27278 B image/avif
+image  wp-content/uploads/2026/07/Abu-Dhabi-Global-Health-Week-1.avif -> 234359 B image/avif
+image  wp-content/uploads/2026/07/GHE-Saudi-Arabia.avif -> 158772 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Expands-Its-Al-Ain-Facility.avif -> 165731 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Introduces-the-Kozyavkin-Method-in-the-UAE.avif -> 26918 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Joins-6th-TVM-Healthcare-Investors-Conference.avif -> 261506 B image/avif
+image  wp-content/uploads/2026/07/CMRC-ICU-Rehab-Symposium-2018-1.avif -> 150225 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Participates-in-the-Tawam-Case-Management-Symposium.avif -> 123293 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Participates-in-WHX-Dubai-2026-2.avif -> 183341 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Saudi-Arabia-Earns-Three-Year-CARF-Accreditation.avif -> 136466 B image/avif
+image  wp-content/uploads/2026/07/1st-Fujairah-ICU-Symposium-3.avif -> 163999 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Sponsors-the-14th-SEHA-International-Paediatric-Conference-1.avif -> 152207 B image/avif
+image  wp-content/uploads/2026/07/3rd-Annual-MENA-Physical-Medicine-and-Rehabilitation-Congress.avif -> 101951 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Hospital-Welcomes-Its-First-Patients-in-Saudi-Arabia.avif -> 78173 B image/avif
+image  wp-content/uploads/2026/07/Cambridge-Medical-Rehabilitation-Center-Accredited-by-The-Commission-on-Accreditation-of-Rehabilitation-Facilities-for-Stroke-Specialty-and-LTAC-Programs.avif -> 338067 B image/avif
+image  wp-content/uploads/2026/07/Emirates-Critical-Care-Conference.avif -> 202356 B image/avif
+image  wp-content/uploads/2026/07/Young-Patient-Walks-Independently-Following-an-Intensive-Kozyavkin-Programme-2.avif -> 110711 B image/avif
+image  wp-content/uploads/2026/07/A-Family-Reunion.avif -> 102556 B image/avif
+image  wp-content/uploads/2026/07/Musical-Parad-at-Al-Mudeef.avif -> 297429 B image/avif
+image  wp-content/uploads/2026/07/Al-Khobar-Openning.avif -> 150540 B image/avif
+image  wp-content/uploads/2026/07/Al-Ain-Football-Club.avif -> 178507 B image/avif
+image  wp-content/uploads/2026/07/Al-Ain-Staff-Sports-Day.avif -> 216697 B image/avif
+image  wp-content/uploads/2026/07/Musical-Gathering.avif -> 237135 B image/avif
+image  wp-content/uploads/2026/07/UAE-National-Day-1.avif -> 291533 B image/avif
+image  wp-content/uploads/2026/07/Flag-Day-Cambridge-Hospital-Al-Ain-1.avif -> 102907 B image/avif
+image  wp-content/uploads/2026/07/Cerebral-Palsy-Day-1.avif -> 102265 B image/avif
+image  wp-content/uploads/2026/07/World-Occupational-Therapy-Day-1.avif -> 210139 B image/avif
+image  wp-content/uploads/2026/07/Cultural-Foundation-Patient-Visit-2.avif -> 174778 B image/avif
+image  wp-content/uploads/2026/07/Outdoor-Activities-in-the-Facilities.avif -> 293635 B image/avif
+image  wp-content/uploads/2026/07/Cultural-Foundation-Patient-Visit-1.avif -> 128668 B image/avif
+image  wp-content/uploads/2026/07/Walkathon-Shakbout-City.avif -> 222160 B image/avif
+image  wp-content/uploads/2026/07/Creativity-Workshop-Saudi-Arabia.avif -> 127739 B image/avif
+image  wp-content/uploads/2026/07/Creativity-Workshop-Saudi-Arabia-1.avif -> 127739 B image/avif
+image  wp-content/uploads/2026/07/Customer-Service-Workshop-1.avif -> 208472 B image/avif
+image  wp-content/uploads/2026/07/Eid-Al-Adha-Celebrations.avif -> 230091 B image/avif
+image  wp-content/uploads/2026/07/Eid-Adha-Community-Support.avif -> 138508 B image/avif
+image  wp-content/uploads/2026/07/Mental-Health-Day-Saudi-Arabia.avif -> 194263 B image/avif
+image  wp-content/uploads/2026/07/Fatima-college-Collab.avif -> 223413 B image/avif
+image  wp-content/uploads/2026/07/Go-Green-Initiative.avif -> 271866 B image/avif
+image  wp-content/uploads/2026/07/Indoor-Patient-Experience-Activities.avif -> 264382 B image/avif
+image  wp-content/uploads/2026/07/Infection-Control.avif -> 168241 B image/avif
+image  wp-content/uploads/2026/07/International-Day-Elderly-patients-day-at-Al-Ain-2-1.avif -> 328831 B image/avif
+image  wp-content/uploads/2026/07/International-Day-Elderly-patients-day-at-Al-Ain-2.avif -> 328831 B image/avif
+image  wp-content/uploads/2026/07/1-International-Day-of-persons-with-disabilities.avif -> 239230 B image/avif
+image  wp-content/uploads/2026/07/International-Family-Day.avif -> 127174 B image/avif
+image  wp-content/uploads/2026/07/3.-International-Day-of-Nurses.avif -> 131853 B image/avif
+image  wp-content/uploads/2026/07/Untitled-1.Little-Champs.avif -> 159475 B image/avif
+image  wp-content/uploads/2026/07/Nurses-Career-Jeddah.avif -> 143945 B image/avif
+image  wp-content/uploads/2026/07/Patient-Experience-Activities-Dhahran-1.avif -> 271163 B image/avif
+image  wp-content/uploads/2026/07/Patient-Celebrations-and-Community-Experiences-1.avif -> 309125 B image/avif
+image  wp-content/uploads/2026/07/Patient-Experience-July.avif -> 229603 B image/avif
+image  wp-content/uploads/2026/07/Patient-Experience-Activities-Dhahran.avif -> 271163 B image/avif
+image  wp-content/uploads/2026/07/Patient-Experience-Dhahran-January.avif -> 250302 B image/avif
+image  wp-content/uploads/2026/07/7.-Eid-in-Dhahran-.avif -> 303687 B image/avif
+image  wp-content/uploads/2026/07/Ramadan-And-Awareness-Activities.avif -> 279974 B image/avif
+image  wp-content/uploads/2026/07/Ramadan-Gathering.avif -> 435123 B image/avif
+image  wp-content/uploads/2026/07/Red-Crescent-Ramadan-Campaign.avif -> 198358 B image/avif
+image  wp-content/uploads/2026/07/Ramadan-External-Iftar-Gathering-1.avif -> 343008 B image/avif
+image  wp-content/uploads/2026/07/Patient-Eid-Visit-at-SSMC.avif -> 99276 B image/avif
+image  wp-content/uploads/2026/07/Saudi-Year-End-Jeddah.avif -> 283296 B image/avif
+image  wp-content/uploads/2026/07/Founding-Day-Saudi-Arabia.avif -> 277557 B image/avif
+image  wp-content/uploads/2026/07/2.-Saudi-National-Day-.avif -> 216076 B image/avif
+image  wp-content/uploads/2026/07/Abu-Dhabi-Statistics-Center-Visit.avif -> 49852 B image/avif
+image  wp-content/uploads/2026/07/Stress-Time.avif -> 276172 B image/avif
+image  wp-content/uploads/2026/07/Stuttering-Day.avif -> 103622 B image/avif
+image  wp-content/uploads/2026/07/UAE-Team-Building.avif -> 436049 B image/avif
+image  wp-content/uploads/2026/07/End-year-Party-UAE.avif -> 287504 B image/avif
+image  wp-content/uploads/2026/07/Flag-Day-Cambridge-Hospital-Al-Ain.avif -> 102907 B image/avif
+image  wp-content/uploads/2026/07/Cerebral-Palsy-Day.avif -> 102265 B image/avif
+image  wp-content/uploads/2026/07/World-Patient-Safety-Day.avif -> 225730 B image/avif
+image  wp-content/uploads/2026/07/Worls-Physiotherapy-Day.avif -> 85137 B image/avif
+image  wp-content/uploads/2026/07/Your-Joy-is-our-Eid-1.avif -> 101561 B image/avif
+image  wp-content/uploads/2024/07/5-Years-Anniversary-%E2%80%93-Dr.-Ihab-El-Ghonimi.webp -> 33660 B image/webp
+image  wp-content/uploads/2024/07/Abdullah-Al-Mehrezi-A-Beacon-Of-Hope-And-A-Success-Story.webp -> 81224 B image/webp
+image  wp-content/uploads/2024/07/Abdullah-Jayoul-A-Success-Story.webp -> 19266 B image/webp
+image  wp-content/uploads/2024/07/Dr.-Ihab-El-Ghonimi-Interview-%E2%80%93-Fujairah-TV.webp -> 41712 B image/webp
+image  wp-content/uploads/2024/07/Dr.-Jamil-Itani-Interview-%E2%80%93-Fujairah-TV.webp -> 34816 B image/webp
+image  wp-content/uploads/2024/07/Dr.-Jamil-Itani-Interview-%E2%80%93-MBC-TV.webp -> 25774 B image/webp
+image  wp-content/uploads/2024/07/Dr.-Rober-Interview-%E2%80%93-Al-Arabiya-TV.webp -> 41230 B image/webp
+image  wp-content/uploads/2024/07/ECCC-2019-Coverage.webp -> 38070 B image/webp
+image  wp-content/uploads/2024/07/Mechanical-Ventilation-Important-Facts-In-The-Era-Of-COVID-19.webp -> 56362 B image/webp
+image  wp-content/uploads/2024/07/Year-Of-Tolerance-%E2%80%93-Dr.-Ihab-El-Ghonimi.webp -> 22986 B image/webp
+image  wp-content/uploads/2024/07/Cambridge-Medical-Rehabilitation-Center-Re-Accreditation-By-JCI-For-A-Gold-Standard-Of-Care.webp -> 24020 B image/webp
+image  wp-content/uploads/2025/02/8-Exercises-for-Easing-Tennis-Elbow-Plus-Prevention-Tips.webp -> 82176 B image/webp
+image  wp-content/uploads/2025/02/Brachial-Plexus-Injury-Diagnosis-Treatment-and-Rehabilitation.webp -> 44680 B image/webp
+image  wp-content/uploads/2025/02/Carpal-Tunnel-Syndrome-and-Other-Entrapment-Neuropathies-and-Role-of-Occupational-Therapy.webp -> 22076 B image/webp
+image  wp-content/uploads/2025/02/Lateral-Epicondylitis.webp -> 66336 B image/webp
+image  wp-content/uploads/2025/02/Newborn-Brachial-Plexus-Injuries.webp -> 62646 B image/webp
+image  wp-content/uploads/2025/02/Role-of-Physiotherapy-in-Shoulder-Pain-Management.webp -> 33950 B image/webp
+image  wp-content/uploads/2022/07/Emblem.avif -> 9191 B image/avif
+image  wp-content/uploads/2025/02/Neck-Pain.webp -> 40202 B image/webp
+image  wp-content/uploads/2025/02/Rheumatoid-Arthritis.webp -> 26148 B image/webp
+image  wp-content/uploads/2022/06/Emblem.avif -> 9191 B image/avif
+image  wp-content/uploads/2025/02/Tendinitis-Symptoms-Causes-Tests-And-Treatment.webp -> 61594 B image/webp
+skip   wp-content/uploads/2022/06/Emblem.avif (have)
+image  wp-content/uploads/2022/06/Emblem-2.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/06/Emblem-1.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/06/Emblem-5.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/06/Emblem-6.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/06/Emblem-3.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/06/Emblem-4.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/05/Emblem.avif -> 9191 B image/avif
+skip   wp-content/uploads/2022/06/Emblem-6.avif (have)
+image  wp-content/uploads/2022/05/Emblem-2.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/03/Emblem-4.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/03/Emblem.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/03/Emblem-2.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/03/Emblem-1.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/03/Emblem-3.avif -> 9191 B image/avif
+image  wp-content/uploads/2022/03/Emblem-5.avif -> 9191 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Bader-Abdulrahman.avif -> 33187 B image/avif
+image  wp-content/uploads/2026/07/Dr.Tamer-Mohamed.avif -> 31027 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Isra-Abdelrahim.avif -> 25269 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Maysa-Awad.avif -> 42421 B image/avif
+
+Saved 2026-10-09T09:59:38.755Z with tools/live-images/fetch.mjs (job2.json)
+pages  /sa/doctor/dr-mehnaz-abdul-ghafoor/ -> 118703 B
+pages  /sa/doctor/dr-ali-mohamed-ali-mahmoud/ -> 118829 B
+pages  /sa/doctor/dr-ahmad-mohamad-almohamady/ -> 120661 B
+pages  /sa/doctor/dr-wafaa-elsayed-abdelmageed-farag/ -> 118626 B
+pages  /sa/doctor/dr-abdulaziz-tariq-abdulsalam-alqutub/ -> 119843 B
+pages  /sa/doctor/dr-majed-taha-majed-osaylan/ -> 118568 B
+pages  /sa/doctor/dr-wissam-abdullah-al-safi/ -> 119706 B
+pages  /sa/doctor/omar-baaqil/ -> 119799 B
+pages  /sa/doctor/ahmed-eltahir/ -> 118966 B
+pages  /doctor/ahmed-abdallah/ -> 104932 B
+pages  /ae/doctor/ahmed-abdallah/ -> fail
+pages  /sa/doctor/ahmed-abdallah/ -> 120179 B
+pages  /sa/doctor/ahmed-rohoma/ -> 119784 B
+pages  /sa/doctor/abdulrahman-batarfi/ -> 118521 B
+pages  /sa/doctor/kashif-ahmed/ -> 120147 B
+pages  /sa/doctor/farahim-chaudhary/ -> 120213 B
+pages  /sa/doctor/ahmed-morsy/ -> 119758 B
+pages  /sa/doctor/mohammed-esmail/ -> 119072 B
+pages  /sa/doctor/suheib-ahmed/ -> 118901 B
+pages  /sa/doctor/wael-mabruk/ -> 118628 B
+pages  /sa/doctor/nada-mohamed/ -> 120111 B
+pages  /ae/doctor/bader-al-qahtani/ -> 110698 B
+pages  /sa/doctor/asmaa-abdullah/ -> 119692 B
+pages  /ae/doctor/tamer-eissa/ -> 110577 B
+pages  /ae/doctor/isra-adam/ -> 110679 B
+pages  /ae/doctor/maysa-osman/ -> 110578 B
+pages  /sa/doctor/mohamed-kallash/ -> 119104 B
+image  ae/wp-content/uploads/sites/2/2026/07/Our-Care-UAE.avif -> 55089 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Inpatient-Care-UAE.avif -> 38200 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Outpatient-Care-UAE.avif -> 41135 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Home-Health-Care-UAE.avif -> 40008 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Inschool-Care-UAE-1.avif -> 43270 B image/avif
+skip   ae/wp-content/uploads/sites/2/2026/07/HOME-Health-CARE-UAE.avif (have)
+image  ae/wp-content/uploads/sites/2/2026/07/Inschool-Care-UAE-2.avif -> 40245 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Inpatient-Care-UAE-1.avif -> 53565 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Post-Acute-Care-UAE-1.avif -> 50468 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Long-Term-Care-UAE.avif -> 44480 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Ventilated-Patients-Care-UAE-1.avif -> 42082 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/06/Pediatric-Care-UAE.avif -> 22150 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Palliative-Care-UAE-1.avif -> 103362 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/ICU-Critical-Care-UAE-1.avif -> 42619 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Outpatient-Care-UAE-2.avif -> 36152 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/PMNR-UAE.avif -> 200437 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Pediatric-Care-UAE-1.avif -> 38239 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Physiotherapy-UAE.avif -> 118315 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Occupational-Therapy-UAE-1.avif -> 97175 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Speech-Language-Therapy.avif -> 64587 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cerebral-Palsy-UAE-1.avif -> 88587 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/ICU-Critical-Care.avif -> 38960 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Long-Term-Care-UAE-1.avif -> 34979 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Ventilated-Patients-Care-UAE.avif -> 39842 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Palliative-Care-UAE.avif -> 36801 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Pediatric-Care-UAE.avif -> 34631 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Post-Acute-Care-Banner-UAE.avif -> 23862 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Geriatric-Care-UAE.avif -> 36940 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Long-Term-Acute-Care-AUE.avif -> 43998 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Long-Term-Care-2-UAE.avif -> 49865 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Pediatric-Long-Term-Care-UAE.avif -> 40952 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Neuromuscular-Rehabilitation-UAE-Ped.avif -> 29163 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Pulmonary-Rehabilitation-Pediatric-UAE.avif -> 34745 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Speech-and-Language-Pediatric-UAE.avif -> 38755 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Neurorehabilitation-UAE-1.avif -> 30164 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Post-Surgical-Rehabilitation-UAE-1.avif -> 43610 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Road-Traffic-Accident-UAE.avif -> 38745 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Long-Term-Ventilated-Care-UAE.avif -> 46664 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/VEntilation-Weaning-Program-UAE.avif -> 42518 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cerebral-Palsy-UAE.avif -> 36239 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Occupational-Therapy-UAE-Inner-Banner.avif -> 37834 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Pediatric-Outpatient-UAE.avif -> 57897 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/PMNR-Banner-UAE.avif -> 61631 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Physiotherapy-Banner-UAE.avif -> 38497 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Speech-Language-Therapy-UAE.avif -> 29267 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Geriatric-Care-Banner-KSA.avif -> 35819 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Long-Term-Acute-Care-Banner-KSA.avif -> 27718 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Long-Term-Care-Banner-KSA.avif -> 32140 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Pediatric-Long-Term-Care-KSA.avif -> 40952 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Neuromuscular-Rehab-banner-KSA.avif -> 37021 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Pulmonary-Rehabilitation-Pediatric-KSA.avif -> 34745 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Speech-and-Language-Pediatric-KSA.avif -> 38755 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Neurorhabilitation-Banner-KSA.avif -> 24413 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Post-Surgical-Rehabilitation-Banner-KSA.avif -> 32136 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Road-Traffic-Accident-Rehabilitation-KSA.avif -> 27860 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Long-term-VVentilated-Care-Banner-KSA-1.avif -> 46979 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/VEntilation-Weaning-Program-KSA.avif -> 42518 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/PMNR-KSA.png -> fail
+image  ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-UAE.avif -> 95463 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/06/Video-Thumbnail.avif -> 6206 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-Facility-1.avif -> 205839 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Exterior-1.avif -> 264233 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-Facility3.avif -> 123641 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Waiting-Area-2.avif -> 147674 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Waiting-Area.avif -> 95783 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Patient-Activity-Area.avif -> 130334 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Interior-1.avif -> 137482 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Corridor.avif -> 66487 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-Conference-Room-2.avif -> 77052 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-Facility5.avif -> 96136 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-Facility2-1.avif -> 102068 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-GYM.avif -> 93751 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-GYM-2.avif -> 91381 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Al-Mudeef-Center-GYM-3.avif -> 49099 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/06/Cambridge-Hospital-Abu-Dhabi.avif -> 23167 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Cambridge-Hospital-Abu-Dhabi-Extrerior-5.avif -> 95852 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Extrerior-Image-Abu-Dhabi.avif -> 118653 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Exterior-1.avif -> 115657 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Exterior-2.avif -> 200504 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Exterior-3.avif -> 164475 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Exterior-4.avif -> 238164 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Reception.jpg -> 251116 B image/jpeg
+image  ae/wp-content/uploads/sites/2/2026/08/Patient-Waiting-Room.jpg -> 166842 B image/jpeg
+image  ae/wp-content/uploads/sites/2/2026/08/Patient-Waiting-Area.jpg -> 178472 B image/jpeg
+image  ae/wp-content/uploads/sites/2/2026/08/Patient-Waitign-Room.jpg -> 191924 B image/jpeg
+image  ae/wp-content/uploads/sites/2/2026/08/Waiting-Room-4.jpg -> 183021 B image/jpeg
+image  ae/wp-content/uploads/sites/2/2026/08/Cambridge-Hospital-Abu-Dhabi-Patient-Room-2.avif -> 94001 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Cambridge-Hospital-Abu-Dhabi-Patient-Room.avif -> 87069 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Cambridge-Hospital-Abu-Dhabi-Patient-Room-3.avif -> 107788 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Cambridge-Hospital-Abu-Dhabi-GYM.avif -> 212767 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/08/Cambridge-Hospital-Abu-Dhabi-GYM-2.avif -> 114640 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-UAE.avif -> 61499 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Facility-Recreational-Garden.avif -> 302794 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Backyard.avif -> 135878 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Gait-Rehabilitation.avif -> 122808 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Inpatient-Room-1.avif -> 62440 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Inpatient-Room-2.avif -> 58661 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Kozyavkin-Rehabilitation.avif -> 136693 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Pediatric-Rehabilitation-2.avif -> 128426 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Rehabilitation-Gym-3.avif -> 100573 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-Waiting-Area-1.avif -> 80176 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/CMRC-Hospital-Al-Ain-Facility-Recreational-Garden.avif -> 226681 B image/avif
+
+Saved 2026-10-09T10:02:26.103Z with tools/live-images/fetch.mjs (job3.json)
+pages  /sa/ar/hospitals/cambridge-hospital-jeddah/ -> 187245 B
+pages  /sa/ar/hospitals/cambridge-hospital-dhahran/ -> 185246 B
+pages  /sa/ar/hospitals/cambridge-hospital-al-khobar/ -> 186582 B
+pages  /ae/ar/hospitals/cambridge-hospital-abu-dhabi/ -> 192930 B
+pages  /ae/ar/hospitals/cambridge-hospital-al-ain/ -> 207916 B
+pages  /ae/ar/hospitals/al-mudeef-center-abu-dhabi/ -> 191590 B
+image  ae/wp-content/uploads/sites/2/2026/07/Dr.-Bader-Abdulrahman.avif -> 33187 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Dr.-Isra-Abdelrahim.avif -> 25269 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Dr.-Maysa-Awad.avif -> 42421 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Dr.Tamer-Mohamed.avif -> 31027 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/AHMED-FATHY-AHMED-ABDALLAH-.avif -> 72028 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Dr.-Ahmad-Eltahir.avif -> 95190 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Dr.-Asma.avif -> 77109 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Ali-Mohamed-General-Practitioner.avif -> 96824 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Dr.-FARAHIM-HUSAIN-CHAUDHARY.avif -> 83119 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Dr.-Kashif-Raza-Bashir-Ahmed.avif -> 97975 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Dr.-Mohammed-Amin-Elsayed-Esmail.avif -> 88904 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Dr.-Nada-Ali-El-Shareef-Mohamed.avif -> 122221 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/08/Dr.-Suheib-Ali-Ahmed.avif -> 84723 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/PMNR-KSA.png -> fail
+
+Saved 2026-10-09T10:07:34.088Z with tools/live-images/fetch.mjs (job4.json)
+pages  /ae/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/ -> 168106 B
+pages  /sa/care/inpatient/pediatric-rehab/central-nervous-system-anomalies-rehab/ -> 173563 B
+pages  /ae/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/ -> 166441 B
+pages  /sa/care/inpatient/pediatric-rehab/long-term-cardiac-anomalies-rehab/ -> 171780 B
+pages  /ae/care/inpatient/pediatric-rehab/post-acute-care/ -> 168377 B
+pages  /sa/care/inpatient/pediatric-rehab/post-acute-care/ -> 173778 B
+pages  /ae/care/inpatient/pediatric-rehab/pediatric-transitional-care/ -> 169402 B
+pages  /sa/care/inpatient/pediatric-rehab/pediatric-transitional-care/ -> 174763 B
+pages  /ae/care/inpatient/post-acute-rehab/musculoskeletal-rehab/ -> 166420 B
+pages  /sa/care/inpatient/post-acute-rehab/musculoskeletal-rehab/ -> 171884 B
+pages  /ae/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/ -> 168301 B
+pages  /sa/care/inpatient/post-acute-rehab/neuro-rehab/spinal-cord-injury-rehab/ -> 173686 B
+pages  /ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/ -> 167225 B
+pages  /sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab/ -> 172669 B
+pages  /ae/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/ -> 167500 B
+pages  /sa/care/inpatient/post-acute-rehab/neuro-rehab/traumatic-brain-injury-rehab/ -> 173002 B
+
+Saved 2026-10-09T10:08:46.136Z with tools/live-images/fetch.mjs (job5.json)
+image  ae/wp-content/uploads/sites/2/2026/07/Central-System-Anomalies-UAE.avif -> 33927 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/LOng-Term-Cardiac-Anomalies-UAE.avif -> 32979 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Pediatric-Transitional-Care-UAE.avif -> 38207 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Post-Acute-Pediatic-UAE.avif -> 39734 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Musculoskeletal-Rehabilitation-UAE.avif -> 50404 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Spinal-Cord-Rehabilitation-UAE-1.avif -> 38117 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Stroke-Rehabilitation-UAE-1.avif -> 38376 B image/avif
+image  ae/wp-content/uploads/sites/2/2026/07/Traumatic-Brain-Injury-UAE.avif -> 33814 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Central-System-Anomalies-KSA.avif -> 33927 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Long-Term-Cardiac-Anomalies-Banner-KSA.avif -> 32427 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Pediatric-Transitional-Care-Banner-KSA.avif -> 45472 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Post-Acute-Pediatric-Banner-KSA-1.avif -> 33626 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Musculoskeletal-Rehab-Banner-KSA.avif -> 40290 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Spinal-Cord-Rehabilitation-Banner-KSA.avif -> 36540 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Stroke-Rehabilitation-Banner-KSA-1.avif -> 32725 B image/avif
+image  sa/wp-content/uploads/sites/3/2026/07/Traumatic-Brain-Injury-KSA.avif -> 20723 B image/avif
+

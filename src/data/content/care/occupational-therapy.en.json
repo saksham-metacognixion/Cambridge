@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Occupational.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Occupational.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/occupational-therapy/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/occupational-therapy/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Occupational Therapy",
     "title": [
       "Occupational",
       "Therapy"
     ],
-    "text": "For patients who need support with movement and daily activities, to restore functional skills, build independence and manage everyday life with greater confidently."
+    "text": "For patients who need support with movement and daily activities, to restore functional skills, build independence and manage everyday life with greater confidently.",
+    "banner": {
+      "image": "care/heroes/occupational-therapy",
+      "alt": ""
+    }
   },
   "overview": [
     "Occupational therapy helps patients overcome the physical, cognitive and practical challenges that can make everyday activities more difficult, from preparing a meal and managing medication to caring for themselves and their families. Rather than asking patients to adapt to the task, our occupational therapists adapt the task and the environment to suit each patient, equipping them with the skills, strategies and confidence to manage daily life more independently."
@@ -137,5 +141,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 604,
+      "w": 448
+    }
+  }
 }

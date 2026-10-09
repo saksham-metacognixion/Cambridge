@@ -13,25 +13,36 @@ import path from 'node:path';
 
 const read = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const write = (f, d) => fs.writeFileSync(f, JSON.stringify(d, null, 2) + '\n');
-// Only folders with a media.json (grabber output): docs/cambridge-images-ksa holds flat live-site files without one (bug 063).
-const dirs = fs.readdirSync('docs').filter((d) => d.startsWith('cambridge-images') && fs.existsSync(`docs/${d}/media.json`)).map((d) => `docs/${d}`);
-if (!dirs.length) throw new Error('no docs/cambridge-images*/ folder with a media.json (unpack cambridge-images.tar there)');
+// Folders with a media.json (grabber output: WordPress media id -> upload path) or a _map.json (flat live-site files without
+// media ids, e.g. docs/cambridge-images-ksa, bug 063: { doctors: { <slug>: <file> }, testimonials: {...}, insurers: {...} }).
+const dirs = fs.readdirSync('docs').filter((d) => d.startsWith('cambridge-images') && (fs.existsSync(`docs/${d}/media.json`) || fs.existsSync(`docs/${d}/_map.json`))).map((d) => `docs/${d}`);
+if (!dirs.length) throw new Error('no docs/cambridge-images*/ folder with a media.json or _map.json (unpack cambridge-images.tar there)');
 
 /** upload path (wp-content/uploads/...) -> local file, original bytes preferred */
 const files = new Map();
 const media = {};
+/** "<type>/<slug>" -> local file, from the _map.json folders */
+const flat = new Map();
 for (const d of dirs) {
-  Object.assign(media, read(`${d}/media.json`).media);
+  if (fs.existsSync(`${d}/media.json`)) Object.assign(media, read(`${d}/media.json`).media);
+  if (fs.existsSync(`${d}/_map.json`)) {
+    const m = read(`${d}/_map.json`);
+    for (const type of ['doctors', 'testimonials', 'insurers']) for (const [slug, f] of Object.entries(m[type] ?? {})) flat.set(`${type}/${slug}`, `${d}/${f}`);
+  }
   const walk = (p) => fs.readdirSync(p, { withFileTypes: true }).forEach((e) => (e.isDirectory() ? walk(`${p}/${e.name}`) : e.name !== '.DS_Store' && add(`${p}/${e.name}`)));
   const add = (f) => {
     const rel = path.relative(d, f);
-    const key = rel.replace(/\.webp$/, '') === rel ? rel : rel.slice(0, -5);
-    const original = !rel.endsWith('.webp') || /\.webp$/.test(key);
+    // <path>.avif.webp = the grabber's browser re-encode of <path>.avif; a plain .webp (the older posts) is an original
+    const key = /\.(avif|png|jpe?g|gif)\.webp$/i.test(rel) ? rel.slice(0, -5) : rel;
+    const original = key === rel;
     if (!files.has(key) || original) files.set(key, f);
   };
-  walk(`${d}/wp-content`);
+  if (fs.existsSync(`${d}/wp-content`)) walk(`${d}/wp-content`);
 }
 const fileFor = (id) => media[id] && files.get(media[id]);
+/** the live file for an empty slot: by WordPress media id, else by slug from a _map.json */
+const slotFile = (type, slug, id) => fileFor(id) || flat.get(`${type}/${slug}`);
+const source = (f, id) => (fileFor(id) === f ? media[id] : path.relative("docs", f));
 const copy = (src, key) => {
   const ext = path.extname(src);
   const dest = `src/assets/${key}${ext}`;
@@ -43,35 +54,35 @@ const report = [];
 
 const docFile = read('src/data/doctors.json');
 for (const d of docFile.doctors) {
-  const f = !d.photo && fileFor(d.wp_media);
+  const f = !d.photo && slotFile('doctors', d.slug, d.wp_media);
   if (!f) continue;
   copy(f, `doctors/wp/${d.slug}`);
   d.photo = `doctors/wp/${d.slug}`;
-  report.push(`- doctor ${d.slug}: photo ${media[d.wp_media]}`);
+  report.push(`- doctor ${d.slug}: photo ${source(f, d.wp_media)}`);
 }
 write('src/data/doctors.json', docFile);
 
 const testFile = read('src/data/testimonials.json');
 const tpl = testFile.testimonials.find((t) => t.slug === 'mohamed-al-menhali');
 for (const t of testFile.testimonials) {
-  const f = !t.photo && fileFor(t.wp_media);
+  const f = !t.photo && slotFile('testimonials', t.slug, t.wp_media);
   if (!f) continue;
   copy(f, `testimonials/wp/${t.slug}`);
   const { w, h, x, y } = tpl.photo;
   t.photo = { image: `testimonials/wp/${t.slug}`, alt: { ...t.name }, w, h, x, y };
   t.layers = [...tpl.layers];
-  report.push(`- testimonial ${t.slug}: photo ${media[t.wp_media]}`);
+  report.push(`- testimonial ${t.slug}: photo ${source(f, t.wp_media)}`);
 }
 write('src/data/testimonials.json', testFile);
 
 const insFile = read('src/data/insurers.json');
 for (const x of insFile.insurers) {
-  const f = !x.logo && fileFor(x.wp_media);
+  const f = !x.logo && slotFile('insurers', x.slug, x.wp_media);
   if (!f) continue;
   copy(f, `insurance/wp/${x.slug}`);
   // live tile 325 x 180 (logo + its own white margin), centred in the 194.77 x 88.79 area above the name bar
   x.logo = { image: `insurance/wp/${x.slug}`, w: 136, h: 75.32, x: 29.39, y: 6.74 };
-  report.push(`- insurer ${x.slug}: logo ${media[x.wp_media]}`);
+  report.push(`- insurer ${x.slug}: logo ${source(f, x.wp_media)}`);
 }
 write('src/data/insurers.json', insFile);
 
@@ -87,6 +98,12 @@ for (const p of list) {
   report.push(`- news ${p.image}`);
 }
 
-fs.writeFileSync('docs/wp-images-import.md', `# Live site images wired in\n\nGenerated by \`tools/import-wp-images.mjs\` from ${dirs.join(', ')} (${files.size} images saved from the live site with \`tools/make-image-grabber.mjs\`; the rest answered 403, NW1).\nOnly empty slots are filled: Figma images stay.\n\n${report.join('\n')}\n`);
+// The report keeps every slot ever wired (earlier runs + hand-written lines); this run's new lines are appended.
+const REPORT = 'docs/wp-images-import.md';
+const old = fs.existsSync(REPORT) ? fs.readFileSync(REPORT, 'utf8') : '';
+const kept = old.split('\n').filter((l) => l.startsWith('- '));
+const fresh = report.filter((l) => !kept.includes(l));
+const notes = old.split('\n').filter((l) => l.startsWith('Note:'));
+fs.writeFileSync(REPORT, `# Live site images wired in\n\nGenerated by \`tools/import-wp-images.mjs\` from ${dirs.join(', ')} (${files.size} images saved from the live site with \`tools/make-image-grabber.mjs\` / \`tools/live-images/fetch.mjs\`; the rest answered 403, NW1).\nOnly empty slots are filled: Figma images stay. Lines accumulate across runs (${new Date().toISOString().slice(0, 10)}: ${fresh.length} new).\n\n${[...kept, ...fresh].join('\n')}\n${notes.length ? '\n' + notes.join('\n') + '\n' : ''}`);
 console.log(report.join('\n'));
 console.log(`${report.length} image(s) wired`);

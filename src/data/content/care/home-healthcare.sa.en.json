@@ -1,11 +1,15 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - KSA.md (5 Oct 2026): the KSA version of Home Care (two extra sections: Laboratory Services, Speech and Language Therapy Services; 'across Saudi Arabia'). Used on /sa; Global and /ae use home-care.en.json (UAE version), docs/open-decisions.md CT5.",
+  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - KSA.md (5 Oct 2026): the KSA version of Home Care (two extra sections: Laboratory Services, Speech and Language Therapy Services; 'across Saudi Arabia'). Used on /sa; Global and /ae use home-care.en.json (UAE version), docs/open-decisions.md CT5. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Home Care",
     "title": [
       "Home Care"
     ],
-    "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home."
+    "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
+    "banner": {
+      "image": "care/heroes/home-healthcare",
+      "alt": ""
+    }
   },
   "overview": [
     "Our home care services bring world-class care to patients in the comfort of their own homes. Whether patients are returning home after surgery, managing a health condition or continuing recovery after a rehabilitation programme, our home care teams provide the clinical support needed to recover safely and resume daily life with their families by their side."
@@ -220,5 +224,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 551,
+      "w": 448
+    }
+  }
 }

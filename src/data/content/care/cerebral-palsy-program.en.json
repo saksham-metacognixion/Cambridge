@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Cerebral Palsy.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Cerebral Palsy.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/cerebral-palsy-program/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/cerebral-palsy-program/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Cerebral Palsy Programme",
     "title": [
       "Cerebral Palsy",
       "Programme"
     ],
-    "text": "For children and adults living with cerebral palsy, to improve mobility, build muscle strength and support overall wellbeing using the Kozyavkin Method - introduced for the first time in the GCC at Cambridge Hospital."
+    "text": "For children and adults living with cerebral palsy, to improve mobility, build muscle strength and support overall wellbeing using the Kozyavkin Method - introduced for the first time in the GCC at Cambridge Hospital.",
+    "banner": {
+      "image": "care/heroes/cerebral-palsy-program",
+      "alt": ""
+    }
   },
   "overview": [
     "Cerebral palsy is a non-progressive neurological disorder caused by damage to the brain before, during or shortly after birth. Although the initial brain injury does not worsen over time, its effects can evolve as a child grows, affecting movement, muscle structure, coordination and internal organ function.",
@@ -108,5 +112,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 574,
+      "w": 448
+    }
+  }
 }

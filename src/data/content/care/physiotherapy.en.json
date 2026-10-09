@@ -1,11 +1,15 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Physiotherapy.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Outpatient/EN-Physiotherapy.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/physiotherapy/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/outpatient/physiotherapy/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Physiotherapy",
     "title": [
       "Physiotherapy"
     ],
-    "text": "For patients experiencing pain, reduced movement, weakness or balance difficulties, to improve mobility, strength, balance and coordination."
+    "text": "For patients experiencing pain, reduced movement, weakness or balance difficulties, to improve mobility, strength, balance and coordination.",
+    "banner": {
+      "image": "care/heroes/physiotherapy",
+      "alt": ""
+    }
   },
   "overview": [
     "If a patient’s movement has been affected by trauma, injury, surgery or a medical condition, physiotherapy can help restore coordination, strength, balance, endurance and flexibility, while managing chronic pain and addressing postural problems."
@@ -128,5 +132,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 571,
+      "w": 448
+    }
+  }
 }

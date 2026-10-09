@@ -1,1 +1,19 @@
-{}
+{
+  "healing": {
+    "areas": [
+      {
+        "label": "المساحات الخارجية"
+      },
+      {
+        "label": "المساحات الداخلية"
+      },
+      {
+        "label": "CT Scan & Laboratory"
+      },
+      {
+        "label": "بنك الدم"
+      }
+    ]
+  },
+  "_note": "Gallery tab labels = the live Arabic hospital page (missing-image audit, 9 Oct 2026)."
+}

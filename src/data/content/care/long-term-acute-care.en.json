@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Long term acute care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Long-Term Care/EN-Long term acute care.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/long-term-care-rehab/long-term-acute-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/long-term-care-rehab/long-term-acute-care/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Long-Term Acute Care",
     "title": [
       "Long-Term Acute",
       "Care"
     ],
-    "text": "For clinically complex patients who need specialist medical care, intensive coordination and longer recovery - bridging the gap between intensive care and home."
+    "text": "For clinically complex patients who need specialist medical care, intensive coordination and longer recovery - bridging the gap between intensive care and home.",
+    "banner": {
+      "image": "care/heroes/long-term-acute-care",
+      "alt": ""
+    }
   },
   "overview": [
     "Some patients are past the immediate crisis but still too medically complex for a general ward or home. Long-term acute care at Cambridge Hospital provides intensive, specialist-led management for these clinically complex patients who need more time, closer oversight and carefully coordinated care to recover.",
@@ -115,5 +119,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 604,
+      "w": 448
+    }
+  }
 }

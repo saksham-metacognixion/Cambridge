@@ -1,0 +1,18 @@
+{
+ "$comment": "slug -> file for the doctor portraits saved from the live profile pages (no WordPress media id known); read by tools/import-wp-images.mjs",
+ "doctors": {
+  "bader-al-qahtani": "ae/wp-content/uploads/sites/2/2026/07/Dr.-Bader-Abdulrahman.avif",
+  "isra-adam": "ae/wp-content/uploads/sites/2/2026/07/Dr.-Isra-Abdelrahim.avif",
+  "maysa-osman": "ae/wp-content/uploads/sites/2/2026/07/Dr.-Maysa-Awad.avif",
+  "tamer-eissa": "ae/wp-content/uploads/sites/2/2026/07/Dr.Tamer-Mohamed.avif",
+  "ahmed-abdallah": "sa/wp-content/uploads/sites/3/2026/08/AHMED-FATHY-AHMED-ABDALLAH-.avif",
+  "ahmed-eltahir": "sa/wp-content/uploads/sites/3/2026/08/Dr.-Ahmad-Eltahir.avif",
+  "asmaa-abdullah": "sa/wp-content/uploads/sites/3/2026/07/Dr.-Asma.avif",
+  "ali-mahmoud": "sa/wp-content/uploads/sites/3/2026/08/Ali-Mohamed-General-Practitioner.avif",
+  "farahim-chaudhary": "sa/wp-content/uploads/sites/3/2026/08/Dr.-FARAHIM-HUSAIN-CHAUDHARY.avif",
+  "kashif-ahmed": "sa/wp-content/uploads/sites/3/2026/08/Dr.-Kashif-Raza-Bashir-Ahmed.avif",
+  "mohammed-esmail": "sa/wp-content/uploads/sites/3/2026/08/Dr.-Mohammed-Amin-Elsayed-Esmail.avif",
+  "nada-mohamed": "sa/wp-content/uploads/sites/3/2026/08/Dr.-Nada-Ali-El-Shareef-Mohamed.avif",
+  "suheib-ahmed": "sa/wp-content/uploads/sites/3/2026/08/Dr.-Suheib-Ali-Ahmed.avif"
+ }
+}

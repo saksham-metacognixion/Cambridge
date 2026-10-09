@@ -50,6 +50,8 @@ for k in about/banner care/banner-inpatient-care care/banner-our-care care/banne
   forms/feedback-hero patient-hub/banner why/banner international/banner careers/banner testimonials-page/banner; do
   python3 -I tools/region-photos/fix-bg-edge.py "$k" sa
 done
+# Testimonials (bug 066): the KSA girl stands right of the Global one, uncovering the top pill's faded end -> solid under her hair.
+python3 -I tools/region-photos/extend-pill.py testimonials-page/banner sa 36 86 780 930
 
 photo() { mkdir -p "$R/$(dirname "$1")"; cp "$K/$2.avif" "$R/$1.avif"; }
 photo care/inpatient/icu-critical-care ICU-Critical-Care-KSA-1

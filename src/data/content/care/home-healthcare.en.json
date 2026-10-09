@@ -1,11 +1,15 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - UAE.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - UAE.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Home Care",
     "title": [
       "Home Care"
     ],
-    "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home."
+    "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
+    "banner": {
+      "image": "care/heroes/home-healthcare",
+      "alt": ""
+    }
   },
   "overview": [
     "Our home care services bring world-class care to patients in the comfort of their own homes. Whether patients are returning home after surgery, managing a health condition or continuing recovery after a rehabilitation programme, our home care teams provide the clinical support needed to recover safely and resume daily life with their families by their side."
@@ -180,5 +184,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 551,
+      "w": 448
+    }
+  }
 }

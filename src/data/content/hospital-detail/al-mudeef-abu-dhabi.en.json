@@ -1,12 +1,12 @@
 {
-  "_note": "Al Mudeef Centre (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: the Abu Dhabi banner is the placeholder (HD1 / CT4); the gallery section shows the shared text without photos. video.host / video.id: empty = the play button does nothing (A3).",
+  "_note": "Al Mudeef Centre (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/al-mudeef-center-abu-dhabi/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/al-mudeef-center-abu-dhabi/, Al-Mudeef-Center-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers).",
   "hero": {
     "title": [
       "Al Mudeef Centre"
     ],
     "text": "Long term care and rehabilitation, providing continuous clinical support for adolescents and adults with complex medical and disability related needs.",
     "banner": {
-      "image": "hospital-detail/banner-abu-dhabi",
+      "image": "hospital-detail/banner-al-mudeef-abu-dhabi",
       "alt": ""
     }
   },
@@ -21,6 +21,101 @@
     ]
   },
   "healing": {
-    "areas": []
+    "areas": [
+      {
+        "key": "outdoor-spaces",
+        "label": "Outdoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-facility-1",
+            "alt": "Al Mudeef Centre Abu Dhabi - Facility 1"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-exterior-1",
+            "alt": "Al Mudeef Centre Abu Dhabi - Exterior 1"
+          }
+        ]
+      },
+      {
+        "key": "indoor-spaces",
+        "label": "Indoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-facility3",
+            "alt": "Al Mudeef Centre Abu Dhabi - Facility3"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-waiting-area-2",
+            "alt": "Al Mudeef Centre Abu Dhabi - Waiting Area 2"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-waiting-area",
+            "alt": "Al Mudeef Centre Abu Dhabi - Waiting Area"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-patient-activity-area",
+            "alt": "Al Mudeef Centre Abu Dhabi - Patient Activity Area"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-interior-1",
+            "alt": "Al Mudeef Centre Abu Dhabi - Interior 1"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-corridor",
+            "alt": "Al Mudeef Centre Abu Dhabi - Corridor"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-conference-room-2",
+            "alt": "Al Mudeef Centre Abu Dhabi - Conference Room 2"
+          }
+        ]
+      },
+      {
+        "key": "amenities",
+        "label": "Amenities",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-facility5",
+            "alt": "Al Mudeef Centre Abu Dhabi - Facility5"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-facility2-1",
+            "alt": "Al Mudeef Centre Abu Dhabi - Facility2 1"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-facility3",
+            "alt": "Al Mudeef Centre Abu Dhabi - Facility3"
+          }
+        ]
+      },
+      {
+        "key": "gyms",
+        "label": "Gyms",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-gym",
+            "alt": "Al Mudeef Centre Abu Dhabi - GYM"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-gym-2",
+            "alt": "Al Mudeef Centre Abu Dhabi - GYM 2"
+          },
+          {
+            "image": "hospital-detail/al-mudeef-abu-dhabi/al-mudeef-center-gym-3",
+            "alt": "Al Mudeef Centre Abu Dhabi - GYM 3"
+          }
+        ]
+      }
+    ]
+  },
+  "heroLayout": {
+    "small": {
+      "x": 506,
+      "w": 448
+    }
   }
 }

@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Musculoskeletal Rehab main.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Musculoskeletal Rehab main.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/post-acute-rehab/musculoskeletal-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/post-acute-rehab/musculoskeletal-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Musculoskeletal Rehabilitation",
     "title": [
       "Musculoskeletal",
       "Rehabilitation"
     ],
-    "text": "For patients recovering from musculoskeletal injuries, chronic conditions or post-surgical limitations affecting movement, to regain independence and strength."
+    "text": "For patients recovering from musculoskeletal injuries, chronic conditions or post-surgical limitations affecting movement, to regain independence and strength.",
+    "banner": {
+      "image": "care/heroes/musculoskeletal-rehabilitation",
+      "alt": ""
+    }
   },
   "overview": [
     "Patients recovering from a bone, joint or soft tissue injury, or from orthopaedic surgery, can benefit from our specialised musculoskeletal rehabilitation programme to restore mobility, rebuild strength and return to daily life with confidence. Care is individualised and expert-led, based on each patient’s needs, goals and stage of recovery."
@@ -60,5 +64,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 604,
+      "w": 448
+    }
+  }
 }

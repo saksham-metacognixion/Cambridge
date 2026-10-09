@@ -1,5 +1,5 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN - Pulmonary.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN - Pulmonary.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/pulmonary-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/pulmonary-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Paediatric Pulmonary Rehabilitation",
     "title": [
@@ -7,7 +7,11 @@
       "Pulmonary",
       "Rehabilitation"
     ],
-    "text": "For children with chronic respiratory conditions requiring monitored therapy and long-term management, to help children breathe easier."
+    "text": "For children with chronic respiratory conditions requiring monitored therapy and long-term management, to help children breathe easier.",
+    "banner": {
+      "image": "care/heroes/pulmonary-rehab",
+      "alt": ""
+    }
   },
   "overview": [
     "For children living with chronic respiratory conditions, even simple daily activities can feel exhausting. Paediatric pulmonary rehabilitation provides structured support that helps children breathe more comfortably and stay active. Through guided breathing techniques, targeted physical training and practical education, the programme helps strengthen lung function and builds confidence in managing symptoms."
@@ -141,5 +145,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 572,
+      "w": 448
+    }
+  }
 }

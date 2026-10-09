@@ -1,11 +1,15 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/School/EN - In-School Care.md (5 Oct 2026), the 'New Text' column of the current/new table, text exactly as in the document. No Figma banner: shared placeholder (CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/School/EN - In-School Care.md (5 Oct 2026), the 'New Text' column of the current/new table, text exactly as in the document. No Figma banner: shared placeholder (CT4). Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/in-school/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/in-school/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "In-School Care",
     "title": [
       "In-School Care"
     ],
-    "text": "Specialised therapy and rehabilitation for children, delivered within the school environment and integrated into their daily routine."
+    "text": "Specialised therapy and rehabilitation for children, delivered within the school environment and integrated into their daily routine.",
+    "banner": {
+      "image": "care/heroes/in-school",
+      "alt": ""
+    }
   },
   "overview": [
     "Our In-School therapy programme brings structured, clinically supervised rehabilitation into the child’s everyday learning experience.",
@@ -186,5 +190,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 540,
+      "w": 448
+    }
+  }
 }

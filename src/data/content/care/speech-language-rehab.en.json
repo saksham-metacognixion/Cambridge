@@ -1,12 +1,16 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Speech and language rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Paediatric Rehab/EN-Speech and language rehab.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/speech-language-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/speech-language-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Speech and Language Rehabilitation",
     "title": [
       "Speech and Language",
       "Rehabilitation"
     ],
-    "text": "For children and adults with communication, speech or swallowing difficulties, to help patients communicate more clearly, confidently and independently."
+    "text": "For children and adults with communication, speech or swallowing difficulties, to help patients communicate more clearly, confidently and independently.",
+    "banner": {
+      "image": "care/heroes/speech-language-rehab",
+      "alt": ""
+    }
   },
   "overview": [
     "Communication is fundamental to how we connect with others, and when it becomes difficult, it can bring isolation, frustration and a loss of confidence. Speech and language therapy helps patients overcome these barriers and express their needs, thoughts and emotions.",
@@ -92,5 +96,11 @@
         }
       ]
     }
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 552,
+      "w": 448
+    }
+  }
 }

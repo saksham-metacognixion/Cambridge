@@ -1,0 +1,9 @@
+{
+ "$comment": "WordPress media id -> upload path for the files saved from the live site with tools/live-images/fetch.mjs (missing-image audit, 9 Oct 2026); read by tools/import-wp-images.mjs. Ids from the WordPress export (docs/cambridgehospital.WordPress.2026-10-06.xml).",
+ "media": {
+  "20033": "wp-content/uploads/2026/07/Dr.-Bader-Abdulrahman.avif",
+  "20036": "wp-content/uploads/2026/07/Dr.Tamer-Mohamed.avif",
+  "20038": "wp-content/uploads/2026/07/Dr.-Isra-Abdelrahim.avif",
+  "20039": "wp-content/uploads/2026/07/Dr.-Maysa-Awad.avif"
+ }
+}

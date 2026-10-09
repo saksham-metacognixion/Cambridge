@@ -24,14 +24,16 @@ const design = [
   { w: 37, h: 62, x: 793, y: 71 },
   { w: 107, h: 33, x: 885, y: 94 },
 ];
+// Logos fit inside their box (object-contain): the Global / UAE logos are the client's L3 files trimmed to their artwork
+// (9 Oct 2026), whose ratio differs a little from the Figma boxes; a cover fit would cut their edges.
 // Insurers of this edition's country only (bug 048, src/data/insurers.json `regions`, the Insurance Providers page's data).
 // Global, and an edition that offers every Figma logo (UAE), keep the Figma strip; otherwise (KSA) the country's insurers
 // flagged `homeStrip` (the six the live /sa Home shows; else the first seven with a logo) sit in one centred row at the Figma
 // logo band (y 71..133), logos 62 high, the Figma dividers between them. The gap shrinks from Figma's 96 so the row fits the
 // strip's 992 (x 30..1022): six 112-wide tiles = 64.
-type Ins = { slug: string; name: { en: string; ar: string }; regions: string[]; homeStrip?: boolean; logo?: { image: string; w: number; h: number } };
+type Ins = { slug: string; name: { en: string; ar: string }; regions: string[]; homeStrip?: boolean; homeLogo?: string; logo?: { image: string; w: number; h: number } };
 const insurers = insurerData.insurers as Ins[];
-const regionOf = (image: string) => insurers.find((x) => x.logo?.image === image)?.regions ?? [];
+const regionOf = (image: string) => insurers.find((x) => x.logo?.image === image || x.homeLogo === image)?.regions ?? [];
 const figmaFits = edition.region === 'global' || (txt.logos as { image: string }[]).every((l) => regionOf(l.image).includes(edition.region));
 const ofRegion = insurers.filter((x) => x.logo && x.regions.includes(edition.region));
 const strip = ofRegion.some((x) => x.homeStrip) ? ofRegion.filter((x) => x.homeStrip) : ofRegion.slice(0, 7);
@@ -54,7 +56,7 @@ const dividers = figmaFits ? [148, 273, 423, 568, 758, 864] : [];
     <ul class:list={['m-0 list-none p-0 max-lg:mt-30 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:justify-center max-lg:gap-x-30 max-lg:gap-y-20', figmaFits ? 'lg:contents' : 'flow']} style={`--gap:${gap}`}>
       {logos.map((l) => (
         <li class:list={['relative shrink-0', figmaFits && 'lg:absolute']} style={`--lw:${l.w}; --lh:${l.h}; --lx:${l.x + F}; --ly:${l.y}`} data-logo>
-          <Image src={l.src} format="webp" width={px(l.w)} height={px(l.h)} densities={[1, 2]} loading="lazy" decoding="async" alt={l.alt} class="block h-full w-full object-cover" />
+          <Image src={l.src} format="webp" width={px(l.w)} height={px(l.h)} fit="contain" densities={[1, 2]} loading="lazy" decoding="async" alt={l.alt} class="block h-full w-full object-contain" />
         </li>
       ))}
     </ul>

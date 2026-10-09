@@ -57,6 +57,7 @@ const topics = own?.topics?.length ? { active: 0, items: own.topics } : undefine
 const kids = node.children.filter((k) => careInRegion(k.slug, edition.region)); // bug 047: services of this country only
 const photoCards = kids.length > 0 && kids.every((k) => k.image);
 const cards = kids.map((k) => ({
+  icon: k.icon,
   title: t(k.cardTitle ?? k.title, loc, 'care'),
   text: t(k.desc, loc, 'care'),
   href: urlFor(edition, CARE_PATHS.of([...trail, k.slug])),

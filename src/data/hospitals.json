@@ -1,5 +1,5 @@
 {
-  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format), hours ({en, ar}) and mapUrl are NOT in Figma or the documents and wait for Pramod (empty = not shown; empty mapUrl = Google Maps search for the address). Arabic names, list titles, addresses and 'View Centre' = the live site's Arabic Our Hospitals page and footer (WordPress export pages 19104 / 19153 / block 19169, 6 Oct 2026). location (bug 051, the ONE place for hospital positions: Contact Us map markers, directions links, hospital-page 'Open in Google Maps'): lat / lng = the hospital's exact position (required for a marker), placeId = its Google Place ID (optional, sharpens the directions link), source = where the value comes from. Five positions = the hospital's own Google place, checked 7 Oct 2026 (client approval pending, R051). Jeddah has NO verified position: lat / lng are null on purpose (no marker, no directions link) until the client supplies the exact coordinates or Place ID; never fill it with a guess or a Google search result.",
+  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format) and hours ({en, ar}) are NOT in Figma or the documents and wait for Pramod (empty = not shown). mapUrl = the live site's own 'Open in Google Maps' link of each hospital page (maps.app.goo.gl share links, saved live pages docs/cambridge-images-live/_pages/*/hospitals/*.html, 9 Oct 2026): the hospital pages' Google Maps button, and the Contact map card's directions link while a hospital has no position (Jeddah). Arabic names, list titles, addresses and 'View Centre' = the live site's Arabic Our Hospitals page and footer (WordPress export pages 19104 / 19153 / block 19169, 6 Oct 2026). location (bug 051, the ONE place for hospital positions: Contact Us map markers, directions links, hospital-page 'Open in Google Maps'): lat / lng = the hospital's exact position (required for a marker), placeId = its Google Place ID (optional, sharpens the directions link), source = where the value comes from. Five positions = the hospital's own Google place, checked 7 Oct 2026 (client approval pending, R051). Jeddah has NO verified position: lat / lng are null on purpose (no marker, no directions link) until the client supplies the exact coordinates or Place ID; never fill it with a guess or a Google search result.",
   "hospitals": [
     {
       "slug": "abu-dhabi",
@@ -28,7 +28,7 @@
         "en": "",
         "ar": ""
       },
-      "mapUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/cNwu7Y3DRKWeeLG7A",
       "location": {
         "lat": 24.3507866,
         "lng": 54.6375318,
@@ -63,7 +63,7 @@
         "en": "",
         "ar": ""
       },
-      "mapUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/1keH2pXrpWKsJ3Qs5",
       "location": {
         "lat": 24.2311383,
         "lng": 55.6805982,
@@ -98,7 +98,7 @@
         "en": "",
         "ar": ""
       },
-      "mapUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/8KEQpYS5NZETYFx39",
       "location": {
         "lat": 26.3191904,
         "lng": 50.1556885,
@@ -133,7 +133,7 @@
         "en": "",
         "ar": ""
       },
-      "mapUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/MnsFmy7xkuJ15rtk8",
       "location": {
         "lat": 26.1862228,
         "lng": 50.2090257,
@@ -168,7 +168,7 @@
         "en": "",
         "ar": ""
       },
-      "mapUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/2d3gdXqVvhR8BSTa6",
       "location": {
         "lat": null,
         "lng": null,
@@ -207,7 +207,7 @@
         "en": "",
         "ar": ""
       },
-      "mapUrl": "",
+      "mapUrl": "https://maps.app.goo.gl/oamDRPNaKShr1P5s5",
       "location": {
         "lat": 24.3239001,
         "lng": 54.6089327,

@@ -39,9 +39,7 @@
     "submit": "SUBMIT"
   },
   "map": {
-    "image": "contact-page/map",
-    "alt": "",
-    "_note": "Bug 051: the static image is the placeholder until the Google map loads (lazy, when the section is near the screen or a hospital is chosen). On load the map shows a marker for every hospital of the edition (Global: all, /ae: UAE, /sa: KSA) and fits them; choosing a hospital in the form zooms to its marker and shows our card (name + address from hospitals.json, never Google's place name, and the directions link). Positions: hospitals.json location (no searches). directions = the card link label ('Open in Google Maps', the approved label of the hospital pages; no approved Arabic yet, R053). The map's accessible name = the header's 'Our Hospitals' label (EN / AR).",
+    "_note": "Bug 051: a neutral drawing (inline SVG in ContactForm.astro: no place names, no pins; replaced the old screenshot labelled 'Cambridge Medical & Rehabilitation Center' on 9 Oct 2026) is the placeholder until the Google map loads (lazy, when the section is near the screen or a hospital is chosen). On load the map shows a marker for every hospital of the edition (Global: all, /ae: UAE, /sa: KSA) and fits them; choosing a hospital in the form zooms to its marker and shows our card (name + address from hospitals.json, never Google's place name, and the directions link). Positions: hospitals.json location (no searches). directions = the card link label ('Open in Google Maps', the approved label of the hospital pages; no approved Arabic yet, R053). The map's accessible name = the header's 'Our Hospitals' label (EN / AR).",
     "directions": "Open in Google Maps"
   },
   "details": {

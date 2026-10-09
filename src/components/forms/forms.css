@@ -83,6 +83,10 @@
 .gf-dial .dial-code { inset-inline-start: calc(23.44 * var(--u)); inset-block-start: calc(7.21 * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
 .pf-dial .dial-code { inset-inline-start: calc(var(--pf-dial-pad, 25.62) * var(--u)); inset-block-start: calc(8 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
 .dial img[hidden] { display: none; }
+/* No flag (only the UAE one exists in Figma, e.g. +966 on KSA): centre the code in the space left of the chevron
+   instead of leaving the empty flag slot and crowding the chevron. */
+.gf-dial:has(img[data-flag-for][hidden]) .dial-code { inset-inline: 0 calc((5.19 + 6.527) * var(--u)); text-align: center; }
+.pf-dial:has(img[data-flag-for][hidden]) .dial-code { inset-inline: 0 calc((var(--pf-dial-chev-x, 5.68) + var(--pf-dial-chev-w, 7.135)) * var(--u)); text-align: center; }
 
 .gf-area {
   block-size: calc(var(--h) * var(--u)); inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; resize: none;

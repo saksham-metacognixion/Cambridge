@@ -1,5 +1,5 @@
 {
-  "_note": "Abu Dhabi Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. Banner, video poster and the four gallery photos = the Figma Abu Dhabi frame; the old 'Outdoor Spaces' text is replaced by the shared 'Designed for Comfort' text. video.host / video.id: empty = the play button does nothing (A3).",
+  "_note": "Abu Dhabi Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. Banner, video poster and the four gallery photos = the Figma Abu Dhabi frame; the old 'Outdoor Spaces' text is replaced by the shared 'Designed for Comfort' text. video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/cambridge-hospital-abu-dhabi/), the same 16 files as the client's folder (I2-R8_Advanced-Care-in-Abu-Dhabi*), wired by tools/live-images/wire-hospitals.py (client assets, 9 Oct 2026: replaces the four Figma gallery photos).",
   "hero": {
     "title": [
       "Abu Dhabi Hospital"
@@ -25,23 +25,92 @@
       {
         "key": "outdoor-spaces",
         "label": "Outdoor Spaces",
-        "active": 2,
+        "active": 0,
         "images": [
           {
-            "image": "hospital-detail/gallery-1",
-            "alt": ""
+            "image": "hospital-detail/abu-dhabi/cambridge-hospital-abu-dhabi-extrerior-5",
+            "alt": "Cambridge Hospital Abu Dhabi - Exterior 5"
           },
           {
-            "image": "hospital-detail/gallery-2",
-            "alt": ""
+            "image": "hospital-detail/abu-dhabi/extrerior-image-abu-dhabi",
+            "alt": "Cambridge Hospital Abu Dhabi - photo"
           },
           {
-            "image": "hospital-detail/gallery-3",
-            "alt": ""
+            "image": "hospital-detail/abu-dhabi/exterior-1",
+            "alt": "Cambridge Hospital Abu Dhabi - Exterior 1"
           },
           {
-            "image": "hospital-detail/gallery-4",
-            "alt": ""
+            "image": "hospital-detail/abu-dhabi/exterior-2",
+            "alt": "Cambridge Hospital Abu Dhabi - Exterior 2"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/exterior-3",
+            "alt": "Cambridge Hospital Abu Dhabi - Exterior 3"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/exterior-4",
+            "alt": "Cambridge Hospital Abu Dhabi - Exterior 4"
+          }
+        ]
+      },
+      {
+        "key": "indoor-spaces",
+        "label": "Indoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/abu-dhabi/reception",
+            "alt": "Cambridge Hospital Abu Dhabi - Reception"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/patient-waiting-room",
+            "alt": "Cambridge Hospital Abu Dhabi - Patient Waiting Room"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/patient-waiting-area",
+            "alt": "Cambridge Hospital Abu Dhabi - Patient Waiting Area"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/patient-waitign-room",
+            "alt": "Cambridge Hospital Abu Dhabi - Patient Waiting Room"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/waiting-room-4",
+            "alt": "Cambridge Hospital Abu Dhabi - Waiting Room 4"
+          }
+        ]
+      },
+      {
+        "key": "amenities",
+        "label": "Amenities",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/abu-dhabi/cambridge-hospital-abu-dhabi-patient-room-2",
+            "alt": "Cambridge Hospital Abu Dhabi - Patient Room 2"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/cambridge-hospital-abu-dhabi-patient-room",
+            "alt": "Cambridge Hospital Abu Dhabi - Patient Room"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/cambridge-hospital-abu-dhabi-patient-room-3",
+            "alt": "Cambridge Hospital Abu Dhabi - Patient Room 3"
+          }
+        ]
+      },
+      {
+        "key": "gyms",
+        "label": "Gyms",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/abu-dhabi/cambridge-hospital-abu-dhabi-gym",
+            "alt": "Cambridge Hospital Abu Dhabi - GYM"
+          },
+          {
+            "image": "hospital-detail/abu-dhabi/cambridge-hospital-abu-dhabi-gym-2",
+            "alt": "Cambridge Hospital Abu Dhabi - GYM 2"
           }
         ]
       }

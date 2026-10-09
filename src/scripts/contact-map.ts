@@ -5,7 +5,7 @@
 // Choosing a hospital (select change: mouse or keyboard) zooms to its marker, highlights it and fills our card (the site's
 // name + address, never Google's place name; directions to the exact position). A marker click does the same AND selects
 // that hospital in the form, so the dropdown, the map, the active marker and the card always agree (one activeId).
-// Fallback (no key, Google rejects the key, the script fails): the Figma map image stays in place, the select and the card
+// Fallback (no key, Google rejects the key, the script fails): the neutral placeholder drawing stays in place, the select and the card
 // (name, address, directions link) keep working, and the cause is logged. Never an iframe embed, never a search by name.
 // A hospital without a position (hospitals.json location lat / lng null: Jeddah until the client sends it) gets no marker and
 // no directions link; choosing it shows the overview and its card (name + address) and logs a warning.
@@ -91,7 +91,7 @@ if (canvas && card) {
   const cardOffset = () =>
     card.hidden ? 0 : card.offsetTop + card.offsetHeight;
 
-  // ---- state: "" = not started, "js" = Maps JavaScript API, "fallback" = Figma image + card only ----
+  // ---- state: "" = not started, "js" = Maps JavaScript API, "fallback" = placeholder drawing + card only ----
   let mode: "" | "js" | "fallback" = "";
   const fallback = (why: string, detail?: unknown) => {
     mode = "fallback";
@@ -102,10 +102,10 @@ if (canvas && card) {
     canvas.classList.remove("is-ready");
     canvas.replaceChildren();
     if (detail === undefined)
-      console.error(`${TAG} ${why}; showing the static map image instead`);
+      console.error(`${TAG} ${why}; showing the placeholder map instead`);
     else
       console.error(
-        `${TAG} ${why}; showing the static map image instead`,
+        `${TAG} ${why}; showing the placeholder map instead`,
         detail,
       );
     showCard(spotOf(select?.value));

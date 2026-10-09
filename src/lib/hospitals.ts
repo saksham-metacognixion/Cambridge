@@ -38,7 +38,12 @@ export interface Hospital {
   /** "Open in Google Maps" target; empty = the hospital's position (location), else a Google Maps search for the address */
   mapUrl?: string;
   /** exact position (bug 051): lat / lng null = not supplied yet (no marker, no directions link); placeId optional */
-  location: { lat: number | null; lng: number | null; placeId: string; source: string };
+  location: {
+    lat: number | null;
+    lng: number | null;
+    placeId: string;
+    source: string;
+  };
 }
 
 export const hospitals = hospitalData.hospitals as Hospital[];
@@ -101,12 +106,13 @@ const placeParam = (h: Hospital, name: string) =>
     ? `&${name}=${encodeURIComponent(h.location.placeId)}`
     : "";
 
-/** Google Maps directions to the hospital's exact position (+ Place ID when set); empty while the position is missing. */
+/** Google Maps directions to the hospital's exact position (+ Place ID when set); while the position is missing, the hospital's
+ *  own Google Maps link (mapUrl: the client's pin from the live site), else empty. Never a search by name. */
 export function directionsHref(h: Hospital): string {
   const p = hospitalPosition(h);
   return p
     ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}${placeParam(h, "destination_place_id")}`
-    : "";
+    : (h.mapUrl ?? "");
 }
 
 /** Google Maps target: the hospital's own URL, else its exact position, else a Maps search for its address. */

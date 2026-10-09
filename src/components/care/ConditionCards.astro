@@ -2,6 +2,7 @@
 import { urlFor, type Edition } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
 import { CONDITION_PATHS } from '../../lib/conditions';
+import { img } from '../../lib/images';
 import neuro from '../../assets/care/post-acute/icon-neuro.svg';
 import musculoskeletal from '../../assets/care/post-acute/icon-musculoskeletal.svg';
 import postSurgical from '../../assets/care/post-acute/icon-post-surgical.svg';
@@ -15,8 +16,9 @@ import accident from '../../assets/care/post-acute/icon-accident.svg';
  * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 (Figma 74 x 17 r3 at (16, 152), label "Know More"
  * Medium 8): now the shared .ui-btn (bugs 044 / 050), at the card's bottom. Card corners --radius-card (bug 049).
  * Card target: `href` (a care page, CarePage), `condition` (detail slug) or `page` (PAGE_PATHS).
- * `icon` is optional: the client's programme lists (Our Care documents, 5 Oct 2026) have no icons, so those cards start with the
- * title at the icon's top (docs/open-decisions.md CT6). `text` = optional intro paragraphs under the heading (Outpatient Care:
+ * `icon` is optional: one of the four Figma post-acute icons by name, or an image key (src/assets path, e.g. care/icons/icon-geriatric-care:
+ * the client's programme icons, 9 Oct 2026, care.json `icon`). Without one (the condition lists under a programme) the card starts
+ * with the title at the icon's top (docs/open-decisions.md CT6). `text` = optional intro paragraphs under the heading (Outpatient Care:
  * heading + two paragraphs + six text cards, same geometry as SubServiceGrid's intro).
  */
 interface Card { title: string; text: string; icon?: string; condition?: string; page?: string; href?: string }
@@ -26,7 +28,7 @@ const icons: Record<string, { src: string; width: number; height: number }> = { 
 const xs = [61, 298, 536, 773];
 const list = cards.map((k, i) => ({
   ...k,
-  icon: k.icon ? icons[k.icon] : undefined,
+  icon: k.icon ? (icons[k.icon] ?? img(k.icon, edition.region)) : undefined,
   x: xs[i % 4],
   href: k.href ?? (k.condition ? urlFor(edition, CONDITION_PATHS.detail(k.condition)) : k.page ? urlFor(edition, pagePath(k.page)) : '#'),
 }));

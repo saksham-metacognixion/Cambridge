@@ -1,5 +1,5 @@
 {
-  "_note": "Accreditations & Partnerships (Figma 55:12215). Text = Website Content - Suhad/About Cambridge/EN-Accreditations Tracked Changes.md with the tracked changes ACCEPTED (5 Oct 2026): all eight tabs now have content. The document asks to reconfirm the JAWDA section (name may have changed to Muashir), docs/open-decisions.md CT9. meta.* and alt texts are PLACEHOLDER.",
+  "_note": "Accreditations & Partnerships (Figma 55:12215). Text = Website Content - Suhad/About Cambridge/EN-Accreditations Tracked Changes.md with the tracked changes ACCEPTED (5 Oct 2026): all eight tabs now have content. The document asks to reconfirm the JAWDA section (name may have changed to Muashir), docs/open-decisions.md CT9. meta.* and alt texts are PLACEHOLDER. Seals (client assets, 9 Oct 2026): the client's L1 accreditation seals (docs/client-assets/accreditation-seals/, white background made transparent) in the other seven tabs, placed in the CARF seal's slot (589, 729) at 146 x 146.",
   "meta": {
     "title": "Accreditations & Partnerships | Cambridge Hospital",
     "description": "Cambridge Hospital's care is guided by internationally recognised standards that ensure safety, consistency and measurable clinical outcomes: CARF, JCI, CBAHI, CAP, Kozyavkin, OSHAD, ADHICS and JAWDA."
@@ -149,7 +149,15 @@
           "type": "p",
           "text": "Accredited facilities: Abu Dhabi – Al Ain – Al Mudeef – Dhahran – Khobar - Jeddah"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/jci",
+        "alt": "JCI seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     },
     {
       "label": "CBAHI Accredited",
@@ -166,7 +174,15 @@
           "type": "p",
           "text": "Accredited facilities: Dhahran – Khobar – Jeddah"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/cbahi",
+        "alt": "CBAHI seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     },
     {
       "label": "CAP Accredited",
@@ -183,7 +199,15 @@
           "type": "p",
           "text": "Accredited facility: Jeddah"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/cap",
+        "alt": "CAP seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     },
     {
       "label": "Affiliated with the Kozyavkin Programme",
@@ -200,7 +224,15 @@
           "type": "p",
           "text": "Affiliated facilities: Abu Dhabi – Al Ain – Dhahran"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/kozyavkin",
+        "alt": "Kozyavkin seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     },
     {
       "label": "OSHAD Certified",
@@ -213,7 +245,15 @@
           "type": "p",
           "text": "Certified facilities: Abu Dhabi – Al Ain – Al Mudeef"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/oshad",
+        "alt": "OSHAD seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     },
     {
       "label": "ADHICS Certified",
@@ -230,7 +270,15 @@
           "type": "p",
           "text": "Certified facilities: Abu Dhabi – Al Ain"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/adhics",
+        "alt": "ADHICS seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     },
     {
       "label": "JAWDA Certified",
@@ -243,7 +291,15 @@
           "type": "p",
           "text": "Certified facilities: Abu Dhabi – Al Ain"
         }
-      ]
+      ],
+      "image": {
+        "image": "accreditations/jawda",
+        "alt": "JAWDA seal",
+        "x": 589,
+        "y": 729,
+        "w": 146,
+        "h": 146
+      }
     }
   ],
   "recovery": {

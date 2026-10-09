@@ -1,5 +1,5 @@
 {
-  "_note": "Who We Are (Figma 46:5841, measurements in figma-cache/who-we-are-spec.md). Text = Website Content - Suhad/About Cambridge/EN- Who We Are.docx (6 Oct 2026): hero, intro, the 'Six Hospitals' band heading, Our Foundation of Care (mission / vision / values), Expanding Access to Exceptional Care. The document's 'One Standrard of Care' is read as a typo: 'One Standard of Care' kept (flagged, docs/open-decisions.md). Stats numbers = the live counters (1,300+ via the shared stat, 715+, 15+, 60 %, 85 %, 91 %; not in the document). meta.*, alt texts and aria labels are PLACEHOLDER. The cyan full stops stay (Figma design). 'Your recovery matters' CTA = the shared Contact page block.",
+  "_note": "Who We Are (Figma 46:5841, measurements in figma-cache/who-we-are-spec.md). Text = Website Content - Suhad/About Cambridge/EN- Who We Are.docx (6 Oct 2026): hero, intro, the 'Six Hospitals' band heading, Our Foundation of Care (mission / vision / values), Expanding Access to Exceptional Care. The document's 'One Standrard of Care' is read as a typo: 'One Standard of Care' kept (flagged, docs/open-decisions.md). Stats numbers = the live counters (1,300+ via the shared stat, 715+, 15+, 60 %, 85 %, 91 %; not in the document). meta.*, alt texts and aria labels are PLACEHOLDER. The cyan full stops stay (Figma design). 'Your recovery matters' CTA = the shared Contact page block. Hero (client assets, 9 Oct 2026): its own people (who-we-are/banner, the client's 'From treatment to recovery' cut-out; KSA = the -5 file) instead of the Accreditations banner Figma repeats here.",
   "meta": {
     "title": "Who We Are | Cambridge Hospital",
     "description": "A leading provider of specialized rehabilitation and long-term care across the UAE and Saudi Arabia: six hospitals, two countries, one standard of care."
@@ -7,7 +7,7 @@
   "hero": {
     "ariaLabel": "A Leader in Post-Acute and Rehabilitation Care in the GCC",
     "banner": {
-      "image": "accreditations/banner",
+      "image": "who-we-are/banner",
       "alt": ""
     },
     "title": [

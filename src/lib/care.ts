@@ -22,6 +22,9 @@ export interface CareNode {
   desc: Localized;
   image?: string;
   alt?: string;
+  /** programme card icon (ConditionCards): 'neuro' | 'musculoskeletal' | 'post-surgical' | 'accident' (Figma post-acute icons) or an
+   *  image key under src/assets (care/icons/*, the client's programme icons, 9 Oct 2026) */
+  icon?: string;
   /** countries that offer this service (bug 047): absent = every edition; e.g. ["ae"] = UAE only (In-School Care). Global
    *  lists every service; a child inherits its ancestors' limits. */
   regions?: RegionId[];

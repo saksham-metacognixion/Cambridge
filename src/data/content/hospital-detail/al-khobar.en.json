@@ -1,5 +1,5 @@
 {
-  "_note": "Al Khobar Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - KSA Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/sa/hospitals/cambridge-hospital-al-khobar/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/sa/hospitals/cambridge-hospital-al-khobar/, Cambridge-Hospital-Al-Khobar.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers). Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/sa/hospitals/cambridge-hospital-al-khobar/, Cambridge-Hospital-Al-Khobar.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers).",
+  "_note": "Al Khobar Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - KSA Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/sa/hospitals/cambridge-hospital-al-khobar/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. Banner (client assets, 9 Oct 2026): the client's own hero cut-out (R6-R7_Advanced-Care-in-Al-Khobar.png, docs/client-assets/hospital-banners/) over the live hero gradient, tools/client-assets/hospital-hero.py; static (no cursor-follow layers). Banner (client assets, 9 Oct 2026): the client's own hero cut-out (R6-R7_Advanced-Care-in-Al-Khobar.png, docs/client-assets/hospital-banners/) over the live hero gradient, tools/client-assets/hospital-hero.py; static (no cursor-follow layers).",
   "hero": {
     "title": [
       "Al Khobar Hospital"
@@ -94,7 +94,7 @@
   },
   "heroLayout": {
     "small": {
-      "x": 604,
+      "x": 538,
       "w": 448
     }
   }

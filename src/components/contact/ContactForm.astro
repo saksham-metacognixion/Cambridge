@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import { content, t } from '../../lib/content';
+import { px } from '../../lib/scale';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
 import { clientConfig, commonText } from '../../lib/forms';
@@ -11,6 +13,7 @@ import globeIcon from '../../assets/contact-page/icon-globe.svg';
 import phoneIcon from '../../assets/contact-page/icon-phone.svg';
 import cornerMask from '../../assets/contact-page/card-corner-mask.svg';
 import cornerFill from '../../assets/contact-page/card-corner-fill.svg';
+import mapImage from '../../assets/contact-page/map.png';
 
 // Figma 86:773 + 86:808 + grey band 86:432: section starts at page y 556, h 667. Spec y values are page y minus 556.
 const { edition } = parsePath(Astro.url.pathname);
@@ -116,21 +119,22 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
       </div>
       <div class="map relative max-lg:w-full max-lg:max-w-[calc(307*var(--u))] max-lg:aspect-[307/375] lg:absolute lg:start-590 lg:top-140 lg:w-307 lg:h-375 rounded-(--radius-card) overflow-hidden">
-        <!-- Neutral map placeholder (Google Maps brief, 9 Oct 2026): streets, water and a park in the site's palette, with no place names,
-             no pins and no hospital, so it can never point at a wrong place. It stays under the Google map, which covers it once loaded,
-             and remains the backdrop of the card when the map can't load (no key, key refused, script blocked). -->
-        <svg class="mph" viewBox="0 0 307 375" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-          <rect width="307" height="375" class="mph-land" />
-          <path class="mph-water" d="M0 0h150c-8 22-30 30-34 52-5 26 22 40 12 66-9 22-40 24-62 40C42 172 18 190 0 196Z" />
-          <path class="mph-park" d="M226 262c18-8 46-4 58 10 12 15 6 40-12 48-21 9-52 6-63-12-10-17-1-38 17-46Z" />
-          <g class="mph-road">
-            <path d="M-10 318 318 58" /><path d="M120 -10 307 220" /><path d="M-10 250 190 385" /><path d="M250 -10 236 385" />
-          </g>
-          <g class="mph-street">
-            <path d="M40 270 170 110" /><path d="M80 300 210 140" /><path d="M120 330 250 172" /><path d="M160 360 290 204" />
-            <path d="M150 60 210 330" /><path d="M10 216 300 300" /><path d="M140 20 300 120" /><path d="M0 120 120 200" />
-          </g>
-        </svg>
+        <!-- Figma map image (86:807) as the placeholder for now (user, 9 Oct 2026; replaces the neutral SVG drawing). It stays under the
+             Google map, which covers it once loaded, and remains the backdrop of the card when the map can't load (no key, script blocked). -->
+        <Picture
+          src={mapImage}
+          formats={['avif']}
+          fallbackFormat="webp"
+          width={px(307)}
+          height={px(375)}
+          widths={[px(307), px(307) * 2]}
+          sizes="(min-width: 1440px) 420px, (min-width: 1024px) 29vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          alt=""
+          class="mph absolute inset-0 h-full w-full max-w-none object-cover"
+          pictureAttributes={{ class: 'contents' }}
+        />
         <div class="gmap" data-map-canvas role="region" aria-label={mapTitle} data-config={mapConfig} hidden></div>
         <!-- The card: the selected hospital as the site names it (never Google's place name), its address and the directions link. -->
         <div class="mcard" data-map-card aria-live="polite" hidden>
@@ -166,16 +170,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
 </script>
 
 <style>
-  /* Neutral placeholder drawing under the map (no labels, no pins). */
-  .mph { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .mph-land { fill: var(--color-mist-25); }
-  .mph-water { fill: color-mix(in srgb, var(--color-steel) 30%, #fff); }
-  .mph-park { fill: color-mix(in srgb, var(--color-green) 16%, #fff); }
-  .mph-road path, .mph-street path { fill: none; stroke: #fff; stroke-linecap: round; }
-  .mph-road path { stroke-width: 9; }
-  .mph-street path { stroke-width: 3.5; }
-  .mph-road { filter: drop-shadow(0 0 .6px var(--color-mist)); }
-  /* Google map over the neutral placeholder (bug 051): fades in once Google has drawn it; the box keeps the Figma size and corners. */
+  /* Google map over the Figma placeholder image (bug 051): fades in once Google has drawn it; the box keeps the Figma size and corners. */
   .gmap { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s; }
   .gmap.is-ready { opacity: 1; }
   /* Card at the top of the map (Google's logo and terms stay visible at the bottom); brand colours, Book / Medium as the form. */

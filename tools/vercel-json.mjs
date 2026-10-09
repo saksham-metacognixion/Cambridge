@@ -4,8 +4,8 @@
 // is dist/<path>/index.html, served at /<path>/; the last rule 301s any other slash-less page URL to /<path>/ in one hop.
 // Vercel's own `trailingSlash: true` is not used: it runs before these redirects, so /events would go /events/ -> target
 // (two hops). The rule skips files (a dot in the last segment: /favicon.svg, /sitemaps/ae-en.xml), /api (form POSTs) and
-// /_astro. Forms run on Vercel through api/forms/[form].ts (a wrapper around the Cloudflare handler); the country header
-// middleware (functions/_middleware.ts) does not run on Vercel.
+// /_astro. Forms run on Vercel through api/forms/[form].js, bundled by tools/vercel/bundle.mjs from tools/vercel/api-forms.ts
+// (a wrapper around the Cloudflare handler); the country header middleware (functions/_middleware.ts) does not run on Vercel.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const redirects = readFileSync('dist/_redirects', 'utf8')
@@ -21,7 +21,7 @@ const redirects = readFileSync('dist/_redirects', 'utf8')
 const config = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
   framework: null,
-  buildCommand: 'npm run build',
+  buildCommand: 'npm run build && node tools/vercel/bundle.mjs',
   outputDirectory: 'dist',
   redirects: [
     ...redirects,

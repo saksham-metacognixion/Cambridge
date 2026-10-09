@@ -187,6 +187,13 @@ if (subs.length) {
     if (e.persisted) closeAll();
   });
   document.getElementById("nav-toggle")?.addEventListener("change", closeAll);
+  // Arms the mobile panel's closing transition (Header.astro .nav-toggled .menu) after the first open, so a resize across the
+  // desktop breakpoint never animates the closed panel.
+  document.getElementById("nav-toggle")?.addEventListener(
+    "change",
+    (e) => (e.target as HTMLElement).closest(".hd")?.classList.add("nav-toggled"),
+    { once: true },
+  );
   desktop.addEventListener("change", closeAll);
   hover.addEventListener("change", closeAll);
 }

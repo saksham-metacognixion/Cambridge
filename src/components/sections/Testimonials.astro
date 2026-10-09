@@ -34,7 +34,9 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
       <p class="t-sub absolute start-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-navy text-center not-italic">{txt.subtitle}</p>
     </div>
 
-    <div data-autoscroll class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
+    <!-- Live Home page (WordPress export, animation audit 8 Oct 2026): Greenshift Swiper, autoplay delay 0, speed 15000, loop,
+         disablepause (no hover pause), autoplayrestore: one 15 s eased slide per card, one after the other (autoscroll.ts step mode). -->
+    <div data-autoscroll="step" data-autoscroll-delay="0" data-autoscroll-speed="15000" data-autoscroll-pause="no" class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
       <div data-loop-row class="t-row flex" style={`gap:${u(GAP)};margin-inline-start:${u(-96)}`}>
         {homeTestimonials.map((s) => (
           <div data-loop-item class="t-item shrink-0" style="scroll-snap-align:start">

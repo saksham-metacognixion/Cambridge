@@ -42,6 +42,10 @@ const { card = {} } = Astro.props;
 <style>
   /* Whole card is clickable through the title link (one link per card for keyboard / screen readers; the arrow is hidden from them). */
   .pc-link::after { content: ""; position: absolute; inset: 0; }
+  /* Title hover as on the live post cards (dynamic title colorlinksHover, theme a transition .12s): brand AA keeps the Deep Teal
+     text and marks the hover with the cyan underline (8 Oct 2026 brand pass) instead of the live cyan text. */
+  .pc-link { transition: color var(--ui-ease), text-decoration-color var(--ui-ease); }
+  @media (hover: hover) { .pc-link:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   /* Badge: the number and weekday are trimmed to their cap height like in Figma, and the drop-shadow follows the rounded bottom. */
   .pc-badge { filter: drop-shadow(calc(2.922 * var(--u)) calc(2.922 * var(--u)) calc(5.479 * var(--u)) rgba(0, 0, 0, 0.25)); }
   .pc-day, .pc-wd { font-family: Poppins, var(--font-gotham); text-box: trim-both cap alphabetic; }

@@ -1,14 +1,14 @@
 // Contact Us Google map (bug 051; markup in components/contact/ContactForm.astro, data = lib/hospitals.ts mapSpots, i.e. the
-// edition's hospitals from hospitals.json: the same list as the form's Hospital select). The Figma map image stays as the
-// placeholder; nothing from Google loads until the map box comes near the screen (or a hospital is chosen first).
-//   key    -> Maps JavaScript API, loaded once: one map, one marker per hospital with a position, fitted to all of them on load.
-//             Choosing a hospital (select change: mouse or keyboard) zooms to its marker, highlights it and fills our card (the
-//             site's name + address, never Google's place name; directions to the exact position). The map instance and its
-//             markers are reused for every change. A marker click shows its card too (the form value is left as it is).
-//   no key -> keyless Google Maps embed by position (one pin at a time; the overview is the area of the edition's hospitals
-//             without pins), same card. Also used when Google rejects the key (gm_authFailure).
-// A hospital without a position (hospitals.json location lat / lng null: Jeddah until the client sends it) gets no marker and no
-// directions link; choosing it shows the overview and its card (name + address). Positions are never searched for by name.
+// edition's hospitals from hospitals.json: the same list as the form's Hospital select). The ONLY map implementation is the
+// Maps JavaScript API; nothing from Google loads until the map box comes near the screen (or a hospital is chosen first), and
+// the API script is requested once. One map, one marker per hospital with a position, fitted to all of them on load.
+// Choosing a hospital (select change: mouse or keyboard) zooms to its marker, highlights it and fills our card (the site's
+// name + address, never Google's place name; directions to the exact position). A marker click does the same AND selects
+// that hospital in the form, so the dropdown, the map, the active marker and the card always agree (one activeId).
+// Fallback (no key, Google rejects the key, the script fails): the Figma map image stays in place, the select and the card
+// (name, address, directions link) keep working, and the cause is logged. Never an iframe embed, never a search by name.
+// A hospital without a position (hospitals.json location lat / lng null: Jeddah until the client sends it) gets no marker and
+// no directions link; choosing it shows the overview and its card (name + address) and logs a warning.
 type Spot = {
   id: string;
   name: string;
@@ -21,32 +21,65 @@ type Config = { key: string; lang: string; region: string; spots: Spot[] };
 // The few Google Maps classes used here (no @types/google.maps dependency).
 type LatLng = { lat: number; lng: number };
 type Icon = { url: string; scaledSize: unknown; anchor: unknown };
-type GMap = { setCenter(p: LatLng): void; setZoom(z: number): void; panBy(x: number, y: number): void; fitBounds(b: unknown, padding: object): void };
-type GMarker = { setOptions(o: { icon?: Icon; zIndex?: number }): void; addListener(e: string, f: () => void): void };
+type GMap = {
+  setCenter(p: LatLng): void;
+  setZoom(z: number): void;
+  panBy(x: number, y: number): void;
+  fitBounds(b: unknown, padding: object): void;
+};
+type GMarker = {
+  setOptions(o: { icon?: Icon; zIndex?: number }): void;
+  addListener(e: string, f: () => void): void;
+};
 type G = {
   Size: new (w: number, h: number) => unknown;
   Point: new (x: number, y: number) => unknown;
   LatLngBounds: new () => { extend(p: LatLng): void };
   event: { addListenerOnce(target: unknown, e: string, f: () => void): void };
-  importLibrary(name: string): Promise<Record<string, new (...args: never[]) => unknown>>;
+  importLibrary(
+    name: string,
+  ): Promise<Record<string, new (...args: never[]) => unknown>>;
 };
 
+const TAG = "[contact-map]";
 const canvas = document.querySelector<HTMLElement>("[data-map-canvas]");
 const card = document.querySelector<HTMLElement>("[data-map-card]");
 if (canvas && card) {
-  const cfg = JSON.parse(canvas.dataset.config ?? "{}") as Config;
+  const cfg = JSON.parse(canvas.dataset.config ?? "{}") as Partial<Config>;
+  const spots = Array.isArray(cfg.spots) ? cfg.spots : [];
+  if (!spots.length)
+    console.error(
+      `${TAG} no hospitals in the map config (lib/hospitals.ts mapSpots)`,
+    );
   const select = document.querySelector<HTMLSelectElement>(
     '#contact-form select[name="hospital"]',
   );
-  const located = cfg.spots.filter((s) => s.position);
-  const spotOf = (id?: string) => cfg.spots.find((s) => s.id === id);
+  const validPos = (s: Spot) =>
+    !!s.position &&
+    Number.isFinite(s.position.lat) &&
+    Number.isFinite(s.position.lng) &&
+    Math.abs(s.position.lat) <= 90 &&
+    Math.abs(s.position.lng) <= 180;
+  for (const s of spots)
+    if (s.position && !validPos(s))
+      console.error(`${TAG} invalid coordinates for "${s.name}":`, s.position);
+  const located = spots.filter(validPos);
+  const unlocated = spots.filter((s) => !validPos(s));
+  if (unlocated.length)
+    console.warn(
+      `${TAG} no exact position yet (hospitals.json location.lat / lng), so no marker and no directions link: ` +
+        unlocated.map((s) => `"${s.name}"`).join(", "),
+    );
+  const spotOf = (id?: string) => spots.find((s) => s.id === id);
   const HOSPITAL_ZOOM = 15;
 
+  // ---- the card (always ours: site name + address + directions to the exact position) ----
   const nameEl = card.querySelector<HTMLElement>("[data-map-name]")!;
   const addrEl = card.querySelector<HTMLElement>("[data-map-addr]")!;
   const linkEl = card.querySelector<HTMLAnchorElement>("[data-map-link]")!;
   const showCard = (s?: Spot) => {
     card.hidden = !s;
+    card.dataset.active = s?.id ?? "";
     if (!s) return;
     nameEl.textContent = s.name;
     addrEl.textContent = s.address;
@@ -58,63 +91,45 @@ if (canvas && card) {
   const cardOffset = () =>
     card.hidden ? 0 : card.offsetTop + card.offsetHeight;
 
-  // ---- keyless embed ----
-  const embedView = () => {
-    // Centre + zoom that fit the edition's hospitals in the box (Web Mercator), for the no-pin overview.
-    const ys = located.map((s) =>
-      Math.log(Math.tan(Math.PI / 4 + (s.position!.lat * Math.PI) / 360)),
-    );
-    const xs = located.map((s) => s.position!.lng);
-    const [x0, x1, y0, y1] = [
-      Math.min(...xs),
-      Math.max(...xs),
-      Math.min(...ys),
-      Math.max(...ys),
-    ];
-    const { width, height } = canvas.getBoundingClientRect();
-    const fit = Math.min(
-      width / 256 / Math.max((x1 - x0) / 360, 1e-6),
-      height / 256 / Math.max((y1 - y0) / (2 * Math.PI), 1e-6),
-    );
-    const z = Math.max(
-      3,
-      Math.min(HOSPITAL_ZOOM, Math.floor(Math.log2(fit * 0.75))),
-    );
-    const lat = (Math.atan(Math.sinh((y0 + y1) / 2)) * 180) / Math.PI;
-    return `ll=${lat.toFixed(6)},${((x0 + x1) / 2).toFixed(6)}&z=${z}`;
-  };
-  const embedSrc = (s?: Spot) => {
-    const view = s?.position
-      ? `q=${s.position.lat},${s.position.lng}&z=${HOSPITAL_ZOOM}`
-      : located.length
-        ? embedView()
-        : "q=";
-    return `https://www.google.com/maps?${view}&hl=${cfg.lang}&output=embed`;
-  };
-  const embed = (s?: Spot) => {
-    let frame = canvas.querySelector("iframe");
-    if (!frame) {
-      frame = document.createElement("iframe");
-      frame.title = canvas.getAttribute("aria-label") ?? "";
-      frame.referrerPolicy = "no-referrer-when-downgrade";
-      frame.addEventListener("load", () => canvas.classList.add("is-ready"));
-      canvas.replaceChildren(frame);
-    }
-    const next = embedSrc(s);
-    if (frame.src !== next) frame.src = next;
+  // ---- state: "" = not started, "js" = Maps JavaScript API, "fallback" = Figma image + card only ----
+  let mode: "" | "js" | "fallback" = "";
+  const fallback = (why: string, detail?: unknown) => {
+    mode = "fallback";
+    canvas.dataset.mapState = "fallback";
+    map = undefined;
+    markers.clear();
+    canvas.hidden = true;
+    canvas.classList.remove("is-ready");
+    canvas.replaceChildren();
+    if (detail === undefined)
+      console.error(`${TAG} ${why}; showing the static map image instead`);
+    else
+      console.error(
+        `${TAG} ${why}; showing the static map image instead`,
+        detail,
+      );
+    showCard(spotOf(select?.value));
   };
 
-  // ---- Maps JavaScript API ----
+  // ---- Maps JavaScript API, loaded once ----
   let g: G | undefined;
   let api: Promise<G> | undefined;
   const loadApi = () =>
     (api ??= new Promise<G>((resolve, reject) => {
       const w = window as unknown as Record<string, unknown>;
-      w.__contactMapReady = () => resolve((g = (w.google as { maps: G }).maps));
-      w.gm_authFailure = () => toEmbed();
+      w.__contactMapReady = () => {
+        const maps = (w.google as { maps?: G } | undefined)?.maps;
+        if (maps) resolve((g = maps));
+        else reject(new Error("google.maps missing after the script loaded"));
+      };
+      // Google calls this when it refuses the key (wrong key, referrer not allowed, Maps JavaScript API not enabled).
+      w.gm_authFailure = () =>
+        fallback(
+          "Google rejected the API key (check PUBLIC_GOOGLE_MAPS_KEY: Maps JavaScript API enabled, HTTP referrer allowed)",
+        );
       const params = new URLSearchParams({
-        key: cfg.key,
-        language: cfg.lang,
+        key: cfg.key ?? "",
+        language: cfg.lang ?? "en",
         loading: "async",
         callback: "__contactMapReady",
       });
@@ -122,7 +137,8 @@ if (canvas && card) {
       const s = document.createElement("script");
       s.src = `https://maps.googleapis.com/maps/api/js?${params}`;
       s.async = true;
-      s.onerror = reject;
+      s.onerror = () =>
+        reject(new Error("the Maps JavaScript API script did not load"));
       document.head.append(s);
     }));
 
@@ -131,12 +147,7 @@ if (canvas && card) {
   let icons: { normal: Icon; active: Icon } | undefined;
   let activeId = "";
 
-  const pinIcon = (
-    g: G,
-    fill: string,
-    dot: string,
-    scale: number,
-  ): Icon => ({
+  const pinIcon = (g: G, fill: string, dot: string, scale: number): Icon => ({
     url:
       "data:image/svg+xml;charset=UTF-8," +
       encodeURIComponent(
@@ -146,6 +157,7 @@ if (canvas && card) {
     anchor: new g.Point(14 * scale, 40 * scale),
   });
 
+  // All of the edition's hospitals in view (LatLngBounds), or the one hospital when only one has a position.
   const overview = () => {
     if (!map || !located.length) return;
     if (located.length === 1) {
@@ -169,25 +181,49 @@ if (canvas && card) {
     markers.get(activeId)?.setOptions({ icon: icons.normal, zIndex: 1 });
     activeId = id;
     markers.get(id)?.setOptions({ icon: icons.active, zIndex: 2 });
+    canvas.dataset.active = id;
   };
 
+  // The one place that moves the map: card + active marker + centre + zoom for a hospital (or the overview for none).
   const focusSpot = (s?: Spot) => {
     showCard(s);
     if (!map) return;
-    highlight(s?.position ? s.id : "");
-    if (!s?.position) return overview();
+    const has = !!s && validPos(s);
+    highlight(has ? s!.id : "");
+    if (!has) {
+      if (s)
+        console.warn(
+          `${TAG} "${s.name}" has no exact position yet: overview shown instead of its marker`,
+        );
+      return overview();
+    }
     map.setZoom(HOSPITAL_ZOOM);
-    map.setCenter(s.position);
+    map.setCenter(s!.position!);
     map.panBy(0, -cardOffset() / 2);
+  };
+
+  // Marker click: select that hospital in the form (same value as the <option>), which runs onChoice through the form's own
+  // change handling (error clearing etc.), so dropdown, map and card never disagree.
+  const chooseFromMarker = (s: Spot) => {
+    if (select && select.value !== s.id) {
+      select.value = s.id;
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    } else focusSpot(s);
   };
 
   const initMap = async () => {
     const g = await loadApi();
     if (mode !== "js") return;
-    const [maps, marker] = await Promise.all([g.importLibrary("maps"), g.importLibrary("marker")]);
-    const MapClass = maps.Map as unknown as new (el: HTMLElement, o: object) => GMap;
+    const [maps, marker] = await Promise.all([
+      g.importLibrary("maps"),
+      g.importLibrary("marker"),
+    ]);
+    const MapClass = maps.Map as unknown as new (
+      el: HTMLElement,
+      o: object,
+    ) => GMap;
     const Marker = marker.Marker as unknown as new (o: object) => GMarker;
-    if (mode !== "js") return;
+    if (mode !== "js" || map) return;
     icons = {
       normal: pinIcon(g, "#004059", "#fff", 1),
       active: pinIcon(g, "#00b8ff", "#004059", 1.2),
@@ -218,33 +254,32 @@ if (canvas && card) {
         icon: icons.normal,
         zIndex: 1,
       });
-      m.addListener("click", () => focusSpot(s));
+      m.addListener("click", () => chooseFromMarker(s));
       markers.set(s.id, m);
     }
-    g.event.addListenerOnce(map, "tilesloaded", () =>
-      canvas.classList.add("is-ready"),
-    );
+    g.event.addListenerOnce(map, "tilesloaded", () => {
+      canvas.classList.add("is-ready");
+      canvas.dataset.mapState = "js";
+    });
     const s = spotOf(select?.value);
     if (s) focusSpot(s);
     else overview();
   };
 
-  let mode: "" | "js" | "embed" = "";
-  const toEmbed = () => {
-    mode = "embed";
-    map = undefined;
-    markers.clear();
-    canvas.classList.remove("is-ready");
-    embed(spotOf(select?.value));
-  };
-
   const start = () => {
     if (mode) return;
+    if (!cfg.key)
+      return fallback(
+        "no Google Maps API key (set PUBLIC_GOOGLE_MAPS_KEY, see .env.example)",
+      );
+    if (!located.length)
+      return fallback("no hospital of this edition has a position to show");
+    mode = "js";
     canvas.hidden = false;
-    if (cfg.key) {
-      mode = "js";
-      initMap().catch(toEmbed);
-    } else toEmbed();
+    canvas.dataset.mapState = "loading";
+    initMap().catch((e: unknown) =>
+      fallback("the Google map could not be started", e),
+    );
   };
 
   const onChoice = () => {
@@ -253,24 +288,36 @@ if (canvas && card) {
       showCard(s);
       return start();
     }
-    if (mode === "embed") {
-      showCard(s);
-      embed(s);
-    } else focusSpot(s);
+    if (mode === "fallback") showCard(s);
+    else focusSpot(s);
   };
   select?.addEventListener("change", onChoice);
   // The form clears itself after a successful send: back to the overview, no card.
   select?.form?.addEventListener("reset", () => setTimeout(onChoice));
 
+  // Lazy: Google loads only once the map box is near the screen, and never before the page's own load event (then in an
+  // idle slot), so the API script stays off the critical path. A hospital choice starts it at once (onChoice above).
+  const whenIdle = (f: () => void) => {
+    const w = window as unknown as {
+      requestIdleCallback?: (cb: () => void, o: { timeout: number }) => void;
+    };
+    if (w.requestIdleCallback) w.requestIdleCallback(f, { timeout: 2000 });
+    else setTimeout(f, 200);
+  };
+  const afterLoad = (f: () => void) =>
+    document.readyState === "complete"
+      ? f()
+      : window.addEventListener("load", f, { once: true });
+  const startLazily = () => afterLoad(() => whenIdle(start));
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         io.disconnect();
-        start();
+        startLazily();
       },
       { rootMargin: "300px 0px" },
     );
     io.observe(canvas.parentElement!);
-  } else start();
+  } else startLazily();
 }

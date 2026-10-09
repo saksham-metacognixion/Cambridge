@@ -117,11 +117,14 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     </div>
 
     <!-- Stats -->
-    <div data-countup-group class="stats grid grid-cols-2 gap-x-6 gap-y-6 w-full max-w-[calc(360*var(--u))] lg:contents">
-      {stats.map((s) => (
+    <!-- Count-up = the live Home page's six Greenshift .gs-counter blocks (WordPress export, animation audit 8 Oct 2026): each
+         stat on its own, linear, from 0 once it is 30 % in view, data-duration 1 / 1.5 / 2 / 1 / 1.5 / 2 s in this order
+         (scripts/countup.ts Greenshift mode, as on Our Hospitals / Why Cambridge). -->
+    <div class="stats grid grid-cols-2 gap-x-6 gap-y-6 w-full max-w-[calc(360*var(--u))] lg:contents">
+      {stats.map((s, i) => (
         <p class="dpos m-0 font-gotham font-medium text-white not-italic leading-[1.147] whitespace-normal [word-break:break-word]" style={`--x:${s.x};--y:${s.y - 2054};--w:${s.w}`}>
           <span class="sr-only">{s.n}</span>
-          <span data-countup aria-hidden="true" class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
+          <span data-countup data-countup-duration={[1, 1.5, 2, 1, 1.5, 2][i] ?? 2} aria-hidden="true" class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
           <span class="block text-f12">{s.l}</span>
         </p>
       ))}

@@ -29,6 +29,9 @@ Read this file at the start of every session and follow it for all work.
   Care Support rows auto-scroll in a slow seamless loop (`src/scripts/autoscroll.ts`) — pauses on hover/focus/touch,
   off with prefers-reduced-motion, copies aria-hidden + out of the tab order (still clickable). Home Doctors row: same
   auto-scroll since 6 Oct 2026 (bug 018, matching the live site); its pills/dots drive it via `autoscroll:*` events.
+  Since 8 Oct 2026 (animation audit, docs/animation-audit.md) these rows use the live Swiper settings from the WordPress export:
+  Home doctors + Our Care doctors = 1 s pause + 1 s eased slide, hover pauses, a drag ends it; Care Support = one tile per 12 s,
+  Testimonials = one card per 15 s, eased per slide, no hover pause (`data-autoscroll-delay/-speed/-pause/-restore`).
 - If exact Figma colours fail WCAG AA contrast on buttons/text, do NOT change them silently — flag it and ask.
 
 ## 3. Figma MCP usage

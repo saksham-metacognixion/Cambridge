@@ -10,16 +10,23 @@
 // 'autoscroll:hold' (dispatch before scrolling the row from script) pauses for RESUME_MS; 'autoscroll:change' is sent
 // after every rebuild. The scroller carries [data-looping] while the loop is set up.
 // prefers-reduced-motion: nothing runs and the row stays a plain swipe/scroll-snap row.
-// [data-autoscroll="step"] (Our Care doctors, the live page's Greenshift Swiper: autoplay delay 1000, speed 1000, loop,
-// pauseOnMouseEnter): instead of gliding, the row waits STEP_DELAY_MS, then slides one item in STEP_MS with Swiper's CSS
-// `ease`, and so on. Hover / focus let the slide in progress finish and hold the next one; touch, drag and wheel stop it at
-// once, and the next slide lands on the next item boundary.
+// [data-autoscroll="step"] = the live site's Greenshift Swiper autoplay (animation audit 8 Oct 2026, WordPress export): the row
+// waits `data-autoscroll-delay` ms (Swiper autoplay.delay, default 1000), then slides one item in `data-autoscroll-speed` ms
+// (Swiper speed, default 1000) with the wrapper's CSS `ease`, and so on. A delay of 0 (Care Support 12 s, Testimonials 15 s
+// per item on the live Home page) is the continuous marquee: one eased slide straight after the other, never a stop.
+// `data-autoscroll-pause="no"` = the live `disablepause` (Swiper pauseOnMouseEnter off): the mouse does not pause it
+// (keyboard focus still does, so the focused card stays in view). `data-autoscroll-restore="no"` = Swiper's default
+// disableOnInteraction (no `autoplayrestore`): after a touch, drag or wheel the row stays where the visitor left it for good;
+// with restore (default) it moves on again RESUME_MS later. Hover / focus let the slide in progress finish and hold the next
+// one; touch, drag and wheel stop it at once, and the next slide lands on the next item boundary.
+// Live rows: Home doctors + Our Care / Refer doctors = step 1000 / 1000, no restore; Care Support = step 0 / 12000, no hover
+// pause, restore; Testimonials = step 0 / 15000, no hover pause, restore; Media Hub Latest keeps the glide (R061, client).
 
-const SECONDS_PER_ITEM = 8; // pace taken from the live-site recording; tied to the item step so it looks the same at every width
-const RESUME_MS = 2500; // after a touch/wheel, wait this long before moving again
+const SECONDS_PER_ITEM = 8; // glide pace (Media Hub Latest, R061); tied to the item step so it looks the same at every width
+const RESUME_MS = 2500; // after a touch/wheel, wait this long before moving again (restore rows)
 const EASE_MS = 450; // time constant of the pace easing in / out (hover, resume)
-const STEP_DELAY_MS = 1000; // Swiper autoplay delay (data-autodelay)
-const STEP_MS = 1000; // Swiper speed (data-speed)
+const STEP_DELAY_MS = 1000; // Swiper autoplay delay (data-autodelay) unless data-autoscroll-delay says otherwise
+const STEP_MS = 1000; // Swiper speed (data-speed) unless data-autoscroll-speed says otherwise
 const FOCUSABLE = "a[href], button, input, select, textarea, [tabindex]";
 
 // CSS `ease` = cubic-bezier(0.25, 0.1, 0.25, 1) (Swiper's wrapper transition): solve x(s) = p, return y(s).
@@ -39,6 +46,11 @@ function ease(p: number) {
 
 function setup(scroller: HTMLElement) {
   const stepMode = scroller.dataset.autoscroll === "step";
+  const num = (v: string | undefined, d: number) => (v !== undefined && v !== "" && !isNaN(+v) ? +v : d);
+  const stepDelay = num(scroller.dataset.autoscrollDelay, STEP_DELAY_MS);
+  const stepMs = num(scroller.dataset.autoscrollSpeed, STEP_MS);
+  const pauseOnHover = scroller.dataset.autoscrollPause !== "no";
+  const restore = scroller.dataset.autoscrollRestore !== "no";
   const row = scroller.querySelector<HTMLElement>("[data-loop-row]");
   if (!row) return;
   const shown = (el: HTMLElement) =>
@@ -135,8 +147,10 @@ function setup(scroller: HTMLElement) {
     touch = false,
     visible = false;
   let resumeAt = 0;
+  let stopped = false; // restore="no": a touch / drag / wheel ends the autoplay for good (Swiper disableOnInteraction)
   const paused = () =>
-    hover ||
+    stopped ||
+    (hover && pauseOnHover) ||
     focus ||
     touch ||
     !visible ||
@@ -171,14 +185,14 @@ function setup(scroller: HTMLElement) {
     last = t;
     if (touch || !visible || document.hidden || period <= 0) s0 = 0;
     if (s0) {
-      const p = Math.min(1, (t - s0) / STEP_MS);
+      const p = Math.min(1, (t - s0) / stepMs);
       pos = from + dist * ease(p);
       if (p >= 1) {
         s0 = 0;
-        nextAt = t + STEP_DELAY_MS;
+        nextAt = t + stepDelay;
       }
     } else if (paused() || period <= 0) {
-      nextAt = t + STEP_DELAY_MS;
+      nextAt = t + stepDelay;
     } else if (t >= nextAt) {
       // Slide on to the next item boundary. From a boundary that is one item; from mid-item (an interrupted slide, or the
       // visitor left the row between two items) it is the rest of the way, never a jump back to the previous boundary.
@@ -215,8 +229,11 @@ function setup(scroller: HTMLElement) {
     frame(tick);
   };
 
-  const holdOff = () => {
+  // `moved` = the visitor dragged / swiped the row (Swiper's sliderFirstMove): on a no-restore row that ends the autoplay for
+  // good. A tap or click, a wheel over the row or a script hold (dot click, pill change) only holds it, as before.
+  const holdOff = (moved = false) => {
     resumeAt = performance.now() + RESUME_MS;
+    if (!restore && moved) stopped = true;
     vel = 0;
     s0 = 0;
     running = false;
@@ -226,11 +243,15 @@ function setup(scroller: HTMLElement) {
   scroller.addEventListener("mouseleave", () => (hover = false));
   scroller.addEventListener("focusin", () => (focus = true));
   scroller.addEventListener("focusout", () => (focus = false));
-  const press = () => (touch = true);
+  let pressPos = 0;
+  const press = () => {
+    if (!touch) pressPos = scroller.scrollLeft;
+    touch = true;
+  };
   const release = () => {
     if (touch) {
       touch = false;
-      holdOff();
+      holdOff(Math.abs(scroller.scrollLeft - pressPos) > 1);
     }
   };
   scroller.addEventListener("pointerdown", press, { passive: true });
@@ -238,8 +259,8 @@ function setup(scroller: HTMLElement) {
   scroller.addEventListener("touchend", release, { passive: true });
   window.addEventListener("pointerup", release, { passive: true });
   window.addEventListener("pointercancel", release, { passive: true });
-  scroller.addEventListener("wheel", holdOff, { passive: true });
-  scroller.addEventListener("autoscroll:hold", holdOff);
+  scroller.addEventListener("wheel", () => holdOff(), { passive: true });
+  scroller.addEventListener("autoscroll:hold", () => holdOff());
   scroller.addEventListener("autoscroll:refresh", () => {
     build(true);
     pos = read();

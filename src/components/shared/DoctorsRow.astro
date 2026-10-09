@@ -32,7 +32,7 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
 <section class="docs" aria-labelledby={id}>
   <SectionIntro id={id} heading={d.heading} text={d.text} gap={3} minH={26} />
   {slider ? (
-    <div class="hscroll slide" data-autoscroll="step">
+    <div class="hscroll slide" data-autoscroll="step" data-autoscroll-restore="no">
       <ul class="srow" role="list" aria-label={d.listLabel} data-loop-row>
         {doctors.map((doc: any) => (
           <li class="snap-start" data-loop-item><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>

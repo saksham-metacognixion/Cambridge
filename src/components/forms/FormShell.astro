@@ -69,7 +69,7 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
       type="submit"
       class="f-submit ui-btn btn-fill"
       style={`margin-block-start:calc(${gaps.submit} * var(--u))`}
-    ><span>{submit}</span></button>
+    ><span>{submit}</span><span class="f-spin" aria-hidden="true"></span></button>
   </div>
 </form>
 <div class="f-success" data-success-for={id} role="status" tabindex="-1" hidden>

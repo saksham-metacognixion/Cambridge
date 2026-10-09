@@ -197,6 +197,11 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .has-sub { position: relative; }
   .sub-head { display: flex; align-items: center; }
   .sub-btn { pointer-events: auto; display: flex; align-items: center; justify-content: center; flex: none; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; --hit-w: 24px; --hit-h: 30px; }
+  /* Motion (animation audit 8 Oct 2026, live Blocksy theme): every link colour eases with the theme's .12s curve (--ui-ease);
+     dropdown panels fade and rise from 10px over .2s ease (data-dropdown type-1); chevrons keep their .2s turn. */
+  .sub-item, .ritem, .mainnav a, .toplinks a { transition: color var(--ui-ease), text-decoration-color var(--ui-ease); }
+  /* Top-level links: the live header recolours a hovered menu item (nav li:hover > .ct-menu-link); brand AA = Deep Teal + cyan underline. */
+  @media (hover: hover) { .toplinks a:hover, .mainnav li > a:hover, .mainnav .sub-head > a:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   .sub-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transition: transform .2s; }
   .has-sub[data-open] .sub-chev { transform: rotate(180deg); }
   .sub-btn:focus-visible, .sub-item:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
@@ -220,13 +225,13 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
      column (111) and, with three rows, reaches below it (56..114): the white list hides the text under it completely
      instead of cutting through it. Stacking: .region (z 60) is above its sibling .visit inside the header, and the
      header (z-50) is above the page. */
-  .rmenu { visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(111 * var(--u)); }
-  .region[data-open] .rmenu { visibility: visible; opacity: 1; }
+  .rmenu { visibility: hidden; opacity: 0; transform: translate3d(0, 10px, 0); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(111 * var(--u)); }
+  .region[data-open] .rmenu { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); }
   /* .hd .rlist, not .rlist: `.hd ul { padding: 0 }` above is more specific and used to strip the list's padding. */
   .hd .rlist { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(6 * var(--u)) calc(10 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
   .ritem { --hit-h: calc(100% + 10 * var(--u)); }
   .ritem:hover, .ritem[aria-current='true'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* current region: the header's highlight colour */
-  .visit { cursor: pointer; transition: color .15s; }
+  .visit { cursor: pointer; transition: color var(--ui-ease); }
   .visit:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* like the region menu's items */
   .visit:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   .deco { pointer-events: none; } /* decorative lines must not swallow clicks meant for the links next to them */
@@ -242,8 +247,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .book { width: auto; min-width: calc(150 * var(--u)); height: auto; inset-inline-start: auto; inset-inline-end: calc((1052 - 905) * var(--u)); top: calc(84 * var(--u) - var(--btn-h) / 2); }
     .has-sub { min-width: calc((var(--w) + 11) * var(--u)); }
     .sub-btn { margin-inline-start: calc(2 * var(--u)); width: calc(9 * var(--u)); height: calc(9 * var(--u)); }
-    .sub { pointer-events: auto; visibility: hidden; opacity: 0; transition: opacity .15s, visibility 0s linear .15s; position: absolute; inset-inline-start: calc(-10 * var(--u)); top: 100%; padding-top: calc(10 * var(--u)); z-index: 60; }
-    .has-sub[data-open] .sub { visibility: visible; opacity: 1; transition: opacity .15s; } /* visible at once on open, so a link can take focus (keyboard) */
+    .sub { pointer-events: auto; visibility: hidden; opacity: 0; transform: translate3d(0, 10px, 0); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; position: absolute; inset-inline-start: calc(-10 * var(--u)); top: 100%; padding-top: calc(10 * var(--u)); z-index: 60; }
+    .has-sub[data-open] .sub { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); } /* visibility flips at once on open (a link can take focus), after the fade on close */
     .hd .sub-list { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(10 * var(--u)) calc(12 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); min-width: calc(140 * var(--u)); }
     .sub-item { --hit-h: calc(100% + 10 * var(--u)); }
     /* Fly-out: starts at the panel's inline edge (the row ends 12 inside it, the list padding), its first item level with the
@@ -254,8 +259,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .fly-btn { margin-inline-start: auto; width: calc(9 * var(--u)); height: calc(9 * var(--u)); --hit-w: 24px; --hit-h: calc(100% + 10 * var(--u)); }
     .fly-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transform: rotate(-90deg); }
     :global([dir='rtl']) .fly-chev { transform: rotate(90deg); }
-    .fly { visibility: hidden; opacity: 0; transition: opacity .15s, visibility 0s linear .15s; position: absolute; inset-inline-start: 100%; top: calc(-10 * var(--u)); padding-inline-start: calc(16 * var(--u)); z-index: 1; }
-    .has-sub[data-open] .has-fly[data-open] > .fly { visibility: visible; opacity: 1; transition: opacity .15s; }
+    .fly { visibility: hidden; opacity: 0; transform: translate3d(0, 10px, 0); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; position: absolute; inset-inline-start: 100%; top: calc(-10 * var(--u)); padding-inline-start: calc(16 * var(--u)); z-index: 1; }
+    .has-sub[data-open] .has-fly[data-open] > .fly { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); }
     .hd .fly-list { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(10 * var(--u)) calc(12 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); min-width: calc(140 * var(--u)); }
   }
 
@@ -265,14 +270,20 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .stage { display: flex; align-items: center; justify-content: space-between; gap: calc(12 * var(--u)); padding: calc(15 * var(--u)) 16px; box-sizing: border-box; }
     .logo { display: block; width: calc(252 * var(--u)); max-width: calc(100% - 60px); flex: 0 1 auto; }
     .burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; align-items: center; cursor: pointer; flex: none; }
-    .burger span { display: block; width: 26px; height: 3px; border-radius: 2px; background: #004059; transition: transform .2s, opacity .2s; }
+    .burger span { display: block; width: 26px; height: 3px; border-radius: 2px; background: #004059; transition: transform .12s cubic-bezier(0.455, 0.03, 0.515, 0.955), opacity .12s cubic-bezier(0.455, 0.03, 0.515, 0.955); } /* live header trigger: all .12s theme curve */
     #nav-toggle:checked ~ .stage .burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     #nav-toggle:checked ~ .stage .burger span:nth-child(2) { opacity: 0; }
     #nav-toggle:checked ~ .stage .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
     #nav-toggle:focus-visible ~ .stage .burger { outline: 2px solid #00b8ff; outline-offset: 2px; }
 
-    .menu { display: none; position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
-    #nav-toggle:checked ~ .stage .menu { display: flex; }
+    /* Open / close motion = the live Blocksy offcanvas (animation audit 8 Oct 2026): the panel fades over .25s ease-in-out while
+       its content slides in from 20 % off the inline end (.25s ease-in-out); hidden = visibility, so nothing inside can take focus. */
+    .menu { display: flex; visibility: hidden; opacity: 0; transform: translate3d(20%, 0, 0); position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
+    :global([dir='rtl']) .menu { transform: translate3d(-20%, 0, 0); }
+    /* The closing transition is armed by the first toggle (scripts/nav-submenu.ts adds .nav-toggled): a window resized across
+       the 1200px breakpoint must not slide the closed panel out of view. Opening always animates (the open state's own transition). */
+    .nav-toggled .menu { transition: opacity .25s ease-in-out, transform .25s ease-in-out, visibility 0s linear .25s; }
+    #nav-toggle:checked ~ .stage .menu { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); transition: opacity .25s ease-in-out, transform .25s ease-in-out, visibility 0s; }
     .deco, .chip, .pill { display: none; }
     .region { width: auto; height: auto; }
     .region-btn { width: auto; min-height: 44px; gap: calc(4 * var(--u)); }
@@ -290,23 +301,27 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     .sub-head { justify-content: space-between; gap: 8px; }
     .sub-btn { width: 44px; height: 44px; }
     .sub-chev { width: 18px; height: 18px; }
-    .sub { display: none; }
-    .has-sub[data-open] .sub { display: block; }
-    .hd .sub-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; }
+    /* Accordion slide = the live mobile menu (height .3s ease): a grid row grows from 0fr to 1fr, the list clipped meanwhile. */
+    .sub { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s ease, visibility 0s linear .3s; }
+    .has-sub[data-open] .sub { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s ease, visibility 0s; }
+    .hd .sub-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; min-height: 0; overflow: clip; }
     .menu .sub-item { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; white-space: normal; }
     /* Second level on mobile: the service row works like a main row (link + 44px chevron), its sections indent once more. */
     .fly-head { justify-content: space-between; gap: 8px; }
     .fly-btn { width: 44px; height: 44px; }
     .fly-chev { width: 18px; height: 18px; }
     .has-fly[data-open] .fly-chev { transform: rotate(180deg); }
-    .fly { display: none; }
-    .has-fly[data-open] > .fly { display: block; }
-    .hd .fly-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; }
+    .fly { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s ease, visibility 0s linear .3s; }
+    .has-fly[data-open] > .fly { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s ease, visibility 0s; }
+    .hd .fly-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; min-height: 0; overflow: clip; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
     .lang a { background: var(--color-mist); border-radius: var(--radius-btn); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
     .lang a[aria-current='true'] { background: #004059; }
     .book { position: relative; }
     .visit { margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; --hit-h: 100%; } /* a menu row like the links above it (44px tap target); the lines stay stacked */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .menu, .sub, .fly, .rmenu, .burger span, .sub-chev, .fly-chev, .chev { transition: none; }
   }
 </style>
 

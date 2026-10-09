@@ -27,9 +27,9 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const err = 'f-err cf-err lg:absolute lg:start-205 lg:w-322';
 const map = img(c.map.image, edition.region);
 // Hospitals (bug 051): ONE list for the Hospital select and the map (lib/hospitals.ts mapSpots: hospitals.json, the edition's own
-// hospitals, all six on Global, the site's own names and addresses). scripts/contact-map.ts loads Google Maps JavaScript API when the
-// map nears the screen (or a hospital is chosen first), drops a marker per hospital with a position and fits them; choosing a
-// hospital zooms to its marker and fills the card below. No key = keyless embed by position (one pin at a time).
+// hospitals, all six on Global, the site's own names and addresses). scripts/contact-map.ts loads the Maps JavaScript API once, when
+// the map nears the screen (or a hospital is chosen first), drops a marker per hospital with a position and fits them; choosing a
+// hospital (or clicking a marker) zooms to it and fills the card below. No key / API failure = this Figma image stays + the card.
 const spots = mapSpots(edition);
 const hospitals = spots.map((h) => ({ value: h.id, label: h.name }));
 const mapConfig = JSON.stringify({
@@ -170,7 +170,6 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
   /* Google map over the Figma placeholder image (bug 051): fades in once Google has drawn it; the box keeps the Figma size and corners. */
   .gmap { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s; }
   .gmap.is-ready { opacity: 1; }
-  .gmap :global(iframe) { display: block; width: 100%; height: 100%; border: 0; }
   /* Card at the top of the map (Google's logo and terms stay visible at the bottom); brand colours, Book / Medium as the form. */
   .mcard {
     position: absolute; inset-inline: calc(8 * var(--u)); top: calc(8 * var(--u)); z-index: 1; box-sizing: border-box;

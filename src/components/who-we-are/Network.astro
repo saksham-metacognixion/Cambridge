@@ -23,7 +23,10 @@ const { edition, c } = Astro.props;
 const stats = resolveStats(edition, c.stats);
 const photo = img(c.photo.image, edition.region);
 const cols = [504, 660, 802], rows = [125, 243];
-const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)] }));
+// Count-up seconds per stat, in order, from the live page's Greenshift counters (WordPress export, animation audit 8 Oct 2026:
+// data-duration 1 / 1.5 / 2 per row, linear, once, from 0 when 30 % in view; scripts/countup.ts Greenshift mode as on Our Hospitals).
+const countSecs = [1, 1.5, 2, 1, 1.5, 2];
+const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)], secs: countSecs[i] ?? 2 }));
 ---
 
 <section class="net" aria-label={c.ariaLabel}>
@@ -36,12 +39,16 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
       </div>
       <ul class="stats" role="list">
         {items.map((s) => (
-          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="n">{s.number}</span><span class="l">{s.label}</span></li>
+          <li class="stat" style={`--x:${s.x};--y:${s.y}`}><span class="sr-only">{s.number}</span><span class="n" aria-hidden="true"><span class="size">{s.number}</span><span class="live" data-countup data-countup-duration={s.secs}>{s.number}</span></span><span class="l">{s.label}</span></li>
         ))}
       </ul>
     </div>
   </div>
 </section>
+
+<script>
+  import '../../scripts/countup';
+</script>
 
 <style>
   .net { font-family: var(--font-gotham); font-style: normal; }
@@ -64,7 +71,12 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
   /* Stats: one grid for all six — 2 columns on phones, 3 on tablets; the number shrinks with the viewport so it fits its column */
   .stats { position: relative; list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(24 * var(--u)) calc(40 * var(--u)); }
   .stat { color: var(--color-navy-alt); font-weight: 500; line-height: 1.337; min-width: 0; }
-  .n { display: block; font-size: clamp(28px, 9vw, calc(35 * var(--u))); }
+  /* An invisible copy of the final text (.size) keeps the number's box at its final width while .live counts on top of it
+     (as on Our Hospitals / Why Cambridge), so the count never reflows the grid. */
+  .n { display: block; position: relative; width: max-content; max-width: 100%; font-size: clamp(28px, 9vw, calc(35 * var(--u))); }
+  .n .size { visibility: hidden; }
+  .n .live { position: absolute; inset-inline-start: 0; top: 0; white-space: nowrap; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .l { display: block; font-size: calc(12 * var(--u)); max-width: calc(140 * var(--u)); }
   @media (min-width: 768px) {
     .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }

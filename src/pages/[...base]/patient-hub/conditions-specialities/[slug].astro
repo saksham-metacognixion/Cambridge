@@ -1,7 +1,8 @@
 ---
 import { editions, urlFor } from '../../../../lib/editions';
 import { content, t } from '../../../../lib/content';
-import { conditions, allDetailSlugs, detailSlugs, CONDITION_PATHS, showPendingNote } from '../../../../lib/conditions';
+import { conditions, allDetailSlugs, detailSlugs, CONDITION_PATHS, showPendingNote, bannerWarned } from '../../../../lib/conditions';
+import { hasImage } from '../../../../lib/images';
 import { INDEXABLE } from '../../../../lib/seo';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Header from '../../../../components/Header.astro';
@@ -39,6 +40,16 @@ const page = full ?? {
   overview: [t(card!.summary, loc, 'conditions')],
 };
 const pendingTab = showPendingNote(INDEXABLE) ? shared.pending.tab : null;
+// Banner (bug 042): every condition declares its OWN image key (hero.banner.image = conditions/<slug>; Stroke = the Figma photo).
+// A key whose file is not in src/assets yet (R042: 19 photos pending from the client, tools/condition-banners/run.sh wires them)
+// falls back to the shared placeholder and carries a staging-only note; a page never inherits another condition's photo.
+const ownBanner = hasImage(page.hero.banner.image, edition.region);
+if (!ownBanner && !bannerWarned.has(slug)) {
+  bannerWarned.add(slug);
+  console.warn(`[conditions] ${slug}: banner "${page.hero.banner.image}" not in src/assets, placeholder shown (docs/open-decisions.md R042)`);
+}
+const hero = ownBanner ? page.hero : { ...page.hero, banner: shared.generated.banner };
+const bannerPending = !ownBanner && showPendingNote(INDEXABLE);
 // Doctors linked from this condition on the live site (conditions.json `doctors`, bug 041), this edition's country first;
 // the shared Figma sample list only when a condition has none.
 const linked = (card?.doctors ?? []).map((s) => profileDoctors.find((d) => d.slug === s)).filter((d) => d !== undefined);
@@ -50,8 +61,9 @@ const doctors = { ...shared.doctors, slugs: linked.length ? doctorsForEdition(li
     <Header />
   </div>
   <main>
-    <div id="hero" class="relative"><PageHero content={page.hero} pos={page.heroLayout} h={322} variant="cover" /></div>
+    <div id="hero" class="relative"><PageHero content={hero} pos={page.heroLayout} h={322} variant="cover" /></div>
     {pending && <p class="pending-note" role="note">{shared.pending.note}</p>}
+    {bannerPending && <p class="pending-note" role="note">{shared.pending.banner}</p>}
     <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
       <DetailBody edition={edition} heading={page.overviewHeading ?? shared.overviewHeading} overview={page.overview} tabs={page.tabs} tabsLabel={shared.tabsLabel} pendingTab={pendingTab} />
     </div>

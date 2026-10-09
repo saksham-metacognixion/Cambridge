@@ -1,5 +1,5 @@
 {
-  "_note": "Multiple Sclerosis (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "_note": "Multiple Sclerosis (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/multiple-sclerosis (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/multiple-sclerosis.png exists (tools/condition-banners/run.sh makes it from the live photo).",
   "meta": {
     "title": "Multiple Sclerosis | Cambridge Hospital",
     "description": "Managing symptoms and maintaining mobility and daily function."
@@ -7,7 +7,7 @@
   "hero": {
     "ariaLabel": "Multiple Sclerosis",
     "banner": {
-      "image": "conditions/accidents-rehabilitation",
+      "image": "conditions/multiple-sclerosis",
       "alt": ""
     },
     "title": [

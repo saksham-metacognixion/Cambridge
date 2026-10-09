@@ -43,7 +43,9 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:201;--y:47;--w:617;--h:27">{c.heading}</h2>
     <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:221;--y:82;--w:577;--h:27">{c.intro[0]}<br class="max-lg:hidden" />{c.intro[1]}</p>
 
-    <div data-autoscroll class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
+    <!-- Live Home page (WordPress export, animation audit 8 Oct 2026): Greenshift Swiper, autoplay delay 0, speed 12000, loop,
+         disablepause (no hover pause), autoplayrestore: one 12 s eased slide per tile, one after the other (autoscroll.ts step mode). -->
+    <div data-autoscroll="step" data-autoscroll-delay="0" data-autoscroll-speed="12000" data-autoscroll-pause="no" class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
       <ul data-loop-row class="row flex gap-[calc(24*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0 m-0 list-none">
         <li class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></li>
         {tiles.map((t) => (

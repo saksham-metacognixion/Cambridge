@@ -26,7 +26,7 @@ const c = content('layout/pagination', edition.locale)[mode];
   .pgn-cyan { --pgn-on: var(--color-cyan); }
   .pgn[hidden] { visibility: hidden; } /* keeps its line (the Figma gap above / below it) but is neither seen nor focusable */
   .pgn-dot { position: relative; flex: none; display: grid; place-items: center; width: calc(11.1 * var(--u)); height: calc(11.1 * var(--u)); margin: 0; padding: 0; border: 0; background: none; border-radius: 50%; cursor: pointer; }
-  .pgn-dot::before { content: ''; width: calc(6.972 * var(--u)); height: calc(6.972 * var(--u)); border-radius: 50%; background: var(--color-dot-grey); transition: background-color 200ms, width 200ms, height 200ms; }
+  .pgn-dot::before { content: ''; width: calc(6.972 * var(--u)); height: calc(6.972 * var(--u)); border-radius: 50%; background: var(--color-dot-grey); transition: width 0.4s ease-out, height 0.4s ease-out; } /* live Swiper bullets: width .4s ease-out, colour at once */
   .pgn-dot[aria-current='true']::before { width: calc(8.716 * var(--u)); height: calc(8.716 * var(--u)); background: var(--pgn-on); } /* size + colour, not colour alone */
   .pgn-dot::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 24px); height: 44px; } /* hit layer */
   .pgn-dot:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }

@@ -105,6 +105,13 @@
 .ui-btn.f-submit { display: flex; inline-size: fit-content; margin-inline: auto; border: 0; background: var(--color-cyan); color: var(--color-navy); }
 /* hover / focus-visible: the shared .btn-fill rules in global.css */
 .f-submit[aria-disabled='true'] { cursor: progress; }
+/* While sending (aria-disabled, scripts/forms.ts): a spinning ring beside the label, as the live Bit Forms (.bf-spinner, 1s linear;
+   animation audit 8 Oct 2026, bitform-1.css shared by every live form). The ring sits inside the button's end padding, so
+   nothing moves. */
+.ui-btn.f-submit { position: relative; }
+.ui-btn.f-submit > .f-spin { display: none; position: absolute; inset-inline-end: 6px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px; box-sizing: border-box; border-radius: 50%; border-top: calc(2 * var(--u)) solid currentColor; border-inline-end: calc(2 * var(--u)) solid transparent; animation: f-spin 1s linear infinite; }
+.ui-btn.f-submit[aria-disabled='true'] > .f-spin { display: block; }
+@keyframes f-spin { to { transform: rotate(360deg); } }
 
 /* Consent (Figma Contact page 86:799: circle 15.47 + Gotham Light 9.87 / 10.5 navy, link Gotham Book underlined) */
 .f-consent { position: relative; display: flex; align-items: flex-start; gap: calc(8.5 * var(--u)); cursor: pointer; font-weight: 300; font-size: calc(9.87 * var(--u)); line-height: calc(10.5 * var(--u)); color: var(--color-navy); }
@@ -135,6 +142,13 @@
 .f-success { text-align: center; padding-block: calc(24 * var(--u)); }
 .f-success:focus { outline: 0; }
 .f-success[hidden] { display: none; }
+/* The success message fades in over 1s ease-out, as the live Bit Forms (.bf-form-msg.active). */
+.f-success:not([hidden]) { animation: f-fade 1s ease-out both; }
+@keyframes f-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .f-spin { animation: none; }
+  .f-success:not([hidden]) { animation: none; }
+}
 .f-success .s-title { margin: 0 0 calc(8 * var(--u)); font-weight: 700; font-size: calc(13.523 * var(--u)); color: var(--color-navy-alt); }
 .f-success .s-text { margin: 0; font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy); }
 

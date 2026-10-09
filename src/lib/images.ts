@@ -13,6 +13,11 @@ const all = import.meta.glob<{ default: ImageMetadata }>('../assets/**/*.{png,jp
 const byKey = new Map<string, ImageMetadata>();
 for (const [p, m] of Object.entries(all)) byKey.set(p.replace('../assets/', '').replace(/\.[a-z0-9]+$/i, ''), m.default);
 
+/** True when an image exists for the key (shared or for the region); used where a page declares its own key before the file arrives. */
+export function hasImage(key: string, region?: RegionId): boolean {
+  return byKey.has(key) || (!!region && region !== 'global' && byKey.has(`regions/${region}/${key}`));
+}
+
 export function img(key: string, region?: RegionId): ImageMetadata {
   if (region && region !== 'global') {
     const r = byKey.get(`regions/${region}/${key}`);

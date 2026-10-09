@@ -4,116 +4,116 @@
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Acquired-Brain-Injury.avif",
-      "key": "conditions/live/acquired-brain-injury",
-      "usedBy": "src/data/content/conditions/acquired-brain-injury.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/acquired-brain-injury",
+      "usedBy": "src/data/content/conditions/acquired-brain-injury.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Amputation-Prosthetic-Rehabilitation.avif",
-      "key": "conditions/live/amputation-prosthetic-rehabilitation",
-      "usedBy": "src/data/content/conditions/amputation-prosthetic-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/amputation-prosthetic-rehabilitation",
+      "usedBy": "src/data/content/conditions/amputation-prosthetic-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Back-Pain-Lumbar-Rehabilitation.avif",
-      "key": "conditions/live/back-pain-lumbar-rehabilitation",
-      "usedBy": "src/data/content/conditions/back-pain-lumbar-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/back-pain-lumbar-rehabilitation",
+      "usedBy": "src/data/content/conditions/back-pain-lumbar-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Epilepsy.avif",
-      "key": "conditions/live/epilepsy",
-      "usedBy": "src/data/content/conditions/epilepsy.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/epilepsy",
+      "usedBy": "src/data/content/conditions/epilepsy.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Fracture-Rehabilitation.avif",
-      "key": "conditions/live/fracture-rehabilitation",
-      "usedBy": "src/data/content/conditions/fracture-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/fracture-rehabilitation",
+      "usedBy": "src/data/content/conditions/fracture-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Guillain-Barre-Syndrome.avif",
-      "key": "conditions/live/guillain-barre-syndrome",
-      "usedBy": "src/data/content/conditions/guillain-barre-syndrome.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/guillain-barre-syndrome",
+      "usedBy": "src/data/content/conditions/guillain-barre-syndrome.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif",
-      "key": "conditions/live/hip-fracture-rehabilitation",
-      "usedBy": "src/data/content/conditions/hip-fracture-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/hip-fracture-rehabilitation",
+      "usedBy": "src/data/content/conditions/hip-fracture-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Hip-Knee-Replacement-Recovery.avif",
-      "key": "conditions/live/hip-knee-replacement-recovery",
-      "usedBy": "src/data/content/conditions/hip-knee-replacement-recovery.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/hip-knee-replacement-recovery",
+      "usedBy": "src/data/content/conditions/hip-knee-replacement-recovery.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Knee-Ligament-Cartilage-Injuries.avif",
-      "key": "conditions/live/knee-ligament-cartilage-injuries",
-      "usedBy": "src/data/content/conditions/knee-ligament-cartilage-injuries.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/knee-ligament-cartilage-injuries",
+      "usedBy": "src/data/content/conditions/knee-ligament-cartilage-injuries.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Motor-Neuron-Diseases.avif",
-      "key": "conditions/live/motor-neuron-diseases",
-      "usedBy": "src/data/content/conditions/motor-neuron-diseases.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/motor-neuron-diseases",
+      "usedBy": "src/data/content/conditions/motor-neuron-diseases.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Multiple-Sclerosis.avif",
-      "key": "conditions/live/multiple-sclerosis",
-      "usedBy": "src/data/content/conditions/multiple-sclerosis.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/multiple-sclerosis",
+      "usedBy": "src/data/content/conditions/multiple-sclerosis.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Musculoskeletal-Orthopedic-Rehabilitation.avif",
-      "key": "conditions/live/musculoskeletal-orthopaedic-rehabilitation",
-      "usedBy": "src/data/content/conditions/musculoskeletal-orthopaedic-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/musculoskeletal-orthopaedic-rehabilitation",
+      "usedBy": "src/data/content/conditions/musculoskeletal-orthopaedic-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Neck-Pain-Cervical-Rehabilitation.avif",
-      "key": "conditions/live/neck-pain-cervical-rehabilitation",
-      "usedBy": "src/data/content/conditions/neck-pain-cervical-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/neck-pain-cervical-rehabilitation",
+      "usedBy": "src/data/content/conditions/neck-pain-cervical-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Neurorehabilitation.avif",
-      "key": "conditions/live/neurorehabilitation",
-      "usedBy": "src/data/content/conditions/neurorehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/neurorehabilitation",
+      "usedBy": "src/data/content/conditions/neurorehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Parkinsons-Disease.avif",
-      "key": "conditions/live/parkinsons-disease",
-      "usedBy": "src/data/content/conditions/parkinsons-disease.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/parkinsons-disease",
+      "usedBy": "src/data/content/conditions/parkinsons-disease.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Shoulder-Injury-Rotator-Cuff-Rehabilitation.avif",
-      "key": "conditions/live/shoulder-rotator-cuff-rehabilitation",
-      "usedBy": "src/data/content/conditions/shoulder-rotator-cuff-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/shoulder-rotator-cuff-rehabilitation",
+      "usedBy": "src/data/content/conditions/shoulder-rotator-cuff-rehabilitation.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Spinal-Cord-Injury.avif",
-      "key": "conditions/live/spinal-cord-injury",
-      "usedBy": "src/data/content/conditions/spinal-cord-injury.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/spinal-cord-injury",
+      "usedBy": "src/data/content/conditions/spinal-cord-injury.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Stroke-Rehabilitation.avif",
-      "key": "conditions/live/stroke-rehabilitation",
-      "usedBy": "src/data/content/conditions/stroke-rehabilitation.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/stroke-rehabilitation",
+      "usedBy": "NOT used: Stroke keeps the Figma photo (bug 042 section 8); tools/condition-banners/run.sh skips it"
     },
     {
       "group": "conditions",
       "source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Tennis-Elbow.avif",
-      "key": "conditions/live/tennis-elbow",
-      "usedBy": "src/data/content/conditions/tennis-elbow.en.json hero.banner.image (today a Figma placeholder photo, CT4)"
+      "key": "conditions/tennis-elbow",
+      "usedBy": "src/data/content/conditions/tennis-elbow.en.json hero.banner.image already points at this key (bug 042); the file comes from tools/condition-banners/run.sh (photo + left fade like the Figma Stroke banner + cursor-follow layers), until then the shared placeholder shows (R042)"
     },
     {
       "group": "care",

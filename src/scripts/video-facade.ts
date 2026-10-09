@@ -56,7 +56,7 @@ function embed(host: string, id: string): HTMLElement | null {
   return f;
 }
 
-const FADE_MS = 250;
+const FADE_MS = 300; // the live GSLightbox transition (all .3s ease-in-out), see .video-lightbox in global.css
 let box: HTMLDialogElement | null = null;
 let frame: HTMLElement | null = null;
 let returnFocusTo: HTMLElement | null = null;

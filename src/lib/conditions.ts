@@ -51,3 +51,6 @@ export const allDetailSlugs = [
 export function showPendingNote(indexable: boolean): boolean {
   return !indexable && import.meta.env.PUBLIC_SHOW_PENDING_NOTE === "true";
 }
+
+/** Condition slugs already reported by the build as "banner photo pending" (one warning per slug, not per edition / locale). */
+export const bannerWarned = new Set<string>();

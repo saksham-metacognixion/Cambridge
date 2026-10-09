@@ -253,7 +253,7 @@ body {
    little on hover or when a link in the card has keyboard focus (bug 019, as on the live site). Only the photo scales, from
    its bottom edge (it stands on the panel), so the card keeps its size: no layout shift, nothing clipped in a scroller.
    1.04 keeps the largest photo (174 on a 180 panel) inside the card. Off with prefers-reduced-motion. */
-.dr-photo { transform-origin: 50% 100%; transition: scale 200ms ease-out; }
+.dr-photo { transform-origin: 50% 100%; transition: scale 0.5s cubic-bezier(0.42, 0, 0.58, 1); } /* live: .doctor-image-box img, all .5s cubic-bezier(.42,0,.58,1), scale 1.04 */
 @media (hover: hover) { .dr-card:hover .dr-photo { scale: 1.04; } }
 .dr-card:has(:focus-visible) .dr-photo { scale: 1.04; }
 @media (prefers-reduced-motion: reduce) { .dr-photo, .dr-card:hover .dr-photo, .dr-card:has(:focus-visible) .dr-photo { scale: none; transition: none; } }
@@ -385,12 +385,12 @@ body {
    portrait video fills the height and a landscape one the width, never wider or taller than the screen, no padding bars.
    The round close button sits on the stage's top inline-end corner (half outside), so it moves with the frame at every
    size; the 24px dialog padding is what keeps it (22px overhang) inside the viewport. Logical inset: top-left in RTL. */
-.video-lightbox { --vl-ratio: 1.7777778; --vl-max-h: 85vh; --vl-pad: 24px; position: fixed; inset: 0; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: var(--vl-pad); border: 0; background: rgba(0, 0, 0, 0.7); opacity: 0; overflow: hidden; transition: opacity 250ms ease; }
+.video-lightbox { --vl-ratio: 1.7777778; --vl-max-h: 85vh; --vl-pad: 24px; position: fixed; inset: 0; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: var(--vl-pad); border: 0; background: rgba(0, 0, 0, 0.7); opacity: 0; overflow: hidden; transition: opacity 300ms ease-in-out; } /* live GSLightbox: all .3s ease-in-out */
 @supports (height: 1dvh) { .video-lightbox { --vl-max-h: 85dvh; } }
 .video-lightbox[open] { display: grid; place-items: center; }
 .video-lightbox.is-open { opacity: 1; }
 .video-lightbox::backdrop { background: transparent; }
-.video-lightbox-stage { position: relative; width: min(100%, calc(var(--vl-max-h) * var(--vl-ratio))); max-height: 100%; aspect-ratio: var(--vl-ratio); transform: scale(0.96); transition: transform 250ms ease; }
+.video-lightbox-stage { position: relative; width: min(100%, calc(var(--vl-max-h) * var(--vl-ratio))); max-height: 100%; aspect-ratio: var(--vl-ratio); transform: scale(0.8); transition: transform 300ms ease-in-out; } /* live: .gs-lightbox-content scale(.8) -> 1, .3s ease-in-out */
 .video-lightbox.is-open .video-lightbox-stage { transform: none; }
 .video-lightbox-frame { width: 100%; height: 100%; background: #000; }
 .video-lightbox-player { display: block; width: 100%; height: 100%; border: 0; background: #000; }

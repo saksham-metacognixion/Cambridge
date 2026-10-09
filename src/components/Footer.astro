@@ -99,14 +99,17 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
   .ft h2.text-f13 { line-height: normal; }
   .links { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #e7e7e7; white-space: nowrap; }
-  .links a, .bot a { color: inherit; text-decoration: none; }
+  .links a, .bot a { color: inherit; text-decoration: none; transition: color var(--ui-ease), text-decoration-color var(--ui-ease); } /* live: a { transition: all .12s } */
+  @media (hover: hover) { .links a:hover { color: #fff; } } /* live footer links: colour -> white on hover (the legal links are white already) */
   .col .links { margin-top: calc(3 * var(--u)); }
   /* Newsletter field: email + Subscribe in one white box (Figma 213 x 26, corners --radius-field, bug 049). Subscribe = the
      shared .ui-btn size (bug 044/050; Figma 36 x 15, label 9) with the .btn-text look, so the box is as tall as the button. */
   .nl .box { position: relative; display: flex; align-items: center; background: #fff; border-radius: var(--radius-field); width: calc(213 * var(--u)); min-height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
   .nl input[type="email"] { flex: 1 1 auto; min-width: 0; align-self: stretch; padding: 0; padding-inline-start: calc(10 * var(--u)); border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; border-radius: inherit; }
   .nl input::placeholder { color: #004059; opacity: 1; }
-  .nl button { border: 0; background: transparent; color: #004059; }
+  .nl button { border: 0; background: transparent; color: #004059; transition: transform .18s ease; } /* live footer form button: transform .18s ease, pressed = scale(.98) */
+  .nl button:active { transform: scale(0.98); }
+  @media (prefers-reduced-motion: reduce) { .nl button { transition: none; } .nl button:active { transform: none; } }
   .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
   .bot { margin: 0; font-size: calc(7 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; white-space: pre; }
   .bot.right { text-align: end; }

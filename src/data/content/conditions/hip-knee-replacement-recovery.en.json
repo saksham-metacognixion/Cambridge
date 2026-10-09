@@ -1,5 +1,5 @@
 {
-  "_note": "Hip & Knee Replacement Recovery (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: shared placeholder photo (docs/open-decisions.md CT4).",
+  "_note": "Hip & Knee Replacement Recovery (condition detail template, Figma 41:2373 / 67:3070). Text = Website Content - Suhad/Patient Hub/EN-Conditions & Specialities.md + AR-... (5 Oct 2026): summary line (the card) and body paragraphs (Overview); no topic tabs in the documents. Banner: own key conditions/hip-knee-replacement-recovery (bug 042); the photo is pending from the client (docs/open-decisions.md R042), so the template shows the shared placeholder until src/assets/conditions/hip-knee-replacement-recovery.png exists (tools/condition-banners/run.sh makes it from the live photo).",
   "meta": {
     "title": "Hip & Knee Replacement Recovery | Cambridge Hospital",
     "description": "Restoring movement and strength for a safe return to daily life."
@@ -7,7 +7,7 @@
   "hero": {
     "ariaLabel": "Hip & Knee Replacement Recovery",
     "banner": {
-      "image": "conditions/accidents-rehabilitation",
+      "image": "conditions/hip-knee-replacement-recovery",
       "alt": ""
     },
     "title": [

@@ -4,10 +4,11 @@
   "tabsLabel": "Topics",
   "pending": {
     "note": "Content pending: this page is generated from the condition card until the full text is supplied.",
-    "tab": "Content pending for this topic."
+    "tab": "Content pending for this topic.",
+    "banner": "Banner photo pending for this condition: the shared placeholder is shown until the page's own photo is supplied."
   },
   "generated": {
-    "_note": "Pages without a content file (src/data/content/conditions/<slug>.en.json): hero title = card title, overview = card summary. Hero image + button are PLACEHOLDERS (Accidents Rehabilitation image), flagged.",
+    "_note": "Pages without a content file (src/data/content/conditions/<slug>.en.json): hero title = card title, overview = card summary. Hero image + button are PLACEHOLDERS (Accidents Rehabilitation image), flagged. The same banner is the FALLBACK of a page whose own key (hero.banner.image = conditions/<slug>, bug 042) has no file in src/assets yet (R042) - shown with pending.banner on staging.",
     "banner": {
       "image": "conditions/accidents-rehabilitation",
       "alt": ""

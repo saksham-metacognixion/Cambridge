@@ -50,9 +50,10 @@ const mainLinks: (MainLink & { w: number; id: string; children: NavItem[] })[] =
 // not exist there (hospital of another region) lands on its nearest existing parent.
 // Every region is listed (Global, UAE, KSA); the current one comes from the URL's edition (parsePath), never from a
 // fixed label, so a direct visit, a refresh or a deep link of /ae or /sa shows that region as the button label.
+// A click saves the region as the visitor's edition choice (data-edition-choice, CountryPopupLogic.astro; bug 084).
 const regionOptions = c.region.options.map((o: { region: RegionId; label: string }) => {
   const target = getEdition(o.region, edition.locale);
-  return { label: o.label, href: switchHref(target, path), lang: target.lang, current: o.region === edition.region };
+  return { label: o.label, region: o.region, href: switchHref(target, path), lang: target.lang, current: o.region === edition.region };
 });
 const currentRegion = regionOptions.find((o: { current: boolean }) => o.current)!;
 // Language switch: the active language = the page's own locale (desktop pill + mobile chip, colours, aria-current).
@@ -106,7 +107,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
         <div class="rmenu" id="region-menu" data-region-menu>
           <ul class="rlist">
             {regionOptions.map((o) => (
-              <li><a href={o.href} hreflang={o.lang} class="hit ritem block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={o.current ? 'true' : undefined}>{o.label}</a></li>
+              <li><a href={o.href} hreflang={o.lang} data-edition-choice={o.region} class="hit ritem block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={o.current ? 'true' : undefined}>{o.label}</a></li>
             ))}
           </ul>
         </div>

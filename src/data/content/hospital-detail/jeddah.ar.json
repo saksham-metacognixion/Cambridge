@@ -15,5 +15,10 @@
       }
     ]
   },
-  "_note": "Gallery tab labels = the live Arabic hospital page (missing-image audit, 9 Oct 2026)."
+  "_note": "Gallery tab labels = the live Arabic hospital page (missing-image audit, 9 Oct 2026). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Jeddah Hospital\" = hospitals.json short names / WP Footer-Ar 19169.",
+  "hero": {
+    "title": [
+      "مستشفى جدة"
+    ]
+  }
 }

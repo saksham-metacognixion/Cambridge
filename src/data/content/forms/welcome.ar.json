@@ -1,1 +1,4 @@
-{}
+{
+  "_note": "Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Cambridge Hospital\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (logo alt).",
+  "logoAlt": "مستشفى كامبريدج"
+}

@@ -62,7 +62,10 @@ const cards = kids.map((k) => ({
   text: t(k.desc, loc, 'care'),
   href: urlFor(edition, CARE_PATHS.of([...trail, k.slug])),
 }));
-const cardsHeading = own?.cardsHeading ?? fill(shared.sub.cardsHeading);
+// The programmes heading template has no Arabic yet: on an Arabic page it is filled with the English title, so the heading
+// stays one language instead of "Our <Arabic title> Programmes" (bug 075 follow-up; R053: no mixed text).
+const cardsTpl = shared.sub.cardsHeading;
+const cardsHeading = own?.cardsHeading ?? cardsTpl.replace('{title}', /[A-Za-z]/.test(cardsTpl.replace('{title}', '')) ? t(node.title, 'en', 'care') : title);
 const meta = { title: own?.meta?.title ?? fill(shared.meta.title), description: own?.meta?.description ?? (own?.hero.text ?? fill(shared.meta.description)) };
 ---
 

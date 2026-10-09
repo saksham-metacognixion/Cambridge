@@ -1,5 +1,5 @@
 {
-  "_note": "Source: the live Arabic page https://cambridgehospital.com/ae/ar/care/home-healthcare/ (captured 9 Oct 2026), text exactly as on the live site; added because this page had no Arabic (English was shown). Replace with the client Arabic document when it arrives. Topics after the 7th have no live Arabic (English shown).",
+  "_note": "Source: the live Arabic page https://cambridgehospital.com/ae/ar/care/home-healthcare/ (captured 9 Oct 2026), text exactly as on the live site; added because this page had no Arabic (English was shown). Replace with the client Arabic document when it arrives. Topics after the 7th have no live Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Scope of Ambulance Services\", \"Follow-up and check-up visits\", \"Non-emergency patient transport\", \"Newborn Nursing Care\", \"Specialist nursing support for newborns and their mothers in the comfort of home, helping families manage the earliest days with confidence and reassurance. Our teams provide:\", \"Routine newborn health checks, including monitoring weight, feeding and general wellbeing\" (+13 more) = content/care/home-healthcare.sa.ar.json (client AR document, same English text).",
   "hero": {
     "ariaLabel": "خدمات الرعاية الصحية المنزلية",
     "title": [
@@ -137,8 +137,57 @@
         }
       ]
     },
-    {},
-    {},
-    {}
+    {
+      "label": "نطاق خدمات الإسعاف",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "زيارات المتابعة والفحوصات",
+            "نقل المرضى في الحالات غير الطارئة"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "خدمات رعاية حديثي الولادة في المنزل",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "نوفر دعمًا تمريضيًا متخصصًا لحديثي الولادة وأمهاتهم في المنزل؛ مما يساعد الأسر على التعامل مع الأيام الأولى ما بعد الولادة بثقة واطمئنان. وتوفر فرقنا:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "الفحوصات الصحية الروتينية لحديثي الولادة، بما في ذلك متابعة الوزن، والتغذية، والحالة الصحية العامة",
+            "دعم التغذية، والإرشاد بشأن الرضاعة الطبيعية، والمساعدة في الرضاعة الصناعية",
+            "العناية بالحبل السري وبشرة حديثي الولادة",
+            "متابعة اليرقان (الصفرة) لدى حديثي الولادة، وتوجيه الوالدين إلى الحالات التي تستدعي تقييمًا أو رعاية إضافية",
+            "إرشاد الوالدين حول النوم الآمن، والنظافة، والعناية اليومية بحديثي الولادة",
+            "تقديم الدعم للأمهات خلال فترة التعافي بعد الولادة"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "خدمات الفحوصات الطبية",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "فحوصات يجريها الأطباء والممرضون في المنزل للمرضى الذين يحتاجون إلى متابعة منتظمة، أو يواجهون صعوبة في التنقل إلى العيادة. وتوفر فرقنا:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "زيارات منزلية مجدولة للفحوصات الطبية الروتينية والمتابعة",
+            "متابعة العلامات الحيوية، بما في ذلك ضغط الدم ومعدل ضربات القلب، ودرجة الحرارة، ومستويات الأكسجين",
+            "مراجعة الحالات الصحية المستمرة والأدوية الحالية",
+            "فحوصات ما قبل العمليات الجراحية وما بعدها",
+            "تقييم الحالة الصحية للمرضى غير القادرين على التنقل إلى العيادة",
+            "الإحالة والتنسيق مع خدمات المستشفى عند الحاجة إلى مزيد من الرعاية"
+          ]
+        }
+      ]
+    }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export page 19153). Card descriptions = the live site's one-liners (the English ones are the client's 5 Oct documents, which have no Arabic yet). cardButton 'Start Your Care': no Arabic on the live site (English shown).",
+  "_note": "Live site Arabic (WordPress export page 19153). Card descriptions = the live site's one-liners (the English ones are the client's 5 Oct documents, which have no Arabic yet). cardButton 'Start Your Care': no Arabic on the live site (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Start Your Care\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (care cards button, 5 of 6 pages); \"In-school care\" = WP export home page 36 -> 19153 / home/services.ar.json title.",
   "heading": "خدمات مميزة في كل مرحلة من مراحل الرعاية",
   "text": "في مستشفى كامبريدج، نلتزم بتقديم رعاية متقدمة مرتكزة على المريض مع تميز سريري، ونوفر مجموعة كاملة من الخدمات المصممة خصيصًا لتلبية احتياجاتكم الفردية",
   "cards": [
@@ -17,7 +17,9 @@
     },
     {
       "title": "الرعاية داخل المدرسة",
-      "desc": "توفير الرعاية في الموقع لدعم صحة الطلاب وسلامتهم."
+      "desc": "توفير الرعاية في الموقع لدعم صحة الطلاب وسلامتهم.",
+      "alt": "الرعاية داخل المدرسة"
     }
-  ]
+  ],
+  "cardButton": "ابدأ رعايتك"
 }

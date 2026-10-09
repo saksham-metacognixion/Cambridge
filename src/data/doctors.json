@@ -26,31 +26,31 @@
       "sub_specialities": [
         {
           "en": "Physical Rehabilitation",
-          "ar": ""
+          "ar": "التأهيل البدني"
         },
         {
           "en": "Spinal Cord Injury Care",
-          "ar": ""
+          "ar": "رعاية إصابات الحبل الشوكي"
         },
         {
           "en": "Brain Injury Rehabilitation",
-          "ar": ""
+          "ar": "إعادة تأهيل إصابات الدماغ"
         },
         {
           "en": "Sports Injury Treatment",
-          "ar": ""
+          "ar": "علاج إصابات الرياضة"
         },
         {
           "en": "EMG & Nerve Studies",
-          "ar": ""
+          "ar": "تخطيط العضلات ودراسات الأعصاب"
         },
         {
           "en": "Pain Management",
-          "ar": ""
+          "ar": "إدارة الألم"
         },
         {
           "en": "Acupuncture Therapy",
-          "ar": ""
+          "ar": "العلاج بالإبر الصينية"
         }
       ],
       "photo": "doctors/dr-ahmad",
@@ -340,7 +340,7 @@
         },
         {
           "en": "Pulmonary Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل الرئوي"
         },
         {
           "en": "Renal Disease & Dialysis",
@@ -702,7 +702,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -894,7 +894,7 @@
         },
         {
           "en": "Post-Surgical Recovery",
-          "ar": ""
+          "ar": "إعادة التأهيل بعد العمليات الجراحية"
         },
         {
           "en": "Preventive Care",
@@ -956,7 +956,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1014,7 +1014,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1052,23 +1052,23 @@
       "sub_specialities": [
         {
           "en": "Pediatric Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل للأطفال"
         },
         {
           "en": "Pulmonary Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل الرئوي"
         },
         {
           "en": "Neuromuscular Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل العصبي العضلي للأطفال"
         },
         {
           "en": "Central Nervous System Anomalies",
-          "ar": ""
+          "ar": "تشوهات الجهاز العصبي المركزي"
         },
         {
           "en": "Long-Term Care of Cardiac Anomalies",
-          "ar": ""
+          "ar": "الرعاية طويلة الأمد لاضطرابات القلب"
         },
         {
           "en": "Pediatric Transitional & Post-Acute Care",
@@ -1126,7 +1126,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1176,7 +1176,7 @@
         },
         {
           "en": "Pain Management",
-          "ar": ""
+          "ar": "إدارة الألم"
         },
         {
           "en": "Perioperative Care",
@@ -1222,7 +1222,7 @@
         },
         {
           "en": "Post-Surgical Recovery",
-          "ar": ""
+          "ar": "إعادة التأهيل بعد العمليات الجراحية"
         },
         {
           "en": "Preventive Care",
@@ -1314,23 +1314,23 @@
       "sub_specialities": [
         {
           "en": "Neuro Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل العصبي"
         },
         {
           "en": "Stroke Rehabilitation",
-          "ar": ""
+          "ar": "إعادة تأهيل السكتة الدماغية"
         },
         {
           "en": "Traumatic Brain Injury",
-          "ar": ""
+          "ar": "إصابة الدماغ الرضحية"
         },
         {
           "en": "Spinal Cord Injury",
-          "ar": ""
+          "ar": "إصابة الحبل الشوكي"
         },
         {
           "en": "Musculoskeletal Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل العضلي الهيكلي"
         },
         {
           "en": "Post-Surgical & Road Traffic Accident Rehabilitation",
@@ -1384,7 +1384,7 @@
         },
         {
           "en": "Post-Surgical Recovery",
-          "ar": ""
+          "ar": "إعادة التأهيل بعد العمليات الجراحية"
         },
         {
           "en": "Preventive Care",
@@ -1446,7 +1446,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1504,7 +1504,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1554,7 +1554,7 @@
         },
         {
           "en": "Post-Surgical Recovery",
-          "ar": ""
+          "ar": "إعادة التأهيل بعد العمليات الجراحية"
         },
         {
           "en": "Preventive Care",
@@ -1612,7 +1612,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1670,7 +1670,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1728,7 +1728,7 @@
         },
         {
           "en": "Tracheostomy Care",
-          "ar": ""
+          "ar": "العناية بفتحة القصبة الهوائية"
         },
         {
           "en": "Post-Surgical Critical Care",
@@ -1766,23 +1766,23 @@
       "sub_specialities": [
         {
           "en": "Pediatric Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل للأطفال"
         },
         {
           "en": "Pulmonary Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل الرئوي"
         },
         {
           "en": "Neuromuscular Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل العصبي العضلي للأطفال"
         },
         {
           "en": "Central Nervous System Anomalies",
-          "ar": ""
+          "ar": "تشوهات الجهاز العصبي المركزي"
         },
         {
           "en": "Long-Term Care of Cardiac Anomalies",
-          "ar": ""
+          "ar": "الرعاية طويلة الأمد لاضطرابات القلب"
         },
         {
           "en": "Pediatric Transitional & Post-Acute Care",
@@ -1828,7 +1828,7 @@
         },
         {
           "en": "Pulmonary Rehabilitation",
-          "ar": ""
+          "ar": "إعادة التأهيل الرئوي"
         },
         {
           "en": "Chronic Respiratory Conditions",
@@ -1886,7 +1886,7 @@
         },
         {
           "en": "Post-Surgical Recovery",
-          "ar": ""
+          "ar": "إعادة التأهيل بعد العمليات الجراحية"
         },
         {
           "en": "Preventive Care",
@@ -1940,7 +1940,7 @@
         },
         {
           "en": "Post-Surgical Recovery",
-          "ar": ""
+          "ar": "إعادة التأهيل بعد العمليات الجراحية"
         },
         {
           "en": "Preventive Care",
@@ -2478,11 +2478,11 @@
         },
         {
           "en": "Medical Emergencies",
-          "ar": ""
+          "ar": "الطوارئ الطبية"
         },
         {
           "en": "Inpatient Wards",
-          "ar": ""
+          "ar": "أقسام المرضى الداخليين"
         }
       ],
       "photo": "doctors/wp/medhat-hagras",
@@ -2728,7 +2728,7 @@
         },
         {
           "en": "Family Medicine",
-          "ar": ""
+          "ar": "طب الأسرة"
         }
       ],
       "photo": "doctors/wp/abbas-khalid",
@@ -3336,31 +3336,31 @@
       "sub_specialities": [
         {
           "en": "Physical Rehabilitation",
-          "ar": ""
+          "ar": "التأهيل البدني"
         },
         {
           "en": "Spinal Cord Injury Care",
-          "ar": ""
+          "ar": "رعاية إصابات الحبل الشوكي"
         },
         {
           "en": "Brain Injury Rehabilitation",
-          "ar": ""
+          "ar": "إعادة تأهيل إصابات الدماغ"
         },
         {
           "en": "Sports Injury Treatment",
-          "ar": ""
+          "ar": "علاج إصابات الرياضة"
         },
         {
           "en": "EMG & Nerve Studies",
-          "ar": ""
+          "ar": "تخطيط العضلات ودراسات الأعصاب"
         },
         {
           "en": "Pain Management",
-          "ar": ""
+          "ar": "إدارة الألم"
         },
         {
           "en": "Acupuncture Therapy",
-          "ar": ""
+          "ar": "العلاج بالإبر الصينية"
         }
       ],
       "photo": "",

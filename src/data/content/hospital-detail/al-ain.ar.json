@@ -1,12 +1,14 @@
 {
-  "_note": "Arabic = the live site's Arabic page text (captured 9 Oct 2026) where its English matches ours; the rest falls back to English. Replace with the client Arabic document when it arrives. Gallery tab labels = the live Arabic hospital page (missing-image audit, 9 Oct 2026).",
+  "_note": "Arabic = the live site's Arabic page text (captured 9 Oct 2026) where its English matches ours; the rest falls back to English. Replace with the client Arabic document when it arrives. Gallery tab labels = the live Arabic hospital page (missing-image audit, 9 Oct 2026). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Al Ain Hospital\" = hospitals.json short names / WP Footer-Ar 19169.",
   "hero": {
-    "text": "رعاية تركز على التعافي في العين، تجمع بين إعادة التأهيل، والرعاية طويلة الأمد، والتنسيق السريري المنظم."
+    "text": "رعاية تركز على التعافي في العين، تجمع بين إعادة التأهيل، والرعاية طويلة الأمد، والتنسيق السريري المنظم.",
+    "title": [
+      "مستشفى العين"
+    ]
   },
   "environment": {
     "text": [
-      "يدعم مستشفى كامبريدج، العين، المرضى الذين يحتاجون إلى إعادة التأهيل، والدعم طويل الأمد، والتعافي تحت إشراف سريري ضمن بيئة مصممة خصيصا للرعاية الممتدة والعلاج الوظيفي. “يساهم هذا المستشفى بشكل أساسي في تسهيل الحصول على خدمات التأهيل المتخصصة في مدينة العين وضواحيها، مقللاً بذلك من تشتت مسارات الرعاية الصحية أو الحاجة للسفر لتلقي العلاج.”",
-      ""
+      "يدعم مستشفى كامبريدج، العين، المرضى الذين يحتاجون إلى إعادة التأهيل، والدعم طويل الأمد، والتعافي تحت إشراف سريري ضمن بيئة مصممة خصيصا للرعاية الممتدة والعلاج الوظيفي. “يساهم هذا المستشفى بشكل أساسي في تسهيل الحصول على خدمات التأهيل المتخصصة في مدينة العين وضواحيها، مقللاً بذلك من تشتت مسارات الرعاية الصحية أو الحاجة للسفر لتلقي العلاج.”"
     ]
   },
   "healing": {

@@ -67,9 +67,10 @@ Read this file at the start of every session and follow it for all work.
 
 ### Country pop-up (Global only)
 - On Global: detect country at the edge (Cloudflare country header or middleware), show the Figma pop-up
-  (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. Exception (user decision, 5 Oct 2026): the pop-up appears
-  every time the website is opened (every new tab / window; `remember: "tab"` in `src/data/country-popup.json`),
-  not only on the first visit; `remember: "forever"` restores the original one-year cookie.
+  (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. Since 9 Oct 2026 (bugs 083/084): shown only to visitors detected in
+  the UAE or KSA (Vercel `x-vercel-ip-country` via root `middleware.ts`, Cloudflare via `functions/_middleware.ts`, shared
+  `functions/_lib/geo.ts`); unknown / other countries = no pop-up, never assume UAE. The choice (pop-up or header region
+  switch) is kept one year (`remember: "forever"`, cookie `ch_edition`), replacing the 5 Oct "every new tab" decision. B5.
 
 ### Arabic (RTL)
 - `dir="rtl"` on Arabic pages; full mirror of logo, navigation, icons, arrows.

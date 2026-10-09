@@ -153,7 +153,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     .acc, .nl { flex: 1 1 calc(235 * var(--u)); }
     .icons { width: calc(161 * var(--u)); height: auto; }
     .stage > img[src*="line24"], .stage > img:not(.logo) { width: 100%; height: auto; flex: 1 1 100%; }
-    .bot { flex: 1 1 auto; white-space: pre-wrap; }
+    .bot { flex: 1 1 auto; white-space: pre-wrap; font-size: 12px; line-height: 1.4; } /* bug 082: readable legal line (Figma 7 = 9.6px) */
     .bot.right { text-align: start; }
     /* Tap targets: every footer link row is 44px high (text size, colour and order unchanged). */
     /* AN8 (9 Oct 2026) = the live footer below 768px (Code Snippet 287.css + its script): the three link columns start closed,

@@ -443,6 +443,12 @@ div:has(> .hd[data-sticky-header]) { position: sticky; top: 0; }
   .title-link-grow:hover { background-size: 100% 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .title-link, .title-link-grow { transition: none; } }
+/* Touch targets (responsive sweep, 9 Oct 2026): card title links (doctor names, conditions, news, hospital titles .tlink) are
+   14-30px high; below 1024 and on touch screens they get the .hit 44px layer, centred and invisible, so nothing moves. */
+@media (max-width: 1023.98px), (pointer: coarse) {
+  .title-link, .tlink { position: relative; }
+  .title-link::before, .tlink::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 44px); height: max(100%, 44px); }
+}
 
 /* Scroll entrances (scripts/aos.ts): the live site's Greenshift AOS CSS. Hidden = transparent and, for fade-up, max(50px, 15 %
    of its own height) lower; shown = in place. 0.8s ease-in-out both ways (--aos-dur to change it); --aos-delay (stagger)

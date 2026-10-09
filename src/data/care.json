@@ -1,5 +1,5 @@
 {
-  "$comment": "Our Care hierarchy = the folder structure of 'Website Content - Suhad/Our Care' (5 Oct 2026): hub -> 4 services -> sections -> programmes (up to 4 levels under /care). title/desc = the page title and lead line of each document; a child's card text (desc, cardTitle) comes from its PARENT's document where that lists it (Inpatient / Outpatient main pages, the programme lists of the section pages), else from the child's own lead line. Slugs: from the live site URLs quoted in the documents where given (care, inpatient, outpatient, pediatric-rehab, pulmonary-rehab, physical-medicine-rehab-care, pediatric-care, physiotherapy, occupational-therapy, speech-language-therapy, cerebral-palsy-program); home-healthcare and in-school from the live site's home / Our Care page links (WordPress export, 6 Oct 2026); live site /ae and /sa URLs confirmed by the client's bug 058 (8 Oct 2026): mechanical-ventilation (+ weaning-program, long-term-ventilated-care), post-acute-rehab (+ neuro-rehab, post-surgical-rehab, road-traffic-accident-rehab), long-term-care-rehab (+ pediatric-long-term-care); the other section / programme slugs are derived from the titles and UNCONFIRMED (docs/open-decisions.md CT2, U58). image = the Figma Inpatient Care card photos (83:226) for the six sections that had them; children without a photo render as text cards. Full page text: src/data/content/care/<slug>.en.json (+ <slug>.<region>.en.json for a region variant: home-care.sa). Paediatric Care (pediatric-rehab) has no document in the folder: generated from its card (CT3). Arabic service titles / card text = the live site's Arabic Our Care and home pages (WordPress export pages 19115 / 19153); the sections and programmes have no Arabic in the export. regions (optional) = the countries that offer a service (bug 047, 7 Oct 2026): In-School Care = UAE only (the live site has it under /ae/care/in-school only). Absent = every edition. Outpatient programmes and Paediatric Pulmonary Rehab are also UAE-only on the live site: to confirm with the client before tagging them (docs/open-decisions.md). icon (9 Oct 2026) = the programme card's icon: a ConditionCards name (neuro / musculoskeletal / post-surgical / accident, the Figma post-acute icons) or an image key under src/assets (care/icons/*, the client's programme icons).",
+  "$comment": "Our Care hierarchy = the folder structure of 'Website Content - Suhad/Our Care' (5 Oct 2026): hub -> 4 services -> sections -> programmes (up to 4 levels under /care). title/desc = the page title and lead line of each document; a child's card text (desc, cardTitle) comes from its PARENT's document where that lists it (Inpatient / Outpatient main pages, the programme lists of the section pages), else from the child's own lead line. Slugs: from the live site URLs quoted in the documents where given (care, inpatient, outpatient, pediatric-rehab, pulmonary-rehab, physical-medicine-rehab-care, pediatric-care, physiotherapy, occupational-therapy, speech-language-therapy, cerebral-palsy-program); home-healthcare and in-school from the live site's home / Our Care page links (WordPress export, 6 Oct 2026); live site /ae and /sa URLs confirmed by the client's bug 058 (8 Oct 2026): mechanical-ventilation (+ weaning-program, long-term-ventilated-care), post-acute-rehab (+ neuro-rehab, post-surgical-rehab, road-traffic-accident-rehab), long-term-care-rehab (+ pediatric-long-term-care); the other section / programme slugs are derived from the titles and UNCONFIRMED (docs/open-decisions.md CT2, U58). image = the Figma Inpatient Care card photos (83:226) for the six sections that had them; children without a photo render as text cards. Full page text: src/data/content/care/<slug>.en.json (+ <slug>.<region>.en.json for a region variant: home-care.sa). Paediatric Care (pediatric-rehab) has no document in the folder: generated from its card (CT3). Arabic service titles / card text = the live site's Arabic Our Care and home pages (WordPress export pages 19115 / 19153); the sections and programmes have no Arabic in the export. regions (optional) = the countries that offer a service (bug 047, 7 Oct 2026): In-School Care = UAE only (the live site has it under /ae/care/in-school only). Absent = every edition. Outpatient programmes and Paediatric Pulmonary Rehab are also UAE-only on the live site: to confirm with the client before tagging them (docs/open-decisions.md). icon (9 Oct 2026) = the programme card's icon: a ConditionCards name (neuro / musculoskeletal / post-surgical / accident, the Figma post-acute icons) or an image key under src/assets (care/icons/*, the client's programme icons). Bug 075 (9 Oct 2026, docs/open-decisions.md R053): section / programme titles and the five Paediatric programme card texts now have Arabic, copied from each page's own Arabic content file (content/care/<slug>.ar.json hero title / text = the live Arabic page, same English), Paediatric Care (inpatient) = the identical English title of the Outpatient Paediatric Care page (الرعاية للأطفال). Section card titles that differ from the page title (Post Acute Care, Long Term Care, Physical Medicine Care) and the section card texts still have no Arabic.",
   "services": [
     {
       "slug": "inpatient",
@@ -17,7 +17,7 @@
           "slug": "post-acute-rehab",
           "title": {
             "en": "Post-Acute Rehabilitation",
-            "ar": ""
+            "ar": "رعاية ما بعد الإصابات الحادة"
           },
           "desc": {
             "en": "Individualised care for patients recovering from serious illness, injury or surgery, supporting medical stability, rehabilitation and a safe transition to the next stage of care.",
@@ -42,7 +42,7 @@
                   "slug": "stroke-rehabilitation",
                   "title": {
                     "en": "Stroke Rehabilitation",
-                    "ar": ""
+                    "ar": "إعادة التأهيل بعد السكتة الدماغية"
                   },
                   "desc": {
                     "en": "Tailored rehabilitation for neurological conditions affecting movement, cognition, balance and daily function",
@@ -58,7 +58,7 @@
                   "slug": "traumatic-brain-injury-rehabilitation",
                   "title": {
                     "en": "Traumatic Brain Injury Rehabilitation",
-                    "ar": ""
+                    "ar": "إعادة التأهيل بعد إصابات الدماغ الرضحية"
                   },
                   "desc": {
                     "en": "Multidisciplinary rehabilitation to support recovery following traumatic brain injury and address physical, cognitive, communication and functional difficulties",
@@ -74,7 +74,7 @@
                   "slug": "spinal-cord-injury-rehabilitation",
                   "title": {
                     "en": "Spinal Cord Injury Rehabilitation",
-                    "ar": ""
+                    "ar": "إعادة تأهيل مرضى إصابات الحبل الشوكي"
                   },
                   "desc": {
                     "en": "Specialised rehabilitation to support mobility, function and independence following spinal cord injury and its associated complications",
@@ -154,7 +154,7 @@
           "slug": "long-term-care-rehab",
           "title": {
             "en": "Long-Term Care & Rehabilitation",
-            "ar": ""
+            "ar": "خدمات الرعاية طويلة الأجل وإعادة التأهيل"
           },
           "desc": {
             "en": "Ongoing medical and nursing care for patients with complex or chronic conditions who require continuous support, with a focus on comfort, stability, symptom management and quality of life.",
@@ -294,7 +294,7 @@
           "slug": "pediatric-rehab",
           "title": {
             "en": "Paediatric Care",
-            "ar": ""
+            "ar": "الرعاية للأطفال"
           },
           "desc": {
             "en": "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress.",
@@ -333,11 +333,11 @@
               "slug": "neuromuscular-rehab",
               "title": {
                 "en": "Paediatric Neuromuscular Rehabilitation",
-                "ar": ""
+                "ar": "إعادة تأهيل الجهاز العصبي العضلي للأطفال"
               },
               "desc": {
                 "en": "For children with neuromuscular conditions affecting movement and muscle control, to build strength, improve function and support greater independence.",
-                "ar": ""
+                "ar": "برامج علاجية مصممة لتحسين التحكم العضلي، والحركة، والقدرات الوظيفية لدى الأطفال"
               },
               "children": [],
               "icon": "care/icons/icon-pediatric-neuromusculare-rehabilitation"
@@ -346,11 +346,11 @@
               "slug": "central-nervous-system",
               "title": {
                 "en": "Central Nervous System Anomalies Rehabilitation",
-                "ar": ""
+                "ar": "إعادة تأهيل تشوهات الجهاز العصبي المركزي"
               },
               "desc": {
                 "en": "For children affected by neurological and developmental conditions, to help manage symptoms, support development and improve quality of life",
-                "ar": ""
+                "ar": "يندرج الجهاز العصبي المركزي ضمن مسارات الرعاية المقدمة للأطفال المصابين بحالات عصبية ونمائية"
               },
               "children": [],
               "icon": "care/icons/icon-central-nervous-system-anomalies"
@@ -359,11 +359,11 @@
               "slug": "long-term-cardiac",
               "title": {
                 "en": "Long-Term Cardiac Anomalies Rehabilitation",
-                "ar": ""
+                "ar": "إعادة تأهيل حالات التشوهات القلبية طويلة الأمد"
               },
               "desc": {
                 "en": "For children with congenital or acquired heart conditions, to support recovery, manage symptoms and promote healthy growth and development.",
-                "ar": ""
+                "ar": "رعاية متخصصة طويلة الأمد للأطفال المصابين بأمراض القلب الخلقية، بداية من التشخيص وحتى التعافي الجراحي والدعم المستمر"
               },
               "children": [],
               "icon": "care/icons/icon-long-term-care-of-cardiac-anomalies"
@@ -372,11 +372,11 @@
               "slug": "paediatric-transitional",
               "title": {
                 "en": "Paediatric Transitional Care",
-                "ar": ""
+                "ar": "الرعاية الانتقالية للأطفال"
               },
               "desc": {
                 "en": "For infants transitioning from hospital to home or between stages of care, to support a safe transition and healthy development.",
-                "ar": ""
+                "ar": "دعم منهجي للأطفال واليافعين أثناء انتقالهم عبر مراحل الرعاية والتعافي المختلفة – من المستشفى إلى المنزل"
               },
               "children": [],
               "icon": "care/icons/icon-pediatric-transitional-care"
@@ -385,11 +385,11 @@
               "slug": "paediatric-post-acute-rehab",
               "title": {
                 "en": "Paediatric Post-Acute Rehabilitation",
-                "ar": ""
+                "ar": "إعادة تأهيل الأطفال ما بعد الإصابات الحادة"
               },
               "desc": {
                 "en": "For children recovering from serious illness or injury, or living with complex long-term conditions, to support recovery, manage their condition and improve quality of life.",
-                "ar": ""
+                "ar": "رعاية طويلة الأمد وعالية الجودة للأطفال الذين يتعافون من أمراض شديدة أو إصابات خطيرة، وللأطفال الذين يعيشون مع حالات طويلة الأمد أو مزمنة"
               },
               "children": [],
               "icon": "care/icons/icon-pediatric-post-acute-care"
@@ -397,7 +397,7 @@
           ],
           "cardTitle": {
             "en": "Paediatric Care",
-            "ar": ""
+            "ar": "الرعاية للأطفال"
           }
         },
         {
@@ -453,7 +453,7 @@
           "slug": "physical-medicine-rehab-care",
           "title": {
             "en": "Physical Medicine and Rehabilitation Care",
-            "ar": ""
+            "ar": "الطب الفيزيائي ورعاية التأهيل"
           },
           "desc": {
             "en": "Physician led care for adults and children with conditions affecting movement, function, pain and physical wellbeing.",
@@ -525,7 +525,7 @@
           "slug": "speech-language-therapy",
           "title": {
             "en": "Speech and Language Therapy",
-            "ar": ""
+            "ar": "علاج التخاطب واللغة"
           },
           "desc": {
             "en": "Specialist therapy for patients with difficulties affecting speech, language, communication, voice, feeding or swallowing.",
@@ -536,14 +536,14 @@
           "children": [],
           "cardTitle": {
             "en": "Speech and Language Therapy",
-            "ar": ""
+            "ar": "علاج التخاطب واللغة"
           }
         },
         {
           "slug": "cerebral-palsy-program",
           "title": {
             "en": "Cerebral Palsy Programme",
-            "ar": ""
+            "ar": "برنامج الشلل الدماغي"
           },
           "desc": {
             "en": "Specialised rehabilitation for children and adults with cerebral palsy, addressing movement, muscle control, function and independence.",
@@ -554,7 +554,7 @@
           "children": [],
           "cardTitle": {
             "en": "Cerebral Palsy Programme",
-            "ar": ""
+            "ar": "برنامج الشلل الدماغي"
           }
         }
       ]

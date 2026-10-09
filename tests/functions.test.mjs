@@ -13,6 +13,7 @@ const bundle = async (entry, name) => {
 };
 const { onRequestPost, onRequest } = await bundle('functions/api/forms/[form].ts', 'form.mjs');
 const { onRequest: mw } = await bundle('functions/_middleware.ts', 'mw.mjs');
+const { default: vmw } = await bundle('middleware.ts', 'vmw.mjs');
 let sent = [], tsOk = true, tsReply = null, tsCalls = 0, providerFail = null;
 const logs = [];
 const realError = console.error;
@@ -86,12 +87,41 @@ for (const [name, run, check] of cases) {
   const r = await run(); let b = {}; try { b = await r.clone().json(); } catch {}
   const ok = await check(r, b); pass += ok ? 1 : 0; console.log(ok ? 'PASS' : 'FAIL', name, r.status, JSON.stringify(b));
 }
-// middleware
+// middleware (bug 083): Cloudflare cf.country / CF-IPCountry, Vercel x-vercel-ip-country; unknown = no cookie, never a guess
 const html = () => new Response('<html></html>', { headers: { 'Content-Type': 'text/html' } });
-const mwReq = (path, cookie = '') => mw({ request: Object.assign(new Request('https://site.test' + path, { headers: cookie ? { Cookie: cookie } : {} }), { cf: { country: 'AE' } }), env: {}, params: {}, next: async () => html() });
+const mwReq = (path, cookie = '', cf = { country: 'AE' }, headers = {}) => mw({ request: Object.assign(new Request('https://site.test' + path, { headers: { ...headers, ...(cookie ? { Cookie: cookie } : {}) } }), { cf }), env: {}, params: {}, next: async () => html() });
+const geo = (r) => r?.headers.get('Set-Cookie') ?? null;
 const m1 = await mwReq('/'); const m2 = await mwReq('/ae'); const m3 = await mwReq('/', 'ch_edition=ae'); const m4 = await mwReq('/ar/find-a-doctor');
-const mw_ok = [m1.headers.get('Set-Cookie')?.startsWith('ch_geo=AE'), !m2.headers.get('Set-Cookie'), !m3.headers.get('Set-Cookie'), m4.headers.get('Set-Cookie')?.startsWith('ch_geo=AE')];
-console.log(mw_ok.every(Boolean) ? 'PASS' : 'FAIL', 'middleware: Global sets ch_geo, /ae untouched, chosen visitors untouched, Global Arabic page sets it', JSON.stringify(mw_ok));
+const mw_cases = [
+  ['CF: Global sets ch_geo=AE', geo(m1)?.startsWith('ch_geo=AE;')],
+  ['CF: /ae untouched', !geo(m2)],
+  ['CF: chosen visitor untouched', !geo(m3)],
+  ['CF: Global Arabic page sets it', geo(m4)?.startsWith('ch_geo=AE;')],
+  ['CF: SA', geo(await mwReq('/', '', { country: 'sa' }))?.startsWith('ch_geo=SA;')],
+  ['CF: IN stored as IN (no pop-up version)', geo(await mwReq('/', '', { country: 'IN' }))?.startsWith('ch_geo=IN;')],
+  ['CF: XX = no cookie', !geo(await mwReq('/', '', { country: 'XX' }))],
+  ['CF: T1 (Tor) = no cookie', !geo(await mwReq('/', '', { country: 'T1' }))],
+  ['CF: none = no cookie', !geo(await mwReq('/', '', {}))],
+  ['CF header only', geo(await mwReq('/', '', {}, { 'CF-IPCountry': 'SA' }))?.startsWith('ch_geo=SA;')],
+  ['Vercel header via Pages middleware', geo(await mwReq('/', '', {}, { 'x-vercel-ip-country': 'ae' }))?.startsWith('ch_geo=AE;')],
+  ['already detected = untouched', !geo(await mwReq('/', 'ch_geo=IN'))],
+  ['/sa untouched', !geo(await mwReq('/sa/ar/'))],
+];
+const vReq = (path, headers = {}, method = 'GET') => vmw(new Request('https://site.test' + path, { method, headers: { Accept: 'text/html,*/*', ...headers } }));
+const v = (r) => (r ? { next: r.headers.get('x-middleware-next'), cookie: r.headers.get('Set-Cookie') } : null);
+mw_cases.push(
+  ['Vercel: AE', v(vReq('/', { 'x-vercel-ip-country': 'AE' }))?.cookie?.startsWith('ch_geo=AE;') && v(vReq('/', { 'x-vercel-ip-country': 'AE' })).next === '1'],
+  ['Vercel: SA on Global Arabic', v(vReq('/ar/', { 'x-vercel-ip-country': 'SA' }))?.cookie?.startsWith('ch_geo=SA;')],
+  ['Vercel: IN stored as IN', v(vReq('/', { 'x-vercel-ip-country': 'IN' }))?.cookie?.startsWith('ch_geo=IN;')],
+  ['Vercel: no header = pass through', vReq('/') === undefined],
+  ['Vercel: invalid header = pass through', vReq('/', { 'x-vercel-ip-country': 'ZZZ' }) === undefined && vReq('/', { 'x-vercel-ip-country': 'XX' }) === undefined],
+  ['Vercel: Cloudflare in front wins', v(vReq('/', { 'x-vercel-ip-country': 'US', 'CF-IPCountry': 'SA' }))?.cookie?.startsWith('ch_geo=SA;')],
+  ['Vercel: /ae and /sa untouched', vReq('/ae/', { 'x-vercel-ip-country': 'AE' }) === undefined && vReq('/sa/ar/', { 'x-vercel-ip-country': 'SA' }) === undefined],
+  ['Vercel: chosen visitor untouched', vReq('/', { 'x-vercel-ip-country': 'AE', Cookie: 'a=1; ch_edition=global' }) === undefined],
+  ['Vercel: non-HTML / POST untouched', vReq('/', { 'x-vercel-ip-country': 'AE', Accept: 'image/avif' }) === undefined && vReq('/', { 'x-vercel-ip-country': 'AE' }, 'POST') === undefined],
+);
+for (const [name, ok] of mw_cases) console.log(ok ? 'PASS' : 'FAIL', 'middleware:', name);
+const mw_ok = mw_cases.map(([, ok]) => !!ok);
 
 const total = pass + (mw_ok.every(Boolean) ? 1 : 0);
 console.log(`${total}/${cases.length + 1} passed`);

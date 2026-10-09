@@ -1,19 +1,43 @@
 {
-  "$comment": "Country pop-up (Welcome Page, Figma 76:196; scope 2.3). ON for UAE visitors only (user decision 2 Oct 2026): Figma has the UAE version only; KSA / other countries wait for Pramod (add an entry under `countries`). Shown only on Global (EN + AR), only when the visitor's detected country (Cloudflare, functions/_middleware.ts -> ch_geo cookie) has an entry under `countries`. Figma has the UAE version only, so other countries see nothing. Per country: `text` = key in src/data/content/forms/welcome.<locale>.json, `map` / `flag` = image keys under src/assets, `buttons[].target` = the edition region saved in the ch_edition cookie (window.chooseEdition): another region = the SAME page in that region (bug 037, 7 Oct 2026: /hospitals -> /ae/hospitals; the edition home when the page does not exist there), the current region = the pop-up just closes. `text` = `aeOnGlobal` (labels that say what the buttons do: 'Go to UAE Website' / 'Stay on Global Website', bug 037) or `ae` (the Figma words 'Continue Here' / 'Go to Global Website', written for a visitor already on the UAE site). Closing with Esc counts as 'global' (the visitor stays where they are). `remember` = how long a choice is kept: 'tab' = the pop-up comes back in every new tab or window (user decision 5 Oct 2026: it must appear every time the site is opened), 'session' = until the browser is closed, 'forever' = one year (the original 'first visit only'), 'never' = on every page load. `fallbackCountry` = the version shown when the visitor's country is unknown (the nginx QA staging has no Cloudflare, so every visitor is 'XX') or has no entry under `countries` (user decision 5 Oct 2026: the pop-up must appear whenever the site is opened, and only the UAE version exists in Figma; set it to '' to show nothing to those visitors, as before). `devCountry` = the country assumed on a local dev server (no Cloudflare header there) so the pop-up can be seen; ignored in production.",
+  "$comment": "Country pop-up (Welcome Page, Figma 76:196; scope 2.3). Shown only on Global (EN + AR), only when the visitor's DETECTED country (edge: functions/_lib/geo.ts via functions/_middleware.ts on Cloudflare or middleware.ts on Vercel -> ch_geo cookie) has an entry under `countries` (bug 083, 9 Oct 2026: AE and SA; every other or unknown country = no pop-up, the visitor stays on Global). Figma has the UAE version only; the SA entry is the same card with KSA text, the pin moved to Riyadh on the same map and no flag (no KSA flag asset exists) until a Figma / client version exists (docs/open-decisions.md B5). Per country: `text` = key in src/data/content/forms/welcome.<locale>.json, `map` / `flag` = image keys under src/assets (`flag` optional), `pin` = top-left of the pin dot in Figma map px (UAE = the Figma position; the chip and line follow it), `buttons[].target` = the edition region saved as the visitor's choice (window.chooseEdition): another region = the SAME page in that region (bug 037: /hospitals -> /ae/hospitals; the edition home when the page does not exist there), the current region = the pop-up just closes. `aeOnGlobal` / `saOnGlobal` = labels that say what the buttons do ('Go to UAE Website' / 'Go to KSA Website' / 'Stay on Global Website'); `ae` = the Figma words written for a visitor already on the UAE site. Closing with Esc counts as 'global'. `remember` = how long a choice is kept (also written by the header region switch): 'forever' = cookie ch_edition for one year (bug 084, 9 Oct 2026; replaces the 5 Oct 'tab' decision), 'session' = until the browser is closed, 'tab' = sessionStorage, back in every new tab / window, 'never' = on every page load. `fallbackCountry` = version shown to a visitor whose country is unknown or has no entry ('' = nothing, bug 083: never assume UAE). `devCountry` = country assumed on a local dev server only (no edge header there) so the pop-up can be seen; ignored in production.",
   "enabled": true,
-  "remember": "tab",
+  "remember": "forever",
   "devCountry": "AE",
-  "fallbackCountry": "AE",
+  "fallbackCountry": "",
   "countries": {
     "AE": {
       "text": "aeOnGlobal",
       "map": "forms/welcome/map",
       "flag": "forms/welcome/flag-uae-round",
+      "pin": {
+        "x": 104.63,
+        "y": 131.59
+      },
       "buttons": [
         {
           "key": "continue",
           "style": "primary",
           "target": "ae"
+        },
+        {
+          "key": "global",
+          "style": "secondary",
+          "target": "global"
+        }
+      ]
+    },
+    "SA": {
+      "text": "saOnGlobal",
+      "map": "forms/welcome/map",
+      "pin": {
+        "x": 27.16,
+        "y": 136.0
+      },
+      "buttons": [
+        {
+          "key": "continue",
+          "style": "primary",
+          "target": "sa"
         },
         {
           "key": "global",

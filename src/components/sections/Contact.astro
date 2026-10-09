@@ -55,13 +55,14 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       <h2 id="home-contact-title" class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:start-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
 
       <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
-        <p class:list={[label, 'm-0 lg:absolute lg:start-54 lg:top-82 lg:w-31']}>{txt.emailLabel}</p>
-        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="hit text-body no-underline">{txt.email}</a></p>
-        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-126']}>{txt.phoneLabel}</p>
+        {/* Bug 077: the labels size to their text (the Figma boxes fit "Email:" etc.; the Arabic labels wrapped over the values). */}
+        <p class:list={[label, 'm-0 lg:absolute lg:start-54 lg:top-82 lg:whitespace-nowrap']}>{txt.emailLabel}</p>
+        <p class:list={[value, 'lg:absolute lg:start-54 lg:top-100 lg:w-193']}><a href={`mailto:${txt.email}`} class="hit text-body no-underline"><span dir="ltr">{txt.email}</span></a></p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-126 lg:whitespace-nowrap']}>{txt.phoneLabel}</p>
         <p class:list={[value, 'lg:absolute lg:start-54 lg:top-144 lg:w-193 lg:h-30']}>{phones.map((p, i) => <>{i > 0 && <br />}{p}</>)}</p>
-        {showAddress && <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:w-41']}>{txt.addressLabel}</p>}
+        {showAddress && <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-182 lg:whitespace-nowrap']}>{txt.addressLabel}</p>}
         {showAddress && <p class:list={[value, 'lg:absolute lg:start-54 lg:top-198 lg:w-193 lg:h-42']}>{txt.address}</p>}
-        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-253 lg:w-49']}>{txt.followLabel}</p>
+        <p class:list={[label, 'm-0 max-lg:mt-8 lg:absolute lg:start-54 lg:top-253 lg:whitespace-nowrap']}>{txt.followLabel}</p>
         <!-- The six icons are one svg image (Figma); each icon gets the live site's profile link (src/data/social.json). -->
         <div class="block max-w-full lg:absolute lg:top-272 social" style="width:calc(125.182 * var(--u));height:calc(20.5025 * var(--u))"><SocialIcons src={social.src} width={social.width} height={social.height} alt={txt.social.alt} /></div>
       </div>

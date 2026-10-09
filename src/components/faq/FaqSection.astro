@@ -120,21 +120,22 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
      once, the fade is what shows). Open-state colours wait for .is-open so the bar and the answer move together. */
   .bar { transition: background-color .3s ease-in-out, color .3s ease-in-out; }
   .qa[open]:not(.is-open) > .bar { background: rgba(231, 231, 231, 0.45); color: #004059; } /* = the closed bar: the open colours arrive with .is-open */
-  .chev-open { display: block; transition: transform .3s ease-in-out; }
-  .qa:not(.is-open) .chev-open { transform: rotate(180deg); }
-  .chev-closed { display: none; }
+  /* Bug 072: every row shows a chevron. Both Figma chevrons sit in the same box and cross-fade while turning: closed = the
+     #418ea2 one pointing up, open = the white one pointing down (Figma's directions, see the header note). */
+  .chev { display: block; transition: transform .3s ease-in-out, opacity .3s ease-in-out; }
+  .qa:not(.is-open) .chev { transform: rotate(180deg); }
+  .qa:not(.is-open) .chev-open, .qa.is-open .chev-closed { opacity: 0; }
   .ans { overflow: hidden; max-height: 5000px; transition: max-height .25s ease-out, opacity .25s ease-out, padding .25s ease-out, min-height .25s ease-out; }
   .qa:not(.is-open) .ans { max-height: 0; min-height: 0; opacity: 0; }
-  @media (prefers-reduced-motion: reduce) { .bar, .chev-open, .ans { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .bar, .chev, .ans { transition: none; } }
   .q { margin: 0; font-weight: 400; font-size: calc(11.041 * var(--u)); line-height: calc(26.7 * var(--u)); overflow-wrap: anywhere; }
   .chev { position: absolute; inset-inline-start: calc(593.46 * var(--u)); top: calc(17.94 * var(--u)); width: calc(9.661 * var(--u)); height: calc(5.806 * var(--u)); max-width: none; }
-  .chev-closed { transform: scaleY(-1); }
-  .qa:not([open]) .chev-open { display: none; }
   .ans { position: relative; box-sizing: border-box; min-height: calc(118 * var(--u)); margin-top: calc(-37.925 * var(--u)); padding: calc(51 * var(--u)) calc(6 * var(--u)) calc(15.24 * var(--u)) calc(23 * var(--u)); border-radius: var(--radius-card); background: var(--color-mist-25); width: calc(629 * var(--u)); max-width: 100%; }
   .ans p + p { margin-top: calc(8 * var(--u)); }
   .ans p { margin: 0; width: calc(600 * var(--u)); max-width: 100%; color: var(--color-navy-alt); font-size: calc(11.041 * var(--u)); line-height: calc(17.252 * var(--u)); overflow-wrap: anywhere; }
   .ans .pending { font-style: italic; color: var(--color-body); }
   @media (max-width: 1023.98px) {
+    .faq { padding-inline: calc(24 * var(--u)); } /* bug 082: the same inline inset as the hero copy above (PageHero), so both headings share one edge */
     .chev { inset-inline-start: auto; inset-inline-end: calc(16 * var(--u)); }
     .ans { width: auto; }
   }

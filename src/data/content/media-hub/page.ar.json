@@ -1,5 +1,5 @@
 {
-  "_note": "Hero, 'Explore' heading, category names and newsletter = Website Content - Suhad 2/Navigation Bar/AR - Media Hub.docx (7 Oct 2026), text exactly as in the document; meta.description = the hero text (as in English). 'What's Trending', button and newsletter heading split: live site Arabic (WordPress export, 6 Oct 2026). Tile titles (post titles) and the select label: no Arabic (English shown).",
+  "_note": "Hero, 'Explore' heading, category names and newsletter = Website Content - Suhad 2/Navigation Bar/AR - Media Hub.docx (7 Oct 2026), text exactly as in the document; meta.description = the hero text (as in English). 'What's Trending', button and newsletter heading split: live site Arabic (WordPress export, 6 Oct 2026). Tile titles (post titles) and the select label: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"SUBSCRIBE\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (newsletter button).",
   "meta": {
     "title": "المركز الإعلامي | مستشفى كامبريدج",
     "description": "اطّلع على أحدث أخبار مستشفى كامبريدج، والرؤى الطبية، وأبرز المستجدات في قطاع الرعاية الصحية وما حوله."
@@ -40,6 +40,7 @@
       "اشترك في ",
       "نشرتنا الإخبارية"
     ],
-    "text": "اشترك في نشرتنا الإخبارية لتصلك أحدث أخبارنا ومستجداتنا، والمزيد!"
+    "text": "اشترك في نشرتنا الإخبارية لتصلك أحدث أخبارنا ومستجداتنا، والمزيد!",
+    "submit": "اشترك"
   }
 }

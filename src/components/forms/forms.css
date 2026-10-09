@@ -236,6 +236,8 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
   .pf-label { grid-column: 1 / -1; min-inline-size: 0; padding-block-end: 6px; }
   .pf-row > .pf-box, .pf-select { inline-size: 100%; }
   .pf-tel { inline-size: auto !important; }
+  /* Bug 082: select labels at 16px (no iOS zoom) and ellipsis, so "Select a Doctor (Optional)" fits a 360 screen */
+  .pf-select select { font-size: max(16px, min(calc(15 * var(--u)), 4.4vw)); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
 }
 
 /* ───────── Grey-box page form fields (Refer a Patient 59:14344, International Patients 54:9239): forms with class "rf" ─────────
@@ -259,6 +261,9 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 .rf .rf-legend { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--u)); }
 .rf .rf-opts { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)) calc(29.5 * var(--u)); padding-block-start: calc(8 * var(--u)); }
 .rf .rf-opt { display: flex; align-items: center; gap: calc(8 * var(--u)); min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+/* 44px touch target on the radio options (responsive sweep, 9 Oct 2026): the .hit layer, invisible, the label box keeps its size */
+.rf .rf-opt { position: relative; }
+.rf .rf-opt::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 44px); height: max(100%, 44px); }
 .rf .rf-radio .f-err { flex-basis: 100%; }
 .rf .rf-area { inline-size: 100%; block-size: calc(125 * var(--u)); padding: calc(13 * var(--u)) calc(14.19 * var(--u)); resize: none; line-height: calc(14 * var(--u)); }
 .rf .rf-area::placeholder { font-style: italic; }

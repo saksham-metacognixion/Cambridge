@@ -75,9 +75,10 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-8 max-lg:px-4 max-lg:py-10">
     <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style="--x:480;--y:58;--w:494;--h:77">{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
 
-    <!-- Map (Group 9) -->
+    <!-- Map (Group 9). dir="ltr" (bug 073): geography is never mirrored, the pins and city labels keep their English
+         positions on Arabic pages (Jeddah on the west coast); only the label text is Arabic. -->
     <div class="mapbox dpos" style={`--x:${MX};--y:${MY};--w:546.176;--h:382.084`}>
-      <div class="mapin">
+      <div class="mapin" dir="ltr">
         <img class="pm" src={mapVector.src} width={px(478)} height={px(382.084)} alt={c.mapAlt} loading="lazy" decoding="async" style="--x:0;--y:0;--w:478;--h:382.084" />
         {labels.map((l) => (
           <span class="pm font-gotham font-medium leading-[normal] text-white whitespace-nowrap not-italic" style={`--x:${l.x - MX};--y:${l.y - MY};--w:${l.w}`}>{l.t}</span>

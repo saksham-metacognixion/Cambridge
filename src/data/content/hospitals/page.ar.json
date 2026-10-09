@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export page 19104 'مستشفياتنا', 6 Oct 2026). 'View Hospital' = 'عرض المستشفى'. Stats labels from the same page; meta.title = the page title.",
+  "_note": "Live site Arabic (WordPress export page 19104 'مستشفياتنا', 6 Oct 2026). 'View Hospital' = 'عرض المستشفى'. Stats labels from the same page; meta.title = the page title. Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Six Locations. One Standard of Care.\", \"Real Impact. Real Outcomes.\" = WP export Our Hospitals page 60 -> 19104; \"Our hospitals\" = footer.ar.json / WP Footer-Ar 19169.",
   "meta": {
     "title": "مستشفياتنا | مستشفى كامبريدج",
     "description": "احصل على شبكة مرافق مستشفى كامبريدج المتخصصة في جميع أنحاء الإمارات العربية المتحدة والسعودية، مقدمة رعاية متسقة وعالية الجودة أينما كنت."
@@ -31,12 +31,14 @@
           "text": "جدة"
         }
       ]
-    }
+    },
+    "ariaLabel": "ستة مستشفيات معيار واحد للرعاية."
   },
   "list": {
     "heading": "ابحث عن الرعاية بالقرب منك",
     "text": "تجمع منشآتنا بين راحة البيئة المرحبة والتقنيات الطبية المتقدمة، لضمان حصول المرضى على رعاية متخصصة في أماكن مصممة للتعافي والكرامة وراحة البال.",
-    "button": "عرض المستشفى"
+    "button": "عرض المستشفى",
+    "listLabel": "مستشفياتنا"
   },
   "impact": {
     "heading": [
@@ -62,7 +64,8 @@
       {
         "label": "سنوات الخبرة"
       }
-    ]
+    ],
+    "ariaLabel": "تأثير حقيقي. نتائج حقيقية."
   },
   "doctors": {
     "heading": "رعاية متخصصة، أطباء موثوق بهم",

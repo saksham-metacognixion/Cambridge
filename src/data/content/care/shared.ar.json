@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, CTA band, doctors block (Our Care page 19115). Topics / 'Know More' / 'Start Your Care' and the generated-page notes: no Arabic (English shown). sub.overviewHeading 'نبذة عامة' = the Overview heading of Website Content - Suhad/Our Care/School/AR - In-School care.docx (6 Oct 2026), used on every care page.",
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, CTA band, doctors block (Our Care page 19115). Topics / 'Know More' / 'Start Your Care' and the generated-page notes: no Arabic (English shown). sub.overviewHeading 'نبذة عامة' = the Overview heading of Website Content - Suhad/Our Care/School/AR - In-School care.docx (6 Oct 2026), used on every care page. Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Start Your Care\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (care cards button, 5 of 6 pages); \"Services\" = footer.ar.json / WP Footer-Ar 19169 (same English \"Services\").",
   "heroButton": {
     "label": "احجز موعد"
   },
@@ -32,5 +32,9 @@
   },
   "sub": {
     "overviewHeading": "نبذة عامة"
+  },
+  "service": {
+    "button": "ابدأ رعايتك",
+    "cardsLabel": "خدماتنا"
   }
 }

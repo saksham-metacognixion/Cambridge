@@ -1,5 +1,5 @@
 {
-  "_note": "Arabic = the live site's Arabic footer (WordPress export, content block 19169 'Footer-Ar', 6 Oct 2026). Knowledge Centre -> the Health Articles category name; 'Compliance' -> the live footer's GDPR link label (the page is /legal/gdpr-compliance). Newsletter field labels: no Arabic (English shown).",
+  "_note": "Arabic = the live site's Arabic footer (WordPress export, content block 19169 'Footer-Ar', 6 Oct 2026). Knowledge Centre -> the Health Articles category name; 'Compliance' -> the live footer's GDPR link label (the page is /legal/gdpr-compliance). Newsletter field labels: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Cambridge Hospital\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (footer logo alt); \"YOUR EMAIL\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (footer newsletter Bit Form \"Newsletter Ar (UAE)\" placeholder); \"Email\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (same newsletter email field); \"Submit\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (footer newsletter button).",
   "quickLinks": {
     "heading": "روابط سريعة",
     "rows": [
@@ -98,7 +98,10 @@
     "alt": "الاعتمادات الموثوقة لمستشفى كامبريدج"
   },
   "newsletter": {
-    "heading": "اشترك في نشرتنا الإخبارية"
+    "heading": "اشترك في نشرتنا الإخبارية",
+    "emailPlaceholder": "بريدك الإلكتروني",
+    "emailLabel": "بريدك الإلكتروني",
+    "submit": "اشترك"
   },
   "copyright": "© 2026 مجموعة كامبريدج للصحة . جميع الحقوق محفوظة.",
   "legal": {
@@ -108,5 +111,8 @@
     "privacy": {
       "label": "سياسة الخصوصية"
     }
+  },
+  "logo": {
+    "alt": "مستشفى كامبريدج"
   }
 }

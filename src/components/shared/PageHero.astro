@@ -23,7 +23,8 @@ import OutlineButton from './OutlineButton.astro';
  * Button: OutlineButton = the shared .ui-btn (bugs 044 / 050): its top-left keeps the Figma anchor, it grows with its label.
  * `labelX` / `labelW` (Figma label offsets) are no longer used.
  */
-interface Pos { titleTop: number; titleW: number; titleMinH?: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
+/** titleSize: desktop title size in Figma px (default 39, line height 37/39 of it); bug 071 (Why Cambridge 4-line client title). */
+interface Pos { titleSize?: number; titleTop: number; titleW: number; titleMinH?: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
 interface Props {
   /** button: absent = a hero without one (the calculator pages, as on the live site) */
   content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button?: { label: string; href: string } };
@@ -52,11 +53,15 @@ interface Props {
    *  (the top of the art is cropped first, never the feet). Default: a 72vw box showing the art at 80% 30%. Bug 027 (About:
    *  the five staff stand at the right edge of the art, x 470-1052). */
   small?: { x: number; w: number; maxH?: number };
+  /** Bug 069 (news posts): on desktop the photo fills only the inline-end 55% of the stage (Figma Health Article Layout
+   *  170:839: photo on the right, the title on a light plain area), its leading edge fading into the light surface. A post
+   *  image is any shape or pattern (the live "Emblem" pill artwork, busy photos), so it never runs under the title. */
+  side?: boolean;
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', small } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', small, side = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
-const p = { titleMinH: 0, textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
+const p = { titleSize: 39, titleMinH: 0, textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
 const imgH = variant === 'banner' ? 500 : 323;
 // Cursor-follow (live-site mouse parallax, scripts/hero-follow.ts): the people (subject layer) move over the static background layer; a banner
 // without layers (Our Hospitals, news photos) is one static picture.
@@ -75,7 +80,7 @@ const pic = {
 } as const;
 ---
 
-<section class:list={['relative', keepComposition && 'keep']} style={`--h: ${h}`} aria-label={c.ariaLabel}>
+<section class:list={['relative', keepComposition && 'keep', side && 'side']} style={`--h: ${h}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${h}`}>
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
          script's transform on the subject image never overrides it. -->
@@ -90,7 +95,7 @@ const pic = {
       )}
     </div>
 
-    <div class="copy" style={`--tt:${p.titleTop};--tw:${p.titleW};--th:${p.titleMinH};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
+    <div class="copy" style={`--ts:${p.titleSize};--tt:${p.titleTop};--tw:${p.titleW};--th:${p.titleMinH};--xg:${p.textGap};--xw:${p.textW};--xx:${p.textX - 95};--bg:${p.buttonGap}`}>
       <h1 class:list={["title hero-title m-0 font-gotham font-medium text-f39 leading-37 not-italic", tone === "white" ? "text-navy lg:text-white" : "text-navy"]}>
         {c.title.map((line: string) => <span class="block">{line}</span>)}
       </h1>
@@ -114,7 +119,7 @@ const pic = {
   .copy .text + :global(.btn) { margin-top: calc(var(--hero-btn-gap) - var(--copy-gap)); }
   @media (min-width: 1024px) {
     .copy { position: absolute; inset-inline-start: calc(95 * var(--u)); top: calc(var(--tt) * var(--u)); }
-    .title { width: calc(var(--tw) * var(--u)); min-height: calc(var(--th) * var(--u)); }
+    .title { width: calc(var(--tw) * var(--u)); min-height: calc(var(--th) * var(--u)); font-size: calc(var(--ts) * var(--u)); line-height: calc(var(--ts) * 37 / 39 * var(--u)); }
     .text { width: calc(var(--xw) * var(--u)); margin-top: calc(var(--xg) * var(--u)); margin-inline-start: calc(var(--xx) * var(--u)); }
     .copy :global(.btn) { margin-top: calc(var(--bg) * var(--u)); margin-inline-start: calc(3 * var(--u)); }
     .copy .text + :global(.btn) { margin-top: var(--hero-btn-gap); }
@@ -122,6 +127,12 @@ const pic = {
        right-aligned, so the box is only as wide as the English paragraph (the area that is clear of the art). */
     :global([dir='rtl']) .keep .copy { inset-inline-start: auto; inset-inline-end: calc(95 * var(--u)); }
     :global([dir='rtl']) .keep .title { width: calc((var(--xx) + var(--xw)) * var(--u)); }
+  }
+  @media (min-width: 1024px) {
+    .side .stage { background: var(--color-mist-50); }
+    .side .hero-media { inset-inline-start: 45%; }
+    .side .hero-media::after { content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 30%; background: linear-gradient(to right, var(--color-mist-50), transparent); }
+    :global([dir='rtl']) .side .hero-media::after { background: linear-gradient(to left, var(--color-mist-50), transparent); }
   }
   @media (max-width: 1023.98px) {
     .cover { top: 0; height: 100%; }

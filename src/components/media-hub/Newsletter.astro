@@ -18,7 +18,8 @@ const pattern = img('media-hub/newsletter-pattern', edition.region);
   </div>
 
   <div class="relative mx-auto h-267 w-772 max-w-[calc(100%-32px)] rounded-(--radius-panel) bg-white shadow-nl-card max-lg:h-auto max-lg:px-24 max-lg:py-32">
-    <h2 class="m-0 font-gotham font-medium text-f36 leading-[1.01] tracking-[calc(0.36*var(--u))] text-navy not-italic lg:absolute lg:start-68 lg:top-33 lg:w-402">
+    <!-- max-lg cap (responsive sweep, 9 Oct 2026): at 360 "Newsletter" ran 10px past the card's text column; 12.8vw only bites below ~385px -->
+    <h2 class="m-0 font-gotham font-medium text-f36 max-lg:text-[min(calc(36*var(--u)),12.8vw)] leading-[1.01] tracking-[calc(0.36*var(--u))] text-navy not-italic lg:absolute lg:start-68 lg:top-33 lg:w-402">
       <span class="block">{c.heading[0]}</span><span class="block">{c.heading[1]}</span>
     </h2>
     <p class="m-0 font-gotham font-normal text-f15 leading-[calc(18.264*var(--u))] text-navy not-italic max-lg:mt-16 lg:absolute lg:start-68 lg:top-121 lg:w-641 lg:text-center">{c.text}</p>

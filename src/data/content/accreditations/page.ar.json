@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19089 'الاعتمادات والشراكات'). The live Arabic page carries fewer programme lists than the client's 5 Oct English document (Dhahran: 2 programmes; Khobar / Jeddah: none): those blocks fall back to English. Tab labels, meta.description, alt texts: no Arabic (English shown).",
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19089 'الاعتمادات والشراكات'). The live Arabic page carries fewer programme lists than the client's 5 Oct English document (Dhahran: 2 programmes; Khobar / Jeddah: none): those blocks fall back to English. Tab labels, meta.description, alt texts: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"CARF Accredited\", \"JCI Accredited\", \"CBAHI Accredited\", \"CAP Accredited\", \"OSHAD Certified\", \"ADHICS Certified\" (+1 more) = WP export Accreditations page 45 -> 19089; \"Inpatient Rehabilitation - Adults\", \"Inpatient Rehabilitation - Children and Adolescents\" = accreditations/page.ar.json (same list elsewhere on the page).",
   "meta": {
     "title": "الاعتمادات والشراكات | مستشفى كامبريدج"
   },
@@ -84,7 +84,13 @@
           "type": "p",
           "text": "برامج متخصصة في مستشفى كامبريدج السعودية - الخبر"
         },
-        {},
+        {
+          "type": "ul",
+          "items": [
+            "برنامج التأهيل الطبي الداخلي للكبار",
+            "برنامج التأهيل الطبي الداخلي للأطفال"
+          ]
+        },
         {
           "type": "sec",
           "text": "مستشفى كامبريدج المملكة العربية السعودية - جدة"
@@ -97,8 +103,15 @@
           "type": "p",
           "text": "برامج متخصصة في مستشفى كامبريدج المملكة العربية السعودية - جدة"
         },
-        {}
-      ]
+        {
+          "type": "ul",
+          "items": [
+            "برنامج التأهيل الطبي الداخلي للكبار",
+            "برنامج التأهيل الطبي الداخلي للأطفال"
+          ]
+        }
+      ],
+      "label": "معتمد من CARF"
     },
     {
       "blocks": [
@@ -114,7 +127,8 @@
           "type": "p",
           "text": "الفروع المعتمدة: أبوظبي - العين - المديف - جدة - ظهران – الخبر"
         }
-      ]
+      ],
+      "label": "معتمد من JCI"
     },
     {
       "blocks": [
@@ -130,7 +144,8 @@
           "type": "p",
           "text": "الفروع المعتمدة: ظهران - الخبر - جدة"
         }
-      ]
+      ],
+      "label": "معتمد من CBAHI"
     },
     {
       "blocks": [
@@ -146,7 +161,8 @@
           "type": "p",
           "text": "الفروع المعتمدة: جدة"
         }
-      ]
+      ],
+      "label": "معتمد من CAP"
     },
     {
       "blocks": [
@@ -174,7 +190,8 @@
           "type": "p",
           "text": "الفروع المعتمدة: أبوظبي - العين - مركز المديف"
         }
-      ]
+      ],
+      "label": "معتمد من OSHAD"
     },
     {
       "blocks": [
@@ -190,7 +207,8 @@
           "type": "p",
           "text": "الفروع المعتمدة: أبوظبي - العين"
         }
-      ]
+      ],
+      "label": "معتمد من ADHICS"
     },
     {
       "blocks": [
@@ -202,7 +220,8 @@
           "type": "p",
           "text": "الفروع المعتمدة: أبوظبي - العين"
         }
-      ]
+      ],
+      "label": "معتمد من JAWDA"
     }
   ],
   "recovery": {

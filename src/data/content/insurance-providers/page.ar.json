@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19068 'شركات التأمين'). Filter 'ALL' and result texts: no Arabic (English shown).",
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19068 'شركات التأمين'). Filter 'ALL' and result texts: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Insurance providers\" = insurance-providers/page.ar.json title / live menu.",
   "meta": {
     "title": "شركات التأمين | مستشفى كامبريدج",
     "description": "نعمل مع شبكة واسعة من مزودي التأمين لضمان حصولك على الرعاية التي تحتاجها بسهولة ووضوح وثقة."
@@ -28,5 +28,8 @@
         "label": "الإمارات"
       }
     ]
+  },
+  "results": {
+    "listLabel": "شركات التأمين"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, the care cards heading / text (home page 19153), doctors block, 'Take a Tour' / map labels: no Arabic (English shown).",
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, the care cards heading / text (home page 19153), doctors block, 'Take a Tour' / map labels: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Start Your Care\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (care cards button, 5 of 6 pages); \"Open in Google Maps\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html; \"Find Us in\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (\"Find Us in <city>\" heading).",
   "hero": {
     "button": {
       "label": "احجز موعد"
@@ -13,7 +13,8 @@
       "inpatient": {
         "desc": "رعاية على مدار الساعة للمرضى بحاجة إلى دعم مستمر."
       }
-    }
+    },
+    "button": "ابدأ رعايتك"
   },
   "doctors": {
     "heading": "رعاية متخصصة، أطباء موثوق بهم",
@@ -22,5 +23,9 @@
   "environment": {
     "ariaLabel": "اختبر بيئة الرعاية",
     "heading": "اختبر بيئة الرعاية"
+  },
+  "map": {
+    "button": "فتح الموقع في خرائط Google",
+    "lead": "ابحث عنا في "
   }
 }

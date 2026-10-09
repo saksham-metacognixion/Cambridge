@@ -66,6 +66,11 @@ const tabs = [
   .card :global(.rf-sel-req select) { padding-inline: calc(15.51 * var(--u)) calc(26 * var(--u)); }
   .card :global(.rf-sel-req .pf-chev) { inset-inline-end: calc(11.76 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7.24 * var(--u)); }
   .card :global(.f-consent) { margin-inline-start: 0; }
+  /* Bug 082 (phones / tablets, where the pills wrap): a pill grows with its label and keeps 10px inside its border
+     ("For Corporate or Organisations" filled the 160 box edge to edge at 360). */
+  @media (max-width: 1023.98px) {
+    .pill { inline-size: auto; min-inline-size: calc(var(--pill-w) * var(--u)); max-inline-size: 100%; padding-inline: calc(10 * var(--u)); }
+  }
 
   @media (min-width: 1024px) {
     .tablist { justify-content: flex-start; margin-inline-start: calc(268 * var(--u)); } /* three 160 pills + 2 gaps = 510, centred on the Figma pill centre 523 */

@@ -1,5 +1,5 @@
 {
-  "_note": "Arabic labels = the live site's Arabic menus (WordPress export: nav menus headertop-arabic, headermain-arabic, headertop-global-arabic, 6 Oct 2026). 'We are listening', 'Knowledge Centre' (the live site links the Health Articles category: 'مقالات صحية'), 'Visit Cambridge Health Group' and the toggle / menu labels: no Arabic on the live site (English shown). The link's URL (visit.href) is inherited from the English file: one Cambridge Health Group site for both languages (its /ar/ page does not exist).",
+  "_note": "Arabic labels = the live site's Arabic menus (WordPress export: nav menus headertop-arabic, headermain-arabic, headertop-global-arabic, 6 Oct 2026). 'We are listening', 'Knowledge Centre' (the live site links the Health Articles category: 'مقالات صحية'), 'Visit Cambridge Health Group' and the toggle / menu labels: no Arabic on the live site (English shown). The link's URL (visit.href) is inherited from the English file: one Cambridge Health Group site for both languages (its /ar/ page does not exist). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Visit\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (header \"Visit Cambridge Health Group\" link); \"Cambridge\", \"Health Group\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (header Visit link); \"Book an appointment\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (header Book button aria-label); \"Cambridge Hospital\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (logo alt); \"Go to top\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (back-to-top aria-label).",
   "topLinks": [
     {},
     {
@@ -86,8 +86,19 @@
     }
   ],
   "book": {
-    "label": "احجز موعد"
+    "label": "احجز موعد",
+    "ariaLabel": "حجز موعد"
   },
-  "toTop": "Go to top",
-  "_toTopNote": "toTop = the aria-label of the \"Go to top\" button (AN1, live Blocksy back-to-top, 9 Oct 2026). No approved Arabic yet (not in the WordPress export): English on the Arabic editions until Padmavathi sends it."
+  "toTop": "العودة لأعلى",
+  "_toTopNote": "toTop = the aria-label of the \"Go to top\" button (AN1, live Blocksy back-to-top, 9 Oct 2026). No approved Arabic yet (not in the WordPress export): English on the Arabic editions until Padmavathi sends it.",
+  "visit": {
+    "intro": "قم بزيارة موقع",
+    "lines": [
+      "مجموعة كامبريدج",
+      "للصحة"
+    ]
+  },
+  "logo": {
+    "alt": "مستشفى كامبريدج"
+  }
 }

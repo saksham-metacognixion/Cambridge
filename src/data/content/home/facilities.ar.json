@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export page 19153 + 19111 for 'الكوادر الصحية'). 'Care Presence': no Arabic on the live site (English shown). Map labels = the live site's city names.",
+  "_note": "Live site Arabic (WordPress export page 19153 + 19111 for 'الكوادر الصحية'). 'Care Presence': no Arabic on the live site (English shown). Map labels = the live site's city names. Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Hospitals\" = WP export home page 36 -> 19153, block gsbp-f0a4886.",
   "heading": "خبراتنا الطبية بين أيديكم اينما كنتم",
   "mapLabels": [
     "الظهران",
@@ -31,5 +31,6 @@
       "label": "عدد الاسرة"
     },
     {}
-  ]
+  ],
+  "listTab": "المستشفيات"
 }

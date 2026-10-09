@@ -141,19 +141,21 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
       </div>
     </div>
 
-    <!-- Contact details row (Figma 86:808). Text tops differ by a few px in Figma and are kept as they are. -->
+    <!-- Contact details row (Figma 86:808). Text tops differ by a few px in Figma and are kept as they are.
+         Bug 076: the LTR isolation sits on an inner span; dir="ltr" on the positioned link itself turned its inset-inline-start
+         into `left` on Arabic pages while the icons used `right`, so the three values piled up. -->
     <ul class="details m-0 list-none p-0 max-lg:flex max-lg:flex-col max-lg:items-start max-lg:gap-[calc(14*var(--u))] lg:contents">
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img loading="lazy" src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(597.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`mailto:${details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-598']}>{details.email}</a>
+        <a href={`mailto:${details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-598']}><span dir="ltr">{details.email}</span></a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img loading="lazy" src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-598" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={details.webHref} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-601']}>{details.web}</a>
+        <a href={details.webHref} class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-601']}><span dir="ltr">{details.web}</span></a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
         <img loading="lazy" src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-596" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`tel:${details.phoneHref}`} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(596.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}>{details.phone}</a>
+        <a href={`tel:${details.phoneHref}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(596.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}><span dir="ltr">{details.phone}</span></a>
       </li>
     </ul>
   </div>

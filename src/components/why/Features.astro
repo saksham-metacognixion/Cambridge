@@ -58,6 +58,7 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
   .p p { margin: 0; }
   .p p + p { margin-top: calc(18 * var(--u)); }
   .rule { margin: 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid var(--color-steel); }
+  @media (max-width: 1023.98px) { .card { align-self: center; } } /* bug 079: the fixed-size photo cards centred above their text */
   @media (min-width: 1024px) {
     .list { gap: 0; }
     .row { flex-direction: row; align-items: flex-start; gap: 0; }

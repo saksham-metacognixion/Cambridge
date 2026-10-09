@@ -31,7 +31,7 @@ const phone = h.phone ?? '';
       <img loading="lazy" src={pin.src} width={pin.width} height={pin.height} alt="" class="pin" />
       <span class="city">{city}</span>
     </h2>
-    <OutlineButton href={mapsHref(h, locale)} label={c.button} class="btn" {...{ target: '_blank', rel: 'noopener' }} />
+    <OutlineButton href={mapsHref(h, locale)} label={c.button} class="btn" onDark {...{ target: '_blank', rel: 'noopener' }} />
     {(address || phone || hours) && (
       <address class="info">
         {address && <span class="line"><span class="sr-only">{c.addressLabel}: </span>{address}</span>}

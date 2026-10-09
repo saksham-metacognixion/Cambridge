@@ -77,7 +77,7 @@ const tiles = c.tiles.map((t: any, i: number) => ({
               <a href={t.href} class="tile-link text-inherit no-underline">{t.title}</a>
             </h3>
           </div>
-          <span class="pointer-events-none absolute flex items-center justify-center" style={`inset-inline-start:calc(${t.corner.x} * var(--u));top:calc(${t.corner.y} * var(--u));width:calc(${t.corner.w} * var(--u));height:calc(${t.corner.h} * var(--u))`} aria-hidden="true">
+          <span class="pointer-events-none absolute flex items-center justify-center rtl:-scale-x-100" style={`inset-inline-start:calc(${t.corner.x} * var(--u));top:calc(${t.corner.y} * var(--u));width:calc(${t.corner.w} * var(--u));height:calc(${t.corner.h} * var(--u))`} aria-hidden="true">
             <img loading="lazy" src={t.corner.icon.src} width={t.corner.icon.width} height={t.corner.icon.height} alt="" class="block flex-none" style={`width:calc(29.6 * var(--u));height:calc(29.6 * var(--u));transform:${t.corner.rot}`} />
           </span>
         </li>

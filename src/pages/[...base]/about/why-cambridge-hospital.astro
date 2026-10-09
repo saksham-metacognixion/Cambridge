@@ -25,6 +25,8 @@ const recovery = { ...shared, tiles: c.recovery.tiles };
  * Hero 119-556 -> grey band 559: 3 | band 559-1252 -> navy box (visible part) 1252: 0 | navy ends 1926 -> block 1 card 1994: 68 (in Features) |
  * block 3 ends 2941 -> grey "Trusted" box 2985: 44 | box ends 3728 -> "Your recovery matters" 3790: 62 | box ends 4058 -> footer 4121: 63.
  * Hero = shared PageHero: title top 244 - 119 = 125 (w434), text 326 (8 below the 2 title lines, w392), button 378 (11 below the text).
+ * Bugs 071 / 078: the client's title has 4 lines (Figma: 2) and ran into the people (who also drift with the cursor): title 36
+ * (Figma 39), 15 higher (top 110), text column 330 (Figma 392) so the paragraph wraps before the photo (R069).
  */
 const sections = [
   { id: 'provider', C: Specialized, props: { edition, c: c.specialized }, mt: 3 },
@@ -41,7 +43,7 @@ const sections = [
   </div>
   <main>
     <div id="hero" class="relative">
-      <PageHero content={c.hero} pos={{ titleTop: 125, titleW: 434, textGap: 8, textW: 392, textX: 97, buttonGap: 11 }} />
+      <PageHero content={c.hero} pos={{ titleSize: 36, titleTop: 110, titleW: 434, textGap: 8, textW: 330, textX: 97, buttonGap: 11 }} />
     </div>
     {
       sections.map(({ id, C, props, mt }) => (

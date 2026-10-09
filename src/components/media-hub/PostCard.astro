@@ -34,8 +34,8 @@ const { card = {} } = Astro.props;
   </div>
   <h3 class="m-0 mt-[calc(22.9*var(--u))] font-medium text-f18p264 leading-21.75 text-navy not-italic [word-break:break-word]"><a href={card.href} class="pc-link text-inherit no-underline" data-title>{card.title}</a></h3>
   <p class="m-0 mt-9 mb-[calc(16.1*var(--u))] font-normal text-f11p689 leading-[calc(18.994*var(--u))] text-body not-italic [word-break:break-word]" data-excerpt>{card.excerpt}</p>
-  <a href={card.href} class="hit mt-auto ms-219 block h-[calc(36.528*var(--u))] w-[calc(36.528*var(--u))]" aria-hidden="true" data-arrow tabindex="-1">
-    <img loading="lazy" src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block h-full w-full" />
+  <a href={card.href} class="pc-arrow hit mt-auto ms-219 block h-[calc(36.528*var(--u))] w-[calc(36.528*var(--u))]" aria-hidden="true" data-arrow tabindex="-1">
+    <img loading="lazy" src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block h-full w-full rtl:-scale-x-100" /><!-- bug 074: points left in Arabic -->
   </a>
 </article>
 
@@ -50,4 +50,10 @@ const { card = {} } = Astro.props;
   .pc-badge { filter: drop-shadow(calc(2.922 * var(--u)) calc(2.922 * var(--u)) calc(5.479 * var(--u)) rgba(0, 0, 0, 0.25)); }
   .pc-day, .pc-wd { font-family: Poppins, var(--font-gotham); text-box: trim-both cap alphabetic; }
   .pc-link:focus-visible { outline: 1px solid var(--color-cyan); outline-offset: 2px; }
+  /* Bug 081 (phones): the card keeps the 16px page gutter plus room for the next card's edge (the desktop 340px card filled a
+     360 screen) and the arrow sits at the card's end edge (Figma lets it overhang the card by 7px, which put it half off-screen). */
+  @media (max-width: 767.98px) {
+    .pc { width: min(calc(248.389 * var(--u)), calc(100vw - 48px)); }
+    .pc-arrow { margin-inline-start: 0; align-self: flex-end; }
+  }
 </style>

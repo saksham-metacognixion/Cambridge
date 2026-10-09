@@ -52,6 +52,6 @@ const iw = crop ? crop.iw : c.w;
   <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-241 lg:w-289" style={`--lx:${c.hx - c.x}`}><a href={readMore.href} class="title-link" tabindex="-1">{title}</a></h3>
   <p class="m-0 mt-10 font-normal text-f9 leading-11 text-body not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-320 lg:w-282 lg:h-44" style={`--lx:${c.ex - c.x}`}>{text}</p>
   <a href={readMore.href} aria-label={readMore.label} class="hit block mt-10 lg:absolute lg:mt-0 lg:top-362" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
-    <img loading="lazy" src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block w-full h-full" />
+    <img loading="lazy" src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block w-full h-full rtl:-scale-x-100" /><!-- bug 074: points left in Arabic -->
   </a>
 </article>

@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { t } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
@@ -37,7 +37,7 @@ const cards = nodes.filter((s) => careInRegion(s.slug, edition.region)).map((s) 
     {cards.map((k) => (
       <li class="cell">
         <article class="card">
-          <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(291.178)} height={px(320.034)} widths={[px(291.178), px(291.178) * 2]} sizes={`(min-width: 1440px) ${px(291.178)}px, (min-width: 1024px) 27.7vw, ${px(291.178)}px`} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+          <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(291.178)} height={px(320.034)} widths={[px(291.178), px(291.178) * 2]} sizes={vwSizes(291.178)} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
           <h3 class="title">{k.title}</h3>
           <p class="desc">{k.text}</p>
           <a href={k.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}>{button}</a>

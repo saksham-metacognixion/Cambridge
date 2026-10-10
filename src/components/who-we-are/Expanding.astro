@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 
@@ -25,7 +25,7 @@ const photo = img(c.image.image, edition.region);
   <div class="in">
     <div class="art">
       <h2 class="h">{c.heading.map((l, i) => <>{i > 0 && <><br class="br" />{' '}</>}{l}</>)}<span class="dot">{c.headingDot}</span></h2>
-      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(463)} height={px(444)} widths={[px(463), px(463) * 2]} sizes={`(min-width: 1024px) ${px(463)}px, 100vw`} loading="lazy" decoding="async" alt={c.image.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(463)} height={px(444)} widths={[px(463), px(463) * 2]} sizes={vwSizes(463, '100vw')} loading="lazy" decoding="async" alt={c.image.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
     </div>
     <div class="copy">
       <p class="lead">{c.lead}</p>

@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import play from '../../assets/about/play.svg';
 
@@ -21,7 +21,7 @@ const W = px(937);
 
 <figure class="video" data-video-facade data-host="youtube" data-id={id}>
   <button type="button" class="poster" data-video-play aria-label={title ? `${playLabel}: ${title}` : playLabel}>
-    {poster && <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={W} height={Math.round((W * 9) / 16)} widths={[Math.round(W / 2), W]} sizes={`(min-width: 1024px) ${W}px, 100vw`} loading="lazy" decoding="async" alt="" class="thumb" pictureAttributes={{ class: 'contents' }} />}
+    {poster && <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={W} height={Math.round((W * 9) / 16)} widths={[Math.round(W / 2), W]} sizes={vwSizes(937, '100vw')} loading="lazy" decoding="async" alt="" class="thumb" pictureAttributes={{ class: 'contents' }} />}
     <img loading="lazy" src={play.src} width="44" height="44" alt="" class="play" />
   </button>
   <noscript><a href={href} target="_blank" rel="noopener">{title || href}</a></noscript>

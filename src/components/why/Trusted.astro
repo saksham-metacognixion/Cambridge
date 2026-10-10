@@ -25,7 +25,7 @@ const more = urlFor(edition, pagePath(c.button.page));
     <div class="p">{[c.text].flat().map((t: string) => <p>{t}</p>)}</div>
     <a href={more} class="btn ui-btn btn-fill-navy">{c.button.label}</a>
     <img src={bars.src} width="451.523" height="292.68" alt="" class="bars" loading="lazy" decoding="async" />
-    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(638)} height={px(399)} widths={[px(638), 1276]} sizes={vwSizes(638, '90vw')} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(638)} height={px(399)} widths={[560, px(638), 1276]} sizes={vwSizes(638, 'calc(100vw - 131px)')} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
   </div>
 </Band>
 

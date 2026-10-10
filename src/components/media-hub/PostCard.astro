@@ -3,6 +3,7 @@
 // excerpt grow with their text, the arrow sits at the bottom. Corners: --radius-card (photo) / --radius-btn (date badge), bug 049. The same markup is rendered empty inside a <template>
 // and filled by src/scripts/media-hub.ts for posts that are not on the page at build time.
 import arrow from '../../assets/news/arrow-icon-group33.svg';
+import { vwSizes } from '../../lib/scale';
 import type { CardData } from '../../lib/news-image';
 
 type Props = { card?: Partial<CardData> };
@@ -16,7 +17,7 @@ const { card = {} } = Astro.props;
         class="pc-img absolute inset-0 block h-full w-full max-w-none object-cover"
         src={card.src ?? ''}
         srcset={card.srcset || undefined}
-        sizes="24vw"
+        sizes={vwSizes(248.389)}
         width="340"
         height="240"
         loading="lazy"

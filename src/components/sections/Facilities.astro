@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import mapVector from '../../assets/facilities/map-vector.svg';
 import pin4243 from '../../assets/facilities/map-pin.svg';
 import pin4342 from '../../assets/facilities/map-pin-43x42.svg';
@@ -109,7 +109,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
       <ul class="card m-0 list-none bg-white rounded-b-(--radius-card) rounded-se-(--radius-card)">
         {rows.map((r, i) => (
           <li class="row">
-            <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(150)} height={px(117.7)} widths={[px(150), px(150) * 2]} sizes={`(max-width: 639.98px) calc(100vw - 64px), ${px(150)}px`} loading="lazy" decoding="async" alt={r.alt} /></div>
+            <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(150)} height={px(117.7)} widths={[px(150), px(150) * 2]} sizes={`(max-width: 639.98px) calc(100vw - 46px), ${vwSizes(150)}`} loading="lazy" decoding="async" alt={r.alt} /></div>
             <div class="info">
               <h3 class="m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]">
                 <span class="block text-f12 leading-15 text-navy-alt">{r.name}</span>

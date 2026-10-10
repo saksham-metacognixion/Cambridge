@@ -54,7 +54,11 @@ const cover = 'absolute start-0 top-0 h-full w-full object-cover';
 //   text sits at the right, so background, people and bottom overlay flip and the people end up on the left. The
 //   people are flipped on their clipping box, not on the <img>, whose transform belongs to hero-follow.ts (which
 //   reverses its drift in RTL so they still follow the cursor).
-const subjectMobile = 'max-md:relative max-md:inset-auto max-md:h-auto max-md:max-w-none max-md:w-[162%] max-md:left-[-62%] max-md:rtl:left-0 sm:max-md:w-full sm:max-md:left-0';
+const phoneArt = 'max-md:w-[162%] max-md:left-[-62%] max-md:rtl:left-0 sm:max-md:w-full sm:max-md:left-0';
+const subjectMobile = `max-md:relative max-md:inset-auto max-md:h-auto max-md:max-w-none ${phoneArt}`;
+// The phone background copy is absolute, so in RTL it has to be anchored at the right like the in-flow people layer, which starts
+// at the right edge of the RTL block and overflows to the left.
+const phoneArtCopy = `${phoneArt} max-md:rtl:left-auto max-md:rtl:right-0`;
 const subjectTablet = 'md:max-lg:object-right';
 // Bug 086: beyond 1440 px the static background's edge columns continue to the viewport edges (global.css .hero-bleed); here
 // two layers: the banner background (full stage height) and the bottom overlay strip (top 341, h 159), both uniform at the edges.
@@ -69,7 +73,12 @@ const edgeVars = (await heroEdgeVars(layers ? layers.background : img(c.banner.i
         <Picture src={layers.background} alt="" fetchpriority="high" class={`${cover} max-lg:object-left rtl:-scale-x-100`} {...bannerProps} />
         <!-- The mother and baby drift with the cursor (scripts/hero-follow.ts); clipped to the hero box. -->
         <div data-hero-follow class="absolute inset-0 overflow-hidden rtl:-scale-x-100 max-md:relative max-md:inset-auto max-md:order-last max-md:mt-[calc(24*var(--u))] max-md:-mx-[calc(24*var(--u))] md:max-lg:relative md:max-lg:inset-auto md:max-lg:col-start-2 md:max-lg:row-start-1 md:max-lg:w-full md:max-lg:self-end md:max-lg:aspect-[572/500]">
-          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" class={`${cover} ${subjectMobile} ${subjectTablet}`} {...bannerProps} />
+          <!-- Phones (user, 10 Oct 2026: the hero background "disappeared" behind the people): the stage background is cropped to
+               its plain start side, so the pill art behind the mother and baby is drawn again here with the people layer's exact
+               box (same file, same width -> same height), so the two layers can never drift apart. Same srcset = one download. Its top
+               fades in (mask) so the art's grey gradient meets the lighter stage background without an edge. -->
+          <Picture src={layers.background} alt="" class={`absolute top-0 h-auto max-w-none md:hidden [mask-image:linear-gradient(to_bottom,transparent,#000_18%)] ${phoneArtCopy}`} {...bannerProps} />
+          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" data-hero-subject class={`${cover} ${subjectMobile} ${subjectTablet}`} {...bannerProps} />
         </div>
       </>
     ) : (

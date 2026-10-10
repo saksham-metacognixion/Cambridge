@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 import chevron from '../../assets/media-hub/select-chevron.svg';
@@ -67,7 +67,7 @@ const pos = (len: number, active: number, i: number) => {
           {a.images.map((im, i) => (
             <li class="slide" data-slide data-pos={pos(a.images.length, active, i)}>
               <button type="button" class="pick-slide" aria-label={fill(c.showSlide, { n: i + 1, total: a.images.length })} aria-current={i === active ? 'true' : undefined} tabindex={i === active ? 0 : -1}>
-                <Picture src={img(im.image, edition.region)} formats={['avif']} fallbackFormat="webp" width={px(646.178)} height={px(397.648)} widths={[px(270), px(646.178), px(646.178) * 2]} sizes={`(min-width: 1440px) ${px(646.178)}px, (min-width: 1024px) 61vw, 100vw`} loading="lazy" decoding="async" alt={im.alt} class="ph" pictureAttributes={{ class: 'contents' }} />
+                <Picture src={img(im.image, edition.region)} formats={['avif']} fallbackFormat="webp" width={px(646.178)} height={px(397.648)} widths={[px(270), px(646.178), px(646.178) * 2]} sizes={vwSizes(646.178, '100vw')} loading="lazy" decoding="async" alt={im.alt} class="ph" pictureAttributes={{ class: 'contents' }} />
               </button>
             </li>
           ))}

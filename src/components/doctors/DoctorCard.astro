@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 import { t } from '../../lib/content';
@@ -43,7 +43,7 @@ const href = doctorHref(d, edition);
         width={px(w)}
         height={px(h)}
         widths={[px(w), px(w) * 2]}
-        sizes={`${px(w)}px`}
+        sizes={vwSizes(w)}
         loading="lazy"
         decoding="async"
         alt={alt}

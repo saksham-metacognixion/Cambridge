@@ -254,7 +254,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .visit { cursor: pointer; transition: color var(--ui-ease); }
   .visit:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* like the region menu's items */
   .visit:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
-  .deco { pointer-events: none; } /* decorative lines must not swallow clicks meant for the links next to them */
+  .deco { pointer-events: none; object-fit: contain; } /* decorative lines must not swallow clicks meant for the links next to them */
 
   @media (min-width: 1200px) {
     .a { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }

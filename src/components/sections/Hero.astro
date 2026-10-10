@@ -1,5 +1,6 @@
 ---
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
+import { heroEdgeVars } from '../../lib/hero-edge';
 import { px } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
@@ -28,7 +29,7 @@ const layers = L && (own(c.banner.image) ? own(L.background) && own(L.subject) :
 const textLines: string[] = Array.isArray(c.text) ? c.text : [c.text];
 const bannerProps = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(500), widths: [720, 1080, px(1052)],
-  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+  sizes: '100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
 const cover = 'absolute start-0 top-0 h-full w-full object-cover';
 // No Figma frame below 1024px (docs/open-decisions.md P1 / P8), so the small-screen hero is our adaptation of the
@@ -57,11 +58,10 @@ const subjectMobile = 'max-md:relative max-md:inset-auto max-md:h-auto max-md:ma
 const subjectTablet = 'md:max-lg:object-right';
 // Bug 086: beyond 1440 px the static background's edge columns continue to the viewport edges (global.css .hero-bleed); here
 // two layers: the banner background (full stage height) and the bottom overlay strip (top 341, h 159), both uniform at the edges.
-const edge = (await getImage({ src: layers ? layers.background : img(c.banner.image, edition.region), format: 'avif', width: 1052 })).src; // = the picture's own largest avif candidate: no extra download
-const edge2 = (await getImage({ src: overlay, format: 'avif', width: 1052 })).src;
+const edgeVars = (await heroEdgeVars(layers ? layers.background : img(c.banner.image, edition.region))) + (await heroEdgeVars(overlay, 'hero-edge-2')); // build-time gradients of their edge columns
 ---
 <!-- Hero: page y 117, --h 500. Spec y values are page y minus 117. -->
-<section class="relative hero-bleed" style={`--h: 500;--hero-edge:url(${JSON.stringify(edge)});--hero-edge-2:url(${JSON.stringify(edge2)})`} aria-label={c.ariaLabel}>
+<section class="relative hero-bleed" style={`--h: 500;${edgeVars}`} aria-label={c.ariaLabel}>
   <div class="stage max-md:flex max-md:flex-col max-md:px-[calc(24*var(--u))] max-md:pt-[calc(64*var(--u))] md:max-lg:grid md:max-lg:grid-cols-[minmax(calc(260*var(--u)),1fr)_minmax(0,1.2fr)] md:max-lg:ps-[calc(24*var(--u))]">
     {layers ? (
       <>
@@ -82,7 +82,7 @@ const edge2 = (await getImage({ src: overlay, format: 'avif', width: 1052 })).sr
       width={px(1052)}
       height={px(159)}
       widths={[720, 1080, px(1052)]}
-      sizes="(min-width: 1440px) 1440px, 100vw"
+      sizes="100vw"
       loading="lazy"
       decoding="async"
       alt=""
@@ -120,11 +120,12 @@ const edge2 = (await getImage({ src: overlay, format: 'avif', width: 1052 })).sr
 </script>
 
 <style>
-  /* Bug 086: the home banner fills its 500 stage exactly (100 %), and the overlay strip is a second band layer. */
+  /* Bug 086: the home banner fills its 500 stage exactly (100 %), and the overlay strip (top 341, h 159) is a second band layer
+     on top of it. Same start / end pairing as global.css (the art is mirrored in RTL). */
   @media (min-width: 1441px) {
-    .hero-bleed::before, .hero-bleed::after { background-image: var(--hero-edge-2), var(--hero-edge); background-size: 200000% calc(159 * var(--u)), 200000% 100%; }
-    .hero-bleed::before { background-position: 0 calc(341 * var(--u)), 0 0; }
-    .hero-bleed::after { background-position: 100% calc(341 * var(--u)), 100% 0; }
+    .hero-bleed::before, .hero-bleed::after { background-size: 100% calc(159 * var(--u)), 100% 100%; background-position: 0 calc(341 * var(--u)), 0 0; }
+    .hero-bleed::before { background-image: var(--hero-edge-2-start), var(--hero-edge-start); }
+    .hero-bleed::after { background-image: var(--hero-edge-2-end), var(--hero-edge-end); }
   }
   /* Bug 065: the buttons --hero-btn-gap under the paragraph (global.css, shared with PageHero); below 1024px the column's
      flex gap (16 Figma px) is already between them, so only the rest is added. */

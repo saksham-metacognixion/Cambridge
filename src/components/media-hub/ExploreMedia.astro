@@ -1,6 +1,6 @@
 ---
 import { Picture, Image } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
@@ -61,8 +61,8 @@ const tiles = c.tiles.map((t: any, i: number) => ({
               fallbackFormat="webp"
               width={px(t.crop ? 222 * 3.1441 : 222)}
               height={px(342)}
-              widths={[px(t.crop ? 222 * 3.1441 : 222)]}
-              sizes="(min-width: 1440px) 304px, 222px"
+              widths={[px(t.crop ? 222 * 3.1441 : 222), px(t.crop ? 222 * 3.1441 : 222) * 2]}
+              sizes={vwSizes(t.crop ? 222 * 3.1441 : 222)}
               loading="lazy"
               decoding="async"
               alt={t.alt}

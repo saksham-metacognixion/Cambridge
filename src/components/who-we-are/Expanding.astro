@@ -36,7 +36,7 @@ const photo = img(c.image.image, edition.region);
 
 <style>
   .exp { background: var(--color-navy-alt); font-family: var(--font-gotham); font-style: normal; }
-  .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .in { position: relative; max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
   /* < 1024: light panel = the photo's background (#f2f5f7 at its top edge), heading in flow, photo below */
   .art { position: relative; background: #f2f5f7; padding-top: clamp(28px, 4.5vw, 44px); }
   .h { box-sizing: border-box; width: 100%; margin: 0; padding: 0 16px 12px; font-weight: 500; font-size: clamp(24px, 7vw, calc(28 * var(--u))); line-height: normal; color: var(--color-navy-alt); text-align: center; text-wrap: balance; overflow-wrap: normal; }

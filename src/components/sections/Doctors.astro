@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -89,7 +89,7 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
           <article class="card dr-card relative shrink-0 snap-start bg-white rounded-(--radius-card) hair-card" data-loop-item data-sets={card.sets} hidden={!card.sets.split(' ').includes(initial)}>
             <div class="pos rounded-(--radius-card) bg-veil" style="--x:3;--y:3;--w:179;--h:155"></div>
             <div class="pos shape" aria-hidden="true" style={`--x:${card.shapeX};--y:${MASK_DY - 4};--w:168.409;--h:170.657;background:url("${(card.fill as any).src}") center/100% 100% no-repeat;${maskStyle}`}></div>
-            <Picture class="pos dr-photo object-cover" src={card.img} formats={['avif']} fallbackFormat="webp" width={px(card.ph[2])} height={px(card.ph[3])} widths={[px(card.ph[2]), px(card.ph[2]) * 2]} sizes={`${px(card.ph[2])}px`} loading="lazy" decoding="async" alt={card.alt} style={`--x:${card.phX};--y:${card.ph[1] - 1380};--w:${card.ph[2]};--h:${card.ph[3]}`} />
+            <Picture class="pos dr-photo object-cover" src={card.img} formats={['avif']} fallbackFormat="webp" width={px(card.ph[2])} height={px(card.ph[3])} widths={[px(card.ph[2]), px(card.ph[2]) * 2]} sizes={vwSizes(card.ph[2])} loading="lazy" decoding="async" alt={card.alt} style={`--x:${card.phX};--y:${card.ph[1] - 1380};--w:${card.ph[2]};--h:${card.ph[3]}`} />
             <!-- Name, role and button in flow from the Figma name top (170), button at the card bottom (bug 044/050: the shared
                  .ui-btn-sm, Figma's 71 x 13 box with an 8px label was unreadable), so the card grows by the taller button and
                  a long role pushes the button down instead of running into it; the cards of the row stay level. -->

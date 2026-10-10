@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import fs from 'node:fs';
-import { DESIGN_W, TARGET_W } from '../lib/scale';
+import { DESIGN_W, TARGET_W, MAX_W_CSS } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
 import { allRoutes } from '../lib/routes';
@@ -67,7 +67,7 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     {hasMainFont && <link rel="preload" href="/fonts/Gotham-Book.woff2" as="font" type="font/woff2" crossorigin />}
     <!-- Arabic pages: the body face (GE SS Two Medium, global.css) is preloaded too, so its text swaps in before the hero settles (CLS seen on /ae/ar in the 9 Oct 2026 performance audit). -->
     {edition.dir === 'rtl' && <link rel="preload" href="/fonts/GESSTwoMedium.woff2" as="font" type="font/woff2" crossorigin />}
-    <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W}}`}></style>
+    <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W};--max-w:${MAX_W_CSS}}`}></style>
     <!-- Scroll entrances (data-aos, scripts/aos.ts) are armed before first paint, so nothing flashes; no JS = all visible. -->
     <script is:inline>"IntersectionObserver"in window&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&document.documentElement.classList.add("aos")</script>
     <slot name="head" />

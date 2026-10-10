@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { px } from '../lib/scale';
+import { px, vwSizes } from '../lib/scale';
 import line24 from '../assets/footer/line24.svg';
 import group53 from '../assets/footer/group53.svg';
 import { parsePath, urlFor } from '../lib/editions';
@@ -11,6 +11,8 @@ import hospitalData from '../data/hospitals.json';
 import { hospitalHref } from '../lib/hospitals';
 import { CARE_PATHS, careInRegion } from '../lib/care';
 import SocialIcons from './shared/SocialIcons.astro';
+import NewsletterStatus from './forms/NewsletterStatus.astro';
+import { clientConfig } from '../lib/forms';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
@@ -84,19 +86,22 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">
       <h2 class="hd text-f12 font-light text-white" style="width:calc(175 * var(--u))">{c.accreditations.heading}</h2>
       <div class="accimg">
-        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={`${px(235)}px`} format="webp" loading="lazy" decoding="async" alt={c.accreditations.alt} class="block h-full w-full object-cover" />
+        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={vwSizes(235)} format="webp" loading="lazy" decoding="async" alt={c.accreditations.alt} class="block h-full w-full object-cover" />
       </div>
     </div>
 
-    <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="/api/forms/newsletter" method="POST">
-      <!-- Newsletter is not one of the scope's 4 forms (and a mailing list means storing data): the function rejects it
-           until Pramod decides what it should do. -->
+    <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="/api/forms/newsletter" method="POST" novalidate data-form="newsletter" data-config={clientConfig('newsletter', edition.locale)}>
+      <!-- Newsletter (D10, 10 Oct 2026): not one of the scope's 4 forms, so it is email only like them: each sign-up is
+           emailed to FORM_TO_NEWSLETTER, nothing is stored. Figma draws no consent box, so none is added (flagged). -->
       <input type="hidden" name="edition" value={edition.id} />
       <h2 class="hd text-f12 font-light text-white">{c.newsletter.heading}</h2>
-      <div class="box">
-        <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
-        <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" />
-        <button type="submit" class="ui-btn hit btn-text">{c.newsletter.submit}</button>
+      <div data-field="email">
+        <div class="box">
+          <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
+          <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" aria-describedby="ft-email-error" />
+          <button type="submit" class="ui-btn hit btn-text">{c.newsletter.submit}</button>
+        </div>
+        <NewsletterStatus edition={edition} errorId="ft-email-error" />
       </div>
     </form>
 
@@ -130,6 +135,10 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   .nl button:active { transform: scale(0.98); }
   @media (prefers-reduced-motion: reduce) { .nl button { transition: none; } .nl button:active { transform: none; } }
   .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
+  /* Newsletter status lines (error / thank you; no Figma design): white on the navy footer, the box's text size. */
+  .nl :global(.nl-msg) { margin: calc(5 * var(--u)) 0 0; font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; text-align: start; }
+  .nl :global(.nl-msg[hidden]) { display: none; }
+  .nl :global(.ts-slot) { margin-top: calc(5 * var(--u)); }
   .bot { margin: 0; font-size: calc(7 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; white-space: pre; }
   .bot.right { text-align: end; }
   .bot.left { width: max-content; min-width: calc(var(--w) * var(--u)); } /* the Arabic copyright is longer than the Figma 160 box (cross-browser sweep 9 Oct 2026): the line keeps its start edge and takes its own width */

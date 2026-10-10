@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { commonText } from '../../lib/forms';
 import type { Edition } from '../../lib/editions';
@@ -36,7 +36,7 @@ const closeLabel = commonText(edition.locale).close as string;
       <img loading="lazy" src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
       <div id="hospital-video" class="video" data-video-facade data-host={video.host} data-id={video.id} data-aspect={video.aspect}>
         <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
-          <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565)]} sizes={`(min-width: 1440px) ${px(565)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
+          <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565)]} sizes={vwSizes(565, '90vw')} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
           {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
           <img loading="lazy" src={play.src} width={play.width} height={play.height} alt="" class="play" />
         </button>
@@ -55,7 +55,7 @@ const closeLabel = commonText(edition.locale).close as string;
 <style>
   .env { font-family: var(--font-gotham); font-style: normal; }
   .band { position: relative; margin-top: calc(135 * var(--u)); background: var(--color-veil); }
-  .in { position: relative; box-sizing: border-box; max-width: calc(var(--target-w) * 1px); margin-inline: auto; overflow-x: clip; padding: 0 calc(24 * var(--u)) calc(35.67 * var(--u)); display: flex; flex-direction: column; align-items: center; }
+  .in { position: relative; box-sizing: border-box; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; padding: 0 calc(24 * var(--u)) calc(35.67 * var(--u)); display: flex; flex-direction: column; align-items: center; }
   .pattern { display: none; }
   .video { position: relative; z-index: 1; flex: none; width: calc(565 * var(--u)); max-width: 100%; aspect-ratio: 565 / 348; margin-top: calc(-135 * var(--u)); border-radius: var(--radius-card); overflow: hidden; background: #e7e7e7; }
   .poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }

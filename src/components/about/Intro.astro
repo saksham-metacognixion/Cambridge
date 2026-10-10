@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import Band from '../careers/Band.astro';
 import play from '../../assets/about/play.svg';
@@ -28,7 +28,7 @@ const closeLabel = commonText(edition.locale).close as string;
   <div class="row">
     <div class="video" data-video-facade data-host={about.video.host} data-id={about.video.id} data-aspect={about.video.aspect}>
       <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
-        <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(429)} height={px(264)} widths={[px(429)]} sizes={`(min-width: 1440px) ${px(429)}px, 90vw`} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
+        <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(429)} height={px(264)} widths={[px(429)]} sizes={vwSizes(429, '90vw')} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
         {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
         <img loading="lazy" src={play.src} width="44" height="44" alt="" class="play" />
       </button>

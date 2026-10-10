@@ -5,7 +5,39 @@ import { SITE_URL } from './site.config.mjs';
 import { readdir, readFile, rename, rmdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { transform as lightningTransform, Features } from 'lightningcss';
+
+/**
+ * Cache-busting for the self-hosted fonts (performance audit, 10 Oct 2026). The fonts stay in public/fonts/ (project rule) under
+ * fixed names, so a host could either revalidate them on every visit (Vercel: max-age=0) or cache them for a year and keep
+ * serving an old file after a fix (the U+00A0 patch of 10 Oct). This pass appends a content hash, /fonts/Gotham-Book.woff2?v=1a2b3c4d,
+ * to every font URL in the built CSS and HTML (@font-face src + preload links), so /fonts/* can be cached as immutable on
+ * every host (vercel.json, public/_headers, deploy/nginx) and a changed file gets a new URL on the next build.
+ */
+function fontVersions() {
+  return {
+    name: 'font-versions',
+    hooks: {
+      'astro:build:done': async ({ dir, logger }) => {
+        const root = fileURLToPath(dir);
+        const fonts = (await readdir(join(root, 'fonts'))).filter((f) => f.endsWith('.woff2'));
+        const hash = {};
+        for (const f of fonts) hash[f] = createHash('sha256').update(await readFile(join(root, 'fonts', f))).digest('hex').slice(0, 8);
+        const re = new RegExp(`/fonts/(${fonts.map((f) => f.replace(/[.-]/g, '\\$&')).join('|')})(?![?\\w.-])`, 'g');
+        const files = (await readdir(root, { recursive: true })).filter((f) => /\.(css|html)$/.test(f));
+        let changed = 0;
+        for (const f of files) {
+          const p = join(root, f);
+          const src = await readFile(p, 'utf8');
+          const out = src.replace(re, (m, name) => `${m}?v=${hash[name]}`);
+          if (out !== src) { await writeFile(p, out); changed++; }
+        }
+        logger.info(`font URLs versioned in ${changed} files`);
+      },
+    },
+  };
+}
 
 /**
  * Browser compatibility of the built CSS (cross-browser audit, 9 Oct 2026). Tailwind v4 optimises the final CSS with Lightning CSS
@@ -94,7 +126,7 @@ export default defineConfig({
   // The integration below moves each edition's 404 page to <prefix>/404.html, the file the hosts serve for unknown URLs.
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'auto' },
-  integrations: [notFoundPages(), browserCompatCss()],
+  integrations: [notFoundPages(), browserCompatCss(), fontVersions()],
   devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss(), devTrailingSlash()],

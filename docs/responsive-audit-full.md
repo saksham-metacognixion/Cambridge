@@ -79,6 +79,32 @@ visitor sees the UAE pop-up). At 09:37 on 10 Oct another session set `fallbackCo
 (only visitors detected in the UAE see it), so on a local QC server without geo detection it no longer opens; that is that
 session's decision, not a layout change.
 
+## 3a. Wide screens: the design now fills the screen (10 Oct 2026, user decision)
+
+The user asked for no whitespace on bigger screens. Until now the layout scaled up to 1440 px and then stayed centred with white
+margins either side (240 px at 1920, 560 px at 2560; only the hero bands and the overflowing rows reached the edges). The cap is
+gone: `src/lib/scale.ts` `MAX_W = 0`, so the design keeps scaling with the page width (1.33× at 1920, 1.78× at 2560) and every
+section, card, image and text keeps its Figma proportion while filling the screen. R073 in `docs/open-decisions.md`.
+
+What changed (all mechanical, one switch): `--max-w` replaces the 1440 cap in global.css (`--u`, `.stage`, `--gutter`, hero bands)
+and in 33 components; `--up` (= page width / 1440, ≥ 1) scales the few sizes that were fixed in CSS px by earlier decisions
+(the one button size R050, the hero text→button gap R058, the small-button label); every image `sizes` attribute is now
+viewport-relative (`vwSizes()`), so browsers fetch the 2× candidates on wide screens (above ≈ 2600 px the 2× sources are upscaled —
+source-limited). Set `MAX_W` back to 1440 or 1920 to cap again.
+
+Verified on the rebuilt copy:
+
+| Check | Result |
+|---|---|
+| Whitespace pixel scan, 32 templates × 1600 / 1920 / 2560 (hard white gutters beside coloured sections; blank bands ≥ 320 px × page scale) | **0 white gutters, 0 blank bands** at 1920 and 2560. The 1600 run flagged card-photo edges 80 px from the screen edge (the scan's old assumption of a 1440 stage edge; checked by eye on Our Hospitals and Media Hub: cards and photos, no white). Blank bands = the design's own section gaps scaled, none above the threshold. |
+| Interactive sweep, 41 templates, Chrome, 390 / 768 / 1024 / 1440 / 1600 / 1920 / 2560, every state at 390 / 1440 / 1920 / 2560 | clean (only the deliberate Figma heading offsets and the 2 px trailing space); 287 views, ≈ 1,000 states |
+| Same sweep, WebKit and Firefox at 1920 / 2560, states at 1920 | clean (WebKit rounded the 10 px header icon to 24 × 24 at 2560 — a 1 px scale, now `object-fit: contain`) |
+| Eye review at 1920 and 2560: Home, About, Find a Doctor, hospital page, Media Hub, Arabic Home | layouts identical to 1440, just larger; no gaps, nothing cut; the gallery and card rows run to the screen edge |
+| ≤ 1440 | byte-identical behaviour: `--up` is 1 and `--max-w` is never the smaller term, so the earlier results (§3) stand |
+
+Harness note: the Google Maps script on Contact Us inserts a 1 px accessibility `<span>` at −8644 px; the "fixed-out" check reports it
+in every engine. It is invisible by design (Google's own markup), not a layout fault.
+
 ## 4. Open items (not changed — need a decision)
 
 Recorded as R072 in `docs/open-decisions.md`:

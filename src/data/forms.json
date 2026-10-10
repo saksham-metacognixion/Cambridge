@@ -833,6 +833,20 @@
         "doctor"
       ],
       "subject": "Refer a Patient (corporate or organisation referral)"
+    },
+    "newsletter": {
+      "subject": "Newsletter sign-up",
+      "inbox": "newsletter",
+      "consent": false,
+      "fields": [
+        {
+          "name": "email",
+          "label": "Email",
+          "type": "email",
+          "required": true,
+          "max": 120
+        }
+      ]
     }
   }
 }

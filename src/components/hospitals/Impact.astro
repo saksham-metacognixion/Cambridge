@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { resolveStats } from '../../lib/stats';
 import type { Edition } from '../../lib/editions';
@@ -23,7 +23,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 
 <section class="imp" aria-label={c.ariaLabel}>
   <div class="in">
-    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(385)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(385)} widths={[px(410), 828, px(410) * 2]} sizes={vwSizes(410, '100vw')} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
     <div class="copy">
       <h2 class="h">{c.heading.map(([w, dot]) => <>{w}<span class="dot">{dot}</span></>)}</h2>
       <hr class="rule" />
@@ -42,7 +42,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 
 <style>
   .imp { position: relative; background: rgba(231, 231, 231, 0.5); font-family: var(--font-gotham); font-style: normal; }
-  .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; overflow-x: clip; }
+  .in { position: relative; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; }
   .imp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 410 / 385; object-fit: cover; max-width: none; }
   .copy { padding: calc(32 * var(--u)) 16px calc(40 * var(--u)); }
   .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); color: var(--color-teal-border); overflow-wrap: anywhere; }

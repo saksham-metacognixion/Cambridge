@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { urlFor, type Edition } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
@@ -35,7 +35,7 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
       {cards.map((x, i) => (
         <li data-aos="fade-up" style={`--aos-delay:${i * 50}ms`} class="cell">
           <article class="card hair-card" style="--sw:.25">
-            <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(222)} height={px(244)} widths={[px(222), px(222) * 2]} sizes={`(min-width: 1440px) ${px(222)}px, (min-width: 1024px) 15.4vw, ${px(222)}px`} loading="lazy" decoding="async" alt={x.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+            <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(222)} height={px(244)} widths={[px(222), px(222) * 2]} sizes={vwSizes(222)} loading="lazy" decoding="async" alt={x.alt} class="img" pictureAttributes={{ class: 'contents' }} />
             <h3 class:list={['t', { long: x.title.length > 2 }]}>
               <a href={x.href} class="stretch">{x.title.map((l) => <span class="block">{l}</span>)}</a>
             </h3>

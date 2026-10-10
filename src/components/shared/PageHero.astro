@@ -1,5 +1,6 @@
 ---
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
+import { heroEdge } from '../../lib/hero-edge';
 import { px } from '../../lib/scale';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -79,21 +80,24 @@ const BANNER_W = 1052, BANNER_H = 500;
 const smallStyle = small
   ? `--hero-h:auto;--hero-aspect:${small.w} / ${imgH};--hero-pos:${((small.x / Math.max(1, BANNER_W - small.w)) * 100).toFixed(2)}% 100%;${small.maxH ? `--hero-max-h:${small.maxH}px;` : ''}`
   : undefined;
+// Image audit 10 Oct 2026: the hero fills the viewport at every width since the 1440 cap went (scale.ts MAX_W = 0), and a
+// `side` post photo fills the inline-end 55% on desktop. The 1440 / 2104 candidates exist only where the source is that wide
+// (Astro never upscales): the 1400 px news photos were capped at 1052 and shown upscaled at 1440; the 1052 Figma banners are unchanged.
 const pic = {
-  formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052],
-  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+  formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052, 1440, 2104],
+  sizes: side ? '(min-width: 1024px) 55vw, 100vw' : '100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
 // Bug 086: the background's edge columns continue to the viewport edges beyond 1440 px (global.css .hero-bleed). The band
 // image = the static layer; a flat banner continues its start column on both sides (its end edge is a photo), unless told otherwise.
 const bleed = Astro.props.bleed ?? (side ? 'none' : layers ? 'edges' : 'start');
-const edge = bleed === 'none' ? null : (await getImage({ src: layers ? layers.background : banner, format: 'avif', width: 1052 })).src; // = the picture's own largest avif candidate: no extra download
-const edgeVars = edge
-  ? `--hero-edge:url(${JSON.stringify(edge)});` + (variant === 'cover' ? `--hero-edge-h:calc(323 * var(--u));--hero-edge-y:calc(-1 * var(--u));` : '')
+const g = bleed === 'none' ? null : await heroEdge(layers ? layers.background : banner); // build-time gradients of its edge columns
+const edgeVars = g
+  ? `--hero-edge-start:${g.start};--hero-edge-end:${bleed === 'start' ? g.start : g.end};` + (variant === 'cover' ? `--hero-edge-h:calc(323 * var(--u));--hero-edge-y:calc(-1 * var(--u));` : '')
   : '';
 const unflipped = !(mirror && !keepComposition);
 ---
 
-<section class:list={['relative', keepComposition && 'keep', side && 'side', edge && 'hero-bleed', edge && bleed === 'start' && 'start', edge && unflipped && 'unflipped']} style={`--h: ${h};${edgeVars}`} aria-label={c.ariaLabel}>
+<section class:list={['relative', keepComposition && 'keep', side && 'side', g && 'hero-bleed', g && unflipped && 'unflipped']} style={`--h: ${h};${edgeVars}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${h}`}>
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
          script's transform on the subject image never overrides it. -->
@@ -140,10 +144,6 @@ const unflipped = !(mirror && !keepComposition);
        right-aligned, so the box is only as wide as the English paragraph (the area that is clear of the art). */
     :global([dir='rtl']) .keep .copy { inset-inline-start: auto; inset-inline-end: calc(95 * var(--u)); }
     :global([dir='rtl']) .keep .title { width: calc((var(--xx) + var(--xw)) * var(--u)); }
-  }
-  /* Bug 086, flat photo banners: both bands repeat the START column (the plain gradient), whichever side the image faces. */
-  @media (min-width: 1441px) {
-    .start::before, .start::after, :global([dir='rtl']) .start.unflipped::before, :global([dir='rtl']) .start.unflipped::after { background-position: 0 var(--hero-edge-y, 0); }
   }
   @media (min-width: 1024px) {
     .side { background: var(--color-mist-50); } /* bug 086: the post's plain surface reaches the viewport edges too */

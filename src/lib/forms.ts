@@ -34,6 +34,7 @@ export interface FieldConfig {
 export interface FormConfig {
   subject: string;
   inbox: string;
+  consent: boolean;
   fields: FieldConfig[];
 }
 
@@ -96,6 +97,7 @@ export function clientConfig(id: string, locale: LocaleId) {
   const c = commonText(locale);
   return JSON.stringify({
     id,
+    consent: formConfig(id).consent,
     fields: formConfig(id).fields.map(
       ({ name, type, required, max, options }) => ({
         name,

@@ -32,24 +32,30 @@
 /* ───────────── Scale ─────────────
    --design-w / --target-w come from src/lib/scale.ts (injected by BaseLayout).
    --u = the length of ONE Figma pixel.
-   ≥1024px: layout scales fluidly with the page width, capped at the target width (1440px).
+   ≥1024px: layout scales fluidly with the page width, capped at --max-w (scale.ts MAX_W; 0 = no cap since 10 Oct 2026, so the
+   design fills 1920 / 2560 screens with no side margins; --target-w = 1440 stays the reference width for build-time maths).
    <1024px: layout is re-flowed (stacked); --u stays fixed so text / radii / gaps keep their designed size. */
 :root {
   --u: calc(var(--target-w) * 1px / var(--design-w));
+  --up: 1;
 }
 @media (min-width: 1024px) {
-  :root { --u: calc(min(100cqw, var(--target-w) * 1px) / var(--design-w)); }
+  :root { --u: calc(min(100cqw, var(--max-w) * 1px) / var(--design-w)); }
+  /* --up = how much wider than the 1440 reference the page is (1 up to 1440, 1.33 at 1920, 1.78 at 2560; capped with --max-w).
+     Sizes that are deliberately fixed in CSS px at 1440 (the one button size R050, the hero text->button gap R058) multiply their
+     caps by it, so they keep their proportion to the scaled design on wide screens (10 Oct 2026). */
+  :root { --up: max(1, calc(min(100cqw, var(--max-w) * 1px) / (var(--target-w) * 1px))); }
   /* Browsers without container-query units (Safari < 16, Chrome < 105, Firefox < 110; cross-browser audit 9 Oct 2026): cqw
      would make every `calc(... * var(--u))` invalid, so the viewport width stands in. It differs from the .page container
      only by a classic scrollbar (overlay scrollbars on macOS / iOS = 0); .page clips that overhang. */
   @supports not (width: 1cqw) {
-    :root { --u: calc(min(100vw, var(--target-w) * 1px) / var(--design-w)); }
+    :root { --u: calc(min(100vw, var(--max-w) * 1px) / var(--design-w)); --up: max(1, calc(min(100vw, var(--max-w) * 1px) / (var(--target-w) * 1px))); }
   }
 }
 /* Hero text -> button gap, ONE value for every hero with a paragraph (Home: Hero.astro, bug 065; inner pages: PageHero,
    bug 055): 18 Figma px (24.6px at 1440, the Figma Home / Find a Doctor gap), kept within 24-32px at every width so the
    buttons never sit against the text. Applied as a margin after the paragraph, in flow, so longer text pushes them down. */
-:root { --hero-btn-gap: clamp(24px, calc(18 * var(--u)), 32px); }
+:root { --hero-btn-gap: clamp(24px, calc(18 * var(--u)), calc(32px * var(--up))); }
 
 @theme {
   /* Full navigation from 1200px up, hamburger below (scope 2.8). Gives the nav: / max-nav: variants. */
@@ -169,7 +175,7 @@ body {
 .stage {
   position: relative;
   width: 100%;
-  max-width: calc(var(--target-w) * 1px);
+  max-width: calc(var(--max-w) * 1px);
   margin-inline: auto;
   height: calc(var(--h) * var(--u));
   overflow-x: clip;
@@ -179,24 +185,25 @@ body {
   .stage { height: auto; overflow-x: visible; }
 }
 
-/* Hero background on screens wider than the target width (bug 086, 9 Oct 2026). The stage stays 1440 wide and centred (the
-   Figma composition, text, people and art are untouched); the page's white used to show on both sides of it. Now the hero
-   section (`.hero-bleed`, always full width) continues the banner's background to both viewport edges by repeating the
-   image's own outermost pixel column outward: the gradient and the pills, which already run off the frame in Figma, carry
-   on to the edge; no photo is scaled up. Set by Hero / PageHero / ContactHero:
-     --hero-edge    url() of the static background layer (the flat banner when there are no layers)
-     --hero-edge-h  the image's height relative to the stage (banner layout 114.42 %, cover layout 323 Figma px)
+/* Hero background on screens wider than the target width (bug 086, 9 Oct 2026; cross-engine rework 10 Oct). The stage stays
+   1440 wide and centred (the Figma composition, text, people and art are untouched); the page's white used to show on both
+   sides of it. Now the hero section (`.hero-bleed`, always full width) continues the banner's background to both viewport
+   edges with the image's own outermost pixel column: the gradient and the pills, which already run off the frame in Figma,
+   carry on to the edge; no photo is scaled or cropped. The column is a build-time vertical linear-gradient (lib/hero-edge.ts,
+   sampled from the source file), not the image stretched to 200000 %, which engines raster differently. Set by Hero /
+   PageHero / ContactHero:
+     --hero-edge-start / --hero-edge-end  gradients of the image's left / right pixel column
+     --hero-edge-h  the image's height relative to the section (banner layout 114.42 %, cover layout 323 Figma px)
      --hero-edge-y  its top offset (cover layout: -1 Figma px)
-   ::before = the band at the image's start edge, ::after = at its end edge. A mirrored image (RTL, the default: the art flips
-   with the layout) keeps that pairing; one that is not mirrored (`unflipped`: keepComposition / mirror=false, a map, a
-   photo) swaps it. A background-size of 200000 % x-wise makes the band show far less than one column of the image, so only
-   the edge pixels are stretched; only applied where a band exists (> 1440 px) so narrower screens load nothing extra. */
+   ::before = the band at the inline start, showing the image's left column; ::after = the inline end, its right column. A
+   mirrored image (RTL, the default: the art flips with the layout) keeps that pairing; one that is not mirrored (`unflipped`:
+   keepComposition / mirror=false, a map, a photo) swaps it. Only drawn where a band exists (> 1440 px). */
 @media (min-width: 1441px) {
-  .hero-bleed::before, .hero-bleed::after { content: ''; position: absolute; top: 0; height: 100%; width: calc((100% - var(--target-w) * 1px) / 2); background: var(--hero-edge, none) no-repeat; background-size: 200000% var(--hero-edge-h, 114.42%); pointer-events: none; }
-  .hero-bleed::before { inset-inline-start: 0; background-position: 0 var(--hero-edge-y, 0); }
-  .hero-bleed::after { inset-inline-end: 0; background-position: 100% var(--hero-edge-y, 0); }
-  [dir='rtl'] .hero-bleed.unflipped::before { background-position: 100% var(--hero-edge-y, 0); }
-  [dir='rtl'] .hero-bleed.unflipped::after { background-position: 0 var(--hero-edge-y, 0); }
+  .hero-bleed::before, .hero-bleed::after { content: ''; position: absolute; top: 0; height: 100%; width: calc((100% - min(100%, var(--max-w) * 1px)) / 2); background-repeat: no-repeat; background-size: 100% var(--hero-edge-h, 114.42%); background-position: 0 var(--hero-edge-y, 0); pointer-events: none; }
+  .hero-bleed::before { inset-inline-start: 0; background-image: var(--hero-edge-start, none); }
+  .hero-bleed::after { inset-inline-end: 0; background-image: var(--hero-edge-end, none); }
+  [dir='rtl'] .hero-bleed.unflipped::before { background-image: var(--hero-edge-end, none); }
+  [dir='rtl'] .hero-bleed.unflipped::after { background-image: var(--hero-edge-start, none); }
 }
 
 /* Hairline borders from Figma, scaled. Width + style only: set the colour with border-<colour>. */
@@ -262,15 +269,15 @@ body {
   width: max(100%, var(--hit-w, 44px)); height: max(100%, var(--hit-h, 44px));
 }
 
-/* Screens wider than the target width (cross-browser / responsive audit, 9 Oct 2026): --gutter = the white margin on EITHER
-   side of the centred 1440 stage (0 up to 1440px, 240px at 1920, 560px at 2560). Rows that overflow the frame in Figma
+/* Screens wider than --max-w (cross-browser / responsive audit, 9 Oct 2026): --gutter = the white margin on EITHER
+   side of the centred stage (0 while the scale is uncapped, MAX_W = 0 since 10 Oct 2026; with MAX_W 1440 it was 240px at 1920). Rows that overflow the frame in Figma
    (Home Doctors, Care Support, Testimonials) widen their scroller by it on both sides, keeping every card at its stage
    position, so the row runs off the real screen edge instead of being cut at an invisible line in the middle of the page.
    Reads 100cqw like --u (the .page container), so a classic scrollbar never adds to it. */
 :root { --gutter: 0px; }
 @media (min-width: 1024px) {
-  :root { --gutter: max(0px, calc((100cqw - var(--target-w) * 1px) / 2)); }
-  @supports not (width: 1cqw) { :root { --gutter: max(0px, calc((100vw - var(--target-w) * 1px) / 2)); } }
+  :root { --gutter: max(0px, calc((100cqw - var(--max-w) * 1px) / 2)); }
+  @supports not (width: 1cqw) { :root { --gutter: max(0px, calc((100vw - var(--max-w) * 1px) / 2)); } }
 }
 
 /* Horizontal row that overflows the frame on the right (Doctors, Care Support, Testimonials).
@@ -328,7 +335,7 @@ body {
   --radius-card: 16px;
   --radius-panel: 28px;
   --radius-pill: 999px;
-  --btn-fs: clamp(14px, calc(11 * var(--u)), 16px);
+  --btn-fs: clamp(14px, calc(11 * var(--u)), calc(16px * var(--up)));
   --btn-h: 44px;
   --btn-px: 20px;
   --btn-sm-h: 40px;
@@ -336,10 +343,10 @@ body {
 }
 @media (min-width: 1024px) {
   :root {
-    --btn-h: clamp(36px, calc(29 * var(--u)), 40px);
-    --btn-px: clamp(14px, calc(16 * var(--u)), 22px);
-    --btn-sm-h: clamp(34px, calc(27 * var(--u)), 36px);
-    --btn-sm-px: clamp(10px, calc(12 * var(--u)), 16px);
+    --btn-h: clamp(36px, calc(29 * var(--u)), calc(40px * var(--up)));
+    --btn-px: clamp(14px, calc(16 * var(--u)), calc(22px * var(--up)));
+    --btn-sm-h: clamp(34px, calc(27 * var(--u)), calc(36px * var(--up)));
+    --btn-sm-px: clamp(10px, calc(12 * var(--u)), calc(16px * var(--up)));
   }
 }
 .ui-btn {
@@ -348,7 +355,7 @@ body {
   font-family: var(--font-gotham); font-style: normal; font-weight: 500; font-size: var(--btn-fs); line-height: 1.2;
   letter-spacing: normal; text-align: center; text-transform: none; white-space: nowrap; text-decoration: none; cursor: pointer;
 }
-.ui-btn.ui-btn-sm { min-height: var(--btn-sm-h); padding-inline: var(--btn-sm-px); font-size: 14px; }
+.ui-btn.ui-btn-sm { min-height: var(--btn-sm-h); padding-inline: var(--btn-sm-px); font-size: calc(14px * var(--up)); } /* label grows with the page beyond 1440 (--up) */
 /* The label (a direct text node or one <span>) sits on the button's centre line: the Gotham caps are centred (bug 007). */
 .ui-btn > span { display: block; line-height: 1; text-box: trim-both cap alphabetic; }
 .ui-btn > svg, .ui-btn > img { flex: none; }

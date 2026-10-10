@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import Band from './Band.astro';
 import type { Edition } from '../../lib/editions';
@@ -20,7 +20,7 @@ const photo = img(c.image.image, edition.region);
 <Band label={c.ariaLabel}>
   <div class="row">
     <div class="photo">
-      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(809)} height={Math.round(px(809) / 1.5)} widths={[px(809), 1536]} sizes={`(min-width: 1440px) ${px(809)}px, 80vw`} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(809)} height={Math.round(px(809) / 1.5)} widths={[px(809), 1536]} sizes={vwSizes(809, '80vw')} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
     </div>
     <div class="copy">
       <h2 class="h">{c.heading.map((line, i) => <span class:list={['block', i < c.heading.length - 1 && 'light']}>{line}</span>)}</h2>

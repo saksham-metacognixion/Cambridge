@@ -20,6 +20,8 @@ export interface RawForm {
   inbox?: string;
   /** env variable with the recipients, instead of FORM_TO_<INBOX> */
   inboxEnv?: string;
+  /** false = no consent checkbox (newsletter: Figma draws only the email box); default true */
+  consent?: boolean;
   fields?: RawField[];
   variantOf?: string;
   omitGroups?: string[];
@@ -28,6 +30,7 @@ export interface ResolvedForm {
   subject: string;
   inbox: string;
   inboxEnv?: string;
+  consent: boolean;
   fields: RawField[];
 }
 
@@ -35,7 +38,7 @@ export function resolveForms(forms: Record<string, RawForm>): Record<string, Res
   const out: Record<string, ResolvedForm> = {};
   for (const [id, f] of Object.entries(forms)) {
     if (!f.variantOf) {
-      out[id] = { subject: f.subject ?? id, inbox: f.inbox ?? id, ...(f.inboxEnv ? { inboxEnv: f.inboxEnv } : {}), fields: f.fields ?? [] };
+      out[id] = { subject: f.subject ?? id, inbox: f.inbox ?? id, ...(f.inboxEnv ? { inboxEnv: f.inboxEnv } : {}), consent: f.consent ?? true, fields: f.fields ?? [] };
       continue;
     }
     const base = forms[f.variantOf];
@@ -45,6 +48,7 @@ export function resolveForms(forms: Record<string, RawForm>): Record<string, Res
       subject: f.subject ?? base.subject ?? id,
       inbox: f.inbox ?? base.inbox ?? f.variantOf,
       ...((f.inboxEnv ?? base.inboxEnv) ? { inboxEnv: f.inboxEnv ?? base.inboxEnv } : {}),
+      consent: f.consent ?? base.consent ?? true,
       fields: (base.fields ?? []).filter((x) => !omit.has(x.ui?.group ?? 'details')),
     };
   }

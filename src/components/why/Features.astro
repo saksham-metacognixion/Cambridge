@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
 import pattern from '../../assets/why/pattern.svg';
@@ -35,7 +35,7 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
           <div class="card">
             {x.svg
               ? <img src={x.src.src} width="208" height="262" alt={x.alt} class="photo" loading="lazy" decoding="async" />
-              : <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(208)} height={px(262)} widths={[px(208), px(208) * 2]} sizes={`(min-width: 1440px) ${px(208)}px, 208px`} loading="lazy" decoding="async" alt={x.alt} class="photo" pictureAttributes={{ class: 'contents' }} />}
+              : <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(208)} height={px(262)} widths={[px(208), px(208) * 2]} sizes={vwSizes(208, '208px')} loading="lazy" decoding="async" alt={x.alt} class="photo" pictureAttributes={{ class: 'contents' }} />}
           </div>
           <div class="txt">
             <h2 class="t">{x.title.map((l: string) => <span class="block">{l}</span>)}</h2>

@@ -23,6 +23,9 @@ const config = {
   framework: null,
   buildCommand: 'npm run build && node tools/vercel/bundle.mjs',
   outputDirectory: 'dist',
+  // Long-lived caching for files whose URL changes with their content: /_astro/* (hashed names) and /fonts/* (?v=<hash>, added by
+  // fontVersions() in astro.config.mjs). Vercel's default for public files is max-age=0 (revalidate on every page view).
+  headers: ['/_astro/(.*)', '/fonts/(.*)'].map((source) => ({ source, headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] })),
   redirects: [
     ...redirects,
     { source: '/:path((?!api/|_astro/)(?:[^/]+/)*[^/.]+)', destination: '/:path/', statusCode: 301 },

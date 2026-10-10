@@ -14,7 +14,7 @@ const { bg, label, labelledby, class: cls } = Astro.props;
 
 <style>
   .band { position: relative; font-family: var(--font-gotham); font-style: normal; }
-  .in { position: relative; box-sizing: border-box; max-width: calc(var(--target-w) * 1px); margin-inline: auto; overflow-x: clip; padding-inline: calc(24 * var(--u)); }
+  .in { position: relative; box-sizing: border-box; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; padding-inline: calc(24 * var(--u)); }
   @media (min-width: 1024px) {
     .in { padding-inline: 0; }
   }

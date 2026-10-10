@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
@@ -36,7 +36,7 @@ const cards = s.cards.map((c: any) => ({ ...c, src: img(c.image, edition.region)
             width={px(296.21)}
             height={px(325.564)}
             widths={[px(296.21), px(296.21) * 2]}
-            sizes={`(min-width: 1440px) ${px(296.21)}px, (min-width: 1024px) 28.16vw, ${px(296.21)}px`}
+            sizes={vwSizes(296.21)}
             loading="lazy"
             decoding="async"
             alt={c.alt}
@@ -53,7 +53,7 @@ const cards = s.cards.map((c: any) => ({ ...c, src: img(c.image, edition.region)
 </section>
 
 <style>
-  .hub { max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .hub { max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
   .grid { list-style: none; margin: calc(23.33 * var(--u)) 0 0; padding: 0; display: grid; }
   .cell { display: flex; }
   .card {

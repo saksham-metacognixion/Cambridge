@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { urlFor, type Edition } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
@@ -50,7 +50,7 @@ const more = urlFor(edition, pagePath(c.button.page));
         </li>
       ))}
     </ul>
-    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(700.8)} height={px(361.4)} widths={[px(700.8), 1788]} sizes={`(min-width: 1440px) ${px(700.8)}px, 90vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(700.8)} height={px(361.4)} widths={[560, px(700.8), 1788]} sizes={vwSizes(700.8, 'calc(100vw - 131px)')} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
   </div>
 </Band>
 

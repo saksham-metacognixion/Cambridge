@@ -1,10 +1,10 @@
 /*
  * POST /api/forms/<form>  — Book an Appointment, Send an Enquiry (page + pop-up), Refer a Patient (doctor / other), Your Opinion Matters
- * (pop-up + Patient Feedback page). Validate -> verify Turnstile -> send ONE email -> answer. Nothing is stored: no
+ * (pop-up + Patient Feedback page), Newsletter (footer + Media Hub; no consent box, D10). Validate -> verify Turnstile -> send ONE email -> answer. Nothing is stored: no
  * database, no KV, no logs of submissions (errors are logged by type only, never with field values).
  *
  * Request: multipart/form-data or urlencoded, fields per src/data/forms.json, plus
- *   consent=on (required on every form), cf-turnstile-response (added by the Turnstile widget), edition=<global|ae|sa>-<en|ar>.
+ *   consent=on (required on every form except `consent: false` ones), cf-turnstile-response (added by the Turnstile widget), edition=<global|ae|sa>-<en|ar>.
  * Response: JSON { ok: true } | { ok: false, error, fields?: { <name>: "required" | "invalid" | "too_long" } } when the
  * client asks for JSON (Accept: application/json); otherwise a 303 back to the page with ?form=sent|error, so the
  * form also works without JavaScript. The EN/AR messages for these codes live in src/data/content/forms/common.*.json.
@@ -32,7 +32,7 @@ type Field = {
 };
 const forms = resolveForms(
   formsConfig.forms as Record<string, RawForm>,
-) as Record<string, { subject: string; inbox: string; inboxEnv?: string; fields: Field[] }>;
+) as Record<string, { subject: string; inbox: string; inboxEnv?: string; consent: boolean; fields: Field[] }>;
 // Mobile fields post `<name>_code` = ISO country (src/data/dial-codes.json); the email shows its calling code.
 const dialCodes = new Map(dialData.countries.map((c) => [c.iso, c.code]));
 const REGIONS = ["global", "ae", "sa"];
@@ -104,7 +104,7 @@ export const onRequestPost = async ({
     rows.push([f.label ?? f.name, display(f, v, data)]);
   }
   const consent = String(data.get("consent") ?? "");
-  if (!["on", "true", "1", "yes"].includes(consent))
+  if (form.consent && !["on", "true", "1", "yes"].includes(consent))
     fields.consent = "required";
   if (Object.keys(fields).length) return fail(422, "validation", fields);
 
@@ -136,7 +136,8 @@ export const onRequestPost = async ({
   if (human === "config") return fail(500, "not_configured");
   if (human !== "ok") return fail(403, "turnstile");
 
-  rows.push(["Edition", edition], ["Consent", "yes"]);
+  rows.push(["Edition", edition]);
+  if (form.consent) rows.push(["Consent", "yes"]);
   const email = String(data.get("email") ?? "").trim();
   try {
     await sendMail(

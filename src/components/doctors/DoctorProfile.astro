@@ -52,7 +52,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
         <img src={shape.src} alt="" width="222" height="225" loading="eager" decoding="async" />
       </div>
       {photo && (
-        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 240px, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" data-aos="fade" pictureAttributes={{ class: 'contents' }} />
+        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 16.7vw, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" data-aos="fade" pictureAttributes={{ class: 'contents' }} />
       )}
     </div>
   </div>
@@ -90,7 +90,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
 </div>
 
 <style>
-  .frame { width: 100%; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .frame { width: 100%; max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
   .crumbs { height: calc(67 * var(--u)); padding-top: calc(29 * var(--u)); box-sizing: border-box; }
   .crumbs-ol { margin-inline-start: calc(94 * var(--u)); }
   .crumbs .sep { padding-inline: calc(2 * var(--u)); }

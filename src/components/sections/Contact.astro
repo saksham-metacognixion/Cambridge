@@ -1,7 +1,8 @@
 ---
-import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
-import pattern from '../../assets/contact/logo-pattern.png';
+import { px, vwSizes } from '../../lib/scale';
+import pattern720 from '../../assets/contact/logo-pattern-720.png';
+import pattern1430 from '../../assets/contact/logo-pattern-1430.png';
+import pattern2860 from '../../assets/contact/logo-pattern-2860.png';
 import cornerFill from '../../assets/contact/corner-fill.svg';
 import cornerMask from '../../assets/contact/corner-mask.svg';
 import { content } from '../../lib/content';
@@ -27,15 +28,14 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
 
 <section id="contact" class="relative bg-white font-gotham" style="--h: 497">
   <!-- Logo pattern (opacity .55), page x 4 -->
-  <div class="pattern-wrap absolute inset-x-0 top-0 mx-auto w-full overflow-hidden pointer-events-none" style="max-width:calc(var(--target-w) * 1px);height:calc(497 * var(--u))" aria-hidden="true">
-    <Picture
-      src={pattern}
-      formats={['avif']}
-      fallbackFormat="webp"
+  <div class="pattern-wrap absolute inset-x-0 top-0 mx-auto w-full overflow-hidden pointer-events-none" style="max-width:calc(var(--max-w) * 1px);height:calc(497 * var(--u))" aria-hidden="true">
+    <!-- 32-colour palette PNGs of the same artwork (tools/images/logo-pattern.mjs): 90 KB at 1430 px vs 208 KB as AVIF. -->
+    <img
+      src={pattern1430.src}
+      srcset={`${pattern720.src} 720w, ${pattern1430.src} 1430w, ${pattern2860.src} 2860w`}
       width={px(1045)}
       height={px(497)}
-      widths={[720, px(1045)]}
-      sizes="(min-width: 1440px) 1430px, 100vw"
+      sizes={vwSizes(1045, '100vw')}
       loading="lazy"
       decoding="async"
       alt=""

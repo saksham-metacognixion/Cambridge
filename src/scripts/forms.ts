@@ -18,6 +18,7 @@ type Rule = {
 };
 type Config = {
   id: string;
+  consent?: boolean;
   fields: Rule[];
   errors: Record<string, string>;
   sending: string;
@@ -271,7 +272,7 @@ function validate(form: HTMLFormElement, c: Config): Record<string, string> {
     )
       out[r.name] = "invalid_date";
   }
-  if (!data.get("consent")) out.consent = "consent";
+  if (c.consent !== false && !data.get("consent")) out.consent = "consent";
   return out;
 }
 
@@ -294,6 +295,8 @@ async function submit(form: HTMLFormElement) {
     alert.hidden = true;
     alert.textContent = "";
   }
+  const done = form.querySelector<HTMLElement>(".f-ok");
+  if (done) done.hidden = true;
   c.fields.forEach((f) => clearError(form, f.name));
   clearError(form, "consent");
 
@@ -357,6 +360,14 @@ function showAlert(form: HTMLFormElement, msg: string) {
   }
 }
 function success(form: HTMLFormElement) {
+  // Newsletter boxes: the thank-you line sits inside the form, which stays (Figma has no success screen for them).
+  const inline = form.querySelector<HTMLElement>(".f-ok");
+  if (inline) {
+    form.reset();
+    resetTurnstile(form);
+    inline.hidden = false;
+    return;
+  }
   const ok = document.querySelector<HTMLElement>(
     `[data-success-for="${form.dataset.form}"]`,
   );

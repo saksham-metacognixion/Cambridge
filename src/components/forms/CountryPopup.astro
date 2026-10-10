@@ -14,7 +14,7 @@ import { Picture } from 'astro:assets';
 import config from '../../data/country-popup.json';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import type { Edition } from '../../lib/editions';
 import logo from '../../assets/forms/welcome/logo-vertical.svg';
 import pinLine from '../../assets/forms/welcome/pin-line.svg';
@@ -48,7 +48,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
               ))}
             </div>
             <div class="cp-map" aria-hidden="true">
-              <Picture src={map} formats={['avif']} fallbackFormat="webp" width={px(253.119)} height={px(276.861)} widths={[px(253.119), px(253.119) * 2]} sizes={`${px(253.119)}px`} loading="eager" fetchpriority="high" decoding="async" alt="" class="cp-map-img" pictureAttributes={{ class: 'contents' }} />
+              <Picture src={map} formats={['avif']} fallbackFormat="webp" width={px(253.119)} height={px(276.861)} widths={[px(253.119), px(253.119) * 2]} sizes={vwSizes(253.119)} loading="eager" fetchpriority="high" decoding="async" alt="" class="cp-map-img" pictureAttributes={{ class: 'contents' }} />
               <img loading="lazy" class="cp-pin" src={pinLine.src} width="0.805" height="34.205" alt="" />
               <span class="cp-chip"><img loading="lazy" src={flag.src} width="16.901" height="16.901" alt="" /><span>{t.chip}</span></span>
               <img loading="lazy" class="cp-dot" src={pinDot.src} width="3.219" height="3.219" alt="" />

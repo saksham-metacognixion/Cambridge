@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import { resolveStats } from '../../lib/stats';
 import type { Edition } from '../../lib/editions';
@@ -39,7 +39,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
     <div class="in band">
       <div class="figure">
         <div class="clip" aria-hidden="true"><img loading="lazy" src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
-        <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+        <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), 720, px(410) * 2]} sizes={vwSizes(410, 'calc(100vw - 32px)')} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
       </div>
       <ul class="stats" role="list">
         {items.map((s) => (
@@ -56,7 +56,7 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 
 <style>
   .net { font-family: var(--font-gotham); font-style: normal; }
-  .in { position: relative; max-width: calc(var(--target-w) * 1px); margin-inline: auto; }
+  .in { position: relative; max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
   .pill { position: relative; z-index: 1; box-sizing: border-box; margin-inline: 16px; padding: calc(30 * var(--u)) calc(16 * var(--u)); border-radius: var(--radius-panel); background: var(--color-navy); } /* bug 049 */
   /* < 1024: fluid size between 21px and the Figma 30 so the three sentences wrap at their spaces (no mid-word breaks) */
   .h { margin: 0; font-weight: 500; font-size: clamp(21px, 6.5vw, calc(30 * var(--u))); line-height: 1.2; color: #fff; text-align: center; text-wrap: balance; }

@@ -1,20 +1,24 @@
 ---
-import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
+import pattern720 from '../../assets/contact/logo-pattern-720.png';
+import pattern1430 from '../../assets/contact/logo-pattern-1430.png';
+import pattern2860 from '../../assets/contact/logo-pattern-2860.png';
 import { content } from '../../lib/content';
-import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
+import { clientConfig } from '../../lib/forms';
+import NewsletterStatus from '../forms/NewsletterStatus.astro';
 
 // Figma 46:7548..46:7561 (page y 1854..2263). Section starts where the grey band ends (y 1892.77) and runs to the footer (2273).
 // The pattern is 1045x497 and overhangs into the footer's rounded top corners, exactly like Figma.
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('media-hub/page', edition.locale).newsletter;
-const pattern = img('media-hub/newsletter-pattern', edition.region);
 ---
 
 <section class="relative pt-[calc(60.23*var(--u))] pb-53" aria-label={c.ariaLabel}>
   <div class="pointer-events-none absolute start-1/2 top-[calc(0.23*var(--u))] h-497 w-1045 max-w-none -translate-x-1/2 rtl:translate-x-1/2 opacity-55 max-lg:hidden" aria-hidden="true">
-    <Picture src={pattern} formats={['avif']} fallbackFormat="webp" width={px(1045)} height={px(497)} widths={[px(1045)]} sizes="1440px" loading="lazy" decoding="async" alt="" class="block h-full w-full object-cover" pictureAttributes={{ class: 'contents' }} />
+    <!-- The same artwork as the Home Contact pattern (media-hub/newsletter-pattern.png = contact/logo-pattern.png): its 32-colour palette PNGs
+         (tools/images/logo-pattern.mjs) are 90 KB at 1430 px vs 208 KB as AVIF. -->
+    <img src={pattern1430.src} srcset={`${pattern720.src} 720w, ${pattern1430.src} 1430w, ${pattern2860.src} 2860w`} width={px(1045)} height={px(497)} sizes={vwSizes(1045)} loading="lazy" decoding="async" alt="" class="block h-full w-full object-cover" />
   </div>
 
   <div class="relative mx-auto h-267 w-772 max-w-[calc(100%-32px)] rounded-(--radius-panel) bg-white shadow-nl-card max-lg:h-auto max-lg:px-24 max-lg:py-32">
@@ -24,20 +28,26 @@ const pattern = img('media-hub/newsletter-pattern', edition.region);
     </h2>
     <p class="m-0 font-gotham font-normal text-f15 leading-[calc(18.264*var(--u))] text-navy not-italic max-lg:mt-16 lg:absolute lg:start-68 lg:top-121 lg:w-641 lg:text-center">{c.text}</p>
 
-    <form action="/api/forms/newsletter" method="POST" class="nl relative rounded-(--radius-card) bg-white shadow-nl-form max-lg:mt-24 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:gap-12 max-lg:p-12 lg:absolute lg:start-119 lg:top-163 lg:h-[calc(75.247*var(--u))] lg:w-[calc(535.497*var(--u))]">
-      <!-- Same as the footer newsletter: not one of the scope's 4 forms, the function rejects it until Pramod decides. -->
+    <form action="/api/forms/newsletter" method="POST" novalidate data-form="newsletter" data-config={clientConfig('newsletter', edition.locale)} class="nl relative rounded-(--radius-card) bg-white shadow-nl-form max-lg:mt-24 max-lg:flex max-lg:flex-wrap max-lg:items-center max-lg:gap-12 max-lg:p-12 lg:absolute lg:start-119 lg:top-163 lg:h-[calc(75.247*var(--u))] lg:w-[calc(535.497*var(--u))]">
+      <!-- Same as the footer newsletter (D10): each sign-up is emailed to FORM_TO_NEWSLETTER, nothing is stored. -->
       <input type="hidden" name="edition" value={edition.id} />
       <span class="max-lg:static max-lg:shrink-0 lg:absolute lg:start-[calc(17.53*var(--u))] lg:top-[calc(17.53*var(--u))] flex h-[calc(39.45*var(--u))] w-[calc(39.45*var(--u))] items-center justify-center rounded-full bg-mist-25" aria-hidden="true"><svg class="nl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m4 7.5 8 6 8-6"/></svg></span>
       <label class="sr-only" for="nl-email">{c.emailLabel}</label>
-      <input id="nl-email" type="email" name="email" required autocomplete="email" placeholder={c.emailPlaceholder} class="h-44 max-lg:min-w-0 max-lg:flex-1 lg:absolute lg:start-75.25 lg:top-[calc(15.6*var(--u))] lg:w-280 lg:max-w-[calc(100%-240px)] border-0 bg-transparent p-0 font-gotham font-normal text-f13p15 text-navy outline-0 placeholder:text-navy placeholder:opacity-100 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan" />
+      <input id="nl-email" type="email" name="email" required autocomplete="email" placeholder={c.emailPlaceholder} aria-describedby="nl-email-error" class="h-44 max-lg:min-w-0 max-lg:flex-1 lg:absolute lg:start-75.25 lg:top-[calc(15.6*var(--u))] lg:w-280 lg:max-w-[calc(100%-240px)] border-0 bg-transparent p-0 font-gotham font-normal text-f13p15 text-navy outline-0 placeholder:text-navy placeholder:opacity-100 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan" />
       <!-- Subscribe (bug 044/050): the shared .ui-btn size instead of Figma's 150 x 52 box with an offset 11.7px label; kept at the
            Figma end inset, centred on the field's height. -->
       <button type="submit" class="ui-btn hit btn-fill max-lg:w-full lg:absolute lg:end-[calc(11.69*var(--u))] lg:top-1/2 lg:-translate-y-1/2 border-0 bg-cyan text-navy">{c.submit}</button>
+      <!-- Status lines under the white box (lg: hangs below it, the card has room down to its 267px bottom) -->
+      <div data-field="email" class="nl-status max-lg:basis-full lg:absolute lg:inset-x-0 lg:top-full lg:pt-8 lg:text-center">
+        <NewsletterStatus edition={edition} errorId="nl-email-error" />
+      </div>
     </form>
   </div>
 </section>
 
 <style>
   .nl-icon { width: calc(19 * var(--u)); height: calc(19 * var(--u)); color: var(--color-navy); } /* brand line icon (was an emoji; brand guidelines 8 Oct 2026) */
+  .nl-status :global(.nl-msg) { margin: 0; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-navy); }
+  .nl-status :global(.nl-msg[hidden]) { display: none; }
   .nl button:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 2px; }
 </style>

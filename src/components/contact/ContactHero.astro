@@ -1,5 +1,6 @@
 ---
-import { Picture, getImage } from 'astro:assets';
+import { Picture } from 'astro:assets';
+import { heroEdgeVars } from '../../lib/hero-edge';
 import { px } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img, heroLayers } from '../../lib/images';
@@ -16,10 +17,10 @@ const pic = {
   sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
 // Bug 086: beyond 1440 px the background layer's edge columns continue to the viewport edges (global.css .hero-bleed).
-const edge = (await getImage({ src: layers ? layers.background : banner, format: 'avif', width: 1052 })).src; // = the picture's own largest avif candidate: no extra download
+const edgeVars = await heroEdgeVars(layers ? layers.background : banner); // build-time gradients of its edge columns
 ---
 
-<section class="relative hero-bleed" style={`--h: 437;--hero-edge:url(${JSON.stringify(edge)})`} aria-label={c.ariaLabel}>
+<section class="relative hero-bleed" style={`--h: 437;${edgeVars}`} aria-label={c.ariaLabel}>
   <div class="stage">
     <!-- Banner PNG is 1052x500 and drawn 114.42% of the 437 box (top-left anchored), exactly as in Figma. -->
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->

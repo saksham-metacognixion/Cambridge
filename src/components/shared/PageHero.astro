@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { heroEdge } from '../../lib/hero-edge';
+import { heroSubjectStrip } from '../../lib/hero-strip';
 import { px } from '../../lib/scale';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -64,14 +65,18 @@ interface Props {
    *  whose end edge is a photo that must not be smeared); 'none' = no bands (`side` posts: the plain surface continues). */
   bleed?: 'edges' | 'start' | 'none';
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', small, side = false } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const banner = img(c.banner.image, edition.region);
-const p = { titleSize: 39, titleMinH: 0, textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
-const imgH = variant === 'banner' ? 500 : 323;
 // Cursor-follow (live-site mouse parallax, scripts/hero-follow.ts): the people (subject layer) move over the static background layer; a banner
 // without layers (Our Hospitals, news photos) is one static picture.
 const layers = heroLayers(c.banner.image, edition.region);
+const p = { titleSize: 39, titleMinH: 0, textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
+const imgH = variant === 'banner' ? 500 : 323;
+// No `small` given: the strip that holds the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), capped like About.
+// A flat banner (news photos) and the Our Hospitals map (follow="map", HeroMap's pins are laid over the whole art) keep the generic crop.
+const auto = !Astro.props.small && layers && follow === 'people' ? await heroSubjectStrip(layers.subject) : null;
+const small = Astro.props.small ?? (auto ? { ...auto, maxH: 640 } : undefined);
 const imgClass = ['absolute start-0 w-full max-w-none object-cover', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover'];
 // Small-screen crop (see `small`): object-position X% = the strip's start as a share of the slack (art width - strip width),
 // the box's aspect = strip width / the variant's banner height (500 banner, 323 cover: condition pages, bug 042),

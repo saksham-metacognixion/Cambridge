@@ -161,6 +161,9 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     .col { flex: 1 1 calc(138 * var(--u)); min-width: 0; }
     .col, .acc, .nl { position: static; }
     .acc, .nl { flex: 1 1 calc(235 * var(--u)); }
+    /* Seals strip (Figma 235 x 45 = ~322px) is wider than a 320-345px phone's content box: it shrinks to fit, same ratio. */
+    .acc { min-width: 0; }
+    .accimg { max-width: 100%; height: auto; aspect-ratio: 235 / 45; }
     .icons { width: calc(161 * var(--u)); height: auto; }
     .stage > img[src*="line24"], .stage > img:not(.logo) { width: 100%; height: auto; flex: 1 1 100%; }
     .bot { flex: 1 1 auto; white-space: pre-wrap; font-size: 12px; line-height: 1.4; } /* bug 082: readable legal line (Figma 7 = 9.6px) */

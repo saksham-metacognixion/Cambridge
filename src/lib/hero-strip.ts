@@ -58,3 +58,13 @@ export function heroSubjectStrip(
   if (!p) cache.set(path, (p = read(path)));
   return p;
 }
+
+/** Below 1024px the photo box takes the strip's aspect (the whole strip in view), capped at `maxH` (default 640 CSS px, the top
+ *  of the art cropped first); `sizes` asks for the zoomed width (art width / strip width), so the crop is not upscaled. */
+export function heroSmallCrop(small: { x: number; w: number; maxH?: number }, artH: number, wide = "100vw") {
+  const pos = ((small.x / Math.max(1, ART_W - small.w)) * 100).toFixed(2);
+  return {
+    style: `--hero-h:auto;--hero-aspect:${small.w} / ${artH};--hero-pos:${pos}% 100%;--hero-max-h:${small.maxH ?? 640}px;`,
+    sizes: `(max-width: 1023.98px) ${Math.round((100 * ART_W) / small.w)}vw, ${wide}`,
+  };
+}

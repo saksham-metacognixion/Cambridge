@@ -94,4 +94,9 @@ const radios = fieldsIn(ID, 'gender');
   .b-opt input:focus-visible + .b-ico { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
   .b-txt { margin-inline-start: calc(var(--gap) * var(--u)); }
   .b-radios .f-err { clear: both; }
+  /* 320-359px phones only: let the gender options wrap instead of clipping */
+  @media (max-width: 359.98px) {
+    .b-opts { flex-wrap: wrap; row-gap: calc(8 * var(--u)); block-size: auto; }
+    .b-opt:first-child { min-inline-size: 0; margin-inline-end: calc(24 * var(--u)); }
+  }
 </style>

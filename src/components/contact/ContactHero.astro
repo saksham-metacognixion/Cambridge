@@ -5,16 +5,20 @@ import { px } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
+import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 
 // Figma 86:433, page y 119, h 437. Spec y values are page y minus 119.
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('contact/page', edition.locale).hero;
 const banner = img(c.banner.image, edition.region);
 const layers = heroLayers(c.banner.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
+// Below 1024px the photo is cropped to the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), as on PageHero.
+const strip = layers ? await heroSubjectStrip(layers.subject) : null;
+const crop = strip ? heroSmallCrop(strip, 500, '(min-width: 1440px) 1440px, 100vw') : null;
 const imgClass = 'absolute start-0 top-0 h-[114.42%] w-full max-w-none object-cover';
 const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(500), widths: [720, 1052],
-  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+  sizes: crop ? crop.sizes : '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
 // Bug 086: beyond 1440 px the background layer's edge columns continue to the viewport edges (global.css .hero-bleed).
 const edgeVars = await heroEdgeVars(layers ? layers.background : banner); // build-time gradients of its edge columns
@@ -24,7 +28,7 @@ const edgeVars = await heroEdgeVars(layers ? layers.background : banner); // bui
   <div class="stage">
     <!-- Banner PNG is 1052x500 and drawn 114.42% of the 437 box (top-left anchored), exactly as in Figma. -->
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->
-    <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} aria-hidden="true">
+    <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} style={crop?.style} aria-hidden="true">
       {layers ? (
         <>
           <Picture src={layers.background} alt="" class={imgClass} {...pic} />

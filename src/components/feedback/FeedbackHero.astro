@@ -4,6 +4,7 @@ import { px } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
+import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 
 // Figma 188:964 hero: image "PAR-inside 1" 1052x323 at page y 118 (1 under the header). Values: page y minus 118.
 // Title (95,100) Gotham Medium 39 / 37 (the line height the other heroes use), w 385 | button at (98,180): the shared .ui-btn (bug 044/050; Figma 164x30).
@@ -15,16 +16,19 @@ const { edition } = parsePath(Astro.url.pathname);
 const c = content('forms/feedback', edition.locale).hero;
 const banner = img(c.image, edition.region);
 const layers = heroLayers(c.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
+// Below 1024px the photo is cropped to the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), as on PageHero.
+const strip = layers ? await heroSubjectStrip(layers.subject) : null;
+const crop = strip ? heroSmallCrop(strip, 323, '(min-width: 1440px) 1440px, 100vw') : null;
 const imgClass = 'absolute start-0 top-0 h-full w-full max-w-none object-cover object-[100%_0]';
 const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(323), widths: [720, 1052],
-  sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', alt: '', pictureAttributes: { class: 'contents' },
+  sizes: crop ? crop.sizes : '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', alt: '', pictureAttributes: { class: 'contents' },
 } as const;
 ---
 
 <section class="hero relative" aria-labelledby="feedback-title">
   <!-- The person drifts with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->
-  <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} aria-hidden="true">
+  <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} style={crop?.style} aria-hidden="true">
     {layers ? (
       <>
         <Picture src={layers.background} class={imgClass} {...pic} />

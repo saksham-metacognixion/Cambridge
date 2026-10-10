@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { heroEdge } from '../../lib/hero-edge';
-import { heroSubjectStrip } from '../../lib/hero-strip';
+import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 import { px } from '../../lib/scale';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -76,21 +76,19 @@ const imgH = variant === 'banner' ? 500 : 323;
 // No `small` given: the strip that holds the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), capped like About.
 // A flat banner (news photos) and the Our Hospitals map (follow="map", HeroMap's pins are laid over the whole art) keep the generic crop.
 const auto = !Astro.props.small && layers && follow === 'people' ? await heroSubjectStrip(layers.subject) : null;
-const small = Astro.props.small ?? (auto ? { ...auto, maxH: 640 } : undefined);
+const small = Astro.props.small ?? auto ?? undefined;
 const imgClass = ['absolute start-0 w-full max-w-none object-cover', variant === 'banner' ? 'top-0 h-[114.42%]' : 'cover'];
-// Small-screen crop (see `small`): object-position X% = the strip's start as a share of the slack (art width - strip width),
-// the box's aspect = strip width / the variant's banner height (500 banner, 323 cover: condition pages, bug 042),
-// so 100% = a strip that ends at the right edge; 100% vertically keeps the bottom (feet) when the box is capped.
-const BANNER_W = 1052, BANNER_H = 500;
-const smallStyle = small
-  ? `--hero-h:auto;--hero-aspect:${small.w} / ${imgH};--hero-pos:${((small.x / Math.max(1, BANNER_W - small.w)) * 100).toFixed(2)}% 100%;${small.maxH ? `--hero-max-h:${small.maxH}px;` : ''}`
-  : undefined;
+// Small-screen crop (see `small`, lib/hero-strip.ts heroSmallCrop): object-position X% = the strip's start as a share of the slack
+// (art width - strip width), the box's aspect = strip width / the variant's banner height (500 banner, 323 cover: condition pages,
+// bug 042), so 100% = a strip that ends at the right edge; 100% vertically keeps the bottom (feet) when the box is capped (640px).
+const crop = small ? heroSmallCrop(small, imgH, side ? '55vw' : '100vw') : null;
+const smallStyle = crop?.style;
 // Image audit 10 Oct 2026: the hero fills the viewport at every width since the 1440 cap went (scale.ts MAX_W = 0), and a
 // `side` post photo fills the inline-end 55% on desktop. The 1440 / 2104 candidates exist only where the source is that wide
 // (Astro never upscales): the 1400 px news photos were capped at 1052 and shown upscaled at 1440; the 1052 Figma banners are unchanged.
 const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052, 1440, 2104],
-  sizes: side ? '(min-width: 1024px) 55vw, 100vw' : '100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+  sizes: crop ? crop.sizes : side ? '(min-width: 1024px) 55vw, 100vw' : '100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
 // Bug 086: the background's edge columns continue to the viewport edges beyond 1440 px (global.css .hero-bleed). The band
 // image = the static layer; a flat banner continues its start column on both sides (its end edge is a photo), unless told otherwise.

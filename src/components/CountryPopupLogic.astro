@@ -4,17 +4,18 @@
  * visitor's edition choice (every edition: the header region switch counts as a choice too, bug 084). The pop-up itself
  * (src/components/forms/CountryPopup.astro) listens for `ch:country-popup` / reads html[data-country-popup].
  * Config: src/data/country-popup.json.
- *   - detected country = the `ch_geo` cookie set at the edge (functions/_middleware.ts on Cloudflare, middleware.ts on
- *     Vercel; both via functions/_lib/geo.ts). No cookie = country unknown = no pop-up (bug 083: never assume UAE), unless
- *     `fallbackCountry` names a version. On a local dev server (no edge header) `devCountry` is assumed so it can be seen.
- *     A country without its own version (e.g. IN) gets nothing.
+ *   - detected country = the `ch_geo` cookie set at the edge (root middleware.ts on Vercel: x-vercel-ip-country;
+ *     functions/_middleware.ts on Cloudflare; both via functions/_lib/geo.ts). Unknown country = no cookie. Since 10 Oct 2026
+ *     (user) `fallbackCountry` is "": only a country with its own version (AE) gets a pop-up; KSA, other and unknown
+ *     visitors stay on Global with none (no KSA version, B5). On a local dev server `devCountry` is assumed.
  *   - a saved choice always wins over the detected country: the pop-up never shows again until it expires.
  *   - `remember` says how long a choice is kept:
- *       forever  -> cookie ch_edition for a year (bug 084, 9 Oct 2026; Path=/ so Global, /ae and /sa share it)
+ *       forever  -> cookie ch_edition for a year (bug 084, 9 Oct 2026; Path=/ so Global, /ae and /sa share it; Secure on https)
  *       session  -> session cookie: back after the browser is closed
  *       tab      -> sessionStorage ch_edition: back in every new tab / window (the 5 Oct 2026 decision, replaced)
  *       never    -> no memory: on every page load
- *     Saving always drops a stale sessionStorage value, so an old per-tab choice can never shadow the cookie.
+ *     Saving always drops a stale sessionStorage value, so an old per-tab choice can never shadow the cookie, and `saved()`
+ *     only reads the store the current mode writes.
  *   - window.chooseEdition('global' | 'ae' | 'sa') (pop-up buttons; Esc = 'global') saves the choice; another region = go
  *     to the SAME page in that region's same-language edition (bug 037: /hospitals -> /ae/hospitals, query string and
  *     #hash kept), or its home when the page does not exist there (src/lib/routes.ts switchHref; the 404 page counts as
@@ -68,9 +69,9 @@ const known = Object.keys(config.countries);
       else document.documentElement.removeAttribute('data-country-popup');
     };
     if (saved()) return;
-    var country = read('ch_geo') || devCountry;
-    if (!country || known.indexOf(country) < 0) country = fallback;
-    if (!country) return;
+    var country = read('ch_geo') || devCountry || 'XX';
+    if (known.indexOf(country) < 0 && fallback) country = fallback;
+    if (known.indexOf(country) < 0) return;
     document.documentElement.dataset.countryPopup = country;
     document.dispatchEvent(new CustomEvent('ch:country-popup', { detail: { country: country } }));
   })();

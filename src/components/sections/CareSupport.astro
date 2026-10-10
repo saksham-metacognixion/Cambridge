@@ -75,7 +75,11 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
   }
   @media (min-width: 1024px) {
     .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
-    .row { margin-inline-start: calc(-22 * var(--u)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
+    /* Beyond 1440px (responsive audit 9 Oct 2026): the scroller takes the page gutter on both sides (global.css --gutter) so the
+       tiles run off the screen edge instead of stopping at the stage edge; the tiles keep their Figma x on the stage. */
+    .stage { overflow-x: visible; }
+    .hscroll.dpos { inset-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
+    .row { margin-inline-start: calc(-22 * var(--u) + var(--gutter)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
     .tile { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: 0; }
   }
 </style>

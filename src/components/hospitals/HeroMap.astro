@@ -7,8 +7,8 @@ import { parsePath } from '../../lib/editions';
  * Map art on the Our Hospitals hero (Figma 101:6609, inside the 437 hero: page y minus 119). Vector 368.816 x 294.809 at
  * (601, 96.87), #e7e7e7 at 45 % x opacity .5; six Material "location_on" pins (32.79 boxes, icon 21.863 x 27.329 centred, #00b8ff)
  * at (832.47,166.17) (848.68,183.92) (676.61,256.45) (918.89,232.53) (935.1,214.78) (952.07,232.53); five labels Gotham Medium 8.112 white
- * (page x/y in the JSON). Decoration (aria-hidden): the same cities are listed as cards below. Hidden below 1024px (the hero photo
- * becomes its own block there). Never flipped on RTL: it is a map.
+ * (page x/y in the JSON). Decoration (aria-hidden): the same cities are listed as cards below. Below 1024px (the hero photo is its own
+ * block there) the pins follow the photo's crop and the labels are hidden. Never flipped on RTL: it is a map.
  * Cursor-follow (the live site's map, gs-prlx-mouse xy 14): the whole group moves with the cursor together with the banner's
  * baked-in map layer (PageHero follow="map", scripts/hero-follow.ts).
  */
@@ -20,22 +20,46 @@ const labelRegion = ['sa', 'sa', 'ae', 'ae', 'sa'];
 const pinRegion = ['sa', 'sa', 'sa', 'ae', 'ae', 'ae'];
 const own = (r: string) => edition.region === 'global' || r === edition.region;
 const labels = Astro.props.labels.filter((_, i) => own(labelRegion[i]));
-const pins = [[832.47, 285.17], [848.68, 302.92], [676.61, 375.45], [918.89, 351.53], [935.1, 333.78], [952.07, 351.53]].filter((_, i) => own(pinRegion[i]));
+// UAE pins (R071, location alignment, 10 Oct 2026; same targets as the Home map, components/sections/Facilities.astro): placed by
+// the pin tip on the drawing, in px of the 478-wide Home drawing (this one is the same outline at 368.816 / 478 from (601, 96.87)):
+// Abu Dhabi (433, 193), Al Mudeef (421, 203), Al Ain (460, 196). In Figma they sat ~20 px too far east (Dubai) and Al Ain south of
+// the border corner. The banner no longer carries any pin (all six erased, tools/hero-layers/erase-banner-pins.py), so these are
+// the only pins and each edition shows its own country only. Icon tip = [x + 16.39, y - 119 + 30.06].
+const S = 368.816 / 478;
+const tip = (vx: number, vy: number) => [601 + vx * S - 16.39, 96.87 + vy * S + 119 - 30.06];
+const pins = [[832.47, 285.17], [848.68, 302.92], [676.61, 375.45], tip(433, 193), tip(421, 203), tip(460, 196)].filter((_, i) => own(pinRegion[i]));
 ---
 
 <div class="map" aria-hidden="true" slot="art" data-hero-subject>
-  <img src={map.src} width="368.816" height="294.809" alt="" class="vec" />
-  {pins.map(([x, y]) => <img src={pin.src} width="21.863" height="27.329" alt="" class="pin" style={`--x:${x + 5.46};--y:${y - 119 + 2.73}`} />)}
-  {labels.map((l) => <span class="lbl" style={`--x:${l.x};--y:${l.y - 119}`}>{l.text}</span>)}
+  <div class="cv">
+    <img src={map.src} width="368.816" height="294.809" alt="" class="vec" />
+    {pins.map(([x, y]) => <img src={pin.src} width="21.863" height="27.329" alt="" class="pin" style={`--x:${x + 5.46};--y:${y - 119 + 2.73}`} />)}
+    {labels.map((l) => <span class="lbl" style={`--x:${l.x};--y:${l.y - 119}`}>{l.text}</span>)}
+  </div>
 </div>
 
 <style>
-  .map { display: none; }
+  /* Positions are banner px (the 1052 x 500 art; hero y = page y - 119) times --u. */
+  .map { position: absolute; pointer-events: none; direction: ltr; }
+  .cv { position: absolute; }
+  .cv > * { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); max-width: none; }
+  .vec { --x: 601; --y: 96.87; width: calc(368.816 * var(--u)); height: calc(294.809 * var(--u)); }
+  .pin { width: calc(21.863 * var(--u)); height: calc(27.329 * var(--u)); }
+  .lbl { font-family: var(--font-gotham); font-weight: 500; font-style: normal; font-size: calc(8.112 * var(--u)); line-height: calc(13.888 * var(--u)); color: #fff; white-space: nowrap; }
   @media (min-width: 1024px) {
-    .map { display: block; position: absolute; inset: 0; pointer-events: none; direction: ltr; }
-    .map > * { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); max-width: none; }
-    .vec { --x: 601; --y: 96.87; width: calc(368.816 * var(--u)); height: calc(294.809 * var(--u)); }
-    .pin { width: calc(21.863 * var(--u)); height: calc(27.329 * var(--u)); }
-    .lbl { font-family: var(--font-gotham); font-weight: 500; font-style: normal; font-size: calc(8.112 * var(--u)); line-height: calc(13.888 * var(--u)); color: #fff; white-space: nowrap; }
+    .map, .cv { inset: 0; }
+  }
+  /* Phones / tablets (R071, 10 Oct 2026): the banner is its own block on top (styles/global.css .hero-media: full width,
+     min(72vw, 300u) tall, the whole 1052 x 500 art object-fit: cover at 80% 30%). The pins used to be baked into the banner
+     and are now drawn here, so this box copies that geometry: --u becomes the art's cover scale and .cv the art's rendered
+     rectangle. The city labels stay hidden as before (they would be ~5px here). */
+  @media (max-width: 1023.98px) {
+    .map { top: 0; inset-inline: 0; height: min(72vw, calc(300 * var(--u))); overflow: hidden; container-type: size; }
+    .cv {
+      --u: max(100cqw / 1052, 100cqh / 500);
+      width: calc(1052 * var(--u)); height: calc(500 * var(--u));
+      left: calc((100cqw - 1052 * var(--u)) * 0.8); top: calc((100cqh - 500 * var(--u)) * 0.3);
+    }
+    .lbl { display: none; }
   }
 </style>

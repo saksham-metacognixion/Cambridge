@@ -137,9 +137,13 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
   }
   @media (min-width: 1024px) {
     .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
-    .hscroll { scroll-padding-inline: calc(94 * var(--u)); }
-    .row { gap: calc(27.6 * var(--u)); padding-inline: calc(94 * var(--u)); }
-    .hscroll.dpos { height: auto; } /* the cards are taller than Figma's 231 by the bigger button (bug 044); they still end above the dots (433) */
+    /* Beyond 1440px (responsive audit 9 Oct 2026) the scroller is widened by the page gutter on both sides (global.css --gutter):
+       the row runs off the screen edge, as Figma draws it running off the frame, instead of being cut at the stage edge; the
+       first stop (card at Figma x 94) keeps its place on the stage. The section clips at the viewport, so the stage must not. */
+    .stage { overflow-x: visible; }
+    .hscroll { scroll-padding-inline: calc(94 * var(--u) + var(--gutter)); }
+    .row { gap: calc(27.6 * var(--u)); padding-inline: calc(94 * var(--u) + var(--gutter)); }
+    .hscroll.dpos { height: auto; inset-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); } /* the cards are taller than Figma's 231 by the bigger button (bug 044); they still end above the dots (433) */
   }
   /* RTL: flip the decorative masked shape itself (its box is already mirrored) */
   :global([dir='rtl']) .shape { scale: -1 1; }

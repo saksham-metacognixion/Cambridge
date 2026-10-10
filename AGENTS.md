@@ -67,10 +67,12 @@ Read this file at the start of every session and follow it for all work.
 
 ### Country pop-up (Global only)
 - On Global: detect country at the edge (Cloudflare country header or middleware), show the Figma pop-up
-  (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. Since 9 Oct 2026 (bugs 083/084): shown only to visitors detected in
-  the UAE or KSA (Vercel `x-vercel-ip-country` via root `middleware.ts`, Cloudflare via `functions/_middleware.ts`, shared
-  `functions/_lib/geo.ts`); unknown / other countries = no pop-up, never assume UAE. The choice (pop-up or header region
-  switch) is kept one year (`remember: "forever"`, cookie `ch_edition`), replacing the 5 Oct "every new tab" decision. B5.
+  (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. State since 10 Oct 2026 (user, bug 083 again): only visitors DETECTED in the UAE see
+  the UAE pop-up (root `middleware.ts` reads `x-vercel-ip-country` on Vercel, `functions/_middleware.ts` Cloudflare, shared
+  `functions/_lib/geo.ts` -> `ch_geo` cookie; `fallbackCountry: ""`); KSA, other and unknown countries get no pop-up (no KSA
+  version); the choice (pop-up button or header region switch) is kept ONE YEAR in the cookie `ch_edition`
+  (`remember: "forever"` in `src/data/country-popup.json`), so it survives new tabs and browser restarts; a stale
+  sessionStorage value never shadows it. `remember: "tab"` restores the 5 Oct "every new tab" behaviour. B5.
 
 ### Arabic (RTL)
 - `dir="rtl"` on Arabic pages; full mirror of logo, navigation, icons, arrows.

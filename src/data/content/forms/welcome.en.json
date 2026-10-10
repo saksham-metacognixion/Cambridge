@@ -1,5 +1,5 @@
 {
-  "$comment": "`ae` = text exactly as in Figma 76:196 (UAE version; written for a visitor already ON the UAE site). `aeOnGlobal` = the same pop-up shown on the GLOBAL site (bug 037, 7 Oct 2026): labels that say what each button does (go to /ae/<same page>, or stay). `text` in src/data/country-popup.json picks the set; switch it back to `ae` to restore the Figma words. No KSA or other-country version exists in Figma. `saOnGlobal` (bug 083, 9 Oct 2026) = the KSA version on the GLOBAL site: button labels from the bug brief ('Go to KSA Website' / 'Stay on Global Website'); the title follows the UAE wording and is NOT client-approved yet (docs/open-decisions.md B5).",
+  "$comment": "`ae` = text exactly as in Figma 76:196 (UAE version; written for a visitor already ON the UAE site). `aeOnGlobal` = the same pop-up shown on the GLOBAL site (bug 037, 7 Oct 2026): labels that say what each button does (go to /ae/<same page>, or stay). `text` in src/data/country-popup.json picks the set; switch it back to `ae` to restore the Figma words. No KSA or other-country version exists in Figma.",
   "logoAlt": "Cambridge Hospital",
   "ae": {
     "title": "You’re on Our UAE Website",
@@ -12,13 +12,6 @@
     "title": "Looks like you’re in the UAE",
     "chip": "UAE",
     "continue": "Go to UAE Website",
-    "or": "OR",
-    "global": "Stay on Global Website"
-  },
-  "saOnGlobal": {
-    "title": "Looks like you’re in KSA",
-    "chip": "KSA",
-    "continue": "Go to KSA Website",
     "or": "OR",
     "global": "Stay on Global Website"
   }

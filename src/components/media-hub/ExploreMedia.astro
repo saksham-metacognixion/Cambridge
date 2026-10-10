@@ -49,7 +49,8 @@ const tiles = c.tiles.map((t: any, i: number) => ({
 
   <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below.
        Each tile fades in when it comes into view, as on the live Media Hub (data-aos="fade", 0.8s, scripts/aos.ts). -->
-  <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-48 lg:pe-47" data-tiles>
+  <!-- Beyond 1440px (responsive audit 9 Oct 2026) the row keeps its Figma start on the centred stage (48 + the page gutter, global.css --gutter) and runs off the real screen edge. -->
+  <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-[calc(48*var(--u)+var(--gutter))] lg:pe-[calc(47*var(--u)+var(--gutter))]" data-tiles>
     {
       tiles.map((t: any) => (
         <li data-aos="fade" class="relative h-342 w-222 shrink-0 snap-start">

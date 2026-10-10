@@ -121,6 +121,11 @@ const pos = (len: number, active: number, i: number) => {
     .slide[data-pos='-2'] { inset-inline-start: calc(-187 * var(--u)); opacity: .5; visibility: visible; z-index: 1; }
     .slide[data-pos='2'] { inset-inline-start: calc(965 * var(--u)); opacity: .5; visibility: visible; z-index: 1; }
     .slide[data-pos='9'] { inset-inline-start: calc(526 * var(--u)); width: 0; }
+    /* Screens wider than 1440 (responsive audit 10 Oct 2026): the strip is widened by the page gutter on both sides and every slide
+       shifted by it, so the outer photos run to the screen edge (.page clips) instead of being cut at the 1440 stage edge. */
+    .slides { margin-inline: calc(-1 * var(--gutter)); }
+    .slide { translate: var(--gutter) 0; }
+    :global([dir='rtl']) .slide { translate: calc(-1 * var(--gutter)) 0; }
   }
   /* Phones / tablets: the active photo fills the width; swipe, tap targets and arrow keys move between photos (no Figma design). */
   @media (max-width: 1023.98px) {

@@ -113,6 +113,7 @@
     ]
   },
   "heroLayout": {
+    "textW": 300,
     "small": {
       "x": 506,
       "w": 448

@@ -79,6 +79,9 @@ const { c } = Astro.props;
     .tl { padding-inline-start: 0; }
   }
   @media (max-width: 1023.98px) {
+    /* Phones (cross-browser sweep 9 Oct 2026): the title steps down with the viewport so its longest word ('Establishment') fits the
+       one-card row at 320px (5.4vw = 17.3px there; the Figma 14 Figma px = 19px from ~355px); a word wider than the line still breaks. */
+    .title { font-size: min(calc(14 * var(--u)), 5.4vw); overflow-wrap: break-word; }
     .line-row { --n: 1; gap: calc(6 * var(--u)); padding-block-end: 4px; align-items: center; }
     .row { --gap: calc(15.33 * var(--u)); flex: 1 1 auto; overflow-x: auto; scroll-snap-type: x mandatory; scroll-snap-stop: always; gap: var(--gap); }
     .card { width: calc((100% - (var(--n) - 1) * var(--gap)) / var(--n)); }

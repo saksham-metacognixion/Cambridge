@@ -97,6 +97,7 @@
     ]
   },
   "heroLayout": {
+    "textW": 360,
     "small": {
       "x": 538,
       "w": 448

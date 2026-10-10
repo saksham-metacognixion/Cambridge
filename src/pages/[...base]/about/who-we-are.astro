@@ -39,7 +39,10 @@ const sections = [
   </div>
   <main>
     <div id="hero" class="relative">
-      <PageHero content={c.hero} pos={{ titleTop: 98, titleW: 385, textGap: 14, textW: 374, textX: 97, buttonGap: 15 }} keepComposition />
+      <!-- Client title / text are longer than the Figma boxes (text-over-art check, 9 Oct 2026): at 39px the third title line ran under the
+           doctor's arm and the 374 paragraph box 83px into it. Title at 36 (as on Why Cambridge, bug 071) and the paragraph at 290 keep both
+           inside the art's clear area (the elbow at Figma x 399). -->
+      <PageHero content={c.hero} pos={{ titleSize: 36, titleTop: 98, titleW: 385, textGap: 14, textW: 290, textX: 97, buttonGap: 15 }} keepComposition />
     </div>
     {
       sections.map(({ id, C, props, mt }) => (

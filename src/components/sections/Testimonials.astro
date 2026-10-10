@@ -30,14 +30,14 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
     <div class="t-head">
       <div class="t-panel absolute start-62 top-0 rounded-(--radius-panel) bg-cyan" style="width:calc(927.828 * var(--u));height:calc(232.906 * var(--u))"></div>
       <img class="t-art absolute start-62 top-4" style="width:calc(927.828 * var(--u));height:calc(232.906 * var(--u))" src={ellipses.src} width="928" height="233" alt="" loading="lazy" decoding="async" />
-      <h2 class="t-title absolute start-306 top-34 w-439 m-0 font-gotham font-medium text-f28 text-navy capitalize text-center not-italic">{txt.title}</h2>
+      <h2 class="t-title absolute start-306 top-34 w-439 m-0 font-gotham font-medium text-f28 leading-27 text-navy capitalize text-center not-italic">{txt.title}</h2>
       <p class="t-sub absolute start-237 top-70 w-578 m-0 font-gotham font-normal text-f12 leading-14 text-navy text-center not-italic">{txt.subtitle}</p>
     </div>
 
     <!-- Live Home page (WordPress export, animation audit 8 Oct 2026): Greenshift Swiper, autoplay delay 0, speed 15000, loop,
          disablepause (no hover pause), autoplayrestore: one 15 s eased slide per card, one after the other (autoscroll.ts step mode). -->
     <div data-autoscroll="step" data-autoscroll-delay="0" data-autoscroll-speed="15000" data-autoscroll-pause="no" class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
-      <div data-loop-row class="t-row flex" style={`gap:${u(GAP)};margin-inline-start:${u(-96)}`}>
+      <div data-loop-row class="t-row flex" style={`gap:${u(GAP)}`}>
         {homeTestimonials.map((s) => (
           <div data-loop-item class="t-item shrink-0" style="scroll-snap-align:start">
             <TestimonialCard name={t(s.name, loc, 'testimonials')} quote={t(s.quote, loc, 'testimonials')} photo={s.photo ? { ...s.photo, alt: t(s.photo.alt, loc, 'testimonials') } : undefined} pattern={s.pattern} layers={s.layers} region={edition.region} s={S} />
@@ -58,11 +58,20 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
 <style>
   .t-head { display: contents; }
   .t-btn { inset-inline: 0; width: fit-content; margin-inline: auto; }
+  /* Row start: Figma draws the first card cut at the frame's left edge (x -96). Beyond 1440px (responsive audit 9 Oct 2026) the
+     scroller is widened by the page gutter on both sides (global.css --gutter) so the cards run off the screen edge instead of
+     being cut at the stage edge; the row keeps its Figma start on the stage. The section clips at the viewport, the stage not. */
+  .testi { overflow-x: clip; }
+  @media (min-width: 1024px) {
+    .stage { overflow-x: visible; }
+    .t-scroller { inset-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
+    .t-row { margin-inline-start: calc(-96 * var(--u) + var(--gutter)); }
+  }
   @media (max-width: 1023.98px) {
     .testi { padding: 24px 0; }
     .t-head { display: block; position: relative; overflow: hidden; margin: 0 16px; padding: 28px 16px; background: #00b8ff; border-radius: var(--radius-panel); } /* Figma r12.66 (bug 049) */
     .t-panel { display: none; }
-    .t-art { inset: 0; width: 100%; height: 100%; inset-inline-start: 0; top: 0; }
+    .t-art { inset: 0; width: 100%; height: 100%; inset-inline-start: 0; top: 0; object-fit: cover; } /* fills the panel without stretching the ellipses */
     .t-title, .t-sub { position: relative; inset-inline-start: auto; top: auto; width: auto; }
     .t-sub { margin-top: 8px; }
     .t-scroller { position: static; width: 100%; margin-top: 24px; }

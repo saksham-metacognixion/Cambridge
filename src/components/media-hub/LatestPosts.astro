@@ -23,8 +23,9 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
        src/scripts/autoscroll.ts: scroller [data-autoscroll] > [data-loop-row] > [data-loop-item]; pauses on hover / focus /
        touch, off with prefers-reduced-motion). The script appends more posts to the loop row as it nears its end
        (scripts/media-hub.ts) and rebuilds the copies. Padding keeps the card shadows from being clipped, margins cancel it out. -->
-  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:scroll-ps-115" data-row data-autoscroll>
-    <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-115 lg:pe-115" data-loop-row aria-label={c.indexLabel}>
+  <!-- Beyond 1440px (responsive audit 9 Oct 2026) the first card keeps its Figma start on the centred stage (115 + the page gutter, global.css --gutter); the row runs off the real screen edge. -->
+  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:scroll-ps-[calc(115*var(--u)+var(--gutter))]" data-row data-autoscroll>
+    <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-[calc(115*var(--u)+var(--gutter))] lg:pe-[calc(115*var(--u)+var(--gutter))]" data-loop-row aria-label={c.indexLabel}>
       {cards.map((card) => <li class="flex" data-loop-item><PostCard card={card} /></li>)}
       <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
     </ul>

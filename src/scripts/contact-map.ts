@@ -2,10 +2,11 @@
 // edition's hospitals from hospitals.json: the same list as the form's Hospital select). The ONLY map implementation is the
 // Maps JavaScript API; nothing from Google loads until the map box comes near the screen (or a hospital is chosen first), and
 // the API script is requested once. One map, one marker per hospital with a position, fitted to all of them on load.
-// Choosing a hospital (select change: mouse or keyboard) zooms to its marker, highlights it and fills our card (the site's
+// Choosing a hospital (select change: mouse or keyboard) zooms to its marker, highlights it, hides the other markers (9 Oct 2026
+// brief: only the selected hospital's marker while one is chosen; the overview shows them all again) and fills our card (the site's
 // name + address, never Google's place name; directions to the exact position). A marker click does the same AND selects
 // that hospital in the form, so the dropdown, the map, the active marker and the card always agree (one activeId).
-// Fallback (no key, Google rejects the key, the script fails): the neutral placeholder drawing stays in place, the select and the card
+// Fallback (no key, Google rejects the key, the script fails): the Figma map image stays in place, the select and the card
 // (name, address, directions link) keep working, and the cause is logged. Never an iframe embed, never a search by name.
 // A hospital without a position (hospitals.json location lat / lng null: Jeddah until the client sends it) gets no marker and
 // no directions link; choosing it shows the overview and its card (name + address) and logs a warning.
@@ -28,7 +29,7 @@ type GMap = {
   fitBounds(b: unknown, padding: object): void;
 };
 type GMarker = {
-  setOptions(o: { icon?: Icon; zIndex?: number }): void;
+  setOptions(o: { icon?: Icon; zIndex?: number; visible?: boolean }): void;
   addListener(e: string, f: () => void): void;
 };
 type G = {
@@ -176,11 +177,18 @@ if (canvas && card) {
     });
   };
 
+  // One active marker; while a hospital is chosen it is the only marker shown (no stale or overlapping pins: Abu Dhabi and
+  // Al Mudeef are 3 km apart), and with none chosen (id "") every marker is back for the overview. Markers are created once
+  // and only shown / hidden, never re-created.
   const highlight = (id: string) => {
     if (!icons) return;
-    markers.get(activeId)?.setOptions({ icon: icons.normal, zIndex: 1 });
     activeId = id;
-    markers.get(id)?.setOptions({ icon: icons.active, zIndex: 2 });
+    for (const [mid, m] of markers)
+      m.setOptions(
+        mid === id
+          ? { icon: icons.active, zIndex: 2, visible: true }
+          : { icon: icons.normal, zIndex: 1, visible: !id },
+      );
     canvas.dataset.active = id;
   };
 

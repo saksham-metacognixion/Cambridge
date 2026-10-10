@@ -75,7 +75,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
 <header class="hd relative z-50 bg-white shadow-bar font-gotham" data-sticky-header>
   <input type="checkbox" id="nav-toggle" class="sr-only" aria-label={c.navToggleLabel} />
   <div class="stage" style="--h: 119">
-    <a href={homeHref} class="logo a" style="--l:41;--t:47;--w:252;--ph:45" aria-label={c.logo.homeLabel}>
+    <a href={homeHref} class="logo a hit" style="--l:41;--t:47;--w:252;--ph:45" aria-label={c.logo.homeLabel}>
       <img src={logo.src} width="252" height="45" alt={c.logo.alt} class="block h-auto w-full" />
     </a>
 
@@ -185,6 +185,11 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
      the top row scrolls away and the main row sticks at the top; stuck = the live row shadow 0 10px 20px rgba(0,64,89,.05),
      .2s theme curve (scripts/sticky-header.ts sets .is-stuck and html scroll-padding-top). Below 1200px the whole bar sticks. */
   .hd { position: sticky; top: 0; transition: box-shadow 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  /* Bug 085 (9 Oct 2026): the shared .stage clips horizontally (overflow-x: clip, global.css). In Safari a single-axis clip on a
+     composited layer (this sticky header) also clips the other axis (WebKit bugs 271457 / 291895, open in Safari 16.5-17+), so
+     every dropdown was cut at the header's bottom edge: only its first row (inside the 119-px stage) showed, the rest looked
+     hidden behind the hero. The header needs no clip of its own (.page clips the horizontal axis), so it is visible here. */
+  .hd .stage { overflow: visible; }
   .hd.is-stuck { box-shadow: var(--shadow-bar), 0 10px 20px rgba(0, 64, 89, 0.05); }
   @media (min-width: 1200px) {
     .hd { top: calc(-51 * var(--u)); } /* Figma: the top row's lowest box (language chip) ends at 51 */
@@ -293,7 +298,9 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
 
     /* Open / close motion = the live Blocksy offcanvas (animation audit 8 Oct 2026): the panel fades over .25s ease-in-out while
        its content slides in from 20 % off the inline end (.25s ease-in-out); hidden = visibility, so nothing inside can take focus. */
-    .menu { display: flex; visibility: hidden; opacity: 0; transform: translate3d(20%, 0, 0); position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; }
+    .menu { display: flex; visibility: hidden; opacity: 0; transform: translate3d(20%, 0, 0); position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 100%); max-height: calc(100dvh - 100%); overflow-y: auto; }
+    /* ^ 100% = the header's own height (the panel's containing block), so the panel ends at the viewport bottom whatever the
+       logo scale makes the bar (85-103px below 1200, not the 80px assumed before); dvh keeps it above the iOS Safari toolbar. */
     :global([dir='rtl']) .menu { transform: translate3d(-20%, 0, 0); }
     /* The closing transition is armed by the first toggle (scripts/nav-submenu.ts adds .nav-toggled): a window resized across
        the 1200px breakpoint must not slide the closed panel out of view. Opening always animates (the open state's own transition). */

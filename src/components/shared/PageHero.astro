@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import { px } from '../../lib/scale';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -57,6 +57,11 @@ interface Props {
    *  170:839: photo on the right, the title on a light plain area), its leading edge fading into the light surface. A post
    *  image is any shape or pattern (the live "Emblem" pill artwork, busy photos), so it never runs under the title. */
   side?: boolean;
+  /** Bug 086 (screens wider than 1440): how the background reaches the viewport edges (styles/global.css .hero-bleed).
+   *  'edges' = each side continues the background layer's own edge column (gradient + pills; the default with layers);
+   *  'start' = both sides continue the banner's START column (the plain gradient side; the default for a flat banner,
+   *  whose end edge is a photo that must not be smeared); 'none' = no bands (`side` posts: the plain surface continues). */
+  bleed?: 'edges' | 'start' | 'none';
 }
 const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', small, side = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
@@ -78,9 +83,17 @@ const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052],
   sizes: '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
+// Bug 086: the background's edge columns continue to the viewport edges beyond 1440 px (global.css .hero-bleed). The band
+// image = the static layer; a flat banner continues its start column on both sides (its end edge is a photo), unless told otherwise.
+const bleed = Astro.props.bleed ?? (side ? 'none' : layers ? 'edges' : 'start');
+const edge = bleed === 'none' ? null : (await getImage({ src: layers ? layers.background : banner, format: 'avif', width: 1052 })).src; // = the picture's own largest avif candidate: no extra download
+const edgeVars = edge
+  ? `--hero-edge:url(${JSON.stringify(edge)});` + (variant === 'cover' ? `--hero-edge-h:calc(323 * var(--u));--hero-edge-y:calc(-1 * var(--u));` : '')
+  : '';
+const unflipped = !(mirror && !keepComposition);
 ---
 
-<section class:list={['relative', keepComposition && 'keep', side && 'side']} style={`--h: ${h}`} aria-label={c.ariaLabel}>
+<section class:list={['relative', keepComposition && 'keep', side && 'side', edge && 'hero-bleed', edge && bleed === 'start' && 'start', edge && unflipped && 'unflipped']} style={`--h: ${h};${edgeVars}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${h}`}>
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
          script's transform on the subject image never overrides it. -->
@@ -128,7 +141,12 @@ const pic = {
     :global([dir='rtl']) .keep .copy { inset-inline-start: auto; inset-inline-end: calc(95 * var(--u)); }
     :global([dir='rtl']) .keep .title { width: calc((var(--xx) + var(--xw)) * var(--u)); }
   }
+  /* Bug 086, flat photo banners: both bands repeat the START column (the plain gradient), whichever side the image faces. */
+  @media (min-width: 1441px) {
+    .start::before, .start::after, :global([dir='rtl']) .start.unflipped::before, :global([dir='rtl']) .start.unflipped::after { background-position: 0 var(--hero-edge-y, 0); }
+  }
   @media (min-width: 1024px) {
+    .side { background: var(--color-mist-50); } /* bug 086: the post's plain surface reaches the viewport edges too */
     .side .stage { background: var(--color-mist-50); }
     .side .hero-media { inset-inline-start: 45%; }
     .side .hero-media::after { content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 30%; background: linear-gradient(to right, var(--color-mist-50), transparent); }

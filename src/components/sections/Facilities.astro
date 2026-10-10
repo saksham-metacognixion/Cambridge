@@ -18,14 +18,25 @@ const { edition } = parsePath(Astro.url.pathname);
 const c = content('home/facilities', edition.locale);
 const MX = 454;
 const MY = 2226 - 2054;
+// Hospital list enlarged (client feedback, Samir Sfeir via Pramod, 9 Oct 2026): the list is 400 wide from x 48 (Figma 358 from
+// x 64) and the right-hand column (heading, map, stats) moves DX to the right, so the gap to the map stays ~30. The list grows
+// taller than the Figma 788, so on desktop the right-hand column also moves down by half that growth (--dy, CSS below).
+const DX = 24;
 // Design only; label text comes from home/facilities JSON (mapLabels), zipped by index.
 const labelPos = [
   { x: 794, y: 2320 - 2054, w: 55 },
   { x: 816, y: 2345 - 2054, w: 69 },
-  { x: 930.18, y: 2380 - 2054, w: 70 },
-  { x: 921, y: 2434 - 2054, w: 69 },
+  { x: 858, y: 2432 - 2054, w: 70 },
+  { x: 931, y: 2400 - 2054, w: 69 },
   { x: 580.18, y: 2471 - 2054, w: 69 },
 ];
+// UAE pins and labels (location alignment fix, 9 Oct 2026): in Figma the pin labelled "Abu Dhabi" stood about where Dubai is on
+// this drawing (x 455 of the 478 vector, the UAE coast runs from x ~380 at Qatar to the Musandam tip at x ~470) and Al Ain
+// sat south of the Oman border corner. Moved by the pin tip to the hospitals' positions (hospitals.json location, projected on
+// the drawing's coastline): Abu Dhabi tip (433, 193), Al Mudeef (421, 203, 3 km south-west, fanned like Dhahran / Al Khobar),
+// Al Ain (460, 196) at the border; the "Abu Dhabi" label under its two pins, "Al Ain" beside its pin. The KSA pins are as in
+// Figma (within the drawing's accuracy). Same targets on the Our Hospitals hero map (components/hospitals/HeroMap.astro, whose
+// banner had its baked pins erased for this).
 // Country of each map label / pin (Figma order: Dhahran, Al Khobar, Abu Dhabi, Al Ain, Jeddah | pins: Dhahran, Al Khobar,
 // Jeddah, Abu Dhabi x 2, Al Ain). UAE / KSA editions show their own country's only (bug 048); the map art stays whole.
 const labelRegion = ['sa', 'sa', 'ae', 'ae', 'sa'];
@@ -36,9 +47,9 @@ const pins = [
   { f: pin4243, x: 754, y: 2315.81 - 2054, w: 42, h: 43 },
   { f: pin4243, x: 775, y: 2338.81 - 2054, w: 42, h: 43 },
   { f: pin4243, x: 552, y: 2432.81 - 2054, w: 42, h: 43 },
-  { f: pin4342, x: 860, y: 2383.81 - 2054, w: 43, h: 42 },
-  { f: pin4342, x: 887, y: 2370.81 - 2054, w: 43, h: 42 },
-  { f: pin32, x: 894, y: 2410 - 2054, w: 32, h: 32 },
+  { f: pin4342, x: 865.5, y: 2377 - 2054, w: 43, h: 42 },
+  { f: pin4342, x: 853.5, y: 2387 - 2054, w: 43, h: 42 },
+  { f: pin32, x: 898, y: 2390 - 2054, w: 32, h: 32 },
 ].filter((_, i) => own(pinRegion[i]));
 
 // Rows (card top = page y 2124, card x = 64): a flow list since bug 044/050. Figma rows sit at a 113 pitch (photo 116 x 91 at
@@ -73,11 +84,11 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
 
 <section class="relative bg-navy-alt overflow-x-clip" style="--h: 788">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-8 max-lg:px-4 max-lg:py-10">
-    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style="--x:480;--y:58;--w:494;--h:77">{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style={`--x:${480 + DX};--y:58;--w:494;--h:77`}>{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
 
     <!-- Map (Group 9). dir="ltr" (bug 073): geography is never mirrored, the pins and city labels keep their English
          positions on Arabic pages (Jeddah on the west coast); only the label text is Arabic. -->
-    <div class="mapbox dpos" style={`--x:${MX};--y:${MY};--w:546.176;--h:382.084`}>
+    <div class="mapbox dpos" style={`--x:${MX + DX};--y:${MY};--w:546.176;--h:382.084`}>
       <div class="mapin" dir="ltr">
         <img class="pm" src={mapVector.src} width={px(478)} height={px(382.084)} alt={c.mapAlt} loading="lazy" decoding="async" style="--x:0;--y:0;--w:478;--h:382.084" />
         {labels.map((l) => (
@@ -90,7 +101,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     </div>
 
     <!-- Hospitals list -->
-    <div class="list dpos" style="--x:64;--y:30;--w:358">
+    <div class="list dpos" style="--x:48;--y:30;--w:400">
       <!-- Tab + card corners: --radius-card (Figma r8, bug 049), same corners as Figma. -->
       <div class="dpos2 bg-cyan rounded-t-(--radius-card) text-navy" style="--x:0;--y:0;--w:149;--h:40">
         <span class="dpos2 font-gotham font-medium text-f13 leading-15 text-center not-italic" style="--x:33;--y:15;--w:78;--h:15">{c.listTab}</span>
@@ -98,7 +109,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
       <ul class="card m-0 list-none bg-white rounded-b-(--radius-card) rounded-se-(--radius-card)">
         {rows.map((r, i) => (
           <li class="row">
-            <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(116)} height={px(91)} widths={[px(116), px(116) * 2]} sizes={`${px(116)}px`} loading="lazy" decoding="async" alt={r.alt} /></div>
+            <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={px(150)} height={px(117.7)} widths={[px(150), px(150) * 2]} sizes={`(max-width: 639.98px) calc(100vw - 64px), ${px(150)}px`} loading="lazy" decoding="async" alt={r.alt} /></div>
             <div class="info">
               <h3 class="m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]">
                 <span class="block text-f12 leading-15 text-navy-alt">{r.name}</span>
@@ -123,17 +134,17 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
          (scripts/countup.ts Greenshift mode, as on Our Hospitals / Why Cambridge). -->
     <div class="stats grid grid-cols-2 gap-x-6 gap-y-6 w-full max-w-[calc(360*var(--u))] lg:contents">
       {stats.map((s, i) => (
-        <p class="dpos m-0 font-gotham font-medium text-white not-italic leading-[1.147] whitespace-normal [word-break:break-word]" style={`--x:${s.x};--y:${s.y - 2054};--w:${s.w}`}>
+        <p class="dpos m-0 font-gotham font-medium text-white not-italic leading-[1.147] whitespace-normal [word-break:break-word]" style={`--x:${s.x + DX};--y:${s.y - 2054};--w:${s.w}`}>
           <span class="sr-only">{s.n}</span>
           <span data-countup data-countup-duration={[1, 1.5, 2, 1, 1.5, 2][i] ?? 2} aria-hidden="true" class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
           <span class="block text-f12">{s.l}</span>
         </p>
       ))}
     </div>
-    <span class="vline dpos" aria-hidden="true" style="--x:677;--y:608;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
-    <span class="vline dpos" aria-hidden="true" style="--x:826;--y:608;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
-    <span class="vline dpos" aria-hidden="true" style="--x:677;--y:694;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
-    <span class="vline dpos" aria-hidden="true" style="--x:826;--y:694;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:701;--y:608;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:850;--y:608;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:701;--y:694;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
+    <span class="vline dpos" aria-hidden="true" style="--x:850;--y:694;--w:0.15;--h:38"><img loading="lazy" src={line8.src} width={px(38)} height={px(0.15)} alt="" /></span>
   </div>
 </section>
 
@@ -148,19 +159,21 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
   .pm:is(span) { font-size: 10px; }
   .pm { position: absolute; inset-inline-start: calc(var(--x) * var(--m)); top: calc(var(--y) * var(--m)); width: calc(var(--w) * var(--m)); height: calc(var(--h) * var(--m)); }
   .pm:is(span) { height: auto; }
-  .list { width: 100%; max-width: calc(358 * var(--u)); }
+  .list { width: 100%; max-width: calc(400 * var(--u)); }
   .card { padding: calc(13 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
   /* Photo column = Figma 116 unless the text column would be narrower than its widest button (phones ~360): then the photo
      gives way (min-content), so "Book Appointment" keeps its padding instead of being squeezed. */
-  .row { display: grid; grid-template-columns: minmax(0, calc(116 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); align-items: start; }
+  /* Enlarged list (client feedback, 9 Oct 2026): photo 150 wide (Figma 116) at the photos' own 464 x 364 proportion, so nothing
+     is stretched and almost nothing is cropped; the text block is centred on the photo. */
+  .row { display: grid; grid-template-columns: minmax(0, calc(150 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); align-items: center; }
   .row > .imgw { grid-column: 1; grid-row: 1; }
   .row > :global(img.divider) { grid-column: 1 / -1; margin-top: calc(10 * var(--u)); max-width: 100%; height: auto; }
-  .info { grid-column: 2; grid-row: 1; }
+  .info { grid-column: 2; grid-row: 1; min-width: 0; }
   /* fit-content: on one line the pair keeps its own widths; once it wraps the box is the full column and both buttons grow to
      it, so stacked buttons are the same width, aligned (1024-1279 and phones). */
   .actions { display: flex; flex-wrap: wrap; gap: calc(6 * var(--u)); margin-top: calc(8 * var(--u)); width: fit-content; max-width: 100%; }
   .actions > a { flex-grow: 1; }
-  .imgw { width: 100%; height: calc(91 * var(--u)); }
+  .imgw { width: 100%; aspect-ratio: 464 / 364; overflow: hidden; border-radius: calc(4 * var(--u)); }
   .list > .dpos2:first-child { position: relative; }
   .vline, .stats { display: none; }
   .stats { display: grid; }
@@ -170,18 +183,23 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
        (the Figma 788 is the minimum); the tab stays on top of the card (absolute, 40 high). Figma row pitch 113 = photo 91 +
        12 + divider 1 + 9; the name 14 under the photo top, the buttons 2 under the name (Figma +47). */
     .stage { height: auto; min-height: calc(var(--h) * var(--u)); }
+    /* The enlarged list makes the section taller than Figma's 788 (164 at 1440+, 58 at 1024-1439, rows of 118 / 100): the
+       heading, map and stats move down by half of it, so the right-hand column stays centred against the list. */
+    .stage { --dy: 82; }
+    .dpos { top: calc((var(--y) + var(--dy)) * var(--u)); }
     .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc(30 * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); padding-top: calc(40 * var(--u)); box-sizing: border-box; }
     .card { padding-block: calc(15 * var(--u)) calc(25 * var(--u)); padding-inline: calc(13 * var(--u)) calc(4 * var(--u)); gap: calc(9 * var(--u)); } /* end padding 4: the button pair fits one line from 1440 */
     .row { column-gap: calc(15 * var(--u)); }
     .row > :global(img.divider) { margin: calc(12 * var(--u)) 0 0; margin-inline-start: calc(-13 * var(--u)); width: calc(100% + 9 * var(--u)); max-width: none; } /* = 350: row 341 (358 - 13 - 4) + 9; a % width so the line does not size the grid columns */
-    .info { padding-top: calc(14 * var(--u)); }
+    .info { padding-top: 0; }
     .actions { margin-top: calc(2 * var(--u)); }
     .stats { display: contents; }
     /* Bug 044 regression: under 1440 the Figma photo (116) left ~256px at 1280 / ~273px at 1366 for the ~275px button pair,
        so the pair stacked. Narrower photo (same height, cropped) + tighter gap: the pair stays on one line from 1280 (about
        10px to spare); 1024-1279 may stack (see .actions below). 1440+ keeps the Figma values. */
     @media (max-width: 1439.98px) {
-      .row { grid-template-columns: minmax(0, calc(96 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); }
+      .row { grid-template-columns: minmax(0, calc(128 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); }
+      .stage { --dy: 29; }
     }
     .vline { display: block; }
     .vline img { position: absolute; width: calc(38 * var(--u)); height: calc(0.15 * var(--u)); inset-inline-start: calc((0.15 - 38) / 2 * var(--u)); top: calc((38 - 0.15) / 2 * var(--u)); transform: rotate(90deg); }
@@ -197,5 +215,15 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     /* the two buttons are stacked 10px apart (6 Figma px = 8px was too tight for 44px targets): grow each hit layer by half the gap only, so they never overlap */
     .actions { gap: 10px; }
     .actions a { --hit-h: calc(100% + 10px); }
+  }
+  /* Phones: each hospital is a full-width photo (its own proportion, ~260px tall at 390) with the name and the two buttons side
+     by side under it, instead of a ~160px thumbnail beside two stacked buttons. */
+  @media (max-width: 639.98px) {
+    .row { grid-template-columns: minmax(0, 1fr); row-gap: 12px; }
+    .row > .imgw { grid-row: 1; grid-column: 1; }
+    .info { grid-column: 1; grid-row: 2; }
+    .actions { width: 100%; flex-wrap: nowrap; }
+    .actions > a { flex: 1 1 0; min-width: 0; padding-inline: 8px; }
+    .row > :global(img.divider) { grid-row: 3; }
   }
 </style>

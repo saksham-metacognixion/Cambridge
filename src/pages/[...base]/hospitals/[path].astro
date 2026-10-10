@@ -8,6 +8,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import PageHero from '../../../components/shared/PageHero.astro';
+import { heroLayers } from '../../../lib/images';
 import EnvironmentBand from '../../../components/hospital/EnvironmentBand.astro';
 import HealingGallery from '../../../components/hospital/HealingGallery.astro';
 import MapBand from '../../../components/hospital/MapBand.astro';
@@ -44,7 +45,12 @@ const hero = {
   text: own?.hero.text ?? undefined,
   button: shared.hero.button,
 };
-const pos = { titleTop: 124, titleW: 422, textGap: 11, textW: 389, textX: 97, buttonGap: 15 };
+// textW: the Figma 389 box, unless the hospital's flat building photo starts inside it (heroLayout.textW in the hospital's content
+// file: Al Ain 320, Al Mudeef 300, Jeddah 360 = photo start - 97 - 12; text-over-art check, 9 Oct 2026).
+const pos = { titleTop: 124, titleW: 422, textGap: 11, textW: own?.heroLayout?.textW ?? 389, textX: 97, buttonGap: 15 };
+// RTL (bug 021 rule, 9 Oct 2026): a flat building photo carries readable signage (the hospital's name board, the ambulance), so it is never
+// mirrored: the composition stays as in English. The Abu Dhabi banner (people layers, no readable content) keeps the default mirror.
+const keepComposition = !heroLayers(hero.banner.image, edition.region);
 const pending = !own && showPendingNote(INDEXABLE) ? shared.pending.note : null;
 const careText = { ...shared.care };
 ---
@@ -55,7 +61,7 @@ const careText = { ...shared.care };
   </div>
   <main>
     <div id="hero" class="relative">
-      <PageHero content={hero} pos={pos} buttonAttrs={{ 'data-hospital': h.slug }} small={own?.heroLayout?.small} />
+      <PageHero content={hero} pos={pos} buttonAttrs={{ 'data-hospital': h.slug }} small={own?.heroLayout?.small} keepComposition={keepComposition} />
     </div>
     {pending && <p class="pending-note" role="note">{pending}</p>}
     {own && (

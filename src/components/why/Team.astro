@@ -78,6 +78,9 @@ const more = urlFor(edition, pagePath(c.button.page));
     .stat { container-type: inline-size; }
     /* Gotham Medium digits are ~0.63em wide ("340,000+" = 5.04em); 0.66 leaves a margin for commas / wider glyph mixes. */
     .n { font-size: min(calc(35 * var(--u)), calc(100cqi / (var(--chars) * 0.66))); }
+    /* Label (cross-browser sweep 9 Oct 2026): 'Professionals' (13 Gotham Book glyphs, ~7.5em) ran past the ~100px cell at 320-360px;
+       it follows the cell width below the Figma 12 px, and a word wider than the line still breaks instead of overflowing. */
+    .l { font-size: min(calc(12 * var(--u)), calc(100cqi / 7.8)); overflow-wrap: break-word; }
   }
   @media (min-width: 1024px) {
     .nv { margin-inline-start: calc(41 * var(--u)); width: calc(976 * var(--u)); height: calc(674 * var(--u)); padding: 0; }

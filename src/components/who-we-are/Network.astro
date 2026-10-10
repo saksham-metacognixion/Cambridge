@@ -32,7 +32,11 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
 <section class="net" aria-label={c.ariaLabel}>
   <div class="in">
     <div class="pill"><h2 class="h">{c.heading.map(([w, dot]) => <><span class="s">{w}<span class="dot">{dot.trim()}</span></span>{dot.endsWith(' ') ? ' ' : ''}</>)}</h2></div>
-    <div class="band">
+    <!-- The grey band's surface is on a full-width wrapper (responsive audit 9 Oct 2026): beyond 1440px it reaches the viewport
+         edges like the other section bands, while the composition inside stays on the centred 1440 stage. -->
+  </div>
+  <div class="band-wrap">
+    <div class="in band">
       <div class="figure">
         <div class="clip" aria-hidden="true"><img loading="lazy" src={lines.src} width="554.532" height="561.934" alt="" class="lines" /></div>
         <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(336)} widths={[px(410), px(410) * 2]} sizes={`(min-width: 1024px) ${px(410)}px, 100vw`} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
@@ -59,7 +63,8 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
   /* each sentence wraps as a unit when it fits the line (inline-block), and at its spaces when it does not (max-width) */
   .s { display: inline-block; max-width: 100%; }
   .dot { color: var(--color-cyan); } /* on the Deep Teal pill: 4.95:1 */
-  .band { position: relative; margin-top: calc(-48 * var(--u)); background: rgba(231, 231, 231, 0.5); overflow: clip; padding: calc(72 * var(--u)) 16px calc(40 * var(--u)); }
+  .band-wrap { position: relative; margin-top: calc(-48 * var(--u)); background: rgba(231, 231, 231, 0.5); }
+  .band { position: relative; overflow: clip; padding: calc(72 * var(--u)) 16px calc(40 * var(--u)); }
   /* Photo figure = the 410 x 336 Figma photo box; the lines and their clip are laid out in % of it so they scale with the photo.
      Clip (Figma 449 x 357 from the band edge, y+28): from 41 before the photo (cut by the band edge) to 50 after, 21 above, ending
      at the photo's bottom edge. Lines (554.5 x 562) at photo x-117.7, y-75.4. */

@@ -4,8 +4,8 @@
  * <dialog> per detected country in src/data/country-popup.json (text, map, flag, the two buttons and their targets).
  * Global editions only. Rendered (and its script shipped) only when the config flag `enabled` is true, or when
  * PUBLIC_COUNTRY_POPUP=on is set for a staging preview. When/whether to open comes from the existing logic:
- * functions/_middleware.ts / middleware.ts (detected country -> ch_geo cookie, bug 083) + CountryPopupLogic.astro (html[data-country-popup],
- * window.chooseEdition saves the choice for as long as country-popup.json `remember` says; one year since bug 084). Values: Figma px from the card's
+ * functions/_middleware.ts (Cloudflare country -> ch_geo cookie) + CountryPopupLogic.astro (html[data-country-popup],
+ * window.chooseEdition saves the choice for as long as country-popup.json `remember` says; default: per tab). Values: Figma px from the card's
  * top-left (card 400 x 287.324 at frame 326,177).
  * Performance audit (9 Oct 2026): the pop-up opens on every Global page load and covers the hero, so its map is the
  * largest first paint (LCP) there; it loads eagerly with fetchpriority=high instead of waiting for the dialog to open.
@@ -24,9 +24,7 @@ interface Props { edition: Edition }
 const { edition } = Astro.props;
 const on = config.enabled || import.meta.env.PUBLIC_COUNTRY_POPUP === 'on';
 const c = content('forms/welcome', edition.locale);
-// `flag` is optional (the KSA version has no flag asset yet, bug 083); `pin` = top-left of the pin dot in Figma map px.
-interface Country { text: string; map: string; flag?: string; pin: { x: number; y: number }; buttons: { key: string; style: string; target: string }[] }
-const countries = Object.entries(config.countries) as [string, Country][];
+const countries = Object.entries(config.countries) as [string, (typeof config.countries)['AE']][];
 ---
 
 {on && edition.region === 'global' && (
@@ -34,7 +32,7 @@ const countries = Object.entries(config.countries) as [string, Country][];
     {countries.map(([iso, v]) => {
       const t = c[v.text];
       const map = img(v.map);
-      const flag = v.flag ? img(v.flag) : null;
+      const flag = img(v.flag);
       const titleId = `country-popup-${iso}-title`;
       return (
         <dialog id={`country-popup-${iso}`} class="modal cp" aria-labelledby={titleId} aria-modal="true" data-country-dialog={iso}>
@@ -49,10 +47,10 @@ const countries = Object.entries(config.countries) as [string, Country][];
                 </>
               ))}
             </div>
-            <div class="cp-map" aria-hidden="true" style={`--pin-x: ${v.pin.x}; --pin-y: ${v.pin.y}`}>
+            <div class="cp-map" aria-hidden="true">
               <Picture src={map} formats={['avif']} fallbackFormat="webp" width={px(253.119)} height={px(276.861)} widths={[px(253.119), px(253.119) * 2]} sizes={`${px(253.119)}px`} loading="eager" fetchpriority="high" decoding="async" alt="" class="cp-map-img" pictureAttributes={{ class: 'contents' }} />
               <img loading="lazy" class="cp-pin" src={pinLine.src} width="0.805" height="34.205" alt="" />
-              <span class:list={['cp-chip', !flag && 'no-flag']}>{flag && <img loading="lazy" src={flag.src} width="16.901" height="16.901" alt="" />}<span>{t.chip}</span></span>
+              <span class="cp-chip"><img loading="lazy" src={flag.src} width="16.901" height="16.901" alt="" /><span>{t.chip}</span></span>
               <img loading="lazy" class="cp-dot" src={pinDot.src} width="3.219" height="3.219" alt="" />
             </div>
           </div>
@@ -110,20 +108,18 @@ const countries = Object.entries(config.countries) as [string, Country][];
   .cp-btn.secondary { background: var(--color-mist-50); color: var(--color-navy-alt); box-shadow: inset 0 0 0 calc(0.402 * var(--u)) currentColor; } /* the ring follows the label colour (cyan on hover, shared .btn-outline rule) */
   .cp-or { box-sizing: border-box; margin: calc(6.684 * var(--u)) 0 0; min-block-size: calc(12 * var(--u)); font-weight: 700; font-size: calc(4.829 * var(--u)); line-height: normal; }
 
-  /* Map: rounded (--radius-card, bug 049; Figma 14.085) clip 238.229 x 275.654; image 253.119 x 276.861 offset (-7.243, -0.805). Pin + chip in map px,
-     placed from the dot's top-left (--pin-x / --pin-y, country-popup.json `pin`; UAE = Figma dot 104.63, 131.59): line +1.21 / -33, chip -10.46 / -41.85. */
+  /* Map: rounded (--radius-card, bug 049; Figma 14.085) clip 238.229 x 275.654; image 253.119 x 276.861 offset (-7.243, -0.805). Pin + chip in map px. */
   .cp-map { position: relative; overflow: hidden; inline-size: calc(238.229 * var(--u)); block-size: calc(275.654 * var(--u)); border-radius: var(--radius-card); }
   .cp-map :global(.cp-map-img) { position: absolute; max-inline-size: none; inset-inline-start: calc(-7.243 * var(--u)); inset-block-start: calc(-0.805 * var(--u)); inline-size: calc(253.119 * var(--u)); block-size: calc(276.861 * var(--u)); object-fit: cover; }
-  .cp-pin { position: absolute; max-inline-size: none; inset-inline-start: calc((var(--pin-x) + 1.21) * var(--u)); inset-block-start: calc((var(--pin-y) - 33) * var(--u)); inline-size: calc(0.805 * var(--u)); block-size: calc(34.205 * var(--u)); }
+  .cp-pin { position: absolute; max-inline-size: none; inset-inline-start: calc(105.84 * var(--u)); inset-block-start: calc(98.59 * var(--u)); inline-size: calc(0.805 * var(--u)); block-size: calc(34.205 * var(--u)); }
   .cp-chip {
     position: absolute; box-sizing: border-box; display: flex; align-items: center; gap: calc(7.649 * var(--u));
-    inset-inline-start: calc((var(--pin-x) - 10.46) * var(--u)); inset-block-start: calc((var(--pin-y) - 41.85) * var(--u)); inline-size: calc(64.789 * var(--u)); block-size: calc(23.742 * var(--u));
+    inset-inline-start: calc(94.17 * var(--u)); inset-block-start: calc(89.74 * var(--u)); inline-size: calc(64.789 * var(--u)); block-size: calc(23.742 * var(--u));
     padding-inline-start: calc(3.62 * var(--u)); border-radius: var(--radius-pill); background: var(--color-mist);
     font-family: 'Gotham', var(--font-gotham); font-weight: 900; font-size: calc(10.272 * var(--u)); line-height: normal; color: var(--color-navy-alt);
   }
-  .cp-chip.no-flag { justify-content: center; padding-inline-start: 0; }
   .cp-chip img { display: block; inline-size: calc(16.901 * var(--u)); block-size: calc(16.901 * var(--u)); max-inline-size: none; }
-  .cp-dot { position: absolute; max-inline-size: none; inset-inline-start: calc(var(--pin-x) * var(--u)); inset-block-start: calc(var(--pin-y) * var(--u)); inline-size: calc(3.219 * var(--u)); block-size: calc(3.219 * var(--u)); }
+  .cp-dot { position: absolute; max-inline-size: none; inset-inline-start: calc(104.63 * var(--u)); inset-block-start: calc(131.59 * var(--u)); inline-size: calc(3.219 * var(--u)); block-size: calc(3.219 * var(--u)); }
   /* The map is geography: it is not mirrored in RTL (only the layout is). */
   :global([dir='rtl']) .cp-map > * { direction: ltr; }
 

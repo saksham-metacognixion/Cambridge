@@ -1,5 +1,7 @@
 ---
 import OutlineButton from '../shared/OutlineButton.astro';
+import NoOpeningsPanel from './NoOpenings.astro';
+import type { NoOpenings } from '../../lib/careers';
 
 /*
  * "Start Your Career Journey with Us!" band (Figma 112:7230, page y 2303-2518, #004059; the SVG is a plain rectangle).
@@ -14,18 +16,22 @@ import OutlineButton from '../shared/OutlineButton.astro';
  * open (no vacancies, portal or form from the client: docs/open-decisions.md D3 / D4), so the dropdown look was a fake control.
  * It is now a plain outline button (the Careers "View Open Roles" button of Life at Cambridge, onDark as on the navy map band)
  * centred where the field's centre was (x 510.5, field middle), so "Apply Now" keeps its place. Destination = openRolesUrl.
+ * noOpen (bug 088 reopened, careers.json noOpenings): both buttons open the no-openings panel below them instead; the band
+ * (fixed Figma height on desktop) grows only while it is open.
  * Existing band component? None fits (CtaTab / Contact / ContactRecovery are different layouts), so this one is new.
  */
-interface Props { c: { ariaLabel: string; heading: string; text: string; openRoles: { label: string }; apply: { label: string } }; openRolesHref: string; applyHref: string }
-const { c, openRolesHref, applyHref } = Astro.props;
+interface Props { c: { ariaLabel: string; heading: string; text: string; openRoles: { label: string }; apply: { label: string } }; openRolesHref: string; applyHref: string; noOpen?: NoOpenings | null }
+const { c, openRolesHref, applyHref, noOpen = null } = Astro.props;
+const ctl = noOpen ? 'no-openings-start' : undefined;
 ---
 
 <section class="cta" aria-label={c.ariaLabel}>
   <div class="in">
     <h2 class="h">{c.heading}</h2>
     <p class="t">{c.text}</p>
-    <OutlineButton href={openRolesHref} label={c.openRoles.label} onDark class="roles" />
-    <a href={applyHref} class="apply ui-btn hit btn-fill-white"><span>{c.apply.label}</span></a>
+    <OutlineButton href={openRolesHref} label={c.openRoles.label} onDark class="roles" data-no-openings={ctl} />
+    <a href={applyHref} class="apply ui-btn hit btn-fill-white" data-no-openings={ctl}><span>{c.apply.label}</span></a>
+    {noOpen && <NoOpeningsPanel id="no-openings-start" n={noOpen} onDark class="nop" />}
   </div>
 </section>
 
@@ -46,6 +52,8 @@ const { c, openRolesHref, applyHref } = Astro.props;
     :global([dir='rtl']) .in :global(.roles) { translate: 50% 0; }
     .apply { display: flex; width: fit-content; margin-inline-start: calc(512 * var(--u)); translate: -50% 0; } /* centre at Figma x512 (429 + 166 / 2) */
     :global([dir='rtl']) .apply { translate: 50% 0; }
+    .in:has(:global(.nop:not([hidden]))) { height: auto; }
+    .in :global(.nop) { width: calc(577 * var(--u)); margin-inline-start: calc(238 * var(--u)); text-align: center; }
   }
   @media (max-width: 1023.98px) {
     .in { padding-block: calc(40 * var(--u)); }

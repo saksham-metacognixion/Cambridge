@@ -324,6 +324,18 @@ the hospital map "Phone" label and the country pop-up "UAE" chip (see each file'
 | `why/page.ar.json` | `specialized.text` | For patients and families, choosing the right care means more than finding a specialist. It means having access to the right expertise, prog |
 | `why/page.ar.json` | `team.photo.alt` | The Cambridge Hospital multidisciplinary team |
 
+
+## New strings awaiting client approval (EN + AR)
+
+Not shown on the site yet. They are added by bug 088 (reopened 13 Oct 2026): the Careers "no openings" panel that "View Open Roles" and "Apply Now" open in place
+instead of going to Contact. It stays OFF (`src/data/careers.json` → `noOpenings.enabled`) until the client confirms there are no open roles and approves
+BOTH languages. Arabic pages show the panel only once its Arabic is filled in; until then they keep the old link.
+
+| File | Key | English (proposed, to approve) | Arabic |
+|---|---|---|---|
+| `src/data/careers.json` | `noOpenings.text.ar` | There are no vacancies listed at the moment. Send us your details and we'll be in touch. | needed |
+| `src/data/careers.json` | `noOpenings.link.label.ar` | Get in Touch (optional link to Contact; leave the Arabic empty to drop the link on Arabic pages) | needed |
+
 ## Entity data (fields with `en` but no `ar`)
 
 | File (`src/data/…`) | Field | Missing |

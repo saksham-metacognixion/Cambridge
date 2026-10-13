@@ -1,15 +1,18 @@
 ---
 import Band from './Band.astro';
 import OutlineButton from '../shared/OutlineButton.astro';
+import NoOpeningsPanel from './NoOpenings.astro';
+import type { NoOpenings } from '../../lib/careers';
 
 /*
  * "Life at Cambridge" (Figma 112:7092 band, page y 969-1305, #e7e7e7 at 50%). Figma px from the band top:
  * H 112:7176 x105 top +57, Medium 28/32 #004059 | 8 | cyan line 112:7175 Book 28/32 (2 lines, w770) | 20 | text 112:7178
  * x106 w649 Book 14/17 #6b6b6b (box 83 high; the client's text has three paragraphs, 5 Oct 2026) | 1 | buttons 164 x 30 at
  * x106 and x296 (26 apart) | 41 to the band end.
+ * noOpen (bug 088 reopened, careers.json noOpenings): 'View Open Roles' opens the no-openings panel under the buttons instead.
  */
-interface Props { c: { heading: string; sub: string[]; text: string | string[]; join: { label: string }; openRoles: { label: string } }; joinHref: string; openRolesHref: string }
-const { c, joinHref, openRolesHref } = Astro.props;
+interface Props { c: { heading: string; sub: string[]; text: string | string[]; join: { label: string }; openRoles: { label: string } }; joinHref: string; openRolesHref: string; noOpen?: NoOpenings | null }
+const { c, joinHref, openRolesHref, noOpen = null } = Astro.props;
 const paras = Array.isArray(c.text) ? c.text : [c.text];
 ---
 
@@ -20,8 +23,9 @@ const paras = Array.isArray(c.text) ? c.text : [c.text];
     <div class="t">{paras.map((p) => <p>{p}</p>)}</div>
     <div class="btns">
       <OutlineButton href={joinHref} label={c.join.label} />
-      <OutlineButton href={openRolesHref} label={c.openRoles.label} />
+      <OutlineButton href={openRolesHref} label={c.openRoles.label} data-no-openings={noOpen ? 'no-openings-life' : undefined} />
     </div>
+    {noOpen && <NoOpeningsPanel id="no-openings-life" n={noOpen} class="nop" />}
   </div>
 </Band>
 
@@ -37,6 +41,7 @@ const paras = Array.isArray(c.text) ? c.text : [c.text];
     .h, .sub { margin-inline-start: calc(105 * var(--u)); width: calc(770 * var(--u)); }
     .t { margin-inline-start: calc(106 * var(--u)); width: calc(649 * var(--u)); }
     .btns { margin-inline-start: calc(106 * var(--u)); }
+    .life :global(.nop) { margin-inline-start: calc(106 * var(--u)); width: calc(649 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
     .t { min-height: 0; }

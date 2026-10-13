@@ -16,7 +16,8 @@ import accident from '../../assets/care/post-acute/icon-accident.svg';
  * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 (Figma 74 x 17 r3 at (16, 152), label "Know More"
  * Medium 8): now the shared .ui-btn (bugs 044 / 050), at the card's bottom. Card corners --radius-card (bug 049).
  * Card target: `href` (a care page, CarePage), `condition` (detail slug) or `page` (PAGE_PATHS).
- * `icon` is optional: one of the four Figma post-acute icons by name, or an image key (src/assets path, e.g. care/icons/icon-geriatric-care:
+ * `icon` is optional: one of the four Figma post-acute icons by name (also the three Neurorehabilitation cards, as on the live
+ * page: Stroke = neuro, Traumatic Brain Injury = musculoskeletal, Spinal Cord Injury = post-surgical; client sheet row 17), or an image key (src/assets path, e.g. care/icons/icon-geriatric-care:
  * the client's programme icons, 9 Oct 2026, care.json `icon`). Without one (the condition lists under a programme) the card starts
  * with the title at the icon's top (docs/open-decisions.md CT6). `text` = optional intro paragraphs under the heading (Outpatient Care:
  * heading + two paragraphs + six text cards, same geometry as SubServiceGrid's intro).
@@ -62,7 +63,9 @@ const list = cards.map((k, i) => ({
   .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: calc(187 * var(--u)); padding: calc(23 * var(--u)) calc(15 * var(--u)) calc(18 * var(--u)); border-radius: var(--radius-card); background: #fff; } /* bug 049 */
   .ico { display: block; max-width: none; flex: none; }
   .title { margin: 0; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
-  .text { margin: calc(2 * var(--u)) 0 0; width: 100%; font-size: calc(9 * var(--u)); line-height: calc(10 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  /* Card text grey as on the live programme cards (.gsbp-1b98b3f { color: #6b6b6b }, saved Neurorehabilitation page): client sheet
+     "CH Website Comments.xlsx" row 17, 13 Oct 2026 (the site-wide body colour is Deep Teal). #6b6b6b on white = 5.3:1, AA. */
+  .text { margin: calc(2 * var(--u)) 0 0; width: 100%; font-size: calc(9 * var(--u)); line-height: calc(10 * var(--u)); color: #6b6b6b; overflow-wrap: anywhere; }
   .btn { margin-top: auto; background: var(--color-navy); color: #fff; } /* bugs 044 / 050: shared .ui-btn size */
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }

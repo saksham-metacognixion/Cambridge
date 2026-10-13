@@ -1,17 +1,59 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19021 'رأيك يهمنا'): hero and intro. The English hero / intro are the client's 5 Oct document ('Your Experience Matters to Us'); the live Arabic page is the older 'Your Opinion Matters' page, used as the best available Arabic. Form fields: no Arabic (English shown).",
+  "_note": "Website Content - Suhad 4/Navigation Bar/AR - Your Opinion Matters.docx (13 Oct 2026), text exactly as in the document: hero title + text (also meta, as in English), intro heading + text, the rating question (matrix.label) and its six rows, the recommend question, 'Tell us more' label + placeholder. The document's extra heading 'تقييم تجربتكم' above the rating question has no slot in the Figma form (the English has one question there): not shown, docs/open-decisions.md CT31. Name / Hospital / Mobile / Email labels, the answer options, rating columns and SUBMIT have no Arabic in any document or on the live site: English shown (CT31).",
   "meta": {
-    "title": "رأيك يهمنا | مستشفى كامبريدج",
-    "description": "دعم شامل لمرضانا الذين يبحثون عن إعادة تأهيل متقدمة بعد الحادة ورعاية طويلة الأمد، مع خدمات منسقة طوال فترة العلاج."
+    "title": "رأيكم يصنع الفرق | مستشفى كامبريدج",
+    "description": "في مستشفى كامبريدج، نولي اهتمامًا كبيرًا لآراء المرضى وأسرهم، ونعتبرها جزءًا أساسيًا من تطوير خدماتنا وتحسين جودة الرعاية. يسعدنا أن نعرف كيف كانت تجربتكم معنا، وكيف يمكننا الارتقاء بخدماتنا لنلبّي تطلعاتكم."
   },
   "hero": {
     "title": [
-      "رأيك يهمنا."
+      "رأيكم يصنع الفرق"
     ],
-    "text": "دعم شامل لمرضانا الذين يبحثون عن إعادة تأهيل متقدمة بعد الحادة ورعاية طويلة الأمد، مع خدمات منسقة طوال فترة العلاج."
+    "text": "في مستشفى كامبريدج، نولي اهتمامًا كبيرًا لآراء المرضى وأسرهم، ونعتبرها جزءًا أساسيًا من تطوير خدماتنا وتحسين جودة الرعاية. يسعدنا أن نعرف كيف كانت تجربتكم معنا، وكيف يمكننا الارتقاء بخدماتنا لنلبّي تطلعاتكم."
   },
   "intro": {
-    "heading": "نحن هنا للاستماع",
-    "text": "دعم شامل لمرضانا الذين يسعون إلى إعادة تأهيل متقدمة بعد الحادة ورعاية طويلة الأمد، مع خدمات منسقة طوال فترة العلاج."
+    "heading": "شاركونا تجربتكم",
+    "text": "نرحب بملاحظاتكم ومقترحاتكم، ونقدّر لكم وقتكم وثقتكم بمستشفى كامبريدج."
+  },
+  "matrix": {
+    "label": "كيف تقيّمون الجوانب التالية من تجربتكم في المستشفى؟"
+  },
+  "fields": {
+    "quality": {
+      "label": [
+        "مستوى الرعاية الطبية المقدمة"
+      ]
+    },
+    "communication": {
+      "label": [
+        "سهولة التواصل مع فريق الرعاية وتلقي المعلومات الواضحة"
+      ]
+    },
+    "cleanliness": {
+      "label": [
+        "نظافة مرافق المستشفى والعناية بها"
+      ]
+    },
+    "information": {
+      "label": [
+        "شمولية ووضوح المعلومات المتعلقة بالتشخيص والخطة العلاجية"
+      ]
+    },
+    "admission": {
+      "label": [
+        "سهولة إجراءات الدخول إلى المستشفى والخروج منه"
+      ]
+    },
+    "responsiveness": {
+      "label": [
+        "سرعة استجابة فريق العمل لاحتياجاتكم"
+      ]
+    },
+    "recommend": {
+      "label": "ما مدى احتمالية أن توصي عائلتك وأصدقاؤك بتلقي الرعاية في مستشفى كامبريدج؟"
+    },
+    "message": {
+      "label": "نود معرفة المزيد",
+      "placeholder": "ما أكثر ما نال رضاكم خلال تجربتكم معنا؟ وما الذي ترون أنه يمكننا العمل على تحسينه؟"
+    }
   }
 }

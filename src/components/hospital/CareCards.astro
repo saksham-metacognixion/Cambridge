@@ -5,6 +5,7 @@ import { content } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
 import { CARE_PATHS, careInRegion } from '../../lib/care';
+import { careRegionButtons } from '../../lib/region-buttons';
 
 /*
  * The four service cards (Home "Services" cards: photos + text from home/services JSON; one card = shared/CareCard.astro), reused on
@@ -32,15 +33,19 @@ interface Props {
   reveal?: boolean;
   /** Per-page card text, keyed by the card's `care` slug (hospital pages: the hospital documents' own card lines, CT29) */
   overrides?: Record<string, { title?: string; desc?: string }>;
+  /** Global edition: UAE / KSA buttons instead of the single one (Our Care hub; client sheet 13 Oct 2026, row 12). Not on the
+   *  hospital pages: a hospital is in one country. */
+  regionButtons?: boolean;
 }
-const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false, overrides = {} } = Astro.props;
+const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false, overrides = {}, regionButtons = false } = Astro.props;
 const s = content('home/services', edition.locale);
-// Only the services offered in this edition's country (bug 047: In-School Care is UAE-only).
+// Only the services offered in this edition's country (bug 047; In-School Care is KSA-only since the client sheet of 13 Oct 2026, row 6).
 const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).filter((k) => !k.care || careInRegion(k.care, edition.region)).map((k) => ({
   ...k,
   ...(k.care ? overrides[k.care] : undefined),
   src: img(k.image, edition.region),
   href: k.care ? urlFor(edition, CARE_PATHS.service(k.care)) : k.page ? urlFor(edition, pagePath(k.page)) : (k.href ?? '#'),
+  buttons: regionButtons && k.care ? careRegionButtons(edition, k.care, CARE_PATHS.service(k.care)) : null,
 }));
 const w = 222 * K;
 const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc(${w} * var(--u)) calc(${xs[2] - xs[1] - w} * var(--u)) calc(${w} * var(--u)) calc(${xs[3] - xs[2] - w} * var(--u)) calc(${w} * var(--u))`;
@@ -52,7 +57,7 @@ const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc($
   <ul class:list={['grid', !c && 'bare']} role="list" aria-label={listLabel}>
     {cards.map((k, i) => (
       <li class="cell" data-aos={reveal ? 'fade-up' : undefined} style={reveal ? `--aos-delay:${(i % 4) * 50}ms` : undefined}>
-        <CareCard src={k.src} alt={k.alt} title={k.title} desc={k.desc} href={k.href} button={button} buttonLabel={`${button}: ${k.title}`} scale={K} titleTone={titleTone} />
+        <CareCard src={k.src} alt={k.alt} title={k.title} desc={k.desc} href={k.href} button={button} buttonLabel={`${button}: ${k.title}`} scale={K} titleTone={titleTone} buttons={k.buttons} />
       </li>
     ))}
   </ul>

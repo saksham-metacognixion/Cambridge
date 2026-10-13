@@ -5,6 +5,7 @@ import { img } from '../../lib/images';
 import { t } from '../../lib/content';
 import { urlFor, type Edition } from '../../lib/editions';
 import { CARE_PATHS, careInRegion, type CareNode } from '../../lib/care';
+import { careRegionButtons } from '../../lib/region-buttons';
 
 /*
  * Sub-service cards of a service page (Figma 83:226 Inpatient Care: 6 cards in 2 rows of 3). Section top = the H2 top (page y 578).
@@ -15,6 +16,13 @@ import { CARE_PATHS, careInRegion, type CareNode } from '../../lib/care';
  * card sentences are longer and wrap, the card grows);
  * button #004059 (Figma 97.059 x 22.297 r3.935 at +401.36, label "Start Your Care" Medium 10.493): now the shared .ui-btn
  * (bugs 044 / 050), at the card's bottom so the buttons of a row stay level. Card + photo corners --radius-card (bug 049).
+ * Client sheet "CH Website Comments.xlsx" (13 Oct 2026):
+ *  - rows 12 + 13 "missing outlines": the .328 hairline was an inset shadow under the photo (no outline beside the photo) and below
+ *    1 device pixel (it dropped out on some edges). Now an outline over the whole card, photo included (::after above the
+ *    children), one device pixel at least, full #418ea2.
+ *  - row 13 "text not aligned among the cards": each card is a subgrid over 4 shared rows (photo | title | text | button), so a
+ *    two-line title in one card moves the text of the whole row down by the same amount and every text starts level.
+ *  - row 12 "UAE and KSA, not Start Your Care": on the Global edition one button per country where the page exists.
  */
 interface Props { edition: Edition; trail: string[]; nodes: CareNode[]; heading: string; text: string[]; listLabel: string; button: string }
 const { edition, trail, nodes, heading, text, listLabel, button } = Astro.props;
@@ -27,6 +35,7 @@ const cards = nodes.filter((s) => careInRegion(s.slug, edition.region)).map((s) 
   src: img(s.image!, edition.region),
   alt: s.alt ?? '',
   href: urlFor(edition, CARE_PATHS.of([...trail, s.slug])),
+  buttons: careRegionButtons(edition, s.slug, CARE_PATHS.of([...trail, s.slug])),
 }));
 ---
 
@@ -40,7 +49,13 @@ const cards = nodes.filter((s) => careInRegion(s.slug, edition.region)).map((s) 
           <Picture src={k.src} formats={['avif']} fallbackFormat="webp" width={px(291.178)} height={px(320.034)} widths={[px(291.178), px(291.178) * 2]} sizes={vwSizes(291.178)} loading="lazy" decoding="async" alt={k.alt} class="img" pictureAttributes={{ class: 'contents' }} />
           <h3 class="title">{k.title}</h3>
           <p class="desc">{k.text}</p>
-          <a href={k.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}>{button}</a>
+          {k.buttons?.length ? (
+            <div class="btns">
+              {k.buttons.map((b) => <a href={b.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${b.label}: ${k.title}`}>{b.label}</a>)}
+            </div>
+          ) : (
+            <a href={k.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}>{button}</a>
+          )}
         </article>
       </li>
     ))}
@@ -56,12 +71,31 @@ const cards = nodes.filter((s) => careInRegion(s.slug, edition.region)).map((s) 
   .grid { list-style: none; margin: calc(20.31 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(291.178 * var(--u))); column-gap: calc(26.23 * var(--u)); row-gap: calc(35.41 * var(--u)); }
   .cell { display: flex; }
   .card { position: relative; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(440.71 * var(--u)); padding: 0 calc(31.48 * var(--u)) calc(13 * var(--u)); }
-  .card::before { content: ''; position: absolute; inset: calc(3.94 * var(--u)) 0 0; background: #fff; border-radius: var(--radius-card); box-shadow: inset 0 0 0 calc(0.328 * var(--u)) var(--color-teal-border); }
+  .card::before { content: ''; position: absolute; inset: calc(3.94 * var(--u)) 0 0; background: #fff; border-radius: var(--radius-card); }
+  .card::after { content: ''; position: absolute; inset: 0; z-index: 1; box-sizing: border-box; border: max(1px / var(--hair-dpr, 1), calc(0.328 * var(--u))) solid var(--color-teal-border); border-radius: var(--radius-card); pointer-events: none; }
   .card > :global(*), .card :global(.img) { position: relative; }
   .card :global(.img) { display: block; align-self: stretch; width: calc(100% + 62.96 * var(--u)); margin-inline: calc(-31.48 * var(--u)); height: auto; aspect-ratio: 291.178 / 320.034; object-fit: cover; max-width: none; border-start-start-radius: var(--radius-card); border-start-end-radius: var(--radius-card); }
   .title { margin: calc(15.74 * var(--u)) 0 0; min-height: calc(19.674 * var(--u)); font-weight: 500; font-size: calc(19.674 * var(--u)); line-height: normal; color: var(--color-navy); overflow-wrap: anywhere; }
   .desc { margin: calc(9.19 * var(--u)) 0 calc(10.5 * var(--u)); min-height: calc(26.23 * var(--u)); font-size: calc(11.805 * var(--u)); line-height: calc(13.116 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .btn { margin-top: auto; background: var(--color-navy); color: #fff; } /* bugs 044 / 050: shared .ui-btn size */
+  .btns { display: flex; flex-wrap: wrap; gap: calc(10 * var(--u)); margin-top: auto; }
+  .btns .btn { margin-top: 0; }
+  /* Rows shared across a row of cards (sheet row 13), desktop only (the cards are a fixed 291.178 wide there; below 1024 a row
+     holds one card). The cell spans 4 rows of the list grid and passes them to the card; the list's row gap is 0 and the space
+     between card rows is the cell's bottom margin (the last row's is taken back by the list). The photo gets an explicit
+     height: a % width + aspect-ratio is measured too short while the shared rows are sized, which pushed the text under the
+     buttons. */
+  @media (min-width: 1024px) {
+    @supports (grid-template-rows: subgrid) {
+      .grid { row-gap: 0; margin-bottom: calc(-35.41 * var(--u)); }
+      .cell { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; margin-bottom: calc(35.41 * var(--u)); }
+      .card { display: grid; grid-row: 1 / -1; grid-template-rows: subgrid; row-gap: 0; align-items: start; }
+      .card :global(.img) { grid-row: 1; justify-self: start; width: calc(291.178 * var(--u)); height: calc(320.034 * var(--u)); aspect-ratio: auto; }
+      .title { grid-row: 2; }
+      .desc { grid-row: 3; }
+      .card > .btn, .btns { grid-row: 4; align-self: end; }
+    }
+  }
   @media (min-width: 1024px) {
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); min-height: calc(52 * var(--u)); }

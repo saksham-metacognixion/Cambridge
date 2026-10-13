@@ -1,0 +1,13 @@
+{
+  "_note": "Paediatric Care (inpatient) main page: the client has no English document for it (CT3; Website Content - Suhad 4 has only AR-Main Page). This file reproduces the generated page (title + card text from care.json) so the Arabic document (pediatric-rehab.ar.json, 13 Oct 2026) can be shown; replace with the English document when it arrives.",
+  "hero": {
+    "ariaLabel": "Paediatric Care",
+    "title": [
+      "Paediatric Care"
+    ],
+    "text": "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress."
+  },
+  "overview": [
+    "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress."
+  ]
+}

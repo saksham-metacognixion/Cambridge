@@ -1,7 +1,7 @@
 {
-  "_note": "Live site Arabic (WordPress export page 19153). Filters ALL / KSA / UAE: the live site has no Arabic doctor filter (English shown). 'Book Now' = the live site's 'احجز موعد'; 'See More': no Arabic on the live site. Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"KSA\", \"UAE\" = content/doctors/page.ar.json (Find a Doctor pills).",
-  "heading": "رعاية متخصصة، وأطباء موثوقون",
-  "intro": "يلتزم أخصائيونا بتقديم الرعاية المناسبة في كل مرحلة من مراحل رحلتك العلاجية",
+  "_note": "Live site Arabic (WordPress export page 19153). Filters ALL / KSA / UAE: the live site has no Arabic doctor filter (English shown). 'Book Now' = the live site's 'احجز موعد'; 'See More': no Arabic on the live site. Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"KSA\", \"UAE\" = content/doctors/page.ar.json (Find a Doctor pills). Heading + intro: Website Content - Suhad 4/AR- Homepage.docx (13 Oct 2026), text exactly as in the document.",
+  "heading": "خبرات متقدّمة، ونهج علاجي موحّد",
+  "intro": "يمتلك أطباؤنا خبرات واسعة في مجالات الطب وإعادة التأهيل، ويقدّمون الرعاية لمرضى تتطلب حالاتهم تشخيصًا دقيقًا واحتياجات طبية معقدة. ويعملون جنباً إلى جنب مع اختصاصيي العلاج، وكوادر التمريض، وسائر المهنيين الصحيين، لتتكامل الخبرات في وضع خطط رعاية تستجيب لحالة كل مريض واحتياجاته، وتدعم تقدّمه نحو أفضل النتائج الممكنة.",
   "buttons": [
     {
       "label": "احجز موعد"

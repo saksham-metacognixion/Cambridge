@@ -1,8 +1,8 @@
 {
-  "_note": "Live site Arabic (WordPress export page 19153): heading, intro and the ten tile labels exactly as on the live site.",
-  "heading": "منظومة دعم شاملة لرعاية المرضى",
+  "_note": "Live site Arabic (WordPress export page 19153): heading, intro and the ten tile labels exactly as on the live site. Heading + intro (one paragraph, wraps; the English is split in two lines for its layout): Website Content - Suhad 4/AR- Homepage.docx (13 Oct 2026), text exactly as in the document.",
+  "heading": "منظومة رعاية متكاملة",
   "intro": [
-    "مجموعة من الخدمات التشخيصية والعلاجية والدعم المصممة لتعزيز رعاية المرضى وتعافيهم"
+    "تجمع منشآتنا بين إمكانات التشخيص المتقدمة، والخدمات العلاجية المتخصصة، والمقومات السريرية اللازمة لضمان تكامل العلاج والتأهيل والتعافي."
   ],
   "tiles": [
     {

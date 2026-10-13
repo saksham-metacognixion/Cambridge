@@ -82,7 +82,7 @@ const statPos = [
 const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: c.stats[i].label as string }));
 ---
 
-<section class="relative bg-navy-alt overflow-x-clip" style="--h: 788">
+<section class="relative bg-navy-alt overflow-x-clip" style={`--h: 788; --n: ${rows.length}`}>
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-8 max-lg:px-4 max-lg:py-10">
     <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] max-lg:text-center" style={`--x:${480 + DX};--y:58;--w:494;--h:77`}>{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
 
@@ -185,9 +185,12 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     .stage { height: auto; min-height: calc(var(--h) * var(--u)); }
     /* The enlarged list makes the section taller than Figma's 788 (164 at 1440+, 58 at 1024-1439, rows of 118 / 100): the
        heading, map and stats move down by half of it, so the right-hand column stays centred against the list. */
-    .stage { --dy: 82; }
+    /* --dy from the row count (client sheet "CH Website Comments.xlsx" row 16, 13 Oct 2026: on /ae and /sa, 3 rows, the fixed
+       82 pushed the stats out of the navy band): the list is about 244 + 118 per row tall (6 rows: 952 = 788 + 164 -> 82). A
+       list shorter than the Figma 544 of rows gets no push and is centred against the right-hand column instead (--lift). */
+    .stage { --dy: max(0, (118 * var(--n) - 544) / 2); --lift: max(0, (544 - 118 * var(--n)) / 2); }
     .dpos { top: calc((var(--y) + var(--dy)) * var(--u)); }
-    .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc(30 * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); padding-top: calc(40 * var(--u)); box-sizing: border-box; }
+    .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc((30 + var(--lift)) * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); padding-top: calc(40 * var(--u)); box-sizing: border-box; }
     .card { padding-block: calc(15 * var(--u)) calc(25 * var(--u)); padding-inline: calc(13 * var(--u)) calc(4 * var(--u)); gap: calc(9 * var(--u)); } /* end padding 4: the button pair fits one line from 1440 */
     .row { column-gap: calc(15 * var(--u)); }
     .row > :global(img.divider) { margin: calc(12 * var(--u)) 0 0; margin-inline-start: calc(-13 * var(--u)); width: calc(100% + 9 * var(--u)); max-width: none; } /* = 350: row 341 (358 - 13 - 4) + 9; a % width so the line does not size the grid columns */
@@ -199,7 +202,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
        10px to spare); 1024-1279 may stack (see .actions below). 1440+ keeps the Figma values. */
     @media (max-width: 1439.98px) {
       .row { grid-template-columns: minmax(0, calc(128 * var(--u))) minmax(min-content, 1fr); column-gap: calc(12 * var(--u)); }
-      .stage { --dy: 29; }
+      .stage { --dy: max(0, (100 * var(--n) - 542) / 2); --lift: max(0, (542 - 100 * var(--n)) / 2); } /* rows of 100: 6 -> 29 */
     }
     .vline { display: block; }
     .vline img { position: absolute; width: calc(38 * var(--u)); height: calc(0.15 * var(--u)); inset-inline-start: calc((0.15 - 38) / 2 * var(--u)); top: calc((38 - 0.15) / 2 * var(--u)); transform: rotate(90deg); }

@@ -177,6 +177,10 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
   .chip { background: var(--color-mist); border-radius: var(--radius-btn); }
   .pill { background: #004059; border-radius: var(--radius-btn); }
   .book { background: #00b8ff; }
+  /* White label: client sheet "CH Website Comments.xlsx" row 4 (13 Oct 2026, "the font to be white"), approved by the user.
+     White on #00b8ff is about 2.2:1, below WCAG AA for text (and against the brand rule "never white on cyan"): flagged in
+     docs/open-decisions.md (CW1) for the client's sign-off. Hover unchanged (navy fill, white label). */
+  :root .hd .book, :root .hd .book > * { color: #fff; }
   .vl > img { position: absolute; inset-inline-start: 0; top: calc(30 * var(--u)); width: calc(30 * var(--u)); height: calc(1 * var(--u)); transform-origin: 0 0; transform: rotate(-90deg); max-width: none; }
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
   :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }
@@ -190,6 +194,21 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
      every dropdown was cut at the header's bottom edge: only its first row (inside the 119-px stage) showed, the rest looked
      hidden behind the hero. The header needs no clip of its own (.page clips the horizontal axis), so it is visible here. */
   .hd .stage { overflow: visible; }
+  /* Client sheet "CH Website Comments.xlsx" row 3 (13 Oct 2026, "Menu is too big"; user decision: cap at 1440): since the page
+     scales to fill wide screens (R073) the header grew with it (about 200px tall at 1920, 270 at 2560). Above 1440 the header
+     keeps its 1440 size: --u / --up and the tokens built on them are reset to the 1440 values for the header and everything in
+     it, dropdowns included (global.css, "Header capped"). The bar still spans the whole screen (user, 13 Oct 2026: responsive
+     at every size): the logo's start margin scales with the page (41 Figma px of the page unit --hu); everything from the
+     main nav's x (331) on keeps its 1440 arrangement as ONE group anchored to the end edge, whose end margin also scales
+     (9 Figma px, the "Visit" block's end at 1043), so nested pieces (language chip + highlight, separators, rule) never drift
+     apart. The extra width goes into the gap between the logo and the nav. At 1441 this equals the 1440 layout (--hu ~ --u);
+     1440 and below: unchanged. */
+  @media (min-width: 1441px) {
+    .hd .stage { --shift: calc(100% - 1052 * var(--u) - 9 * (var(--hu) - var(--u))); }
+    .hd .a { inset-inline-start: calc(var(--l) * var(--u) + var(--shift)); }
+    .hd .logo { inset-inline-start: calc(41 * var(--hu)); }
+    .hd .book { inset-inline-start: auto; inset-inline-end: calc((1052 - 905) * var(--u) + 9 * (var(--hu) - var(--u))); }
+  }
   .hd.is-stuck { box-shadow: var(--shadow-bar), 0 10px 20px rgba(0, 64, 89, 0.05); }
   @media (min-width: 1200px) {
     .hd { top: calc(-51 * var(--u)); } /* Figma: the top row's lowest box (language chip) ends at 51 */

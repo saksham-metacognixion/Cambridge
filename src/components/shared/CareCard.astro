@@ -17,6 +17,8 @@ import { px, vwSizes } from '../../lib/scale';
  * the card in a stretching cell (flex / grid, as both owners do) and every card of a row takes the tallest one's height, so
  * the four buttons stay level. The title is set at line-height 1 from 257 (same baseline as Figma's 15 line from 259) so a
  * wrapping title (Arabic) does not overlap itself.
+ * `buttons` (Global care cards, client sheet 13 Oct 2026 rows 6 + 12, lib/region-buttons.ts): one button per country (UAE / KSA)
+ * in place of the single button, side by side (wrapping if they ever do not fit), same .ui-btn look.
  */
 interface Props {
   src: ImageMetadata;
@@ -30,8 +32,10 @@ interface Props {
   buttonLabel?: string;
   scale?: number;
   titleTone?: 'cyan' | 'navy';
+  /** several buttons instead of the single one (Global: one per country) */
+  buttons?: { label: string; href: string }[] | null;
 }
-const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTone = 'cyan' } = Astro.props;
+const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTone = 'cyan', buttons } = Astro.props;
 ---
 
 <article class="cc hair-card" style={`--k:${K};--sw:${0.25 * K}`}>
@@ -39,7 +43,13 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
   <div class="cc-body">
     <h3 class:list={['cc-title', 'text-navy']}>{title}</h3>
     <p class="cc-desc">{desc}</p>
-    <a href={href} class="cc-btn ui-btn hit btn-fill" aria-label={buttonLabel}>{button}</a>
+    {buttons?.length ? (
+      <div class="cc-btns">
+        {buttons.map((b) => <a href={b.href} class="cc-btn ui-btn hit btn-fill" aria-label={`${b.label}: ${title}`}>{b.label}</a>)}
+      </div>
+    ) : (
+      <a href={href} class="cc-btn ui-btn hit btn-fill" aria-label={buttonLabel}>{button}</a>
+    )}
   </div>
 </article>
 
@@ -50,4 +60,6 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
   .cc-title { margin: 0; font-weight: 500; font-size: calc(19 * var(--cu)); line-height: 1; overflow-wrap: anywhere; }
   .cc-desc { margin: calc(5 * var(--cu)) 0 calc(8 * var(--cu)); max-width: calc(154 * var(--cu)); font-weight: 400; font-size: calc(9 * var(--cu)); line-height: calc(10 * var(--cu)); color: var(--color-body); overflow-wrap: anywhere; }
   .cc-btn { margin-top: auto; align-self: flex-start; background: var(--color-cyan); color: var(--color-navy); } /* size, label, corners: .ui-btn */
+  .cc-btns { display: flex; flex-wrap: wrap; gap: calc(8 * var(--cu)); margin-top: auto; }
+  .cc-btns .cc-btn { margin-top: 0; }
 </style>

@@ -53,7 +53,9 @@ const closeLabel = commonText(edition.locale).close as string;
 </script>
 
 <style>
-  .env { font-family: var(--font-gotham); font-style: normal; }
+  /* flow-root (client sheet "CH Website Comments.xlsx" row 14, 13 Oct 2026: "no space between the header and the video"): the band's
+     135 top margin collapsed through the page's 31 gap above this section, so the video (pulled up 135) sat on the hero's bottom. */
+  .env { display: flow-root; font-family: var(--font-gotham); font-style: normal; }
   .band { position: relative; margin-top: calc(135 * var(--u)); background: var(--color-veil); }
   .in { position: relative; box-sizing: border-box; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; padding: 0 calc(24 * var(--u)) calc(35.67 * var(--u)); display: flex; flex-direction: column; align-items: center; }
   .pattern { display: none; }

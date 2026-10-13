@@ -1,5 +1,5 @@
 {
-  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded. 9 Oct 2026: the six remaining KSA logos (Gulf Union, Al Rajhi Takaful, TCS, Malath, MEDGULF, Walaa) copied from docs/cambridge-images-ksa/ (the live /sa files saved 8 Oct 2026 with the user's approval, bug 063) into src/assets/insurance/wp/<slug>.avif with the importer's box (live 325x180 tile centred above the name bar). JHAH and MOH have no insurer record or logo on the live site (names from the FAQ text): their official marks were taken from jhah.com / moh.gov.sa on 9 Oct 2026 (user request; logoSource), composed into the live tile format (white 325x180 tile, logo 80 % wide, src/assets/insurance/wp/<slug>.png: the Home KSA logo strip and the card both expect that tile) with the importer's box - client to confirm (R-item in docs/open-decisions.md). Enaya: the live file saved 9 Oct 2026 through a hand-started debugging Chrome (.astro/qc-ins/fetch-enaya.mjs, user-run) and wired by tools/import-wp-images.mjs. Every insurer now has a logo. homeStrip: shown in the Home 'Accepted Insurance Providers' strip of an edition that does not use the Figma seven (KSA): the six logos the live /sa Home shows (docs/cambridge-images-ksa/_pages.json), in this file's order; without any flag the first seven with a logo are used. Logos (9 Oct 2026): every insurer the client's L3 folder has uses that 325x180 tile (insurance/wp/<slug>.jpg) in the tile box; the others keep the Figma logo. homeLogo = the image key the Home strip (home/insurance JSON) uses for this insurer when it differs from logo.image.",
+  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded. 9 Oct 2026: the six remaining KSA logos (Gulf Union, Al Rajhi Takaful, TCS, Malath, MEDGULF, Walaa) copied from docs/cambridge-images-ksa/ (the live /sa files saved 8 Oct 2026 with the user's approval, bug 063) into src/assets/insurance/wp/<slug>.avif with the importer's box (live 325x180 tile centred above the name bar). JHAH and MOH have no insurer record or logo on the live site (names from the FAQ text): their official marks were taken from jhah.com / moh.gov.sa on 9 Oct 2026 (user request; logoSource), composed into the live tile format (white 325x180 tile, logo 80 % wide, src/assets/insurance/wp/<slug>.png: the Home KSA logo strip and the card both expect that tile) with the importer's box - client to confirm (R-item in docs/open-decisions.md). Enaya: the live file saved 9 Oct 2026 through a hand-started debugging Chrome (.astro/qc-ins/fetch-enaya.mjs, user-run) and wired by tools/import-wp-images.mjs. Every insurer now has a logo. homeStrip: shown in the Home 'Accepted Insurance Providers' strip of an edition that does not use the Figma seven (KSA): the six logos the live /sa Home shows (docs/cambridge-images-ksa/_pages.json), in this file's order; without any flag the first seven with a logo are used. Logos (9 Oct 2026): every insurer the client's L3 folder has uses that 325x180 tile (insurance/wp/<slug>.jpg) in the tile box; the others keep the Figma logo. homeLogo = the image key the Home strip (home/insurance JSON) uses for this insurer when it differs from logo.image. 13 Oct 2026 (client sheet 'CH Website Comments.xlsx' row 15, 'please double check with the live website only'): the list = the live site's insurer records (docs/insurance.json, the WordPress REST export: 8 UAE + 9 KSA, SAICO under UAE there too); name.en = the live record title; the insurers that are not live records (the Figma-only UAE nine and JHAH / MOH from the live FAQ text) keep their data with onLive: false and are not shown (lib/insurers.ts, Home strip).",
   "insurers": [
     {
       "slug": "al-buhaira",
@@ -16,7 +16,8 @@
         "h": 26.37,
         "x": 43.68,
         "y": 35.8
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "neuron",
@@ -79,7 +80,8 @@
           "left": "0%",
           "top": "-41.94%"
         }
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "thiqa",
@@ -116,7 +118,8 @@
         "h": 44.473,
         "x": 43.68,
         "y": 32.22
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "adnic",
@@ -153,7 +156,8 @@
         "h": 33.655,
         "x": 40.1,
         "y": 31.51
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "cigna",
@@ -170,7 +174,8 @@
         "h": 37.296,
         "x": 48.69,
         "y": 25.06
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "daman",
@@ -195,7 +200,7 @@
     {
       "slug": "nextcare",
       "name": {
-        "en": "Nextcare Insurance",
+        "en": "NextCare Insurance",
         "ar": ""
       },
       "regions": [
@@ -248,7 +253,8 @@
         "h": 51.557,
         "x": 45.83,
         "y": 25.78
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "orient",
@@ -267,7 +273,8 @@
         "y": 25,
         "fit": "contain",
         "ratio": 3.4289
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "allianz",
@@ -284,7 +291,8 @@
         "h": 28.771,
         "x": 39,
         "y": 37
-      }
+      },
+      "onLive": false
     },
     {
       "slug": "deutsche-assistance",
@@ -301,7 +309,8 @@
         "h": 11.137,
         "x": 29,
         "y": 47
-      }
+      },
+      "onLive": false
     },
     {
       "name": {
@@ -324,7 +333,7 @@
     },
     {
       "name": {
-        "en": "Bupa",
+        "en": "Bupa Insurance",
         "ar": ""
       },
       "regions": [
@@ -363,7 +372,7 @@
     },
     {
       "name": {
-        "en": "Tawuniya",
+        "en": "Tawuniya Insurance",
         "ar": ""
       },
       "regions": [
@@ -397,7 +406,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "logoSource": "https://www.jhah.com/dist/assets/img/jhah-logo.svg"
+      "logoSource": "https://www.jhah.com/dist/assets/img/jhah-logo.svg",
+      "onLive": false
     },
     {
       "name": {
@@ -415,11 +425,12 @@
         "x": 29.39,
         "y": 6.74
       },
-      "logoSource": "https://www.moh.gov.sa/_layouts/15/moh/internet/new/enterprise/img/logo.png"
+      "logoSource": "https://www.moh.gov.sa/_layouts/15/moh/internet/new/enterprise/img/logo.png",
+      "onLive": false
     },
     {
       "name": {
-        "en": "Al Rajhi Takaful",
+        "en": "Alrajhi Takaful",
         "ar": ""
       },
       "regions": [
@@ -439,7 +450,7 @@
     },
     {
       "name": {
-        "en": "TCS",
+        "en": "TCS Insurance",
         "ar": ""
       },
       "regions": [
@@ -459,7 +470,7 @@
     },
     {
       "name": {
-        "en": "GlobeMed",
+        "en": "GlobeMed Insurance",
         "ar": ""
       },
       "regions": [
@@ -479,7 +490,7 @@
     },
     {
       "name": {
-        "en": "Malath",
+        "en": "Malath Insurance",
         "ar": ""
       },
       "regions": [

@@ -32,7 +32,7 @@ const design = [
 // logo band (y 71..133), logos 62 high, the Figma dividers between them. The gap shrinks from Figma's 96 so the row fits the
 // strip's 992 (x 30..1022): six 112-wide tiles = 64.
 type Ins = { slug: string; name: { en: string; ar: string }; regions: string[]; homeStrip?: boolean; homeLogo?: string; logo?: { image: string; w: number; h: number } };
-const insurers = insurerData.insurers as Ins[];
+const insurers = (insurerData.insurers as (Ins & { onLive?: boolean })[]).filter((x) => x.onLive !== false); // live records only (client sheet 13 Oct 2026 row 15)
 const regionOf = (image: string) => insurers.find((x) => x.logo?.image === image || x.homeLogo === image)?.regions ?? [];
 const figmaFits = edition.region === 'global' || (txt.logos as { image: string }[]).every((l) => regionOf(l.image).includes(edition.region));
 const ofRegion = insurers.filter((x) => x.logo && x.regions.includes(edition.region));

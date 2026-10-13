@@ -11,7 +11,7 @@
     "_cardsNote": "No Arabic hospital document: the Inpatient card keeps the Home services Arabic text (set here so the English override of shared.en.json does not leak through the locale merge).",
     "cards": {
       "inpatient": {
-        "desc": "رعاية على مدار الساعة للمرضى بحاجة إلى دعم مستمر."
+        "desc": "رعاية طبية وتأهيلية متخصصة على مدار الساعة طوال أيام الأسبوع"
       }
     },
     "button": "ابدأ رعايتك"

@@ -1,10 +1,10 @@
 {
-  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/cambridge-hospital-al-ain/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. The live page lists the same photos under every tab; they are sorted into the tabs here by their file names (to be confirmed by the client). Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/cambridge-hospital-al-ain/, Cambridge-Hospital-Al-Ain-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers).",
+  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/cambridge-hospital-al-ain/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. The live page lists the same photos under every tab; they are sorted into the tabs here by their file names (to be confirmed by the client). Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/cambridge-hospital-al-ain/, Cambridge-Hospital-Al-Ain-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers). 13 Oct 2026 (Website Content - Suhad 4, EN - UAE / KSA Hospitals): new hero title, hero line and 'Experience the Environment of Care' paragraphs.",
   "hero": {
     "title": [
-      "Al Ain Hospital"
+      "Cambridge Hospital Al Ain"
     ],
-    "text": "Recovery-focused care combining rehabilitation, extended support and structured clinical coordination.",
+    "text": "A specialised rehabilitation hospital in Al Ain",
     "banner": {
       "image": "hospital-detail/banner-al-ain",
       "alt": ""
@@ -16,8 +16,8 @@
   },
   "environment": {
     "text": [
-      "Cambridge Hospital Al Ain supports patients who require rehabilitation, long term care and clinically managed recovery within a setting designed specifically for extended care and function focused treatment.",
-      "The hospital plays an important role in expanding access to rehabilitation and extended care in Al Ain and the surrounding areas, helping patients receive coordinated care closer to home and reducing the need for fragmented or distant care pathways."
+      "Cambridge Hospital Al Ain is a dedicated rehabilitation hospital providing advanced inpatient and outpatient rehabilitation services. Through structured clinical pathways and a multidisciplinary approach, the hospital delivers personalised programmes for adults and children, supporting recovery and long-term improvements in function.",
+      "The hospital is equipped to address a wide range of rehabilitation needs, combining advanced technologies with specialised therapy environments. With a focus on continuity of care, patient safety and measurable outcomes, Cambridge Hospital Al Ain plays an important role in delivering high-quality, consistent rehabilitation services across the region."
     ]
   },
   "healing": {

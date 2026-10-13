@@ -13,6 +13,9 @@ import Band from '../careers/Band.astro';
  * card top +45 / +33 / +45, copy Book 16 / 18 #6b6b6b 8 / 6 / 8 below the title. The pill-stripe pattern (234 x 239) sits at x69,
  * card top +15 / +14 / +16, under the card. Rows: block 1 top 1994, block 2 +325, hairline (707 x .5 #bcbcbc, x158) 42.7 below block 2,
  * block 3 43 below the hairline.
+ * Client sheet "CH Website Comments.xlsx" (13 Oct 2026, rows 8 + 9, "text to be aligned with the picture"): the text column is
+ * centred vertically on the photo card (Figma: title at a fixed +33 / +45, so the longer client copy ran past the photo's bottom).
+ * The text is shorter than the card, so the row stays as tall as the card and the pattern keeps its place.
  */
 interface Props { edition: Edition; c: any }
 const { edition, c } = Astro.props;
@@ -61,13 +64,13 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
   @media (max-width: 1023.98px) { .card { align-self: center; } } /* bug 079: the fixed-size photo cards centred above their text */
   @media (min-width: 1024px) {
     .list { gap: 0; }
-    .row { flex-direction: row; align-items: flex-start; gap: 0; }
+    .row { flex-direction: row; align-items: center; gap: 0; }
     .first { margin-top: calc(68 * var(--u)); }
     .second { margin-top: calc(56.7 * var(--u)); }
     .third { margin-top: calc(43 * var(--u)); }
     .pattern { display: block; position: absolute; inset-inline-start: calc(69 * var(--u)); top: calc(var(--pt) * var(--u)); width: calc(234 * var(--u)); height: calc(239 * var(--u)); max-width: none; }
     .card { margin-inline-start: calc((154 + var(--shift)) * var(--u)); }
-    .txt { margin-inline-start: calc(25.1 * var(--u)); margin-top: calc(var(--tt) * var(--u)); width: calc(var(--tw) * var(--u)); }
+    .txt { margin-inline-start: calc(25.1 * var(--u)); width: calc(var(--tw) * var(--u)); }
     .p { width: calc(488 * var(--u)); }
     .rule { margin-top: calc(42.7 * var(--u)); margin-inline-start: calc(158 * var(--u)); width: calc(707 * var(--u)); }
   }

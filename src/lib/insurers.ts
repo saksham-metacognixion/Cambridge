@@ -10,5 +10,6 @@ export interface Insurer {
   /** absent = no logo file yet (the card shows the name only) */
   logo?: { image: string; w: number; h: number; x: number; y: number; fit?: 'contain'; ratio?: number; crop?: { w: string; h: string; left: string; top: string } };
 }
-export const insurers = data.insurers as Insurer[];
+// onLive: false = not one of the live site's insurer records (client sheet 13 Oct 2026 row 15): kept in the JSON, not shown.
+export const insurers = (data.insurers as (Insurer & { onLive?: boolean })[]).filter((i) => i.onLive !== false);
 export const insurersFor = (region: RegionId) => (region === 'global' ? insurers : insurers.filter((i) => i.regions.includes(region)));

@@ -32,10 +32,10 @@
       "image": {
         "image": "accreditations/carf",
         "alt": "CARF accredited seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
-        "h": 142
+        "x": 589.0,
+        "y": 729.0,
+        "w": 146.0,
+        "h": 146.0
       },
       "blocks": [
         {
@@ -153,9 +153,9 @@
       "image": {
         "image": "accreditations/jci",
         "alt": "JCI seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
+        "x": 589.1,
+        "y": 729.0,
+        "w": 145.7,
         "h": 146
       }
     },
@@ -178,10 +178,10 @@
       "image": {
         "image": "accreditations/cbahi",
         "alt": "CBAHI seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
-        "h": 146
+        "x": 542.0,
+        "y": 762.8,
+        "w": 240,
+        "h": 78.4
       }
     },
     {
@@ -203,10 +203,10 @@
       "image": {
         "image": "accreditations/cap",
         "alt": "CAP seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
-        "h": 146
+        "x": 548.8,
+        "y": 755.0,
+        "w": 226.5,
+        "h": 94.1
       }
     },
     {
@@ -228,9 +228,9 @@
       "image": {
         "image": "accreditations/kozyavkin",
         "alt": "Kozyavkin seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
+        "x": 594.0,
+        "y": 729.0,
+        "w": 136.0,
         "h": 146
       }
     },
@@ -249,10 +249,10 @@
       "image": {
         "image": "accreditations/oshad",
         "alt": "OSHAD seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
-        "h": 146
+        "x": 577.0,
+        "y": 739.3,
+        "w": 170.0,
+        "h": 125.4
       }
     },
     {
@@ -274,10 +274,10 @@
       "image": {
         "image": "accreditations/adhics",
         "alt": "ADHICS seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
-        "h": 146
+        "x": 572.8,
+        "y": 742.2,
+        "w": 178.4,
+        "h": 119.5
       }
     },
     {
@@ -295,10 +295,10 @@
       "image": {
         "image": "accreditations/jawda",
         "alt": "JAWDA seal",
-        "x": 589,
-        "y": 729,
-        "w": 146,
-        "h": 146
+        "x": 589.0,
+        "y": 729.0,
+        "w": 146.0,
+        "h": 146.0
       }
     }
   ],

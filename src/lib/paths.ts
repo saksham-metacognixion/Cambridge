@@ -6,7 +6,7 @@ import { DOCTOR_PATHS } from "./doctors";
  * Slugs = the current site's URL structure (CLAUDE.md 5): the page URLs of the live site's WordPress export
  * (docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), which confirmed the ones quoted in the client's documents
  * (5 Oct 2026) and settled the rest (/faqs/, /contact-us/, /about/why-cambridge-hospital/, /patient-hub/find-a-doctor/,
- * /legal/<slug>/, /care/home-healthcare/, /care/in-school/). Arabic = /ar/ prefix. Doctor profile and article slugs stay
+ * /legal/<slug>/, /care/in-school/; the live /care/home-healthcare/ is /care/homecare/ since bug 096, 301 in redirects.ts). Arabic = /ar/ prefix. Doctor profile and article slugs stay
  * unconfirmed (not in the export). Change them here only (docs/open-decisions.md CT1 / WP1).
  */
 export const PAGE_PATHS = {

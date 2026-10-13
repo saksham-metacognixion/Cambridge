@@ -1,5 +1,5 @@
 {
-  "_note": "Accreditations & Partnerships (Figma 55:12215). Text = Website Content - Suhad/About Cambridge/EN-Accreditations Tracked Changes.md with the tracked changes ACCEPTED (5 Oct 2026): all eight tabs now have content. The document asks to reconfirm the JAWDA section (name may have changed to Muashir), docs/open-decisions.md CT9. meta.* and alt texts are PLACEHOLDER. Seals (client assets, 9 Oct 2026): the client's L1 accreditation seals (docs/client-assets/accreditation-seals/, white background made transparent) in the other seven tabs, placed in the CARF seal's slot (589, 729) at 146 x 146.",
+  "_note": "Accreditations & Partnerships (Figma 55:12215). Text = Website Content - Suhad/About Cambridge/EN-Accreditations Tracked Changes.md with the tracked changes ACCEPTED (5 Oct 2026): all eight tabs now have content. The document asks to reconfirm the JAWDA section (name may have changed to Muashir), docs/open-decisions.md CT9. meta.* and alt texts are PLACEHOLDER. Seals (client assets, 9 Oct 2026): the client's L1 accreditation seals (docs/client-assets/accreditation-seals/, white background made transparent) in the other seven tabs, placed in the CARF seal's slot (589, 729) at 146 x 146. CARF `position: left` (bug 099, 13 Oct 2026): carf.png is 583 x 570 with 10 px transparent padding on the left and 23 on the right, so the default centred square crop left the seal 3 px left of centre; anchoring the build-time crop left trims only transparent pixels and centres it like the other seven (10 px padding on every side). The source file is unchanged.",
   "meta": {
     "title": "Accreditations & Partnerships | Cambridge Hospital",
     "description": "Cambridge Hospital's care is guided by internationally recognised standards that ensure safety, consistency and measurable clinical outcomes: CARF, JCI, CBAHI, CAP, Kozyavkin, OSHAD, ADHICS and JAWDA."
@@ -35,7 +35,8 @@
         "x": 589.0,
         "y": 729.0,
         "w": 182.646,
-        "h": 182.646
+        "h": 182.646,
+        "position": "left"
       },
       "blocks": [
         {

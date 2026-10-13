@@ -5,6 +5,7 @@
  * cloudflare:sockets. The password is only ever sent over TLS: a server that offers no STARTTLS is refused.
  */
 import type { Mail } from "./email";
+import { base64 } from "./base64";
 
 export interface SmtpConfig {
   host: string;
@@ -145,9 +146,13 @@ class Session {
 const clean = (s: string) => s.replace(/[\r\n]+/g, " ").trim(); // no header injection
 const ascii = (s: string) => /^[\x20-\x7e]*$/.test(s);
 
-function message(m: Mail, from: SmtpConfig["from"], domain: string): string {
+/** The whole RFC 5322 message (exported for tests). */
+export function message(m: Mail, from: SmtpConfig["from"], domain: string): string {
   const boundary = `=_ch_${crypto.randomUUID()}`;
   const fromName = from.name ? `${word(from.name)} ` : "";
+  const files = m.attachments ?? [];
+  // With attachments (bug 093): multipart/mixed = the text/HTML alternative part + one base64 part per file.
+  const mixed = files.length ? `=_ch_${crypto.randomUUID()}` : "";
   const headers = [
     `From: ${fromName}<${from.email}>`,
     `To: ${m.to.map(clean).join(", ")}`,
@@ -156,7 +161,6 @@ function message(m: Mail, from: SmtpConfig["from"], domain: string): string {
     `Date: ${new Date().toUTCString().replace("GMT", "+0000")}`,
     `Message-ID: <${crypto.randomUUID()}@${domain}>`,
     "MIME-Version: 1.0",
-    `Content-Type: multipart/alternative; boundary="${boundary}"`,
   ];
   const part = (type: string, body: string) =>
     [
@@ -166,14 +170,43 @@ function message(m: Mail, from: SmtpConfig["from"], domain: string): string {
       "",
       wrap(b64(body)),
     ].join("\r\n");
-  return [
-    ...headers,
+  const alternative = [
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
     "",
     part("text/plain", m.text),
     part("text/html", m.html),
     `--${boundary}--`,
+  ];
+  if (!mixed) return [...headers, ...alternative].join("\r\n");
+  return [
+    ...headers,
+    `Content-Type: multipart/mixed; boundary="${mixed}"`,
+    "",
+    `--${mixed}`,
+    ...alternative,
+    ...files.map((a) =>
+      [
+        `--${mixed}`,
+        `Content-Type: ${clean(a.contentType)}; name="${fallbackName(a.filename)}"`,
+        `Content-Disposition: attachment; ${fileParam(a.filename)}`,
+        "Content-Transfer-Encoding: base64",
+        "",
+        wrap(base64(a.content)),
+      ].join("\r\n"),
+    ),
+    `--${mixed}--`,
   ].join("\r\n");
 }
+
+/** ASCII file name for old clients: the name itself when plain ASCII, else "attachment.<ext>". */
+const fallbackName = (name: string) =>
+  ascii(name) && !/["\\]/.test(name) ? clean(name) : `attachment${/\.[a-z0-9]+$/i.exec(name)?.[0] ?? ""}`;
+/** filename="..." plus the RFC 2231 UTF-8 form when the name is not plain ASCII (Arabic file names). */
+const fileParam = (name: string) =>
+  `filename="${fallbackName(name)}"` +
+  (fallbackName(name) === clean(name)
+    ? ""
+    : `; filename*=UTF-8''${encodeURIComponent(clean(name)).replace(/['()*]/g, (ch) => `%${ch.charCodeAt(0).toString(16).toUpperCase()}`)}`);
 
 /** Header text: as is when plain ASCII, else RFC 2047 encoded words (<= 75 chars each, never splitting a character). */
 function word(s: string): string {
@@ -192,13 +225,7 @@ function word(s: string): string {
   return words.map((w) => `=?UTF-8?B?${b64(w)}?=`).join("\r\n ");
 }
 
-function b64(s: string): string {
-  const bytes = new TextEncoder().encode(s);
-  let bin = "";
-  for (let i = 0; i < bytes.length; i += 0x8000)
-    bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return btoa(bin);
-}
+const b64 = (s: string) => base64(new TextEncoder().encode(s));
 const wrap = (s: string) => s.replace(/.{1,76}/g, "$&\r\n").trimEnd();
 
 /* ───────── Connections ───────── */

@@ -46,7 +46,8 @@ const { edition } = Astro.props;
   fromHash();
 
   // Page forms (e.g. Patient Feedback): load on first focus; a submit before that waits for the script.
-  document.addEventListener('focusin', (e) => {
+  // Also on change: a value can arrive without focus (a file dropped on the attachment box, autofill); initForm then syncs it.
+  for (const type of ['focusin', 'change']) document.addEventListener(type, (e) => {
     const f = (e.target as Element).closest?.('form[data-form]') as HTMLFormElement | null;
     if (f && !f.closest('dialog')) void load().then((m) => m.initForm(f));
   });

@@ -10,6 +10,7 @@ import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
 import { pagePath } from '../../lib/paths';
 import { clientConfig, commonText } from '../../lib/forms';
+import AttachField from '../forms/AttachField.astro';
 import checkbox from '../../assets/contact-page/checkbox.svg';
 import SocialIcons from '../shared/SocialIcons.astro';
 
@@ -26,7 +27,7 @@ const label = 'font-normal text-f9 leading-14 text-navy not-italic whitespace-no
 const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespace-normal [word-break:break-word]';
 ---
 
-<section id="contact" class="relative bg-white font-gotham" style="--h: 497">
+<section id="contact" class="relative bg-white font-gotham" style="--h: 541">
   <!-- Logo pattern (opacity .55), page x 4 -->
   <div class="pattern-wrap absolute inset-x-0 top-0 mx-auto w-full overflow-hidden pointer-events-none" style="max-width:calc(var(--max-w) * 1px);height:calc(497 * var(--u))" aria-hidden="true">
     <!-- 32-colour palette PNGs of the same artwork (tools/images/logo-pattern.mjs): 90 KB at 1430 px vs 208 KB as AVIF. -->
@@ -42,8 +43,9 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       class="pattern-img absolute object-cover opacity-55 max-w-none"
     />
   </div>
-  <!-- Grey band (full-bleed) -->
-  <div class="absolute inset-x-0 top-4 h-423 bg-veil max-lg:inset-y-0 max-lg:h-auto max-lg:top-0" aria-hidden="true"></div>
+  <!-- Grey band (full-bleed). Bug 093: band and section 44 Figma px taller than Figma (497 / 423) for the attachment row, so the
+       footer, which overlaps the section's foot, never covers the Send button. -->
+  <div class="absolute inset-x-0 top-4 h-467 bg-veil max-lg:inset-y-0 max-lg:h-auto max-lg:top-0" aria-hidden="true"></div>
 
   <div class="stage max-lg:px-16 max-lg:py-40">
     <!-- Corner art (placed BELOW the card: see report): box 324x348 @ (0,95), clipped, rounded bottom-start (Figma r16; --radius-card, bug 049) -->
@@ -70,7 +72,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       {/* Own form id "home-contact" (fields = what Figma shows; src/data/forms.json), inbox FORM_TO_SEND_ENQUIRY.
            Errors sit in the Figma gaps under each box; the consent row (no Figma design here: Contact page style) and the
            button flow from the button's Figma top (263), so the white card grows by the consent row. */}
-      <form action="/api/forms/home-contact" method="POST" novalidate data-form="home-contact" data-config={clientConfig('home-contact', edition.locale)} aria-labelledby="home-contact-title" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
+      <form action="/api/forms/home-contact" method="POST" enctype="multipart/form-data" novalidate data-form="home-contact" data-config={clientConfig('home-contact', edition.locale)} aria-labelledby="home-contact-title" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
         <input type="hidden" name="edition" value={edition.id} />
 
         <div data-field="name" class="max-lg:flex max-lg:flex-col max-lg:gap-10 lg:contents">
@@ -92,6 +94,9 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
         </div>
 
         <div class="tail relative max-lg:mt-8 max-lg:max-w-284 lg:ms-371 lg:pt-263 lg:pb-29 lg:w-284">
+          <!-- Bug 093: optional attachment (not in Figma), first in the flowing tail under the message box, so the consent row and
+               the button move down by its height and the white card grows, as it does for the consent row. -->
+          <AttachField form="home-contact" edition={edition} variant="home" class="att-tail" />
           <div data-field="consent">
             <label class="f-consent">
               <input id="contact-consent" type="checkbox" name="consent" required aria-describedby="contact-consent-error" />
@@ -143,6 +148,9 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
     font-size: calc(7 * var(--u)); line-height: calc(14 * var(--u));
   }
   .submit { width: 100%; margin-top: calc(8 * var(--u)); }
+  /* Bug 093 attachment row: the gap to the consent row = the Figma 8 px field gap; full column width */
+  .tail :global(.att-tail) { pointer-events: auto; margin-block-end: calc(8 * var(--u)); }
+  @media (max-width: 1023.98px) { .tail :global(.att-tail) { margin-block-end: calc(10 * var(--u)); } }
   .field::placeholder { color: var(--color-body); opacity: 1; }
   .corner-art {
     position: absolute;

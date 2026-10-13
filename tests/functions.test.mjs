@@ -13,6 +13,8 @@ const bundle = async (entry, name) => {
 };
 const { onRequestPost, onRequest } = await bundle('functions/api/forms/[form].ts', 'form.mjs');
 const { onRequest: mw } = await bundle('functions/_middleware.ts', 'mw.mjs');
+const { message: smtpMessage } = await bundle('functions/_lib/smtp.ts', 'smtp.mjs');
+const att = await bundle('src/lib/attachments.ts', 'att.mjs');
 const { default: vmw } = await bundle('middleware.ts', 'vmw.mjs');
 let sent = [], tsOk = true, tsReply = null, tsCalls = 0, providerFail = null;
 const logs = [];
@@ -36,6 +38,11 @@ const post = (form, fields, { json = true, origin = 'https://site.test' } = {}) 
   const req = new Request(`https://site.test/api/forms/${form}`, { method: 'POST', body: fd, headers: { Accept: json ? 'application/json' : 'text/html', Origin: origin, Referer: 'https://site.test/ae' } });
   return onRequestPost({ request: req, env, params: { form } });
 };
+const PDF = '%PDF-1.4\n%test\n' + 'x'.repeat(600) + '\n%%EOF';
+const file = (bytes, name, type = '') => new File([bytes], name, { type });
+const pdf = (name) => file(PDF, name, 'application/pdf');
+const JPG = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0, 16, 0x4a, 0x46, 0x49, 0x46]), PNG = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0]);
+const ZIP = new Uint8Array([0x50, 0x4b, 0x03, 0x04, 20, 0]), OLE = new Uint8Array([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1, 0, 0]);
 const good = { name: 'A Patient', email: 'a@b.test', hospital: 'abu-dhabi', subject: 'Question', message: 'Hello <b>there</b>', consent: 'on', 'cf-turnstile-response': 't', edition: 'ae-en' };
 const book = { specialty: 'pediatric', doctor: 'ahmad-al-khayer', name: 'A Patient', email: '', dob: '1990-05-01', mobile_code: 'AE', mobile: '50 123 4567', gender: 'female', message: '', consent: 'on', 'cf-turnstile-response': 't', edition: 'sa-ar' };
 const refer = { doctor_name: 'Dr A', doctor_mobile_code: 'AE', doctor_mobile: '50 111 2222', name: 'A Patient', dob: '1990-05-01', mobile_code: 'AE', mobile: '50 123 4567', gender: 'male', guardian_mobile_code: 'AE', guardian_mobile: '50 999 8888', diagnosis: 'Stroke', consent: 'on', 'cf-turnstile-response': 't', edition: 'ae-en' };
@@ -83,6 +90,20 @@ const cases = [
   ['smtp without SMTP_HOST / SMTP_PASS -> not_configured (named in the log)', () => { env.EMAIL_PROVIDER = 'smtp'; env.SMTP_USER = 'u@x.test'; return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; delete env.SMTP_USER; return r.status === 500 && b.error === 'not_configured' && logs.at(-1).includes('SMTP_HOST / SMTP_PASS missing'); }],
   ['smtp server down -> 502 send_failed, no success', () => { Object.assign(env, { EMAIL_PROVIDER: 'smtp', SMTP_HOST: '127.0.0.1', SMTP_PORT: '1', SMTP_USER: 'u@x.test', SMTP_PASS: 'p' }); return post('send-enquiry', good); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; for (const k of ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS']) delete env[k]; return r.status === 502 && b.error === 'send_failed' && !b.ok; }],
   ['postmark: From / To / ReplyTo', () => { env.EMAIL_PROVIDER = 'postmark'; return post('book-appointment', { ...book, email: 'p@b.test' }); }, (r, b) => { env.EMAIL_PROVIDER = 'resend'; const m = sent.at(-1); return r.status === 200 && b.ok && m.From === 'Site <no-reply@x.test>' && m.To === 'book@x.test,book2@x.test' && m.ReplyTo === 'p@b.test'; }],
+  // Bug 093: optional attachment on the three Send an Enquiry forms (rules: src/data/forms.json attachments, provisional).
+  ['attachment: PDF emailed (resend), named in the text, nothing else changed', () => post('send-enquiry', { ...good, attachment: pdf('report.pdf') }), (r, b) => { const m = sent.at(-1); return r.status === 200 && b.ok && m.attachments?.length === 1 && m.attachments[0].filename === 'report.pdf' && Buffer.from(m.attachments[0].content, 'base64').toString('latin1') === PDF && m.text.includes('Attachment: report.pdf (1 KB, attached)') && m.to[0] === 'ae@x.test'; }],
+  ['attachment: none chosen (empty file part) -> sent without attachments', () => post('send-enquiry', { ...good, attachment: new File([], '', { type: 'application/octet-stream' }) }), (r, b) => r.status === 200 && b.ok && !('attachments' in sent.at(-1)) && sent.at(-1).text.includes('Attachment: \n')],
+  ['attachment: field absent (old page / no JS urlencoded name only) -> sent without', () => post('send-enquiry', { ...good, attachment: 'report.pdf' }), (r, b) => r.status === 200 && b.ok && !('attachments' in sent.at(-1))],
+  ['attachment: .exe refused (file_type), nothing sent', () => { const n = sent.length; return post('send-enquiry', { ...good, attachment: new File(['MZ...'], 'setup.exe') }).then((r) => ((r.n = n), r)); }, (r, b) => r.status === 422 && b.fields.attachment === 'file_type' && sent.length === r.n],
+  ['attachment: text renamed .pdf refused (content sniff, MIME claim ignored)', () => post('send-enquiry', { ...good, attachment: new File(['hello'], 'fake.pdf', { type: 'application/pdf' }) }), (r, b) => r.status === 422 && b.fields.attachment === 'file_invalid'],
+  ['attachment: over the size limit refused (file_size)', () => post('send-enquiry', { ...good, attachment: new File([PDF, new Uint8Array(4 * 1048576)], 'big.pdf') }), (r, b) => r.status === 422 && b.fields.attachment === 'file_size'],
+  ['attachment: Content-Length over limit + text forms keep 32 KB', async () => { const fd = new FormData(); for (const [k, v] of Object.entries(good)) fd.append(k, v); const big = await onRequestPost({ request: new Request('https://site.test/api/forms/send-enquiry', { method: 'POST', body: fd, headers: { Accept: 'application/json', 'Content-Length': String(5 * 1048576) } }), env, params: { form: 'send-enquiry' } }); const ok = await onRequestPost({ request: new Request('https://site.test/api/forms/send-enquiry', { method: 'POST', body: fd, headers: { Accept: 'application/json', 'Content-Length': String(1048576) } }), env, params: { form: 'send-enquiry' } }); const text = await onRequestPost({ request: new Request('https://site.test/api/forms/feedback', { method: 'POST', body: fd, headers: { Accept: 'application/json', 'Content-Length': String(40 * 1024) } }), env, params: { form: 'feedback' } }); big.extra = [ok.status, text.status]; return big; }, (r, b) => r.status === 413 && b.error === 'too_large' && r.extra[0] !== 413 && r.extra[1] === 413],
+  ['attachment: path / quotes / control characters stripped from the name, extension lower-cased', () => post('send-enquiry', { ...good, attachment: pdf('..\\..\\C:/tmp/re"po<r>t\u0007.PDF') }), (r, b) => r.status === 200 && sent.at(-1).attachments[0].filename === 'report.pdf'],
+  ['attachment: Arabic file name kept; JPEG / PNG / DOCX / DOC accepted by content', async () => { const rs = []; for (const f of [file(JPG, 'تقرير طبي.jpg'), file(PNG, 'scan.png'), file(ZIP, 'letter.docx'), file(OLE, 'old.doc')]) rs.push(await post('send-enquiry', { ...good, attachment: f }).then((x) => x.status)); const r = new Response('{}'); r.codes = rs; return r; }, (r) => r.codes.every((c) => c === 200) && sent.at(-4).attachments[0].filename === 'تقرير طبي.jpg' && sent.at(-1).attachments[0].filename === 'old.doc'],
+  ['attachment: pop-up + Home forms take it too', async () => { const a = await post('send-enquiry-popup', { name: 'A', mobile_code: 'AE', mobile: '501234567', email: 'a@b.test', consent: 'on', 'cf-turnstile-response': 't', attachment: pdf('p.pdf') }); a.second = await post('home-contact', { name: 'A', email: 'v@b.test', message: 'Hi', consent: 'on', 'cf-turnstile-response': 't', attachment: pdf('h.pdf') }).then((x) => x.status); a.name = sent.at(-1).attachments?.[0].filename; return a; }, (r, b) => r.status === 200 && r.second === 200 && r.name === 'h.pdf'],
+  ['attachment: forms without a file field ignore a posted file (feedback, newsletter)', () => post('feedback', { name: 'A', mobile_code: 'AE', mobile: '501234567', consent: 'on', 'cf-turnstile-response': 't', attachment: pdf('x.pdf') }), (r, b) => r.status === 200 && !('attachments' in sent.at(-1)) && !sent.at(-1).text.includes('Attachment')],
+  ['attachment: postmark Attachments + sendgrid attachments shapes', async () => { env.EMAIL_PROVIDER = 'postmark'; const a = await post('send-enquiry', { ...good, attachment: pdf('a.pdf') }); const pm = sent.at(-1); env.EMAIL_PROVIDER = 'sendgrid'; await post('send-enquiry', { ...good, attachment: pdf('a.pdf') }); const sg = sent.at(-1); env.EMAIL_PROVIDER = 'resend'; a.pm = pm; a.sg = sg; return a; }, (r) => r.pm.Attachments[0].Name === 'a.pdf' && r.pm.Attachments[0].ContentType === 'application/pdf' && Buffer.from(r.pm.Attachments[0].Content, 'base64').toString('latin1') === PDF && r.sg.attachments[0].filename === 'a.pdf' && r.sg.attachments[0].type === 'application/pdf' && r.sg.attachments[0].disposition === 'attachment'],
+  ['attachment: provider failure -> 502 send_failed, file content never logged', () => { providerFail = { status: 500, body: 'boom' }; return post('send-enquiry', { ...good, attachment: pdf('secret-scan.pdf') }); }, (r, b) => { providerFail = null; return r.status === 502 && b.error === 'send_failed' && !logs.join(' ').includes('secret-scan') && !logs.join(' ').includes('%PDF'); }],
 ];
 let pass = 0;
 for (const [name, run, check] of cases) {
@@ -125,6 +146,24 @@ mw_cases.push(
 for (const [name, ok] of mw_cases) console.log(ok ? 'PASS' : 'FAIL', 'middleware:', name);
 const mw_ok = mw_cases.map(([, ok]) => !!ok);
 
-const total = pass + (mw_ok.every(Boolean) ? 1 : 0);
-console.log(`${total}/${cases.length + 1} passed`);
-if (total !== cases.length + 1) process.exit(1);
+// Bug 093: SMTP message with an attachment (multipart/mixed) and without (unchanged multipart/alternative); shared rules.
+const from = { email: 'site@x.test', name: 'Site' };
+const plainMail = smtpMessage({ to: ['a@x.test'], subject: 'S', text: 't', html: '<p>t</p>' }, from, 'x.test');
+const withFile = smtpMessage({ to: ['a@x.test'], subject: 'S', text: 't', html: '<p>t</p>', attachments: [{ filename: 'تقرير.pdf', content: new TextEncoder().encode(PDF), contentType: 'application/pdf' }, { filename: 'scan.png', content: PNG, contentType: 'image/png' }] }, from, 'x.test');
+const b64part = (msg, name) => { const i = msg.indexOf(name); const body = msg.slice(msg.indexOf('\r\n\r\n', i) + 4); return Buffer.from(body.slice(0, body.indexOf('\r\n--')).replace(/\r\n/g, ''), 'base64'); };
+const lib_cases = [
+  ['smtp: no attachment = multipart/alternative at the top (unchanged)', /^Content-Type: multipart\/alternative/m.test(plainMail) && !plainMail.includes('multipart/mixed')],
+  ['smtp: attachment = multipart/mixed with the alternative part inside', /^Content-Type: multipart\/mixed/m.test(withFile) && withFile.includes('Content-Type: multipart/alternative')],
+  ['smtp: Arabic name as RFC 2231 + ASCII fallback', withFile.includes(`filename="attachment.pdf"; filename*=UTF-8''${encodeURIComponent('تقرير.pdf')}`) && withFile.includes('Content-Type: application/pdf; name="attachment.pdf"')],
+  ['smtp: ASCII name as is, content round-trips through base64', withFile.includes('filename="scan.png"\r\n') && b64part(withFile, 'filename="scan.png"').equals(Buffer.from(PNG)) && b64part(withFile, "filename*=UTF-8''").toString('latin1') === PDF],
+  ['smtp: lines within 998 characters', withFile.split('\r\n').every((l) => l.length <= 998)],
+  ['lib: checkFile type / size / empty', att.checkFile('a.PDF', 10, { maxBytes: 100, types: { pdf: 'x' } }) === undefined && att.checkFile('a.exe', 10, { maxBytes: 100, types: { pdf: 'x' } }) === 'file_type' && att.checkFile('a.pdf', 101, { maxBytes: 100, types: { pdf: 'x' } }) === 'file_size' && att.checkFile('a.pdf', 0, { maxBytes: 100, types: { pdf: 'x' } }) === 'file_invalid' && att.checkFile('pdf', 1, { maxBytes: 100, types: { pdf: 'x' } }) === 'file_type'],
+  ['lib: typeList / sizeLabel / acceptAttr', att.typeList({ maxBytes: 1, types: { pdf: '', jpg: '', jpeg: '', png: '' } }, 'or') === 'PDF, JPG or PNG' && att.sizeLabel(4194304) === '4 MB' && att.acceptAttr({ maxBytes: 1, types: { pdf: '', png: '' } }) === '.pdf,.png'],
+  ['lib: safeName', att.safeName('../../x/.hidden', 'pdf') === 'attachment.pdf' && att.safeName('../../x/..notes.txt', 'pdf') === 'notes.pdf' && att.safeName('', 'pdf') === 'attachment.pdf' && att.safeName('a'.repeat(300) + '.pdf', 'pdf').length === 100],
+];
+for (const [name, ok] of lib_cases) console.log(ok ? 'PASS' : 'FAIL', name);
+const lib_ok = lib_cases.every(([, ok]) => ok);
+
+const total = pass + (mw_ok.every(Boolean) ? 1 : 0) + (lib_ok ? 1 : 0);
+console.log(`${total}/${cases.length + 2} passed`);
+if (total !== cases.length + 2) process.exit(1);

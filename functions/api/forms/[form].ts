@@ -3,7 +3,8 @@
  * (pop-up + Patient Feedback page), Newsletter (footer + Media Hub; no consent box, D10). Validate -> verify Turnstile -> send ONE email -> answer. Nothing is stored: no
  * database, no KV, no logs of submissions (errors are logged by type only, never with field values).
  *
- * Request: multipart/form-data or urlencoded, fields per src/data/forms.json, plus
+ * Request: multipart/form-data or urlencoded, fields per src/data/forms.json (type `file` = one optional attachment, multipart only,
+ *   rules in forms.json `attachments`: extension, size and first bytes checked here, renamed, emailed, never stored; bug 093), plus
  *   consent=on (required on every form except `consent: false` ones), cf-turnstile-response (added by the Turnstile widget), edition=<global|ae|sa>-<en|ar>.
  * Response: JSON { ok: true } | { ok: false, error, fields?: { <name>: "required" | "invalid" | "too_long" } } when the
  * client asks for JSON (Accept: application/json); otherwise a 303 back to the page with ?form=sent|error, so the
@@ -18,8 +19,9 @@ import countriesData from "../../../src/data/countries.json";
 import dialData from "../../../src/data/dial-codes.json";
 import type { PagesContext } from "../../_lib/types";
 import { verifyTurnstile } from "../../_lib/turnstile";
-import { mailConfigError, sendMail } from "../../_lib/email";
+import { mailConfigError, sendMail, type Attachment } from "../../_lib/email";
 import { resolveForms, type RawForm } from "../../../src/lib/form-config";
+import { checkFile, extOf, safeName, sniff, type AttachmentRules } from "../../../src/lib/attachments";
 
 type Field = {
   name: string;
@@ -37,6 +39,7 @@ const forms = resolveForms(
 const dialCodes = new Map(dialData.countries.map((c) => [c.iso, c.code]));
 const REGIONS = ["global", "ae", "sa"];
 const MAX_BODY = 32 * 1024;
+const attachmentRules = formsConfig.attachments as AttachmentRules;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const TEL_RE = /^[0-9][0-9 ()-]{4,18}$/;
 const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -84,7 +87,11 @@ export const onRequestPost = async ({
   if (!form) return fail(404, "unknown_form");
 
   if (!originAllowed(request, env.ALLOWED_ORIGINS)) return fail(403, "origin");
-  if (Number(request.headers.get("Content-Length") ?? 0) > MAX_BODY)
+  // Text-only forms: 32 KB. A form with a file field: the file limit + room for the text fields and multipart framing.
+  const maxBody = form.fields.some((f) => f.type === "file")
+    ? attachmentRules.maxBytes + MAX_BODY
+    : MAX_BODY;
+  if (Number(request.headers.get("Content-Length") ?? 0) > maxBody)
     return fail(413, "too_large");
 
   let data: FormData;
@@ -97,7 +104,15 @@ export const onRequestPost = async ({
   // Validation (required, format, length, allowed options) + consent on every form.
   const fields: Record<string, string> = {};
   const rows: [string, string][] = [];
+  const attachments: Attachment[] = [];
   for (const f of form.fields) {
+    if (f.type === "file") {
+      const r = await readFile(f, data.get(f.name));
+      if (r.error) fields[f.name] = r.error;
+      if (r.file) attachments.push(r.file);
+      rows.push([f.label ?? f.name, r.file ? `${r.file.filename} (${Math.ceil(r.file.content.length / 1024)} KB, attached)` : ""]);
+      continue;
+    }
     const v = String(data.get(f.name) ?? "").trim();
     const error = check(f, v, data);
     if (error) fields[f.name] = error;
@@ -147,6 +162,7 @@ export const onRequestPost = async ({
         text: rows.map(([k, v]) => `${k}: ${v}`).join("\n"),
         html: `<table>${rows.map(([k, v]) => `<tr><th align="left">${esc(k)}</th><td>${esc(v).replace(/\n/g, "<br>")}</td></tr>`).join("")}</table>`,
         replyTo: EMAIL_RE.test(email) ? email : undefined,
+        ...(attachments.length ? { attachments } : {}),
       },
       env,
     );
@@ -190,6 +206,39 @@ function check(f: Field, v: string, data: FormData): string | undefined {
       return f.options && !f.options.includes(v) ? "invalid" : undefined;
   }
   return undefined;
+}
+
+/**
+ * The attachment of a `file` field: nothing (no file chosen: absent, an empty file part, or a no-JS urlencoded post that only
+ * carries a name), an error code, or the file read into memory. Never trusts the browser: the extension must be configured,
+ * the size within the limit and the first bytes must match the extension; the email's MIME type comes from the config and
+ * the name is rebuilt (no path, no control characters). The bytes live only in this request (no temp file, no log).
+ */
+async function readFile(
+  f: Field,
+  v: FormDataEntryValue | null,
+): Promise<{ error?: string; file?: Attachment }> {
+  if (!v || typeof v === "string" || (!v.name && !v.size))
+    return f.required ? { error: "required" } : {};
+  const bad = checkFile(v.name, v.size, attachmentRules);
+  if (bad) return { error: bad };
+  const ext = extOf(v.name);
+  let content: Uint8Array;
+  try {
+    content = new Uint8Array(await v.arrayBuffer());
+  } catch {
+    return { error: "file_invalid" };
+  }
+  if (content.length !== v.size || content.length > attachmentRules.maxBytes)
+    return { error: content.length > attachmentRules.maxBytes ? "file_size" : "file_invalid" };
+  if (!sniff(ext, content.subarray(0, 16))) return { error: "file_invalid" };
+  return {
+    file: {
+      filename: safeName(v.name, ext),
+      content,
+      contentType: attachmentRules.types[ext],
+    },
+  };
 }
 
 /** Value as staff read it in the email. */

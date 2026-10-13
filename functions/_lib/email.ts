@@ -1,5 +1,13 @@
 import type { Env } from './types';
 import { sendSmtp } from './smtp';
+import { base64 } from './base64';
+
+/** A file sent with the email (bug 093): already validated and renamed by the form function, held in memory only. */
+export interface Attachment {
+  filename: string;
+  content: Uint8Array;
+  contentType: string;
+}
 
 export interface Mail {
   to: string[];
@@ -7,6 +15,7 @@ export interface Mail {
   text: string;
   html: string;
   replyTo?: string;
+  attachments?: Attachment[];
 }
 
 /*
@@ -21,7 +30,11 @@ const resend: Adapter = async (m, env) => {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.EMAIL_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: env.MAIL_FROM, to: m.to, subject: m.subject, text: m.text, html: m.html, reply_to: m.replyTo }),
+    body: JSON.stringify({
+      from: env.MAIL_FROM, to: m.to, subject: m.subject, text: m.text, html: m.html, reply_to: m.replyTo,
+      // Resend takes the type from the file name (the extension was validated against the content).
+      attachments: m.attachments?.map((a) => ({ filename: a.filename, content: base64(a.content) })),
+    }),
   });
   if (!r.ok) throw new Error(`resend ${r.status}${await reason(r)}`);
 };
@@ -30,7 +43,10 @@ const postmark: Adapter = async (m, env) => {
   const r = await fetch('https://api.postmarkapp.com/email', {
     method: 'POST',
     headers: { 'X-Postmark-Server-Token': env.EMAIL_API_KEY ?? '', 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ From: env.MAIL_FROM, To: m.to.join(','), Subject: m.subject, TextBody: m.text, HtmlBody: m.html, ReplyTo: m.replyTo, MessageStream: 'outbound' }),
+    body: JSON.stringify({
+      From: env.MAIL_FROM, To: m.to.join(','), Subject: m.subject, TextBody: m.text, HtmlBody: m.html, ReplyTo: m.replyTo, MessageStream: 'outbound',
+      Attachments: m.attachments?.map((a) => ({ Name: a.filename, Content: base64(a.content), ContentType: a.contentType })),
+    }),
   });
   if (!r.ok) throw new Error(`postmark ${r.status}${await reason(r)}`);
 };
@@ -46,6 +62,7 @@ const sendgrid: Adapter = async (m, env) => {
       reply_to: m.replyTo ? { email: m.replyTo } : undefined,
       subject: m.subject,
       content: [{ type: 'text/plain', value: m.text }, { type: 'text/html', value: m.html }],
+      attachments: m.attachments?.map((a) => ({ content: base64(a.content), filename: a.filename, type: a.contentType, disposition: 'attachment' })),
       tracking_settings: { click_tracking: { enable: false }, open_tracking: { enable: false } },
     }),
   });

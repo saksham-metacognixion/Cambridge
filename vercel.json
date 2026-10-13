@@ -375,6 +375,16 @@
       "statusCode": 301
     },
     {
+      "source": "/care/home-healthcare",
+      "destination": "/care/homecare/",
+      "statusCode": 301
+    },
+    {
+      "source": "/care/home-healthcare/",
+      "destination": "/care/homecare/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/events",
       "destination": "/ar/media-hub/?category=events#latest",
       "statusCode": 301
@@ -725,6 +735,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/care/home-healthcare",
+      "destination": "/ar/care/homecare/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/care/home-healthcare/",
+      "destination": "/ar/care/homecare/",
+      "statusCode": 301
+    },
+    {
       "source": "/ae/events",
       "destination": "/ae/media-hub/?category=events#latest",
       "statusCode": 301
@@ -1072,6 +1092,16 @@
     {
       "source": "/ae/care/inpatient/pediatric-rehab/post-acute-care/",
       "destination": "/ae/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/home-healthcare",
+      "destination": "/ae/care/homecare/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/care/home-healthcare/",
+      "destination": "/ae/care/homecare/",
       "statusCode": 301
     },
     {
@@ -1872,6 +1902,16 @@
     {
       "source": "/ae/ar/care/inpatient/pediatric-rehab/post-acute-care/",
       "destination": "/ae/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/home-healthcare",
+      "destination": "/ae/ar/care/homecare/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/care/home-healthcare/",
+      "destination": "/ae/ar/care/homecare/",
       "statusCode": 301
     },
     {
@@ -2685,6 +2725,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sa/care/home-healthcare",
+      "destination": "/sa/care/homecare/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/home-healthcare/",
+      "destination": "/sa/care/homecare/",
+      "statusCode": 301
+    },
+    {
       "source": "/sa/patient-hub/find-a-doctor/ahmad-al-khayer",
       "destination": "/sa/patient-hub/find-a-doctor/",
       "statusCode": 301
@@ -3262,6 +3312,16 @@
     {
       "source": "/sa/ar/care/inpatient/pediatric-rehab/post-acute-care/",
       "destination": "/sa/ar/care/inpatient/pediatric-rehab/paediatric-post-acute-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/home-healthcare",
+      "destination": "/sa/ar/care/homecare/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/home-healthcare/",
+      "destination": "/sa/ar/care/homecare/",
       "statusCode": 301
     },
     {

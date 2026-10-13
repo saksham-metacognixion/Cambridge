@@ -81,7 +81,7 @@
    "title": "خدماتنا - مستشفى كامبريدج الامارات",
    "description": "رعاية متكاملة ومنسقة عبر خدمات للمرضى المنومين وفي العيادات الخارجية، والرعاية المنزلية، بشكل يواكب احتياجات المريض طوال رحلة التعافي."
   },
-  "/ae/ar/care/home-healthcare/": {
+  "/ae/ar/care/homecare/": {
    "title": "خدمات الرعاية الصحية المنزلية - مستشفى كامبريدج الامارات",
    "description": "رعاية منزلية مخصصة للبالغين والمراهقين والأطفال — تقدم إعادة التأهيل والتمريض والرعاية الطبية مباشرة للمريض"
   },
@@ -953,7 +953,7 @@
    "title": "Our Care - Cambridge Hospital UAE",
    "description": "Coordinated care across inpatient, outpatient, and home settings — for every stage of recovery"
   },
-  "/ae/care/home-healthcare/": {
+  "/ae/care/homecare/": {
    "title": "Home Care - Cambridge Hospital UAE",
    "description": "Personalized  home care for adults, adolescents, and children — bringing rehabilitation, nursing, and medical care directly to the patient"
   },
@@ -3466,7 +3466,7 @@
    "title": "خدماتنا - مستشفى كامبريدج السعودية",
    "description": "رعاية متصلة وشاملة تغطي خدمات المرضى المنومين، والمرضى الخارجيين، والرعاية المنزلية، مع دعم المرضى في كل مرحلة من مراحل تعافيهم."
   },
-  "/sa/ar/care/home-healthcare/": {
+  "/sa/ar/care/homecare/": {
    "title": "خدمات الرعاية الصحية المنزلية - مستشفى كامبريدج السعودية",
    "description": "خدمات الرعاية الصحية المنزلية المخصصة للبالغين واليافعين والأطفال — تقديم خدمات إعادة التأهيل والتمريض والرعاية الطبية مباشرةً للمرضى."
   },
@@ -4447,7 +4447,7 @@
    "title": "Our Care - Cambridge Hospital KSA",
    "description": "Connected care spanning inpatient, outpatient, and home-based settings — supporting patients through every phase of their recovery"
   },
-  "/sa/care/home-healthcare/": {
+  "/sa/care/homecare/": {
    "title": "Home Care - Cambridge Hospital KSA",
    "description": "Personalized home care for adults, adolescents, and children — delivering rehabilitation, nursing, and medical care directly to the patient"
   },

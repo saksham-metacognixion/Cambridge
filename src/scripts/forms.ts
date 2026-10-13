@@ -6,8 +6,11 @@
  *   - Book an Appointment: doctors filtered by speciality (and the edition's region); a trigger with data-doctor preselects
  *   - validation from the form's src/data/forms.json rules, messages from src/data/content/forms/common.<locale>.json
  *   - Turnstile rendered when a form is first used; JSON submit to the Pages Function; success message
+ *   - optional attachment (bug 093, AttachField.astro): file name + remove button, type / size checked before sending
  * Nothing is stored in the browser either (no localStorage, no drafts).
  */
+
+import { checkFile, type AttachmentRules } from "../lib/attachments";
 
 type Rule = {
   name: string;
@@ -22,6 +25,8 @@ type Config = {
   fields: Rule[];
   errors: Record<string, string>;
   sending: string;
+  /** forms with a file field: the rules + the live-region messages ({name} = the file name) */
+  attachment?: AttachmentRules & { selected: string; removed: string };
 };
 type TurnstileApi = {
   render: (el: HTMLElement, o: Record<string, unknown>) => string;
@@ -223,7 +228,51 @@ export function initForm(form: HTMLFormElement) {
   form
     .querySelectorAll<HTMLSelectElement>("[data-dial] select")
     .forEach((sel) => sel.addEventListener("change", () => syncDial(sel)));
+  // After the clear-on-change listeners above (same element: registration order), so a bad file's error stays.
+  initAttach(form);
   renderTurnstile(form);
+}
+
+/* ───────── Attachment (bug 093): one optional file, shown by name, removable; nothing kept after reset / success ───────── */
+function initAttach(form: HTMLFormElement) {
+  const c = cfg(form);
+  form.querySelectorAll<HTMLElement>("[data-attach]").forEach((box) => {
+    const input = box.querySelector<HTMLInputElement>('input[type="file"]');
+    const name = box.querySelector<HTMLElement>("[data-att-name]");
+    const remove = box.querySelector<HTMLButtonElement>("[data-att-remove]");
+    const status = box.querySelector<HTMLElement>("[data-att-status]");
+    if (!input || !name || !remove) return;
+    const sync = (say?: string) => {
+      const f = input.files?.[0];
+      box.toggleAttribute("data-has-file", !!f);
+      name.textContent = f?.name ?? "";
+      remove.hidden = !f;
+      if (status && say !== undefined) status.textContent = say;
+      const bad = f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
+      if (bad) setError(form, input.name, c.errors[bad] ?? c.errors.invalid);
+    };
+    form.addEventListener("change", (e) => {
+      if (e.target !== input) return;
+      const f = input.files?.[0];
+      sync(f ? (c.attachment?.selected ?? "").replace("{name}", f.name) : "");
+    });
+    remove.addEventListener("click", () => {
+      input.value = "";
+      clearError(form, input.name);
+      sync(c.attachment?.removed ?? "");
+      input.focus();
+    });
+    // form.reset() (success, or a reset button) clears the input after the event: sync once it has.
+    form.addEventListener("reset", () =>
+      setTimeout(() => {
+        clearError(form, input.name);
+        sync("");
+      }),
+    );
+    // A file picked before this script loaded (the change that loaded it): shown and announced now.
+    const early = input.files?.[0];
+    sync(early ? (c.attachment?.selected ?? "").replace("{name}", early.name) : undefined);
+  });
 }
 
 const cfg = (form: HTMLFormElement): Config =>
@@ -257,6 +306,13 @@ function validate(form: HTMLFormElement, c: Config): Record<string, string> {
   const out: Record<string, string> = {};
   const data = new FormData(form);
   for (const r of c.fields) {
+    if (r.type === "file") {
+      const f = controls(form, r.name)[0]?.files?.[0];
+      const bad = f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
+      if (bad) out[r.name] = bad;
+      else if (!f && r.required) out[r.name] = "required";
+      continue;
+    }
     const v = String(data.get(r.name) ?? "").trim();
     if (!v) {
       if (r.required) out[r.name] = "required";
@@ -320,6 +376,11 @@ async function submit(form: HTMLFormElement) {
       fields?: Record<string, string>;
     };
     if (res.ok && body.ok) return success(form);
+    // Body over the limit (our function: "too_large"; the host itself answers 413 without JSON): the attachment is the cause.
+    if ((res.status === 413 || body.error === "too_large") && c.attachment) {
+      const file = c.fields.find((f) => f.type === "file");
+      if (file) return showErrors(form, c, { [file.name]: "file_size" });
+    }
     if (body.error === "validation" && body.fields) {
       const mapped: Record<string, string> = {};
       for (const [k, v] of Object.entries(body.fields))

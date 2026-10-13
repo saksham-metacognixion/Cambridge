@@ -49,56 +49,9 @@
       ],
       [
         {
-          "label": "Media Hub",
-          "href": "#",
-          "page": "mediaHub"
-        }
-      ],
-      [
-        {
-          "label": "Career Hub",
-          "href": "#",
-          "page": "careers"
-        }
-      ],
-      [
-        {
-          "label": "Knowledge Centre",
-          "href": "#",
-          "query": "?category=health-articles#latest",
-          "page": "mediaHub"
-        }
-      ],
-      [
-        {
           "label": "FAQs",
           "href": "#",
           "page": "faq"
-        },
-        {
-          "label": "Your Opinion Matters",
-          "href": "#your-opinion",
-          "page": "patientFeedback"
-        }
-      ],
-      [
-        {
-          "label": "Find a Doctor",
-          "href": "#",
-          "page": "findDoctor"
-        }
-      ],
-      [
-        {
-          "label": "Search Conditions",
-          "href": "#",
-          "page": "conditions"
-        }
-      ],
-      [
-        {
-          "label": "Send an Inquiry",
-          "href": "#send-inquiry"
         }
       ]
     ]
@@ -119,7 +72,7 @@
       {
         "label": "Home Care",
         "href": "#",
-        "care": "home-healthcare"
+        "care": "homecare"
       },
       {
         "label": "In-School Care",
@@ -164,5 +117,5 @@
       "page": "privacyPolicy"
     }
   },
-  "_note": "Footer text (Figma). Quick link labels: 'Career Hub', 'Knowledge Centre' (site map, 5 Oct 2026); services = the four Our Care services ('Home Care', 'In-School Care' as in the documents; `care` = service slug in src/data/care.json). Links: `page` = key in PAGE_PATHS, `href` = literal (pop-ups). Facility names come from hospitals.json. Legal links: 'Compliance' opens the live site's GDPR Compliance page (/legal/gdpr-compliance), 'Privacy Policy' /legal/privacy-policy (WordPress export, 6 Oct 2026)."
+  "_note": "Footer text (Figma). Quick links: bug 097 (13 Oct 2026, client) removed Media Hub, Career Hub, Knowledge Centre, Your Opinion Matters, Find a Doctor, Search Conditions and Send an Inquiry to shorten the footer (FAQs kept; the pages stay in the header menus); services = the four Our Care services ('Home Care', 'In-School Care' as in the documents; `care` = service slug in src/data/care.json). Links: `page` = key in PAGE_PATHS, `href` = literal (pop-ups). Facility names come from hospitals.json. Legal links: 'Compliance' opens the live site's GDPR Compliance page (/legal/gdpr-compliance), 'Privacy Policy' /legal/privacy-policy (WordPress export, 6 Oct 2026)."
 }

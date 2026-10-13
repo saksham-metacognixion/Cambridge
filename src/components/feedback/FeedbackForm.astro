@@ -5,8 +5,12 @@
  * (card = page x 53, y 599). Every question is a radio group (fieldset + legend); the satisfaction rows are announced
  * as "<statement>, <column>" (the column headers are drawn once, visually). Figma draws all five "recommend" options
  * as selected (a state sample): nothing is preselected; unselected circles use the grey of the matrix circles.
+ * Bug 095: the five satisfaction levels are sentiment faces (RatingFace.astro, one shared sprite; provisional, F095) on the
+ * real radio inputs. Bug 094: compact desktop layout (one-line rows, horizontal recommend options, shorter textarea, tighter
+ * gaps): the form went from ~1491 to ~700 px at 1366 x 768; phones / tablets keep their stacked layout.
  */
 import FormShell from '../forms/FormShell.astro';
+import RatingFace from './RatingFace.astro';
 import DialSelect from '../forms/DialSelect.astro';
 import CenteredIntro from '../shared/CenteredIntro.astro';
 import { content } from '../../lib/content';
@@ -45,7 +49,7 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
       edition={edition}
       submit={c.submit}
       ariaLabel={c.ariaLabel}
-      gaps={{ consent: 16, submit: 16 }}
+      gaps={{ consent: 10, submit: 12 }}
       class="pf"
     >
       <!-- Name / Hospital / Mobile / Email: rows at 69 and 123, columns at 47 and 512 -->
@@ -97,10 +101,13 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
 
       {matrix.length > 0 && (
         <div class="matrix">
-          <p class="pf-q q2">{c.matrix.label}</p>
-          <div class="m-head" aria-hidden="true">
-            <span></span>
-            {cols.map((o) => <span class="m-col">{c.matrix.columns[o].map((l: string) => <span class="block">{l}</span>)}</span>)}
+          <RatingFace sprite />
+          <!-- Question + column names on one line (desktop): the question takes the label column above the row labels -->
+          <div class="m-top">
+            <p class="pf-q q2">{c.matrix.label}</p>
+            <div class="m-head" aria-hidden="true">
+              {cols.map((o) => <span class="m-col">{c.matrix.columns[o].map((l: string) => <span class="block">{l}</span>)}</span>)}
+            </div>
           </div>
           {matrix.map((f) => (
             <fieldset class="m-row" data-field={f.name} aria-describedby={`${id(f.name)}-error`}>
@@ -109,7 +116,7 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
                 {f.options!.map((o) => (
                   <label class="m-cell">
                     <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
-                    <span class="pf-radio" aria-hidden="true"><img loading="lazy" class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img loading="lazy" class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
+                    <RatingFace level={o} />
                     <span class="m-name" lang={enLang(c.matrix.columns[o].join(' '))} dir={enLang(c.matrix.columns[o].join(' ')) && 'ltr'}>{c.matrix.columns[o].map((l: string, k: number) => <span class="block">{k > 0 && ' '}{l}</span>)}</span>
                   </label>
                 ))}
@@ -151,72 +158,91 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
   /* Intro: heading + line centred on page x 530, top 502 (61 below the hero); card at 599 (the intro box keeps its 97 height) */
   .fb { box-sizing: border-box; max-inline-size: calc(var(--max-w) * 1px); margin-inline: auto; padding-block-start: calc(61 * var(--u)); }
   .intro { min-block-size: calc(97 * var(--u)); position: relative; inset-inline-start: calc(4 * var(--u)); }
+  /* Bug 094: the card hugs the compact form (was the Figma 1179 tall, padding 69 / 49) */
   .card {
     position: relative; inset-inline-start: calc(4 * var(--u)); box-sizing: border-box;
     inline-size: calc(954 * var(--u)); max-inline-size: calc(100% - 32px); margin-inline: auto;
-    min-block-size: calc(1179 * var(--u));
-    padding: calc(69 * var(--u)) calc(37.6 * var(--u)) calc(49 * var(--u)) calc(47 * var(--u));
+    padding: calc(40 * var(--u)) calc(37.6 * var(--u)) calc(32 * var(--u)) calc(47 * var(--u));
   }
   .card :global(.pf) { color: var(--color-navy); }
   /* SUBMIT: the shared .ui-btn, centred on the content box (bugs 044 / 050) */
 
   /* Fields: fill rgba(217,217,217,.5), radius --radius-field (bug 049), h 35; labels Gotham Book 15 / 18.82, text 8 below the box top */
-  .contact { display: grid; grid-template-columns: calc(465 * var(--u)) minmax(0, 1fr); row-gap: calc(19 * var(--u)); align-items: start; }
+  .contact { display: grid; grid-template-columns: calc(465 * var(--u)) minmax(0, 1fr); row-gap: calc(12 * var(--u)); align-items: start; }
   .mobile .pf-row { margin-inline-start: calc(1 * var(--u)); }
 
   fieldset { margin: 0; padding: 0; border: 0; min-inline-size: 0; }
   /* Order (client's form, 5 Oct 2026): satisfaction matrix first, then the recommend question, then "Tell us more".
-     Matrix question 63 below the contact rows (the Figma gap after them); recommend question 33.18 below the last matrix row
-     (the Figma gap between the two groups); options from +48, every 28 */
-  .recommend { margin-block-start: calc(33.18 * var(--u)); }
-  .recommend > legend { float: inline-start; inline-size: calc(543 * var(--u)); max-inline-size: 100%; min-block-size: calc(48 * var(--u)); }
-  .nps { clear: both; display: flex; flex-direction: column; gap: calc(9.18 * var(--u)); }
-  .nps-opt { display: flex; align-items: center; gap: calc(8.19 * var(--u)); inline-size: max-content; min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+     Bug 094 (desktop): blocks 14-16 Figma px apart instead of 22-63; the recommend options on one line. */
+  .recommend { margin-block-start: calc(16 * var(--u)); }
+  .recommend > legend { float: inline-start; inline-size: 100%; margin-block-end: calc(6 * var(--u)); }
+  .nps { clear: both; display: flex; flex-wrap: wrap; column-gap: calc(30 * var(--u)); row-gap: calc(8 * var(--u)); }
+  .nps-opt { display: flex; align-items: center; gap: calc(8.19 * var(--u)); inline-size: max-content; min-block-size: calc(22 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
 
-  /* Satisfaction: question at 433 (33.18 below the last option); header row 491; rows at 539 + 58n; label x 50.
-     Columns (from x 50): label 236 | cells 96 wide centred on 284 / 424 / 549 / 657 / 765 */
-  .matrix { margin-block-start: calc(63 * var(--u)); --cols: calc(236 * var(--u)) calc(96 * var(--u)) calc(44 * var(--u)) calc(96 * var(--u)) calc(29 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)) calc(12 * var(--u)) calc(96 * var(--u)); }
-  .q2 { inline-size: calc(612 * var(--u)); max-inline-size: 100%; min-block-size: calc(58 * var(--u)); }
-  .m-head { display: grid; grid-template-columns: var(--cols); align-items: center; min-block-size: calc(37.64 * var(--u)); margin-inline-start: calc(3 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); text-align: center; }
-  .m-head > :nth-child(2) { grid-column: 2; } .m-head > :nth-child(3) { grid-column: 4; } .m-head > :nth-child(4) { grid-column: 6; } .m-head > :nth-child(5) { grid-column: 8; } .m-head > :nth-child(6) { grid-column: 10; }
-  .m-row { margin-block-start: calc(10.36 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
-  .m-row + .m-row { margin-block-start: calc(20.36 * var(--u)); }
-  .m-legend { float: inline-start; box-sizing: border-box; inline-size: calc(236 * var(--u)); min-block-size: calc(37.64 * var(--u)); padding: 0; padding-inline-end: calc(21 * var(--u));   /* Figma text box 215 */ font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
-  .m-cells { display: flex; padding-block-start: calc(9 * var(--u)); }
-  .m-cell { display: flex; justify-content: center; inline-size: calc(96 * var(--u)); min-block-size: calc(13 * var(--u)); cursor: pointer; }
-  .m-cell:nth-child(2) { margin-inline-start: calc(44 * var(--u)); } .m-cell:nth-child(3) { margin-inline-start: calc(29 * var(--u)); }
-  .m-cell:nth-child(4), .m-cell:nth-child(5) { margin-inline-start: calc(12 * var(--u)); }
+  /* Satisfaction matrix (bug 094): the question shares a line with the column names; each row is one line (label column =
+     the width left of the five 88-wide columns), face rows 26 apart. Legends wrap rather than clip if a label is longer. */
+  .matrix { --cell: calc(88 * var(--u)); --face-size: 22; margin-block-start: calc(16 * var(--u)); }
+  .m-top { display: flex; align-items: flex-end; }
+  .q2 { flex: 1 1 auto; min-inline-size: 0; padding-inline-end: calc(12 * var(--u)); padding-block-end: calc(2 * var(--u)); }
+  .m-head { display: flex; flex: none; font-size: calc(13 * var(--u)); line-height: calc(16 * var(--u)); text-align: center; }
+  .m-col { inline-size: var(--cell); }
+  .m-row { margin-block-start: calc(10 * var(--u)); }
+  .m-row + .m-row { margin-block-start: calc(4 * var(--u)); }
+  .m-legend { float: inline-start; box-sizing: border-box; inline-size: calc(100% - 5 * var(--cell)); min-block-size: calc(var(--face-size) * var(--u)); padding: calc(2 * var(--u)) 0 0; padding-inline-end: calc(12 * var(--u)); font-size: calc(14 * var(--u)); line-height: calc(18 * var(--u)); }
+  .m-cells { display: flex; }
+  .m-cell { position: relative; display: flex; justify-content: center; align-items: center; inline-size: var(--cell); min-block-size: calc(var(--face-size) * var(--u)); cursor: pointer; }
   .m-name { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .m-cell { position: relative; }
   .m-cell::before { content: ''; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; translate: -50% -50%; inline-size: 44px; block-size: 44px; }   /* 44px hit area */
   :global([dir='rtl']) .m-cell::before { translate: 50% -50%; }
   .m-row .f-err { clear: both; }
 
-  /* Tell us more: label 22.36 below the last option, textarea (50, +39) 797x194 radius --radius-field (bug 049), placeholder Book 11 at (18, 17) */
-  .improve { margin-block-start: calc(22.36 * var(--u)); }
-  .q3 { min-block-size: calc(39 * var(--u)); }
-  .pf-area { inline-size: calc(797 * var(--u)); block-size: calc(194 * var(--u)); margin-inline-start: calc(3 * var(--u)); border-radius: var(--radius-field); padding: calc(17 * var(--u)) calc(18 * var(--u)); resize: none; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
+  /* Sentiment faces (bug 095, RatingFace.astro; colours provisional in src/data/rating-faces.json). Unselected: Deep Teal face on
+     a light tint of its level colour; hover: a stronger tint; selected: the full colour + a Deep Teal ring (white gap), so the
+     choice shows on every colour; keyboard focus: a dashed Deep Teal outline outside the ring. Forced colours: a system ring. */
+  .m-cell :global(.rface) {
+    --face-fill: color-mix(in srgb, var(--face) 22%, #fff);
+    flex: none; display: block; inline-size: calc(var(--face-size) * var(--u)); block-size: calc(var(--face-size) * var(--u)); border-radius: 50%; color: var(--color-navy);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .m-cell:hover :global(.rface) { --face-fill: color-mix(in srgb, var(--face) 50%, #fff); }
+  .m-cell input:checked + :global(.rface) { --face-fill: var(--face); transform: scale(1.12); box-shadow: 0 0 0 calc(1.5 * var(--u)) #fff, 0 0 0 calc(3 * var(--u)) var(--color-navy); }
+  .m-cell input:focus-visible + :global(.rface) { outline: calc(1.5 * var(--u)) dashed var(--color-navy); outline-offset: calc(5 * var(--u)); }
+  @media (forced-colors: active) {
+    .m-cell input:checked + :global(.rface) { outline: 3px solid Highlight; outline-offset: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .m-cell :global(.rface) { transition: none; } }
+
+  /* Tell us more (bug 094): the box 72 Figma px tall (~5 lines) instead of 194; radius --radius-field (bug 049), placeholder Book 11 */
+  .improve { margin-block-start: calc(14 * var(--u)); }
+  .q3 { margin-block-end: calc(6 * var(--u)); }
+  .pf-area { inline-size: calc(797 * var(--u)); block-size: calc(72 * var(--u)); margin-inline-start: calc(3 * var(--u)); border-radius: var(--radius-field); padding: calc(12 * var(--u)) calc(18 * var(--u)); resize: vertical; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
   .card :global(.f-consent) { margin-inline-start: calc(3 * var(--u)); }
 
-  /* Below 1024: one column; the satisfaction rows show each column name under its circle */
+  /* Below 1024: one column; the satisfaction rows show each column name under its face */
   @media (max-width: 1023.98px) {
-    .card { inline-size: auto; inset-inline-start: 0; padding: 24px 16px; min-block-size: 0; }
+    .card { inline-size: auto; inset-inline-start: 0; padding: 24px 16px; }
     .intro { inset-inline-start: 0; min-block-size: 0; margin-block-end: 24px; }
-    .contact { grid-template-columns: minmax(0, 1fr); }
+    .contact { grid-template-columns: minmax(0, 1fr); row-gap: calc(19 * var(--u)); }
+    .matrix { margin-block-start: 32px; }
+    .m-top { display: block; }
     .m-head { display: none; }
-    .q2, .recommend > legend { inline-size: auto; min-block-size: 0; margin-block-end: 12px; }
-    .m-row, .m-row + .m-row { margin-block-start: 20px; margin-inline-start: 0; }
-    .m-legend { float: none; inline-size: auto; min-block-size: 0; margin-block-end: 8px; }
+    .q2, .recommend > legend { inline-size: auto; padding: 0; margin-block-end: 12px; }
+    .m-row, .m-row + .m-row { margin-block-start: 20px; }
+    .m-legend { float: none; inline-size: auto; min-block-size: 0; padding: 0; margin-block-end: 8px; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
     .m-cells { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 0; }
-    .m-cell, .m-cell:nth-child(n) { margin: 0; inline-size: auto; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; min-block-size: 44px; }
+    .m-cell { margin: 0; inline-size: auto; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; min-block-size: 44px; padding-block-start: 4px; }
     /* Five columns are narrower than "Dissatisfied" up to ~375 px: it breaks at the soft hyphens in feedback.en.json ("Dissatis-fied")
        instead of anywhere ("Dissatisfie/d", mobile QA M1, 13 Oct 2026); each label line is its own block so "Very" never pulls half
        a word up next to it. `hyphens: auto` was not used: Chrome / Firefox did not hyphenate here. */
     .m-name { position: static; inline-size: auto; block-size: auto; clip-path: none; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: calc(8 * var(--u)); line-height: 1.2; }
+    .m-cell input:checked ~ .m-name { font-weight: 500; }
     .m-cell::before { display: none; }
-    /* Recommend options: each row a full-width 44 px tap target (was 18.82u = 26 px, mobile QA M2); the rows move ~6 px further apart */
-    .nps { gap: 0; }
+    .recommend { margin-block-start: 32px; }
+    /* Recommend options: each row a full-width 44 px tap target (was 18.82u = 26 px, mobile QA M2); stacked on phones / tablets */
+    .nps { flex-direction: column; flex-wrap: nowrap; gap: 0; }
     .nps-opt { inline-size: 100%; min-block-size: 44px; }
+    .improve { margin-block-start: 28px; }
+    .pf-area { block-size: calc(96 * var(--u)); }
     .pf-area, .card :global(.f-consent) { margin-inline-start: 0; inline-size: 100%; }
   }
   @media (max-width: 767.98px) {

@@ -74,7 +74,7 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
     {items.map((t, i) => (
       <div role="tabpanel" id={id('panel', i)} class="panel" aria-labelledby={id('tab', i)} tabindex="0" hidden={i !== active} style={`--r:${2 * i + 2}`}>
         {photos[i] && (
-          <Picture src={photos[i]!.src} formats={['avif']} fallbackFormat="webp" width={px(photos[i]!.w)} height={px(photos[i]!.h)} widths={[px(photos[i]!.w), px(photos[i]!.w) * 2]} sizes={vwSizes(photos[i]!.w)} loading="lazy" decoding="async" alt={photos[i]!.alt} class="art" pictureAttributes={{ class: 'contents' }} style={`--ax:${photos[i]!.x - panelX};--ay:${photos[i]!.y - panelY};--aw:${photos[i]!.w};--ah:${photos[i]!.h}`} />
+          <Picture src={photos[i]!.src} formats={['avif']} fallbackFormat="webp" width={px(photos[i]!.w)} height={px(photos[i]!.h)} position={photos[i]!.position} widths={[px(photos[i]!.w), px(photos[i]!.w) * 2]} sizes={vwSizes(photos[i]!.w)} loading="lazy" decoding="async" alt={photos[i]!.alt} class="art" pictureAttributes={{ class: 'contents' }} style={`--ax:${photos[i]!.x - panelX};--ay:${photos[i]!.y - panelY};--aw:${photos[i]!.w};--ah:${photos[i]!.h}`} />
         )}
         {t.blocks.length === 0 && pending && <p class="pending">{pending}</p>}
         {t.blocks.map((b) =>

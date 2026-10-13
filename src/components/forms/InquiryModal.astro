@@ -7,6 +7,7 @@
 import Modal from './Modal.astro';
 import FormShell from './FormShell.astro';
 import GlassField from './GlassField.astro';
+import AttachField from './AttachField.astro';
 import { content } from '../../lib/content';
 import { commonText, fieldsIn } from '../../lib/forms';
 import type { Edition } from '../../lib/editions';
@@ -33,6 +34,8 @@ const area = { w: 256, h: 115.552, px: 13, py: 10.4, fs: 10 };
       {fieldsIn(ID, 'details').map((f) => (
         <GlassField form={ID} edition={edition} dialLabel={common.dialCodeLabel} field={f} text={c.fields[f.name] ?? {}} area={f.type === 'textarea' ? area : undefined} />
       ))}
+      {/* Bug 093: optional attachment under the message box (not in Figma; forms.json ui.group "attach") */}
+      {fieldsIn(ID, 'attach').map((f) => <AttachField form={ID} edition={edition} variant="glass" name={f.name} />)}
     </div>
   </FormShell>
 </Modal>

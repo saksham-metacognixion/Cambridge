@@ -5,6 +5,7 @@ import doctorsData from "../data/doctors.json";
 import hospitalsData from "../data/hospitals.json";
 import countriesData from "../data/countries.json";
 import { content, t } from "./content";
+import { acceptAttr, sizeLabel, typeList, type AttachmentRules } from "./attachments";
 import type { Edition, LocaleId } from "./editions";
 
 /*
@@ -23,7 +24,8 @@ export interface FieldConfig {
     | "select"
     | "radio"
     | "rating"
-    | "textarea";
+    | "textarea"
+    | "file";
   required: boolean;
   max?: number;
   options?: string[];
@@ -92,9 +94,21 @@ export function sourceOptions(
 /** Shared text (consent, close, errors, success) for a locale. */
 export const commonText = (locale: LocaleId) => content("forms/common", locale);
 
+/** Attachment rules (bug 093, src/data/forms.json `attachments`, provisional) and whether a form has a file field. */
+export const attachmentRules = config.attachments as AttachmentRules;
+export const hasFile = (id: string) => formConfig(id).fields.some((f) => f.type === "file");
+
+/** Text of the attachment field with the configured types / size filled in ({types}, {size}). */
+export function attachText(locale: LocaleId) {
+  const a = commonText(locale).attach;
+  const fill = (s: string) => s.replace("{types}", typeList(attachmentRules, a.or)).replace("{size}", sizeLabel(attachmentRules.maxBytes));
+  return { ...a, hint: fill(a.hint), fileType: fill(a.errors.file_type), fileSize: fill(a.errors.file_size), accept: acceptAttr(attachmentRules) };
+}
+
 /** What the browser script needs to validate a form: the rules from the config + the error strings. */
 export function clientConfig(id: string, locale: LocaleId) {
   const c = commonText(locale);
+  const file = hasFile(id) ? attachText(locale) : undefined;
   return JSON.stringify({
     id,
     consent: formConfig(id).consent,
@@ -107,8 +121,11 @@ export function clientConfig(id: string, locale: LocaleId) {
         options,
       }),
     ),
-    errors: c.errors,
+    errors: file
+      ? { ...c.errors, file_type: file.fileType, file_size: file.fileSize, file_invalid: file.errors.file_invalid }
+      : c.errors,
     sending: c.sending,
+    ...(file ? { attachment: { ...attachmentRules, selected: file.selected, removed: file.removed } } : {}),
   });
 }
 

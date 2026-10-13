@@ -28,5 +28,19 @@
     "title": "Thank you",
     "text": "Your message has been sent. Our team will contact you soon."
   },
-  "sending": "Sending…"
+  "sending": "Sending…",
+  "attach": {
+    "$comment": "Bug 093: optional attachment on the Send an Enquiry forms (Contact page, pop-up, Home). Not in Figma; the label is the issue tracker's wording, the rest needs Pramod's approval (English) and his Arabic text (common.ar.json is empty: English shows on Arabic pages, as for every other shared form string). {types} / {size} are filled from src/data/forms.json `attachments`.",
+    "label": "Attach file (optional)",
+    "hint": "{types}, up to {size}",
+    "or": "or",
+    "remove": "Remove attachment",
+    "selected": "File attached: {name}",
+    "removed": "Attachment removed",
+    "errors": {
+      "file_type": "Please choose a {types} file.",
+      "file_size": "This file is too large. The maximum size is {size}.",
+      "file_invalid": "This file could not be read. Please choose another file."
+    }
+  }
 }

@@ -37,8 +37,13 @@ const MEET_THE_TEAM = (PAGE_PATHS as Record<string, string>).meetTheTeam as
 const meetTheTeamFor = (e: (typeof editions)[number]) =>
   urlFor(e, MEET_THE_TEAM ?? PAGE_PATHS.about);
 
-/** Our care.json slug -> the live site's slug, where they differ (the live /ae and /sa page sitemaps, 9 Oct 2026). */
+/**
+ * Our care.json slug -> the live site's slug, where they differ (the live /ae and /sa page sitemaps, 9 Oct 2026).
+ * homecare: client bug 096 (13 Oct 2026) renamed the live /care/home-healthcare/ to match the section name (SEO-sensitive,
+ * client to confirm before go-live: docs/open-decisions.md U9).
+ */
 const LIVE_CARE_SLUGS: Record<string, string> = {
+  homecare: "home-healthcare",
   "central-nervous-system": "central-nervous-system-anomalies-rehab",
   "long-term-cardiac": "long-term-cardiac-anomalies-rehab",
   "paediatric-post-acute-rehab": "post-acute-care",

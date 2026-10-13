@@ -20,14 +20,19 @@ const logo = img(c.logo.image, edition.region);
 // Figma top-row boxes. The first box = "We are listening" (scope 2.5, not in the Figma header): only used while that link is on
 // (src/data/nav.json weAreListeningTarget; off since bug 045), placed between the logo (ends 293) and the Opinion icon (394).
 const listeningBox = { l: 305, w: 72 };
-// Arabic (GE SS Two, BG2, 8 Oct 2026): the labels are wider than the English boxes (Careers ran into Articles, FAQs past the
-// separator at 828), so the last four sit evenly between 532 and 820 at their measured GE SS Two widths (59 / 58 / 65 / 63).
+// Top-row start (13 Oct 2026, client screenshot of Figma 93:894): in Figma the Opinion icon (394), the rule (393) and "About
+// Cambridge" (393) share one start edge. The main nav starts at 331 since bug 046 (it is ~40 wider than Figma's with the dropdown
+// chevrons and would run into Book at 393), so the top row's leading group (icon, Your Opinion Matters, first separator) moves
+// with it by TOP_SHIFT, keeping Figma's own offsets (icon nav + 1, Opinion + 15, separator 11 after the Opinion box, first link 17
+// after it). Keep TOP_X equal to .mainnav --l in the CSS below.
+const TOP_X = 331;
+const TOP_SHIFT = 393 - TOP_X;
+// The four links after the separator sit evenly between the first link (532 - TOP_SHIFT) and the separator before the language
+// chip (828) at their measured widths: Arabic (GE SS Two, BG2, 8 Oct 2026) 59 / 58 / 65 / 63 up to 820; English (Gotham Book)
+// 48 / 51 / 83 / 24 up to FAQs' Figma end 807 ("Career Hub" is wider than Figma's "Careers", so Figma's own boxes left uneven gaps).
 const topLinkBoxes = edition.locale === 'ar'
-  ? [ { l: 408, w: 96 }, { l: 532, w: 59 }, { l: 606, w: 58 }, { l: 678, w: 65 }, { l: 757, w: 63 } ]
-  // English (13 Oct 2026, client screenshot): "Career Hub" is wider than Figma's "Careers" (36), so in Figma's boxes it ended
-  // 11 before Knowledge Centre while the other gaps were 26. The last four sit evenly between Figma's 532 and FAQs' end (807) at
-  // their measured Gotham Book widths (48 / 51 / 83 / 24): equal gaps of 23, as in Figma's evenly spaced row.
-  : [ { l: 408, w: 96 }, { l: 532, w: 48 }, { l: 603, w: 51 }, { l: 677, w: 83 }, { l: 783, w: 24 } ];
+  ? [ { l: 346, w: 96 }, { l: 470, w: 59 }, { l: 564, w: 58 }, { l: 657, w: 65 }, { l: 757, w: 63 } ]
+  : [ { l: 346, w: 96 }, { l: 470, w: 48 }, { l: 562, w: 51 }, { l: 656, w: 83 }, { l: 783, w: 24 } ];
 // `path` = page inside the edition (+ optional `query`, e.g. Knowledge Center -> Media Hub health articles, docs/open-decisions.md LA1).
 // `page` = key in PAGE_PATHS (preferred), `path` = literal path inside the edition.
 const target = (x: { href: string; path?: string; page?: string; query?: string }) => (x.page !== undefined ? urlFor(edition, pagePath(x.page)) : x.path !== undefined ? urlFor(edition, x.path) : x.href) + (x.query ?? '');
@@ -72,7 +77,7 @@ const langs = (['en', 'ar'] as const).map((id) => ({
   ...langBoxes[id],
 }));
 const pillL = langBoxes[edition.locale].l - 5;
-const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
+const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
 ---
 
 <header class="hd relative z-50 bg-white shadow-bar font-gotham" data-sticky-header>
@@ -85,7 +90,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515, 25] ];
     <label for="nav-toggle" class="burger" aria-hidden="true"><span></span><span></span><span></span></label>
 
     <nav class="menu" aria-label={c.menuLabel}>
-      <img class="a deco" style="--l:394;--t:32;--w:10;--ph:10" src={vector.src} width="10" height="10" alt="" />
+      <img class="a deco" style={`--l:${394 - TOP_SHIFT};--t:32;--w:10;--ph:10`} src={vector.src} width="10" height="10" alt="" />
       <ul class="toplinks">
         {topLinks.map((x) => (
           <li class="a" style={`--l:${x.l};--t:33;--w:${x.w};--ph:15`}>

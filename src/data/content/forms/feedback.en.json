@@ -84,23 +84,23 @@
     "columns": {
       "very-dissatisfied": [
         "Very",
-        "Dissatisfied"
+        "Dis\u00adsat\u00adis\u00adfied"
       ],
       "dissatisfied": [
-        "Dissatisfied"
+        "Dis\u00adsat\u00adis\u00adfied"
       ],
       "neutral": [
         "Neutral"
       ],
       "satisfied": [
-        "Satisfied"
+        "Sat\u00adis\u00adfied"
       ],
       "very-satisfied": [
         "Very",
-        "Satisfied"
+        "Sat\u00adis\u00adfied"
       ]
     }
   },
   "submit": "SUBMIT",
-  "_note": "Your Opinion Matters / Patient Feedback page (Figma 188:964). Text = Website Content - Suhad/Navigation Bar/EN - Your Opinion Matters.md ('New Text' column, 5 Oct 2026): hero 'Your Experience Matters to Us' + text, intro 'We’re Listening', the rating matrix first ('How would you rate your experience?', six rows incl. the new 'Responsiveness of our staff to your needs'), then the recommend question, then 'Tell us more'. The document's five-star recommendation is logged, not built (docs/open-decisions.md CT10). Fields: src/data/forms.json 'feedback'."
+  "_note": "Your Opinion Matters / Patient Feedback page (Figma 188:964). Text = Website Content - Suhad/Navigation Bar/EN - Your Opinion Matters.md ('New Text' column, 5 Oct 2026): hero 'Your Experience Matters to Us' + text, intro 'We’re Listening', the rating matrix first ('How would you rate your experience?', six rows incl. the new 'Responsiveness of our staff to your needs'), then the recommend question, then 'Tell us more'. The document's five-star recommendation is logged, not built (docs/open-decisions.md CT10). Fields: src/data/forms.json 'feedback'. matrix.columns: \u00ad = soft hyphens (invisible unless the word breaks): on phones the five columns are narrower than \"Dissatisfied\" up to ~375px, so it breaks as \"Dissatis-fied\" in every browser, not mid-letter (mobile QA M1, 13 Oct 2026)."
 }

@@ -31,13 +31,16 @@ const c = content('layout/pagination', edition.locale)[mode];
   .pgn-dot::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 24px); height: 44px; } /* hit layer */
   .pgn-dot:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   @media (hover: hover) { .pgn-dot:hover::before { background: var(--pgn-on); } }
-  @media (pointer: coarse) { .pgn { gap: max(0px, 24px - 11.1 * var(--u)); } }
+  /* Touch: 44 x 44 hit layer per dot, dots 44 apart so the layers never overlap (mobile QA L1, 13 Oct 2026; was 24 wide). The
+     drawn dot is unchanged; mouse / trackpad keep the Figma spacing. */
+  @media (pointer: coarse) { .pgn { gap: max(0px, 44px - 11.1 * var(--u)); } .pgn-dot::after { width: max(100%, 44px); } }
   /* Below 600px only a window of 7 dots around the current one is shown (bug 023, src/scripts/pagination.ts); the edge dots
      with more beyond them are smaller. The line never gets wider than the phone and keeps a margin on both sides. */
   @media (max-width: 599.98px) {
     .pgn { max-width: calc(100% - 32px); margin-inline: auto; }
-    .pgn-dot[data-out] { display: none; }
-    .pgn-dot[data-edge]:not([aria-current='true'])::before { width: calc(4.5 * var(--u)); height: calc(4.5 * var(--u)); }
   }
+  /* the window (pagination.ts): below 600 at most 7 dots, and on any width no more than fit the line (44 px touch spacing) */
+  .pgn-dot[data-out] { display: none; }
+  .pgn-dot[data-edge]:not([aria-current='true'])::before { width: calc(4.5 * var(--u)); height: calc(4.5 * var(--u)); }
   @media (prefers-reduced-motion: reduce) { .pgn-dot::before { transition: none; } }
 </style>

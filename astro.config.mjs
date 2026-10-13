@@ -132,6 +132,11 @@ export default defineConfig({
     plugins: [tailwindcss(), devTrailingSlash()],
     // Staging: the dev server is exposed through ngrok (finalist-tamale-rhyme.ngrok-free.dev);
     // Vite blocks unknown Host headers unless listed here.
-    server: { allowedHosts: ['.ngrok-free.dev', '.ngrok-free.app', '.ngrok.app'] },
+    server: {
+      allowedHosts: ['.ngrok-free.dev', '.ngrok-free.app', '.ngrok.app'],
+      // .astro/ holds the QA scratch builds (many GB, rewritten while QA runs); watching it and the docs/figma-cache exports
+      // stalled the dev server (transport invoke timeouts on global.css).
+      watch: { ignored: ['**/.astro/**', '**/dist/**', '**/docs/**', '**/figma-cache/**'] },
+    },
   },
 });

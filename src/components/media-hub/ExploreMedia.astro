@@ -48,7 +48,8 @@ const tiles = c.tiles.map((t: any, i: number) => ({
   </div>
 
   <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below.
-       Each tile fades in when it comes into view, as on the live Media Hub (data-aos="fade", 0.8s, scripts/aos.ts). -->
+       The tiles fade in when the row comes into view, as on the live Media Hub (data-aos="fade", 0.8s, scripts/aos.ts); swiping
+       the row never hides them (they follow the row, not their own sideways position, mobile QA M3). -->
   <!-- Beyond 1440px (responsive audit 9 Oct 2026) the row keeps its Figma start on the centred stage (48 + the page gutter, global.css --gutter) and runs off the real screen edge. -->
   <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-[calc(48*var(--u)+var(--gutter))] lg:pe-[calc(47*var(--u)+var(--gutter))]" data-tiles>
     {
@@ -73,10 +74,8 @@ const tiles = c.tiles.map((t: any, i: number) => ({
             <Image src={overlay} width={px(222)} height={px(342)} format="webp" alt="" loading="lazy" class="absolute inset-0 block h-full w-full max-w-none" />
           </div>
           <div class="absolute inset-0 flex flex-col items-start justify-end ps-16 pe-10 pb-22">
-            <span class="block rounded-(--radius-btn) bg-cyan px-[calc(4.2*var(--u))] py-[calc(3.7*var(--u))] font-gotham font-medium text-f12p61 leading-[calc(15.367*var(--u))] text-navy uppercase not-italic whitespace-nowrap">{t.label}</span>
-            <h3 class="m-0 mt-5 w-190 max-w-full font-gotham font-medium text-f20p26 leading-24 text-white not-italic [word-break:break-word]">
-              <a href={t.href} class="tile-link text-inherit no-underline">{t.title}</a>
-            </h3>
+            <!-- Category pill only, no title under it (user, 13 Oct 2026); the pill is the tile's one link. -->
+            <a href={t.href} class="tile-link block rounded-(--radius-btn) bg-cyan px-[calc(4.2*var(--u))] py-[calc(3.7*var(--u))] font-gotham font-medium text-f12p61 leading-[calc(15.367*var(--u))] text-navy uppercase not-italic whitespace-nowrap no-underline">{t.label}</a>
           </div>
           <span class="pointer-events-none absolute flex items-center justify-center rtl:-scale-x-100" style={`inset-inline-start:calc(${t.corner.x} * var(--u));top:calc(${t.corner.y} * var(--u));width:calc(${t.corner.w} * var(--u));height:calc(${t.corner.h} * var(--u))`} aria-hidden="true">
             <img loading="lazy" src={t.corner.icon.src} width={t.corner.icon.width} height={t.corner.icon.height} alt="" class="block flex-none" style={`width:calc(29.6 * var(--u));height:calc(29.6 * var(--u));transform:${t.corner.rot}`} />

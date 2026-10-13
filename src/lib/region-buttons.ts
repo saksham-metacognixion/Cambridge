@@ -5,7 +5,7 @@ import { getEdition, urlFor, type Edition, type RegionId } from "./editions";
 /**
  * Country buttons on the Global care cards (client sheet "CH Website Comments.xlsx", 13 Oct 2026, rows 6 + 12: "these should
  * be UAE and KSA, not Start Your Care"). On the Global edition a card that opens a care page gets one button per country
- * where that page exists (careInRegion, so In-School Care shows KSA only: care.json regions, client sheet row 6 + user decision 13 Oct 2026), each opening the same page in that country's
+ * where that page exists (careInRegion, so In-School Care shows UAE only, as on the live site), each opening the same page in that country's
  * edition, same language. Labels = the header's region names (approved Arabic, layout/header.<locale>.json).
  * Returns null on /ae and /sa (the country is already chosen: the card keeps its single button).
  */

@@ -9,6 +9,8 @@ import type { Edition } from '../../lib/editions';
  * Reusable ARIA tabs (WAI-ARIA tablist / tab / tabpanel, vertical): used by the detail-page topics (Figma 41:2373) and
  * both lists on Careers (112:7295). Behaviour: src/scripts/tabs.ts (arrow keys / Home / End, roving tabindex, Left/Right
  * mirrored on RTL). Without JS the default tab's panel is visible (the others carry `hidden`).
+ * Look: the live site's tabs since 13 Oct 2026 (client: "exactly as live"; values at `const L` below). Was Figma 311 x 63, Book 13/14,
+ * active #418ea2 with a text shadow, others rgba(231,231,231,.45). Figma notes kept for history:
  * Look (Figma px): tabs 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25; active #418ea2, white text with
  * text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059. The panel sits `gap` right of the tabs
  * (18 on detail pages, 24 on Careers), `top` below the tabs top (1 / 27), `width` wide (610 / 529 / 441), Book 12/14 #6b6b6b.
@@ -39,6 +41,8 @@ interface Props {
   /** page x / y of the panel text box, so `item.image` positions are page coordinates (Figma px) */
   panelX?: number;
   panelY?: number;
+  /** keep `item.image` in the panel's flow on desktop too: centred at the panel top, 32 px (23.378 Figma px) above the text (live Accreditations) */
+  artFlow?: boolean;
   active?: number;
   /** id prefix: two tab lists on one page need different ids */
   idPrefix?: string;
@@ -48,14 +52,17 @@ interface Props {
   top?: number;
   width?: number;
 }
-const { edition, label, items, active: activeIn = 0, idPrefix = '', pending, gap = 18, top = 1, width = 610, look = {}, panelX = 0, panelY = 0 } = Astro.props;
-const L = { tabH: 63, tabGap: 2, fontSize: 13, lineHeight: 14, activeWeight: 400, shadow: true, center: false, padStart: 24, labelW: 265, ...look };
+const { edition, label, items, active: activeIn = 0, idPrefix = '', pending, gap = 21.917, top = 1, width = 610, look = {}, panelX = 0, panelY = 0, artFlow = false } = Astro.props;
+// Defaults = the live site's Greenshift tabs (client 13 Oct 2026: "exactly as live"; saved live Who We Are / Accreditations / FAQs,
+// docs/live-save-13oct), in Figma px at 1440 (px / 1.3688): 375 x 56 (two lines 88), 8 apart, label Book 16 on a 32 line at 25 in
+// (24 padding + 1 border), centred vertically, radius 14, inactive #f5f5f5, no text shadow; the panel 30 right of the tabs.
+const L = { tabH: 40.912, tabGap: 5.845, fontSize: 11.689, lineHeight: 23.378, activeWeight: 400, shadow: false, center: true, padStart: 18.264, labelW: 237.43, ...look };
 const photos = items.map((t) => (t.image ? { ...t.image, src: img(t.image.image, edition.region) } : null));
 const active = Math.min(activeIn, Math.max(items.length - 1, 0));
 const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
 ---
 
-<div class:list={['topics', L.center && 'centered']} data-tabs style={`--rows:${items.length * 2};--pg:${gap};--pt:${top};--pw:${width};--th:${L.tabH};--tgp:${L.tabGap};--tfs:${L.fontSize};--tlh:${L.lineHeight};--taw:${L.activeWeight};--tsh:${L.shadow ? 1 : 0};--tps:${L.padStart};--tlw:${L.labelW}`}>
+<div class:list={['topics', L.center && 'centered', artFlow && 'art-flow']} data-tabs style={`--rows:${items.length * 2};--pg:${gap};--pt:${top};--pw:${width};--th:${L.tabH};--tgp:${L.tabGap};--tfs:${L.fontSize};--tlh:${L.lineHeight};--taw:${L.activeWeight};--tsh:${L.shadow ? 1 : 0};--tps:${L.padStart};--tlw:${L.labelW}`}>
   <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={label}>
     {items.map((t, i) => (
       <button type="button" role="tab" id={id('tab', i)} class="tab ui-tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={id('panel', i)} tabindex={i === active ? 0 : -1} style={`--r:${2 * i + 1}`}>
@@ -99,9 +106,9 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
 <style>
   .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
   .tablist { display: flex; flex-direction: column; gap: calc(var(--tgp, 2) * var(--u)); }
-  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(var(--th, 63) * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(var(--tps, 24) * var(--u)) calc(22 * var(--u)); border: 0; border-radius: var(--radius-btn); background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(var(--tfs, 13) * var(--u)) / calc(var(--tlh, 14) * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; }
+  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: max(44px, calc(var(--th, 63) * var(--u))); margin: 0; padding-block: calc(8.767 * var(--u)); padding-inline: calc(var(--tps, 24) * var(--u)); border: 0; border-radius: calc(10.228 * var(--u)); background: #f5f5f5; color: var(--color-navy); font: 400 calc(var(--tfs, 13) * var(--u)) / calc(var(--tlh, 14) * var(--u)) var(--font-gotham); text-align: start; cursor: pointer; } /* min-height >= 44 px: touch target (bug 090, the scaled 56 px is 40 at 1024) */
   .tab[aria-selected='true'] { background: var(--tab-selected); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
-  .centered .tab { align-items: center; padding-block: 0; }
+  .centered .tab { align-items: center; }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
   .tab[aria-selected='true']:focus-visible { outline-color: var(--color-navy); } /* cyan on the #418ea2 fill is 1.7:1; Deep Teal 3:1 */
   .tab-label { max-width: calc(var(--tlw, 265) * var(--u)); overflow-wrap: anywhere; }
@@ -115,9 +122,13 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
   .bullets { white-space: normal; }
   .bullets .b1 { display: inline-block; line-height: calc(19 * var(--u)); }
   .panel > .sec + .bullets { margin-top: 0; }
-  .panel :global(.art) { display: block; margin: 0 auto calc(14 * var(--u)); width: calc(var(--aw) * var(--u)); height: calc(var(--ah) * var(--u)); max-width: none; object-fit: cover; }
+  /* Below 1024 the art may shrink to the panel column (same proportions), so a wide seal never pushes the panel past a 320 px
+     screen (mobile QA H1, 13 Oct 2026: CBAHI 41 px over); the desktop rule below sets both sizes again. */
+  .panel :global(.art) { display: block; margin: 0 auto calc(14 * var(--u)); width: calc(var(--aw) * var(--u)); height: auto; aspect-ratio: var(--aw) / var(--ah); max-width: 100%; object-fit: cover; }
   .panel > :global(picture:first-child) + * { margin-top: 0; }
   @media (min-width: 1024px) { .panel > :global(picture:first-child) + * { margin-top: 0; } .panel :global(.art) { position: absolute; z-index: 1; margin: 0; max-width: none; object-fit: cover; width: calc(var(--aw) * var(--u)); height: calc(var(--ah) * var(--u)); inset-inline-start: calc(var(--ax) * var(--u)); top: calc(var(--ay) * var(--u)); } }
+  .art-flow .panel :global(.art) { margin-bottom: calc(23.378 * var(--u)); }
+  @media (min-width: 1024px) { .art-flow .panel :global(.art) { position: static; margin: 0 auto calc(23.378 * var(--u)); } }
   .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
   .lead { color: var(--color-navy); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
   .note { color: var(--color-navy); }
@@ -140,7 +151,7 @@ const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
   }
   @media (min-width: 1024px) {
     .topics { flex-direction: row; align-items: flex-start; gap: 0; }
-    .tablist { flex: none; width: calc(311 * var(--u)); }
+    .tablist { flex: none; width: calc(273.96 * var(--u)); } /* live 375px at 1440 */
     .panels { flex: none; width: calc(var(--pw) * var(--u)); margin-top: calc(var(--pt) * var(--u)); margin-inline-start: calc(var(--pg) * var(--u)); }
   }
 </style>

@@ -995,16 +995,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/care/in-school",
-      "destination": "/ae/care/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/care/in-school/",
-      "destination": "/ae/care/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
       "destination": "/ae/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
       "statusCode": 301
@@ -1802,16 +1792,6 @@
     {
       "source": "/ae/ar/condition/post-surgical-rehabilitation/",
       "destination": "/ae/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/care/in-school",
-      "destination": "/ae/ar/care/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/care/in-school/",
-      "destination": "/ae/ar/care/",
       "statusCode": 301
     },
     {
@@ -2615,6 +2595,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sa/care/in-school",
+      "destination": "/sa/care/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/care/in-school/",
+      "destination": "/sa/care/",
+      "statusCode": 301
+    },
+    {
       "source": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehab",
       "destination": "/sa/care/inpatient/post-acute-rehab/neuro-rehab/stroke-rehabilitation/",
       "statusCode": 301
@@ -3182,6 +3172,16 @@
     {
       "source": "/sa/ar/condition/post-surgical-rehabilitation/",
       "destination": "/sa/ar/care/inpatient/post-acute-rehab/post-surgical-rehab/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/in-school",
+      "destination": "/sa/ar/care/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/care/in-school/",
+      "destination": "/sa/ar/care/",
       "statusCode": 301
     },
     {

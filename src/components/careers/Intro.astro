@@ -49,4 +49,7 @@ const photo = img(c.image.image, edition.region);
     .row { padding-bottom: calc(24 * var(--u)); }
     .copy { padding-bottom: calc(24 * var(--u)); }
   }
+  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
+     (mobile QA M1, 13 Oct 2026: "Transforms" 281 px in a 254 px column at 320). Never larger than the size above; 360 px and up unchanged. */
+  @media (max-width: 359.98px) { .h { font-size: min(calc(37 * var(--u)), 14.2vw); } }
 </style>

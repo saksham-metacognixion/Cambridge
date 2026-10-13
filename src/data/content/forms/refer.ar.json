@@ -1,5 +1,5 @@
 {
-  "_note": "Tab labels = Website Content - Suhad 2/Patient Hub/AR- Refer a patient.docx (7 Oct 2026), text exactly as in the document. The rest of the form has no Arabic source yet (English shown, docs/open-decisions.md CT24).",
+  "_note": "Tab labels = Website Content - Suhad 2/Patient Hub/AR- Refer a patient.docx (7 Oct 2026), text exactly as in the document. The rest of the form has no Arabic source yet (English shown, docs/open-decisions.md CT24). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
   "tabs": {
     "doctor": "للعاملين في القطاع الصحي",
     "other": "لك، لفرد من أسرتك أو لصديق",
@@ -11,6 +11,12 @@
         "male": "ذكر",
         "female": "أنثى"
       }
+    },
+    "doctor_email": {
+      "label": "البريد الإلكتروني"
+    },
+    "email": {
+      "label": "البريد الإلكتروني"
     }
   }
 }

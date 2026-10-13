@@ -29,6 +29,8 @@ const message = fieldsIn(ID, 'message')[0];
 const hospitals = sourceOptions('hospitals', edition);
 const lbl = (name: string) => splitStar(c.fields[name].label);
 const cols = matrix[0]?.options ?? [];
+// English fallback text on an Arabic page (no Arabic yet, CT31) is tagged lang="en", so it hyphenates as English and screen readers read it as English
+const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? 'en' : undefined);
 ---
 
 <section class="fb" aria-labelledby="feedback-title">
@@ -108,7 +110,7 @@ const cols = matrix[0]?.options ?? [];
                   <label class="m-cell">
                     <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
                     <span class="pf-radio" aria-hidden="true"><img loading="lazy" class="off" src={radioOff.src} alt="" width="16.279" height="16.467" /><img loading="lazy" class="on" src={radioOn.src} alt="" width="16.279" height="16.467" /></span>
-                    <span class="m-name">{c.matrix.columns[o].join(' ')}</span>
+                    <span class="m-name" lang={enLang(c.matrix.columns[o].join(' '))} dir={enLang(c.matrix.columns[o].join(' ')) && 'ltr'}>{c.matrix.columns[o].map((l: string, k: number) => <span class="block">{k > 0 && ' '}{l}</span>)}</span>
                   </label>
                 ))}
               </div>
@@ -207,8 +209,14 @@ const cols = matrix[0]?.options ?? [];
     .m-legend { float: none; inline-size: auto; min-block-size: 0; margin-block-end: 8px; }
     .m-cells { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 0; }
     .m-cell, .m-cell:nth-child(n) { margin: 0; inline-size: auto; flex-direction: column; align-items: center; justify-content: flex-start; gap: 6px; min-block-size: 44px; }
+    /* Five columns are narrower than "Dissatisfied" up to ~375 px: it breaks at the soft hyphens in feedback.en.json ("Dissatis-fied")
+       instead of anywhere ("Dissatisfie/d", mobile QA M1, 13 Oct 2026); each label line is its own block so "Very" never pulls half
+       a word up next to it. `hyphens: auto` was not used: Chrome / Firefox did not hyphenate here. */
     .m-name { position: static; inline-size: auto; block-size: auto; clip-path: none; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: calc(8 * var(--u)); line-height: 1.2; }
     .m-cell::before { display: none; }
+    /* Recommend options: each row a full-width 44 px tap target (was 18.82u = 26 px, mobile QA M2); the rows move ~6 px further apart */
+    .nps { gap: 0; }
+    .nps-opt { inline-size: 100%; min-block-size: 44px; }
     .pf-area, .card :global(.f-consent) { margin-inline-start: 0; inline-size: 100%; }
   }
   @media (max-width: 767.98px) {

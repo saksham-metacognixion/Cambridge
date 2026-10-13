@@ -27,4 +27,7 @@ const paras = Array.isArray(text) ? text : [text];
     .h { width: calc(var(--hw) * var(--u)); margin-inline-start: calc((var(--cx) - var(--hw) / 2) * var(--u)); padding: 0; }
     .t { width: calc(var(--tw) * var(--u)); margin-inline-start: calc((var(--tx) - var(--tw) / 2) * var(--u)); padding: 0; }
   }
+  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
+     (mobile QA M1, 13 Oct 2026: International Patients "Comprehensive" 299 px in 288 px at 320). Never larger than the size above; 360 px and up unchanged. */
+  @media (max-width: 359.98px) { .h { font-size: min(calc(28 * var(--u)), 11.4vw); } }
 </style>

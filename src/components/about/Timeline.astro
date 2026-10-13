@@ -92,4 +92,7 @@ const { c } = Astro.props;
   }
   @media (min-width: 640px) and (max-width: 1023.98px) { .line-row { --n: 2; } }
   @media (min-width: 900px) and (max-width: 1023.98px) { .line-row { --n: 3; } }
+  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
+     (mobile QA M1, 13 Oct 2026: card titles: "Commissioning" 131 px in 120 px at 320). Never larger than the size above; 360 px and up unchanged. */
+  @media (max-width: 359.98px) { .title { font-size: min(calc(14 * var(--u)), 4.9vw); } }
 </style>

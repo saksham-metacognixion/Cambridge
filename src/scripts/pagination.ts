@@ -43,8 +43,20 @@ export interface Pagination {
 }
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-/** Dots shown at once below 600px (Pagination.astro). */
+/** Dots shown at once below 600px (Pagination.astro); wider lines show all of them. On touch screens every dot is a 44px-wide
+ * target 44px apart (mobile QA L1, 13 Oct 2026), so there the window is also never more than fit the screen (a long row:
+ * 22 pages at 768). Mouse / trackpad: the Figma spacing and the window exactly as before. */
 const WINDOW = 7;
+const narrow = matchMedia("(max-width: 599.98px)");
+const touch = matchMedia("(pointer: coarse)");
+/** Touch: how many dots fit the screen less its 16px side margins, measured on the current (always shown) dot. */
+function fitting(nav: HTMLElement, dot: HTMLElement | undefined): number {
+  const w = dot?.getBoundingClientRect().width ?? 0;
+  const avail = document.documentElement.clientWidth - 32;
+  if (!touch.matches || !w || avail <= 0) return Infinity;
+  const gap = parseFloat(getComputedStyle(nav).columnGap) || 0;
+  return Math.max(1, Math.floor((avail + gap) / (w + gap)));
+}
 
 
 export function createPagination(nav: HTMLElement, src: Source): Pagination {
@@ -53,8 +65,9 @@ export function createPagination(nav: HTMLElement, src: Source): Pagination {
   const mark = () => {
     const i = src.current();
     const n = dots.length;
-    const a = windowStart(i, n, WINDOW);
-    const b = Math.min(n, a + WINDOW) - 1;
+    const w = Math.min(n, narrow.matches ? WINDOW : n, fitting(nav, dots[i]));
+    const a = windowStart(i, n, w);
+    const b = Math.min(n, a + w) - 1;
     dots.forEach((d, k) => {
       if (k === i) d.setAttribute("aria-current", "true");
       else d.removeAttribute("aria-current");

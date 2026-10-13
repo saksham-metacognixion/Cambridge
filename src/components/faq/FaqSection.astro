@@ -13,8 +13,9 @@ import chevClosed from '../../assets/faq/chevron-closed.svg';
  * 43.3 | category tabs at x 86.45 (ARIA tabs + ?category= in the URL, src/scripts/tabs.ts). Figma 81:2396 had 217.372 x 28.983
  * tabs, the selected one Book 12 on #418ea2, the others Book 10.351 #6b6b6b on no fill; client sheet "CH Website Comments.xlsx"
  * (13 Oct 2026, rows 18 + 19: "all tabs like this", "needs alignment") -> the shared detail-page (ICU) tab look instead
- * (shared/Tabs.astro defaults): 63 tall, 2 apart, rgba(231,231,231,.45) fill, Book 13/14 #004059 label at +24 / +25, the selected one
- * --tab-selected with a white label + text shadow, one size for every tab so the labels share one edge. 240 wide (the column is 260).
+ * then (13 Oct, client: "exactly as live") the live site's tabs, as shared/Tabs.astro: 375 x 56 px at 1440 (273.96 x 40.912 Figma
+ * px), 8 px apart, Book 16 / 32 label at 25 px in, centred vertically, radius 14, #f5f5f5 / selected --tab-selected with a white label;
+ * the questions start 30 px right of the tabs as on the live FAQs page.
  * Right column (x 343, w 628.652): native <details> per question (keyboard + no JS). Question bar 46.925 high, radius
  * 11.731 (-> --radius-card, bug 049), Gotham Book 11.041 / 26.7 at x +19.32, top +8.97, chevron 9.661 x 5.806 at x +593.46, top +17.94: open = #418ea2
  * bar, white text, chevron pointing DOWN; closed = rgba(231,231,231,.45) bar, #004059 text, chevron pointing UP (as in
@@ -31,6 +32,9 @@ const cats = data.categories.map((x) => ({ id: x.id, label: t(x.label, loc, 'faq
 const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
 // An answer is plain text: paragraphs separated by a blank line, line breaks inside a paragraph kept (src/data/faqs.json).
 const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
+// An email address may break before its "@" (<wbr>) rather than mid-word (mobile QA M1, 13 Oct 2026: "info@cambridgehospital.com," is
+// 4 px wider than the answer column at 320): [text, local part, @domain, text, ...]
+const emails = (l: string) => l.split(/([^\s@]+)(@[^\s@]+)/);
 ---
 
 <section class="faq" aria-labelledby="faq-heading">
@@ -54,7 +58,7 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
               <img loading="lazy" class="chev chev-closed" src={chevClosed.src} width="9.661" height="5.806" alt="" />
             </summary>
             <div class="ans">
-              {it.a ? paras(it.a).map((lines) => <p>{lines.map((l, j) => (<>{j > 0 && <br />}{l}</>))}</p>) : pending && <p class="pending">{c.answerPending}</p>}
+              {it.a ? paras(it.a).map((lines) => <p>{lines.map((l, j) => (<>{j > 0 && <br />}{emails(l).map((s, m) => (m % 3 === 1 ? <>{s}<wbr /></> : s))}</>))}</p>) : pending && <p class="pending">{c.answerPending}</p>}
             </div>
           </details>
         ))}
@@ -104,12 +108,11 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
 <style>
   .faq { max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: calc(24 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
   .h { margin: 0; font-weight: 500; font-size: calc(22.866 * var(--u)); line-height: calc(25.533 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
-  .tablist { display: flex; flex-direction: column; gap: calc(2 * var(--u)); margin-top: calc(43.3 * var(--u)); }
-  .tab { box-sizing: border-box; display: block; width: calc(240 * var(--u)); max-width: 100%; min-height: calc(63 * var(--u)); margin: 0; padding-block: calc(25 * var(--u)) calc(24 * var(--u)); padding-inline: calc(24 * var(--u)) calc(22 * var(--u)); border: 0; border-radius: var(--radius-btn); background: rgba(231, 231, 231, 0.45); color: var(--color-navy); font: 400 calc(13 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-align: start; overflow-wrap: anywhere; cursor: pointer; }
-  .tab[aria-selected='true'] { background: var(--tab-selected); color: #fff; text-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25); }
+  .tablist { display: flex; flex-direction: column; gap: calc(5.845 * var(--u)); margin-top: calc(43.3 * var(--u)); }
+  .tab { box-sizing: border-box; display: flex; align-items: center; width: calc(273.96 * var(--u)); max-width: 100%; min-height: max(44px, calc(40.912 * var(--u))); margin: 0; padding-block: calc(8.767 * var(--u)); padding-inline: calc(18.264 * var(--u)); border: 0; border-radius: calc(10.228 * var(--u)); background: #f5f5f5; color: var(--color-navy); font: 400 calc(11.689 * var(--u)) / calc(23.378 * var(--u)) var(--font-gotham); text-align: start; overflow-wrap: anywhere; cursor: pointer; } /* min-height >= 44 px: touch target (bug 090) */
+  .tab[aria-selected='true'] { background: var(--tab-selected); color: #fff; }
   .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .panel[hidden] { display: none; }
-  @media (max-width: 1023.98px) { .tab { min-height: 44px; } } /* tap target */
   .qa { position: relative; }
   .qa + .qa { margin-top: calc(17.255 * var(--u)); }
   .qa[open] + .qa { margin-top: calc(10 * var(--u)); }
@@ -143,9 +146,8 @@ const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
   }
   @media (min-width: 1024px) {
     .faq { flex-direction: row; align-items: flex-start; gap: 0; padding: 0; }
-    .side { flex: none; width: calc(260.24 * var(--u)); margin-inline-start: calc(82.76 * var(--u)); padding-top: calc(3.62 * var(--u)); }
+    .side { flex: none; width: calc(295.877 * var(--u)); margin-inline-start: calc(82.76 * var(--u)); padding-top: calc(3.62 * var(--u)); } /* live tab 273.96 + the live 30 px (21.917) gap to the questions */
     .h { width: calc(208.056 * var(--u)); }
-    .tablist { margin-inline-start: calc(3.69 * var(--u)); }
     .panels { flex: none; width: calc(628.652 * var(--u)); }
   }
 </style>

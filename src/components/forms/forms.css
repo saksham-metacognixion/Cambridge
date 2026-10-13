@@ -77,7 +77,9 @@
 .gf-dial .gf-chev { inset-inline-end: calc(5.19 * var(--u)); inset-block-start: calc(13.52 * var(--u)); inline-size: calc(6.527 * var(--u)); }
 .gf-tel { margin-inline-start: calc(8.113 * var(--u)); }
 /* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971"). */
-.dial-select { color: transparent !important; }
+/* overflow: the hidden country name ("United Arab Emirates (+971)") ran past the box; WebKit counted it as scrollable
+   width, so the booking pop-up scrolled 65px sideways at 320-375px (bug 091 follow-up). Clipping it changes nothing visible. */
+.dial-select { color: transparent !important; overflow: hidden; }
 .dial-select option { color: var(--color-navy); }
 .dial-code { position: absolute; pointer-events: none; white-space: nowrap; color: var(--color-body); font-weight: 400; }
 .gf-dial .dial-code { inset-inline-start: calc(23.44 * var(--u)); inset-block-start: calc(7.21 * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
@@ -273,4 +275,19 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 }
 @media (min-width: 1024px) {
   .rf .rf-grid { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }
+}
+
+/* Arabic pages: form text that has no Arabic yet is shown in English (docs/open-decisions.md WP2 / CT24 / CT31). In an RTL
+   paragraph its trailing punctuation moved to the wrong end (":Address", "*Full Name", ".This field is required",
+   "...Write Something"; mobile QA H2, 13 Oct 2026). `plaintext` takes each line's direction from its own first letter, so English
+   reads left-to-right with its punctuation in place and Arabic stays right-to-left; the text stays on the right edge (= the start
+   edge on these pages; `match-parent` resolves to left in Chrome once the line is LTR). Placeholders: inputs in every engine,
+   textareas in Chrome / Safari (Firefox keeps the old order there). A dir="ltr" field (phone numbers) is left as it is. */
+[dir='rtl'] :is(form label:not(.f-consent), form legend, .f-consent .txt, .f-err, .f-alert, .gf-section, .pf-q, .bidi-auto) { unicode-bidi: plaintext; text-align: right; }
+[dir='rtl'] :is(input, textarea):not([dir='ltr'])::placeholder { unicode-bidi: plaintext; text-align: right; }
+
+/* No backdrop blur (mobile QA S1, 13 Oct 2026): the glass panel is only 10% white, so the page would show through the form.
+   Where the browser cannot blur, the panel is near-opaque instead; browsers with the blur keep the Figma glass unchanged. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .modal-panel { background: rgba(255, 255, 255, 0.94); }
 }

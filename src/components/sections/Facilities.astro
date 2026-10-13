@@ -182,7 +182,10 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
     /* The list is in the stage's flow at its Figma spot (64, 30), so a list grown by wrapped buttons makes the section taller
        (the Figma 788 is the minimum); the tab stays on top of the card (absolute, 40 high). Figma row pitch 113 = photo 91 +
        12 + divider 1 + 9; the name 14 under the photo top, the buttons 2 under the name (Figma +47). */
-    .stage { height: auto; min-height: calc(var(--h) * var(--u)); }
+    /* flow-root (bug 092, 13 Oct 2026): the list is the stage's only in-flow child, so without a new formatting context its
+       margins collapsed through the stage and the section: the 24 under the card left the navy (0 navy under the card, Figma 24)
+       and the 30 (+ --lift) above it became a white strip between Care Support and the band (~196px on /ae and /sa). */
+    .stage { display: flow-root; height: auto; min-height: calc(var(--h) * var(--u)); }
     /* The enlarged list makes the section taller than Figma's 788 (164 at 1440+, 58 at 1024-1439, rows of 118 / 100): the
        heading, map and stats move down by half of it, so the right-hand column stays centred against the list. */
     /* --dy from the row count (client sheet "CH Website Comments.xlsx" row 16, 13 Oct 2026: on /ae and /sa, 3 rows, the fixed
@@ -190,7 +193,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
        list shorter than the Figma 544 of rows gets no push and is centred against the right-hand column instead (--lift). */
     .stage { --dy: max(0, (118 * var(--n) - 544) / 2); --lift: max(0, (544 - 118 * var(--n)) / 2); }
     .dpos { top: calc((var(--y) + var(--dy)) * var(--u)); }
-    .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc((30 + var(--lift)) * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); padding-top: calc(40 * var(--u)); box-sizing: border-box; }
+    .list.dpos { position: relative; inset-inline-start: auto; top: auto; height: auto; margin: calc((30 + var(--lift)) * var(--u)) 0 calc(24 * var(--u)); margin-inline-start: calc(64 * var(--u)); box-sizing: border-box; } /* no top padding: the tab is in flow (.list > .dpos2:first-child), so tab 30, card 70 as in Figma */
     .card { padding-block: calc(15 * var(--u)) calc(25 * var(--u)); padding-inline: calc(13 * var(--u)) calc(4 * var(--u)); gap: calc(9 * var(--u)); } /* end padding 4: the button pair fits one line from 1440 */
     .row { column-gap: calc(15 * var(--u)); }
     .row > :global(img.divider) { margin: calc(12 * var(--u)) 0 0; margin-inline-start: calc(-13 * var(--u)); width: calc(100% + 9 * var(--u)); max-width: none; } /* = 350: row 341 (358 - 13 - 4) + 9; a % width so the line does not size the grid columns */

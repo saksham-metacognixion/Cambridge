@@ -41,6 +41,7 @@ const tiles = [
   { x: 527, y: 152, lx: 19, ly: 41 },
   { x: 742, y: 152, lx: 23, ly: 41 },
 ].map((d, i) => ({ ...d, ...c.tiles[i], href: tileHref(c.tiles[i]), icon: icons[i] }));
+const imax = Math.max(...icons.map((i) => i.size)); // the largest tile icon: phone layout lines the icon bottoms up on it
 ---
 
 <section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>
@@ -59,7 +60,7 @@ const tiles = [
         <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
       </div>
 
-      <div class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
+      <div style={`--imax:${imax}`} class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
         {tiles.map((t, i) => (
           <a href={t.href} data-tile={i} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-(--radius-card) max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
             <img loading="lazy" class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
@@ -78,6 +79,11 @@ const tiles = [
     .tiles { gap: min(calc(12 * var(--u)), 4%); }               /* 12 Figma px from ~450px up */
     .tile { container-type: inline-size; padding-inline: min(calc(8 * var(--u)), 6%); } /* 8 Figma px from ~180px-wide tiles up */
     .tile .lbl { font-size: min(calc(13 * var(--u)), calc(100cqw / 6.9)); }
+    /* Icons level across a row when one label wraps to two lines and the other doesn't (mobile QA L7, 13 Oct 2026: centred, the
+       two-line tile's icon sat 5-9 px higher): content from the top of every tile, and each icon pushed down by the difference to
+       the largest icon (--imax), so all icon bottoms, and so all label tops, line up. */
+    .tile { justify-content: flex-start; }
+    .tile .icon { margin-top: calc((var(--imax) - var(--iw)) * var(--u)); }
   }
   @media (min-width: 1024px) {
     .tile { inset-inline-start: calc(var(--tx) * var(--u)); top: calc(var(--ty) * var(--u)); background: transparent; }

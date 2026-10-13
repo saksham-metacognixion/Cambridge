@@ -96,4 +96,7 @@ const more = urlFor(edition, pagePath(c.button.page));
        longer Arabic label puts fully under the photo (found in the bug 057 click-through QA, 8 Oct 2026). */
     .nv :global(.photo) { position: absolute; inset-inline-start: calc(115 * var(--u)); bottom: calc(0.6 * var(--u)); width: calc(700.8 * var(--u)); height: calc(361.4 * var(--u)); max-width: none; margin: 0; pointer-events: none; }
   }
+  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
+     (mobile QA M1, 13 Oct 2026: "Multidisciplinary" 200 px in a 189 px column at 320). Never larger than the size above; 360 px and up unchanged. */
+  @media (max-width: 359.98px) { .title { font-size: min(calc(37 * var(--u)), 7.1vw); } }
 </style>

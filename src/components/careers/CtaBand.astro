@@ -1,5 +1,5 @@
 ---
-import chevron from '../../assets/careers/chevron.svg';
+import OutlineButton from '../shared/OutlineButton.astro';
 
 /*
  * "Start Your Career Journey with Us!" band (Figma 112:7230, page y 2303-2518, #004059; the SVG is a plain rectangle).
@@ -10,7 +10,10 @@ import chevron from '../../assets/careers/chevron.svg';
  * #004059, centred in the button by flex: the Figma text box at +9 / +9 put the label low with the real Gotham metrics, bug 007).
  * Since bugs 044 / 049 / 050 (client request 7 Oct 2026): the button is the shared .ui-btn size (its centre kept at x512), the
  * field corners --radius-field. Band ends 19 below the button.
- * "View Open Roles" is a dropdown-LOOK link to openRolesUrl (Figma shows a select with no options): nothing invented.
+ * "View Open Roles" (bug 088, 13 Oct 2026): Figma draws it as a select field with a chevron, but there is no list of roles to
+ * open (no vacancies, portal or form from the client: docs/open-decisions.md D3 / D4), so the dropdown look was a fake control.
+ * It is now a plain outline button (the Careers "View Open Roles" button of Life at Cambridge, onDark as on the navy map band)
+ * centred where the field's centre was (x 510.5, field middle), so "Apply Now" keeps its place. Destination = openRolesUrl.
  * Existing band component? None fits (CtaTab / Contact / ContactRecovery are different layouts), so this one is new.
  */
 interface Props { c: { ariaLabel: string; heading: string; text: string; openRoles: { label: string }; apply: { label: string } }; openRolesHref: string; applyHref: string }
@@ -21,10 +24,7 @@ const { c, openRolesHref, applyHref } = Astro.props;
   <div class="in">
     <h2 class="h">{c.heading}</h2>
     <p class="t">{c.text}</p>
-    <a href={openRolesHref} class="field hit hair-card">
-      <span class="fl">{c.openRoles.label}</span>
-      <img loading="lazy" src={chevron.src} alt="" aria-hidden="true" width="7" height="4.207" class="chev" />
-    </a>
+    <OutlineButton href={openRolesHref} label={c.openRoles.label} onDark class="roles" />
     <a href={applyHref} class="apply ui-btn hit btn-fill-white"><span>{c.apply.label}</span></a>
   </div>
 </section>
@@ -34,15 +34,16 @@ const { c, openRolesHref, applyHref } = Astro.props;
   .in { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding: calc(38 * var(--u)) calc(24 * var(--u)) calc(19 * var(--u)); text-align: center; color: #fff; }
   .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(34.6 * var(--u)); overflow-wrap: anywhere; }
   .t { margin: calc(14 * var(--u)) 0 0; max-width: calc(577 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); overflow-wrap: anywhere; }
-  .field { --sw: 0.5; --sc: #fff; position: relative; display: block; box-sizing: border-box; width: calc(311 * var(--u)); max-width: 100%; height: calc(35 * var(--u)); margin-top: calc(17 * var(--u)); background: var(--color-mist); border-radius: var(--radius-field); color: var(--color-navy-alt); text-align: start; text-decoration: none; }
-  .fl { position: absolute; inset-inline-start: calc(15 * var(--u)); top: calc(10 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(14 * var(--u)); white-space: nowrap; }
-  .chev { position: absolute; inset-inline-start: calc(287 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); }
-  .apply { margin-top: calc(14 * var(--u)); background: #fff; color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
+  /* --fd = half of (old 35-unit field - button): the button sits on the field's middle and Apply Now keeps its y. */
+  .in { --fd: calc((35 * var(--u) - var(--btn-h)) / 2); }
+  .in :global(.roles) { margin-top: calc(17 * var(--u) + var(--fd)); }
+  .apply { margin-top: calc(14 * var(--u) + var(--fd)); background: #fff; color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
   @media (min-width: 1024px) {
     .in { display: block; padding-inline: 0; text-align: start; height: calc(215 * var(--u)); }
     .h { width: calc(606 * var(--u)); height: calc(27 * var(--u)); margin-inline-start: calc(209 * var(--u)); text-align: center; }
     .t { width: calc(577 * var(--u)); max-width: none; margin-top: calc(7 * var(--u)); margin-inline-start: calc(238 * var(--u)); text-align: center; }
-    .field { margin-inline-start: calc(355 * var(--u)); }
+    .in :global(.roles) { display: flex; width: fit-content; margin-inline-start: calc(510.5 * var(--u)); translate: -50% 0; } /* the old field's centre */
+    :global([dir='rtl']) .in :global(.roles) { translate: 50% 0; }
     .apply { display: flex; width: fit-content; margin-inline-start: calc(512 * var(--u)); translate: -50% 0; } /* centre at Figma x512 (429 + 166 / 2) */
     :global([dir='rtl']) .apply { translate: 50% 0; }
   }

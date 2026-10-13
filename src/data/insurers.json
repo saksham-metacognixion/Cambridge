@@ -1,5 +1,5 @@
 {
-  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded. 9 Oct 2026: the six remaining KSA logos (Gulf Union, Al Rajhi Takaful, TCS, Malath, MEDGULF, Walaa) copied from docs/cambridge-images-ksa/ (the live /sa files saved 8 Oct 2026 with the user's approval, bug 063) into src/assets/insurance/wp/<slug>.avif with the importer's box (live 325x180 tile centred above the name bar). JHAH and MOH have no insurer record or logo on the live site (names from the FAQ text): their official marks were taken from jhah.com / moh.gov.sa on 9 Oct 2026 (user request; logoSource), composed into the live tile format (white 325x180 tile, logo 80 % wide, src/assets/insurance/wp/<slug>.png: the Home KSA logo strip and the card both expect that tile) with the importer's box - client to confirm (R-item in docs/open-decisions.md). Enaya: the live file saved 9 Oct 2026 through a hand-started debugging Chrome (.astro/qc-ins/fetch-enaya.mjs, user-run) and wired by tools/import-wp-images.mjs. Every insurer now has a logo. homeStrip: shown in the Home 'Accepted Insurance Providers' strip of an edition that does not use the Figma seven (KSA): the six logos the live /sa Home shows (docs/cambridge-images-ksa/_pages.json), in this file's order; without any flag the first seven with a logo are used. Logos (9 Oct 2026): every insurer the client's L3 folder has uses that 325x180 tile (insurance/wp/<slug>.jpg) in the tile box; the others keep the Figma logo. homeLogo = the image key the Home strip (home/insurance JSON) uses for this insurer when it differs from logo.image. 13 Oct 2026 (client sheet 'CH Website Comments.xlsx' row 15, 'please double check with the live website only'): the list = the live site's insurer records (docs/insurance.json, the WordPress REST export: 8 UAE + 9 KSA, SAICO under UAE there too); name.en = the live record title; the insurers that are not live records (the Figma-only UAE nine and JHAH / MOH from the live FAQ text) keep their data with onLive: false and are not shown (lib/insurers.ts, Home strip).",
+  "$comment": "Insurance providers (Insurance Providers page, Figma 46:6844), in Figma order. name.en = card label exactly as in Figma (incl. 'Adu Dhabi National Insurance Company' and 'DeutscheAssistance', flagged). regions: editions where the insurer is accepted (ae / sa); Figma shows all 16 under the UAE pill, so all are 'ae' until Pramod sends the real UAE/KSA mapping (none is 'sa' yet). logo: image key (src/assets), box w x h at x,y inside the 194.77 x 125.311 card (Figma px); fit 'contain' (+ ratio = the image's width/height, so the fitted size is known without reading the file), or crop = the image's size/offset inside its box (Figma fill), else the box matches the image. Added 6 Oct 2026 from the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026): Enaya (UAE) and the KSA network named in the live FAQ (Bupa, Gulf Union, Tawuniya, JHAH, MOH, Al Rajhi Takaful, TCS, GlobeMed, Malath). The insurer records themselves are not in the export, so these have no logo yet (the card shows the name only); logoSource = the logo file on the live site for tools/download-wp-images.mjs (the uploads folder is behind a bot check, NW1), to be mapped to a src/assets key + box once downloaded. 9 Oct 2026: the six remaining KSA logos (Gulf Union, Al Rajhi Takaful, TCS, Malath, MEDGULF, Walaa) copied from docs/cambridge-images-ksa/ (the live /sa files saved 8 Oct 2026 with the user's approval, bug 063) into src/assets/insurance/wp/<slug>.avif with the importer's box (live 325x180 tile centred above the name bar). JHAH and MOH have no insurer record or logo on the live site (names from the FAQ text): their official marks were taken from jhah.com / moh.gov.sa on 9 Oct 2026 (user request; logoSource), composed into the live tile format (white 325x180 tile, logo 80 % wide, src/assets/insurance/wp/<slug>.png: the Home KSA logo strip and the card both expect that tile) with the importer's box - client to confirm (R-item in docs/open-decisions.md). Enaya: the live file saved 9 Oct 2026 through a hand-started debugging Chrome (.astro/qc-ins/fetch-enaya.mjs, user-run) and wired by tools/import-wp-images.mjs. Every insurer now has a logo. homeStrip: shown in the Home 'Accepted Insurance Providers' strip of an edition that does not use the Figma seven (KSA): the six logos the live /sa Home shows (docs/cambridge-images-ksa/_pages.json), in this file's order; without any flag the first seven with a logo are used. Logos (9 Oct 2026): every insurer the client's L3 folder has uses that 325x180 tile (insurance/wp/<slug>.jpg) in the tile box; the others keep the Figma logo. homeLogo = the image key the Home strip (home/insurance JSON) uses for this insurer when it differs from logo.image. 13 Oct 2026 (client sheet 'CH Website Comments.xlsx' row 15, 'please double check with the live website only'): the list = the live site's insurer records (docs/insurance.json, the WordPress REST export: 8 UAE + 9 KSA, SAICO under UAE there too); name.en = the live record title; the insurers that are not live records (the Figma-only UAE nine and JHAH / MOH from the live FAQ text) keep their data with onLive: false and are not shown (lib/insurers.ts, Home strip). liveOrder = the card order on the live Insurance Providers pages (saved 13 Oct 2026, docs/live-save-13oct: UAE then KSA); the page sorts by it, the file order (Home KSA strip) is unchanged.",
   "insurers": [
     {
       "slug": "al-buhaira",
@@ -37,7 +37,8 @@
       },
       "wp_media": 18544,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_neuron-insurance-uae.jpg",
-      "homeLogo": "insurance/neuron"
+      "homeLogo": "insurance/neuron",
+      "liveOrder": 5
     },
     {
       "slug": "almadallah",
@@ -57,7 +58,8 @@
       },
       "wp_media": 18535,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_AlMadhalla-insurance-uae.jpg",
-      "homeLogo": "insurance/logo-original"
+      "homeLogo": "insurance/logo-original",
+      "liveOrder": 6
     },
     {
       "slug": "dubai-insurance",
@@ -101,7 +103,8 @@
       },
       "wp_media": 18549,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_thiqa-insurance-uae.jpg",
-      "homeLogo": "insurance/thiqa"
+      "homeLogo": "insurance/thiqa",
+      "liveOrder": 1
     },
     {
       "slug": "al-khazna",
@@ -139,7 +142,8 @@
       },
       "wp_media": 18534,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_adnic-insurance-uae.jpg",
-      "homeLogo": "insurance/layout-set"
+      "homeLogo": "insurance/layout-set",
+      "liveOrder": 3
     },
     {
       "slug": "aafiya",
@@ -195,7 +199,8 @@
       },
       "wp_media": 18538,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_daman-insurance-uae.jpg",
-      "homeLogo": "insurance/daman"
+      "homeLogo": "insurance/daman",
+      "liveOrder": 2
     },
     {
       "slug": "nextcare",
@@ -215,7 +220,8 @@
       },
       "wp_media": 18545,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_nextcare-insurance-uae.jpg",
-      "homeLogo": "insurance/images"
+      "homeLogo": "insurance/images",
+      "liveOrder": 4
     },
     {
       "slug": "saico",
@@ -236,7 +242,8 @@
       "$note": "Shown under UAE in Figma; SAICO is a Saudi insurer (probable Figma error). Region to be confirmed by Pramod.",
       "wp_media": 18546,
       "logoSource": "client assets (L3, 9 Oct 2026): L3_saico-insurance-uae.jpg",
-      "homeLogo": "insurance/saico"
+      "homeLogo": "insurance/saico",
+      "liveOrder": 7
     },
     {
       "slug": "al-sagr",
@@ -329,7 +336,8 @@
         "h": 75.32,
         "x": 29.39,
         "y": 6.74
-      }
+      },
+      "liveOrder": 8
     },
     {
       "name": {
@@ -349,7 +357,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "homeStrip": true
+      "homeStrip": true,
+      "liveOrder": 9
     },
     {
       "name": {
@@ -368,7 +377,8 @@
         "h": 75.32,
         "x": 29.39,
         "y": 6.74
-      }
+      },
+      "liveOrder": 16
     },
     {
       "name": {
@@ -388,7 +398,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "homeStrip": true
+      "homeStrip": true,
+      "liveOrder": 11
     },
     {
       "name": {
@@ -446,7 +457,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "homeStrip": true
+      "homeStrip": true,
+      "liveOrder": 13
     },
     {
       "name": {
@@ -466,7 +478,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "homeStrip": true
+      "homeStrip": true,
+      "liveOrder": 14
     },
     {
       "name": {
@@ -486,7 +499,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "homeStrip": true
+      "homeStrip": true,
+      "liveOrder": 10
     },
     {
       "name": {
@@ -505,7 +519,8 @@
         "h": 75.32,
         "x": 29.39,
         "y": 6.74
-      }
+      },
+      "liveOrder": 15
     },
     {
       "name": {
@@ -525,7 +540,8 @@
         "y": 6.74
       },
       "homeStrip": true,
-      "logoSource": "client assets (L3, 9 Oct 2026): L3_medgulf-ksa-1.jpg"
+      "logoSource": "client assets (L3, 9 Oct 2026): L3_medgulf-ksa-1.jpg",
+      "liveOrder": 12
     },
     {
       "name": {
@@ -544,7 +560,8 @@
         "x": 29.39,
         "y": 6.74
       },
-      "logoSource": "client assets (L3, 9 Oct 2026): L3_walaa-ksa-1.jpg"
+      "logoSource": "client assets (L3, 9 Oct 2026): L3_walaa-ksa-1.jpg",
+      "liveOrder": 17
     }
   ]
 }

@@ -116,7 +116,7 @@ export function pageRedirects(): Redirect[] {
           : urlFor(e, CARE_PATHS.hub),
       );
     }
-    // Care pages not offered in this edition's country (bug 047, e.g. /ae/care/in-school since In-School went KSA-only, 13 Oct 2026) -> the edition's Our Care hub.
+    // Care pages not offered in this edition's country (bug 047, e.g. /sa/care/in-school) -> the edition's Our Care hub.
     const outside = new Set(
       careOutsideRegion(e.region).map((p) => p.node.slug),
     );

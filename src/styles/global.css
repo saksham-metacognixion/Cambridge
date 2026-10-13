@@ -1,4 +1,11 @@
 @import "tailwindcss";
+/* Class-name scan: only the site sources. docs/ (saved live pages), figma-cache/ (Figma exports), tools/ and tests/ are
+   hundreds of MB of HTML/JS/SVG; scanning them made the dev server time out on this file ("transport invoke timed out")
+   and added unused utilities from the live site's markup to the build. */
+@source not "../../docs";
+@source not "../../figma-cache";
+@source not "../../tools";
+@source not "../../tests";
 
 /* ───────────── Fonts (self-hosted from public/fonts/) ─────────────
    Light / Book / Medium woff2 = the client's own files from the live site (5 Oct 2026); the web licence for the new
@@ -32,8 +39,8 @@
 /* ───────────── Scale ─────────────
    --design-w / --target-w come from src/lib/scale.ts (injected by BaseLayout).
    --u = the length of ONE Figma pixel.
-   ≥1024px: layout scales fluidly with the page width, capped at --max-w (scale.ts MAX_W; 0 = no cap since 10 Oct 2026, so the
-   design fills 1920 / 2560 screens with no side margins; --target-w = 1440 stays the reference width for build-time maths).
+   ≥1024px: layout scales fluidly with the page width, capped at --max-w (scale.ts MAX_W = 1440 since bug 089, 13 Oct 2026;
+   it was 0 = no cap 10-13 Oct; --target-w = 1440 stays the reference width for build-time maths).
    <1024px: layout is re-flowed (stacked); --u stays fixed so text / radii / gaps keep their designed size. */
 :root {
   --u: calc(var(--target-w) * 1px / var(--design-w));
@@ -44,12 +51,18 @@
   /* --up = how much wider than the 1440 reference the page is (1 up to 1440, 1.33 at 1920, 1.78 at 2560; capped with --max-w).
      Sizes that are deliberately fixed in CSS px at 1440 (the one button size R050, the hero text->button gap R058) multiply their
      caps by it, so they keep their proportion to the scaled design on wide screens (10 Oct 2026). */
-  :root { --up: max(1, calc(min(100cqw, var(--max-w) * 1px) / (var(--target-w) * 1px))); }
+  /* Only where a length / length division is valid (Chrome, Safari; NOT Firefox): elsewhere the whole token went invalid and every
+     .ui-btn lost its padding and height in Firefox at >= 1024px (bug 089, 13 Oct 2026). Without it --up stays 1, which is exact
+     while MAX_W <= 1440. */
+  @supports (width: calc(1px * (2px / 1px))) {
+    :root { --up: max(1, calc(min(100cqw, var(--max-w) * 1px) / (var(--target-w) * 1px))); }
+    @supports not (width: 1cqw) { :root { --up: max(1, calc(min(100vw, var(--max-w) * 1px) / (var(--target-w) * 1px))); } }
+  }
   /* Browsers without container-query units (Safari < 16, Chrome < 105, Firefox < 110; cross-browser audit 9 Oct 2026): cqw
      would make every `calc(... * var(--u))` invalid, so the viewport width stands in. It differs from the .page container
      only by a classic scrollbar (overlay scrollbars on macOS / iOS = 0); .page clips that overhang. */
   @supports not (width: 1cqw) {
-    :root { --u: calc(min(100vw, var(--max-w) * 1px) / var(--design-w)); --up: max(1, calc(min(100vw, var(--max-w) * 1px) / (var(--target-w) * 1px))); }
+    :root { --u: calc(min(100vw, var(--max-w) * 1px) / var(--design-w)); }
   }
 }
 /* Hero text -> button gap, ONE value for every hero with a paragraph (Home: Hero.astro, bug 065; inner pages: PageHero,

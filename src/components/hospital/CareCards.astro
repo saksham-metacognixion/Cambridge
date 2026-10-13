@@ -39,7 +39,7 @@ interface Props {
 }
 const { edition, c, listLabel, button, scale: K = 0.9884, titleTone = 'cyan', xs = [55, 298.16, 537.36, 780.51], reveal = false, overrides = {}, regionButtons = false } = Astro.props;
 const s = content('home/services', edition.locale);
-// Only the services offered in this edition's country (bug 047; In-School Care is KSA-only since the client sheet of 13 Oct 2026, row 6).
+// Only the services offered in this edition's country (bug 047: In-School Care is UAE-only, as on the live site; client 13 Oct 2026: "exactly as live").
 const cards = (s.cards as { image: string; alt: string; title: string; desc: string; href?: string; page?: string; care?: string }[]).filter((k) => !k.care || careInRegion(k.care, edition.region)).map((k) => ({
   ...k,
   ...(k.care ? overrides[k.care] : undefined),

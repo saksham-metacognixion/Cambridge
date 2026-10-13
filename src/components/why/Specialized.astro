@@ -98,4 +98,7 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
        keeps its height: a taller Arabic title pushes the bigger .ui-btn (bug 044/050) down, and the bars follow instead of covering it. */
     .pills { display: block; position: relative; top: auto; inset-inline-start: auto; margin-top: calc(38 * var(--u)); margin-inline-start: calc(361 * var(--u)); margin-bottom: calc(-356 * var(--u)); }
   }
+  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
+     (mobile QA M1, 13 Oct 2026: "Cambridge" 279 px in a 254 px column at 320). Never larger than the size above; 360 px and up unchanged. */
+  @media (max-width: 359.98px) { .title { font-size: min(calc(37 * var(--u)), 14.2vw); } }
 </style>

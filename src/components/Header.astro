@@ -24,7 +24,10 @@ const listeningBox = { l: 305, w: 72 };
 // separator at 828), so the last four sit evenly between 532 and 820 at their measured GE SS Two widths (59 / 58 / 65 / 63).
 const topLinkBoxes = edition.locale === 'ar'
   ? [ { l: 408, w: 96 }, { l: 532, w: 59 }, { l: 606, w: 58 }, { l: 678, w: 65 }, { l: 757, w: 63 } ]
-  : [ { l: 408, w: 96 }, { l: 532, w: 49 }, { l: 607, w: 36 }, { l: 669, w: 85 }, { l: 780, w: 27 } ];
+  // English (13 Oct 2026, client screenshot): "Career Hub" is wider than Figma's "Careers" (36), so in Figma's boxes it ended
+  // 11 before Knowledge Centre while the other gaps were 26. The last four sit evenly between Figma's 532 and FAQs' end (807) at
+  // their measured Gotham Book widths (48 / 51 / 83 / 24): equal gaps of 23, as in Figma's evenly spaced row.
+  : [ { l: 408, w: 96 }, { l: 532, w: 48 }, { l: 603, w: 51 }, { l: 677, w: 83 }, { l: 783, w: 24 } ];
 // `path` = page inside the edition (+ optional `query`, e.g. Knowledge Center -> Media Hub health articles, docs/open-decisions.md LA1).
 // `page` = key in PAGE_PATHS (preferred), `path` = literal path inside the edition.
 const target = (x: { href: string; path?: string; page?: string; query?: string }) => (x.page !== undefined ? urlFor(edition, pagePath(x.page)) : x.path !== undefined ? urlFor(edition, x.path) : x.href) + (x.query ?? '');

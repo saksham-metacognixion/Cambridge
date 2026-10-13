@@ -39,7 +39,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
           <div class="cp-card" data-panel>
             <div class="cp-left">
               <img loading="lazy" class="cp-logo" src={logo.src} width="114" height="64" alt={c.logoAlt} />
-              <p id={titleId} class="cp-title">{t.title}</p>
+              <p id={titleId} class="cp-title" tabindex="-1">{t.title}</p>
               {v.buttons.map((b, i) => (
                 <>
                   {i === 1 && <p class="cp-or" aria-hidden="true">{t.or}</p>}
@@ -78,7 +78,9 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
         // Esc: the visitor stays where they are (remembered like a choice, see CountryPopupLogic).
         dlg.addEventListener('cancel', () => choose('global'));
         dlg.showModal();
-        dlg.querySelector<HTMLButtonElement>('[data-target]')?.focus();
+        // Focus the title, not the first button: opened by the page (no click / key), a focused button drew its focus ring on
+        // every phone (mobile QA S3, 13 Oct 2026). Screen readers still start at the title; Tab reaches the buttons.
+        dlg.querySelector<HTMLElement>('.cp-title')?.focus();
       };
       open(document.documentElement.dataset.countryPopup);
       document.addEventListener('ch:country-popup', (e) => open((e as CustomEvent<{ country: string }>).detail.country));
@@ -134,4 +136,7 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
       --u: max(0.7px, min(calc(var(--target-w) * 1px / var(--design-w)), calc((100vw - 32px) / 238.229), calc((100dvh - 300px) / 275.654)));
     }
   }
+  /* No backdrop blur (mobile QA S1): near-opaque card instead of the 20% glass; browsers with the blur are unchanged */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .cp-card { background: rgba(244, 242, 240, 0.95); } }
+  .cp-title:focus { outline: none; } /* focused by script only (tabindex -1), not interactive */
 </style>

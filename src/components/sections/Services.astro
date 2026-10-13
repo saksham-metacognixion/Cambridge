@@ -13,7 +13,7 @@ const target = (k: { care?: string; href?: string }) => (k.care ? urlFor(edition
 
 // Cards (shared/CareCard.astro) at Figma x 49 / 295 / 537 / 783, top 172 (photo 169): a grid with the Figma gaps as columns
 // (24 / 20 / 24), so the four cards share one row and stretch to the tallest (bug 011: the buttons stay level).
-// Only the services offered in this edition's country (bug 047; In-School Care is KSA-only since the client sheet of 13 Oct 2026, row 6).
+// Only the services offered in this edition's country (bug 047: In-School Care is UAE-only, as on the live site; client 13 Oct 2026: "exactly as live").
 const cards = (s.cards as { image: string; alt: string; title: string; desc: string; care?: string; href?: string }[]).filter((k) => !k.care || careInRegion(k.care, edition.region)).map((k) => ({
   img: img(k.image, edition.region), alt: k.alt, title: k.title, desc: k.desc, href: target(k),
   // Global: UAE / KSA buttons instead of "Start Your Care" (client sheet 13 Oct 2026, row 6)

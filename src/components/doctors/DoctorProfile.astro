@@ -140,4 +140,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
     .rule-sec { width: calc(100% - 32 * var(--u)); }
     .summary h2, .bio { margin-inline: calc(16 * var(--u)); width: auto; max-width: none; }
   }
+  /* Figma justifies this text on its 855 / 496 px desktop column; on a phone column justify opens wide gaps between words
+     (mobile QA L3, 13 Oct 2026), so below 768 it follows the reading direction (left in English, right in Arabic). */
+  @media (max-width: 767.98px) { .bio { text-align: start; } }
 </style>

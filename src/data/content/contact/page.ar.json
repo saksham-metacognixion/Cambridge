@@ -44,6 +44,8 @@
     "directions": "فتح الموقع في خرائط Google"
   },
   "form": {
+    "_note": "Bug 114 (reopened 14 Oct 2026): labelColumn = desktop label column in Figma units (English 88). The Arabic e-mail label is 113.2 wide (155px at 1440), + the English 6.8 gap after the longest label (Full Name*) = 120. Re-check with .astro/qc-bug114r/measure.mjs when the remaining Arabic labels arrive (docs/arabic-missing-strings.md).",
+    "labelColumn": 120,
     "emailLabel": "البريد الإلكتروني*"
   },
   "intro": "يرجى تعبئة النموذج أدناه، وسيتولى فريقنا متابعة طلبكم والتواصل معكم في أقرب وقت ممكن."

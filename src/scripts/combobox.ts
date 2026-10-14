@@ -10,6 +10,7 @@
  * Bug 054 (editable): a picked name never locks the list. A click / tap on the field or the arrow opens EVERY valid name
  * with the current one highlighted, and the text is selected so typing replaces it; the x button (shown while the field has
  * text) clears it in one press (onSelect('')). The arrow toggles the list like a native dropdown arrow.
+ * Bug 052 reopened: a clearable select-only box (specialty) has the same x while it has a value.
  */
 import { nameMatches } from "../lib/doctor-filters";
 
@@ -51,10 +52,10 @@ export function createCombobox(root: HTMLElement, opts: ComboboxOptions) {
     syncClear();
   }
 
-  /** The x shows while the name box has any text (a picked doctor or typed letters). */
+  /** The x shows while the box has a value: any text in the name box (a picked doctor or typed letters), a picked option. */
   function syncClear() {
-    if (!clearBtn || !input) return;
-    const on = input.value !== "";
+    if (!clearBtn) return;
+    const on = input ? input.value !== "" : value !== "";
     clearBtn.hidden = !on;
     root.classList.toggle("has-clear", on);
   }
@@ -273,13 +274,15 @@ export function createCombobox(root: HTMLElement, opts: ComboboxOptions) {
     open();
     selectPicked();
   });
-  // The x: empties the field, clears the value (the page drops ?q= and shows every doctor of the other filters), focus back.
+  // The x: empties the field, clears the value (the page drops ?q= / ?specialty= and shows every doctor of the other
+  // filters), focus back to the field (the x itself disappears).
   clearBtn?.addEventListener("click", () => {
-    if (!input) return;
     close();
-    input.value = "";
-    typed = false;
-    input.focus({ preventScroll: true });
+    if (input) {
+      input.value = "";
+      typed = false;
+    }
+    field.focus({ preventScroll: true });
     setValue("");
     opts.onSelect("");
   });

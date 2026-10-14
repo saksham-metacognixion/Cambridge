@@ -26,7 +26,7 @@ const empty = content('doctors/page', edition.locale).results.empty;
   <RegionPills options={c.countries} active={active} label={c.countryLabel} class="df-pills" />
 
   <Combobox id="df-name" name="q" label={c.nameLabel} options={names} editable emptyText={empty} clearLabel={c.clearName} />
-  <Combobox id="df-specialty" name="specialty" label={c.specialtyLabel} options={specialtyOpts} emptyText={empty} />
+  <Combobox id="df-specialty" name="specialty" label={c.specialtyLabel} options={specialtyOpts} emptyText={empty} clearable clearLabel={c.clearSpecialty} />
 </div>
 
 <style>

@@ -39,6 +39,7 @@
     ],
     "nameLabel": "Search for Doctors by Name",
     "clearName": "Clear doctor name",
+    "clearSpecialty": "Clear specialty",
     "specialtyLabel": "Search for Specialities"
   },
   "card": {

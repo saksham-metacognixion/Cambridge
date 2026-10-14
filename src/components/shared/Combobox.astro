@@ -19,10 +19,13 @@ interface Props {
   editable?: boolean;
   /** shown in the list when no option fits */
   emptyText: string;
-  /** editable only (bug 054): accessible name of the clear (x) button shown while the field has text */
+  /** clear (x) button shown while the box has a value (bug 054: name text; bug 052 reopened: a picked specialty).
+   *  Default: on for the editable box, off for select-only. */
+  clearable?: boolean;
+  /** accessible name of the clear (x) button */
   clearLabel?: string;
 }
-const { id, name, label, options, editable = false, emptyText, clearLabel = 'Clear' } = Astro.props;
+const { id, name, label, options, editable = false, emptyText, clearable = editable, clearLabel = 'Clear' } = Astro.props;
 const listId = `${id}-list`;
 ---
 
@@ -38,12 +41,15 @@ const listId = `${id}-list`;
       <span class="cb-value" data-cb-value data-placeholder={label}>{label}</span>
     </div>
   )}
+  <!-- Bug 054: x clears the value (and its URL parameter) in one press; a real button, so Tab reaches it and Enter / Space
+       press it. -->
+  {clearable && (
+    <button type="button" class="cb-clear" aria-label={clearLabel} aria-controls={id} hidden data-cb-clear>
+      <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M1 1l8 8M9 1l-8 8" /></svg>
+    </button>
+  )}
   {editable && (
     <>
-      <!-- Bug 054: x clears the name (and ?q=) in one press; a real button, so Tab reaches it and Enter / Space press it. -->
-      <button type="button" class="cb-clear" aria-label={clearLabel} aria-controls={id} hidden data-cb-clear>
-        <svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M1 1l8 8M9 1l-8 8" /></svg>
-      </button>
       <!-- The arrow toggles the list like a native dropdown arrow. Out of the tab order and hidden from screen readers
            (APG: the keyboard opens the list with Down / Alt+Down on the field). -->
       <button type="button" class="cb-toggle" tabindex="-1" aria-hidden="true" data-cb-toggle></button>
@@ -97,7 +103,7 @@ const listId = `${id}-list`;
   @media (hover: hover) { .cb-opt[aria-selected='true']:hover { background: color-mix(in srgb, var(--color-cyan) 22%, #fff); } }
   @media (prefers-reduced-motion: reduce) { .cb-chev { transition: none; } }
 
-  /* Bug 054: arrow + clear buttons at the end of the name box (logical insets: mirrored in RTL). The arrow's hit area is the
+  /* Bug 054: arrow + clear buttons at the end of the box (the select-only box has the x only; its whole field opens the list) (logical insets: mirrored in RTL). The arrow's hit area is the
      31 Figma px end padding the chevron sits in; the x sits just before it and the text stops before both. */
   .cb { --cb-end: calc(31 * var(--u)); --cb-x: max(28px, calc(26 * var(--u))); }
   .cb-toggle, .cb-clear {

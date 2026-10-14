@@ -28,7 +28,7 @@ const f = c.form;
 // Shared form behaviour (src/scripts/forms.ts): EN/AR validation, JSON submit, success message. Field rules = forms.json 'send-enquiry'.
 const common = commonText(edition.locale);
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
-const err = 'f-err cf-err lg:absolute lg:start-205 lg:w-322';
+const err = 'f-err cf-err lg:absolute cf-col';
 // Hospitals (bug 051): ONE list for the Hospital select and the map (lib/hospitals.ts mapSpots: hospitals.json, the edition's own
 // hospitals, all six on Global, the site's own names and addresses). scripts/contact-map.ts loads the Maps JavaScript API once, when
 // the map nears the screen (or a hospital is chosen first), drops a marker per hospital with a position and fits them; choosing a
@@ -43,11 +43,15 @@ const mapConfig = JSON.stringify({
 });
 const mapTitle = content('layout/header', edition.locale).mainLinks[3].label;
 
+// Bug 114 (reopened 14 Oct 2026): label column on desktop = Figma 88 (205 - 117) for the English labels; a locale whose longest
+// label is wider sets form.labelColumn (Figma units) in its contact/page JSON. Fields start after the column and keep their Figma
+// end edge (527, flush with the message box), so a wider column only makes them narrower; the labels never run under a field.
+const labelColumn = f.labelColumn ?? 88;
 const label = 'font-gotham font-normal text-[calc(15*var(--u))] leading-[calc(18.82*var(--u))] text-navy not-italic whitespace-nowrap max-lg:whitespace-normal';
 const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy not-italic whitespace-nowrap no-underline';
 ---
 
-<section id="contact-form" class="relative bg-veil" style="--h: 722" aria-labelledby="contact-title">
+<section id="contact-form" class="relative bg-veil" style={`--h: 722; --cf-lab: ${labelColumn}`} aria-labelledby="contact-title">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-[calc(32*var(--u))] max-lg:px-[calc(16*var(--u))] max-lg:py-[calc(40*var(--u))]">
     <h2 id="contact-title" class:list={["m-0 font-gotham font-medium text-f28 leading-none text-navy-alt text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-201 lg:w-651 lg:h-33", c.intro ? "lg:top-[calc(24*var(--u))]" : "lg:top-42"]}>{c.heading}</h2>
     <!-- Intro line (client's Contact Us documents, Suhad 4, 14 Oct 2026; not in Figma): between the heading and the card, the heading
@@ -61,19 +65,19 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         <input type="hidden" name="edition" value={edition.id} />
 
         <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="name">
-          <label for="cf-name" class:list={[label, 'lg:absolute lg:start-117 lg:top-134 lg:w-88']}>{f.nameLabel}</label>
-          <input id="cf-name" name="name" type="text" required autocomplete="name" class="field lg:absolute lg:start-205 lg:top-126" aria-describedby="cf-name-error" />
+          <label for="cf-name" class:list={[label, 'lg:absolute lg:start-117 lg:top-134 cf-lab']}>{f.nameLabel}</label>
+          <input id="cf-name" name="name" type="text" required autocomplete="name" class="field cf-col lg:absolute lg:top-126" aria-describedby="cf-name-error" />
           <p id="cf-name-error" class:list={[err, 'lg:top-[calc(162*var(--u))]']} hidden></p>
         </div>
         <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="email">
           <label for="cf-email" class:list={[label, 'lg:absolute lg:start-117 lg:top-189']}>{f.emailLabel}</label>
-          <input id="cf-email" name="email" type="email" required autocomplete="email" class="field lg:absolute lg:start-205 lg:top-181" aria-describedby="cf-email-error" />
+          <input id="cf-email" name="email" type="email" required autocomplete="email" class="field cf-col lg:absolute lg:top-181" aria-describedby="cf-email-error" />
           <p id="cf-email-error" class:list={[err, 'lg:top-[calc(217*var(--u))]']} hidden></p>
         </div>
         <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="hospital">
           <label for="cf-hospital" class:list={[label, 'lg:absolute lg:start-117 lg:top-244']}>{f.hospitalLabel}</label>
           <!-- The box is the select's own frame (positioned on desktop like the other fields), so the chevron is anchored to the field's end edge. -->
-          <div class="relative max-lg:w-full lg:absolute lg:start-205 lg:top-236">
+          <div class="relative cf-col max-lg:w-full lg:absolute lg:top-236">
             <select id="cf-hospital" name="hospital" required class="field select">
               <option value="" selected disabled>{f.hospitalPlaceholder}</option>
               {hospitals.map((h) => <option value={h.value}>{h.label}</option>)}
@@ -84,7 +88,7 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         </div>
         <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="subject">
           <label for="cf-subject" class:list={[label, 'lg:absolute lg:start-117 lg:top-299']}>{f.subjectLabel}</label>
-          <input id="cf-subject" name="subject" type="text" required class="field lg:absolute lg:start-205 lg:top-291" aria-describedby="cf-subject-error" />
+          <input id="cf-subject" name="subject" type="text" required class="field cf-col lg:absolute lg:top-291" aria-describedby="cf-subject-error" />
           <p id="cf-subject-error" class:list={[err, 'lg:top-[calc(327*var(--u))]']} hidden></p>
         </div>
         <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="message">
@@ -219,8 +223,10 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
   .area { height: calc(86 * var(--u)); padding: calc(8.94 * var(--u)) calc(7 * var(--u)); resize: none; }
   .field { min-height: 44px; }  /* touch target (scope 2.8): only bites below ~1346px wide, where 35 Figma px < 44px */
   @media (min-width: 1024px) {
-    .field { width: calc(322 * var(--u)); }
+    .field { width: calc((410 - var(--cf-lab)) * var(--u)); }  /* Figma 322 with the English 88 column */
     .area { width: calc(410 * var(--u)); }
+    .cf-col { inset-inline-start: calc((117 + var(--cf-lab)) * var(--u)); width: calc((410 - var(--cf-lab)) * var(--u)); }  /* Figma 205 / 322 */
+    .cf-lab { width: calc(var(--cf-lab) * var(--u)); }
   }
 
   /* Contact details row on phones: the Figma 17.224 size is 23.6px there (--u is fixed below 1024) and the email / website ran

@@ -3,6 +3,10 @@
 Status: **confirmed fixes verified on staging** (commit 271ff60, deployed 9 Oct 2026 to https://cambridge-hospital-staging.vercel.app).
 Two items are still waiting for the client (see "Waiting for the client").
 
+**Reopened 14 Oct 2026** (see "Reopened 14 Oct 2026" at the end): K1 done (KSA Our Care doctor's hijab recoloured navy, user
+decision), K2 kept as on the live KSA site (user's screenshot of cambridgehospital.com/sa/about/, 14 Oct), hospital banners and the
+testimonials artwork re-checked.
+
 Sources checked: the live KSA site's own files (`docs/cambridge-images-ksa/` + `_pages.json`, saved 8 Oct, and
 `docs/cambridge-images-live/` + `_pages/sa/*.html`, saved 9 Oct), the WordPress export (`docs/cambridgehospital.WordPress.2026-10-06.xml`)
 and the existing `src/assets/regions/sa/` set. No new downloads were needed. A contact sheet of every KSA people photo on disk is in
@@ -50,3 +54,21 @@ Global and UAE: nothing changed. The only asset this bug edits is `src/assets/re
   (doctor in a navy or black hijab)?
 - **K2, KSA About hero.** The live KSA banner shows the woman on the far right (sage scrubs) without a hijab. Keep it as on the live site,
   or send a replacement? We won't edit the person without written approval.
+
+## Reopened 14 Oct 2026
+
+- **K1, `/sa/care/` (EN + AR): fixed.** No navy or black hijab version of this scene exists anywhere (Global
+  `src/assets/care/banner-our-care-subject.png`, live UAE `Our-Care-UAE.avif`, live KSA `Our-Care-Banner-KSA.avif` and the client
+  folder all show the same light-blue hijab). The user chose to recolour it: `tools/region-photos/recolour-hijab.py care/banner-our-care
+  sa 880 1051 60 499` (now part of `run-sa.sh`) turns only the doctor's hijab in `src/assets/regions/sa/care/banner-our-care-subject.png`
+  navy, rgb(17, 32, 56) = the median of the navy hijabs already in the approved KSA set (palliative-care / inpatient-care subjects),
+  with a soft hue/saturation mask, shading kept. The nurse's blue scrubs (x < 700) are outside the box; alpha, crop, position, pills,
+  cursor-follow and the Global / UAE file are unchanged. **Client sign-off needed** on the edited photo (R064).
+- **K2, `/sa/about/`: unchanged, by decision.** The user's screenshot of the live KSA About page (cambridgehospital.com/sa/about/,
+  14 Oct) shows the same five people, the far-right woman without a hijab. Our layer is that file. Not edited; if the client wants her
+  covered or removed, they need to say so in writing (or send a replacement under `about/banner`).
+- **Hospital banners / testimonials:** Jeddah, Dhahran, Al Khobar (EN + AR) still use `banner-jeddah` / `banner-dhahran` /
+  `banner-al-khobar`; no Abu Dhabi asset (`banner-abu-dhabi*`, `abu-dhabi`, `extrerior-image-abu-dhabi`, `cambridge-hospital-abu-dhabi-*`,
+  Al Mudeef) is referenced by any `/sa` page in the build, news included. Testimonials banner: pill solid, no smudge.
+- QA: `.astro/qc-bug067/ksa.mjs <engine> <base>` (KSA heroes EN + AR at 390 / 768 / 1366 / 1920: no broken or distorted images, no
+  sideways scroll; screenshots in `.astro/qc-bug067/shots/ksa-*`).

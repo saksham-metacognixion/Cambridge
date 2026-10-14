@@ -7,7 +7,7 @@
   "hero": {
     "ariaLabel": "Lung Health Calculator",
     "banner": {
-      "image": "doctors-page/banner",
+      "image": "calculators/lung-health",
       "alt": ""
     },
     "title": [

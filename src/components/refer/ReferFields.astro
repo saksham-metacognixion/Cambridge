@@ -8,7 +8,7 @@
  *   (Gotham Bold 15) is 33 above its first row (Figma 33 / 39 / 38); a block ends 37 above the next section label (all
  *   Figma blocks); textarea labels 27 above the box (Figma 27 / 22).
  *   Label -> box (--at): text 85.42 (left) / 88 (right), mobile 88 (dial box 76, then 10), gender options 92, EID 158,
- *   Referral Type 124, Referral For 112, Paediatrics Cases 149; boxes run to the column end. Bold row labels sit 11
+ *   Paediatrics Cases 149 (Figma's Referral Type / Referral For row removed, user 14 Oct); boxes run to the column end. Bold row labels sit 11
  *   below the box top, regular labels 8. Selects: placeholder 15.51 in (Requested) / 21 in (Referral), chevron 11.76 /
  *   13 from the end, 18 from the top. DOB: calendar icon 12.78 from the end, 5 from the top. Gender: selected 13px
  *   circle, unselected 11px circle (both centred in 13), text 8 after the circle, 29.5 between the options.
@@ -42,7 +42,6 @@ const blocks: { section: string; rows: Cell[][]; rowsGap?: number }[] = [
   ] },
 ];
 const referralRows: Cell[][] = [
-  [{ name: 'referral_type', at: 124, bold: true }, { name: 'referral_for', at: 112, bold: true }],
   [{ name: 'guardian_name', at: 149, bold: true }, { name: 'guardian_mobile', at: 88 }],
 ];
 const visible = (rows: Cell[][]) => rows.map((r) => r.filter((x) => has(x.name))).filter((r) => r.length);

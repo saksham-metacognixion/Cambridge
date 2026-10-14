@@ -179,15 +179,22 @@ function preselect(form: HTMLFormElement, slug?: string) {
   filterDoctors(form);
 }
 
-/* ───────── Dial code box: shows the code (Figma "+971") and the flag Figma has (UAE only) ───────── */
+/* ───────── Dial code box: shows the code (Figma "+971") and the country's flag (Figma's own for the UAE, bug 067) ───────── */
 function syncDial(sel: HTMLSelectElement) {
   const box = sel.closest("[data-dial]");
   const opt = sel.selectedOptions[0];
-  const code = box?.querySelector<HTMLElement>(".dial-code");
+  const code = box?.querySelector<HTMLElement>(".dial-code bdi");
   if (code && opt) code.textContent = opt.dataset.code ?? "";
-  box
-    ?.querySelectorAll<HTMLImageElement>("img[data-flag-for]")
-    .forEach((img) => (img.hidden = img.dataset.flagFor !== opt?.value));
+  const flag = box?.querySelector<HTMLImageElement>("img[data-flag]");
+  if (!flag || !opt) return;
+  const src =
+    opt.value === "AE"
+      ? flag.dataset.flagAe
+      : `${flag.dataset.flagBase}${opt.value}.svg`;
+  // No flag file for that country: hide the image, so the code moves into its slot (forms.css) instead of an empty gap.
+  flag.onerror = () => (flag.hidden = true);
+  flag.hidden = false;
+  if (src && flag.getAttribute("src") !== src) flag.src = src;
 }
 
 /* ───────── Forms ───────── */
@@ -227,7 +234,10 @@ export function initForm(form: HTMLFormElement) {
   });
   form
     .querySelectorAll<HTMLSelectElement>("[data-dial] select")
-    .forEach((sel) => sel.addEventListener("change", () => syncDial(sel)));
+    .forEach((sel) => {
+      sel.addEventListener("change", () => syncDial(sel));
+      syncDial(sel); // a country restored by the browser (back / forward) shows its own code and flag
+    });
   // After the clear-on-change listeners above (same element: registration order), so a bad file's error stays.
   initAttach(form);
   renderTurnstile(form);
@@ -248,7 +258,8 @@ function initAttach(form: HTMLFormElement) {
       name.textContent = f?.name ?? "";
       remove.hidden = !f;
       if (status && say !== undefined) status.textContent = say;
-      const bad = f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
+      const bad =
+        f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
       if (bad) setError(form, input.name, c.errors[bad] ?? c.errors.invalid);
     };
     form.addEventListener("change", (e) => {
@@ -271,7 +282,11 @@ function initAttach(form: HTMLFormElement) {
     );
     // A file picked before this script loaded (the change that loaded it): shown and announced now.
     const early = input.files?.[0];
-    sync(early ? (c.attachment?.selected ?? "").replace("{name}", early.name) : undefined);
+    sync(
+      early
+        ? (c.attachment?.selected ?? "").replace("{name}", early.name)
+        : undefined,
+    );
   });
 }
 
@@ -308,7 +323,8 @@ function validate(form: HTMLFormElement, c: Config): Record<string, string> {
   for (const r of c.fields) {
     if (r.type === "file") {
       const f = controls(form, r.name)[0]?.files?.[0];
-      const bad = f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
+      const bad =
+        f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
       if (bad) out[r.name] = bad;
       else if (!f && r.required) out[r.name] = "required";
       continue;

@@ -21,6 +21,10 @@ export function content<T = any>(name: string, locale: LocaleId): T {
   return merge(en, loc, `${name}.${locale}`) as T;
 }
 
+/** Whether src/data/content/<name>.<locale>.json exists (no English fallback). */
+export const hasContent = (name: string, locale: LocaleId) =>
+  `../data/content/${name}.${locale}.json` in files;
+
 /** Localized entity field: { en: "...", ar: "..." } -> string for the locale (English fallback). */
 export type Localized = { en: string; ar?: string };
 export function t(

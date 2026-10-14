@@ -61,16 +61,6 @@
     "eid": {
       "label": "EID / Passport No:"
     },
-    "referral_type": {
-      "label": "Referral Type",
-      "placeholder": "Select Option",
-      "options": {}
-    },
-    "referral_for": {
-      "label": "Referral For",
-      "placeholder": "Select Option",
-      "options": {}
-    },
     "guardian_name": {
       "label": "Paediatrics Cases",
       "placeholder": "Guardian Name"

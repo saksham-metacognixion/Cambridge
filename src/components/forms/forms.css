@@ -74,24 +74,31 @@
 .gf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(16.407 * var(--u)); inset-block-start: calc(4.51 * var(--u)); inline-size: calc(17.85 * var(--u)); block-size: calc(19.834 * var(--u)); }
 
 /* Mobile: dial-code box + number box */
-.gf-dial { position: relative; flex: none; inline-size: calc(68.517 * var(--u)); }
-.gf-dial select { inline-size: 100%; padding-inline: calc(23.44 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+.gf-dial { position: relative; flex: none; min-inline-size: calc(68.517 * var(--u)); min-block-size: calc(31.554 * var(--u)); }
+.gf-dial select { padding-inline: calc(23.44 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
 .gf-flag { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-start: calc(5.41 * var(--u)); inset-block-start: calc(9.91 * var(--u)); inline-size: calc(14.875 * var(--u)); block-size: calc(9.917 * var(--u)); }
 .gf-dial .gf-chev { inset-inline-end: calc(5.19 * var(--u)); inset-block-start: calc(13.52 * var(--u)); inline-size: calc(6.527 * var(--u)); }
 .gf-tel { margin-inline-start: calc(8.113 * var(--u)); }
-/* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971"). */
+/* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971").
+   Bug 067: select and code share one grid cell with the code in flow, so the box is Figma's width (the min-inline-size
+   above; "+971" fits) or wider when a code needs it ("+966", "+1684"), always with --dial-gap between the code and the
+   chevron instead of running under it. The select covers the box absolutely, so it adds no width of its own (in flow, its
+   longest country name sized the box: Chrome ignores size containment on a select, WebKit a 0 / min 100% width); the box
+   height is therefore set on .gf-dial / .pf-dial (the Figma box heights, 44px on touch / narrow screens). */
+.dial { display: grid; inline-size: max-content; --dial-gap: 3; }
+.dial > select { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; min-block-size: 0; }
 /* overflow: the hidden country name ("United Arab Emirates (+971)") ran past the box; WebKit counted it as scrollable
    width, so the booking pop-up scrolled 65px sideways at 320-375px (bug 091 follow-up). Clipping it changes nothing visible. */
 .dial-select { color: transparent !important; overflow: hidden; }
 .dial-select option { color: var(--color-navy); }
-.dial-code { position: absolute; pointer-events: none; white-space: nowrap; color: var(--color-body); font-weight: 400; }
-.gf-dial .dial-code { inset-inline-start: calc(23.44 * var(--u)); inset-block-start: calc(7.21 * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
-.pf-dial .dial-code { inset-inline-start: calc(var(--pf-dial-pad, 25.62) * var(--u)); inset-block-start: calc(8 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+.dial-code { position: relative; align-self: start; pointer-events: none; white-space: nowrap; color: var(--color-body); font-weight: 400; }
+.dial-code bdi { unicode-bidi: isolate; } /* dir="ltr" in the markup: "+966" on Arabic pages, not "966+" */
+.gf-dial .dial-code { margin-block-start: calc(7.21 * var(--u)); margin-inline: calc(23.44 * var(--u)) calc((var(--dial-gap) + 5.19 + 6.527) * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
+.pf-dial .dial-code { margin-block-start: calc(8 * var(--u)); margin-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) calc((var(--dial-gap) + var(--pf-dial-chev-x, 5.68) + var(--pf-dial-chev-w, 7.135)) * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
 .dial img[hidden] { display: none; }
-/* No flag (only the UAE one exists in Figma, e.g. +966 on KSA): centre the code in the space left of the chevron
-   instead of leaving the empty flag slot and crowding the chevron. */
-.gf-dial:has(img[data-flag-for][hidden]) .dial-code { inset-inline: 0 calc((5.19 + 6.527) * var(--u)); text-align: center; }
-.pf-dial:has(img[data-flag-for][hidden]) .dial-code { inset-inline: 0 calc((var(--pf-dial-chev-x, 5.68) + var(--pf-dial-chev-w, 7.135)) * var(--u)); text-align: center; }
+/* No flag file for the country: the code starts where the flag would, no empty slot. */
+.gf-dial:has(img[data-flag][hidden]) .dial-code { margin-inline-start: calc(5.41 * var(--u)); }
+.pf-dial:has(img[data-flag][hidden]) .dial-code { margin-inline-start: calc(var(--pf-flag-x, 5.91) * var(--u)); }
 
 .gf-area {
   block-size: calc(var(--h) * var(--u)); inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; resize: none;
@@ -165,12 +172,13 @@
 
 /* Touch screens and narrow windows: every control at least 44px tall without changing its look on desktop (scope 2.8). */
 @media (pointer: coarse), (max-width: 1023.98px) {
-  .gf-box, .gf-select select, .gf-dial select { min-block-size: 44px; }
+  .gf-box, .gf-select select, .gf-dial { min-block-size: 44px; }
   .gf-row { align-items: center; }
   .gf-label { padding-block-start: 0; }
   .gf-cal { inset-block-start: 50%; translate: 0 -50%; }
   .gf-select .gf-chev, .gf-dial .gf-chev { inset-block-start: 50%; translate: 0 -50%; }
-  .gf-flag, .gf-dial .dial-code { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-flag { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-dial .dial-code { align-self: center; margin-block-start: 0; }
 }
 
 /* ───────── Below 1024: same design, one column, full width; below 768: full screen ───────── */
@@ -208,8 +216,8 @@
 .pf-select select { inline-size: 100%; padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
 .pf-select .pf-chev { inset-inline-end: calc(var(--pf-sel-chev-x, 16.2) * var(--u)); inset-block-start: calc(var(--pf-sel-chev-y, 18) * var(--u)); inline-size: calc(var(--pf-sel-chev-w, 7.24) * var(--u)); }
 .pf-chev, .pf-flag { position: absolute; pointer-events: none; max-inline-size: none; block-size: auto; }
-.pf-dial { position: relative; flex: none; inline-size: calc(var(--pf-dial-w, 74.901) * var(--u)); }
-.pf-dial select { inline-size: 100%; padding-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+.pf-dial { position: relative; flex: none; min-inline-size: calc(var(--pf-dial-w, 74.901) * var(--u)); min-block-size: calc(35 * var(--u)); }
+.pf-dial select { padding-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) 0; color: var(--color-body); cursor: pointer; }
 .pf-flag { inset-inline-start: calc(var(--pf-flag-x, 5.91) * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(var(--pf-flag-w, 16.261) * var(--u)); block-size: calc(11 * var(--u)); }
 .pf-dial .pf-chev { inset-inline-end: calc(var(--pf-dial-chev-x, 5.68) * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(var(--pf-dial-chev-w, 7.135) * var(--u)); }
 .pf-tel { margin-inline-start: calc(var(--pf-tel-gap, 9.85) * var(--u)); flex: 0 1 auto; min-inline-size: 0; }
@@ -233,9 +241,10 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 @media (max-width: 1023.98px) {
   .pf-row { align-items: center; }
   .pf-label { padding-block-start: 0; }
-  .pf-box { min-block-size: 44px; }
+  .pf-box, .pf-dial { min-block-size: 44px; }
   .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
-  .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag, .pf-dial .dial-code { inset-block-start: 50%; translate: 0 -50%; }
+  .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }
+  .pf-dial .dial-code { align-self: center; margin-block-start: 0; }
 }
 @media (max-width: 767.98px) {
   .pf-row { display: grid; grid-template-columns: minmax(0, 1fr); }

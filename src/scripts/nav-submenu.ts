@@ -9,6 +9,8 @@
 // same model one level down. Desktop: hover or the chevron opens a fly-out beside its list (on the other side when it would
 // leave the viewport); the "inward" arrow (ArrowRight, ArrowLeft in Arabic) on the row opens it and focuses its first link,
 // the "outward" arrow or Escape closes it and returns to the row. Mobile: nested accordions.
+// Bug 116 (reopened): a [data-fly-inline] row (Neurorehabilitation) is no fly-out on desktop: its programmes are shown under it
+// in the same panel (Header.astro) and are rows of that panel for the arrow keys; on mobile it is an accordion like the others.
 const roots = [...document.querySelectorAll<HTMLElement>("[data-submenu]")];
 const desktop = matchMedia("(min-width: 1200px)");
 const hover = matchMedia("(hover: hover) and (min-width: 1200px)");
@@ -69,7 +71,18 @@ for (const root of roots) {
     const link = li.querySelector<HTMLAnchorElement>(":scope > .fly-head > .sub-item")!;
     const panel = li.querySelector<HTMLElement>(":scope > .fly")!;
     const list = panel.querySelector<HTMLElement>(":scope > .fly-list")!;
-    const kids = [...list.children].map(rowLink).filter((x): x is HTMLAnchorElement => !!x);
+    const inline = li.hasAttribute("data-fly-inline");
+    const flat = () => inline && desktop.matches;
+    // this panel's rows for the arrow keys, an inline row's programmes after it (desktop)
+    const kids = () =>
+      [...list.children]
+        .flatMap((x) => [
+          rowLink(x),
+          ...(desktop.matches && x.hasAttribute("data-fly-inline")
+            ? [...x.querySelectorAll(":scope > .fly > .fly-list > li")].map(rowLink)
+            : []),
+        ])
+        .filter((x): x is HTMLAnchorElement => !!x);
     let fpinned = false;
     const fopen = () => li.hasAttribute("data-open");
     // Desktop: open on the side that fits the viewport (Header.astro [data-flip]); a nested fly-out first tries its parent's side.
@@ -101,7 +114,7 @@ for (const root of roots) {
     const enter = () => {
       fset(true);
       fpinned = true;
-      requestAnimationFrame(() => kids[0]?.focus());
+      requestAnimationFrame(() => kids()[0]?.focus());
     }; // next frame: still hidden in this one
     fbtn.addEventListener("click", () => {
       if (fopen() && !fpinned && hover.matches) {
@@ -120,6 +133,12 @@ for (const root of roots) {
     li.addEventListener("pointerenter", (e) => {
       if (e.pointerType !== "mouse" || !hover.matches) return;
       clearTimeout(intent);
+      if (flat()) {
+        // a plain row here: resting on it closes a fly-out open beside it
+        const open = openSiblings(li);
+        if (open.length) later(() => open.forEach((x) => flyOf.get(x)?.set(false)));
+        return;
+      }
       if (fopen()) return;
       if (openSiblings(li).length) later(() => fset(true));
       else fset(true);
@@ -131,7 +150,7 @@ for (const root of roots) {
     // Keys are handled by the innermost level: this li takes its own row's inward arrow and the keys of its fly-out's rows;
     // anything else on its own row goes up to the list the row belongs to (parent fly-out or the dropdown).
     li.addEventListener("keydown", (e) => {
-      if (!desktop.matches) return; // mobile: plain Tab order through the accordion
+      if (!desktop.matches || flat()) return; // mobile: plain Tab order through the accordion; inline: the panel's keys
       const inward = rtl() ? "ArrowLeft" : "ArrowRight";
       const outward = rtl() ? "ArrowRight" : "ArrowLeft";
       const t = e.target as HTMLElement;
@@ -144,7 +163,9 @@ for (const root of roots) {
         return;
       }
       const row = t.closest("li");
-      if (!row || row.parentElement !== list) return; // a deeper level's key (that level stopped it already)
+      const rows = kids();
+      const k = row ? rows.indexOf(rowLink(row)!) : -1;
+      if (k < 0) return; // a deeper level's key (that level stopped it already)
       e.stopPropagation(); // the outer levels' own keys must not act on this fly-out's rows
       if (e.key === outward || e.key === "Escape") {
         e.preventDefault();
@@ -152,8 +173,7 @@ for (const root of roots) {
         link.focus();
         return;
       }
-      const k = kids.indexOf(rowLink(row)!);
-      if (listNav(kids, e.key, k)) e.preventDefault();
+      if (listNav(rows, e.key, k)) e.preventDefault();
     });
   }
   // a mouse resting on a row without a fly-out closes the fly-out open beside it (same intent delay)

@@ -7,7 +7,7 @@
   "hero": {
     "ariaLabel": "Stroke Risk Calculator",
     "banner": {
-      "image": "doctors-page/banner",
+      "image": "calculators/stroke-risk",
       "alt": ""
     },
     "title": [

@@ -1,0 +1,65 @@
+---
+import { Picture } from 'astro:assets';
+import { bannerArt } from '../../lib/banner-art';
+import shape from '../../assets/banners/shape.avif';
+import pattern from '../../assets/banners/pattern.svg';
+import type { RegionId } from '../../lib/editions';
+
+/*
+ * Banner art as on the live site (banner brief 14 Oct 2026; user decisions: live geometry at 1440, scaled with the page like
+ * the rest of the design; phones text first, the people under it). Live (cambridgehospital.com, measured with
+ * .astro/qc-banner): every banner is a gradient (`banners/bg.avif`, background-size cover, set by the host section via
+ * bannerArt().bgStyle) with the pill shape (613x500) and ONE transparent people cut-out drawn at its natural size
+ * (579x450, 500x450, 565x462 ...), right-aligned to the 72px content edge, its bottom 10px below the banner (Home: the
+ * outline pattern 620x548 and a 580x480 cut-out in a 550px banner). The people drift with the cursor (scripts/hero-follow.ts);
+ * the shape and gradient stay.
+ * Units: --lp = one live px at 1440 = 1052/1440 Figma px (--u), so from 1024px up the art scales with the page width exactly
+ * like the copy beside it. Below 1024px --u is fixed (1lp = 1px) and the art is a block under the copy at the live
+ * phone / tablet size (325x265 / 365x298 for a 579x450 cut-out: x0.561 / x0.630 of the natural size), never distorted.
+ * RTL: `mirror` flips the art with the layout (the default of every hero); `keep` keeps the English composition
+ * (art on the right, unflipped: banners with readable or directional content).
+ */
+interface Props {
+  image: string;
+  region: RegionId;
+  alt: string;
+  home?: boolean;
+  mirror?: boolean;
+  keep?: boolean;
+  class?: string;
+}
+const { image, region, alt, home = false, mirror = true, keep = false, class: cls } = Astro.props;
+const art = bannerArt(image, region)!;
+const { w, h } = art;
+// Shape box relative to the people box (live px): the pills sit 30px under the banner top (Home pattern: 55px), the people's
+// bottom 10px (Home 5px) under the banner bottom, both right-aligned to the same edge.
+const S = home ? { w: 620, h: 548, top: 55, banner: 550, drop: 5 } : { w: 613, h: 500, top: 30, banner: 500, drop: 10 };
+const shapeTop = S.top - (S.banner + S.drop - h);
+const flip = mirror && !keep;
+// Rendered width: w live px at 1440 scaled with the page (desktop), x0.630 tablet, x0.561 phone; Astro never upscales.
+const pic = {
+  formats: ['avif'], fallbackFormat: art.image.format === 'png' ? 'png' : 'webp', widths: [Math.round(w * 0.561), Math.round(w * 0.63), w].filter((v, i, a) => a.indexOf(v) === i),
+  sizes: `(min-width: 1024px) ${((w / 1440) * 100).toFixed(2)}vw, (min-width: 690px) ${Math.round(w * 0.63)}px, ${Math.round(w * 0.561)}px`,
+  loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+} as const;
+---
+
+<div class:list={['bn-frame', home && 'bn-home', cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
+  <div class:list={['bn-art', flip && 'rtl:-scale-x-100']} data-hero-follow>
+    {art.shape && <img class="bn-shape" src={home ? pattern.src : shape.src} width={S.w} height={S.h} alt="" loading="eager" decoding="async" />}
+    <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
+  </div>
+</div>
+
+<style>
+  .bn-frame { --lp: 1px; --s: 0.561; position: relative; z-index: 0; display: flex; justify-content: flex-start; padding-inline: calc(24 * var(--u)); pointer-events: none; }
+  .bn-art { position: relative; width: calc(var(--bw) * var(--s) * var(--lp)); max-width: 100%; aspect-ratio: var(--bw) / var(--bh); flex: none; }
+  .bn-people { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: 100% 100%; }
+  .bn-shape { position: absolute; z-index: -1; inset-inline-end: 0; top: calc(var(--st) / var(--bh) * 100%); width: calc(var(--sw) / var(--bw) * 100%); height: auto; max-width: none; }
+  /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
+  @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }
+  @media (min-width: 1024px) {
+    .bn-frame { --lp: calc(var(--u) * 1052 / 1440); --s: 1; position: absolute; inset: 0; max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding: 0; display: block; }
+    .bn-art { position: absolute; inset-inline-end: calc(72 * var(--lp)); bottom: calc(-1 * var(--sd) * var(--lp)); max-width: none; }
+  }
+</style>

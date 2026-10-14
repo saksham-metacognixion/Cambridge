@@ -1,0 +1,632 @@
+{
+ "ae:care/heroes/post-surgical-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "ae:hero/banner3": {
+  "w": 580,
+  "h": 480,
+  "shape": true
+ },
+ "ae:insurance-page/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:about/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:accreditations/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:calculators/bmi": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:calculators/heart-age": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:calculators/lung-health": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:calculators/stroke-risk": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:care/banner-inpatient-care": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/banner-our-care": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/banner-post-acute-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/central-nervous-system": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/cerebral-palsy-program": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/geriatric-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/home-healthcare": {
+  "w": 311,
+  "h": 496,
+  "shape": true
+ },
+ "global:care/heroes/icu-critical-care": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/in-school": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/long-term-acute-care": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/long-term-cardiac": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/long-term-care": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/long-term-care-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/long-term-ventilated-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/mechanical-ventilation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/musculoskeletal-rehabilitation": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/neuro-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/neuromuscular-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/occupational-therapy": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/outpatient": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/paediatric-post-acute-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/paediatric-transitional": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/palliative-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/pediatric-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/pediatric-long-term-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/pediatric-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/physical-medicine-rehab-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/physiotherapy": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/post-surgical-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/pulmonary-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/road-traffic-accident-rehab": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/speech-language-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/speech-language-therapy": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/spinal-cord-injury-rehabilitation": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/stroke-rehabilitation": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/traumatic-brain-injury-rehabilitation": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:care/heroes/weaning-program": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:careers/banner": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/acquired-brain-injury": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/amputation-prosthetic-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/back-pain-lumbar-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/banner": {
+  "w": 458,
+  "h": 212,
+  "shape": true
+ },
+ "global:conditions/epilepsy": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/fracture-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/guillain-barre-syndrome": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/hip-fracture-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/hip-knee-replacement-recovery": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/knee-ligament-cartilage-injuries": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/motor-neuron-diseases": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/multiple-sclerosis": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/musculoskeletal-orthopaedic-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/neck-pain-cervical-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/neurorehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/parkinsons-disease": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/shoulder-rotator-cuff-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/spinal-cord-injury": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/stroke-rehabilitation": {
+  "w": 489,
+  "h": 419,
+  "shape": true
+ },
+ "global:conditions/tennis-elbow": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:conditions/traumatic-brain-injury": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:contact-page/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "global:doctors-page/banner": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:faq/hero": {
+  "w": 540,
+  "h": 460,
+  "shape": true
+ },
+ "global:forms/feedback-hero": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:hero/banner3": {
+  "w": 580,
+  "h": 480,
+  "shape": true
+ },
+ "global:hospital-detail/banner-abu-dhabi": {
+  "w": 555,
+  "h": 500,
+  "shape": false
+ },
+ "global:hospital-detail/banner-al-ain": {
+  "w": 579,
+  "h": 450,
+  "shape": false
+ },
+ "global:hospital-detail/banner-al-khobar": {
+  "w": 579,
+  "h": 450,
+  "shape": false
+ },
+ "global:hospital-detail/banner-al-mudeef-abu-dhabi": {
+  "w": 579,
+  "h": 450,
+  "shape": false
+ },
+ "global:hospital-detail/banner-dhahran": {
+  "w": 579,
+  "h": 450,
+  "shape": false
+ },
+ "global:hospital-detail/banner-jeddah": {
+  "w": 579,
+  "h": 450,
+  "shape": false
+ },
+ "global:insurance-page/banner": {
+  "w": 600,
+  "h": 460,
+  "shape": true
+ },
+ "global:international/banner": {
+  "w": 583,
+  "h": 417,
+  "shape": true
+ },
+ "global:media-hub/banner": {
+  "w": 510,
+  "h": 500,
+  "shape": true
+ },
+ "global:patient-hub/banner": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:refer/banner": {
+  "w": 565,
+  "h": 462,
+  "shape": true
+ },
+ "global:testimonials-page/banner": {
+  "w": 580,
+  "h": 480,
+  "shape": true
+ },
+ "global:who-we-are/banner": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "global:why/banner": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "sa:about/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:accreditations/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/banner-inpatient-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/banner-our-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/banner-post-acute-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/cerebral-palsy-program": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/geriatric-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/home-healthcare": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/icu-critical-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/long-term-acute-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/long-term-cardiac": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/long-term-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/long-term-care-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/long-term-ventilated-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/musculoskeletal-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/neuro-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/neuromuscular-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/occupational-therapy": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/outpatient": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/paediatric-post-acute-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/paediatric-transitional": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/palliative-care": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/physiotherapy": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/post-surgical-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/road-traffic-accident-rehab": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/speech-language-therapy": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/spinal-cord-injury-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/stroke-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:care/heroes/traumatic-brain-injury-rehabilitation": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:careers/banner": {
+  "w": 576,
+  "h": 456,
+  "shape": true
+ },
+ "sa:faq/hero": {
+  "w": 540,
+  "h": 460,
+  "shape": true
+ },
+ "sa:forms/feedback-hero": {
+  "w": 429,
+  "h": 444,
+  "shape": true
+ },
+ "sa:hero/banner3": {
+  "w": 580,
+  "h": 480,
+  "shape": true
+ },
+ "sa:insurance-page/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:international/banner": {
+  "w": 578,
+  "h": 408,
+  "shape": true
+ },
+ "sa:patient-hub/banner": {
+  "w": 500,
+  "h": 450,
+  "shape": true
+ },
+ "sa:testimonials-page/banner": {
+  "w": 555,
+  "h": 496,
+  "shape": true
+ },
+ "sa:who-we-are/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ },
+ "sa:why/banner": {
+  "w": 579,
+  "h": 450,
+  "shape": true
+ }
+}

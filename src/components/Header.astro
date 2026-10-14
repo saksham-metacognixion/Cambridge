@@ -156,24 +156,27 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
                   // One row of the dropdown at any depth (bug 104): a row with children = link + chevron button + a fly-out of
                   // the same rows one level down (Our Care: section -> programme -> Neurorehabilitation's programmes). The
                   // first-level links are .sub-item, everything inside a fly-out also .fly-item (scripts/nav-submenu.ts).
-                  const row = (k: NavItem, rid: string, deep: boolean): any => k.children.length ? (
-                    <li class="has-fly" data-flyout>
+                  // Bug 116 (reopened 14 Oct 2026): a row with children inside a fly-out's fly-out (depth 2: Neurorehabilitation)
+                  // is data-fly-inline: on desktop its programmes show as indented rows under it in the same panel instead of a
+                  // 4th-level fly-out (that one covered the Inpatient sections list); mobile keeps the nested accordion.
+                  const row = (k: NavItem, rid: string, depth: number): any => k.children.length ? (
+                    <li class="has-fly" data-flyout data-fly-inline={depth >= 2 ? '' : undefined}>
                       <div class="fly-head">
-                        <a id={rid} href={k.href} class:list={['hit sub-item block whitespace-nowrap text-f9 font-medium not-italic text-navy', deep && 'fly-item']} aria-current={k.current ? 'page' : undefined}>{k.label}</a>
+                        <a id={rid} href={k.href} class:list={['hit sub-item block whitespace-nowrap text-f9 font-medium not-italic text-navy', depth > 0 && 'fly-item']} aria-current={k.current ? 'page' : undefined}>{k.label}</a>
                         <button type="button" class="hit fly-btn text-navy" aria-expanded="false" aria-controls={`${rid}-menu`} aria-labelledby={rid} data-flyout-btn>
                           <svg class="fly-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
                         </button>
                       </div>
                       <div class="fly" id={`${rid}-menu`} data-flyout-menu>
                         <ul class="fly-list">
-                          {k.children.map((g, m) => row(g, `${rid}-${m}`, true))}
+                          {k.children.map((g, m) => row(g, `${rid}-${m}`, depth + 1))}
                         </ul>
                       </div>
                     </li>
                   ) : (
-                    <li><a href={k.href} class:list={['hit sub-item block whitespace-nowrap text-f9 font-medium not-italic text-navy', deep && 'fly-item']} aria-current={k.current ? 'page' : undefined}>{k.label}</a></li>
+                    <li><a href={k.href} class:list={['hit sub-item block whitespace-nowrap text-f9 font-medium not-italic text-navy', depth > 0 && 'fly-item']} aria-current={k.current ? 'page' : undefined}>{k.label}</a></li>
                   );
-                  return x.children.map((k, j) => row(k, `${x.id}-${j}`, false));
+                  return x.children.map((k, j) => row(k, `${x.id}-${j}`, 0));
                 })()}
               </ul>
             </div>
@@ -352,6 +355,14 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .has-fly[data-flip] > .fly-head .fly-chev { transform: rotate(90deg); }
     :global([dir='rtl']) .has-fly[data-flip] > .fly-head .fly-chev { transform: rotate(-90deg); }
     .hd .fly-list { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(10 * var(--u)) calc(12 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); min-width: calc(140 * var(--u)); }
+    /* Bug 116 (reopened): Neurorehabilitation's programmes (Stroke, TBI, Spinal Cord Injury) as a group inside the Post Acute
+       panel, not a 4th fly-out (it opened over the Inpatient sections at 1280-1680 and never flips now): no chevron, the list
+       always shown with its panel, indented 10 under the row with a short cyan rule at its inline start, label 8 (rows 9).
+       Their links join that panel's arrow-key list (scripts/nav-submenu.ts). */
+    .has-fly[data-fly-inline] > .fly-head > .fly-btn { display: none; }
+    .has-fly[data-fly-inline] > .fly { position: static; visibility: inherit; opacity: 1; transform: none; transition: none; padding: 0; margin-top: calc(7 * var(--u)); }
+    .hd .has-fly[data-fly-inline] > .fly > .fly-list { background: none; box-shadow: none; border-radius: 0; min-width: 0; gap: calc(7 * var(--u)); padding: 0; padding-inline-start: calc(9 * var(--u)); margin-inline-start: calc(1 * var(--u)); border-inline-start: calc(1 * var(--u)) solid var(--color-cyan); }
+    .has-fly[data-fly-inline] > .fly .fly-item { font-size: calc(8 * var(--u)); }
   }
 
   @media (max-width: 1199.98px) {

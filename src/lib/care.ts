@@ -1,6 +1,6 @@
 import data from "../data/care.json";
 import { PAGE_PATHS } from "./paths";
-import { content, type Localized } from "./content";
+import { content, hasContent, type Localized } from "./content";
 import type { LocaleId, RegionId } from "./editions";
 
 /*
@@ -95,10 +95,12 @@ const files = import.meta.glob("../data/content/care/*.en.json");
 export const careContentNames = new Set(
   Object.keys(files).map((p) => p.replace(/^.*\/(.+)\.en\.json$/, "$1")),
 );
-/** Full page content: the region variant when one exists (homecare.sa on /sa), else the shared file, else null. */
+/** Full page content: the region variant when one exists (homecare.sa on /sa), else the shared file, else null. A region
+ * variant only counts for a locale it has a file in: an English-only variant (post-acute-rehab.ae / .sa, the live regional
+ * subtitle, bug 109) leaves the Arabic page on the shared Arabic file instead of falling back to its English. */
 export function careContent(slug: string, locale: LocaleId, region?: RegionId) {
   if (slug === "shared") return null;
-  if (region && region !== "global" && careContentNames.has(`${slug}.${region}`))
+  if (region && region !== "global" && hasContent(`care/${slug}.${region}`, locale))
     return content(`care/${slug}.${region}`, locale);
   return careContentNames.has(slug) ? content(`care/${slug}`, locale) : null;
 }

@@ -7,7 +7,7 @@
   "hero": {
     "ariaLabel": "BMI Calculator",
     "banner": {
-      "image": "doctors-page/banner",
+      "image": "calculators/bmi",
       "alt": ""
     },
     "title": [

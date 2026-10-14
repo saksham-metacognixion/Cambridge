@@ -5,6 +5,8 @@ import { content } from '../../lib/content';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
 import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
+import BannerArt from '../shared/BannerArt.astro';
+import { bannerArt, bannerBgStyle, bannerH } from '../../lib/banner-art';
 
 // Figma 188:964 hero: image "PAR-inside 1" 1052x323 at page y 118 (1 under the header). Values: page y minus 118.
 // Title (95,100) Gotham Medium 39 / 37 (the line height the other heroes use), w 385 | button at (98,180): the shared .ui-btn (bug 044/050; Figma 164x30).
@@ -14,8 +16,10 @@ import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 // add one as src/assets/regions/sa/forms/feedback-hero.png and it is used on /sa automatically.
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('forms/feedback', edition.locale).hero;
-const banner = img(c.image, edition.region);
-const layers = heroLayers(c.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
+// Live-site banner art (banner brief 14 Oct 2026): see PageHero / shared/BannerArt.astro.
+const art = bannerArt(c.image, edition.region);
+const banner = art ? null : img(c.image, edition.region);
+const layers = art ? null : heroLayers(c.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
 // Below 1024px the photo is cropped to the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), as on PageHero.
 const strip = layers ? await heroSubjectStrip(layers.subject) : null;
 const crop = strip ? heroSmallCrop(strip, 323, '(min-width: 1440px) 1440px, 100vw') : null;
@@ -26,23 +30,24 @@ const pic = {
 } as const;
 ---
 
-<section class="hero relative" aria-labelledby="feedback-title">
+<section class:list={['hero relative', art && 'bn-live']} style={art ? `--bnh:${bannerH()};${bannerBgStyle}` : undefined} aria-labelledby="feedback-title">
   <!-- The person drifts with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->
-  <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} style={crop?.style} aria-hidden="true">
+  {!art && <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} style={crop?.style} aria-hidden="true">
     {layers ? (
       <>
         <Picture src={layers.background} class={imgClass} {...pic} />
         <Picture src={layers.subject} fetchpriority="high" data-hero-subject class={imgClass} {...pic} />
       </>
     ) : (
-      <Picture src={banner} fetchpriority="high" class={imgClass} {...pic} />
+      <Picture src={banner!} fetchpriority="high" class={imgClass} {...pic} />
     )}
-  </div>
+  </div>}
   <div class="inner relative">
     <h1 id="feedback-title" class="title hero-title m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic">{c.title.map((line: string) => <span class="block">{line}</span>)}</h1>
     {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
     <a href={c.button.href} class="btn ui-btn hit btn-outline hair-card relative no-underline text-navy" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
   </div>
+  {art && <BannerArt image={c.image} region={edition.region} alt="" />}
 </section>
 
 <script>
@@ -51,6 +56,12 @@ const pic = {
 
 <style>
   .hero { min-block-size: calc(323 * var(--u)); margin-block-start: calc(-1 * var(--u)); }
+  .bn-live { overflow: clip; min-block-size: calc(var(--bnh) * var(--u)); }
+  /* Live banner (see PageHero): the copy block centred vertically; the banner grows only if needed. */
+  @media (min-width: 1024px) {
+    .bn-live { display: flex; align-items: center; }
+    .bn-live .inner { flex: 1; padding-block: calc(32 * var(--u) * 1052 / 1440); }
+  }
   @media (max-width: 1023.98px) { .hero { min-block-size: 0; } }
   .inner { box-sizing: border-box; max-inline-size: calc(var(--max-w) * 1px); margin-inline: auto; padding-block: calc(100 * var(--u)) calc(24 * var(--u)); padding-inline-start: calc(95 * var(--u)); }
   .title { inline-size: calc(385 * var(--u)); max-inline-size: 100%; min-block-size: calc(80 * var(--u)); }

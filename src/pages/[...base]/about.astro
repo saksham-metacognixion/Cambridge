@@ -22,14 +22,16 @@ const showTimeline = about.showTimeline;
  * About Cambridge template (Figma 45:4982, file LJIRtzU...). Gaps (Figma px) between blocks:
  * Hero 119-556 -> intro (video / copy top 636): 80 | intro ends 900 -> grey "Explore" band 974: 74 |
  * band 974-1537 -> "Your recovery matters" box 1603: 66 | box ends 1871 -> footer 1937: 66.
- * With the timeline ON (frame 307:494): intro ends 900 -> timeline heading 991: 91; cards end 1220 -> band 1312: 92.
+ * With the timeline ON: since 14 Oct 2026 it is the LIVE section (user request), so its gaps are the live ones in Figma units
+ * (1 live px at 1440 = 1052/1440 u): intro -> heading 40 (two 20 section paddings) = 29.22; slider -> grey band 60, of which the
+ * dots' 20 are inside Timeline = 40 = 29.22. (Figma 307:494 had 91 / 92.)
  * Hero = shared PageHero: title top 217 - 119 = 98 (w385), text 342 (14 below the 3 title lines), button 384 (15 below the text).
  * Not in Figma: the "We are listening" section (scope 2.5), see docs/open-decisions.md A2 (blocking).
  */
 const sections = [
   { id: 'intro', C: Intro, props: { edition, c: c.intro }, mt: 80 },
-  ...(showTimeline ? [{ id: 'journey', C: Timeline, props: { c: c.timeline }, mt: 91 }] : []),
-  { id: 'explore', C: Explore, props: { edition, c: c.explore }, mt: showTimeline ? 92 : 74 },
+  ...(showTimeline ? [{ id: 'journey', C: Timeline, props: { c: c.timeline }, mt: 29.22 }] : []),
+  { id: 'explore', C: Explore, props: { edition, c: c.explore }, mt: showTimeline ? 29.22 : 74 },
   { id: 'recovery', C: ContactRecovery, props: {}, mt: 66 },
 ];
 ---

@@ -8,6 +8,8 @@
  * - Autoplay: one card every 6 s, starting like the live site's lazily loaded Swiper (first mouseover / scroll / touch / key);
  *   not paused by hovering, paused while the tab is hidden, and stopped for good by any interaction (arrow, drag, swipe,
  *   wheel). prefers-reduced-motion: no autoplay and the arrows jump.
+ * - Dots ([data-timeline-dot], decorative like the live, non-clickable Swiper bullets): one per card, the current one = the
+ *   card at the row's start; it moves when a slide starts (Swiper's slideChange) and follows manual scrolling.
  */
 const SPEED = 400; // Swiper `speed`
 const DELAY = 6000; // Swiper `autoplay.delay`
@@ -89,6 +91,16 @@ document.querySelectorAll<HTMLElement>("[data-timeline]").forEach((root) => {
     );
   };
 
+  // Dots: card index at a given start distance (abs), wrapped into the originals.
+  const dots = [...root.querySelectorAll<HTMLElement>("[data-timeline-dot]")];
+  const markAt = (abs: number) => {
+    const step = edge(cards[1]) - edge(cards[0]);
+    if (!dots.length || !step) return;
+    const n = cards.length;
+    const i = ((Math.round(abs / step) % n) + n) % n;
+    dots.forEach((d, k) => d.classList.toggle("on", k === i));
+  };
+
   let raf = 0;
   const slide = (dir: 1 | -1) => {
     cancelAnimationFrame(raf);
@@ -101,6 +113,7 @@ document.querySelectorAll<HTMLElement>("[data-timeline]").forEach((root) => {
         ? s.find((p) => p > from + 1)
         : [...s].reverse().find((p) => p < from - 1);
     if (to === undefined) return;
+    markAt(to);
     if (reduced()) return put(to);
     row.style.scrollSnapType = "none"; // or the browser snaps every frame back to a card
     const t0 = performance.now();
@@ -124,6 +137,7 @@ document.querySelectorAll<HTMLElement>("[data-timeline]").forEach((root) => {
     "scroll",
     () => {
       if (raf) return;
+      markAt(now());
       if (Math.abs(row.scrollLeft - mine) > 1 && performance.now() - resized > 300) stop();
       clearTimeout(idle);
       idle = window.setTimeout(() => now() >= period - 1 && put(now()), 150);

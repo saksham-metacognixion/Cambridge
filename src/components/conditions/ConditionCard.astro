@@ -39,7 +39,7 @@ const { title, summary, href, button, headingId } = Astro.props;
 </article>
 
 <style>
-  .ccard { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; width: calc(198.097 * var(--u)); min-height: calc(188 * var(--u)); box-sizing: border-box; padding-bottom: calc(12.667 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
+  .ccard { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; width: calc(198.097 * var(--u)); min-height: calc(176 * var(--u)); box-sizing: border-box; padding-bottom: calc(14 * var(--u)); transition: transform .2s ease; font-family: var(--font-gotham); font-style: normal; }
   .corner { position: absolute; z-index: 0; inset-inline-start: calc(30 * var(--u)); top: 0; width: calc(162.113 * var(--u)); height: calc(54.903 * var(--u)); max-width: none; transform: scaleY(-1); }
   .box { position: absolute; z-index: 1; inset: calc(4 * var(--u)) 0 0 0; background: var(--color-chip); border-radius: var(--radius-card); } /* bug 049 */
   .tag { position: relative; z-index: 3; display: flex; align-items: center; box-sizing: border-box; margin-inline-start: calc(10 * var(--u)); width: calc(180.5 * var(--u)); min-height: calc(54.38 * var(--u)); padding-inline: calc(21 * var(--u)) calc(23.726 * var(--u)); }
@@ -48,10 +48,13 @@ const { title, summary, href, button, headingId } = Astro.props;
    * the image's own coordinates, so the RTL scaleX(-1) mirrors it to the other side. The tab offset itself is Figma's folder tab (kept, user). */
   .tag-art { position: absolute; z-index: -1; top: calc(-7.762 * var(--u)); inset-inline-start: calc(-7.762 * var(--u)); width: calc(100% + 23.291 * var(--u)); height: calc(100% + 23.911 * var(--u)); max-width: none; clip-path: inset(0 calc(7.932 * var(--u)) 0 0); }
   .title { margin: 0; width: calc(135.774 * var(--u)); font-weight: 500; font-size: calc(10.387 * var(--u)); line-height: calc(13 * var(--u)); color: #fff; text-align: center; overflow-wrap: break-word; }
-  .summary { position: relative; z-index: 2; margin: calc(33.62 * var(--u)) 0 0; margin-inline-start: calc(17.06 * var(--u)); width: calc(164.71 * var(--u)); font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(10.387 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .summary { position: relative; z-index: 2; margin: calc(22 * var(--u)) 0 0; margin-inline-start: calc(17.06 * var(--u)); width: calc(164.71 * var(--u)); text-align: center; font-weight: 400; font-size: calc(10.5 * var(--u)); line-height: calc(15 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
   /* bugs 044 / 050: shared .ui-btn size, centred under the centred title (bug 040); a gap above it when the text runs long */
   .btn { position: relative; z-index: 2; margin-top: auto; align-self: center; } /* colours: .btn-fill */
-  .summary { margin-bottom: calc(10 * var(--u)); }
+  .summary { margin-bottom: calc(14 * var(--u)); }
+  .box { box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgb(0 36 54 / 0.06); }
+  @media (hover: hover) { .ccard:hover { transform: translateY(calc(-3 * var(--u))); } }
+  @media (prefers-reduced-motion: reduce) { .ccard { transition: none; } .ccard:hover { transform: none; } }
   /* Mirror the decoration in RTL (the tag's notch and the corner sit at the inline end). */
   :global([dir='rtl']) .tag-art { transform: scaleX(-1); }
   :global([dir='rtl']) .corner { transform: scale(-1, -1); }

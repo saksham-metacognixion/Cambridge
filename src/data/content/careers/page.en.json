@@ -1,7 +1,7 @@
 {
-  "_note": "Career Hub (Figma 112:7295). Text = Website Content - Suhad/Navigation Bar/EN - Career Hub.md (5 Oct 2026): hero, Be Part of a Purpose (3 paragraphs), Life at Cambridge Hospital (3 paragraphs), 'What Sets Us Apart' (4 tabs, all with content), National Talent Development (UAE / KSA paragraphs). The document says the 'Why Cambridge Hospital' section isn't needed: removed (no `why` key). Button destinations: src/data/careers.json (D3/D4 still open; the document notes the live site's vacancy buttons don't work). meta.*, pendingTab and alt texts are PLACEHOLDER.",
+  "_note": "Careers (Figma 112:7295). Text = Website Content - Suhad/Navigation Bar/EN - Career Hub.md (5 Oct 2026): hero, Be Part of a Purpose (3 paragraphs), Life at Cambridge Hospital (3 paragraphs), 'What Sets Us Apart' (4 tabs, all with content), National Talent Development (UAE / KSA paragraphs). The document says the 'Why Cambridge Hospital' section isn't needed: removed (no `why` key). Button destinations: src/data/careers.json (D3/D4 still open; the document notes the live site's vacancy buttons don't work). meta.*, pendingTab and alt texts are PLACEHOLDER.",
   "meta": {
-    "title": "Career Hub | Cambridge Hospital",
+    "title": "Careers | Cambridge Hospital",
     "description": "Careers at Cambridge Hospital: join a team shaping recovery, restoring lives and redefining care across the region."
   },
   "pendingTab": "Content pending",

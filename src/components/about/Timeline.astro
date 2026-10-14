@@ -1,46 +1,52 @@
 ---
-import { Picture } from 'astro:assets';
 import Band from '../careers/Band.astro';
-import arrow from '../../assets/about/timeline-arrow.svg';
-import line from '../../assets/about/timeline-line.svg';
 
 /*
- * "Journey of Excellence" (Figma 307:494, second About version; switched OFF in src/data/about.json -> showTimeline until the
- * frame is confirmed as final, docs/open-decisions.md A1). Page y of that frame: heading 991 (box 387 x 33, Medium 28 / 28,
- * centred), cards 1065-1220. Cards 187 x 155, radius 14 (now --radius-card, bug 049), x 120 / 322 / 524 / 727 (gap 15.33); odd = white + 1px cyan border
- * (year / title cyan, text #6b6b6b), even = cyan fill (all white). Year Book 28 at card + (21, 16); title Book 14 / 16 (2 lines) at
- * +43; text Book 11 / 14 at +80, width 154 (white cards) / 146 (cyan cards). "Line 33" (503 x 1, #418ea2) runs at y1148
- * (card + 83) from x307 behind the cards, so only the gaps between the cards show it. Arrows (36.528 circle, #00b8ff) at x71 and
- * x930, y1122 (row top + 57); the left one is the right one rotated 180. Each arrow moves the row by one card; the row loops and
- * auto-advances every 6 s like the live site's Swiper (scripts/timeline.ts).
- * Content (5 Oct 2026): the client's About document supplies 18 entries whose titles and texts are longer than the four Figma
- * samples, so the card height is a MINIMUM (155) and a row's cards stretch to the tallest one; the title wraps freely. The text
- * ends 16 Figma px above the card's bottom edge, the same as the top inset (bug 028).
- * Below 1024px (no Figma frame, bug 028): the row shows `--n` whole cards between the arrows (1 on phones, 2 from 640px,
- * 3 from 900px), each card (100% - gaps) / --n wide so no partial card ever shows, the row snaps one card at a time and the
- * arrows are centred on the row. The connector line (drawn for the 187px desktop card) is hidden there.
+ * "Journey of Excellence" — the LIVE site's section (user request 14 Oct 2026: replicate cambridgehospital.com/about; replaces the
+ * Figma 307:494 version: 187 x 155 cyan cards, connector line, Figma arrows). Values from the saved live page + its Greenshift
+ * Swiper settings (init.js), in live CSS px at 1440 = `--px` (scales with the page from 1024 up, 1 CSS px below 1024):
+ *  - box 90vw (1296 at 1440), the slider inset 20 (Swiper 10 margin + 10 padding) -> 1256 track, 4 cards, gap 30 -> 291.5 cards.
+ *  - card: radius 30, padding 20, 1px #418ea2 at 46% border (live #4190a375), odd cards #e7e7e7 at 50% (live #e7e7e780);
+ *    year = h3 32 / 1.35 Book Deep Teal, title 16 / 1.6 Medium + 1.5em below, text 16 / 1.6. All cards share one height (the
+ *    tallest, at least 240 = live .swiper-slide-inner min-height); live centres cards of their own height (user: even, 14 Oct).
+ *  - arrows: 48 circle, 1px cyan border, cyan chevron (live '❮' 20px), 60 outside the box (20 below 1024 = live phone value),
+ *    top 50% - 22 (Swiper --swiper-navigation-size 44). Not clickable dots live -> decorative here (aria-hidden): 8 x 8 cyan at
+ *    20% (Swiper inactive opacity .2), current one 24 wide, Deep Teal (live #0081b4 is off-brand), width .4s ease-out, 20 below.
+ *  - heading = h2 38 / 1.3 Medium, 25 above the slider; below 1000 live h2 32 + year 18, below 690 h2 22.
+ *  - motion (scripts/timeline.ts): speed 400 ease, loop, autoplay 6 s, no hover pause, stops on interaction, grab cursor.
+ * Brand (AA, user decision 8 Oct 2026): the live title is cyan #00b8ff on white (2.4:1, fails AA), so it is Deep Teal here via
+ * --tl-accent; set it to var(--color-cyan) for the exact live look. Live text #1a1a2e -> --color-body.
+ * Cards per view (live: 1 below 690, 4 from 690): 1 / 2 from 690 / 3 from 900 / 4 from 1024 — 4 at 690-1023 would be ~145px cards.
  */
 interface Item { year: string; title: string[]; text: string }
-interface Props { c: { ariaLabel: string; heading: string; prevLabel: string; nextLabel: string; items: Item[] } }
+interface Props { c: { ariaLabel: string; heading: string; prevLabel?: string; nextLabel?: string; items: Item[] } }
 const { c } = Astro.props;
+const prev = c.prevLabel ?? 'Previous';
+const next = c.nextLabel ?? 'Next';
 ---
 
 <Band labelledby="about-timeline-heading">
   <div class="tl" data-timeline>
     <h2 id="about-timeline-heading" class="h">{c.heading}</h2>
-    <div class="line-row">
-      <button type="button" class="arrow prev hit" data-timeline-dir="-1" aria-label={c.prevLabel}><img loading="lazy" src={arrow.src} width="36.5278" height="36.5278" alt="" /></button>
+    <div class="slider">
       <div class="row hscroll" data-timeline-row tabindex="0" role="group" aria-label={c.ariaLabel}>
-        <img loading="lazy" class="connector" src={line.src} width="503" height="1" alt="" aria-hidden="true" />
         {c.items.map((x, i) => (
-          <article class:list={['card', i % 2 === 0 ? 'outline' : 'fill']} data-timeline-card>
+          <article class:list={['card', i % 2 === 1 && 'shade']} data-timeline-card>
             <p class="year">{x.year}</p>
-            <h3 class="title">{x.title.map((l) => <span class="block">{l}</span>)}</h3>
+            <h3 class="title">{x.title.join(' ')}</h3>
             <p class="text">{x.text}</p>
           </article>
         ))}
       </div>
-      <button type="button" class="arrow next hit" data-timeline-dir="1" aria-label={c.nextLabel}><img loading="lazy" src={arrow.src} width="36.5278" height="36.5278" alt="" /></button>
+      <button type="button" class="arrow prev" data-timeline-dir="-1" aria-label={prev}>
+        <svg viewBox="0 0 10 16" width="10" height="16" aria-hidden="true"><path d="M8 1.5 2.5 8 8 14.5" /></svg>
+      </button>
+      <button type="button" class="arrow next" data-timeline-dir="1" aria-label={next}>
+        <svg viewBox="0 0 10 16" width="10" height="16" aria-hidden="true"><path d="M2 1.5 7.5 8 2 14.5" /></svg>
+      </button>
+      <div class="dots" aria-hidden="true">
+        {c.items.map((_, i) => <span class:list={['dot', i === 0 && 'on']} data-timeline-dot />)}
+      </div>
     </div>
   </div>
 </Band>
@@ -50,49 +56,55 @@ const { c } = Astro.props;
 </script>
 
 <style>
-  .h { margin: 0 auto; width: calc(387 * var(--u)); max-width: 100%; min-height: calc(33 * var(--u)); text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(28 * var(--u)); color: var(--color-navy); }
-  .line-row { margin-top: calc(41 * var(--u)); display: flex; align-items: flex-start; }
-  .row { position: relative; display: flex; align-items: stretch; gap: calc(15.33 * var(--u)); min-width: 0; padding: 0; }
-  .connector { position: absolute; inset-inline-start: calc(187 * var(--u)); top: calc(83 * var(--u)); width: calc(503 * var(--u)); height: calc(1 * var(--u)); max-width: none; pointer-events: none; }
-  .card { position: relative; flex: none; box-sizing: border-box; width: calc(187 * var(--u)); min-height: calc(155 * var(--u)); border-radius: var(--radius-card); padding-block: calc(16 * var(--u)); padding-inline: calc(21 * var(--u)) calc(12 * var(--u)); font-weight: 400; scroll-snap-align: start; }
-  .card.outline { background: #fff; border: calc(1 * var(--u)) solid var(--color-cyan); padding-block-start: calc(15 * var(--u)); padding-inline-start: calc(20 * var(--u)); color: var(--color-navy); }
-  .card.fill { background: var(--color-cyan); color: var(--color-navy); }
-  .year { margin: 0; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); }
-  .title { margin: calc(0 * var(--u)) 0 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(16 * var(--u)); }
-  .year + .title { margin-top: calc(0 * var(--u)); }
-  .text { margin: calc(5 * var(--u)) 0 0; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); }
-  .outline .text { color: var(--color-body); width: calc(154 * var(--u)); }
-  .fill .text { width: calc(146 * var(--u)); }
-  .arrow { flex: none; padding: 0; border: 0; background: none; cursor: pointer; width: calc(36.528 * var(--u)); height: calc(36.528 * var(--u)); margin-top: calc(57 * var(--u)); line-height: 0; }
-  .arrow img { display: block; width: 100%; height: 100%; }
-  .prev img { transform: rotate(180deg); }
-  :global([dir='rtl']) .prev img { transform: none; }
-  :global([dir='rtl']) .next img { transform: rotate(180deg); }
-  .arrow:focus-visible, .row:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; border-radius: var(--radius-card); } /* bug 049 */
+  .tl {
+    --px: calc(var(--u) * 1052 / 1440); /* 1 live CSS px at the 1440 reference */
+    --tl-accent: var(--color-navy);
+    --n: 4;
+    --gap: calc(30 * var(--px));
+    --inset: calc(20 * var(--px));
+    --arrow-out: calc(60 * var(--px));
+    padding-bottom: calc(20 * var(--px)); /* the dots hang 20 below the slider */
+  }
+  .h { margin: 0; text-align: center; font-weight: 500; font-size: calc(38 * var(--px)); line-height: 1.3; color: var(--color-navy); }
+  .slider { position: relative; margin-top: calc(25 * var(--px)); padding-inline: var(--inset); }
+  .row { display: flex; align-items: stretch; gap: var(--gap); scroll-snap-type: x mandatory; }
+  .card {
+    flex: none; box-sizing: border-box; width: calc((100% - (var(--n) - 1) * var(--gap)) / var(--n)); min-height: calc(240 * var(--px)); scroll-snap-align: start;
+    padding: calc(20 * var(--px)); border: 1px solid color-mix(in srgb, var(--color-teal-border) 46%, transparent);
+    border-radius: calc(30 * var(--px)); background: #fff; color: var(--color-body); font-weight: 400;
+    font-size: calc(16 * var(--px)); line-height: 1.6;
+  }
+  .card.shade { background: var(--color-mist-50); }
+  .year { margin: 0; font-size: calc(32 * var(--px)); line-height: 1.35; color: var(--color-navy); }
+  .title { margin: 0 0 1.5em; font-size: 1em; line-height: 1.6; font-weight: 500; color: var(--tl-accent); overflow-wrap: break-word; }
+  .text { margin: 0; }
+  .arrow {
+    position: absolute; top: calc(50% - 22 * var(--px)); z-index: 1; display: grid; place-items: center; box-sizing: border-box;
+    width: max(44px, calc(48 * var(--px))); height: max(44px, calc(48 * var(--px))); margin: 0; padding: 0; border: 1px solid var(--color-cyan);
+    border-radius: 50%; background: #fff; color: var(--color-cyan); cursor: pointer; /* white, not the live transparent: below 1024 the arrow overlaps the card edge by 8px (as live) and the border would cross it */
+  }
+  .prev { inset-inline-start: calc(-1 * var(--arrow-out)); }
+  .next { inset-inline-end: calc(-1 * var(--arrow-out)); }
+  .arrow svg { width: calc(9 * var(--px)); height: calc(15 * var(--px)); min-width: 8px; min-height: 13px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  :global([dir='rtl']) .arrow svg { transform: scaleX(-1); }
+  .arrow:focus-visible, .row:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  .row:focus-visible { border-radius: calc(30 * var(--px)); }
+  .dots { position: absolute; inset-inline: 0; bottom: calc(-20 * var(--px)); display: flex; justify-content: center; gap: calc(8 * var(--px)); line-height: 0; pointer-events: none; }
+  .dot { flex: none; width: calc(8 * var(--px)); height: calc(8 * var(--px)); border-radius: 100px; background: color-mix(in srgb, var(--color-cyan) 20%, transparent); transition: width 0.4s ease-out; }
+  .dot.on { width: calc(24 * var(--px)); background: var(--color-navy); }
   @media (min-width: 1024px) {
-    .row { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-    .row::-webkit-scrollbar { display: none; }
-    .line-row { padding-inline-start: calc(71 * var(--u)); }
-    .prev { margin-inline-end: calc(12.47 * var(--u)); }
-    .next { margin-inline-start: calc(16 * var(--u)); }
-    .row { width: calc(794 * var(--u)); }
-    .tl { padding-inline-start: 0; }
+    .tl { width: calc(1296 * var(--px)); margin-inline: auto; }
   }
   @media (max-width: 1023.98px) {
-    /* Phones (cross-browser sweep 9 Oct 2026): the title steps down with the viewport so its longest word ('Establishment') fits the
-       one-card row at 320px (5.4vw = 17.3px there; the Figma 14 Figma px = 19px from ~355px); a word wider than the line still breaks. */
-    .title { font-size: min(calc(14 * var(--u)), 5.4vw); overflow-wrap: break-word; }
-    .line-row { --n: 1; gap: calc(6 * var(--u)); padding-block-end: 4px; align-items: center; }
-    .row { --gap: calc(15.33 * var(--u)); flex: 1 1 auto; overflow-x: auto; scroll-snap-type: x mandatory; scroll-snap-stop: always; gap: var(--gap); }
-    .card { width: calc((100% - (var(--n) - 1) * var(--gap)) / var(--n)); }
-    .outline .text, .fill .text { width: auto; }
-    .connector { display: none; }
-    /* Smaller arrows (36 CSS px, the 44px hit layer stays) so the card keeps the band's width on phones. */
-    .arrow { margin-top: 0; width: 36px; height: 36px; }
+    .tl { --n: 3; --arrow-out: 20px; }
+    .h { font-size: 32px; }
+    .year { font-size: 18px; }
   }
-  @media (min-width: 640px) and (max-width: 1023.98px) { .line-row { --n: 2; } }
-  @media (min-width: 900px) and (max-width: 1023.98px) { .line-row { --n: 3; } }
-  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
-     (mobile QA M1, 13 Oct 2026: card titles: "Commissioning" 131 px in 120 px at 320). Never larger than the size above; 360 px and up unchanged. */
-  @media (max-width: 359.98px) { .title { font-size: min(calc(14 * var(--u)), 4.9vw); } }
+  @media (max-width: 899.98px) { .tl { --n: 2; } }
+  @media (max-width: 689.98px) {
+    .tl { --n: 1; }
+    .h { font-size: 22px; }
+    .row { scroll-snap-stop: always; }
+  }
+  @media (prefers-reduced-motion: reduce) { .dot { transition: none; } }
 </style>

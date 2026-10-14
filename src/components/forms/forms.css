@@ -78,7 +78,9 @@
 .gf-dial select { padding-inline: calc(23.44 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
 .gf-flag { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-start: calc(5.41 * var(--u)); inset-block-start: calc(9.91 * var(--u)); inline-size: calc(14.875 * var(--u)); block-size: calc(9.917 * var(--u)); }
 .gf-dial .gf-chev { inset-inline-end: calc(5.19 * var(--u)); inset-block-start: calc(13.52 * var(--u)); inline-size: calc(6.527 * var(--u)); }
-.gf-tel { margin-inline-start: calc(8.113 * var(--u)); }
+/* Gap dial box -> number on the dial box (bug 118): the number input is dir="ltr", so ITS inline-start is the left side even
+   in an RTL row (Arabic: no gap, the number pulled in from the column end). The dial box follows the row direction. */
+.gf-dial { margin-inline-end: calc(8.113 * var(--u)); }
 /* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971").
    Bug 067: select and code share one grid cell with the code in flow, so the box is Figma's width (the min-inline-size
    above; "+971" fits) or wider when a code needs it ("+966", "+1684"), always with --dial-gap between the code and the
@@ -220,7 +222,8 @@
 .pf-dial select { padding-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) 0; color: var(--color-body); cursor: pointer; }
 .pf-flag { inset-inline-start: calc(var(--pf-flag-x, 5.91) * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(var(--pf-flag-w, 16.261) * var(--u)); block-size: calc(11 * var(--u)); }
 .pf-dial .pf-chev { inset-inline-end: calc(var(--pf-dial-chev-x, 5.68) * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(var(--pf-dial-chev-w, 7.135) * var(--u)); }
-.pf-tel { margin-inline-start: calc(var(--pf-tel-gap, 9.85) * var(--u)); flex: 0 1 auto; min-inline-size: 0; }
+.pf-dial { margin-inline-end: calc(var(--pf-tel-gap, 9.85) * var(--u)); } /* the dial -> number gap, on the dial box: see .gf-dial (bug 118) */
+.pf-tel { flex: 0 1 auto; min-inline-size: 0; }
 
 /* White form card (Patient Feedback 188:964, Refer a Patient 46:8029 "Rectangle 107"; bug 098: every page form panel,
    International Patients included, uses it unchanged): drop shadow 0 0 15.696 rgba(0,0,0,.25),
@@ -240,7 +243,7 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 
 @media (max-width: 1023.98px) {
   .pf-row { align-items: center; }
-  .pf-label { padding-block-start: 0; }
+  .pf-label { padding-block-start: 0; min-inline-size: calc(var(--at-n, var(--at)) * var(--u)); }
   .pf-box, .pf-dial { min-block-size: 44px; }
   .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
   .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }

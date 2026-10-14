@@ -1,5 +1,9 @@
 {
-  "_note": "Tab labels = Website Content - Suhad 2/Patient Hub/AR- Refer a patient.docx (7 Oct 2026), text exactly as in the document. The rest of the form has no Arabic source yet (English shown, docs/open-decisions.md CT24). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "_note": "Tab labels = Website Content - Suhad 2/Patient Hub/AR- Refer a patient.docx (7 Oct 2026), text exactly as in the document. The rest of the form has no Arabic source yet (English shown, docs/open-decisions.md CT24). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153). labelColumn (bug 119, 14 Oct 2026): minimum label width per column in Figma px (lib/forms labelAt), [start column, end column]. The end column holds \"البريد الإلكتروني\" (146px @1440 = 107u + 4 padding), so 120 = the Contact form's Arabic label column (page.ar.json form.labelColumn, bug 114): every box of that column starts there and keeps one width. Re-measure when the remaining Arabic labels arrive (CT24).",
+  "labelColumn": [
+    0,
+    120
+  ],
   "tabs": {
     "doctor": "للعاملين في القطاع الصحي",
     "other": "لك، لفرد من أسرتك أو لصديق",

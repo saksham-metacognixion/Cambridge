@@ -359,6 +359,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
        panel, not a 4th fly-out (it opened over the Inpatient sections at 1280-1680 and never flips now): no chevron, the list
        always shown with its panel, indented 10 under the row with a short cyan rule at its inline start, label 8 (rows 9).
        Their links join that panel's arrow-key list (scripts/nav-submenu.ts). */
+    .has-fly[data-fly-inline] { height: auto; } /* every menu row is 15 tall (.mainnav li): this one holds its programmes too */
     .has-fly[data-fly-inline] > .fly-head > .fly-btn { display: none; }
     .has-fly[data-fly-inline] > .fly { position: static; visibility: inherit; opacity: 1; transform: none; transition: none; padding: 0; margin-top: calc(7 * var(--u)); }
     .hd .has-fly[data-fly-inline] > .fly > .fly-list { background: none; box-shadow: none; border-radius: 0; min-width: 0; gap: calc(7 * var(--u)); padding: 0; padding-inline-start: calc(9 * var(--u)); margin-inline-start: calc(1 * var(--u)); border-inline-start: calc(1 * var(--u)) solid var(--color-cyan); }

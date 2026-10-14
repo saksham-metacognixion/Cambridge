@@ -129,6 +129,17 @@ export function clientConfig(id: string, locale: LocaleId) {
   });
 }
 
+/**
+ * Label column of a grey-box page form row (Refer a Patient, International Patients; bug 119): the Figma `at` of the cell, raised to
+ * the locale's minimum for its column (content `labelColumn`: Figma px per column, e.g. Arabic [0, 120]). A longer label (Arabic
+ * "البريد الإلكتروني") then never narrows its own box: every box in that column starts at the same place. `narrow` = the same for the
+ * one-column layout (768-1023), where both columns stack, so the largest minimum applies. Radios keep their Figma offset.
+ */
+export function labelAt(at: number, col: number, type: string, min?: number[]) {
+  if (type === "radio" || !min?.length) return { at, narrow: at };
+  return { at: Math.max(at, min[col] ?? 0), narrow: Math.max(at, ...min) };
+}
+
 /** Ids for a field inside a form, unique on the page. */
 export const fieldId = (form: string, name: string) => `${form}-${name}`;
 

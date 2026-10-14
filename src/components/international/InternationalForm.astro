@@ -15,7 +15,7 @@
 import FormShell from '../forms/FormShell.astro';
 import PageField from '../forms/PageField.astro';
 import { content } from '../../lib/content';
-import { fieldsIn, commonText, fieldId } from '../../lib/forms';
+import { fieldsIn, commonText, fieldId, labelAt } from '../../lib/forms';
 import { parsePath } from '../../lib/editions';
 import consentOff from '../../assets/page-form/consent-off.svg';
 import consentOn from '../../assets/page-form/radio-on.svg';
@@ -31,6 +31,8 @@ const rows: [string, number][][] = [
   [['mobile', 88], ['age', 88]],
   [['country', 85.42], ['gender', 92]],
 ];
+// label column per locale (bug 119): the column index is taken before missing fields are dropped
+const cells = rows.map((row) => row.flatMap(([n, at], col) => (f[n] ? [{ n, ...labelAt(at, col, f[n].type, c.labelColumn) }] : [])));
 const msg = f.message;
 const id = (n: string) => fieldId(ID, n);
 ---
@@ -49,11 +51,11 @@ const id = (n: string) => fieldId(ID, n);
       class="pf rf intl-form"
     >
       <p class="pf-q sec">{c.section}</p>
-      {rows.map((row) => (
+      {cells.map((row) => (
         <div class="rf-grid">
-          {row.filter(([n]) => f[n]).map(([n, at]) => (
+          {row.map(({ n, at, narrow }) => (
             <div class:list={[n === 'country' && 'rf-sel-ref intl-country']}>
-              <PageField form={ID} f={f[n]} text={c.fields[n]} at={at} dialLabel={dialLabel} edition={edition} />
+              <PageField form={ID} f={f[n]} text={c.fields[n]} at={at} atNarrow={narrow} dialLabel={dialLabel} edition={edition} />
             </div>
           ))}
         </div>

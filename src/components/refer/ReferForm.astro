@@ -76,5 +76,16 @@ const tabs = [
     .tablist { justify-content: flex-start; margin-inline-start: calc(268 * var(--u)); } /* three 160 pills + 2 gaps = 510, centred on the Figma pill centre 523 */
     .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(56 * var(--u)) calc(43 * var(--u)) calc(52 * var(--u)) calc(44 * var(--u)); }
     .card :global(.rf-sel-req) { inline-size: calc(410 * var(--u)); }
+    /* Bug 105 (14 Oct 2026, client: the form is too tall): compact desktop layout, Figma px. Same fields, type and boxes (35 high);
+       only the white space shrinks: card padding top 56 -> 27 / bottom 52 -> 27, field rows 54 -> 42.4 apart (row gap 19 -> 7.4),
+       section label -> first row 33 -> 26, blocks 37 -> 18 apart, textarea label -> box 27 -> 24, textareas 125 -> 88 high
+       (-30 %, ~6 lines), last field -> consent 37 -> 20, consent -> SUBMIT 22 -> 12 (as Patient Feedback, bug 094).
+       Healthcare Professionals at 1366: 1523 -> 1094px; the other two tabs 1317 -> 936px. Below 1024
+       the stacked layout keeps its own spacing. */
+    .card { padding-block: calc(27 * var(--u)); --rf-row: 7.4; --f-gap-consent: 20; --f-gap-submit: 12; }
+    .card :global(.rf-section) { margin-block-end: calc(8 * var(--u)); }
+    .card :global(.rf-area-label) { margin-block-end: calc(6 * var(--u)); }
+    .card :global(.rf-block + .rf-block) { margin-block-start: calc(18 * var(--u)); }
+    .card :global(.rf-area) { block-size: calc(88 * var(--u)); }
   }
 </style>

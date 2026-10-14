@@ -102,6 +102,8 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
       {matrix.length > 0 && (
         <div class="matrix">
           <RatingFace sprite />
+          {/* Optional heading above the rating question: only the Arabic document has one ('تقييم تجربتكم', Suhad 4, 14 Oct 2026); English = Figma, none */}
+          {c.matrix.heading && <h3 class="pf-q m-heading">{c.matrix.heading}</h3>}
           <!-- Question + column names on one line (desktop): the question takes the label column above the row labels -->
           <div class="m-top">
             <p class="pf-q q2">{c.matrix.label}</p>
@@ -183,6 +185,7 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
      the width left of the five 88-wide columns), face rows 26 apart. Legends wrap rather than clip if a label is longer. */
   .matrix { --cell: calc(88 * var(--u)); --face-size: 22; margin-block-start: calc(16 * var(--u)); }
   .m-top { display: flex; align-items: flex-end; }
+  .m-heading { margin-block-end: calc(10 * var(--u)); }
   .q2 { flex: 1 1 auto; min-inline-size: 0; padding-inline-end: calc(12 * var(--u)); padding-block-end: calc(2 * var(--u)); }
   .m-head { display: flex; flex: none; font-size: calc(13 * var(--u)); line-height: calc(16 * var(--u)); text-align: center; }
   .m-col { inline-size: var(--cell); }

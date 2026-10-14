@@ -1,13 +1,23 @@
 {
-  "_note": "Paediatric Care (inpatient) main page: the client has no English document for it (CT3; Website Content - Suhad 4 has only AR-Main Page). This file reproduces the generated page (title + card text from care.json) so the Arabic document (pediatric-rehab.ar.json, 13 Oct 2026) can be shown; replace with the English document when it arrives.",
+  "_note": "Paediatric Care (inpatient) main page: the client has no English document for it (CT3; Website Content - Suhad 4 has only AR-Main Page). This file reproduces the generated page (title + card text from care.json) so the Arabic document (pediatric-rehab.ar.json, 13 Oct 2026) can be shown; replace with the English document when it arrives. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/inpatient/pediatric-rehab/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
   "hero": {
     "ariaLabel": "Paediatric Care",
     "title": [
       "Paediatric Care"
     ],
-    "text": "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress."
+    "text": "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress.",
+    "banner": {
+      "image": "care/heroes/pediatric-rehab",
+      "alt": ""
+    }
   },
   "overview": [
     "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress."
-  ]
+  ],
+  "heroLayout": {
+    "small": {
+      "x": 604,
+      "w": 448
+    }
+  }
 }

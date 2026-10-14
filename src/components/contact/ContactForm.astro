@@ -49,7 +49,10 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
 
 <section id="contact-form" class="relative bg-veil" style="--h: 722" aria-labelledby="contact-title">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-[calc(32*var(--u))] max-lg:px-[calc(16*var(--u))] max-lg:py-[calc(40*var(--u))]">
-    <h2 id="contact-title" class="m-0 font-gotham font-medium text-f28 leading-none text-navy-alt text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-201 lg:top-42 lg:w-651 lg:h-33">{c.heading}</h2>
+    <h2 id="contact-title" class:list={["m-0 font-gotham font-medium text-f28 leading-none text-navy-alt text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-201 lg:w-651 lg:h-33", c.intro ? "lg:top-[calc(24*var(--u))]" : "lg:top-42"]}>{c.heading}</h2>
+    <!-- Intro line (client's Contact Us documents, Suhad 4, 14 Oct 2026; not in Figma): between the heading and the card, the heading
+         raised from 42 to 24 so the card and every field keep their Figma positions. -->
+    {c.intro && <p class="intro m-0 max-lg:-mt-[calc(20*var(--u))] max-lg:max-w-[calc(651*var(--u))] font-gotham font-normal text-f12 leading-14 text-body text-center not-italic lg:absolute lg:start-67 lg:top-[calc(66*var(--u))] lg:w-859">{c.intro}</p>}
 
     <div class="card max-lg:w-full max-lg:max-w-[calc(859*var(--u))] max-lg:rounded-(--radius-panel) max-lg:bg-white max-lg:p-[calc(24*var(--u))] max-lg:flex max-lg:flex-col max-lg:gap-[calc(32*var(--u))] lg:contents">
       <div class="hidden lg:block absolute start-67 top-96 w-859 h-518 bg-white rounded-(--radius-panel)" aria-hidden="true"></div>

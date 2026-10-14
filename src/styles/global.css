@@ -541,8 +541,15 @@ body {
 /* Sticky header (AN1, 9 Oct 2026, see Header.astro): the page templates wrap <Header /> in a z-index <div>, and a sticky box can
    only move inside its parent, so that wrapper is the box that sticks (same offsets as .hd: the Figma top row scrolls away on
    desktop, the whole bar sticks below 1200px). */
+/* Bug 103 (14 Oct 2026, client: "make the header a little smaller"): the desktop header drops Figma's white space above the top
+   row (--hd-trim-top) and below the main row (--hd-trim-bottom), in Figma px: 119 -> 90 (163 -> 123px at 1440), top-row text
+   45 -> 22px from the top, main-nav text 40 -> 24px from the bottom (12, not 13: the three-line Arabic "Visit" block keeps 6px
+   below its last line). Both rows keep their Figma positions relative to each other
+   (Header.astro subtracts --hd-trim-top from every Figma y), so the sticky cut moves up with them: 51 - 17 = the language chip's
+   bottom. Desktop (>= 1200px) only; the mobile bar has its own flow layout. */
+:root { --hd-trim-top: 17; --hd-trim-bottom: 12; }
 div:has(> .hd[data-sticky-header]) { position: sticky; top: 0; }
-@media (min-width: 1200px) { div:has(> .hd[data-sticky-header]) { top: calc(-51 * var(--u)); } }
+@media (min-width: 1200px) { div:has(> .hd[data-sticky-header]) { top: calc((var(--hd-trim-top) - 51) * var(--u)); } }
 
 /* "Go to top" button (AN1, 9 Oct 2026) = the live Blocksy .ct-back-to-top: fixed 25px from the bottom and the inline end (the live
    theme puts it right; mirrored here like every other control), 12px padding + 12px chevron, cyan (palette-3) with a Deep Teal

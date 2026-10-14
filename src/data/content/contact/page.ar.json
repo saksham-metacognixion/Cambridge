@@ -1,5 +1,5 @@
 {
-  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19053 'اتصل بنا'): hero, heading, website link, CTA band. Form labels: no Arabic (the live forms are a plugin, not exported). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Contact Cambridge Hospital\" = WP export Contact page 76 -> 19053 (attribute); \"Open in Google Maps\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (\"Open in Google Maps\" button). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "_note": "Website Content - Suhad 4/Navigation Bar/AR - Contact us.docx (14 Oct 2026 export): hero.text = the line under the banner title, intro = the line under the 'Contact Us' form heading, text exactly as in the document (user request 14 Oct 2026; the phone at the top = the document's suggestion, rendered from details.phone). Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19053 'اتصل بنا'): hero, heading, website link, CTA band. Form labels: no Arabic (the live forms are a plugin, not exported). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Contact Cambridge Hospital\" = WP export Contact page 76 -> 19053 (attribute); \"Open in Google Maps\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (\"Open in Google Maps\" button). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
   "meta": {
     "title": "اتصل بنا | مستشفى كامبريدج",
     "description": "تواصل مع فريقنا من المتخصصين ذوي الخبرة في منشآتنا في الإمارات العربية المتحدة والسعودية. سواء كان لديك أسئلة أو تحتاج إلى مساعدة، نحن هنا لمساعدتك."
@@ -8,7 +8,8 @@
     "title": [
       "نحن هنا لمساعدتكم"
     ],
-    "ariaLabel": "تواصل مع مستشفى كامبريدج"
+    "ariaLabel": "تواصل مع مستشفى كامبريدج",
+    "text": "فريقنا على استعداد للإجابة عن استفساراتكم وتقديم المساعدة التي تحتاجون إليها."
   },
   "heading": "تواصل معنا",
   "details": {
@@ -44,5 +45,6 @@
   },
   "form": {
     "emailLabel": "البريد الإلكتروني*"
-  }
+  },
+  "intro": "يرجى تعبئة النموذج أدناه، وسيتولى فريقنا متابعة طلبكم والتواصل معكم في أقرب وقت ممكن."
 }

@@ -16,7 +16,8 @@
     "button": {
       "label": "Inquire Now",
       "href": "#contact-form"
-    }
+    },
+    "text": "Get in touch with our experienced care team. Whether you have a question or need assistance, we are here to help."
   },
   "heading": "Contact Us",
   "form": {
@@ -84,5 +85,6 @@
       }
     ]
   },
-  "_note": "Contact page (Figma 86:431). details.* = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026) (email, website, UAE toll-free number as on the live contact page / home page); the Figma values (info@cmrc.ae, +971 8002672) were placeholders. web = the label (Figma's www. format, the live site's domain), webHref = the live link; kept separate from email (bug 017: Figma's \"www.info@cmrc.ae\" mixed the two)."
+  "_note": "Website Content - Suhad 4/Navigation Bar/EN - Contact us.docx (14 Oct 2026 export): hero.text = the line under the banner title, intro = the line under the 'Contact Us' form heading, text exactly as in the document (user request 14 Oct 2026; the phone at the top = the document's suggestion, rendered from details.phone). Contact page (Figma 86:431). details.* = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026) (email, website, UAE toll-free number as on the live contact page / home page); the Figma values (info@cmrc.ae, +971 8002672) were placeholders. web = the label (Figma's www. format, the live site's domain), webHref = the live link; kept separate from email (bug 017: Figma's \"www.info@cmrc.ae\" mixed the two).",
+  "intro": "Complete the form below and tell us how we can help. Our team will review your enquiry and get back to you promptly."
 }

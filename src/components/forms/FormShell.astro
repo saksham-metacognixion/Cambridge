@@ -17,7 +17,8 @@ interface Props {
   ariaLabelledby?: string;
   ariaLabel?: string;
   class?: string;
-  /** Figma px between the last field and the consent row, and between consent and the button */
+  /** Figma px between the last field and the consent row, and between consent and the button (a page can override them per
+   *  breakpoint with --f-gap-consent / --f-gap-submit on an ancestor, e.g. Refer a Patient's compact desktop, bug 105) */
   gaps: { consent: number; submit: number };
   /** Consent row drawn in the page's own Figma style (International Patients: a radio-style circle + "By proceeding you
    *  agree Terms & conditions"); default = the Contact page style with the shared consent text. */
@@ -47,7 +48,7 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
   <input type="hidden" name="edition" value={edition.id} />
   <slot />
 
-  <div class="f-tail" style={`margin-block-start:calc(${gaps.consent} * var(--u))`}>
+  <div class="f-tail" style={`margin-block-start:calc(var(--f-gap-consent, ${gaps.consent}) * var(--u))`}>
     <div data-field="consent">
       {consent ? (
         <label class="f-consent f-consent-own" style={`--cs:${consent.size}`}>
@@ -69,7 +70,7 @@ const privacyHref = c.consent.link.page ? urlFor(edition, pagePath(c.consent.lin
     <button
       type="submit"
       class="f-submit ui-btn btn-fill"
-      style={`margin-block-start:calc(${gaps.submit} * var(--u))`}
+      style={`margin-block-start:calc(var(--f-gap-submit, ${gaps.submit}) * var(--u))`}
     ><span>{submit}</span><span class="f-spin" aria-hidden="true"></span></button>
   </div>
 </form>

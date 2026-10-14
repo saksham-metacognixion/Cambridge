@@ -23,9 +23,11 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
        src/scripts/autoscroll.ts: scroller [data-autoscroll] > [data-loop-row] > [data-loop-item]; pauses on hover / focus /
        touch, off with prefers-reduced-motion). The script appends more posts to the loop row as it nears its end
        (scripts/media-hub.ts) and rebuilds the copies. Padding keeps the card shadows from being clipped, margins cancel it out. -->
-  <!-- Beyond 1440px (responsive audit 9 Oct 2026) the first card keeps its Figma start on the centred stage (115 + the page gutter, global.css --gutter); the row runs off the real screen edge. -->
-  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:scroll-ps-[calc(115*var(--u)+var(--gutter))]" data-row data-autoscroll>
-    <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-[calc(115*var(--u)+var(--gutter))] lg:pe-[calc(115*var(--u)+var(--gutter))]" data-loop-row aria-label={c.indexLabel}>
+  <!-- data-autoscroll-lead (bug 111): the Figma lead before the first card shows on load only; the loop wraps past it, so the
+       empty lead no longer pops back in at the left edge every time the loop restarts. -->
+  <!-- Beyond 1440px (responsive audit 9 Oct 2026) the first card starts on the centred stage at 48 + the page gutter (global.css --gutter), the left edge of the Explore Our Media tiles above (bug 111, user decision 14 Oct 2026: replaces the Figma 115 lead); the row runs off the real screen edge. -->
+  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:scroll-ps-[calc(48*var(--u)+var(--gutter))]" data-row data-autoscroll data-autoscroll-lead>
+    <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-[calc(48*var(--u)+var(--gutter))] lg:pe-[calc(47*var(--u)+var(--gutter))]" data-loop-row aria-label={c.indexLabel}>
       {cards.map((card) => <li class="flex" data-loop-item><PostCard card={card} /></li>)}
       <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
     </ul>

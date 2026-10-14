@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import { heroEdgeVars } from '../../lib/hero-edge';
 import { px } from '../../lib/scale';
+import phoneIcon from '../../assets/contact-page/icon-phone.svg';
 import { content } from '../../lib/content';
 import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -9,7 +10,10 @@ import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 
 // Figma 86:433, page y 119, h 437. Spec y values are page y minus 119.
 const { edition } = parsePath(Astro.url.pathname);
-const c = content('contact/page', edition.locale).hero;
+const page = content('contact/page', edition.locale);
+const c = page.hero;
+// Phone line of this edition (details.byRegion: the KSA number on /sa), the same one as in the details row under the form.
+const phone = { ...page.details, ...(page.details.byRegion?.[edition.region] ?? {}) };
 const banner = img(c.banner.image, edition.region);
 const layers = heroLayers(c.banner.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
 // Below 1024px the photo is cropped to the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), as on PageHero.
@@ -39,17 +43,20 @@ const edgeVars = await heroEdgeVars(layers ? layers.background : banner); // bui
       )}
     </div>
 
-    <div class="hero-copy">
-      <!-- Figma: Gotham Medium 39 on 37px lines (box 297..371, 2 lines), button at 384 = 13 under it; the line height is
-           the inner-page hero one (Hero / PageHero `leading-37`): without it the font's own line box is ~47px and the
-           title ran into the button (bug 015). -->
-      <h1 class="hero-title relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal lg:absolute lg:start-95 lg:top-178 lg:w-374">
-        <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
+    <!-- Copy in FLOW (like PageHero): title -> text -> phone -> button. The client's Contact Us documents (Suhad 4, 14 Oct 2026) add
+         the intro line under the title and the phone number at the top of the page; the block starts at 140 (Figma title 178) so it
+         stays centred on the banner. Title: Gotham Medium 39 on 37px lines (bug 015). -->
+    <div class="hero-copy lg:absolute lg:start-95 lg:top-[calc(140*var(--u))]">
+      <h1 class="hero-title relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal lg:w-374">
+        <span class="block">{c.title[0]}</span>{c.title[1] && <span class="block">{c.title[1]}</span>}
       </h1>
-
-      <!-- Button (bug 044/050): the shared .ui-btn size instead of Figma's 164 x 30 box with an offset 13px label; anchored at
-           the Figma start / top on desktop, growing with its label. -->
-      <a href={c.button.href} class="ui-btn hit btn-outline hair-card relative no-underline text-navy lg:absolute lg:start-98 lg:top-265" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
+      {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
+      <a href={`tel:${phone.phoneHref}`} class="phone hit inline-flex items-center font-gotham font-medium text-f12 leading-14 text-navy no-underline">
+        <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none" />
+        <span dir="ltr">{phone.phone}</span>
+      </a>
+      <!-- Button (bug 044/050): the shared .ui-btn size, 3px in from the title as in Figma (x98). -->
+      <a href={c.button.href} class="btn ui-btn hit btn-outline hair-card relative no-underline text-navy" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
     </div>
   </div>
 </section>
@@ -57,3 +64,16 @@ const edgeVars = await heroEdgeVars(layers ? layers.background : banner); // bui
 <script>
   import '../../scripts/hero-follow';
 </script>
+
+<style>
+  /* Phones / tablets: global .hero-copy flow (16px gaps). Desktop: our own flow column (global.css sets display:contents there). */
+  .text { overflow-wrap: anywhere; }
+  .phone { gap: calc(7 * var(--u)); }
+  .phone img { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
+  @media (min-width: 1024px) {
+    .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
+    .text { width: calc(389 * var(--u)); margin-top: calc(11 * var(--u)); margin-inline-start: calc(2 * var(--u)); }
+    .phone { margin-top: calc(8 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+    .btn { margin-top: calc(15 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+  }
+</style>

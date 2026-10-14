@@ -31,12 +31,13 @@ function setup(row: HTMLElement) {
   mark();
 
   // Show position `abs`: a looping row stays inside its first period (every position past it looks the same), any other
-  // row is clamped. Returns where it ended up.
+  // row is clamped. A row with a lead ([data-loop-lead], bug 111) stays inside [lead, lead + period) once past it, so the
+  // empty lead is not brought back by a drag across the wrap. Returns where it ended up.
   const put = (abs: number) => {
     const p = period();
     if (p > 0) {
-      abs %= p;
-      if (abs < 0) abs += p;
+      const lead = Number(row.dataset.loopLead) || 0;
+      if (abs < 0 || abs >= lead + p) abs = lead + ((((abs - lead) % p) + p) % p);
     } else abs = Math.min(Math.max(abs, 0), max());
     row.scrollLeft = abs * sign();
     return abs;

@@ -188,7 +188,7 @@ the hospital map "Phone" label and the country pop-up "UAE" chip (see each file'
 | `forms/refer.ar.json` | `sections.requested` | Requested Speciality: |
 | `forms/refer.ar.json` | `sections.patient` | Patient Details: |
 | `forms/refer.ar.json` | `sections.info` | Referral Information: |
-| `forms/refer.ar.json` | `sections.history` | Breif History: |
+| `forms/refer.ar.json` | `sections.history` | Brief History: |
 | `forms/refer.ar.json` | `fields.doctor_name.label` | Name* |
 | `forms/refer.ar.json` | `fields.doctor_specialty.label` | Speciality |
 | `forms/refer.ar.json` | `fields.doctor_mobile.label` | Mobile* |

@@ -21,6 +21,10 @@
 // one; touch, drag and wheel stop it at once, and the next slide lands on the next item boundary.
 // Live rows: Home doctors + Our Care / Refer doctors = step 1000 / 1000, no restore; Care Support = step 0 / 12000, no hover
 // pause, restore; Testimonials = step 0 / 15000, no hover pause, restore; Media Hub Latest keeps the glide (R061, client).
+// [data-autoscroll-lead] (Media Hub Latest, bug 111): the row's inline-start padding is a lead shown only before the first
+// pass. The wrap happens one lead later (positions stay in [lead, lead + period)), so the empty lead no longer pops back in
+// at the left edge each time the loop restarts; the copies fill the extra lead. The lead is published as [data-loop-lead]
+// for src/scripts/drag-scroll.ts.
 
 const SECONDS_PER_ITEM = 8; // glide pace (Media Hub Latest, R061); tied to the item step so it looks the same at every width
 const RESUME_MS = 2500; // after a touch/wheel, wait this long before moving again (restore rows)
@@ -51,6 +55,7 @@ function setup(scroller: HTMLElement) {
   const stepMs = num(scroller.dataset.autoscrollSpeed, STEP_MS);
   const pauseOnHover = scroller.dataset.autoscrollPause !== "no";
   const restore = scroller.dataset.autoscrollRestore !== "no";
+  const keepLead = scroller.hasAttribute("data-autoscroll-lead");
   const row = scroller.querySelector<HTMLElement>("[data-loop-row]");
   if (!row) return;
   const shown = (el: HTMLElement) =>
@@ -82,6 +87,7 @@ function setup(scroller: HTMLElement) {
 
   let copies: HTMLElement[] = [];
   let period = 0;
+  let lead = 0; // px before the first item that the loop skips after the first pass ([data-autoscroll-lead])
   let speed = 0; // px per second
   let stepPx = 0; // item step (step mode)
 
@@ -89,11 +95,13 @@ function setup(scroller: HTMLElement) {
     copies.forEach((c) => c.remove());
     copies = [];
     period = 0;
+    lead = 0;
     scroller.style.removeProperty("display");
     scroller.style.removeProperty("scroll-snap-type");
     row.style.removeProperty("flex-shrink");
     delete scroller.dataset.looping;
     delete scroller.dataset.loopPeriod;
+    delete scroller.dataset.loopLead;
   };
 
   // One period = distance from item 1 to its first copy = n × the item step. Each copy is nudged so that holds (the row's
@@ -112,7 +120,8 @@ function setup(scroller: HTMLElement) {
     scroller.dataset.looping = "";
     const step = edge(a[1]) - edge(a[0]);
     const target = step * a.length;
-    const need = Math.max(1, Math.ceil(scroller.clientWidth / target));
+    lead = keepLead ? parseFloat(getComputedStyle(row).paddingInlineStart) || 0 : 0;
+    const need = Math.max(1, Math.ceil((scroller.clientWidth + lead) / target));
     if (force || need !== copies.length) {
       copies.forEach((c) => c.remove());
       copies = Array.from({ length: need }, copy);
@@ -127,6 +136,8 @@ function setup(scroller: HTMLElement) {
     nudge(target - (edge(shown(copies[0])[0]) - edge(a[0])));
     period = target;
     scroller.dataset.loopPeriod = String(period); // read by src/scripts/drag-scroll.ts to wrap a mouse drag
+    if (lead) scroller.dataset.loopLead = String(lead);
+    else delete scroller.dataset.loopLead;
     speed = step / SECONDS_PER_ITEM;
     stepPx = step;
     scroller.dispatchEvent(new Event("autoscroll:change"));
@@ -136,7 +147,8 @@ function setup(scroller: HTMLElement) {
   // Where the row is now, inside one period (the copies make every position past it look the same).
   const read = () => {
     const p = Math.abs(scroller.scrollLeft);
-    return period > 0 ? p % period : p;
+    if (period <= 0 || p < lead) return p;
+    return lead + ((p - lead) % period);
   };
 
   let pos = read();
@@ -203,7 +215,7 @@ function setup(scroller: HTMLElement) {
     }
     running = !!s0;
     if (running) {
-      if (pos >= period) {
+      if (pos >= period + lead) {
         pos -= period;
         from -= period;
       }
@@ -223,7 +235,7 @@ function setup(scroller: HTMLElement) {
     running = vel > 0;
     if (running) {
       pos += (vel * dt) / 1000;
-      if (pos >= period) pos -= period;
+      if (pos >= period + lead) pos -= period;
       scroller.scrollLeft = sign * pos;
     }
     frame(tick);

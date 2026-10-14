@@ -1,5 +1,5 @@
 {
-  "_note": "Website Content - Suhad 4/Navigation Bar/AR - Your Opinion Matters.docx (13 Oct 2026), text exactly as in the document: hero title + text (also meta, as in English), intro heading + text, the rating question (matrix.label) and its six rows, the recommend question, 'Tell us more' label + placeholder. The document's extra heading 'تقييم تجربتكم' above the rating question has no slot in the Figma form (the English has one question there): not shown, docs/open-decisions.md CT31. Name / Hospital / Mobile / Email labels, the answer options, rating columns and SUBMIT have no Arabic in any document or on the live site: English shown (CT31). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "_note": "Website Content - Suhad 4/Navigation Bar/AR - Your Opinion Matters.docx (13 Oct 2026), text exactly as in the document: hero title + text (also meta, as in English), intro heading + text, the rating question (matrix.label) and its six rows, the recommend question, 'Tell us more' label + placeholder. The document's extra heading 'تقييم تجربتكم' above the rating question is shown as matrix.heading (Arabic only; user request 14 Oct 2026, the English form has none). Name / Hospital / Mobile / Email labels, the answer options, rating columns and SUBMIT have no Arabic in any document or on the live site: English shown (CT31). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
   "meta": {
     "title": "رأيكم يصنع الفرق | مستشفى كامبريدج",
     "description": "في مستشفى كامبريدج، نولي اهتمامًا كبيرًا لآراء المرضى وأسرهم، ونعتبرها جزءًا أساسيًا من تطوير خدماتنا وتحسين جودة الرعاية. يسعدنا أن نعرف كيف كانت تجربتكم معنا، وكيف يمكننا الارتقاء بخدماتنا لنلبّي تطلعاتكم."
@@ -15,6 +15,7 @@
     "text": "نرحب بملاحظاتكم ومقترحاتكم، ونقدّر لكم وقتكم وثقتكم بمستشفى كامبريدج."
   },
   "matrix": {
+    "heading": "تقييم تجربتكم",
     "label": "كيف تقيّمون الجوانب التالية من تجربتكم في المستشفى؟"
   },
   "fields": {

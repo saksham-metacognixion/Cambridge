@@ -1,5 +1,5 @@
 {
-  "_note": "Refer a Patient form (Figma 59:14344). Tabs = Website Content - Suhad/Patient Hub/EN - Refer a patient.md (5 Oct 2026): 'For Healthcare Professionals' (the Figma form), 'For You, Family or friends' and 'For Corporate or Organisations' (both = the form without the referring-doctor block; their field lists are NOT in the document, docs/open-decisions.md CT11). Fields: src/data/forms.json 'refer-patient', 'refer-patient-other', 'refer-patient-corporate'. Labels exactly as in Figma (incl. 'Breif History:'). ariaLabel / tabsLabel texts are NOT in Figma (screen readers only).",
+  "_note": "Refer a Patient form (Figma 59:14344). Tabs = Website Content - Suhad/Patient Hub/EN - Refer a patient.md (5 Oct 2026): 'For Healthcare Professionals' (the Figma form), 'For You, Family or friends' and 'For Corporate or Organisations' (both = the form without the referring-doctor block; their field lists are NOT in the document, docs/open-decisions.md CT11). Fields: src/data/forms.json 'refer-patient', 'refer-patient-other', 'refer-patient-corporate'. Labels exactly as in Figma, except bug 106 (14 Oct 2026, client): Figma's 'Breif History:' typo corrected to 'Brief History:'. ariaLabel / tabsLabel texts are NOT in Figma (screen readers only).",
   "tabsLabel": "Who is referring",
   "tabs": {
     "doctor": "For Healthcare Professionals",
@@ -16,7 +16,7 @@
     "requested": "Requested Speciality:",
     "patient": "Patient Details:",
     "info": "Referral Information:",
-    "history": "Breif History:"
+    "history": "Brief History:"
   },
   "fields": {
     "doctor_name": {

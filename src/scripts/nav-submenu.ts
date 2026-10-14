@@ -5,9 +5,10 @@
 // ArrowUp/ArrowDown/Home/End move inside; Escape closes and returns focus to the button; focus or a click leaving the item
 // closes it (any desktop-width screen, touch included). Only one dropdown is open at a time. Below 1200px the same button
 // expands the list in place (accordion in the hamburger menu).
-// Second level ([data-flyout], Our Care's Inpatient / Outpatient sections): same model one level down. Desktop: hover or the
-// chevron opens a fly-out beside the panel; the "inward" arrow (ArrowRight, ArrowLeft in Arabic) on the row opens it and
-// focuses its first link, the "outward" arrow or Escape closes it and returns to the row. Mobile: a nested accordion.
+// Deeper levels ([data-flyout], Our Care's sections, programmes and Neurorehabilitation's programmes; any depth since bug 104):
+// same model one level down. Desktop: hover or the chevron opens a fly-out beside its list (on the other side when it would
+// leave the viewport); the "inward" arrow (ArrowRight, ArrowLeft in Arabic) on the row opens it and focuses its first link,
+// the "outward" arrow or Escape closes it and returns to the row. Mobile: nested accordions.
 const roots = [...document.querySelectorAll<HTMLElement>("[data-submenu]")];
 const desktop = matchMedia("(min-width: 1200px)");
 const hover = matchMedia("(hover: hover) and (min-width: 1200px)");
@@ -40,6 +41,15 @@ for (const root of roots) {
     ...root.querySelectorAll<HTMLAnchorElement>(".sub-item:not(.fly-item)"),
   ];
   const flys: Toggle[] = [];
+  const flyOf = new Map<Element, Toggle>();
+  // the link of a row (a plain row: the link itself; a row with a fly-out: the link in its head)
+  const rowLink = (li: Element) =>
+    li.querySelector<HTMLAnchorElement>(":scope > a, :scope > .fly-head > a");
+  // the open fly-outs next to `li` in the same list (one open per list)
+  const openSiblings = (li: Element) =>
+    [...(li.parentElement?.children ?? [])].filter(
+      (x) => x !== li && x.hasAttribute("data-flyout") && x.hasAttribute("data-open"),
+    );
   let intent: number | undefined;
   const later = (fn: () => void) => { clearTimeout(intent); intent = window.setTimeout(fn, 250); };
   const isOpen = () => root.hasAttribute("data-open");
@@ -52,19 +62,42 @@ for (const root of roots) {
   };
   subs.push({ root, set });
 
+  // Fly-outs at every depth (bug 104: Our Care section -> programmes -> Neurorehabilitation's programmes), one model:
+  // opening one closes the open one beside it, closing one closes every fly-out inside it.
   for (const li of root.querySelectorAll<HTMLElement>("[data-flyout]")) {
-    const fbtn = li.querySelector<HTMLButtonElement>("[data-flyout-btn]")!;
-    const link = li.querySelector<HTMLAnchorElement>(".fly-head > .sub-item")!;
-    const kids = [...li.querySelectorAll<HTMLAnchorElement>(".fly-item")];
+    const fbtn = li.querySelector<HTMLButtonElement>(":scope > .fly-head > [data-flyout-btn]")!;
+    const link = li.querySelector<HTMLAnchorElement>(":scope > .fly-head > .sub-item")!;
+    const panel = li.querySelector<HTMLElement>(":scope > .fly")!;
+    const list = panel.querySelector<HTMLElement>(":scope > .fly-list")!;
+    const kids = [...list.children].map(rowLink).filter((x): x is HTMLAnchorElement => !!x);
     let fpinned = false;
     const fopen = () => li.hasAttribute("data-open");
+    // Desktop: open on the side that fits the viewport (Header.astro [data-flip]); a nested fly-out first tries its parent's side.
+    const place = () => {
+      if (!desktop.matches) return li.removeAttribute("data-flip");
+      const pref = li.parentElement?.closest("[data-flyout]")?.hasAttribute("data-flip") ?? false;
+      const vw = document.documentElement.clientWidth;
+      const room = (flip: boolean) => {
+        li.toggleAttribute("data-flip", flip);
+        const r = list.getBoundingClientRect();
+        return Math.min(r.left, vw - r.right); // < 0 = overflows
+      };
+      const a = room(pref);
+      if (a >= 0) return;
+      if (room(!pref) < a) li.toggleAttribute("data-flip", pref); // neither fits: the side that overflows less
+    };
     const fset = (open: boolean) => {
-      if (open) flys.forEach((f) => f.root !== li && f.set(false));
+      if (open) {
+        openSiblings(li).forEach((x) => flyOf.get(x)?.set(false));
+        place();
+      } else li.querySelectorAll("[data-flyout][data-open]").forEach((x) => flyOf.get(x)?.set(false));
       li.toggleAttribute("data-open", open);
       fbtn.setAttribute("aria-expanded", String(open));
       if (!open) fpinned = false;
     };
-    flys.push({ root: li, set: fset });
+    const toggle = { root: li, set: fset };
+    flys.push(toggle);
+    flyOf.set(li, toggle);
     const enter = () => {
       fset(true);
       fpinned = true;
@@ -81,48 +114,55 @@ for (const root of roots) {
         fpinned = true;
       }
     });
-    // Hover intent: with no fly-out open, a row opens at once; with another one open, only after the pointer rests here
+    // Hover intent: with no fly-out open beside it, a row opens at once; with one open, only after the pointer rests here
     // (`later`), so a diagonal move from a row to its fly-out across the rows below does not switch it. Coming back into
     // the open row / fly-out cancels the switch. Leaving the dropdown closes everything (root pointerleave).
     li.addEventListener("pointerenter", (e) => {
       if (e.pointerType !== "mouse" || !hover.matches) return;
       clearTimeout(intent);
       if (fopen()) return;
-      if (flys.some((f) => f.root !== li && f.root.hasAttribute("data-open"))) later(() => fset(true));
+      if (openSiblings(li).length) later(() => fset(true));
       else fset(true);
     });
     li.addEventListener("focusout", (e) => {
       const next = (e as FocusEvent).relatedTarget as Node | null;
       if (next && !li.contains(next) && desktop.matches) fset(false);
     });
+    // Keys are handled by the innermost level: this li takes its own row's inward arrow and the keys of its fly-out's rows;
+    // anything else on its own row goes up to the list the row belongs to (parent fly-out or the dropdown).
     li.addEventListener("keydown", (e) => {
       if (!desktop.matches) return; // mobile: plain Tab order through the accordion
       const inward = rtl() ? "ArrowLeft" : "ArrowRight";
       const outward = rtl() ? "ArrowRight" : "ArrowLeft";
-      const k = kids.indexOf(e.target as HTMLAnchorElement);
-      if (k < 0) {
+      const t = e.target as HTMLElement;
+      if (t === link || t === fbtn) {
         if (e.key === inward) {
           e.preventDefault();
+          e.stopPropagation();
           enter();
         }
-        return; // ArrowUp/Down on the row: first-level list (root handler)
+        return;
       }
-      e.stopPropagation(); // the dropdown's own keys must not act on a fly-out link
+      const row = t.closest("li");
+      if (!row || row.parentElement !== list) return; // a deeper level's key (that level stopped it already)
+      e.stopPropagation(); // the outer levels' own keys must not act on this fly-out's rows
       if (e.key === outward || e.key === "Escape") {
         e.preventDefault();
         fset(false);
         link.focus();
         return;
       }
+      const k = kids.indexOf(rowLink(row)!);
       if (listNav(kids, e.key, k)) e.preventDefault();
     });
   }
-  // a mouse resting on a first-level row without a fly-out closes the open fly-out (same intent delay)
-  for (const li of root.querySelectorAll<HTMLElement>(".sub-list > li:not([data-flyout])")) {
+  // a mouse resting on a row without a fly-out closes the fly-out open beside it (same intent delay)
+  for (const li of root.querySelectorAll<HTMLElement>(":is(.sub-list, .fly-list) > li:not([data-flyout])")) {
     li.addEventListener("pointerenter", (e) => {
       if (e.pointerType !== "mouse" || !hover.matches) return;
       clearTimeout(intent);
-      if (flys.some((f) => f.root.hasAttribute("data-open"))) later(() => flys.forEach((f) => f.set(false)));
+      const open = openSiblings(li);
+      if (open.length) later(() => open.forEach((x) => flyOf.get(x)?.set(false)));
     });
   }
 

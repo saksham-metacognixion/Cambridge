@@ -52,7 +52,10 @@ const pos = { titleTop: 124, titleW: 422, textGap: 11, textW: own?.heroLayout?.t
 // mirrored: the composition stays as in English. The Abu Dhabi banner (people layers, no readable content) keeps the default mirror.
 const keepComposition = !heroLayers(hero.banner.image, edition.region);
 const pending = !own && showPendingNote(INDEXABLE) ? shared.pending.note : null;
-const careText = { ...shared.care };
+// A hospital file may override the shared section headings / closing text (KSA Arabic document, 14 Oct 2026: its own wording per page).
+const careText = { ...shared.care, ...own?.care };
+const envText = { ...shared.environment, ...(own?.environment.heading ? { heading: own.environment.heading, ariaLabel: own.environment.heading } : {}) };
+const healText = { ...shared.healing, ...(own?.healing.heading ? { heading: own.healing.heading } : {}) };
 ---
 
 <BaseLayout edition={edition} path={HOSPITAL_PATHS.detail(h.slug)} title={fill(shared.meta.title)} description={fill(shared.meta.description)} editionsWithPage={hospitalEditions(h)}>
@@ -66,12 +69,12 @@ const careText = { ...shared.care };
     {pending && <p class="pending-note" role="note">{pending}</p>}
     {own && (
       <div id="environment" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(31 * var(--u))">
-        <EnvironmentBand edition={edition} c={shared.environment} text={own.environment.text} video={own.video} />
+        <EnvironmentBand edition={edition} c={envText} text={own.environment.text} video={own.video} />
       </div>
     )}
     {own && (
       <div id="healing" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(54 * var(--u))">
-        <HealingGallery edition={edition} c={shared.healing} text={own.healing.text} areas={own.healing.areas} />
+        <HealingGallery edition={edition} c={healText} text={own.healing.text} areas={own.healing.areas} />
       </div>
     )}
     <div id="map" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${own ? 36 : 31} * var(--u))`}>

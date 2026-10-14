@@ -19,6 +19,8 @@ import nav from "../data/nav.json";
 export interface NavItem {
   label: string;
   href: string;
+  /** page path inside the edition (the header's active-section match, bug 116) */
+  path: string;
   current: boolean;
   children: NavItem[];
 }
@@ -43,6 +45,7 @@ export function headerSubmenu(
           {
             label,
             href: urlFor(edition, path),
+            path,
             current: here === path,
             children,
           },

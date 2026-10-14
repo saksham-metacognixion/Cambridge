@@ -88,3 +88,18 @@ Verified in real Safari 26.6.2 (local dev):
 - The loop restart goes `10597 → 65` with the same post at the left edge before and after.
 
 Files: `src/components/media-hub/LatestPosts.astro` (padding / scroll-padding).
+
+## Update 14 Oct (third pass, user decision): Latest = centred three-card window (replaces the 48u start)
+The user wanted the Latest row centred like Explore Our Media, not starting on the left and running off the right edge.
+At ≥ 1024 `#latest-posts` is now a centred window (`mx-auto`) of exactly three cards. The width is
+`3 × 248.389 + 2 × 36.6 = 818.367u` plus `22u` each side for the card shadows (`862.367u`), and the row padding and
+scroll padding are `22u`. This matches the Figma composition: three centred cards at x 115 / 401 / 685. Cards glide in
+and out at the window edges. Below 1024 nothing changed.
+
+Verified in real Safari 26.6.2 (local dev, `/sa` and `/sa/ar`):
+- The window margins are equal: 92 / 115 / 130 / 370 px at 1024 / 1280 / 1440 / 1920. At rest the cards sit 160 px from
+  each side at 1440.
+- No horizontal page scroll.
+- Autoscroll moves (220 px in 5 s) in EN, AR and the filtered view.
+- The loop restart (`10562 → 30`, and `−10562 → −30` in RTL) is seamless, with the same post at the window edge.
+- The hover pause is kept (user decision).

@@ -47,13 +47,24 @@ const mainLinkWidths: Record<string, number> = { about: 84, ourCare: 41, hospita
 // Dropdowns (bug 046): items from src/lib/nav.ts headerSubmenu (fixed `children` page lists or a data `menu`: Our Care with its
 // fly-outs at every depth of the care tree since bug 104, Our Hospitals), only pages built in this edition.
 type MainLink = MainLinkSource & { label: string; href: string; path?: string; page?: string };
-const mainLinks: (MainLink & { w: number; id: string; children: NavItem[] })[] = c.mainLinks.map((x: MainLink, i: number) => ({
-  ...x,
-  href: target(x),
-  w: mainLinkWidths[x.page ?? ''] ?? 51,
-  id: `nav-${x.page ?? i}`,
-  children: headerSubmenu(x, edition, path),
-}));
+// Current section (bug 116, the live header's current-menu-ancestor): a main link is active on its own page, on any page under
+// its path (/about/... -> About Cambridge, /care/... -> Our Care, a doctor profile -> Patient Hub) and on any page of its
+// dropdown or under one, wherever it lives (a menu entry outside the section's folder). aria-current = "page" on the link's own page,
+// "true" (current item of the set) on the rest of its section.
+const within = (p: string | undefined) => !!p && (path === p || path.startsWith(`${p}/`));
+const inTree = (items: NavItem[]): boolean => items.some((k) => within(k.path) || inTree(k.children));
+const mainLinks: (MainLink & { w: number; id: string; children: NavItem[]; current?: 'page' | 'true' })[] = c.mainLinks.map((x: MainLink, i: number) => {
+  const children = headerSubmenu(x, edition, path);
+  const own = x.page !== undefined ? pagePath(x.page) : x.path;
+  return {
+    ...x,
+    href: target(x),
+    w: mainLinkWidths[x.page ?? ''] ?? 51,
+    id: `nav-${x.page ?? i}`,
+    children,
+    current: own !== undefined && path === own ? 'page' : within(own) || inTree(children) ? 'true' : undefined,
+  };
+});
 // Region switch: same page in the chosen region, same language (the language switch does the reverse); a page that does
 // not exist there (hospital of another region) lands on its nearest existing parent.
 // Every region is listed (Global, UAE, KSA); the current one comes from the URL's edition (parsePath), never from a
@@ -132,9 +143,9 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
 
       <ul class="mainnav a" style="--t:81;--w:595;--ph:15">
         {mainLinks.map((x) => x.children.length ? (
-          <li class="has-sub" style={`--w:${x.w}`} data-submenu>
+          <li class="has-sub" style={`--w:${x.w}`} data-submenu data-active={x.current ? '' : undefined}>
             <div class="sub-head">
-              <a id={x.id} href={x.href} class="hit block whitespace-nowrap text-f9 font-medium not-italic text-navy">{x.label}</a>
+              <a id={x.id} href={x.href} class="hit block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={x.current}>{x.label}</a>
               <button type="button" class="hit sub-btn text-navy" aria-expanded="false" aria-controls={`${x.id}-menu`} aria-labelledby={x.id} data-submenu-btn>
                 <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
               </button>
@@ -168,7 +179,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
             </div>
           </li>
         ) : (
-          <li style={`--w:${x.w}`}><a href={x.href} class="hit block whitespace-nowrap text-f9 font-medium not-italic text-navy">{x.label}</a></li>
+          <li style={`--w:${x.w}`} data-active={x.current ? '' : undefined}><a href={x.href} class="hit block whitespace-nowrap text-f9 font-medium not-italic text-navy" aria-current={x.current}>{x.label}</a></li>
         ))}
       </ul>
 
@@ -252,12 +263,14 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   /* Motion (animation audit 8 Oct 2026, live Blocksy theme): every link colour eases with the theme's .12s curve (--ui-ease);
      dropdown panels fade and rise from 10px over .2s ease (data-dropdown type-1); chevrons keep their .2s turn. */
   .sub-item, .ritem, .mainnav a, .toplinks a { transition: color var(--ui-ease), text-decoration-color var(--ui-ease); }
-  /* Top-level links: the live header recolours a hovered menu item (nav li:hover > .ct-menu-link); brand AA = Deep Teal + cyan underline. */
-  @media (hover: hover) { .toplinks a:hover, .mainnav li > a:hover, .mainnav .sub-head > a:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
+  /* Top row: brand AA = Deep Teal + cyan underline on hover. The main row (bug 116) recolours instead from 1200px, see below;
+     the mobile menu (<1200) keeps the underline. */
+  @media (hover: hover) { .toplinks a:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
+  @media (hover: hover) and (max-width: 1199.98px) { .mainnav li > a:hover, .mainnav .sub-head > a:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   .sub-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transition: transform .2s; }
   .has-sub[data-open] .sub-chev { transform: rotate(180deg); }
   .sub-btn:focus-visible, .sub-item:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
-  .sub-item:hover, .sub-item[aria-current='page'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* brand AA: Deep Teal + cyan underline, never cyan text */
+  @media (max-width: 1199.98px) { .sub-item:hover, .sub-item[aria-current='page'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } } /* mobile menu: Deep Teal + cyan underline */
   /* Deeper levels (Our Care: Inpatient -> sections -> programmes -> Neurorehabilitation's programmes, bug 104). A row with
      children = its link + a chevron button that opens a fly-out beside its list on desktop (chevron points to the inline end,
      so it mirrors in Arabic), or an indented list below the row on mobile (chevron points down). Same markup at every depth. */
@@ -265,7 +278,23 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   .fly-btn { pointer-events: auto; display: flex; align-items: center; justify-content: center; flex: none; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
   .fly-chev { transition: transform .2s; }
   .fly-btn:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
-  .has-fly[data-open] > .fly-head > .sub-item { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; }
+  @media (max-width: 1199.98px) { .has-fly[data-open] > .fly-head > .sub-item { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
+  /* Bug 116 (14 Oct 2026), desktop main row = the live Blocksy menu (docs/live-save-13oct/global.css: [data-id="menu"] links and
+     .sub-menu links go from palette-color-1 #004059 to palette-color-3 #00b8ff, no underline): cyan label (and its chevron) while
+     the item is hovered (the pointer anywhere in its li, open dropdown included, like li:hover > .ct-menu-link), keyboard-focused,
+     open (aria-expanded / data-open) or the current section ([data-active], current-menu-ancestor). Dropdown and fly-out rows the
+     same: hovered, focused, open, or the current page. Cyan text on white is 2.26:1 (fails AA): user decision 14 Oct 2026 to
+     match live, flagged as B116 in docs/open-decisions.md; keyboard focus keeps its outline, so it never relies on colour alone. */
+  @media (min-width: 1200px) {
+    .mainnav > li[data-active] > a, .mainnav > li[data-active] > .sub-head > *,
+    .has-sub[data-open] > .sub-head > *, .sub-btn[aria-expanded='true'],
+    .mainnav > li > a:focus-visible, .sub-head > a:focus-visible, .sub-btn:focus-visible,
+    .sub-item:focus-visible, .sub-item[aria-current='page'], .fly-btn:focus-visible,
+    .has-fly[data-open] > .fly-head > * { color: var(--color-cyan); }
+    @media (hover: hover) {
+      .mainnav > li:hover > a, .mainnav > li:hover > .sub-head > *, .sub-item:hover, .fly-head:hover > * { color: var(--color-cyan); }
+    }
+  }
   .burger { display: none; }
   .lang-hit { --hit-w: calc(100% + 5 * var(--u)); }
   .region { z-index: 60; }

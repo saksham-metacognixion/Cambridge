@@ -64,14 +64,14 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
   .t a { color: inherit; text-decoration: none; }
   .stretch::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-card); }
   .stretch:focus-visible { outline: none; }
-  /* Hovers as on the live About cards: the title text turns cyan, the button navy (shared .btn-fill). Both sit above the
+  /* Hovers as on the live About cards: the title text turns cyan, the button cyan (shared .btn-fill). Both sit above the
      whole-card link layer so each reacts on its own; the button is a second link to the same page, hidden from AT and Tab
      (the title link is the one they use). */
   .t .block, .btn { position: relative; z-index: 1; }
   .t a { transition: color 160ms ease; }
   @media (hover: hover) { .t:has(.block:hover) a { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   .card:has(.stretch:focus-visible) { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
-  .btn { margin-top: auto; background: var(--color-cyan); color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
+  .btn { margin-top: auto; } /* size from .ui-btn (bug 044/050), colours from .btn-fill */
   @media (min-width: 1024px) {
     .grid { grid-template-columns: repeat(4, calc(222 * var(--u))); column-gap: calc(20 * var(--u)); }
   }

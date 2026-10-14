@@ -118,7 +118,7 @@ const stats = statPos.map((d, i) => ({ ...d, n: c.stats[i].number as string, l: 
               <!-- Book Appointment + Visit Page (bug 044/050): the shared .ui-btn-sm pair in one wrapping row, instead of Figma's
                    118 x 25 / 68 x 20 boxes with 10 / 9px labels. -->
               <div class="actions">
-                <a href={c.book.href} data-hospital={r.slug} class="ui-btn ui-btn-sm hit btn-fill bg-cyan text-navy" aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
+                <a href={c.book.href} data-hospital={r.slug} class="ui-btn ui-btn-sm hit btn-fill" aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
                 <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="ui-btn ui-btn-sm hit btn-outline hair-50 border-navy text-navy">{c.visit.label}</a>
               </div>
             </div>

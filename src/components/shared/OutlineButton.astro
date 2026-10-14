@@ -6,7 +6,7 @@
  * the Figma 164 x 30 box and the label offsets (labelX / labelW) no longer apply. Touch target 44px via .hit.
  * Layout (margins) is the caller's: pass `class`. Hover / focus: the shared .btn-outline / .btn-fill rules in global.css.
  */
-/* `fill`: the filled variant (Our Hospitals hero 81:1444): #00b8ff background, white label, no outline. */
+/* `fill`: the filled variant (Our Hospitals hero 81:1444; Figma #00b8ff): the shared .btn-fill colours (bug 102), no outline. */
 /* `onDark` (bug 070): for navy bands (hospital map band). Cyan outline + white label: the brand navy label vanished on the
    navy band, and Figma's cyan label (4.95:1 on flat #004059) drops under 4.5:1 over the band's lighter map texture (R069). */
 /* Any other attribute (data-hospital, target, rel ...) goes onto the <a>. labelX / labelW: accepted for old callers, unused. */
@@ -14,6 +14,6 @@ interface Props { href: string; label: string; labelX?: number; labelW?: number;
 const { href, label, labelX: _lx, labelW: _lw, class: cls, fill = false, onDark = false, ...rest } = Astro.props;
 ---
 
-<a href={href} class:list={['btn ui-btn hit no-underline', fill ? 'bg-cyan btn-fill' : 'hair-card btn-outline', cls]} style="--sw:1;--sc:var(--color-cyan)" {...rest}>
+<a href={href} class:list={['btn ui-btn hit no-underline', fill ? 'btn-fill' : 'hair-card btn-outline', cls]} style="--sw:1;--sc:var(--color-cyan)" {...rest}>
   <span class:list={['label', onDark ? 'text-white' : 'text-navy']}>{label}</span>
 </a>

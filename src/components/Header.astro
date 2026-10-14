@@ -178,7 +178,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
            755..916 slot holds next to the nav, so the button ends 11 before the separator line (x 905) and grows toward the nav,
            which starts earlier (Figma 393; 331 since bug 046, see .mainnav) to make room; vertical
            centre = the Figma box's (84). -->
-      <a href={c.book.href} class="hit book a ui-btn btn-fill text-navy" style="--l:755;--t:69;--w:138;--ph:30"><span>{c.book.label}</span></a>
+      <a href={c.book.href} class="hit book a ui-btn btn-fill" style="--l:755;--t:69;--w:138;--ph:30"><span>{c.book.label}</span></a>
 
       {vlines.map(([l, t]) => (
         <span class="vl a deco" style={`--l:${l};--t:${t};--w:0;--ph:30`}><img src={line1.src} width="30" height="1" alt="" /></span>
@@ -193,11 +193,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   /* Corners (bug 049): language chip + its active pill = small chips (--radius-btn), dropdown panels = --radius-card. */
   .chip { background: var(--color-mist); border-radius: var(--radius-btn); }
   .pill { background: #004059; border-radius: var(--radius-btn); }
-  .book { background: #00b8ff; }
-  /* White label: client sheet "CH Website Comments.xlsx" row 4 (13 Oct 2026, "the font to be white"), approved by the user.
-     White on #00b8ff is about 2.2:1, below WCAG AA for text (and against the brand rule "never white on cyan"): flagged in
-     docs/open-decisions.md (CW1) for the client's sign-off. Hover unchanged (navy fill, white label). */
-  :root .hd .book, :root .hd .book > * { color: #fff; }
+  /* Book button colours: the shared .btn-fill (navy, white label; cyan + Deep Teal label on hover, bug 102). */
   .vl > img { position: absolute; inset-inline-start: 0; top: calc(30 * var(--u)); width: calc(30 * var(--u)); height: calc(1 * var(--u)); transform-origin: 0 0; transform: rotate(-90deg); max-width: none; }
   /* RTL: the line hangs from its right end, so rotate the other way around the top-right corner (exact mirror). */
   :global([dir='rtl']) .vl > img { transform-origin: 100% 0; transform: rotate(90deg); }

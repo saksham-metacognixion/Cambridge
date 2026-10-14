@@ -2,7 +2,8 @@
 /*
  * Sentiment face of one rating level (bug 095), or with `sprite` the five face drawings once per page (<symbol>s), which
  * every face then <use>s: the 30 matrix cells share one copy of the SVG paths. Face + colour per option value:
- * src/data/rating-faces.json (provisional). Decorative: the radio input next to it carries the accessible name.
+ * src/data/rating-faces.json (provisional; its `aliases` map the pop-up's excellent / good / medium / poor onto the same levels).
+ * The sprite is rendered once per page by forms/Modals.astro (outside the closed dialogs). Decorative: the radio input next to it carries the accessible name.
  *
  * Drawings (viewBox = the Figma 19.443 face box): Very Satisfied / Satisfied / Neutral = the Figma pop-up faces Excellent /
  * Good / Medium (112:7878, src/assets/forms/opinion-face-*.svg); Very Dissatisfied = Figma Poor (its 21.211 box cropped
@@ -16,7 +17,8 @@ interface Props {
   sprite?: boolean;
 }
 const { level, sprite } = Astro.props;
-const conf = level ? (faces.levels as Record<string, { face: string; color: string }>)[level] : undefined;
+const key = level && ((faces.aliases as Record<string, string>)[level] ?? level);
+const conf = key ? (faces.levels as Record<string, { face: string; color: string }>)[key] : undefined;
 if (level && !conf) throw new Error(`rating-faces.json has no level "${level}"`);
 const disc = 'fill:var(--face-fill, transparent)';
 const line = { fill: 'none', stroke: 'currentColor', 'stroke-width': '1.76758', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' } as const;
@@ -53,5 +55,5 @@ const ring = 'M18.5596 9.72171C18.5596 14.6028 14.6028 18.5596 9.72171 18.5596C4
     </symbol>
   </svg>
 ) : conf && (
-  <svg class="rface" viewBox="0 0 20 20" aria-hidden="true" focusable="false" data-level={level} style={`--face:${conf.color}`}><use href={`#rface-${conf.face}`} /></svg>
+  <svg class="rface" viewBox="0 0 20 20" aria-hidden="true" focusable="false" data-level={key} style={`--face:${conf.color}`}><use href={`#rface-${conf.face}`} /></svg>
 )}

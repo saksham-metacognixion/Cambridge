@@ -36,7 +36,7 @@ const c = content('media-hub/page', edition.locale).newsletter;
       <input id="nl-email" type="email" name="email" required autocomplete="email" placeholder={c.emailPlaceholder} aria-describedby="nl-email-error" class="h-44 max-lg:min-w-0 max-lg:flex-1 lg:absolute lg:start-75.25 lg:top-[calc(15.6*var(--u))] lg:w-280 lg:max-w-[calc(100%-240px)] border-0 bg-transparent p-0 font-gotham font-normal text-f13p15 text-navy outline-0 placeholder:text-navy placeholder:opacity-100 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan" />
       <!-- Subscribe (bug 044/050): the shared .ui-btn size instead of Figma's 150 x 52 box with an offset 11.7px label; kept at the
            Figma end inset, centred on the field's height. -->
-      <button type="submit" class="ui-btn hit btn-fill max-lg:w-full lg:absolute lg:end-[calc(11.69*var(--u))] lg:top-1/2 lg:-translate-y-1/2 border-0 bg-cyan text-navy">{c.submit}</button>
+      <button type="submit" class="ui-btn hit btn-fill max-lg:w-full lg:absolute lg:end-[calc(11.69*var(--u))] lg:top-1/2 lg:-translate-y-1/2 border-0">{c.submit}</button>
       <!-- Status lines under the white box (lg: hangs below it, the card has room down to its 267px bottom) -->
       <div data-field="email" class="nl-status max-lg:basis-full lg:absolute lg:inset-x-0 lg:top-full lg:pt-8 lg:text-center">
         <NewsletterStatus edition={edition} errorId="nl-email-error" />

@@ -10,12 +10,15 @@ import BookAppointmentModal from './BookAppointmentModal.astro';
 import InquiryModal from './InquiryModal.astro';
 import OpinionModal from './OpinionModal.astro';
 import CountryPopup from './CountryPopup.astro';
+import RatingFace from '../feedback/RatingFace.astro';
 import type { Edition } from '../../lib/editions';
 
 interface Props { edition: Edition }
 const { edition } = Astro.props;
 ---
 
+<!-- Sentiment face drawings, once per page, outside the closed <dialog>s: the pop-up's ratings and the Patient Feedback matrix <use> them (bug 095) -->
+<RatingFace sprite />
 <BookAppointmentModal edition={edition} />
 <InquiryModal edition={edition} />
 <OpinionModal edition={edition} />

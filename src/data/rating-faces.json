@@ -7,5 +7,12 @@
     "neutral": { "face": "neutral", "color": "#ffd939" },
     "satisfied": { "face": "satisfied", "color": "#15adbf" },
     "very-satisfied": { "face": "very-satisfied", "color": "#22b573" }
+  },
+  "$aliases": "Bug 095 reopened (14 Oct 2026): the four ratings of the Your Opinion Matters pop-up (forms.json 'feedback-popup': excellent / good / medium / poor) reuse the levels above, so both forms share one face set and one colour per sentiment.",
+  "aliases": {
+    "excellent": "very-satisfied",
+    "good": "satisfied",
+    "medium": "neutral",
+    "poor": "very-dissatisfied"
   }
 }

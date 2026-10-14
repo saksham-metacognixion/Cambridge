@@ -5,7 +5,7 @@
  * (card = page x 53, y 599). Every question is a radio group (fieldset + legend); the satisfaction rows are announced
  * as "<statement>, <column>" (the column headers are drawn once, visually). Figma draws all five "recommend" options
  * as selected (a state sample): nothing is preselected; unselected circles use the grey of the matrix circles.
- * Bug 095: the five satisfaction levels are sentiment faces (RatingFace.astro, one shared sprite; provisional, F095) on the
+ * Bug 095: the five satisfaction levels are sentiment faces (RatingFace.astro, one shared sprite rendered by forms/Modals.astro; provisional, F095) on the
  * real radio inputs. Bug 094: compact desktop layout (one-line rows, horizontal recommend options, shorter textarea, tighter
  * gaps): the form went from ~1491 to ~700 px at 1366 x 768; phones / tablets keep their stacked layout.
  */
@@ -101,7 +101,6 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
 
       {matrix.length > 0 && (
         <div class="matrix">
-          <RatingFace sprite />
           {/* Optional heading above the rating question: only the Arabic document has one ('تقييم تجربتكم', Suhad 4, 14 Oct 2026); English = Figma, none */}
           {c.matrix.heading && <h3 class="pf-q m-heading">{c.matrix.heading}</h3>}
           <!-- Question + column names on one line (desktop): the question takes the label column above the row labels -->

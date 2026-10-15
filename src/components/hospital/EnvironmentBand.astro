@@ -42,7 +42,7 @@ const closeLabel = commonText(edition.locale).close as string;
         </button>
       </div>
       <h2 class="h">{c.heading}</h2>
-      <div class="text">{text.map((p) => <p>{p}</p>)}</div>
+      <div class="text text-justify-center">{text.map((p) => <p>{p}</p>)}</div>
       <a href={c.tour.href} class="tour ui-btn hit btn-fill">{c.tour.label}</a>
     </div>
   </div>
@@ -66,11 +66,10 @@ const closeLabel = commonText(edition.locale).close as string;
   .play { position: absolute; width: calc(57.929 * var(--u)); height: calc(57.929 * var(--u)); inset-inline-start: calc(248.73 / 565 * 100%); top: calc(134.72 / 348 * 100%); max-width: none; }
   .video :global(.player) { display: block; width: 100%; height: 100%; border: 0; background: #000; }
   .h { position: relative; z-index: 1; margin: calc(30 * var(--u)) 0 0; max-width: calc(558 * var(--u)); font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
-  .text { position: relative; z-index: 1; margin-top: calc(13 * var(--u)); width: calc(539 * var(--u)); max-width: 100%; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
-  /* Bug 123 (client, 14 Oct 2026): justified paragraphs (straight edges), the block itself stays centred (align-items above);
-     last lines start-aligned (the justify default), direction + hyphenation dictionary from <html dir/lang>. Phones: start-aligned,
-     a ~40-character measure gives rivers when justified. */
-  @media (max-width: 479.98px) { .text { text-align: start; } }
+  .text { position: relative; z-index: 1; margin-top: calc(13 * var(--u)); width: calc(539 * var(--u)); max-width: 100%; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  /* Bug 123 (client, 14 Oct 2026) justified the paragraphs with start-aligned last lines; bug 132 (15 Oct 2026): the shared
+     .text-justify-center (global.css) — straight edges, LAST line centred, plainly centred under 480. The block itself stays centred
+     (align-items above). */
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(5 * var(--u)); }
   .tour { position: relative; z-index: 1; margin-top: calc(17 * var(--u)); } /* size / label / corners: .ui-btn (bugs 044/050); colours: .btn-fill */

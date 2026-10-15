@@ -41,7 +41,7 @@ const pos = (len: number, active: number, i: number) => {
 <section class="heal" aria-labelledby="healing-heading" data-gallery>
   <h2 id="healing-heading" class="h">{c.heading}</h2>
 
-  {!hasPhotos && <div class="text solo">{text.map((p) => <p>{p}</p>)}</div>}
+  {!hasPhotos && <div class="text solo text-justify-center">{text.map((p) => <p>{p}</p>)}</div>}
 
   {!hasPhotos ? null : areas.length > 1 ? (
     <div class="ui-box pick">
@@ -62,7 +62,7 @@ const pos = (len: number, active: number, i: number) => {
     const active = Math.min(a.active ?? 0, a.images.length - 1);
     return (
       <div class="area" data-gallery-area={a.key} hidden={ai !== 0}>
-        <div class="text">{text.map((p) => <p>{p}</p>)}</div>
+        <div class="text text-justify-center">{text.map((p) => <p>{p}</p>)}</div>
         <ul class="slides" data-slides data-active={active} role="list" aria-label={fill(c.galleryLabel, { area: a.label })}>
           {a.images.map((im, i) => (
             <li class="slide" data-slide data-pos={pos(a.images.length, active, i)}>
@@ -96,7 +96,7 @@ const pos = (len: number, active: number, i: number) => {
   .pick .one { display: flex; align-items: center; }
   .area { display: contents; }
   .area[hidden] { display: none; }
-  .text { margin-top: calc(22 * var(--u)); width: calc(539 * var(--u)); max-width: calc(100% - 32px); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); text-align: center; }
+  .text { margin-top: calc(22 * var(--u)); width: calc(539 * var(--u)); max-width: calc(100% - 32px); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); } /* alignment: .text-justify-center (bug 132) */
   .text.solo { margin-top: calc(16 * var(--u)); } /* no area dropdown: the text sits where the dropdown's top was */
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(14 * var(--u)); }

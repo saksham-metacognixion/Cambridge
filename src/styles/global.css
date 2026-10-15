@@ -510,6 +510,16 @@ body {
 /* Empty result of a client-side filter (Find a Doctor, Conditions, ...). No Figma design: body text style, centred.
    Wording + look flagged for Pramod's approval. */
 .ui-empty { margin: 0; padding: calc(40 * var(--u)) calc(16 * var(--u)); text-align: center; font: 400 calc(12 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+
+/* Centred multi-line intro paragraphs (bug 132, client, 15 Oct 2026): straight edges on both sides, the LAST line centred, the block
+   itself still centred under its heading (its own width / margin rules). Replaces text-align: center on the Home section intros, the
+   shared CenteredIntro (Refer, Insurance, International, Testimonials, Feedback, calculators), the hospital Environment / Healing
+   text, Why Trusted Standards and the Careers CTA band. Works in both directions (RTL: the edges are the box's inline edges). Manual
+   hyphenation only (no dictionary breaks in the brand copy). Phones narrower than 480: a ~40-character measure gives rivers when
+   justified, so the paragraphs stay plainly centred. One class, not a component rule: the components drop their own text-align
+   (Astro's scoped selectors are more specific than this one and would win). */
+.text-justify-center { text-align: justify; text-align-last: center; -webkit-hyphens: manual; hyphens: manual; }
+@media (max-width: 479.98px) { .text-justify-center { text-align: center; text-align-last: auto; } }
 .ui-empty[hidden] { display: none; }
 
 /* Video lightbox (src/scripts/video-facade.ts): About intro + hospital videos open here on play, as on the live site

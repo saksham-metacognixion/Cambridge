@@ -13,12 +13,18 @@ import { hospitalHref } from '../../lib/hospitals';
  * version). The Figma section (93:894, page y 2054-2842) had a white hospital list beside the map; the client asked for the
  * list to go, the title centred above the map, the map centred, and the hospitals reachable from their PINS instead.
  *
- * 15 Oct 2026 (client reference `cambridge-locations-2.html`, reproduced here as closely as possible):
+ * 15 Oct 2026 (client reference `cambridge-locations-2.html`, then its third version `cambridge-locations-3.html` the same
+ * day, reproduced here as closely as possible):
+ *  - layout (v3): from 1024px a two-column grid, the map on the inline-start side (1.05fr) and a content column (1fr) beside
+ *    it with the title (start-aligned, max 640 px) over the six counters (3 x 2, hairline dividers between the columns of a
+ *    row, no divider before the first of a row); below 1024 the content column stacks ABOVE the map (counters centred), and
+ *    below 640 the counters are 2 x 3 with wrapping labels. The reference's px are the site's Figma units (x 1 / 1.3688) on
+ *    the desktop canvas so the section scales with the page; its literal px below 1024 where the canvas is dropped.
  *  - entrance once 25 % of the section is in view (scripts/hospital-map.ts adds `.in`; never replays): the title fades up
- *    (0.8 s), the map outline draws itself in (2.2 s, stroke-dashoffset) and its fill fades in after 1.7 s, every pin drops
- *    from 140 map px above with a two-step bounce (0.95 s, 1.1 s + 0.2 s per pin), then bobs (2.6 s loop) over a pulse ring at
- *    its tip, its city label fades in 0.6 s after the drop starts; the six counters sit ON the map (2 x 3, in the empty Saudi
- *    interior), fade up 1.6 s + 0.12 s per counter after the entrance and count 0 -> value over 2 s, ease-out cubic, 1.7 s +
+ *    (0.8 s from 0.2 s), the map outline draws itself in (2.2 s, stroke-dashoffset; the Figma ring fades in after 1.7 s so the
+ *    map ends as the Figma art), every pin drops from 140 map px above with a two-step bounce (0.95 s, 1.1 s + 0.2 s per
+ *    pin), then bobs (2.6 s loop) over a pulse ring at its tip, its city label fades in 0.6 s after the drop starts; the
+ *    counters fade up 0.6 s + 0.12 s per counter after the entrance and count 0 -> value over 2 s, ease-out cubic, 0.7 s +
  *    0.12 s per counter after it (the reference's own counter, not the Greenshift one of the other pages).
  *  - a pin = the reference's vector pin (outlined teardrop + dot) in the brand colours (section navy fill, cyan outline and
  *    dot), sized to the Figma pin box so the tips stay where the 9 Oct alignment put them; hover / focus / open = 1.18 scale
@@ -30,7 +36,8 @@ import { hospitalHref } from '../../lib/hospitals';
  *    whose card lists both Abu Dhabi Hospital and Al Mudeef Centre (the client's point 4; the 9 Oct fanned second pin is gone).
  *  - nothing moves with prefers-reduced-motion (html.aos absent): everything is visible at once, the counters show their values.
  * The navy band, the heading style, the map art (the Figma silhouette, now also outlined like the reference's countries), the
- * pin positions, the city labels and the six counters are the Figma / live ones; cards come from hospitals.json.
+ * pin positions, the city labels and the six counters are the Figma / live ones (brand colours, not the reference's #1b3851 /
+ * #43a8f2); cards come from hospitals.json.
  */
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('home/facilities', edition.locale);
@@ -90,11 +97,28 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
 
 <section class="hm relative bg-navy-alt overflow-x-clip" data-hospital-map aria-labelledby="hm-title">
   <div class="stage">
-    <h2 id="hm-title" class="hm-title m-0 font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word] text-center">{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
+    <div class="inner">
+      <!-- Title + counters (reference .cl-content). First in the DOM so the heading precedes the pin buttons; the desktop grid
+           puts this column beside the map (inline-end), the stacked layout keeps it above. Screen readers read the sr-only
+           counter value; the animated span is aria-hidden and holds the final text until the entrance zeroes it. -->
+      <div class="hcontent">
+        <h2 id="hm-title" class="hm-title m-0 font-gotham font-medium text-f28 max-lg:text-f23 leading-34 text-white not-italic whitespace-normal [word-break:break-word]">{c.heading}<span class="text-cyan">{c.headingAccent}</span></h2>
+        <div class="stats">
+          {stats.map((s, i) => (
+            <p class="stat m-0 font-gotham font-medium text-white not-italic whitespace-normal" style={`--i:${i}`}>
+              <span class="sr-only">{s.n}</span>
+              {/* lang="en": WebKit shapes the Latin digits with the page language and skips Gotham's tabular-figures feature
+                  under Arabic (proportional figures 12 % wider: "340,000+" 211 px instead of 188 at 1440, overflowing the
+                  column); Chrome / Firefox already render them tabular. Measured 15 Oct 2026. */}
+              <span data-hm-count aria-hidden="true" lang="en" class="num block text-cyan">{s.n}</span>
+              <span class="lbl-stat block">{s.l}</span>
+            </p>
+          ))}
+        </div>
+      </div>
 
-    <!-- Map (Group 9). dir="ltr" (bug 073): geography is never mirrored, the pins and city labels keep their English
-         positions on Arabic pages (Jeddah on the west coast); only the label text is Arabic. -->
-    <div class="mapwrap">
+      <!-- Map (Group 9). dir="ltr" (bug 073): geography is never mirrored, the pins and city labels keep their English
+           positions on Arabic pages (Jeddah on the west coast); only the label text is Arabic. -->
       <div class="mapbox">
         <div class="mapin" dir="ltr" data-mapin>
           <svg class="pm map" viewBox="0 0 478 382.084" preserveAspectRatio="none" role="img" aria-label={c.mapAlt} style="--x:0;--y:0;--w:478;--h:382.084">
@@ -137,18 +161,6 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
               </div>
             </div>
           ))}
-
-          <!-- Counters on the map (reference: 2 columns in the Saudi interior, sized with the map). Screen readers read the
-               sr-only value; the animated span is aria-hidden and holds the final text until the entrance zeroes it. -->
-          <div class="stats" dir={edition.dir} style="--sx:256;--sy:224;--sw:180">
-            {stats.map((s, i) => (
-              <p class="stat m-0 font-gotham font-medium text-white not-italic whitespace-normal" style={`--i:${i}`}>
-                <span class="sr-only">{s.n}</span>
-                <span data-hm-count aria-hidden="true" class="num block text-cyan">{s.n}</span>
-                <span class="lbl-stat block">{s.l}</span>
-              </p>
-            ))}
-          </div>
         </div>
       </div>
     </div>
@@ -160,15 +172,19 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
 </script>
 
 <style>
-  /* Flow layout (the Figma absolute canvas is gone with the list): heading and map stacked and centred; Figma spacing kept
-     (heading top 58, map 37 under the heading box) and the same 58 under the map (the stats are on the map now). */
-  .stage { display: flex; flex-direction: column; align-items: center; padding: calc(58 * var(--u)) calc(24 * var(--u)); box-sizing: border-box; }
-  .hm-title { max-width: calc(600 * var(--u)); }
-  .mapwrap { margin-top: calc(37 * var(--u)); max-width: 100%; }
-  /* --m = 1 map px on screen: 1 Figma unit (--u), or less so the Figma map group (546.176 wide: drawing 478 + the labels
-     beside it) fits the viewport less 16px gutters. The box is the DRAWING (478 wide), so the drawing is what is centred; the
-     labels overflow it to the right. NOT a CSS container: --u is defined in cqw and would shrink inside one. */
-  .mapbox { --m: min(calc((100vw - 32px) / 546.176), var(--u)); width: calc(478 * var(--m)); aspect-ratio: 478 / 382.084; position: relative; }
+  /* Layout = the reference's .cl-inner (v3): a 1.05fr | 1fr grid, map on the inline-start side, title + counters beside it,
+     vertically centred; its px as Figma units at 1440 (padding 70 / 24 -> 51.14u / 17.54u, gap 48 -> 35.07u) so the section
+     scales with the page like the rest of the canvas. .hcontent is first in the DOM (heading before the pin buttons) and the
+     explicit grid areas put it in the second column. */
+  .stage { padding: calc(51.14 * var(--u)) calc(17.54 * var(--u)); box-sizing: border-box; }
+  .inner { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; gap: calc(35.07 * var(--u)); }
+  .hcontent { grid-column: 2; grid-row: 1; min-width: 0; }
+  .hm-title { max-width: calc(467.56 * var(--u)); margin-bottom: calc(40.91 * var(--u)); text-align: start; } /* 640 / 56 px */
+  /* --m = 1 map px on screen. Desktop: the Figma map group (546.176 wide: drawing 478 + the labels beside it) fills the map
+     column, which is (1052 - 2 x 17.54 - 35.07) x 1.05 / 2.05 = 502.9u wide -> 0.92077u per map px (drawing 602 px at 1440;
+     the reference's countries span about 634 of its 688 px column). Below 1024: the group fits the viewport less the
+     gutters, never above 1 Figma unit. NOT a CSS container: --u is defined in cqw and would shrink inside one. */
+  .mapbox { grid-column: 1; grid-row: 1; justify-self: center; --m: calc(0.92077 * var(--u)); width: calc(546.176 * var(--m)); max-width: 100%; aspect-ratio: 546.176 / 382.084; position: relative; }
   .mapin { position: relative; width: 100%; height: 100%; }
   .pm { position: absolute; inset-inline-start: calc(var(--x) * var(--m)); top: calc(var(--y) * var(--m)); width: calc(var(--w) * var(--m)); height: calc(var(--h) * var(--m)); }
   .lbl { height: auto; font-size: max(10px, calc(10 * var(--m))); }
@@ -182,7 +198,7 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
   /* Pins: box = the Figma pin box (.pm); --tip = the tip's y in it. .drop = entrance, .bob = idle bob, .shape = hover scale (three
      elements so the three transforms never fight), .pulse = the ring at the tip. */
   .spot { z-index: 1; }
-  .spot[data-active], .spot:focus-within { z-index: 10; } /* above the counters (z 2) */
+  .spot[data-active], .spot:focus-within { z-index: 10; } /* above the neighbouring pins and the content column */
   .drop, .bob { position: absolute; inset: 0; }
   .pulse { position: absolute; left: 50%; top: calc(var(--tip) * var(--m)); width: calc(12 * var(--m)); height: calc(5 * var(--m)); margin: calc(-2.5 * var(--m)) 0 0 calc(-6 * var(--m)); border: 1.6px solid var(--color-cyan); border-radius: 50%; box-sizing: border-box; opacity: 0; pointer-events: none; }
   .pin { display: block; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; color: var(--color-navy-alt); }
@@ -221,28 +237,46 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
     .imgw { flex-basis: 96px; height: 96px; }
   }
 
-  /* Counters on the map (reference .cl-stats: centred at 47.5 % / 57 % of its 860px map, 36 % wide, 2 columns, type in cqw):
-     here in map units (--m; the reference's cqw values x 5.46 = its map in Figma units), centred at --sx / --sy, --sw wide,
-     in the empty south-central interior of this drawing between Jeddah and the Gulf (the reference's spot; measured against the
-     outline, the pins and the labels, 15 Oct 2026); never catch the pointer. */
-  .stats { position: absolute; left: calc(var(--sx) * var(--m)); top: calc(var(--sy) * var(--m)); transform: translate(-50%, -50%); width: calc(var(--sw) * var(--m)); z-index: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: calc(14 * var(--m)) calc(10.92 * var(--m)); text-align: center; pointer-events: none; }
-  .num { font-size: calc(16 * var(--m)); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25); }
-  .lbl-stat { margin-top: calc(3.82 * var(--m)); font-size: max(10px, calc(7.92 * var(--m))); line-height: 1.3; opacity: 0.9; }
-  @media (max-width: 600px) {
-    /* reference: the counters stay on the map, larger; here in the roomier north-west interior (the 2 x 3 grid is 220 wide) */
-    .stats { --sx: 180; --sy: 140; --sw: 220; gap: calc(17.48 * var(--m)) calc(6.55 * var(--m)); }
-    .num { font-size: calc(21.3 * var(--m)); }
-    .lbl-stat { font-size: max(8.5px, calc(13.65 * var(--m))); margin-top: calc(5.46 * var(--m)); }
-  }
+  /* Counters (reference .cl-stats v3): 3 x 2 under the title, each column of a row separated by a 1px white 20 % hairline
+     on its inline-start side (none before the first of a row), rows 56 px apart (40.91u). Number = the reference's
+     clamp(30px, 2.9vw, 48px) at 1440 = 30.5u, label = clamp(14px, 1.05vw, 18px) = 11.05u, 10 px between them (7.3u), scaled
+     with the canvas like every other size on it (no px floors from 1024 up: with the reference's 30 / 14 px floors the three
+     columns were 554 px in a 466 px column at 1024). Padding 20u (27 px at 1440) instead of the reference's 34 px: measured
+     15 Oct 2026, the widest texts ("340,000+", "5,000+" / "Improved Inpatients", "30,000+" = 368u, Arabic 357u) plus five
+     paddings have to fit the 479u content column, and 34 px (24.84u) overflowed it by 19 px at 1440 (clipped by the stage).
+     Tabular figures so the count-up never shifts. */
+  .stats { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; row-gap: calc(40.91 * var(--u)); }
+  .stat { padding: 0 calc(20 * var(--u)); border-inline-start: 1px solid rgba(255, 255, 255, 0.2); }
+  .stat:nth-child(3n + 1) { padding-inline-start: 0; border-inline-start: 0; }
+  .num { font-size: calc(30.5 * var(--u)); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .lbl-stat { margin-top: calc(7.3 * var(--u)); font-size: calc(11.05 * var(--u)); line-height: 1.3; white-space: nowrap; }
 
+  /* Tablet / phones (reference <= 1024 / <= 640, its literal px: the canvas is dropped here): one column, title + counters
+     above the map, counters centred, 40 px between the blocks; under 640 two counter columns with wrapping labels. */
   @media (max-width: 1023.98px) {
-    .stage { padding: 40px 16px; }
-    .mapwrap { margin-top: 32px; }
+    .stage { padding: 70px 24px; }
+    .inner { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .hcontent, .mapbox { grid-column: auto; grid-row: auto; }
+    .mapbox { --m: min(calc((100vw - 48px) / 546.176), var(--u)); }
+    .hm-title { max-width: 640px; margin-bottom: 36px; }
+    .stats { justify-content: center; row-gap: 56px; }
+    .stat { padding: 0 34px; }
+    .num { font-size: 30px; }
+    .lbl-stat { margin-top: 10px; font-size: 14px; }
+  }
+  @media (max-width: 640px) {
+    .stage { padding: 56px 16px; }
+    .mapbox { --m: min(calc((100vw - 32px) / 546.176), var(--u)); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; justify-content: stretch; }
+    .stat { padding: 0; padding-inline-start: 18px; }
+    .stat:nth-child(3n + 1) { padding-inline-start: 18px; border-inline-start: 1px solid rgba(255, 255, 255, 0.2); }
+    .stat:nth-child(2n + 1) { padding-inline-start: 0; border-inline-start: 0; }
+    .lbl-stat { white-space: normal; }
   }
 
   /* Entrance (scripts/hospital-map.ts adds .in once 25 % of the section is in view; html.aos = IntersectionObserver present and
      no prefers-reduced-motion, set in BaseLayout, so without either everything is simply visible). Timings = the reference. */
-  :global(html.aos) .hm .hm-title { transition: opacity 0.8s ease, transform 0.8s ease; }
+  :global(html.aos) .hm .hm-title { transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; }
   :global(html.aos) .hm:not(.in) .hm-title { opacity: 0; transform: translateY(24px); }
   :global(html.aos) .hm .country { stroke-dasharray: 1; transition: stroke-dashoffset 2.2s cubic-bezier(0.65, 0, 0.35, 1), fill-opacity 1s ease 1.7s, stroke-opacity 1s ease 1.7s; }
   :global(html.aos) .hm:not(.in) .country { stroke-dashoffset: 1; fill-opacity: 0; stroke-opacity: 1; }
@@ -254,7 +288,7 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
   :global(html.aos) .hm .lbl { opacity: 0; transition: opacity 0.5s ease; }
   :global(html.aos) .hm.in .lbl { opacity: 1; transition-delay: calc(var(--d) + 0.6s); }
   :global(html.aos) .hm .stat { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  :global(html.aos) .hm.in .stat { opacity: 1; transform: none; transition-delay: calc(1.6s + var(--i) * 0.12s); }
+  :global(html.aos) .hm.in .stat { opacity: 1; transform: none; transition-delay: calc(0.6s + var(--i) * 0.12s); }
   @keyframes pin-drop {
     0% { transform: translateY(calc(-140 * var(--m))); opacity: 0; }
     55% { transform: translateY(0); opacity: 1; }

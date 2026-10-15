@@ -1,7 +1,7 @@
-// Home hospital map (sections/Facilities.astro, bug 133 + the client's reference `cambridge-locations-2.html`, 15 Oct 2026).
+// Home hospital map (sections/Facilities.astro, bug 133 + the client's reference `cambridge-locations-3.html`, 15 Oct 2026).
 // - `.in` once 25 % of the section is in view, once (the CSS draws the map outline, drops the pins, fades the labels and
-//   counters in); the six counters on the map then count 0 -> value as in the reference: 2 s each, ease-out cubic, starting
-//   1.7 s + 0.12 s per counter after the entrance. Reduced motion / no IntersectionObserver (html.aos absent): no motion,
+//   counters in); the six counters beside the map then count 0 -> value as in the reference: 2 s each, ease-out cubic, starting
+//   0.7 s + 0.12 s per counter after the entrance. Reduced motion / no IntersectionObserver (html.aos absent): no motion,
 //   the counters keep their final text.
 // - A pin's card opens on hover (mouse: pointerenter, closes 260 ms after the pointer leaves the pin AND the card), on tap
 //   (touch: toggles; a tap outside closes), on keyboard focus / Enter / Space (Escape closes and focuses the pin). One card
@@ -41,7 +41,7 @@ for (const root of document.querySelectorAll<HTMLElement>("[data-hospital-map]")
           } else c.done();
         };
         requestAnimationFrame(tick);
-      }, 1700 + i * 120);
+      }, 700 + i * 120);
     });
   };
 

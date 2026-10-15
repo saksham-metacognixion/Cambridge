@@ -31,6 +31,17 @@ Notes
   text in the originals) and the Parkinson's tablet screen (green). Those areas keep the current pixels (soft blend).
 - Multiple Sclerosis: the live cut-out had a faint stray white logo floating beside the patient's arm (retouching leftover); the new copy does not.
 
+## Hospital page banners (15 Oct): building + pills split
+
+The six live hospital banner files had the building and 3-5 pill outlines in one raster, the pills behind the building.
+`tools/banners/split_pills.py` (run by `prepare.py` for `hospital-detail/*`) now writes the building alone as `<key>-cutout` and
+the pills as `<key>-pills.svg` (rounded rectangles fitted to the live pixels: position, size, stroke, colour; a lighter pill
+drawn behind a darker one where the live art shows an inner arc; ends hidden behind the building run on under it). BannerArt
+draws the SVG under the building inside one cursor-follow subject, so the pills are vector-sharp at every size and the
+building can take any larger photo of the same framing. With that, Al Khobar (908 px, 1.57x) and Dhahran (884 px, 1.53x)
+took the client's 900x975 photos. Checked: Chrome renders of SVG + building vs the live file for all six (.astro/qc-hd/pills-render.mjs),
+hospital pages dev vs staging (hosp-shots.mjs), edge zooms.
+
 ## Not used
 
 | File | Why |
@@ -42,7 +53,7 @@ Notes
 | Stroke condition original | ours is a different (Figma) picture |
 | Neck-Pain.png | a different picture from our news image |
 | UAE `Exterior-1..4.png` (one 1920px photo x4), `Reception.png` | not any photo on the site: ask where they go |
-| Al Khobar / Dhahran / Jeddah 900x975 (`KSA/Other`, `Global/Other`) | the hospital-page banner cut-outs at 1.55x, but those cut-outs have the pill outlines drawn in and the originals do not: the pills come out blurred / recoloured (tried, reverted). Needs the pill shape as SVG |
+| Jeddah 900x975 (`KSA/Other`) | the hospital-page banner building at 1.88x, but it sits 2-3 px off our cut (131 matched points): sky pixels inside the tower edge. Kept at 1x |
 | `Cambridge-Hospital-Jeddah.png` (1672px) | the Home / Our Hospitals Jeddah card building, shot at another moment (crowd, other sky): 45% patched back, blotchy sky (tried, reverted) |
 | 13 leadership portraits (1024px, `Global/I1 Page banners`) | Meet the Team page is not built (WP6, no Figma frame); Dr Ahmad / Dr Wael Sary are the suit portraits, not the doctor-profile photos |
 | CARF 720x520, Speech-Language KSA 579px, Media-Hub 540px | same pictures, no useful gain |

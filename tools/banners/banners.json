@@ -303,13 +303,19 @@
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-UAE.avif"
  },
  "hospital-detail/banner-al-khobar": {
-  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Al-Khobar.avif"
+  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Al-Khobar.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/KSA/Other - Other website images/Cambridge-Hospital-Al-Khobar-KSA.png"
+  }
  },
  "hospital-detail/banner-al-mudeef-abu-dhabi": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-UAE.avif"
  },
  "hospital-detail/banner-dhahran": {
-  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Dhahran.avif"
+  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Dhahran.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/KSA/Other - Other website images/Cambridge-Hospital-Dhahran-KSA-1.png"
+  }
  },
  "hospital-detail/banner-jeddah": {
   "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Jeddah.avif"

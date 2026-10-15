@@ -16,7 +16,7 @@ tools/banners/banners.json, per key:  "global" / "ae" / "sa" = a live file, or "
   "hd" = {"src": client original, "green": true for a green-screen studio shot}: replace the global cut-out with a 2x copy
   from the client's Website Images folder (14 Oct 2026, docs/client-assets/website-images-oct14), aligned to the live
   framing by tools/banners/hd.py; the display size in banner-art.json stays the live one.
-  `--hd-only` applies just that step to the cut-outs already in src/assets (no other banner is touched).
+  `--hd-only` applies just that step (and the hospital split) to the cut-outs already in src/assets (no other banner is touched).
 Shared art (identical on all three live editions): banners/bg.avif (gradient), banners/shape.avif (pills), banners/pattern.svg (Home).
 """
 import json
@@ -29,6 +29,7 @@ from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hd import hd_copy  # noqa: E402
+from split_pills import write as split_pills  # noqa: E402
 
 LIVE = 'docs/cambridge-images-live/wp-content/uploads/2026/06/'
 cfg = json.load(open('tools/banners/banners.json'))
@@ -42,7 +43,11 @@ manifest = {}
 
 
 def apply_hd(key, e, d):
-    """2x copy of the cut-out d from the client original (global only); returns the new path."""
+    """Hospital pages: split the live file into the building alone + <key>-pills.svg (split_pills.py), then, with an "hd"
+    entry, a 2x copy of the cut-out d from the client original (global only); returns the new path."""
+    if key.startswith('hospital-detail/'):
+        split_pills(key.split('/banner-')[1])
+        d = f'src/assets/{key}-cutout.png'
     hd = e.get('hd')
     if not hd:
         return d
@@ -88,7 +93,7 @@ def crop(key, region):
 if '--hd-only' in sys.argv:
     import glob
     for key, e in cfg.items():
-        if e.get('hd'):
+        if e.get('hd') or key.startswith('hospital-detail/'):
             cur = glob.glob(f'src/assets/{key}-cutout.*')  # an already-replaced .webp realigns to itself (same result)
             if not cur:
                 sys.exit(f'{key}: no current cut-out to align to; run without --hd-only')

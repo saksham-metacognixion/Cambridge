@@ -96,8 +96,12 @@ def hd_copy(current, original, out, green=False, k=2.0, patch=False, log=print):
             keyed = warp(key_green(src), s, t, k, size)
             hd[..., :3] = core[..., None] * hd[..., :3] + (1 - core[..., None]) * keyed[..., :3]
             hd[..., 3] = np.maximum(keyed[..., 3], core) * outer
-        else:  # an alpha original: its own edge, limited to the current cut
-            hd[..., 3] = np.minimum(hd[..., 3], outer)
+        else:
+            # an alpha original: its own edge, limited to the current cut; semi-transparent edge pixels of the original carry
+            # its background colour (a blue sky fringe on the Jeddah towers), so inside the current edge they are made opaque
+            # and outside it they are cut (the current cut-out's edge is clean)
+            edge = np.clip((ca - 0.5) * 4 + 0.5, 0, 1)
+            hd[..., 3] = np.where(edge > 0.5, np.maximum(hd[..., 3], edge), np.minimum(hd[..., 3], edge))
         # Opaque on the current image but transparent here (thin green props keyed out, e.g. the Tennis Elbow band; the pill
         # outlines drawn into the hospital-page cut-outs, absent from the originals): take the current pixels (upscaled).
         lost = cv2.GaussianBlur(((ca > 0.9) & (hd[..., 3] < 0.6)).astype(np.float32), (0, 0), k * 0.5)[..., None]

@@ -12,7 +12,8 @@ import type { RegionId } from '../../lib/editions';
  * bannerArt().bgStyle) with the pill shape (613x500) and ONE transparent people cut-out drawn at its natural size
  * (579x450, 500x450, 565x462 ...), right-aligned to the 72px content edge, its bottom 10px below the banner (Home: the
  * outline pattern 620x548 and a 580x480 cut-out in a 550px banner). The people drift with the cursor (scripts/hero-follow.ts);
- * the shape and gradient stay.
+ * the shape and gradient stay. Hospital pages (shape: false): the pills are drawn into the live file behind the building; we
+ * keep them as `<key>-pills.svg` (tools/banners/split_pills.py) under the building-only cut-out, inside one moving subject.
  * Units: --lp = one live px at 1440 = 1052/1440 Figma px (--u), so from 1024px up the art scales with the page width exactly
  * like the copy beside it. Below 1024px --u is fixed (1lp = 1px) and the art is a block under the copy at the live
  * phone / tablet size (325x265 / 365x298 for a 579x450 cut-out: x0.561 / x0.630 of the natural size), never distorted.
@@ -51,7 +52,14 @@ const pic = {
 <div class:list={['bn-frame', home && 'bn-home', cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
   <div class:list={['bn-art', flip && 'rtl:-scale-x-100']} data-hero-follow>
     {art.shape && <img class="bn-shape" src={home ? pattern.src : shape.src} width={S.w} height={S.h} alt="" loading="eager" decoding="async" />}
-    <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
+    {art.pills ? (
+      <div class="bn-people" data-hero-subject>
+        <img class="bn-pills" src={art.pills.src} width={w} height={h} alt="" loading="eager" decoding="async" />
+        <Picture src={art.image} alt={alt} fetchpriority="high" class="bn-people" {...pic} />
+      </div>
+    ) : (
+      <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
+    )}
   </div>
 </div>
 
@@ -59,6 +67,8 @@ const pic = {
   .bn-frame { --lp: 1px; --s: 0.561; position: relative; z-index: 0; display: flex; justify-content: flex-start; padding-inline: calc(24 * var(--u)); pointer-events: none; }
   .bn-art { position: relative; width: calc(var(--bw) * var(--s) * var(--lp)); max-width: 100%; aspect-ratio: var(--bw) / var(--bh); flex: none; }
   .bn-people { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: 100% 100%; }
+  /* hospital pages: the pill outlines (SVG, same box as the building cut-out) behind the building */
+  .bn-pills { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
   .bn-shape { position: absolute; z-index: -1; inset-inline-end: 0; top: calc(var(--st) / var(--bh) * 100%); width: calc(var(--sw) / var(--bw) * 100%); height: auto; max-width: none; }
   /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
   @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }

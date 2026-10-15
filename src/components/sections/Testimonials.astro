@@ -64,7 +64,16 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
   .testi { overflow-x: clip; }
   @media (min-width: 1024px) {
     .stage { overflow-x: visible; }
-    .t-scroller { inset-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
+    /* Bug 129 (15 Oct 2026): the Figma canvas is a grid of tracks instead of absolute boxes, so a heading or intro that needs more
+       lines (Arabic line heights) grows its track and pushes what follows; each track's minimum = the Figma box, so English keeps
+       every Figma position. */
+    /* tracks (Figma y): 34 | title 34..61 | 9 | text 70..98 | 19 | scroller 117..391 (fixed) | button 391..421 (fixed: the shared .ui-btn is taller, bug 044) */
+    .stage { display: grid; grid-template-columns: 100%; grid-template-rows: calc(34 * var(--u)) minmax(calc(27 * var(--u)), auto) calc(9 * var(--u)) minmax(calc(28 * var(--u)), auto) calc(19 * var(--u)) calc(274 * var(--u)) calc(30 * var(--u)); align-content: start; justify-items: start; height: auto; min-height: calc(var(--h) * var(--u)); }
+    .t-title, .t-sub, .t-scroller, .t-btn { position: relative; inset: auto; align-self: start; }
+    .t-title { grid-row: 2; margin-inline-start: calc(306 * var(--u)); width: calc(439 * var(--u)); min-height: calc(27 * var(--u)); }
+    .t-sub { grid-row: 4; margin-inline-start: calc(237 * var(--u)); width: calc(578 * var(--u)); min-height: calc(28 * var(--u)); }
+    .t-btn { grid-row: 7; justify-self: center; margin-inline: 0; }
+    .t-scroller { grid-row: 6; margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
     .t-row { margin-inline-start: calc(-96 * var(--u) + var(--gutter)); }
   }
   @media (max-width: 1023.98px) {

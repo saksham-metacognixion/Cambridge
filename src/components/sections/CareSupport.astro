@@ -77,11 +77,19 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     .dpos { position: static; }
   }
   @media (min-width: 1024px) {
-    .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
+    /* Bug 129 (15 Oct 2026): the Figma canvas is a grid of tracks instead of absolute boxes, so a heading or intro that needs more
+       lines (Arabic line heights) grows its track and pushes what follows; each track's minimum = the Figma box, so English keeps
+       every Figma position. */
+    /* tracks (Figma y): 47 | heading 47..75 (28 = the font on leading-none) | 7 | text 82..110 (two 14 lines) | 77 | row 187..297 | 59 = 356 */
+    .stage { display: grid; grid-template-columns: 100%; grid-template-rows: calc(47 * var(--u)) minmax(calc(28 * var(--u)), auto) calc(7 * var(--u)) minmax(calc(28 * var(--u)), auto) calc(77 * var(--u)) calc(110 * var(--u)) calc(59 * var(--u)); align-content: start; justify-items: start; height: auto; min-height: calc(var(--h) * var(--u)); }
+    .dpos { position: relative; align-self: start; margin-inline-start: calc(var(--x) * var(--u)); width: calc(var(--w) * var(--u)); min-height: calc(var(--h) * var(--u)); }
+    h2.dpos { grid-row: 2; }
+    p.dpos { grid-row: 4; }
+    .hscroll.dpos { grid-row: 6; }
     /* Beyond 1440px (responsive audit 9 Oct 2026): the scroller takes the page gutter on both sides (global.css --gutter) so the
        tiles run off the screen edge instead of stopping at the stage edge; the tiles keep their Figma x on the stage. */
     .stage { overflow-x: visible; }
-    .hscroll.dpos { inset-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
+    .hscroll.dpos { margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
     .row { margin-inline-start: calc(-22 * var(--u) + var(--gutter)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
     .tile { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: 0; }
   }

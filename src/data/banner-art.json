@@ -12,7 +12,9 @@
  "ae:insurance-page/banner": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:about/banner": {
   "w": 579,
@@ -77,7 +79,8 @@
  "global:care/heroes/home-healthcare": {
   "w": 311,
   "h": 496,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:care/heroes/icu-critical-care": {
   "w": 500,
@@ -92,7 +95,8 @@
  "global:care/heroes/long-term-acute-care": {
   "w": 500,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:care/heroes/long-term-cardiac": {
   "w": 579,
@@ -122,7 +126,8 @@
  "global:care/heroes/musculoskeletal-rehabilitation": {
   "w": 500,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "fade": "start"
  },
  "global:care/heroes/neuro-rehab": {
   "w": 500,
@@ -157,7 +162,8 @@
  "global:care/heroes/palliative-care": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "fade": "start"
  },
  "global:care/heroes/pediatric-care": {
   "w": 579,
@@ -167,12 +173,14 @@
  "global:care/heroes/pediatric-long-term-care": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:care/heroes/pediatric-rehab": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "fade": "start"
  },
  "global:care/heroes/physical-medicine-rehab-care": {
   "w": 579,
@@ -237,7 +245,9 @@
  "global:conditions/acquired-brain-injury": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:conditions/amputation-prosthetic-rehabilitation": {
   "w": 579,
@@ -252,7 +262,8 @@
  "global:conditions/banner": {
   "w": 458,
   "h": 212,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:conditions/epilepsy": {
   "w": 579,
@@ -312,7 +323,9 @@
  "global:conditions/parkinsons-disease": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:conditions/shoulder-rotator-cuff-rehabilitation": {
   "w": 579,
@@ -327,7 +340,9 @@
  "global:conditions/stroke-rehabilitation": {
   "w": 489,
   "h": 419,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "start top"
  },
  "global:conditions/tennis-elbow": {
   "w": 579,
@@ -347,7 +362,8 @@
  "global:doctors-page/banner": {
   "w": 565,
   "h": 462,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:faq/hero": {
   "w": 540,
@@ -367,47 +383,63 @@
  "global:hospital-detail/banner-abu-dhabi": {
   "w": 555,
   "h": 500,
-  "shape": false
+  "shape": false,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:hospital-detail/banner-al-ain": {
   "w": 579,
   "h": 450,
-  "shape": false
+  "shape": false,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:hospital-detail/banner-al-khobar": {
   "w": 579,
   "h": 450,
-  "shape": false
+  "shape": false,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:hospital-detail/banner-al-mudeef-abu-dhabi": {
   "w": 579,
   "h": 450,
-  "shape": false
+  "shape": false,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:hospital-detail/banner-dhahran": {
   "w": 579,
   "h": 450,
-  "shape": false
+  "shape": false,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:hospital-detail/banner-jeddah": {
   "w": 579,
   "h": 450,
-  "shape": false
+  "shape": false,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:insurance-page/banner": {
   "w": 600,
   "h": 460,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "start"
  },
  "global:international/banner": {
   "w": 583,
   "h": 417,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:media-hub/banner": {
   "w": 510,
   "h": 500,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "global:patient-hub/banner": {
   "w": 500,
@@ -432,7 +464,8 @@
  "global:why/banner": {
   "w": 500,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "fade": "start"
  },
  "sa:about/banner": {
   "w": 579,
@@ -542,7 +575,8 @@
  "sa:care/heroes/palliative-care": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "fade": "start"
  },
  "sa:care/heroes/physiotherapy": {
   "w": 579,
@@ -582,7 +616,8 @@
  "sa:careers/banner": {
   "w": 576,
   "h": 456,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "sa:faq/hero": {
   "w": 540,
@@ -592,7 +627,9 @@
  "sa:forms/feedback-hero": {
   "w": 429,
   "h": 444,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "top"
  },
  "sa:hero/banner3": {
   "w": 580,
@@ -602,12 +639,15 @@
  "sa:insurance-page/banner": {
   "w": 579,
   "h": 450,
-  "shape": true
+  "shape": true,
+  "bleed": "end",
+  "fade": "start"
  },
  "sa:international/banner": {
   "w": 578,
   "h": 408,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "sa:patient-hub/banner": {
   "w": 500,
@@ -617,7 +657,8 @@
  "sa:testimonials-page/banner": {
   "w": 555,
   "h": 496,
-  "shape": true
+  "shape": true,
+  "bleed": "end"
  },
  "sa:who-we-are/banner": {
   "w": 579,

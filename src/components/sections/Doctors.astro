@@ -138,14 +138,25 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
     .hscroll.dpos { position: static; width: 100%; height: auto; }
   }
   @media (min-width: 1024px) {
-    .dpos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); }
+    /* Bug 129 (15 Oct 2026): the Figma canvas is a grid of tracks instead of absolute boxes, so a heading or intro that needs more
+       lines (Arabic line heights) grows its track and pushes what follows; each track's minimum = the Figma box, so English keeps
+       every Figma position. */
+    /* tracks (Figma y): heading 0 (28 = the 28 font on leading-none; the box says 27) | 7 | text 35..91 | 17 | pills 108..133 | 35 | row 168..399 (fixed:
+       the cards overhang it, bug 044) | 34 | dots 433..450 | 36 = 486 */
+    .stage { display: grid; grid-template-columns: 100%; grid-template-rows: minmax(calc(28 * var(--u)), auto) calc(7 * var(--u)) minmax(calc(56 * var(--u)), auto) calc(17 * var(--u)) calc(25 * var(--u)) calc(35 * var(--u)) calc(231 * var(--u)) calc(34 * var(--u)) calc(17 * var(--u)) calc(36 * var(--u)); align-content: start; justify-items: start; height: auto; min-height: calc(var(--h) * var(--u)); }
+    .dpos { position: relative; align-self: start; margin-inline-start: calc(var(--x) * var(--u)); width: calc(var(--w) * var(--u)); min-height: calc(var(--h) * var(--u)); }
+    h2.dpos { grid-row: 1; }
+    p.dpos { grid-row: 3; }
+    div[role='group'].dpos { grid-row: 5; height: calc(25 * var(--u)); }
+    .hscroll.dpos { grid-row: 7; }
+    .dots.dpos { grid-row: 9; }
     /* Beyond 1440px (responsive audit 9 Oct 2026) the scroller is widened by the page gutter on both sides (global.css --gutter):
        the row runs off the screen edge, as Figma draws it running off the frame, instead of being cut at the stage edge; the
        first stop (card at Figma x 94) keeps its place on the stage. The section clips at the viewport, so the stage must not. */
     .stage { overflow-x: visible; }
     .hscroll { scroll-padding-inline: calc(94 * var(--u) + var(--gutter)); }
     .row { gap: calc(27.6 * var(--u)); padding-inline: calc(94 * var(--u) + var(--gutter)); }
-    .hscroll.dpos { height: auto; inset-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); } /* the cards are taller than Figma's 231 by the bigger button (bug 044); they still end above the dots (433) */
+    .hscroll.dpos { height: auto; margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); } /* the cards are taller than Figma's 231 by the bigger button (bug 044); they still end above the dots (433) */
   }
   /* RTL: flip the decorative masked shape itself (its box is already mirrored) */
   :global([dir='rtl']) .shape { scale: -1 1; }

@@ -168,6 +168,20 @@
 @font-face { font-family: "GE SS Two"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoBold.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
 html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
 
+/* Bugs 129 / 130 (15 Oct 2026): Arabic line spacing and heading weight.
+   The Figma line heights are Gotham's (title 37/39 = 0.95, body 14/12 = 1.17); GE SS Two's ascenders, descenders and diacritics
+   collided at them. Arabic pages only: headings 1.45, running text 1.65 (brief: 1.4-1.5 / 1.6-1.7). English is untouched.
+   `!important`: the Figma values are set per component (scoped rules, Tailwind leading-* classes, inline calc()), so one
+   override must beat every specificity; containers grow with the text (flow layouts; the hero stages have min-heights).
+   Weight: the only Arabic files are GE SS Two Medium (500) and Bold (700), so Book / Light Arabic text already renders Medium;
+   headings now take Bold, running text keeps Medium (the best contrast the licensed files allow; a Regular / Light file is an
+   open client dependency, docs/open-decisions.md B130). font-synthesis: Latin words inside an Arabic heading ask Gotham for 700;
+   Gotham stops at Medium (no Bold file), and the browser must not fake it. The header's fixed-box nav keeps its own metrics
+   (single-line items); the footer and the mobile menu are flow layouts and take the running-text height. */
+html:lang(ar) { font-synthesis-weight: none; }
+html:lang(ar) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading) { font-weight: 700 !important; line-height: 1.45 !important; }
+html:lang(ar) :is(main, footer, .menu) :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;

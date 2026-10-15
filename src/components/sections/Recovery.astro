@@ -22,6 +22,17 @@ const c = content('home/recovery', edition.locale);
 </section>
 
 <style>
+  @media (min-width: 1024px) {
+    /* Bug 129 (15 Oct 2026): the Figma canvas is a grid of tracks instead of absolute boxes, so a heading or intro that needs more
+       lines (Arabic line heights) grows its track and pushes what follows; each track's minimum = the Figma box, so English keeps
+       every Figma position. */
+    /* tracks (Figma y): 38 | title 38..65 | 6 | text 71..99 | 17 | buttons 116..146 (fixed: the shared .ui-btn is taller, bug 044) | 40 = 186 */
+    .stage { display: grid; grid-template-columns: 100%; grid-template-rows: calc(38 * var(--u)) minmax(calc(27 * var(--u)), auto) calc(6 * var(--u)) minmax(calc(28 * var(--u)), auto) calc(17 * var(--u)) calc(30 * var(--u)) calc(40 * var(--u)); align-content: start; justify-items: start; height: auto; min-height: calc(var(--h) * var(--u)); }
+    .r-title, .r-sub, .r-btns { position: relative; inset: auto; align-self: start; height: auto; }
+    .r-title { grid-row: 2; margin-inline-start: calc(176 * var(--u)); width: calc(701 * var(--u)); min-height: calc(27 * var(--u)); }
+    .r-sub { grid-row: 4; margin-inline-start: calc(238 * var(--u)); width: calc(577 * var(--u)); min-height: calc(28 * var(--u)); }
+    .r-btns { grid-row: 6; width: 100%; }
+  }
   @media (max-width: 1023.98px) {
     .stage { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; padding: 32px 16px; box-sizing: border-box; }
     .r-title, .r-sub, .r-btns { position: static; width: 100%; height: auto; }

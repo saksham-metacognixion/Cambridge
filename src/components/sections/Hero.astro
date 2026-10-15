@@ -140,6 +140,9 @@ const edgeVars = art ? '' : (await heroEdgeVars(layers ? layers.background : img
   @media (min-width: 1024px) {
     .bn-live .stage { display: flex; align-items: center; height: auto; min-height: calc(var(--h) * var(--u)); }
     .bn-live .home-copy { position: relative; inset: auto; top: auto; margin-inline-start: calc(95 * var(--u)); padding-block: calc(32 * var(--u) * 1052 / 1440); }
+    /* Bug 129: the CTA tab band overlaps the hero's last 57 Figma px (index.astro mt -57). The taller Arabic copy (line heights) is
+       centred in the part above the band, so its buttons never run under it; the stage grows if even that is not enough. */
+    :global(html:lang(ar)) .bn-live .home-copy { padding-bottom: calc(57 * var(--u) + 32 * var(--u) * 1052 / 1440); }
   }
   /* Bug 086: the home banner fills its 500 stage exactly (100 %), and the overlay strip (top 341, h 159) is a second band layer
      on top of it. Same start / end pairing as global.css (the art is mirrored in RTL). */

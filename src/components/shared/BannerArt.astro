@@ -32,6 +32,9 @@ interface Props {
 const { image, region, alt, home = false, mirror = true, keep = false, class: cls } = Astro.props;
 const art = bannerArt(image, region)!;
 const { w, h } = art;
+// Bug 131: edge-cut files (lib/banner-art.ts BannerArtEntry): `bleed-end` pushes the subject past the viewport's end edge, `fade-start` /
+// `fade-top` feather a cut edge that faces the copy or the banner top (CSS below).
+const edge = [art.bleed === 'end' && 'bleed-end', ...(art.fade ?? '').split(' ').filter(Boolean).map((f) => `fade-${f}`)];
 // Shape box relative to the people box (live px): the pills sit 30px under the banner top (Home pattern: 55px), the people's
 // bottom 10px (Home 5px) under the banner bottom, both right-aligned to the same edge.
 const S = home ? { w: 620, h: 548, top: 55, banner: 550, drop: 5 } : { w: 613, h: 500, top: 30, banner: 500, drop: 10 };
@@ -49,7 +52,7 @@ const pic = {
 } as const;
 ---
 
-<div class:list={['bn-frame', home && 'bn-home', cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
+<div class:list={['bn-frame', home && 'bn-home', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
   <div class:list={['bn-art', flip && 'rtl:-scale-x-100']} data-hero-follow>
     {art.shape && <img class="bn-shape" src={home ? pattern.src : shape.src} width={S.w} height={S.h} alt="" loading="eager" decoding="async" />}
     {art.pills ? (
@@ -76,4 +79,25 @@ const pic = {
     .bn-frame { --lp: calc(var(--u) * 1052 / 1440); --s: 1; position: absolute; inset: 0; max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding: 0; display: block; }
     .bn-art { position: absolute; inset-inline-end: calc(72 * var(--lp)); bottom: calc(-1 * var(--sd) * var(--lp)); max-width: none; }
   }
+
+  /* Bug 131 (15 Oct 2026): a subject cut flat by its file's END edge (lib/banner-art.ts `bleed`) is moved past the viewport's end
+     edge: from the live spot (72 live px inside the 1440 stage) by the stage-to-viewport gap + 72, plus 10 for the cursor drift
+     (hero-follow moves the layer up to 7 px), so the cut never comes back on screen. `translate` composes with the script's
+     `transform`; inside the RTL-mirrored box (scale -1) it goes the other way on screen, towards the mirrored end edge. The
+     pills stay where the live site draws them (the people cover their ends). Below 1024 the block sits on the end side and
+     overhangs it by the same 10 px; the host section clips (.bn-live overflow: clip). */
+  @media (min-width: 1024px) {
+    .bleed-end .bn-art :global([data-hero-subject]) { translate: calc((100vw - min(100vw, var(--max-w) * 1px)) / 2 + 82 * var(--lp)) 0; }
+  }
+  @media (max-width: 1023.98px) {
+    .bleed-end { justify-content: flex-end; padding-inline-end: 0; }
+    .bleed-end .bn-art { margin-inline-end: -10px; }
+  }
+  /* A cut edge that faces the copy (start) or the banner top is feathered out over 48 live px (the mask is in the layer's own
+     coordinates, so it follows the RTL mirror). Both edges: the two gradients intersect. */
+  .fade-start .bn-art :global([data-hero-subject]) { --mask-s: linear-gradient(to right, transparent, #000 calc(48 * var(--lp) * var(--s))); }
+  .fade-top .bn-art :global([data-hero-subject]) { --mask-t: linear-gradient(to bottom, transparent, #000 calc(40 * var(--lp) * var(--s))); }
+  .fade-start:not(.fade-top) .bn-art :global([data-hero-subject]) { -webkit-mask-image: var(--mask-s); mask-image: var(--mask-s); }
+  .fade-top:not(.fade-start) .bn-art :global([data-hero-subject]) { -webkit-mask-image: var(--mask-t); mask-image: var(--mask-t); }
+  .fade-start.fade-top .bn-art :global([data-hero-subject]) { -webkit-mask-image: var(--mask-s), var(--mask-t); -webkit-mask-composite: source-in; mask-image: var(--mask-s), var(--mask-t); mask-composite: intersect; }
 </style>

@@ -24,6 +24,11 @@ Read this file at the start of every session and follow it for all work.
   `data-hero-follow` box + `data-hero-subject` people layer in PageHero / ContactHero / FeedbackHero): only the people move,
   gradient and pills stay. Our Hospitals: the map group drifts in both axes (`follow="map"`, the live site's map motion).
   Layers `<key>-subject` / `<key>-bg` come from `tools/hero-layers/run-all.sh` (HF1 in docs/open-decisions.md).
+- Hero cut-outs cut flat by their own file edge carry `bleed: "end"` / `fade: "start"|"top"` in `src/data/banner-art.json`
+  (bug 131, 15 Oct 2026: the subject runs off the viewport's end edge, a cut edge facing the copy is feathered; BannerArt.astro).
+- Home "Bringing Expert Care Closer" (bug 133, 15 Oct 2026, client design, no Figma frame): no hospital list; centred map with
+  pin buttons that open a hospital card on hover / tap / focus (`src/scripts/hospital-map.ts`), map + pin entrance animation,
+  nothing moves with prefers-reduced-motion.
 - Doctors / Testimonials rows overflow the frame in Figma: CSS scroll-snap rows, swipe/scroll, no arrows or
   dots unless Figma shows them. Exception (user decision, 2 Oct 2026, matching the live site): Testimonials and
   Care Support rows auto-scroll in a slow seamless loop (`src/scripts/autoscroll.ts`) — pauses on hover/focus/touch,
@@ -79,6 +84,10 @@ Read this file at the start of every session and follow it for all work.
 - Use CSS logical properties only (`margin-inline-start`, `ps-*`/`pe-*`, `start`/`end`) — never left/right —
   so one stylesheet works both ways.
 - Arabic text exactly as in Figma. **No translating.** No English left on Arabic pages.
+- Arabic typography (bugs 129/130, 15 Oct 2026): `html:lang(ar)` headings = GE SS Two Bold on 1.45 lines, running text = Medium
+  on 1.65 (one `!important` block in `src/styles/global.css`; English line heights untouched). Sections that hold a heading + intro
+  in Figma boxes use grid tracks with the Figma box as the minimum (Home Services/Doctors/Care Support/Recovery/Testimonials), so
+  Arabic grows the section and English keeps its positions. No Regular/Light Arabic file exists (B130).
 
 ## 6. Page templates
 Home (hero + doctor animations, region images) · About ("We are listening" section + nav link) · Patient ·

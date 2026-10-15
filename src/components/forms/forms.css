@@ -338,7 +338,7 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
    reads left-to-right with its punctuation in place and Arabic stays right-to-left; the text stays on the right edge (= the start
    edge on these pages; `match-parent` resolves to left in Chrome once the line is LTR). Placeholders: inputs in every engine,
    textareas in Chrome / Safari (Firefox keeps the old order there). A dir="ltr" field (phone numbers) is left as it is. */
-[dir='rtl'] :is(form label:not(.f-consent), form legend, .f-consent .txt, .f-err, .f-alert, .gf-section, .pf-q, .bidi-auto) { unicode-bidi: plaintext; text-align: right; }
+[dir='rtl'] :is(form label:not(.f-consent), form legend, .rf-legend, .f-consent .txt, .f-err, .f-alert, .gf-section, .pf-q, .bidi-auto) { unicode-bidi: plaintext; text-align: right; }
 [dir='rtl'] :is(input, textarea):not([dir='ltr'])::placeholder { unicode-bidi: plaintext; text-align: right; }
 
 /* No backdrop blur (mobile QA S1, 13 Oct 2026): the glass panel is only 10% white, so the page would show through the form.

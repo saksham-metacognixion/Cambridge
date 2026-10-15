@@ -31,7 +31,10 @@ const opts: Option[] = f.source ? sourceOptions(f.source, edition) : (f.options 
 
 {f.type === 'radio' ? (
   <fieldset class="pf-field rf-radio" data-field={f.name} aria-describedby={err} style={`--at:${at}`}>
-    <legend class="pf-label rf-legend">{label}<span aria-hidden="true">{star}</span></legend>
+    <!-- Bug 149 (QA, 15 Oct 2026): WebKit never floats a fieldset's rendered legend, so in Safari the options dropped a line below
+         "Gender". The legend stays for assistive tech (visually hidden); the visible label is the first item of the radio row. -->
+    <legend class="sr-only">{label}</legend>
+    <span class="pf-label rf-legend" aria-hidden="true">{label}<span>{star}</span></span>
     <div class="rf-opts">
       {opts.map((o) => (
         <label class="rf-opt">

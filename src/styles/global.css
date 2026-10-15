@@ -212,7 +212,7 @@ html:lang(ar) :is(main, footer) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-hea
    their pill / chip. Desktop keeps the Figma metrics; English pages are untouched either way. */
 html:lang(ar) { font-synthesis-weight: none; }
 html:lang(ar) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading) { font-weight: 700 !important; line-height: 1.45 !important; }
-html:lang(ar) :is(main, footer) :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+html:lang(ar) :is(main, footer) :is(p, li, dd, dt, label, legend, .rf-legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
 @media (max-width: 1199.98px) {
   html:lang(ar) .menu :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
 }

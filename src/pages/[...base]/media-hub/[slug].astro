@@ -36,6 +36,12 @@ const loc = edition.locale;
 const title = c.meta.title.replace('{title}', post.title);
 const description = post.excerpt || c.meta.descriptionFallback.replace('{title}', post.title);
 const html = sanitizeHtml(post.body);
+// Bug 152 (15 Oct 2026): the WordPress excerpt is (the start of) the body's first paragraph on almost every post (122 / 129 Arabic,
+// 120 / 129 English), so the intro line printed that paragraph twice. The intro shows only when the body does not open with it.
+const plain = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;|&#160;|&[a-z]+;|&#\d+;/g, ' ').replace(/\s+/g, ' ').trim();
+const firstPara = plain(post.body.match(/<p[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? '');
+const lead = plain(post.excerpt ?? '').replace(/(\.\.\.|…|\[…\])$/, '').replace(/[\s.،,]+$/, '');
+const intro = post.excerpt && !(lead && firstPara.startsWith(lead)) ? [post.excerpt] : [];
 const pending = !html && showPendingNote(INDEXABLE) ? c.pending.body : null;
 const date = c.date.show ? { iso: post.date, text: badgeDate(post.date, loc).full, label: c.date.label } : null;
 
@@ -72,7 +78,7 @@ const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
         {image ? <PageHero content={hero} pos={pos} h={322} variant="cover" mirror={false} side /> : <PageHero content={{ ...hero, banner: { image: 'conditions/accidents-rehabilitation', alt: '' } }} pos={pos} h={322} variant="cover" />}
       </div>
       <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
-        <ArticleBody heading={c.overviewHeading} date={date} intro={post.excerpt ? [post.excerpt] : []} html={html} pending={pending} video={c.video} />
+        <ArticleBody heading={c.overviewHeading} date={date} intro={intro} html={html} pending={pending} video={c.video} />
       </div>
     </article>
     <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">

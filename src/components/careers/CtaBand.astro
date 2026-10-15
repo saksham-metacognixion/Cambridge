@@ -59,4 +59,6 @@ const ctl = noOpen ? 'no-openings-start' : undefined;
     .in { padding-block: calc(40 * var(--u)); }
     .h { font-size: calc(26 * var(--u)); }
   }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .h { font-size: calc(26 * 0.8 * var(--u)); } }
 </style>

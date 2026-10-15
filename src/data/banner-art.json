@@ -29,22 +29,26 @@
  "global:calculators/bmi": {
   "w": 565,
   "h": 462,
-  "shape": true
+  "shape": true,
+  "readable": true
  },
  "global:calculators/heart-age": {
   "w": 565,
   "h": 462,
-  "shape": true
+  "shape": true,
+  "readable": true
  },
  "global:calculators/lung-health": {
   "w": 565,
   "h": 462,
-  "shape": true
+  "shape": true,
+  "readable": true
  },
  "global:calculators/stroke-risk": {
   "w": 565,
   "h": 462,
-  "shape": true
+  "shape": true,
+  "readable": true
  },
  "global:care/banner-inpatient-care": {
   "w": 500,

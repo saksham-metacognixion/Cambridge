@@ -60,4 +60,11 @@ const u = (n: number) => `calc(${n} * var(--u))`;
     .c-head { inset-inline-start: 0; inset-inline-end: 0; top: 8%; width: 100%; height: auto; font-size: 6.05cqw; line-height: 5.83cqw; } /* 28 / 463 and 27 / 463 of the picture width: the heading keeps its desktop proportions over the photo instead of growing past it (bug 087: a fixed --u line-height pushed line 2 onto the head) */
     .c-grid { order: 3; display: grid; grid-template-columns: repeat(auto-fit, calc(218 * var(--u))); justify-content: center; gap: 16px; width: 100%; }
   }
+  /* Bug 144 (15 Oct 2026): the Arabic heading line height (1.45, bug 129) made the two lines ~35px taller than the Figma 27-unit lines,
+     growing down onto the doctor's head. A heading laid over the photo is the exception: 1.2 lines, and the box is raised so its
+     bottom stays where the English heading ends (Figma 37 + 2 x 27 = 91; below 1024: 8% of the photo height + 2 x 5.83cqw = 19.33cqw). */
+  :global(html:lang(ar)) .c-head { line-height: 1.2 !important; top: calc(91 * var(--u) - 2.4em); }
+  @media (max-width: 1023.98px) {
+    :global(html:lang(ar)) .c-head { top: calc(19.33cqw - 2.4em); }
+  }
 </style>

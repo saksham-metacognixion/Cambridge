@@ -221,6 +221,23 @@ html:lang(ar) :is(main, footer) :is(p, li, dd, dt, label, legend, figcaption, bl
    Gotham headings; with the 1.45 / 1.65 Arabic line heights (bug 129) the heavier GE SS Two Bold heading sat on its paragraph.
    One value, used by each component's `html:lang(ar)` desktop override (>= 1024px); English keeps the Figma tracks. */
 html:lang(ar) { --ar-gap-heading: calc(14 * var(--u)); }
+/* Bug 147 (15 Oct 2026): Arabic phone headings. GE SS Two Bold is wider than Gotham and runs on 1.45 lines (bug 129), so the English
+   phone sizes broke the Arabic headings into 4-6 short lines (one word alone on a line). Arabic phones (< 480px): the heading size
+   tokens are 0.8x the English ones, hero titles are capped at 7vw (27px at 390) and headings wrap balanced, so no word is left alone
+   on its last line. Components with their own heading sizes (ContactRecovery, Newsletter, Why / Careers / About sections) use --ar-phone-h2. */
+@media (max-width: 479.98px) {
+  html:lang(ar) {
+    --ar-phone-h2: calc(28 * 0.8 * var(--u)); /* section headings sized in component CSS (the scaled text-f28) */
+    --text-f23: calc(23 * 0.8 * var(--u));
+    --text-f28: calc(28 * 0.8 * var(--u));
+    --text-f29p076: calc(29.076 * 0.8 * var(--u));
+    --text-f30: calc(30 * 0.8 * var(--u));
+    --text-f36: calc(36 * 0.8 * var(--u));
+    --text-f39: calc(39 * 0.8 * var(--u));
+  }
+  html:lang(ar) main :is(h1, h2, .hero-title) { text-wrap: balance; }
+  html:lang(ar) .hero-title { font-size: min(calc(39 * var(--u)), 7vw); }
+}
 
 html { -webkit-text-size-adjust: 100%; }
 body {

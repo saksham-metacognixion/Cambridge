@@ -143,6 +143,7 @@ const emails = (l: string) => l.split(/([^\s@]+)(@[^\s@]+)/);
     .faq { padding-inline: calc(24 * var(--u)); } /* bug 082: the same inline inset as the hero copy above (PageHero), so both headings share one edge */
     .chev { inset-inline-start: auto; inset-inline-end: calc(16 * var(--u)); }
     .ans { width: auto; }
+    .tab { width: 100%; } /* bug 153: the category tabs span the column like the questions under them (were the 375px desktop tab) */
   }
   @media (min-width: 1024px) {
     .faq { flex-direction: row; align-items: flex-start; gap: 0; padding: 0; }

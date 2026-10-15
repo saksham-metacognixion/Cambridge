@@ -74,4 +74,6 @@ const items = c.items.map((x: any, i: number) => ({ ...x, ...design[i], src: img
     .p { width: calc(488 * var(--u)); }
     .rule { margin-top: calc(42.7 * var(--u)); margin-inline-start: calc(158 * var(--u)); width: calc(707 * var(--u)); }
   }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .t { font-size: var(--ar-phone-h2); } }
 </style>

@@ -76,7 +76,18 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
     .slide { width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
-    .docs { padding-inline: 16px; }
+    /* Bug 143 (15 Oct 2026): the page wrappers put only 10 units (13.7px) between the CTA band above and this heading; 30 more here
+       gives the ~55px section spacing of the other stacked sections. */
+    .docs { padding-inline: 16px; padding-top: calc(30 * var(--u)); }
+    /* Bug 143: the fixed 215-unit cards were centred in the gutter box (inset 48px at 390, 77px at 768) while the heading and intro
+       run from gutter to gutter. The cells now fill the box (1 per row on phones, 2 on tablets, the Patient Hub rule) and each card
+       is drawn at its cell's width: the card's own --u = cell width / 215 (below 1024 the page --u is a fixed px value, so the
+       cell can be a size container), so heading, intro and cards share both edges in either direction. */
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; column-gap: calc(20 * var(--u)); grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.card) { --u: calc(100cqw / 215); }
+    }
     .slide { margin-inline: -16px; scroll-padding-inline: 16px; }
     .srow { padding-inline: 16px; gap: calc(20 * var(--u)); }
   }

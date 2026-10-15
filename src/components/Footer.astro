@@ -182,6 +182,9 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   @media (max-width: 1023.98px) {
     .stage { display: flex; flex-wrap: wrap; gap: calc(28 * var(--u)) calc(30 * var(--u)); padding: calc(32 * var(--u)) 16px; box-sizing: border-box; align-items: flex-start; }
     .logo { width: calc(110px * 242 / 120); height: auto; aspect-ratio: 242 / 120; } /* bug 097: 110px tall (was 164) */
+    /* Bug 154 (15 Oct 2026): the artwork starts 17.3 of the file's 242 px in from its edge (~16px here), so the logo sat inset from the
+       gutter the column toggles below use; the box is pulled back by that margin so the mark lines up with them (both directions). */
+    .logo { margin-inline-start: calc(-110px * 17.3 / 120); }
     .col { flex: 1 1 calc(138 * var(--u)); min-width: 0; }
     .col, .acc, .nl { position: static; }
     .acc, .nl { flex: 1 1 calc(235 * var(--u)); }
@@ -225,6 +228,9 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
       .stage { row-gap: 24px; column-gap: 32px; padding-block: 32px 20px; }
       .cols { display: flex; flex-direction: column; flex: 1 1 60%; min-width: 0; } /* the rest of the logo's row: seals + newsletter wrap below */
       .col { flex: none; }
+      /* Bug 153 (15 Oct 2026): the toggles span the ~470px column beside the logo, so a row-end "+" sat ~480px from its label;
+         on tablets it follows the label (both directions). Phones keep the live full-row toggle. */
+      .ft-tgl { justify-content: flex-start; gap: 16px; }
       .acc, .nl { flex: 1 1 calc(50% - 16px); }
       .icons, .bot { align-self: center; } /* icons, copyright and the 44px legal links on one centre line */
     }

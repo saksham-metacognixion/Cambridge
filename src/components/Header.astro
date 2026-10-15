@@ -423,6 +423,14 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .lang a[aria-current='true'] { background: #004059; }
     .book { position: relative; }
     .visit { margin: 0; display: flex; flex-direction: column; justify-content: center; min-height: 44px; --hit-h: 100%; } /* a menu row like the links above it (44px tap target); the lines stay stacked */
+    /* Bug 150 (15 Oct 2026), both languages: the main list fills the panel width, so every chevron sits at the row's inline end at
+       one x (it was shrink-wrapped to the longest label: chevrons mid-screen at 768, the Arabic ones at different x); the rows use
+       a readable 16px (sub rows 14px) instead of the 12px desktop size; the group name stays on one line under "Visit". */
+    .mainnav { align-self: stretch; }
+    .menu .mainnav .sub-head > a, .menu .mainnav > li > a { font-size: 16px; }
+    .menu .sub-item { font-size: 14px; }
+    .visit .font-medium { white-space: nowrap; }
+    .visit .font-medium br { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .menu, .sub, .fly, .rmenu, .burger span, .sub-chev, .fly-chev, .chev { transition: none; }

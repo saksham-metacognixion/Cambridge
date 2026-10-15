@@ -71,10 +71,10 @@ const maskStyle = `mask-image:url("${mask.src}");-webkit-mask-image:url("${mask.
      one line, and the four-line intro pushes the pills, row and dots down by 29 (Figma 79 / 139 / 404, height 457). -->
 <section class="relative overflow-x-clip" style="--h: 486">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-6 max-lg:py-6">
-    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:175;--y:0;--w:701;--h:27">{c.heading}</h2>
-    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-justify-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:56">{c.intro}</p>
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-16" style="--x:175;--y:0;--w:701;--h:27">{c.heading}</h2>
+    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-justify-center not-italic whitespace-normal [word-break:break-word] max-lg:px-16 max-lg:max-w-[calc(577*var(--u))]" style="--x:237;--y:35;--w:577;--h:56">{c.intro}</p>
 
-    <div class="dpos flex max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-4" role="group" aria-label={c.filterLabel} data-row-pills style="--x:371;--y:108;--w:279;--h:25">
+    <div class="dpos flex max-lg:justify-center max-lg:gap-[calc(10*var(--u))] max-lg:px-16" role="group" aria-label={c.filterLabel} data-row-pills style="--x:371;--y:108;--w:279;--h:25">
       <button type="button" aria-pressed={String(countries[0] === initial)} class="hit ui-pill pill" data-country={countries[0]} style="--x:0">{c.filters[0]}</button>
       <button type="button" aria-pressed={String(countries[1] === initial)} class="hit ui-pill pill" data-country={countries[1]} style="--x:99">{c.filters[1]}</button>
       <button type="button" aria-pressed={String(countries[2] === initial)} class="hit ui-pill pill" data-country={countries[2]} style="--x:200">{c.filters[2]}</button>

@@ -45,14 +45,16 @@ if (box && ok.matches) {
     const flipped =
       new DOMMatrix(cs.transform).a < 0 !== parseFloat(cs.scale) < 0; // Tailwind's scale-x-* sets `scale`, not `transform`
     const dir = flipped ? -1 : 1;
+    // A subject turned back inside the mirrored box (BannerArt .bn-readable, bug 146: `scale: -1 1` on the layer itself) flips the
+    // transform's x axis once more.
+    const dirs = subjects.map((s) => (parseFloat(getComputedStyle(s).scale) < 0 ? -dir : dir));
 
     const frame = (t: number) => {
       const p = Math.min(1, Math.max(0, (t - t0) / DUR));
       const e = 1 - (1 - p) * (1 - p); // Power1.easeOut
       x = fx + (tx - fx) * e;
       y = fy + (ty - fy) * e;
-      const tf = `translate3d(${(dir * x).toFixed(3)}px,${y.toFixed(3)}px,0)`;
-      for (const s of subjects) s.style.transform = tf;
+      subjects.forEach((s, i) => (s.style.transform = `translate3d(${(dirs[i] * x).toFixed(3)}px,${y.toFixed(3)}px,0)`));
       raf = p < 1 ? requestAnimationFrame(frame) : 0;
     };
 

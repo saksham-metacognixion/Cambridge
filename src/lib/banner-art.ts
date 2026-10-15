@@ -24,6 +24,9 @@ export interface BannerArtEntry {
   shape: boolean;
   bleed?: "end";
   fade?: "start" | "top" | "start top";
+  /** Bug 146 (15 Oct 2026): the subject holds readable or real-world content (the calculator phone screens, the lungs): in RTL the
+   *  composition is mirrored as usual but the subject itself is drawn unflipped (BannerArt `.bn-readable`). */
+  readable?: boolean;
 }
 
 export function bannerArt(

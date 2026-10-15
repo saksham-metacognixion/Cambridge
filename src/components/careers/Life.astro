@@ -47,4 +47,9 @@ const paras = Array.isArray(c.text) ? c.text : [c.text];
     .t { min-height: 0; }
     .btns { margin-top: calc(16 * var(--u)); }
   }
+  /* Bug 154 (15 Oct 2026): in Arabic the subheading (body face, Tajawal at 109.5%, bug 130) drew larger than its GE SS Two Bold H2;
+     it is set at 20 units under the 28-unit heading (English keeps the Figma 28 light line). */
+  :global(html:lang(ar)) .sub { font-size: calc(20 * var(--u)); }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .h { font-size: var(--ar-phone-h2); } }
 </style>

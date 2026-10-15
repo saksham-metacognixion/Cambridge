@@ -47,4 +47,6 @@ const more = urlFor(edition, pagePath(c.button.page));
     .btn { align-self: center; } /* Figma x377 = the box centre; the padding-sized button stays centred */
     .box :global(.img) { margin-inline-start: calc(117 * var(--u)); width: calc(638 * var(--u)); max-width: none; }
   }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .t { font-size: min(var(--ar-phone-h2), 7vw); } }
 </style>

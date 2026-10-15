@@ -40,11 +40,11 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 
 <section class="relative bg-veil overflow-x-clip" style="--h: 356">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-6 max-lg:py-8">
-    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4" style="--x:201;--y:47;--w:617;--h:27">{c.heading}</h2>
+    <h2 class="dpos font-gotham font-medium text-f28 max-lg:text-f23 leading-none text-navy text-center not-italic whitespace-normal [word-break:break-word] max-lg:px-16" style="--x:201;--y:47;--w:617;--h:27">{c.heading}</h2>
     <!-- Bug 132 (15 Oct 2026): justified with the last line centred (.text-justify-center). The Figma line break between intro[0] and
          intro[1] is gone: a forced break ends a line, which justify leaves unstretched, so the two lines now wrap naturally at the same
          place (the 577 box) with the first line filled edge to edge. -->
-    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-justify-center not-italic whitespace-normal [word-break:break-word] max-lg:px-4 max-lg:max-w-[calc(577*var(--u))]" style="--x:221;--y:82;--w:577;--h:27">{c.intro.join('')}</p>
+    <p class="dpos font-gotham font-normal text-f12 leading-14 text-body text-justify-center not-italic whitespace-normal [word-break:break-word] max-lg:px-16 max-lg:max-w-[calc(577*var(--u))]" style="--x:221;--y:82;--w:577;--h:27">{c.intro.join('')}</p>
 
     <!-- Live Home page (WordPress export, animation audit 8 Oct 2026): Greenshift Swiper, autoplay delay 0, speed 12000, loop,
          disablepause (no hover pause), autoplayrestore: one 12 s eased slide per tile, one after the other (autoscroll.ts step mode). -->

@@ -37,10 +37,28 @@ const loc = edition.locale;
 <style>
   .ts { max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
   .ts :global(.ts-pills) { margin: calc(41 * var(--u)) auto 0; }
-  .grid { list-style: none; margin: calc(43.57 * var(--u)) 0 0; padding: 0 16px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(257.723 * var(--u))); column-gap: calc(32.037 * var(--u)); row-gap: calc(48.625 * var(--u)); }
+  /* Bug 155 (15 Oct 2026): the Figma card (257.723 Figma px = 353px, --u is fixed below 1024) is wider than a 320 / 360 phone minus the
+     16px gutters, so the centred fixed track ran past both viewport edges and the corner badge was cut by the screen. The track is now
+     at most the list's content width (the auto-fill count still comes from the 257.723 max), the card never exceeds its track, and
+     below 385px (card + 2 x 16) the card's unit --k is capped by the li's inline size (a container only there, where --u carries no
+     cqw) so the whole composition (text, photo, pattern, badge overhang) scales down as one piece instead of overflowing. From 385px
+     up nothing changes (the cap is scoped out, so the unit stays the exact --u). */
+  .grid { list-style: none; margin: calc(43.57 * var(--u)) 0 0; padding: 0 16px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, minmax(0, calc(257.723 * var(--u)))); column-gap: calc(32.037 * var(--u)); row-gap: calc(48.625 * var(--u)); }
   .grid.no-pills { margin-top: calc(41 * var(--u)); }
-  .grid > li { display: flex; }
+  .grid > li { display: flex; min-width: 0; }
   .grid > li[hidden] { display: none; }
+  .grid :global(.tcard) { max-width: 100%; }
+  @media (max-width: 384.98px) {
+    @supports (width: 1cqw) {
+      .grid > li { container-type: inline-size; }
+      .grid :global(.tcard) { --k: min(calc(var(--s) * var(--u)), calc(100cqw / 257.723)); }
+    }
+  }
+  /* Bug 142 (15 Oct 2026): the fixed 257.723 cards (353px) fit two per row on a 768 tablet only with a narrower gap than the Figma 32
+     (two cards + 44px > 736px), so the list was one narrow column there. 16px gap / 12px sides: two columns from 744px wide. */
+  @media (min-width: 740px) and (max-width: 1023.98px) {
+    .grid { column-gap: 16px; padding-inline: 12px; }
+  }
   @media (min-width: 1024px) {
     .ts :global(.ts-pills) { margin-inline: calc(375 * var(--u)) 0; }
     .grid { width: calc(837.243 * var(--u)); margin-inline-start: calc(102.84 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(3, calc(257.723 * var(--u))); }

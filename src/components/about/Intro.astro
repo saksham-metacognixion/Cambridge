@@ -75,4 +75,6 @@ const closeLabel = commonText(edition.locale).close as string;
     .copy { flex: none; width: calc(407 * var(--u)); margin-inline-start: calc(30 * var(--u)); }
     .t1, .t2 { width: calc(387 * var(--u)); }
   }
+  /* Bug 153 (15 Oct 2026): stacked (< 1024) the 429-unit video is centred in the column (it sat on the start edge: 148px / 33px). */
+  @media (max-width: 1023.98px) { .video { align-self: center; } }
 </style>

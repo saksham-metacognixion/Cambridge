@@ -319,7 +319,9 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 .rf .rf-ph-in { padding-inline-start: calc(11 * var(--u)); }
 .rf .rf-area { padding: calc(10 * var(--u)) calc(11.5 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); resize: vertical; min-block-size: calc(66 * var(--u)); } /* shorter box: the user can drag it taller to review a long text */
 @media (max-width: 1023.98px) {
-  .rf .pf-label { padding-block-start: 0; }
+  /* Bug 149 (15 Oct 2026): the options drop their top padding with the legend (it is a .pf-label), so the radios sit on the
+     "Gender" line instead of ~10px under it (both languages). */
+  .rf .pf-label, .rf .rf-opts { padding-block-start: 0; }
   .rf .pf-dial .dial-code { margin-block-start: 0; }
 }
 @media (max-width: 767.98px) {

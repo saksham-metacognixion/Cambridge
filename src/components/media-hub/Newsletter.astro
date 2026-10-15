@@ -53,4 +53,6 @@ const c = content('media-hub/page', edition.locale).newsletter;
   /* Bug 134 (15 Oct 2026, Arabic only, desktop grid): the two Bold heading lines on 1.45 fill the 88 track, so the heading gets its
      own gap to the paragraph: --ar-gap-heading (global.css), the Home canvases' value. English keeps the Figma track slack. */
   @media (min-width: 1024px) { :global(html:lang(ar)) h2 { margin-bottom: var(--ar-gap-heading); } }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) h2 { font-size: min(calc(36 * 0.8 * var(--u)), 8vw); } }
 </style>

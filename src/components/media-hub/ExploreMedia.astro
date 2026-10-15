@@ -51,7 +51,9 @@ const tiles = c.tiles.map((t: any, i: number) => ({
        The tiles fade in when the row comes into view, as on the live Media Hub (data-aos="fade", 0.8s, scripts/aos.ts); swiping
        the row never hides them (they follow the row, not their own sideways position, mobile QA M3). -->
   <!-- Beyond 1440px (responsive audit 9 Oct 2026) the row keeps its Figma start on the centred stage (48 + the page gutter, global.css --gutter) and runs off the real screen edge. -->
-  <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-[calc(48*var(--u)+var(--gutter))] lg:pe-[calc(47*var(--u)+var(--gutter))]" data-tiles>
+  <!-- Bug 151 (15 Oct 2026): scroll padding = the inline padding, so the snap keeps the first tile on the gutter (it snapped flush to the
+       screen edge in both directions). -->
+  <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 scroll-ps-16 scroll-pe-16 lg:ps-[calc(48*var(--u)+var(--gutter))] lg:pe-[calc(47*var(--u)+var(--gutter))] lg:scroll-ps-[calc(48*var(--u)+var(--gutter))] lg:scroll-pe-[calc(47*var(--u)+var(--gutter))]" data-tiles>
     {
       tiles.map((t: any) => (
         <li data-aos="fade" class="relative h-342 w-222 shrink-0 snap-start">

@@ -52,8 +52,8 @@ const pic = {
 } as const;
 ---
 
-<div class:list={['bn-frame', home && 'bn-home', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
-  <div class:list={['bn-art', flip && 'rtl:-scale-x-100']} data-hero-follow>
+<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
+  <div class:list={['bn-art', flip && 'bn-flip rtl:-scale-x-100']} data-hero-follow>
     {art.shape && <img class="bn-shape" src={home ? pattern.src : shape.src} width={S.w} height={S.h} alt="" loading="eager" decoding="async" />}
     {art.pills ? (
       <div class="bn-people" data-hero-subject>
@@ -73,6 +73,17 @@ const pic = {
   /* hospital pages: the pill outlines (SVG, same box as the building cut-out) behind the building */
   .bn-pills { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
   .bn-shape { position: absolute; z-index: -1; inset-inline-end: 0; top: calc(var(--st) / var(--bh) * 100%); width: calc(var(--sw) / var(--bw) * 100%); height: auto; max-width: none; }
+  /* Bug 145 (15 Oct 2026): the mirrored box (scale -1) already turns the English layout round, so the shape inside it is anchored
+     on the English side: in RTL inset-inline-end resolves to the left and the transform flipped it a second time, sending the pills
+     past the outer screen edge instead of behind the copy side (most visible with narrow cut-outs: Homecare 311 wide, shape 613). */
+  :global([dir='rtl']) .bn-flip .bn-shape { inset-inline-end: auto; inset-inline-start: 0; }
+  /* Bug 146: a subject with readable / real-world content (banner-art.json `readable`: the calculator phone screens) is turned back
+     inside the mirrored box, so the composition mirrors but the screen reads the right way (scripts/hero-follow.ts reads this scale). */
+  :global([dir='rtl']) .bn-readable .bn-flip :global([data-hero-subject]) { scale: -1 1; }
+  /* Bug 139: phones stack the art under the copy; the pills rise above the art box by -st live px (Conditions: 268, a flat 458x212
+     cut-out) and covered the end of the intro and the button. The frame drops by whatever the copy's 40-unit bottom padding
+     (PageHero) does not already absorb, so the shape stays under the text in both languages; the usual 450-tall cut-outs (30) are unchanged. */
+  @media (max-width: 689.98px) { .bn-frame { margin-top: max(0px, calc(-1 * var(--st) * var(--s) * var(--lp) - 40 * var(--u))); } }
   /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
   @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }
   @media (min-width: 1024px) {

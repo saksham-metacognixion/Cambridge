@@ -58,10 +58,11 @@ export function postFor(slug: string, edition: Edition): Post | undefined {
 /** Whether a slug has an article page; used to wire cards (a missing slug links to the 404 page). */
 export const hasPost = (slug: string) => allPostSlugs.includes(slug);
 
-/** "15" and "Wed" for the date badge; Arabic gets Arabic-Indic numerals and Arabic weekday names. */
+/** "15" and "Wed" for the date badge; Arabic gets Arabic weekday / month names with Western digits (bug 154, 15 Oct 2026: one digit
+ *  style site-wide, as in the stats, the footer and the English edition; was Arabic-Indic). */
 export function badgeDate(iso: string, locale: LocaleId) {
   const d = new Date(`${iso}T12:00:00Z`);
-  const tag = locale === "ar" ? "ar-u-nu-arab" : "en";
+  const tag = locale === "ar" ? "ar-u-nu-latn" : "en";
   return {
     day: new Intl.DateTimeFormat(tag, {
       day: "numeric",

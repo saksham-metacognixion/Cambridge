@@ -81,5 +81,8 @@ const cols = `calc(${w} * var(--u)) calc(${xs[1] - xs[0] - w} * var(--u)) calc($
   }
   @media (max-width: 1023.98px) {
     .care { padding-inline: 16px; }
+    /* Bug 154 (15 Oct 2026): the cards fill the 16px gutters like the other card lists (they were a fixed 304px, centred, 43px from
+       each edge at 390); two per row on tablets (bug 142, the Patient Hub rule). The photo and text keep their scaled sizes. */
+    .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
   }
 </style>

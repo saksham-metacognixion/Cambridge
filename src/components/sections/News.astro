@@ -51,7 +51,9 @@ const cards = design.map((d, i) => {
     src: img(figma.image, edition.region),
     alt: post?.image_alt || t(figma.imageAlt, edition.locale, 'news'),
     title: post?.title ?? t(figma.title, edition.locale, 'news'),
-    text: post?.excerpt ?? t(figma.excerpt, edition.locale, 'news'),
+    // A post without an excerpt in the export (a video-only post such as the Dr. Kassab interview, 15 Oct 2026) shows the
+    // Figma card text of the edition's language; no English on Arabic pages, so an Arabic edition keeps the box empty.
+    text: post?.excerpt || figma.excerpt[edition.locale] || '',
     readMore: { label: txt.readMore.label, href: articleHref(slug) },
   };
 });

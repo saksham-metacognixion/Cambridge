@@ -105,4 +105,8 @@ const cards = nodes.filter((s) => careInRegion(s.slug, edition.region)).map((s) 
     .svc { padding-inline: 16px; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(291.178 * var(--u))), calc(291.178 * var(--u)))); }
   }
+  /* Bug 142 (15 Oct 2026): two cards per row on tablets (768-1023), the Patient Hub rule (HubCards). */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .grid { justify-content: stretch; gap: calc(24.58 * var(--u)); grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+  }
 </style>

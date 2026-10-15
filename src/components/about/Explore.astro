@@ -75,4 +75,14 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
   @media (min-width: 1024px) {
     .grid { grid-template-columns: repeat(4, calc(222 * var(--u))); column-gap: calc(20 * var(--u)); }
   }
+  /* Bug 154 (15 Oct 2026): stacked (< 1024) the heading -> cards gap is flow spacing (32px), not the Figma 70 / 47 units of the
+     desktop canvas (~96px / ~64px). */
+  @media (max-width: 1023.98px) {
+    .grid, .h + .grid { margin-top: 32px; }
+    /* same card gutters as the other card lists (CareCards, Patient Hub): full width on phones, two per row on tablets */
+    .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+    .card { width: 100%; }
+  }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .h { font-size: var(--ar-phone-h2); } }
 </style>

@@ -77,4 +77,9 @@ const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.f
     .hosp { padding-inline: 16px; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(296.21 * var(--u))), calc(296.21 * var(--u)))); }
   }
+  /* Bug 142 (15 Oct 2026): tablets (768-1023) hold two cards per row, the Patient Hub rule (HubCards), instead of one phone-size card
+     with ~180px of white each side. */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .grid { justify-content: stretch; gap: calc(24.58 * var(--u)); grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+  }
 </style>

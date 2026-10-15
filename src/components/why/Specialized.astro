@@ -79,6 +79,8 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
   .btn::before { content: ''; position: absolute; }
   .wire { display: block; width: 100%; height: auto; aspect-ratio: 1052 / 222; margin-top: calc(32 * var(--u)); max-width: none; pointer-events: none; }
   .pills { display: none; position: absolute; width: calc(346.6 * var(--u)); height: calc(356 * var(--u)); top: calc(430 * var(--u)); inset-inline-start: calc(361 * var(--u)); max-width: none; pointer-events: none; }
+  /* Bug 168 (15 Oct 2026): the 1052 x 222 wireframe is a 68px grey strip on phones; hidden under 768 (decorative), kept on tablets (148px at 768). */
+  @media (max-width: 767.98px) { .wire { display: none; } }
   @media (max-width: 1023.98px) {
     .stat { container-type: inline-size; }
     /* Gotham Medium digits are ~0.63em wide ("340,000+" = 5.04em); 0.66 leaves a margin for commas / wider glyph mixes. */

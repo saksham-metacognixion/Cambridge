@@ -32,6 +32,14 @@ const empty = content('doctors/page', edition.locale).results.empty;
 <style>
   .filters { display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: calc(12 * var(--u)); padding-inline: calc(16 * var(--u)); }
   .filters :global(.cb) { width: calc(311 * var(--u)); }
+  /* Bug 159 (15 Oct 2026): below 1024 the two 311-unit boxes were centred in the gutter (426px wide at 768 while the card grid
+     fills the box). The row is the same cell grid as the cards (1 per row on phones, 2 on tablets), the boxes fill their cells and
+     the country pills keep a centred row of their own above them. */
+  @media (max-width: 1023.98px) {
+    .filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); padding-inline: 16px; }
+    .filters :global(.df-pills) { grid-column: 1 / -1; justify-self: center; }
+    .filters :global(.cb) { width: auto; min-width: 0; }
+  }
   @media (min-width: 1024px) {
     .filters { flex-wrap: nowrap; justify-content: flex-start; gap: calc(12 * var(--u)); width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; padding-inline: 0; }
     .filters :global(.df-pills) { margin-inline-end: calc(30 * var(--u)); } /* 42 from the pills' right edge to the first box, minus the 12 flex gap */

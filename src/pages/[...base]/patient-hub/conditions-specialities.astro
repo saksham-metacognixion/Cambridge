@@ -27,12 +27,12 @@ const c = content('conditions-specialities/page', edition.locale);
   </div>
   <main>
     <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
-    <div id="conditions" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))"><ConditionList /></div>
-    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(69 * var(--u))">
+    <div id="conditions" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(42 * var(--u))"><ConditionList /></div>
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(69 * var(--u))">
       <ContactRecovery content={c.recovery} headTop={50} />
     </div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
     <Footer />
   </div>
   <script>

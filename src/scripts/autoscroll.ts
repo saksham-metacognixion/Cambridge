@@ -108,7 +108,9 @@ function setup(scroller: HTMLElement) {
   // own padding would otherwise add to the distance). Enough copies that one period + the visible width is always filled.
   const build = (force = false) => {
     const a = shown(row);
-    if (a.length < 2) {
+    // A hidden scroller (display: none, e.g. the Our Care doctors slider below 1024, bug 163) has no geometry to copy from;
+    // the ResizeObserver below builds it once it is shown.
+    if (a.length < 2 || getComputedStyle(scroller).display === "none") {
       clear();
       scroller.dispatchEvent(new Event("autoscroll:change"));
       return;

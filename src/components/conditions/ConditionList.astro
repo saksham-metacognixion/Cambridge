@@ -79,16 +79,29 @@ const options = specialties.filter((s) => conditions.some((x) => x.specialties.i
 
 <style>
   .list { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
-  .h { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: calc(16 * var(--u)); box-sizing: border-box; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
-  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(16 * var(--u)) calc(21 * var(--u)); margin-top: calc(35 * var(--u)); padding-inline: calc(16 * var(--u)); }
+  .h { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: 16px; box-sizing: border-box; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(16 * var(--u)) calc(21 * var(--u)); margin-top: calc(35 * var(--u)); padding-inline: 16px; }
   .pair { display: flex; gap: calc(14 * var(--u)); width: calc(417 * var(--u)); max-width: 100%; }
   .sel { flex: 1 1 auto; min-width: 0; width: calc(311 * var(--u)); }
   .az { position: relative; height: auto; background: transparent; border: calc(0.5 * var(--u)) solid var(--color-teal-border); color: var(--color-navy); } /* bugs 044 / 049 / 050: size, label, corners = .ui-btn */
   .az[aria-pressed='true'] { background: var(--color-chip); } /* no pressed state in Figma: subtle chip fill, flagged */
   .az-icon { width: calc(21 * var(--u)); max-width: 24px; height: auto; }
-  .grid { list-style: none; margin: calc(56 * var(--u)) 0 0; padding: 0 calc(16 * var(--u)); display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(198.097 * var(--u))); column-gap: calc(24.903 * var(--u)); row-gap: calc(22 * var(--u)); }
+  .grid { list-style: none; margin: calc(56 * var(--u)) 0 0; padding: 0 16px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(198.097 * var(--u))); column-gap: calc(24.903 * var(--u)); row-gap: calc(22 * var(--u)); }
   .grid > li { display: flex; }
   .grid > li[hidden] { display: none; }
+  /* Bug 159 (15 Oct 2026): below 1024 the fixed 198-unit cards were centred in the gutter box (271px wide, 60px margins at 390)
+     under filters that span the gutter. The cells now fill the box (1 per row on phones, 2 on tablets, the Patient Hub rule) and
+     each card is drawn at its cell's width: the card's own --u = cell width / 198.097 (the page --u is a fixed px value below
+     1024, so the cell can be a size container; the DoctorsRow pattern from bug 143), so the whole composition scales as one piece. */
+  @media (max-width: 1023.98px) {
+    .filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+    .pair { width: auto; }
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.ccard) { --u: calc(100cqw / 198.097); }
+    }
+  }
   @media (min-width: 1024px) {
     .filters { flex-wrap: nowrap; justify-content: flex-start; width: calc(855 * var(--u)); margin-inline-start: calc(97 * var(--u)); padding-inline: 0; }
     .grid { width: calc(867.097 * var(--u)); margin-inline-start: calc(92 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(4, calc(198.097 * var(--u))); }

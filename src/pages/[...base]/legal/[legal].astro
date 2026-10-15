@@ -40,7 +40,7 @@ const fill = (s: string) => s.replace('{title}', c.title);
   <main class="legal">
     <ArticleBody heading={c.title} headingTag="h1" date={date} intro={[]} html={html} pending={pending} />
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(68 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(68 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

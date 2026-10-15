@@ -21,6 +21,7 @@ const { id, heading, text, gap, minH } = Astro.props;
     .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
+    .h { text-wrap: balance; } /* bug 168 (15 Oct 2026): no one-word last line ("Everything You Need, In One / Place" at 390) */
     .t { min-height: 0; margin-top: calc(12 * var(--u)); }
   }
 </style>

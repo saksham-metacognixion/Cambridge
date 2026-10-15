@@ -38,6 +38,15 @@ const global = edition.region === 'global';
   .grid.no-pills { margin-top: calc(40 * var(--u)); }
   .grid > li { display: flex; }
   .grid > li[hidden] { display: none; }
+  /* Bug 159 (15 Oct 2026): the fixed 194.77-unit cards were centred (267px wide, 62px margins at 390); the cells fill the gutter box
+     (1 per row on phones, 2 on tablets) and each card scales to its cell (card --u = cell width / 194.77, bug 143 pattern). */
+  @media (max-width: 1023.98px) {
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.icard) { --u: calc(100cqw / 194.77); }
+    }
+  }
   @media (min-width: 1024px) {
     .ins :global(.ins-pills) { margin-inline: calc(389 * var(--u)) 0; }
     .grid { width: calc(875.77 * var(--u)); margin-inline-start: calc(77 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(4, calc(194.77 * var(--u))); }

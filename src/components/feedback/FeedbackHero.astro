@@ -70,7 +70,7 @@ const pic = {
   .text + .btn { margin-block-start: calc(17 * var(--u)); }
   .btn { margin-inline-start: calc(3 * var(--u)); } /* size, label, corners: the shared .ui-btn (bug 044/050; Figma 164 x 30, label 13) */
   @media (max-width: 1023.98px) {
-    .inner { padding-inline: calc(24 * var(--u)); padding-block: calc(28 * var(--u)) calc(40 * var(--u)); }
+    .inner { padding-inline: 16px; padding-block: calc(28 * var(--u)) calc(40 * var(--u)); } /* bug 167 (15 Oct 2026): the 16px page gutter below 1024 (was 24 units = 33px) */
     .title { inline-size: auto; max-inline-size: 100%; min-block-size: 0; }
     .btn { margin-block-start: 12px; }
   }

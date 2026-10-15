@@ -29,8 +29,12 @@ const ctl = noOpen ? 'no-openings-start' : undefined;
   <div class="in">
     <h2 class="h">{c.heading}</h2>
     <p class="t text-justify-center">{c.text}</p>
-    <OutlineButton href={openRolesHref} label={c.openRoles.label} onDark class="roles" data-no-openings={ctl} />
-    <a href={applyHref} class="apply ui-btn hit btn-fill-white" data-no-openings={ctl}><span>{c.apply.label}</span></a>
+    <!-- Bug 160 (15 Oct 2026, client): the two buttons sit side by side from 768px (one row centred on the Figma x 512, where the old
+         field + button column was) and stack only on phones. To confirm against Figma (docs/open-decisions.md B160). -->
+    <div class="btns">
+      <OutlineButton href={openRolesHref} label={c.openRoles.label} onDark class="roles" data-no-openings={ctl} />
+      <a href={applyHref} class="apply ui-btn hit btn-fill-white" data-no-openings={ctl}><span>{c.apply.label}</span></a>
+    </div>
     {noOpen && <NoOpeningsPanel id="no-openings-start" n={noOpen} onDark class="nop" />}
   </div>
 </section>
@@ -42,16 +46,16 @@ const ctl = noOpen ? 'no-openings-start' : undefined;
   .t { margin: calc(14 * var(--u)) 0 0; max-width: calc(577 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); overflow-wrap: anywhere; }
   /* --fd = half of (old 35-unit field - button): the button sits on the field's middle and Apply Now keeps its y. */
   .in { --fd: calc((35 * var(--u) - var(--btn-h)) / 2); }
-  .in :global(.roles) { margin-top: calc(17 * var(--u) + var(--fd)); }
-  .apply { margin-top: calc(14 * var(--u) + var(--fd)); background: #fff; color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
+  .btns { display: flex; flex-direction: column; align-items: center; gap: calc(14 * var(--u) + var(--fd)) calc(16 * var(--u)); margin-top: calc(17 * var(--u) + var(--fd)); }
+  .apply { background: #fff; color: var(--color-navy); } /* size from .ui-btn (bug 044/050) */
+  @media (min-width: 768px) { .btns { flex-direction: row; justify-content: center; } }
   @media (min-width: 1024px) {
     .in { display: block; padding-inline: 0; text-align: start; height: calc(215 * var(--u)); }
     .h { width: calc(606 * var(--u)); height: calc(27 * var(--u)); margin-inline-start: calc(209 * var(--u)); text-align: center; }
     .t { width: calc(577 * var(--u)); max-width: none; margin-top: calc(7 * var(--u)); margin-inline-start: calc(238 * var(--u)); } /* alignment: .text-justify-center (bug 132) */
-    .in :global(.roles) { display: flex; width: fit-content; margin-inline-start: calc(510.5 * var(--u)); translate: -50% 0; } /* the old field's centre */
-    :global([dir='rtl']) .in :global(.roles) { translate: 50% 0; }
-    .apply { display: flex; width: fit-content; margin-inline-start: calc(512 * var(--u)); translate: -50% 0; } /* centre at Figma x512 (429 + 166 / 2) */
-    :global([dir='rtl']) .apply { translate: 50% 0; }
+    .btns { width: fit-content; margin-inline-start: calc(512 * var(--u)); translate: -50% 0; } /* row centred at Figma x512 (429 + 166 / 2) */
+    :global([dir='rtl']) .btns { translate: 50% 0; }
+    .in :global(.roles), .apply { display: flex; width: fit-content; }
     .in:has(:global(.nop:not([hidden]))) { height: auto; }
     .in :global(.nop) { width: calc(577 * var(--u)); margin-inline-start: calc(238 * var(--u)); text-align: center; }
   }

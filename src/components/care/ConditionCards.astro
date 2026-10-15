@@ -54,7 +54,7 @@ const list = cards.map((k, i) => ({
 
 <style>
   .cond { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
-  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; text-wrap: balance; } /* bug 168 (15 Oct 2026): "Our Post-Acute Rehabilitation / Programmes" at 1440 */
   .t { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
   .t p { margin: 0; overflow-wrap: anywhere; }
   .t p + p { margin-top: calc(14 * var(--u)); }
@@ -81,6 +81,9 @@ const list = cards.map((k, i) => ({
   }
   @media (max-width: 1023.98px) {
     .cond { padding-inline: 16px; }
+    /* Bug 159 (15 Oct 2026): the fixed 222-unit cells were centred in the gutter box; they fill it like the heading above (1 per row
+       on phones, 2 on tablets). The card already flows at its cell's width. */
+    .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
     .title { margin-top: calc(17 * var(--u)); }
     .no-icon .title { margin-top: 0; }
     .text { margin-bottom: calc(12 * var(--u)); }

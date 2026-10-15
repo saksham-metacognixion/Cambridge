@@ -6,7 +6,8 @@
  *   width of the row. While the row loops ([data-looping], src/scripts/autoscroll.ts) it has no end, so the pages tile one
  *   loop period (every shown card once) and the position is taken inside it; otherwise (prefers-reduced-motion) the pages
  *   are those of a plain scroller, the last one at the end of the row. Hidden when every card fits.
- *   Start: one stop in on desktop, as Figma draws it (first card cut at the left edge).
+ *   Start: card 1 at the first stop (Figma x 94). Bug 157 (15 Oct 2026, client): the row no longer opens one stop in as Figma
+ *   draws it (first card cut at the left edge); the auto-scroll moves it on from there.
  *   Auto-scroll: pills tell it to rebuild its copies ('autoscroll:refresh'); a dot click pauses it ('autoscroll:hold') so
  *   the smooth scroll is not overridden; after every rebuild ('autoscroll:change') the pages are recounted.
  * RTL: scrollLeft runs negative in RTL, so positions are taken as absolute values and the sign is put back on scroll.
@@ -15,7 +16,6 @@ import { loopPageCount, loopPageIndex, pageCount, pageIndex } from "../lib/pagin
 import { createPagination } from "./pagination";
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const desktop = matchMedia("(min-width: 1024px)");
 
 for (const section of document.querySelectorAll<HTMLElement>(
   "section:has([data-row])",
@@ -92,6 +92,5 @@ for (const section of document.querySelectorAll<HTMLElement>(
   // auto-scroll copies and the dots all match it.
   const pressed = pills.find((p) => p.getAttribute("aria-pressed") === "true")?.dataset.country;
   if (pressed && pressed !== "all") show(pressed);
-  if (desktop.matches) scroll(pitch(), false);
   pg.update();
 }

@@ -79,7 +79,7 @@ const meta = { title: own?.meta?.title ?? fill(shared.meta.title), description: 
     </div>
     {pending && <p class="pending-note" role="note">{pending}</p>}
     {isService && (hasIntro || kids.length > 0) && (
-      <div id="services" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(22 * var(--u))">
+      <div id="services" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(22 * var(--u))">
         {photoCards ? (
           <SubServiceGrid edition={edition} trail={trail} nodes={kids} heading={own?.intro.heading ?? title} text={own?.intro.text ?? []} listLabel={shared.service.cardsLabel} button={shared.service.button} />
         ) : (
@@ -88,23 +88,23 @@ const meta = { title: own?.meta?.title ?? fill(shared.meta.title), description: 
       </div>
     )}
     {!(isService && hasIntro) && (overview.length > 0 || topics) && (
-      <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
+      <div id="overview" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
         <DetailBody edition={edition} heading={shared.sub.overviewHeading} overview={overview} tabs={topics} tabsLabel={shared.sub.topicsLabel} />
       </div>
     )}
     {!isService && kids.length > 0 && (
-      <div id="programmes" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(30 * var(--u))">
+      <div id="programmes" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(30 * var(--u))">
         <ConditionCards edition={edition} heading={cardsHeading} listLabel={shared.sub.conditionsLabel} button={shared.sub.button} cards={cards} />
       </div>
     )}
-    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${isService ? 55.86 : 51} * var(--u))`}>
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style={`--gap:calc(${isService ? 55.86 : 51} * var(--u))`}>
       <ContactRecovery content={shared.recovery} headTop={50} />
     </div>
-    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${isService ? 41 : 59} * var(--u))`}>
+    <div id="doctors" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style={`--gap:calc(${isService ? 41 : 59} * var(--u))`}>
       <DoctorsRow content={shared.doctors} id="care-doctors-heading" />
     </div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(36.54 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(36.54 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

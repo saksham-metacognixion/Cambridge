@@ -56,7 +56,7 @@ if (at < html.length) segs.push({ html: html.slice(at) });
 </section>
 
 <style>
-  .art { max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding-inline: calc(16 * var(--u)); box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .art { max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
   .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .intro { margin-top: calc(12 * var(--u)); }
   .intro p { margin: 0; overflow-wrap: anywhere; }
@@ -94,7 +94,9 @@ if (at < html.length) segs.push({ html: html.slice(at) });
     .art { padding-inline: 0; }
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .intro, .pending { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    /* Bug 167 (15 Oct 2026): the prose column is capped at 760 units (~85 characters a line; it ran the full 937 = 1283px). */
     .body { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .intro, .body { max-width: calc(760 * var(--u)); }
     .body :global(h2) { margin-inline-start: calc(-2 * var(--u)); }
   }
 </style>

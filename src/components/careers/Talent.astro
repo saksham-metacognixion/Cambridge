@@ -86,6 +86,9 @@ const photo = img(c.photo.image, edition.region);
   /* The 294 px photo card is wider than the column under ~360 px and lost its right edge to the band's clip (mobile QA, 13 Oct
      2026, 320: 33..327). Below 1024 it may shrink to the column, same proportions; at 360 and up its size is unchanged. */
   @media (max-width: 1023.98px) { .card-wrap { max-width: 100%; height: auto; aspect-ratio: 214.853 / 268.276; } }
+  /* Bug 160 (15 Oct 2026): below 1024 the photo card kept the Figma column's start edge (x 35 with ~440px empty beside it at 768);
+     centred in the column instead, same size. */
+  @media (max-width: 1023.98px) { .card-wrap { margin-inline: auto; } }
   /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
   @media (max-width: 479.98px) { :global(html:lang(ar)) .h { font-size: var(--ar-phone-h2); } }
 </style>

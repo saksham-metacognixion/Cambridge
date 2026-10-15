@@ -32,10 +32,10 @@ const c = content(`calculators/${calc.key}`, edition.locale);
   </div>
   <main>
     <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
-    <div id="calculator" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(35 * var(--u))"><CalculatorForm calc={calc} /></div>
+    <div id="calculator" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(35 * var(--u))"><CalculatorForm calc={calc} /></div>
   </main>
   <!-- Bug 154 (15 Oct 2026): below 1024 the calculator card sat 12-14px above the footer; 40 units (~55px) like the other stacked sections. -->
-  <div class="relative max-lg:mt-40 lg:mt-(--gap)" style="--gap:calc(44.54 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(44.54 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

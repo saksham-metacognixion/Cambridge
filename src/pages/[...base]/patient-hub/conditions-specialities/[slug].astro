@@ -64,17 +64,17 @@ const doctors = { ...shared.doctors, slugs: linked.length ? doctorsForEdition(li
     <div id="hero" class="relative"><PageHero content={hero} pos={page.heroLayout} h={322} variant="cover" small={page.heroLayout.small} /></div>
     {pending && <p class="pending-note" role="note">{shared.pending.note}</p>}
     {bannerPending && <p class="pending-note" role="note">{shared.pending.banner}</p>}
-    <div id="overview" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
+    <div id="overview" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
       <DetailBody edition={edition} heading={page.overviewHeading ?? shared.overviewHeading} overview={page.overview} tabs={page.tabs} tabsLabel={shared.tabsLabel} pendingTab={pendingTab} />
     </div>
-    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
       <ContactRecovery content={shared.recovery} headTop={50} />
     </div>
-    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(59 * var(--u))">
+    <div id="doctors" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(59 * var(--u))">
       <DoctorsRow content={doctors} />
     </div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(33.54 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(33.54 * var(--u))">
     <Footer />
   </div>
   <script>

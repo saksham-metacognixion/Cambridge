@@ -58,7 +58,7 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
 <style>
   .t-head { display: contents; }
   .t-btn { inset-inline: 0; width: fit-content; margin-inline: auto; }
-  /* Row start: Figma draws the first card cut at the frame's left edge (x -96). Beyond 1440px (responsive audit 9 Oct 2026) the
+  /* Row start: Figma draws the first card cut at the frame's left edge (x -96); since bug 157 the row opens one card in. Beyond 1440px (responsive audit 9 Oct 2026) the
      scroller is widened by the page gutter on both sides (global.css --gutter) so the cards run off the screen edge instead of
      being cut at the stage edge; the row keeps its Figma start on the stage. The section clips at the viewport, the stage not. */
   .testi { overflow-x: clip; }
@@ -76,7 +76,9 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
     /* Bug 134 (15 Oct 2026, Arabic only): title -> text spacer = --ar-gap-heading (global.css) instead of Figma's 9. */
     :global(html:lang(ar)) .stage { grid-template-rows: calc(34 * var(--u)) minmax(calc(27 * var(--u)), auto) var(--ar-gap-heading) minmax(calc(28 * var(--u)), auto) calc(19 * var(--u)) calc(274 * var(--u)) calc(30 * var(--u)); }
     .t-scroller { grid-row: 6; margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
-    .t-row { margin-inline-start: calc(-96 * var(--u) + var(--gutter)); }
+    /* Bug 157 (15 Oct 2026, client): the row opens one card pitch (203) in from Figma's x -96, so card 1 is whole at Figma's
+       first full-card x (107) and only the far side peeks; the auto-scroll moves it on from there. */
+    .t-row { margin-inline-start: calc(107 * var(--u) + var(--gutter)); }
   }
   @media (max-width: 1023.98px) {
     .testi { padding: 24px 0; }

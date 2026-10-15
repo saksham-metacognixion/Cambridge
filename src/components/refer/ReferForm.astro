@@ -68,14 +68,13 @@ const tabs = [
   .card :global(.f-consent) { margin-inline-start: 0; }
   .card :global(.rf-area) { block-size: calc(90 * var(--u)); } /* bug 124: 125 -> 90 (6 lines at 14) on phones / tablets */
   .card { --rf-row: 14; } /* bug 124: one-column rows 19 -> 14 apart */
-  /* Bug 082 (phones / tablets, where the pills wrap): a pill grows with its label and keeps 10px inside its border
-     ("For Corporate or Organisations" filled the 160 box edge to edge at 360). */
-  @media (max-width: 1023.98px) {
-    .pill { inline-size: auto; min-inline-size: calc(var(--pill-w) * var(--u)); max-inline-size: 100%; padding-inline: calc(10 * var(--u)); }
-  }
+  /* Bug 082 (phones / tablets) and bug 166 (desktop, 15 Oct 2026): a pill grows with its label and keeps 12 units inside its border
+     at every width ("For Corporate or Organisations" filled the 160 box edge to edge: 2px of padding at 1440). */
+  .pill { inline-size: auto; min-inline-size: calc(var(--pill-w) * var(--u)); max-inline-size: 100%; padding-inline: calc(12 * var(--u)); }
 
   @media (min-width: 1024px) {
-    .tablist { justify-content: flex-start; margin-inline-start: calc(268 * var(--u)); } /* three 160 pills + 2 gaps = 510, centred on the Figma pill centre 523 */
+    .tablist { justify-content: center; width: fit-content; margin-inline-start: calc(523 * var(--u)); translate: -50% 0; } /* the row centred on the Figma pill centre 523 whatever the pills' widths (bug 166) */
+    :global([dir='rtl']) .tablist { translate: 50% 0; }
     .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(56 * var(--u)) calc(43 * var(--u)) calc(52 * var(--u)) calc(44 * var(--u)); }
     .card :global(.rf-sel-req) { inline-size: calc(410 * var(--u)); }
     /* Bug 105 (14 Oct 2026, client: the form is too tall): compact desktop layout, Figma px. Same fields, type and boxes (35 high);

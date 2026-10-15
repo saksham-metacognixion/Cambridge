@@ -40,9 +40,9 @@ const jsonLd = {
   </div>
   <main>
     <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 }} h={322} variant="cover" /></div>
-    <div id="faq" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(75 * var(--u))"><FaqSection /></div>
+    <div id="faq" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(75 * var(--u))"><FaqSection /></div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(52.74 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(52.74 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

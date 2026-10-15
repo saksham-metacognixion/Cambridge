@@ -184,7 +184,8 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
   }
   @media (max-width: 1023.98px) {
     .cover { top: 0; height: 100%; }
-    .copy { --copy-gap: calc(16 * var(--u)); gap: var(--copy-gap); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
+    /* Bug 167 (15 Oct 2026): the copy keeps the page's 16px gutter below 1024 like the sections under it (was 24 units = 33px). */
+    .copy { --copy-gap: calc(16 * var(--u)); gap: var(--copy-gap); padding: calc(28 * var(--u)) 16px calc(40 * var(--u)); }
     .text { max-width: calc(var(--xw) * var(--u)); }
   }
 </style>

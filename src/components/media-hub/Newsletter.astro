@@ -24,7 +24,9 @@ const c = content('media-hub/page', edition.locale).newsletter;
   <div class="relative mx-auto w-772 max-w-[calc(100%-32px)] rounded-(--radius-panel) bg-white shadow-nl-card max-lg:px-24 max-lg:py-32 lg:grid lg:min-h-267 lg:grid-cols-[100%] lg:grid-rows-[calc(33*var(--u))_minmax(calc(88*var(--u)),auto)_minmax(calc(42*var(--u)),auto)_auto] lg:content-start lg:justify-items-start">
     <!-- max-lg cap (responsive sweep, 9 Oct 2026): at 360 "Newsletter" ran 10px past the card's text column; 12.3vw (was 12.8: 5px over at 320 in the cross-browser sweep) only bites below ~400px -->
     <h2 class="m-0 font-gotham font-medium text-f36 max-lg:text-[min(calc(36*var(--u)),12.3vw)] leading-[1.01] tracking-[calc(0.36*var(--u))] text-navy not-italic lg:row-start-2 lg:ms-68 lg:w-402">
-      <span class="block">{c.heading[0]}</span><span class="block">{c.heading[1]}</span>
+      <!-- Bug 161 (15 Oct 2026): the two Figma lines are forced only on the desktop grid; below 1024 the heading wraps on its own
+           (it took four short lines at 390) and under 480 it is capped at 8.6vw (style below). -->
+      <span class="lg:block">{c.heading[0]}</span>{' '}<span class="lg:block">{c.heading[1]}</span>
     </h2>
     <p class="m-0 font-gotham font-normal text-f15 leading-[calc(18.264*var(--u))] text-navy not-italic max-lg:mt-16 lg:row-start-3 lg:ms-68 lg:w-641 lg:text-center">{c.text}</p>
 
@@ -53,6 +55,10 @@ const c = content('media-hub/page', edition.locale).newsletter;
   /* Bug 134 (15 Oct 2026, Arabic only, desktop grid): the two Bold heading lines on 1.45 fill the 88 track, so the heading gets its
      own gap to the paragraph: --ar-gap-heading (global.css), the Home canvases' value. English keeps the Figma track slack. */
   @media (min-width: 1024px) { :global(html:lang(ar)) h2 { margin-bottom: var(--ar-gap-heading); } }
+  /* Bug 161 (15 Oct 2026): English phone heading in two lines ("Subscribe to / Our Newsletter" from 320px); the e-mail field keeps
+     12px inside its edges so the placeholder is not cut at the box. */
+  @media (max-width: 479.98px) { h2 { font-size: min(calc(36 * var(--u)), 8.6vw); } }
+  @media (max-width: 1023.98px) { #nl-email { padding-inline: 12px; text-overflow: ellipsis; } }
   /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
   @media (max-width: 479.98px) { :global(html:lang(ar)) h2 { font-size: min(calc(36 * 0.8 * var(--u)), 8vw); } }
 </style>

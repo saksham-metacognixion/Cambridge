@@ -31,21 +31,22 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
 
 <section class="docs" aria-labelledby={id}>
   <SectionIntro id={id} heading={d.heading} text={d.text} gap={3} minH={26} />
-  {slider ? (
-    <div class="hscroll slide" data-autoscroll="step" data-autoscroll-restore="no">
+  <!-- Bug 163 (15 Oct 2026): the slider is the desktop row only (display: none below 1024, where the grid below is shown instead;
+       autoscroll.ts leaves a hidden scroller alone), so phones and tablets get the same stacked list / 2-up grid as every other page. -->
+  {slider && (
+    <div class="hscroll slide desk" data-autoscroll="step" data-autoscroll-restore="no">
       <ul class="srow" role="list" aria-label={d.listLabel} data-loop-row>
         {doctors.map((doc: any) => (
           <li class="snap-start" data-loop-item><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
         ))}
       </ul>
     </div>
-  ) : (
-    <ul class="grid" role="list" aria-label={d.listLabel}>
-      {doctors.map((doc: any) => (
-        <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
-      ))}
-    </ul>
   )}
+  <ul class:list={['grid', slider && 'small']} role="list" aria-label={d.listLabel}>
+    {doctors.map((doc: any) => (
+      <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
+    ))}
+  </ul>
 </section>
 
 <script>
@@ -74,11 +75,12 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
   }
   @media (min-width: 1024px) {
     .slide { width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); }
+    .grid.small { display: none; }
   }
   @media (max-width: 1023.98px) {
-    /* Bug 143 (15 Oct 2026): the page wrappers put only 10 units (13.7px) between the CTA band above and this heading; 30 more here
-       gives the ~55px section spacing of the other stacked sections. */
-    .docs { padding-inline: 16px; padding-top: calc(30 * var(--u)); }
+    /* Bug 143 added a 30-unit padding-top here because the page wrappers put only 13.7px between sections; since Bug 156 the
+       wrappers carry the shared --stack-gap (global.css), so the row needs no spacing of its own. */
+    .docs { padding-inline: 16px; }
     /* Bug 143: the fixed 215-unit cards were centred in the gutter box (inset 48px at 390, 77px at 768) while the heading and intro
        run from gutter to gutter. The cells now fill the box (1 per row on phones, 2 on tablets, the Patient Hub rule) and each card
        is drawn at its cell's width: the card's own --u = cell width / 215 (below 1024 the page --u is a fixed px value, so the
@@ -88,7 +90,6 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
       .grid > li { container-type: inline-size; }
       .grid > li > :global(.card) { --u: calc(100cqw / 215); }
     }
-    .slide { margin-inline: -16px; scroll-padding-inline: 16px; }
-    .srow { padding-inline: 16px; gap: calc(20 * var(--u)); }
+    .slide.desk { display: none; }
   }
 </style>

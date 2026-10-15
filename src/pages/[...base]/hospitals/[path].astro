@@ -68,29 +68,29 @@ const healText = { ...shared.healing, ...(own?.healing.heading ? { heading: own.
     </div>
     {pending && <p class="pending-note" role="note">{pending}</p>}
     {own && (
-      <div id="environment" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(31 * var(--u))">
+      <div id="environment" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(31 * var(--u))">
         <EnvironmentBand edition={edition} c={envText} text={own.environment.text} video={own.video} />
       </div>
     )}
     {own && (
-      <div id="healing" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(54 * var(--u))">
+      <div id="healing" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(54 * var(--u))">
         <HealingGallery edition={edition} c={healText} text={own.healing.text} areas={own.healing.areas} />
       </div>
     )}
-    <div id="map" class="relative max-lg:mt-10 lg:mt-(--gap)" style={`--gap:calc(${own ? 36 : 31} * var(--u))`}>
+    <div id="map" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style={`--gap:calc(${own ? 36 : 31} * var(--u))`}>
       <MapBand c={shared.map} hospital={h} city={city} locale={loc} />
     </div>
-    <div id="care" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(66 * var(--u))">
+    <div id="care" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(66 * var(--u))">
       <CareCards edition={edition} c={careText} listLabel={shared.care.listLabel} button={shared.care.button} overrides={shared.care.cards} reveal />
     </div>
-    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">
       <ContactRecovery headTop={50} />
     </div>
-    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(58 * var(--u))">
+    <div id="doctors" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(58 * var(--u))">
       <DoctorsRow content={shared.doctors} id="hospital-doctors-heading" />
     </div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(41.54 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(41.54 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

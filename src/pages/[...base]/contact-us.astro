@@ -33,13 +33,13 @@ const sections = [
   <main>
     {
       sections.map(({ id, C, mt }) => (
-        <div id={id} class="relative lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+        <div id={id} class:list={['relative lg:mt-(--gap)', mt > 0 && 'max-lg:mt-(--stack-gap)']} style={`--gap:calc(${mt} * var(--u))`}>
           <C />
         </div>
       ))
     }
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(42 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(42 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

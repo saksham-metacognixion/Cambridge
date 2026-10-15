@@ -124,6 +124,13 @@ const pills = pillX.map((x, i) => {
     [data-news] :global([data-card]) { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
     [data-news] :global([data-card] > :not(:first-child)) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
   }
+  /* Bug 158 (15 Oct 2026): 768-1023 the three cards sat in one 396px column (the phone stack). Tablets get the 2-up step used by
+     HospitalCards / SubServiceGrid (cells of at least 240 units, 24-unit column gap), the cards fill their cells, so they sit 2 + 1.
+     Phones keep the centred stack. */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    [data-news-cards] { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); column-gap: calc(24 * var(--u)); row-gap: calc(40 * var(--u)); align-items: start; }
+    [data-news] :global([data-card]) { max-width: none; }
+  }
   /* Tabs: the shared .ui-pill rule (global.css); selected = the filled navy pill Figma uses in Care Support. */
   /* Tab switch, as on the live site: cards fade out, the set swaps, cards fade back in (script below). */
   @media (prefers-reduced-motion: no-preference) {

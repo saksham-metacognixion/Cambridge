@@ -34,6 +34,16 @@ const items = allDoctors.map((d) => {
   .grid { list-style: none; margin: 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u)); }
   .grid > li { display: flex; }
   .grid > li[hidden] { display: none; }
+  /* Bug 159 (15 Oct 2026): the fixed 215-unit cards were centred in the gutter box (48px / 77px margins at 390 / 768) while the
+     filters span it; the cells fill the box (1 per row on phones, 2 on tablets) and each card scales to its cell (DoctorsRow, bug 143). */
+  @media (max-width: 1023.98px) {
+    .grid { padding-inline: 16px; }
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.card) { --u: calc(100cqw / 215); }
+    }
+  }
   @media (min-width: 1024px) {
     .grid { width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; justify-content: start; grid-template-columns: repeat(4, calc(215 * var(--u))); column-gap: calc(31.667 * var(--u)); }
   }

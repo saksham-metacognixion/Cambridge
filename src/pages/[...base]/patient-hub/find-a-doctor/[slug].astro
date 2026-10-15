@@ -29,7 +29,7 @@ const fill = (s: string) => s.replace('{name}', name).replace('{title}', t(docto
   <main>
     <DoctorProfile doctor={doctor} />
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(35 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(35 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

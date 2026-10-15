@@ -29,15 +29,15 @@ const c = content('doctors/page', edition.locale);
   <main>
     <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
     <div data-doctor-filters data-region={edition.region} class="lg:mx-auto lg:max-w-[calc(var(--max-w)*1px)]">
-      <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(30 * var(--u))"><DoctorFilters /></div>
-      <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(31 * var(--u))"><DoctorGrid /></div>
+      <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(30 * var(--u))"><DoctorFilters /></div>
+      <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(31 * var(--u))"><DoctorGrid /></div>
       <script type="application/json" data-hospitals set:html={JSON.stringify(filterHospitals)} />
     </div>
-    <div id="recovery" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(49.5 * var(--u))">
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(49.5 * var(--u))">
       <ContactRecovery content={c.recovery} />
     </div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
     <Footer />
   </div>
   <script>

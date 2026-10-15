@@ -69,6 +69,10 @@
    bug 055): 18 Figma px (24.6px at 1440, the Figma Home / Find a Doctor gap), kept within 24-32px at every width so the
    buttons never sit against the text. Applied as a margin after the paragraph, in flow, so longer text pushes them down. */
 :root { --hero-btn-gap: clamp(24px, calc(18 * var(--u)), calc(32px * var(--up))); }
+/* Bug 156 (15 Oct 2026): below 1024 every page stacks its sections in flow, and the page wrappers used a fixed 10 units (13.7px)
+   between them because each section's desktop spacing comes from absolute Figma y-positions. ONE stacked-section gap for every
+   page wrapper (and before the footer): 40px on phones, growing to 56px on tablets. Desktop keeps the per-section Figma gaps. */
+:root { --stack-gap: clamp(40px, 7vw, 56px); }
 
 @theme {
   /* Full navigation from 1200px up, hamburger below (scope 2.8). Gives the nav: / max-nav: variants. */
@@ -317,7 +321,8 @@ body {
      height (the top of the art is cropped first, never the feet), and the art is anchored to that edge. */
   .hero-media { position: relative; width: 100%; height: var(--hero-h, min(72vw, calc(300 * var(--u)))); aspect-ratio: var(--hero-aspect, auto); max-height: var(--hero-max-h, none); }
   .hero-media img { position: absolute; top: 0; inset-inline-start: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: var(--hero-pos, 80% 30%); }
-  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); }
+  /* Bug 167 (15 Oct 2026): 16px side gutter, the page gutter below 1024 (was 24 units = 33px). */
+  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) 16px calc(40 * var(--u)); }
 }
 @media (min-width: 1024px) { .hero-copy { display: contents; } }
 /* Inner-page hero title (Figma Gotham Medium 39 on 37px lines: PageHero, ContactHero, FeedbackHero). Bug 038: below 1024px
@@ -328,7 +333,7 @@ body {
    wider than the whole column on its own, so a word is never broken to tidy a line. */
 .hero-title { overflow-wrap: break-word; word-break: normal; }
 @media (max-width: 1023.98px) {
-  .hero-title { font-size: min(calc(39 * var(--u)), 8vw); line-height: calc(37 / 39); }
+  .hero-title { font-size: min(calc(39 * var(--u)), 8vw); line-height: calc(37 / 39); text-wrap: balance; /* bug 168: no one-word last line ("Cambridge Hospital Abu / Dhabi" at 768) */ }
 }
 
 @media (min-resolution: 2dppx) { :root { --hair-dpr: 2; } }

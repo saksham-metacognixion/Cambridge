@@ -45,10 +45,12 @@ const imax = Math.max(...icons.map((i) => i.size)); // the largest tile icon: ph
 ---
 
 <section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>
-  <div class="stage max-lg:px-[calc(16*var(--u))]">
+  <div class="stage max-lg:px-[16px]">
     <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-(--radius-panel) max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
       <h2 class="m-0 font-gotham text-f28 leading-[calc(27.25*var(--u))] text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-52 lg:top-(--ht) lg:w-331 lg:h-109" style={`--ht:calc(${headTop} * var(--u))`}>
-        <span class="font-normal">{c.lead}</span><span class="font-medium">{c.emphasis[0]}<br />{c.emphasis[1]}</span>
+        <!-- Bug 164 (15 Oct 2026): the break between the two emphasis strings is Figma's desktop line; below 1024 the heading wraps
+             on its own (the forced break left "step of / the journey." stubs on phones). -->
+        <span class="font-normal">{c.lead}</span><span class="font-medium">{c.emphasis[0]}<br class="max-lg:hidden" />{' '}{c.emphasis[1]}</span>
       </h2>
       <p class="m-0 font-gotham font-normal text-f12 leading-14 text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-53 lg:top-172 lg:w-324 lg:h-44">{c.text}</p>
 
@@ -110,6 +112,8 @@ const imax = Math.max(...icons.map((i) => i.size)); // the largest tile icon: ph
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: calc(433 * var(--u)) calc(266.622 * var(--u)); mask-size: calc(433 * var(--u)) calc(266.622 * var(--u));
     -webkit-mask-position: calc(-17.395 * var(--u)) calc(127.28 * var(--u)); mask-position: calc(-17.395 * var(--u)) calc(127.28 * var(--u)); mask-mode: alpha;
   }
+  /* Bug 164 (15 Oct 2026): English phone heading 22 units (was 28 = 38px at 390, six lines); the box stays under a third of the screen. */
+  @media (max-width: 479.98px) { .box > h2 { font-size: calc(20 * var(--u)); line-height: 1.15; text-wrap: balance; } }
   /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
   @media (max-width: 479.98px) { :global(html:lang(ar)) .box > h2 { font-size: calc(28 * 0.65 * var(--u)); } }
 </style>

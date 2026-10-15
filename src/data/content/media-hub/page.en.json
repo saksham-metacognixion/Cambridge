@@ -96,7 +96,7 @@
     ],
     "text": "Sign up to receive our newsletter and stay up to date with our latest news and more!",
     "emailLabel": "Email",
-    "emailPlaceholder": "youremail123@gmail.com",
+    "emailPlaceholder": "Your email",
     "submit": "SUBSCRIBE"
   },
   "_note": "Media Hub (Figma 100:5522). Text = Website Content - Suhad/Navigation Bar/EN - Media Hub.md (5 Oct 2026): hero 'Stay Informed' (one line), 'Explore Our Media' without a description, categories in the recommended order (Events, Conferences, Press Releases, Health Articles; the four Figma tiles follow that order), newsletter text. meta.* PLACEHOLDER."

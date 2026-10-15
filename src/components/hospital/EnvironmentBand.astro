@@ -57,7 +57,7 @@ const closeLabel = commonText(edition.locale).close as string;
      135 top margin collapsed through the page's 31 gap above this section, so the video (pulled up 135) sat on the hero's bottom. */
   .env { display: flow-root; font-family: var(--font-gotham); font-style: normal; }
   .band { position: relative; margin-top: calc(135 * var(--u)); background: var(--color-veil); }
-  .in { position: relative; box-sizing: border-box; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; padding: 0 calc(24 * var(--u)) calc(35.67 * var(--u)); display: flex; flex-direction: column; align-items: center; }
+  .in { position: relative; box-sizing: border-box; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; padding: 0 16px calc(35.67 * var(--u)); /* bug 167: the 16px page gutter below 1024 (was 24 units = 33px) */ display: flex; flex-direction: column; align-items: center; }
   .pattern { display: none; }
   .video { position: relative; z-index: 1; flex: none; width: calc(565 * var(--u)); max-width: 100%; aspect-ratio: 565 / 348; margin-top: calc(-135 * var(--u)); border-radius: var(--radius-card); overflow: hidden; background: #e7e7e7; }
   .poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }

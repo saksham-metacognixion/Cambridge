@@ -100,7 +100,9 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
        tiles run off the screen edge instead of stopping at the stage edge; the tiles keep their Figma x on the stage. */
     .stage { overflow-x: visible; }
     .hscroll.dpos { margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
-    .row { margin-inline-start: calc(-22 * var(--u) + var(--gutter)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
+    /* Bug 157 (15 Oct 2026, client): Figma draws tile 1 cut at the frame's start edge (row x -22, label "adiology"). The row now
+       opens one tile pitch (113) in, so tile 1 sits where Figma's first whole tile is (x 91) and only the far side peeks. */
+    .row { margin-inline-start: calc(91 * var(--u) + var(--gutter)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
     /* Bug 138: Arabic tile row (absolute tiles, so the row cannot size from them) and its grid track = --ar-tile-h; the 59u bottom
        track stays, so the Arabic section is 30u taller than Figma's 356. */
     :global(html:lang(ar)) .row { height: calc(var(--ar-tile-h) * var(--u)); }

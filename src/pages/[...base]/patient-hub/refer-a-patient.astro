@@ -27,10 +27,10 @@ const c = content('refer-patient/page', edition.locale);
   </div>
   <main>
     <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
-    <div id="referral" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(35 * var(--u))"><ReferForm /></div>
-    <div id="doctors" class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(32 * var(--u))"><DoctorsRow content={c.doctors} /></div>
+    <div id="referral" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(35 * var(--u))"><ReferForm /></div>
+    <div id="doctors" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(32 * var(--u))"><DoctorsRow content={c.doctors} /></div>
   </main>
-  <div class="relative max-lg:mt-10 lg:mt-(--gap)" style="--gap:calc(44.54 * var(--u))">
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(44.54 * var(--u))">
     <Footer />
   </div>
 </BaseLayout>

@@ -32,6 +32,9 @@ const c = content('home/recovery', edition.locale);
     .r-title { grid-row: 2; margin-inline-start: calc(176 * var(--u)); width: calc(701 * var(--u)); min-height: calc(27 * var(--u)); }
     .r-sub { grid-row: 4; margin-inline-start: calc(238 * var(--u)); width: calc(577 * var(--u)); min-height: calc(28 * var(--u)); }
     .r-btns { grid-row: 6; width: 100%; }
+    /* Bug 134 (15 Oct 2026, Arabic only): spacer title -> text = --ar-gap-heading (global.css, 14u) instead of Figma's 6, text -> buttons
+       20 instead of 17, so the Bold heading on 1.45 lines clears its paragraph (about 20px box gap at 1440); the tracks grow as before. */
+    :global(html:lang(ar)) .stage { grid-template-rows: calc(38 * var(--u)) minmax(calc(27 * var(--u)), auto) var(--ar-gap-heading) minmax(calc(28 * var(--u)), auto) calc(20 * var(--u)) calc(30 * var(--u)) calc(40 * var(--u)); }
   }
   @media (max-width: 1023.98px) {
     .stage { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; padding: 32px 16px; box-sizing: border-box; }

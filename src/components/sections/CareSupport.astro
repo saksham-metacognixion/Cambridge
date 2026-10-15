@@ -85,6 +85,8 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     .dpos { position: relative; align-self: start; margin-inline-start: calc(var(--x) * var(--u)); width: calc(var(--w) * var(--u)); min-height: calc(var(--h) * var(--u)); }
     h2.dpos { grid-row: 2; }
     p.dpos { grid-row: 4; }
+    /* Bug 134 (15 Oct 2026, Arabic only): heading -> text spacer = --ar-gap-heading (global.css) instead of Figma's 7. */
+    :global(html:lang(ar)) .stage { grid-template-rows: calc(47 * var(--u)) minmax(calc(28 * var(--u)), auto) var(--ar-gap-heading) minmax(calc(28 * var(--u)), auto) calc(77 * var(--u)) calc(110 * var(--u)) calc(59 * var(--u)); }
     .hscroll.dpos { grid-row: 6; }
     /* Beyond 1440px (responsive audit 9 Oct 2026): the scroller takes the page gutter on both sides (global.css --gutter) so the
        tiles run off the screen edge instead of stopping at the stage edge; the tiles keep their Figma x on the stage. */

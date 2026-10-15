@@ -54,6 +54,9 @@ const cards = (s.cards as { image: string; alt: string; title: string; desc: str
     .stage { height: auto; min-height: calc(var(--h) * var(--u)); box-sizing: border-box; padding-bottom: calc(39 * var(--u)); display: grid; grid-template-columns: 100%; grid-template-rows: calc(42 * var(--u)) auto auto calc(36 * var(--u)) auto; align-content: start; justify-items: start; }
     h2 { grid-row: 2; }
     p { grid-row: 3; }
+    /* Bug 134 (15 Oct 2026, Arabic only): the two Arabic heading lines fill the 64 box (2 x 1.45 lines), so the heading needs its own
+       gap to the paragraph: --ar-gap-heading (global.css, the same gap as the other Home canvases). English keeps the box slack. */
+    :global(html:lang(ar)) h2 { margin-bottom: var(--ar-gap-heading); }
     .cards { grid-row: 5; }
     .cards { display: grid; justify-content: start; margin-inline-start: calc(49 * var(--u)); column-gap: 0; row-gap: calc(32 * var(--u)); grid-template-columns: calc(222 * var(--u)) calc(24 * var(--u)) calc(222 * var(--u)) calc(20 * var(--u)) calc(222 * var(--u)) calc(24 * var(--u)) calc(222 * var(--u)); }
     .cards > li:nth-child(4n + 1) { grid-column: 1; }

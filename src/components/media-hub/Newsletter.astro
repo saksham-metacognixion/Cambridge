@@ -50,4 +50,7 @@ const c = content('media-hub/page', edition.locale).newsletter;
   .nl-status :global(.nl-msg) { margin: 0; font-size: calc(11 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-navy); }
   .nl-status :global(.nl-msg[hidden]) { display: none; }
   .nl button:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 2px; }
+  /* Bug 134 (15 Oct 2026, Arabic only, desktop grid): the two Bold heading lines on 1.45 fill the 88 track, so the heading gets its
+     own gap to the paragraph: --ar-gap-heading (global.css), the Home canvases' value. English keeps the Figma track slack. */
+  @media (min-width: 1024px) { :global(html:lang(ar)) h2 { margin-bottom: var(--ar-gap-heading); } }
 </style>

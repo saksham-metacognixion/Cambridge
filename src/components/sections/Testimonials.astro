@@ -73,6 +73,8 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
     .t-title { grid-row: 2; margin-inline-start: calc(306 * var(--u)); width: calc(439 * var(--u)); min-height: calc(27 * var(--u)); }
     .t-sub { grid-row: 4; margin-inline-start: calc(237 * var(--u)); width: calc(578 * var(--u)); min-height: calc(28 * var(--u)); }
     .t-btn { grid-row: 7; justify-self: center; margin-inline: 0; }
+    /* Bug 134 (15 Oct 2026, Arabic only): title -> text spacer = --ar-gap-heading (global.css) instead of Figma's 9. */
+    :global(html:lang(ar)) .stage { grid-template-rows: calc(34 * var(--u)) minmax(calc(27 * var(--u)), auto) var(--ar-gap-heading) minmax(calc(28 * var(--u)), auto) calc(19 * var(--u)) calc(274 * var(--u)) calc(30 * var(--u)); }
     .t-scroller { grid-row: 6; margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
     .t-row { margin-inline-start: calc(-96 * var(--u) + var(--gutter)); }
   }

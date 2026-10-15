@@ -177,10 +177,21 @@ html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans
    headings now take Bold, running text keeps Medium (the best contrast the licensed files allow; a Regular / Light file is an
    open client dependency, docs/open-decisions.md B130). font-synthesis: Latin words inside an Arabic heading ask Gotham for 700;
    Gotham stops at Medium (no Bold file), and the browser must not fake it. The header's fixed-box nav keeps its own metrics
-   (single-line items); the footer and the mobile menu are flow layouts and take the running-text height. */
+   (single-line items); the footer and the mobile menu are flow layouts and take the running-text height.
+   Bug 130 re-opened (15 Oct 2026): verified in Chrome, WebKit and Firefox that weights 300 / 400 / 500 all resolve to the
+   Medium file and 600 / 700 to Bold, so body text cannot get lighter until the client supplies GE SS Two Regular / Light
+   (add an @font-face at 400 / 300 above). Known limit: the recovery card heading ("Your recovery matters to us",
+   ContactRecovery.astro) is a lighter lead span + a `.font-medium` emphasis span, so on Arabic pages the whole heading is
+   Medium, the same face as its paragraph. Making the emphasis Bold was tried and reverted: Bold is wider, the heading wraps to
+   four lines in its fixed Figma box (331u) at 1024-1920 and runs into the paragraph below (docs/open-decisions.md B130). */
 html:lang(ar) { font-synthesis-weight: none; }
 html:lang(ar) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading) { font-weight: 700 !important; line-height: 1.45 !important; }
 html:lang(ar) :is(main, footer, .menu) :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+/* Bug 134 (15 Oct 2026): the gap between a heading and its intro paragraph on the Arabic Home canvases (Services, Doctors, Care
+   Support, Testimonials, Recovery) and the Media Hub newsletter card. The Figma spacer tracks (6-9 scaled px) were drawn for the
+   Gotham headings; with the 1.45 / 1.65 Arabic line heights (bug 129) the heavier GE SS Two Bold heading sat on its paragraph.
+   One value, used by each component's `html:lang(ar)` desktop override (>= 1024px); English keeps the Figma tracks. */
+html:lang(ar) { --ar-gap-heading: calc(14 * var(--u)); }
 
 html { -webkit-text-size-adjust: 100%; }
 body {

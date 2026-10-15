@@ -28,7 +28,9 @@ Read this file at the start of every session and follow it for all work.
   (bug 131, 15 Oct 2026: the subject runs off the viewport's end edge, a cut edge facing the copy is feathered; BannerArt.astro).
 - Home "Bringing Expert Care Closer" (bug 133, 15 Oct 2026, client design, no Figma frame): no hospital list; centred map with
   pin buttons that open a hospital card on hover / tap / focus (`src/scripts/hospital-map.ts`), map + pin entrance animation,
-  nothing moves with prefers-reduced-motion.
+  nothing moves with prefers-reduced-motion. Since the second brief (15 Oct, B133b) the section reproduces the client's
+  reference `cambridge-locations-2.html`: outline draw-in, pin drop + bob + pulse, counters ON the map, floating card, ONE
+  Abu Dhabi pin whose card lists Abu Dhabi Hospital + Al Mudeef Centre. Never make `.mapbox` a CSS container (`--u` is cqw).
 - Doctors / Testimonials rows overflow the frame in Figma: CSS scroll-snap rows, swipe/scroll, no arrows or
   dots unless Figma shows them. Exception (user decision, 2 Oct 2026, matching the live site): Testimonials and
   Care Support rows auto-scroll in a slow seamless loop (`src/scripts/autoscroll.ts`) — pauses on hover/focus/touch,

@@ -92,7 +92,7 @@ Lighthouse after (local, one run): `/ae/` 94 / 100 (Home was already 94 on mobil
 | Item | Why |
 |---|---|
 | Our Hospitals hero map (`I1_Six-Locations`, `I1_Three-Locations`, `-2`) | The folder maps have the city names and pins drawn into the image in English. The Arabic pages would show English city names (the site draws translated labels and region-filtered pins over the map), and the pins would double up. Needs the maps without baked labels, or a decision to accept English labels on Arabic pages. |
-| SAICO in the Home strip | The folder logo is a wide wordmark; the Figma slot is a tall 37 x 62 box made for the round emblem, so it renders small. Widening the slot is a layout change. |
+| SAICO in the Home strip | The folder logo is a wide wordmark; the Figma slot is a tall 37 x 62 box made for the round emblem, so it renders small. Widening the slot is a layout change. **Resolved by bug 137 (15 Oct 2026):** the slot is 99 x 44.6 at the lockup's ratio, dividers re-centred; Daman / Almadallah / Nextcare now come from the larger Figma-export / 14 Oct client files (`docs/open-decisions.md` B137). |
 | International Patients Global / UAE | Folder has only the red-shemagh (KSA) version. |
 | Your Opinion Matters KSA | Folder has one file, a nurse without head covering; KSA keeps the folder's KSA FAQ man. |
 | Leadership portraits, Meet our Team, Dr Wael Alsayed, Tabler icons, Threads, second Dr Ahmed Elenani photo | No slot on the site. |

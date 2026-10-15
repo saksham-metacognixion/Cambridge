@@ -1,10 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import { px, vwSizes } from '../../lib/scale';
-import mapVector from '../../assets/facilities/map-vector.svg';
-import pin4243 from '../../assets/facilities/map-pin.svg';
-import pin4342 from '../../assets/facilities/map-pin-43x42.svg';
-import pin32 from '../../assets/facilities/map-pin-32.svg';
+import { px } from '../../lib/scale';
+import mapRaw from '../../assets/facilities/map-vector.svg?raw';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
@@ -14,56 +11,80 @@ import { hospitalHref } from '../../lib/hospitals';
 /*
  * Home "Bringing Expert Care Closer to You Across the Region" (bug 133, client design 15 Oct 2026; no Figma frame for this
  * version). The Figma section (93:894, page y 2054-2842) had a white hospital list beside the map; the client asked for the
- * list to go, the title centred above the map, the map centred, and the hospitals reachable from their PINS instead:
- * hover / tap / keyboard focus on a pin opens a small card (photo, name, city, Book Appointment, Visit Page). The map rises in
- * when the section scrolls into view and the pins drop in one after the other (scripts/hospital-map.ts + CSS below; nothing
- * moves with prefers-reduced-motion, every pin still works). The navy band, the heading style, the map art, the pin art and
- * the six counters are the Figma ones; the stats row now sits centred under the map.
+ * list to go, the title centred above the map, the map centred, and the hospitals reachable from their PINS instead.
+ *
+ * 15 Oct 2026 (client reference `cambridge-locations-2.html`, reproduced here as closely as possible):
+ *  - entrance once 25 % of the section is in view (scripts/hospital-map.ts adds `.in`; never replays): the title fades up
+ *    (0.8 s), the map outline draws itself in (2.2 s, stroke-dashoffset) and its fill fades in after 1.7 s, every pin drops
+ *    from 140 map px above with a two-step bounce (0.95 s, 1.1 s + 0.2 s per pin), then bobs (2.6 s loop) over a pulse ring at
+ *    its tip, its city label fades in 0.6 s after the drop starts; the six counters sit ON the map (2 x 3, in the empty Saudi
+ *    interior), fade up 1.6 s + 0.12 s per counter after the entrance and count 0 -> value over 2 s, ease-out cubic, 1.7 s +
+ *    0.12 s per counter after it (the reference's own counter, not the Greenshift one of the other pages).
+ *  - a pin = the reference's vector pin (outlined teardrop + dot) in the brand colours (section navy fill, cyan outline and
+ *    dot), sized to the Figma pin box so the tips stay where the 9 Oct alignment put them; hover / focus / open = 1.18 scale
+ *    from the tip, solid cyan with a white dot.
+ *  - hover (mouse), tap (touch), focus / Enter / Space (keyboard) open the hospital card: the removed list item (photo, name,
+ *    city, Book Appointment, Visit Page) as the reference's floating card (white, 430 wide max, photo 128 x 112 beside the text,
+ *    arrow on the pin's axis), above the pin when there is room, else under it, kept inside the map's width; it fades and slides
+ *    in / out over 0.22 s, and a card hovered keeps itself open (260 ms grace from pin to card). The Abu Dhabi pin is ONE pin
+ *    whose card lists both Abu Dhabi Hospital and Al Mudeef Centre (the client's point 4; the 9 Oct fanned second pin is gone).
+ *  - nothing moves with prefers-reduced-motion (html.aos absent): everything is visible at once, the counters show their values.
+ * The navy band, the heading style, the map art (the Figma silhouette, now also outlined like the reference's countries), the
+ * pin positions, the city labels and the six counters are the Figma / live ones; cards come from hospitals.json.
  */
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('home/facilities', edition.locale);
 // Map group origin in Figma (page 454, 2226); pins and labels below are Figma page px, converted to map px (478 x 382 vector).
 const MX = 454;
 const MY = 2226;
-// Design only; label text comes from home/facilities JSON (mapLabels), zipped by index.
+// The Figma map silhouette as an inline path so its outline can draw itself in (one path, four sub-paths).
+const mapPath = mapRaw.match(/\sd="([^"]+)"/)?.[1];
+if (!mapPath) throw new Error('home/facilities: map-vector.svg has no path');
+// The reference pin: tip at (0, 0), head centre (0, -27) r 15, 30 wide, 42 tall; scaled per pin to the Figma pin art's width.
+const PIN_D = 'M0 0C-4-7-15-15-15-27A15 15 0 1 1 15-27C15-15 4-7 0 0Z';
+// Design only; label text comes from home/facilities JSON (mapLabels), zipped by index. `pin` = the pin whose drop delay the
+// label follows (reference: a label fades in 0.6 s after its pin starts dropping).
 const labelPos = [
-  { x: 794, y: 2320, w: 55 },
-  { x: 816, y: 2345, w: 69 },
-  { x: 858, y: 2432, w: 70 },
-  { x: 931, y: 2400, w: 69 },
-  { x: 580.18, y: 2471, w: 69 },
+  { x: 794, y: 2320, w: 55, pin: 'dhahran' },
+  { x: 816, y: 2345, w: 69, pin: 'al-khobar' },
+  { x: 858, y: 2432, w: 70, pin: 'abu-dhabi' },
+  { x: 931, y: 2400, w: 69, pin: 'al-ain' },
+  { x: 580.18, y: 2471, w: 69, pin: 'jeddah' },
 ];
 // UAE pins and labels (location alignment fix, 9 Oct 2026): in Figma the pin labelled "Abu Dhabi" stood about where Dubai is on
 // this drawing and Al Ain sat south of the Oman border corner. Moved by the pin tip to the hospitals' positions (hospitals.json
-// location, projected on the drawing's coastline): Abu Dhabi tip (433, 193), Al Mudeef (421, 203, fanned like Dhahran / Al
-// Khobar), Al Ain (460, 196) at the border. The KSA pins are as in Figma. Same targets on the Our Hospitals hero map
-// (components/hospitals/HeroMap.astro).
+// location, projected on the drawing's coastline): Abu Dhabi tip (433, 193), Al Ain (460, 196) at the border. The KSA pins are
+// as in Figma. Same targets on the Our Hospitals hero map (components/hospitals/HeroMap.astro).
 // Country of each map label / pin (Figma order: Dhahran, Al Khobar, Abu Dhabi, Al Ain, Jeddah | pins: Dhahran, Al Khobar,
-// Jeddah, Abu Dhabi, Al Mudeef, Al Ain). UAE / KSA editions show their own country's only (bug 048); the map art stays whole.
+// Jeddah, Abu Dhabi, Al Ain). UAE / KSA editions show their own country's only (bug 048); the map art stays whole.
 const labelRegion = ['sa', 'sa', 'ae', 'ae', 'sa'];
 const own = (r: string) => edition.region === 'global' || r === edition.region;
-const labels = labelPos.map((d, i) => ({ ...d, t: c.mapLabels[i] as string, r: labelRegion[i] })).filter((l) => own(l.r));
-// One pin per hospital (slug = hospitals.json): the card content comes from the hospital record, never duplicated here.
+// One pin per place; `group` = the hospitals on its card (slugs = hospitals.json; the card content comes from the record, never
+// duplicated here). Box = the Figma pin box (x, y, w, h in page px); tip / span = where the tip sits in that box and how wide the
+// Figma teardrop is (the 42 x 43 and 43 x 42 arts: tip 39.42 / 38.5 from the top, 28 / 28.67 wide; the 32 art: 29.33, 21.33).
 const pinDefs = [
-  { slug: 'dhahran', f: pin4243, x: 754, y: 2315.81, w: 42, h: 43 },
-  { slug: 'al-khobar', f: pin4243, x: 775, y: 2338.81, w: 42, h: 43 },
-  { slug: 'jeddah', f: pin4243, x: 552, y: 2432.81, w: 42, h: 43 },
-  { slug: 'abu-dhabi', f: pin4342, x: 865.5, y: 2377, w: 43, h: 42 },
-  { slug: 'al-mudeef-abu-dhabi', f: pin4342, x: 853.5, y: 2387, w: 43, h: 42 },
-  { slug: 'al-ain', f: pin32, x: 898, y: 2390, w: 32, h: 32 },
+  { slug: 'dhahran', group: ['dhahran'], x: 754, y: 2315.81, w: 42, h: 43, tip: 39.42, span: 28 },
+  { slug: 'al-khobar', group: ['al-khobar'], x: 775, y: 2338.81, w: 42, h: 43, tip: 39.42, span: 28 },
+  { slug: 'jeddah', group: ['jeddah'], x: 552, y: 2432.81, w: 42, h: 43, tip: 39.42, span: 28 },
+  { slug: 'abu-dhabi', group: ['abu-dhabi', 'al-mudeef-abu-dhabi'], x: 865.5, y: 2377, w: 43, h: 42, tip: 38.5, span: 28.67 },
+  { slug: 'al-ain', group: ['al-ain'], x: 898, y: 2390, w: 32, h: 32, tip: 29.33, span: 21.33 },
 ];
+const hospital = (slug: string) => {
+  const h = hospitalsData.hospitals.find((x) => x.slug === slug);
+  if (!h) throw new Error(`home/facilities: unknown hospital slug "${slug}"`);
+  const brand = t(h.brand, edition.locale, 'hospitals');
+  const city = t(h.city, edition.locale, 'hospitals');
+  // "Visit Page" -> the hospital's detail page (Figma 112:7721); "Book Appointment" opens the pop-up with the hospital noted.
+  return { slug, region: h.region, img: img(h.photo, edition.region), brand, city, alt: `${brand} ${city}`, visitHref: hospitalHref(slug, edition) };
+};
 const pins = pinDefs
-  .map((p) => {
-    const h = hospitalsData.hospitals.find((x) => x.slug === p.slug);
-    if (!h) throw new Error(`home/facilities: unknown hospital slug "${p.slug}"`);
-    const brand = t(h.brand, edition.locale, 'hospitals');
-    const city = t(h.city, edition.locale, 'hospitals');
-    // "Visit Page" -> the hospital's detail page (Figma 112:7721); "Book Appointment" opens the pop-up with the hospital noted.
-    return { ...p, region: h.region, img: img(h.photo, edition.region), brand, city, alt: `${brand} ${city}`, visitHref: hospitalHref(p.slug, edition) };
-  })
-  .filter((p) => own(p.region));
+  .map((p) => ({ ...p, rows: p.group.map(hospital) }))
+  .filter((p) => own(p.rows[0].region))
+  .map((p, i) => ({ ...p, i, d: 1.1 + i * 0.2, alt: p.rows.map((r) => r.alt).join(', ') }));
+const delayOf = (slug: string) => pins.find((p) => p.slug === slug)?.d ?? 1.1;
+const labels = labelPos.map((d, i) => ({ ...d, t: c.mapLabels[i] as string, r: labelRegion[i] })).filter((l) => own(l.r));
 
-// Number + label come from home/facilities JSON (stats), in the Figma order (3 x 2).
+// Number + label come from home/facilities JSON (stats), in the Figma order (2 x 3 on the map).
 const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: s.number, l: s.label }));
 ---
 
@@ -75,119 +96,179 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
          positions on Arabic pages (Jeddah on the west coast); only the label text is Arabic. -->
     <div class="mapwrap">
       <div class="mapbox">
-        <div class="mapin" dir="ltr">
-          <img class="pm" src={mapVector.src} width={px(478)} height={px(382.084)} alt={c.mapAlt} loading="lazy" decoding="async" style="--x:0;--y:0;--w:478;--h:382.084" />
+        <div class="mapin" dir="ltr" data-mapin>
+          <svg class="pm map" viewBox="0 0 478 382.084" preserveAspectRatio="none" role="img" aria-label={c.mapAlt} style="--x:0;--y:0;--w:478;--h:382.084">
+            <path class="country" pathLength="1" d={mapPath} />
+          </svg>
           {labels.map((l) => (
-            <span class="pm font-gotham font-medium leading-[normal] text-white whitespace-nowrap not-italic" aria-hidden="true" style={`--x:${l.x - MX};--y:${l.y - MY};--w:${l.w}`}>{l.t}</span>
+            <span class="pm lbl font-gotham font-medium leading-[normal] text-white whitespace-nowrap not-italic" aria-hidden="true" style={`--x:${l.x - MX};--y:${l.y - MY};--w:${l.w};--d:${delayOf(l.pin)}s`}>{l.t}</span>
           ))}
-          {pins.map((p, i) => (
-            <div class="spot pm" style={`--x:${p.x - MX};--y:${p.y - MY};--w:${p.w};--h:${p.h};--i:${i}`} data-spot>
-              <button type="button" class="pin hit" aria-expanded="false" aria-controls={`hm-card-${p.slug}`} aria-label={p.alt}>
-                <img src={p.f.src} width={px(p.w)} height={px(p.h)} alt="" loading="lazy" decoding="async" />
-              </button>
-              <div class="hcard" id={`hm-card-${p.slug}`} role="group" aria-label={p.alt} dir={edition.dir}>
-                <div class="hc-in bg-white rounded-(--radius-card) text-navy">
-                  <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={p.img} formats={['avif']} fallbackFormat="webp" width={px(176)} height={px(138)} widths={[px(176), px(176) * 2]} sizes={vwSizes(176)} loading="lazy" decoding="async" alt={p.alt} /></div>
-                  <p class="m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]">
-                    <span class="block text-f12 leading-15 text-navy-alt">{p.brand}</span>
-                    <span class="block text-f10 leading-16 text-body">{p.city}</span>
-                  </p>
-                  <div class="actions">
-                    <a href={c.book.href} data-hospital={p.slug} class="ui-btn ui-btn-sm hit btn-fill" aria-label={`${c.book.label}: ${p.alt}`}>{c.book.label}</a>
-                    <a href={p.visitHref} aria-label={`${c.visit.label}: ${p.alt}`} class="ui-btn ui-btn-sm hit btn-outline hair-50 border-navy text-navy">{c.visit.label}</a>
-                  </div>
+          {pins.map((p) => (
+            <div class="spot pm" style={`--x:${p.x - MX};--y:${p.y - MY};--w:${p.w};--h:${p.h};--d:${p.d}s;--tip:${p.tip}`} data-spot>
+              <div class="drop">
+                <span class="pulse" aria-hidden="true"></span>
+                <div class="bob">
+                  <button type="button" class="pin hit" aria-expanded="false" aria-controls={`hm-card-${p.slug}`} aria-label={p.alt}>
+                    <svg class="shape" viewBox={`${-p.w / 2} ${-p.tip} ${p.w} ${p.h}`} style={`transform-origin:50% ${((p.tip / p.h) * 100).toFixed(2)}%`} aria-hidden="true" focusable="false">
+                      <g transform={`scale(${(p.span / 30).toFixed(4)})`}>
+                        <path d={PIN_D} />
+                        <circle cx="0" cy="-27" r="5" />
+                      </g>
+                    </svg>
+                  </button>
                 </div>
+              </div>
+              <div class="hcard" id={`hm-card-${p.slug}`} role="group" aria-label={p.alt} dir={edition.dir}>
+                {p.rows.map((r) => (
+                  <div class="hrow">
+                    <div class="imgw [&_picture]:block [&_picture]:h-full"><Picture class="block w-full h-full object-cover" src={r.img} formats={['avif']} fallbackFormat="webp" width={256} height={224} widths={[128, 256]} sizes="(max-width: 480px) 96px, 128px" loading="lazy" decoding="async" alt={r.alt} /></div>
+                    <div class="hbody">
+                      <p class="m-0 font-gotham font-medium not-italic whitespace-normal [word-break:break-word]">
+                        <span class="block text-f12 leading-15 text-navy-alt">{r.brand}</span>
+                        <span class="block text-f10 leading-16 text-body">{r.city}</span>
+                      </p>
+                      <div class="actions">
+                        <a href={c.book.href} data-hospital={r.slug} class="ui-btn ui-btn-sm hit btn-fill" aria-label={`${c.book.label}: ${r.alt}`}>{c.book.label}</a>
+                        <a href={r.visitHref} aria-label={`${c.visit.label}: ${r.alt}`} class="ui-btn ui-btn-sm hit btn-outline hair-50 border-navy text-navy">{c.visit.label}</a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
+
+          <!-- Counters on the map (reference: 2 columns in the Saudi interior, sized with the map). Screen readers read the
+               sr-only value; the animated span is aria-hidden and holds the final text until the entrance zeroes it. -->
+          <div class="stats" dir={edition.dir} style="--sx:256;--sy:224;--sw:180">
+            {stats.map((s, i) => (
+              <p class="stat m-0 font-gotham font-medium text-white not-italic whitespace-normal" style={`--i:${i}`}>
+                <span class="sr-only">{s.n}</span>
+                <span data-hm-count aria-hidden="true" class="num block text-cyan">{s.n}</span>
+                <span class="lbl-stat block">{s.l}</span>
+              </p>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Stats. Count-up = the live Home page's six Greenshift .gs-counter blocks (WordPress export, animation audit 8 Oct 2026):
-         each stat on its own, linear, from 0 once it is 30 % in view, data-duration 1 / 1.5 / 2 / 1 / 1.5 / 2 s in this order
-         (scripts/countup.ts Greenshift mode, as on Our Hospitals / Why Cambridge). -->
-    <div class="stats">
-      {stats.map((s, i) => (
-        <p class="stat m-0 font-gotham font-medium text-white not-italic leading-[1.147] whitespace-normal [word-break:break-word]">
-          <span class="sr-only">{s.n}</span>
-          <span data-countup data-countup-duration={[1, 1.5, 2, 1, 1.5, 2][i] ?? 2} aria-hidden="true" class="block text-f28 max-lg:text-[length:min(calc(28*var(--u)),6.6vw)] text-cyan">{s.n}</span>
-          <span class="block text-f12">{s.l}</span>
-        </p>
-      ))}
     </div>
   </div>
 </section>
 
 <script>
-  import '../../scripts/countup';
   import '../../scripts/hospital-map';
 </script>
 
 <style>
-  img { max-width: none; }
-  /* Flow layout (the Figma absolute canvas is gone with the list): heading, map, stats stacked and centred; Figma spacing kept
-     (heading top 58, map 37 under the heading box, stats 54 under the map, rows 86 apart; section at least the Figma 788). */
-  .stage { height: auto; min-height: calc(var(--h, 788) * var(--u)); display: flex; flex-direction: column; align-items: center; padding: calc(58 * var(--u)) calc(24 * var(--u)) calc(40 * var(--u)); box-sizing: border-box; }
+  /* Flow layout (the Figma absolute canvas is gone with the list): heading and map stacked and centred; Figma spacing kept
+     (heading top 58, map 37 under the heading box) and the same 58 under the map (the stats are on the map now). */
+  .stage { display: flex; flex-direction: column; align-items: center; padding: calc(58 * var(--u)) calc(24 * var(--u)); box-sizing: border-box; }
   .hm-title { max-width: calc(600 * var(--u)); }
-  .mapwrap { margin-top: calc(37 * var(--u)); }
-  .mapbox { width: min(calc(100vw - 32px), calc(546.176 * var(--u))); aspect-ratio: 546.176 / 382.084; position: relative; --m: calc(min(100vw - 32px, 546.176 * var(--u)) / 546.176); }
+  .mapwrap { margin-top: calc(37 * var(--u)); max-width: 100%; }
+  /* --m = 1 map px on screen: 1 Figma unit (--u), or less so the Figma map group (546.176 wide: drawing 478 + the labels
+     beside it) fits the viewport less 16px gutters. The box is the DRAWING (478 wide), so the drawing is what is centred; the
+     labels overflow it to the right. NOT a CSS container: --u is defined in cqw and would shrink inside one. */
+  .mapbox { --m: min(calc((100vw - 32px) / 546.176), var(--u)); width: calc(478 * var(--m)); aspect-ratio: 478 / 382.084; position: relative; }
   .mapin { position: relative; width: 100%; height: 100%; }
   .pm { position: absolute; inset-inline-start: calc(var(--x) * var(--m)); top: calc(var(--y) * var(--m)); width: calc(var(--w) * var(--m)); height: calc(var(--h) * var(--m)); }
-  .pm:is(span) { height: auto; font-size: 10px; }
+  .lbl { height: auto; font-size: max(10px, calc(10 * var(--m))); }
 
-  /* Pins: the Figma pin art inside a button (44px hit layer, .hit); the card hangs above the pin's tip. */
-  .pin { display: block; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; }
-  .pin > img { display: block; width: 100%; height: 100%; }
+  /* Map: the Figma art is an OUTLINE (a stroke outlined into one ring-shaped fill, #E7E7E7 at 45 %), not a silhouette. The
+     reference's white 30 % 1.6px stroke draws itself along it (both edges of the ring, 3px apart, read as one line), then, as the
+     reference fades its fill in (1.7 s), the Figma ring fades in and the drawing stroke fades out, so the map ends as in Figma. */
+  .map { display: block; overflow: visible; }
+  .country { fill: #e7e7e7; fill-opacity: 0.45; stroke: rgba(255, 255, 255, 0.3); stroke-opacity: 0; stroke-width: 1.6; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+
+  /* Pins: box = the Figma pin box (.pm); --tip = the tip's y in it. .drop = entrance, .bob = idle bob, .shape = hover scale (three
+     elements so the three transforms never fight), .pulse = the ring at the tip. */
+  .spot { z-index: 1; }
+  .spot[data-active], .spot:focus-within { z-index: 10; } /* above the counters (z 2) */
+  .drop, .bob { position: absolute; inset: 0; }
+  .pulse { position: absolute; left: 50%; top: calc(var(--tip) * var(--m)); width: calc(12 * var(--m)); height: calc(5 * var(--m)); margin: calc(-2.5 * var(--m)) 0 0 calc(-6 * var(--m)); border: 1.6px solid var(--color-cyan); border-radius: 50%; box-sizing: border-box; opacity: 0; pointer-events: none; }
+  .pin { display: block; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; color: var(--color-navy-alt); }
   .pin:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
-  /* Mouse / trackpad: the pointer target is the pin's round head, not its square box, so the fanned pairs (Abu Dhabi / Al Mudeef,
-     Dhahran / Al Khobar) each stay reachable where they show. Touch keeps the square 44px hit layer (.hit). */
-  @media (hover: hover) and (pointer: fine) { .pin { clip-path: circle(48% at 50% 42%); } }
-  .spot:hover, .spot:focus-within, .spot[data-open] { z-index: 2; }
-  /* Card: 200 Figma px wide, centred on the pin, its bottom just over the pin (the padding is the hover bridge from pin to
-     card, so the pointer never crosses a gap). Shown on hover / focus-within (keyboard) / data-open (tap, click). --dx = the
-     script's horizontal clamp so the card never leaves the section; [data-flip] puts it under a pin too close to the top. */
-  .hcard { position: absolute; left: 50%; bottom: calc(100% - 6px); width: calc(170 * var(--u)); padding-bottom: 10px; translate: calc(-50% + var(--dx, 0px)) 0; visibility: hidden; opacity: 0; transition: opacity 0.18s ease, visibility 0s linear 0.18s; }
-  .spot[data-flip] .hcard { bottom: auto; top: calc(100% - 6px); padding-bottom: 0; padding-top: 10px; }
-  .spot:hover .hcard, .spot:focus-within .hcard, .spot[data-open] .hcard { visibility: visible; opacity: 1; transition: opacity 0.18s ease; }
-  .hc-in { position: relative; padding: calc(10 * var(--u)); box-shadow: var(--shadow-tile); }
-  /* pointer under (over, when flipped) the card, on the pin's axis whatever --dx is */
-  .hc-in::after { content: ''; position: absolute; left: calc(50% - var(--dx, 0px)); bottom: -7px; width: 14px; height: 14px; background: #fff; translate: -50% 0; rotate: 45deg; box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.08); }
-  .spot[data-flip] .hc-in::after { bottom: auto; top: -7px; box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.08); }
-  .imgw { width: 100%; aspect-ratio: 464 / 364; overflow: hidden; border-radius: calc(4 * var(--u)); margin-bottom: calc(8 * var(--u)); }
-  /* Book + Visit (bug 044/050): the shared .ui-btn-sm pair, stacked full width; each 44px hit layer stops at half the 8px gap. */
-  .actions { display: flex; flex-direction: column; gap: 8px; margin-top: calc(8 * var(--u)); }
-  .actions > a { --hit-h: calc(100% + 8px); }
+  .shape { display: block; width: 100%; height: 100%; overflow: visible; transition: transform 0.25s ease; }
+  .shape path { fill: currentColor; stroke: var(--color-cyan); stroke-width: 3; transition: fill 0.25s ease; }
+  .shape circle { fill: var(--color-cyan); transition: fill 0.25s ease; }
+  .spot[data-active] .shape, .pin:focus-visible .shape { transform: scale(1.18); }
+  .spot[data-active] .shape path, .pin:focus-visible .shape path { fill: var(--color-cyan); }
+  .spot[data-active] .shape circle, .pin:focus-visible .shape circle { fill: #fff; }
+  /* Mouse / trackpad: the pointer target is the drawn pin, not its square box, so the Dhahran / Al Khobar pair each stay reachable
+     where they show. Touch keeps the square 44px hit layer (.hit). */
+  @media (hover: hover) and (pointer: fine) {
+    .pin, .pin > .shape { pointer-events: none; }
+    .pin > .shape * { pointer-events: visiblePainted; } /* the teardrop + dot only, not the svg box (which overlaps the neighbour's head) */
+  }
 
-  /* Stats: 3 x 2 centred under the map, start-aligned text, the Figma hairline (#418EA2, 38 tall) between columns. */
-  .stats { display: grid; grid-template-columns: repeat(3, auto); column-gap: 0; row-gap: calc(40 * var(--u)); margin-top: calc(54 * var(--u)); max-width: 100%; }
-  .stat { position: relative; padding-inline: calc(24 * var(--u)); min-width: calc(150 * var(--u)); box-sizing: border-box; }
-  .stat:nth-child(3n + 2)::before, .stat:nth-child(3n + 3)::before { content: ''; position: absolute; inset-inline-start: 0; top: 50%; translate: 0 -50%; width: 1px; height: calc(38 * var(--u)); background: #418ea2; }
+  /* Card (the reference's .hcard, styled as the removed list item): absolute in the map, placed by the script (left / top
+     relative to its .spot, --ax = the arrow's x), above the pin or [.below] it; fades + slides over 0.22 s. 464 wide (the
+     reference's 430 + 34) so the .ui-btn-sm pair sits on one line beside the 128px photo as in the reference. */
+  .hcard { position: absolute; left: 0; top: 0; z-index: 10; display: flex; flex-direction: column; gap: 12px; width: min(464px, calc(100vw - 32px)); padding: 12px; box-sizing: border-box; background: #fff; color: var(--color-navy); border-radius: var(--radius-card); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28); opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px); transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s; }
+  .hcard.below { transform: translateY(-8px); }
+  .hcard.show { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition-delay: 0s; }
+  .hcard::after { content: ''; position: absolute; left: var(--ax, 50%); bottom: -7px; width: 14px; height: 14px; background: #fff; transform: translateX(-50%) rotate(45deg); border-radius: 2px; }
+  .hcard.below::after { top: -7px; bottom: auto; }
+  .hrow { display: flex; gap: 14px; align-items: center; }
+  .hrow + .hrow { border-top: 1px solid var(--color-mist); padding-top: 12px; }
+  .imgw { flex: 0 0 128px; height: 112px; overflow: hidden; border-radius: calc(4 * var(--u)); background: var(--color-mist-50); }
+  .hbody { min-width: 0; flex: 1 1 auto; }
+  /* Book + Visit (bug 044/050): the shared .ui-btn-sm pair in one row, wrapping when the card is narrow; each 44px hit layer
+     stops at half the gap. */
+  .actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: calc(8 * var(--u)); }
+  .actions > a { --hit-h: calc(100% + 6px); }
+  @media (max-width: 480px) {
+    .hrow { gap: 10px; }
+    .imgw { flex-basis: 96px; height: 96px; }
+  }
+
+  /* Counters on the map (reference .cl-stats: centred at 47.5 % / 57 % of its 860px map, 36 % wide, 2 columns, type in cqw):
+     here in map units (--m; the reference's cqw values x 5.46 = its map in Figma units), centred at --sx / --sy, --sw wide,
+     in the empty south-central interior of this drawing between Jeddah and the Gulf (the reference's spot; measured against the
+     outline, the pins and the labels, 15 Oct 2026); never catch the pointer. */
+  .stats { position: absolute; left: calc(var(--sx) * var(--m)); top: calc(var(--sy) * var(--m)); transform: translate(-50%, -50%); width: calc(var(--sw) * var(--m)); z-index: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: calc(14 * var(--m)) calc(10.92 * var(--m)); text-align: center; pointer-events: none; }
+  .num { font-size: calc(16 * var(--m)); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25); }
+  .lbl-stat { margin-top: calc(3.82 * var(--m)); font-size: max(10px, calc(7.92 * var(--m))); line-height: 1.3; opacity: 0.9; }
+  @media (max-width: 600px) {
+    /* reference: the counters stay on the map, larger; here in the roomier north-west interior (the 2 x 3 grid is 220 wide) */
+    .stats { --sx: 180; --sy: 140; --sw: 220; gap: calc(17.48 * var(--m)) calc(6.55 * var(--m)); }
+    .num { font-size: calc(21.3 * var(--m)); }
+    .lbl-stat { font-size: max(8.5px, calc(13.65 * var(--m))); margin-top: calc(5.46 * var(--m)); }
+  }
+
   @media (max-width: 1023.98px) {
-    .hcard { width: 220px; } /* --u is fixed below 1024 (170u = 233px): a phone card stays narrower than the map */
-    .stage { padding: 40px 16px; gap: 0; }
+    .stage { padding: 40px 16px; }
     .mapwrap { margin-top: 32px; }
-    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; margin-top: 32px; width: 100%; max-width: calc(360 * var(--u)); }
-    .stat { min-width: 0; padding-inline: 16px; }
-    .stat::before { display: none; }
-    .stat:nth-child(2n)::before { display: block; }
   }
 
-  /* Entrance (scripts/hospital-map.ts adds .in when 25 % of the section is in view; html.aos = IntersectionObserver present and
-     no prefers-reduced-motion, set in BaseLayout, so without either the section is simply visible): the map fades and rises
-     over 0.7 s, then the pins drop in one after the other (0.12 s apart) with a short bounce. */
-  :global(html.aos) .hm:not(.in) .mapwrap { opacity: 0; translate: 0 24px; }
-  :global(html.aos) .hm .mapwrap { transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), translate 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
-  :global(html.aos) .hm:not(.in) .spot { opacity: 0; }
-  :global(html.aos) .hm.in .spot { animation: pin-drop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(0.5s + var(--i) * 0.12s); }
+  /* Entrance (scripts/hospital-map.ts adds .in once 25 % of the section is in view; html.aos = IntersectionObserver present and
+     no prefers-reduced-motion, set in BaseLayout, so without either everything is simply visible). Timings = the reference. */
+  :global(html.aos) .hm .hm-title { transition: opacity 0.8s ease, transform 0.8s ease; }
+  :global(html.aos) .hm:not(.in) .hm-title { opacity: 0; transform: translateY(24px); }
+  :global(html.aos) .hm .country { stroke-dasharray: 1; transition: stroke-dashoffset 2.2s cubic-bezier(0.65, 0, 0.35, 1), fill-opacity 1s ease 1.7s, stroke-opacity 1s ease 1.7s; }
+  :global(html.aos) .hm:not(.in) .country { stroke-dashoffset: 1; fill-opacity: 0; stroke-opacity: 1; }
+  :global(html.aos) .hm.in .country { stroke-dashoffset: 0; }
+  :global(html.aos) .hm .drop { opacity: 0; }
+  :global(html.aos) .hm.in .drop { animation: pin-drop 0.95s cubic-bezier(0.3, 0.6, 0.4, 1) var(--d) both; }
+  :global(html.aos) .hm.in .bob { animation: pin-bob 2.6s ease-in-out calc(var(--d) + 0.95s) infinite; }
+  :global(html.aos) .hm.in .pulse { animation: pin-pulse 2.6s ease-out calc(var(--d) + 0.95s) infinite; }
+  :global(html.aos) .hm .lbl { opacity: 0; transition: opacity 0.5s ease; }
+  :global(html.aos) .hm.in .lbl { opacity: 1; transition-delay: calc(var(--d) + 0.6s); }
+  :global(html.aos) .hm .stat { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  :global(html.aos) .hm.in .stat { opacity: 1; transform: none; transition-delay: calc(1.6s + var(--i) * 0.12s); }
   @keyframes pin-drop {
-    0% { opacity: 0; translate: 0 -28px; }
-    55% { opacity: 1; translate: 0 3px; }
-    78% { translate: 0 -3px; }
-    100% { opacity: 1; translate: 0 0; }
+    0% { transform: translateY(calc(-140 * var(--m))); opacity: 0; }
+    55% { transform: translateY(0); opacity: 1; }
+    70% { transform: translateY(calc(-16 * var(--m))); }
+    84% { transform: translateY(0); }
+    92% { transform: translateY(calc(-5 * var(--m))); }
+    100% { transform: translateY(0); opacity: 1; }
   }
+  @keyframes pin-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(-6 * var(--m))); } }
+  @keyframes pin-pulse { 0% { transform: scale(0.4); opacity: 0.9; } 100% { transform: scale(3.4); opacity: 0; } }
   @media (prefers-reduced-motion: reduce) {
-    .hm .mapwrap, .hm .spot { opacity: 1 !important; translate: none !important; animation: none !important; transition: none !important; }
+    .hm .hm-title, .hm .country, .hm .drop, .hm .bob, .hm .pulse, .hm .lbl, .hm .stat { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; }
+    .hm .country { stroke-dashoffset: 0 !important; fill-opacity: 0.45 !important; stroke-opacity: 0 !important; }
+    .hm .pulse { opacity: 0 !important; }
     .hcard { transition: none !important; }
   }
 </style>

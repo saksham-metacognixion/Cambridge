@@ -168,6 +168,28 @@
 @font-face { font-family: "GE SS Two"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoBold.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
 html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
 
+/* Bug 130 interim (15 Oct 2026, Padmavathi): Arabic running text in a genuine Regular face. GE SS Two Regular / Light does not
+   exist in the licensed files (only Medium + Bold), so body copy used the Medium face and read as bold. Until the client / brand
+   agency supplies GESSTwoLight (Brand Guidelines May 2026 p.35), running text uses Tajawal Regular 400 (Google Fonts, SIL OFL 1.1,
+   Arabic subset from @fontsource/tajawal 5.2.5, licence in public/fonts/Tajawal-OFL.txt). It lives in its own family "GE SS Two
+   Body" = 400 Tajawal + 500 GE SS Two Medium + 700 GE SS Two Bold, so only weight-400 (and 300) text changes face; Medium /
+   Bold text inside paragraphs (strong, .font-medium, testimonial names) keeps GE SS Two, and so do headings (their own family
+   rule below, so a heading's lighter span stays GE SS Two Medium instead of mixing typefaces). size-adjust 109.5%: measured on real
+   paragraphs, GE SS Two Medium lines are 9.6% longer than Tajawal at the same size, so the adjusted face keeps the line lengths,
+   wraps and layout of the Medium face (x-heights 0.493 vs 0.454 em, same ratio). ascent / descent overrides copy the GE SS Two
+   Medium metrics (hhea 1690 / 492 of 2048) so baselines do not move. Wiring: inside main and footer the --font-gotham variable
+   itself points at the body stack, so every `font-gotham` utility and `var(--font-gotham)` rule there resolves to it (plain
+   font-family inheritance would lose to the utility class on most paragraphs); headings, buttons, pills, tabs and fields set
+   the variable back to the GE SS Two stack, so they keep Bold / Medium, and the header + mobile menu are outside main. When
+   the real GE SS Two Light / Regular file arrives: point the 400 src at it, drop size-adjust
+   and the overrides, delete the two Tajawal files, update docs/open-decisions.md B130. */
+@font-face { font-family: "GE SS Two Body"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Tajawal-Regular-arabic.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; size-adjust: 109.5%; ascent-override: 82.5%; descent-override: 24%; line-gap-override: 0%; }
+@font-face { font-family: "GE SS Two Body"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoMedium.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+@font-face { font-family: "GE SS Two Body"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoBold.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+html:lang(ar) { --font-ar-ui: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; --font-ar-body: "Gotham", "GE SS Two Body", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
+html:lang(ar) :is(main, footer) { --font-gotham: var(--font-ar-body); font-family: var(--font-gotham); }
+html:lang(ar) :is(main, footer) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading, .ui-btn, .ui-pill, .ui-tab, .ui-field, button) { --font-gotham: var(--font-ar-ui); font-family: var(--font-gotham); }
+
 /* Bugs 129 / 130 (15 Oct 2026): Arabic line spacing and heading weight.
    The Figma line heights are Gotham's (title 37/39 = 0.95, body 14/12 = 1.17); GE SS Two's ascenders, descenders and diacritics
    collided at them. Arabic pages only: headings 1.45, running text 1.65 (brief: 1.4-1.5 / 1.6-1.7). English is untouched.
@@ -179,14 +201,21 @@ html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans
    Gotham stops at Medium (no Bold file), and the browser must not fake it. The header's fixed-box nav keeps its own metrics
    (single-line items); the footer and the mobile menu are flow layouts and take the running-text height.
    Bug 130 re-opened (15 Oct 2026): verified in Chrome, WebKit and Firefox that weights 300 / 400 / 500 all resolve to the
-   Medium file and 600 / 700 to Bold, so body text cannot get lighter until the client supplies GE SS Two Regular / Light
-   (add an @font-face at 400 / 300 above). Known limit: the recovery card heading ("Your recovery matters to us",
-   ContactRecovery.astro) is a lighter lead span + a `.font-medium` emphasis span, so on Arabic pages the whole heading is
-   Medium, the same face as its paragraph. Making the emphasis Bold was tried and reverted: Bold is wider, the heading wraps to
-   four lines in its fixed Figma box (331u) at 1024-1920 and runs into the paragraph below (docs/open-decisions.md B130). */
+   Medium file and 600 / 700 to Bold, so body text could not get lighter with the licensed files alone; running text now uses
+   the interim "GE SS Two Body" family above (Tajawal Regular at 400). Known limit: the recovery card heading ("Your recovery
+   matters to us", ContactRecovery.astro) is a lighter lead span + a `.font-medium` emphasis span, so on Arabic pages the whole
+   heading is Medium, the same face as... its paragraph was; making the emphasis Bold was tried and reverted: Bold is wider, the
+   heading wraps to four lines in its fixed Figma box (331u) at 1024-1920 and runs into the paragraph (open-decisions B130).
+   Bug 136 (15 Oct 2026): the `.menu` scope is the MOBILE menu only (below the header's 1200px breakpoint, Header.astro). From
+   1200px up the same `.menu` holds the desktop header, whose items are fixed Figma boxes (language toggle li 15 tall, top links,
+   region list, dropdown rows): the 1.65 line box (19px) inside the 15u box pushed the AR / EN labels 4-5px below the centre of
+   their pill / chip. Desktop keeps the Figma metrics; English pages are untouched either way. */
 html:lang(ar) { font-synthesis-weight: none; }
 html:lang(ar) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading) { font-weight: 700 !important; line-height: 1.45 !important; }
-html:lang(ar) :is(main, footer, .menu) :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+html:lang(ar) :is(main, footer) :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+@media (max-width: 1199.98px) {
+  html:lang(ar) .menu :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+}
 /* Bug 134 (15 Oct 2026): the gap between a heading and its intro paragraph on the Arabic Home canvases (Services, Doctors, Care
    Support, Testimonials, Recovery) and the Media Hub newsletter card. The Figma spacer tracks (6-9 scaled px) were drawn for the
    Gotham headings; with the 1.45 / 1.65 Arabic line heights (bug 129) the heavier GE SS Two Bold heading sat on its paragraph.

@@ -70,6 +70,14 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 <style>
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
   .tile { width: calc(89 * var(--u)); height: calc(110 * var(--u)); }
+  /* Bug 138 (15 Oct 2026, Arabic only): the label is a 10u Figma box at the tile's bottom edge (y 100 of 110) and the scroller clips
+     vertical overflow, so with the Arabic 1.65 line height (bug 129: one 16.5u line, two lines for CT Scan / Sensory Rooms /
+     Inpatient Gym = 33u) the glyphs ran under the edge. Arabic labels size to their text (10u minimum) and the tile grows to
+     --ar-tile-h = 100 + 2 x 16.5 + 7 spare = 140u; the row, the scroller track and the section grow with it below. English keeps
+     every Figma value. The label's x / width and the icon are untouched. */
+  :global(html:lang(ar)) section { --ar-tile-h: 140; }
+  :global(html:lang(ar)) .tile { height: calc(var(--ar-tile-h) * var(--u)); }
+  :global(html:lang(ar)) .tile p.pos { height: auto; min-height: calc(var(--h) * var(--u)); }
   @media (max-width: 1023.98px) {
     .row { width: max-content; }
     .hscroll.dpos { position: static; width: auto; height: auto; }
@@ -85,14 +93,18 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     .dpos { position: relative; align-self: start; margin-inline-start: calc(var(--x) * var(--u)); width: calc(var(--w) * var(--u)); min-height: calc(var(--h) * var(--u)); }
     h2.dpos { grid-row: 2; }
     p.dpos { grid-row: 4; }
-    /* Bug 134 (15 Oct 2026, Arabic only): heading -> text spacer = --ar-gap-heading (global.css) instead of Figma's 7. */
-    :global(html:lang(ar)) .stage { grid-template-rows: calc(47 * var(--u)) minmax(calc(28 * var(--u)), auto) var(--ar-gap-heading) minmax(calc(28 * var(--u)), auto) calc(77 * var(--u)) calc(110 * var(--u)) calc(59 * var(--u)); }
+    /* Bug 134 (15 Oct 2026, Arabic only): heading -> text spacer = --ar-gap-heading (global.css) instead of Figma's 7; the Arabic
+       track list lives in the bug 138 rule below (it also widens the row track). */
     .hscroll.dpos { grid-row: 6; }
     /* Beyond 1440px (responsive audit 9 Oct 2026): the scroller takes the page gutter on both sides (global.css --gutter) so the
        tiles run off the screen edge instead of stopping at the stage edge; the tiles keep their Figma x on the stage. */
     .stage { overflow-x: visible; }
     .hscroll.dpos { margin-inline-start: calc(-1 * var(--gutter)); width: calc(100% + 2 * var(--gutter)); }
     .row { margin-inline-start: calc(-22 * var(--u) + var(--gutter)); width: calc(1106 * var(--u)); height: calc(110 * var(--u)); }
+    /* Bug 138: Arabic tile row (absolute tiles, so the row cannot size from them) and its grid track = --ar-tile-h; the 59u bottom
+       track stays, so the Arabic section is 30u taller than Figma's 356. */
+    :global(html:lang(ar)) .row { height: calc(var(--ar-tile-h) * var(--u)); }
+    :global(html:lang(ar)) .stage { grid-template-rows: calc(47 * var(--u)) minmax(calc(28 * var(--u)), auto) var(--ar-gap-heading) minmax(calc(28 * var(--u)), auto) calc(77 * var(--u)) calc(var(--ar-tile-h) * var(--u)) calc(59 * var(--u)); }
     .tile { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: 0; }
   }
 </style>

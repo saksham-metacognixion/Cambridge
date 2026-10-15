@@ -16,7 +16,7 @@
         {
           "slug": "post-acute-rehab",
           "title": {
-            "en": "Post Acute Rehabilitation",
+            "en": "Post-Acute Rehabilitation",
             "ar": "إعادة التأهيل ما بعد الحالات الحادة"
           },
           "desc": {
@@ -149,7 +149,7 @@
             }
           ],
           "cardTitle": {
-            "en": "Post Acute Care",
+            "en": "Post-Acute Care",
             "ar": "الرعاية ما بعد الحالات الحادة"
           }
         },
@@ -236,14 +236,14 @@
             }
           ],
           "cardTitle": {
-            "en": "Long Term Care",
+            "en": "Long-Term Care",
             "ar": "الرعاية طويلة الأمد وإعادة التأهيل"
           }
         },
         {
           "slug": "mechanical-ventilation",
           "title": {
-            "en": "Ventilated Patients Care",
+            "en": "Ventilated Patient Care",
             "ar": "رعاية مرضى أجهزة التنفس الصناعي"
           },
           "desc": {
@@ -289,7 +289,7 @@
             }
           ],
           "cardTitle": {
-            "en": "Ventilated Patients Care",
+            "en": "Ventilated Patient Care",
             "ar": "رعاية مرضى أجهزة التنفس الصناعي"
           }
         },
@@ -565,7 +565,7 @@
     {
       "slug": "homecare",
       "title": {
-        "en": "Home Care",
+        "en": "Homecare",
         "ar": "خدمات الرعاية المنزلية"
       },
       "desc": {

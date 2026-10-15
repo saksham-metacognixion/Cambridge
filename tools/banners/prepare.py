@@ -13,6 +13,10 @@ src/assets/regions/<ae|sa>/ only where the live edition shows a different pictur
 tools/banners/banners.json, per key:  "global" / "ae" / "sa" = a live file, or "crop" = cut the people out of our own
   <key>-subject layer (a Figma picture that differs from the live one, or a regional picture the live site does not have);
   "sa_recolour" = re-apply the KSA hijab recolour (bug 066 reopened, user decision K1) to the live KSA file.
+  "hd" = {"src": client original, "green": true for a green-screen studio shot}: replace the global cut-out with a 2x copy
+  from the client's Website Images folder (14 Oct 2026, docs/client-assets/website-images-oct14), aligned to the live
+  framing by tools/banners/hd.py; the display size in banner-art.json stays the live one.
+  `--hd-only` applies just that step to the cut-outs already in src/assets (no other banner is touched).
 Shared art (identical on all three live editions): banners/bg.avif (gradient), banners/shape.avif (pills), banners/pattern.svg (Home).
 """
 import json
@@ -23,14 +27,35 @@ import sys
 
 from PIL import Image
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from hd import hd_copy  # noqa: E402
+
 LIVE = 'docs/cambridge-images-live/wp-content/uploads/2026/06/'
 cfg = json.load(open('tools/banners/banners.json'))
-os.makedirs('src/assets/banners', exist_ok=True)
-shutil.copyfile(LIVE + 'Find-a-Doctor.avif', 'src/assets/banners/bg.avif')
-shutil.copyfile(LIVE + 'shape1.avif', 'src/assets/banners/shape.avif')
-shutil.copyfile(LIVE + 'Pattern.svg', 'src/assets/banners/pattern.svg')
+if '--hd-only' not in sys.argv:
+    os.makedirs('src/assets/banners', exist_ok=True)
+    shutil.copyfile(LIVE + 'Find-a-Doctor.avif', 'src/assets/banners/bg.avif')
+    shutil.copyfile(LIVE + 'shape1.avif', 'src/assets/banners/shape.avif')
+    shutil.copyfile(LIVE + 'Pattern.svg', 'src/assets/banners/pattern.svg')
 
 manifest = {}
+
+
+def apply_hd(key, e, d):
+    """2x copy of the cut-out d from the client original (global only); returns the new path."""
+    hd = e.get('hd')
+    if not hd:
+        return d
+    tmp = '.astro/banner-tmp/hd.webp'
+    os.makedirs(os.path.dirname(tmp), exist_ok=True)
+    print(f'hd     {key:52s} <- {hd["src"]}')
+    green = hd.get('green', False)
+    hd_copy(d, hd['src'], tmp, green=green, patch=green)
+    out = dest(key, 'global', '.webp')
+    shutil.move(tmp, out)
+    return out
+
+
 
 
 def dest(key, region, ext):
@@ -58,6 +83,16 @@ def crop(key, region):
     return d, round(out.width * k), round(out.height * k), bb[3] == im.height
 
 
+if '--hd-only' in sys.argv:
+    import glob
+    for key, e in cfg.items():
+        if e.get('hd'):
+            cur = [f for f in glob.glob(f'src/assets/{key}-cutout.*') if not f.endswith('.webp')]
+            if not cur:
+                sys.exit(f'{key}: no current (non-webp) cut-out to align to; run without --hd-only')
+            apply_hd(key, e, cur[0])
+    sys.exit(0)
+
 for key, e in cfg.items():
     for region in ('global', 'ae', 'sa'):
         src = e.get(region)
@@ -84,6 +119,8 @@ for key, e in cfg.items():
             im = Image.open(d)
             w, h = im.size
             cut = True
+        if region == 'global':
+            d = apply_hd(key, e, d)
         manifest[f'{region}:{key}'] = {'w': w, 'h': h, 'shape': not key.startswith('hospital-detail/')}
         print(f'{region:6s} {key:52s} {w}x{h}  <- {src}')
 

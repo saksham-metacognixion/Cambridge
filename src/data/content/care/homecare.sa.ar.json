@@ -1,5 +1,5 @@
 {
-  "_note": "Source: Website Content - Suhad 3/Our Care/Home/AR-Home - KSA.docx (8 Oct 2026), text exactly as in the document (slips kept, docs/open-decisions.md). hero.title = one line, wraps in the 385px column.",
+  "_note": "Source: Website Content - Suhad 3/Our Care/Home/AR-Home - KSA.docx (8 Oct 2026), text exactly as in the document (slips kept, docs/open-decisions.md). hero.title = one line, wraps in the 385px column. Bug 122 (14 Oct 2026): Physician, Physical and Occupational Therapy and Ambulance topics removed to match the English/live sidebar (9 topics); labels kept as in the document (no translation).",
   "hero": {
     "ariaLabel": "الرعاية الصحيّة المنزلية",
     "title": [
@@ -60,22 +60,6 @@
       ]
     },
     {
-      "label": "نطاق خدمات الأطباء",
-      "blocks": [
-        {
-          "type": "ul",
-          "items": [
-            "تثقيف المرضى وتقديم المشورة",
-            "وصف الأدوية والأجهزة الطبية",
-            "تقييم بيئة المنزل وسلامة المريض",
-            "التقييم والفحص السريري",
-            "الاستشارات والعلاج",
-            "زيارة الأطباء المتخصصين المنزلية"
-          ]
-        }
-      ]
-    },
-    {
       "label": "نطاق خدمات التمريض المتخصص",
       "blocks": [
         {
@@ -109,33 +93,6 @@
             "العلاج بالتبخير",
             "إعادة التأهيل الرئوي",
             "تثقيف المرضى"
-          ]
-        }
-      ]
-    },
-    {
-      "label": "نطاق خدمات العلاج الطبيعي والوظيفي",
-      "blocks": [
-        {
-          "type": "ul",
-          "items": [
-            "إدارة الألم",
-            "التدريب على الانتقال والمشي",
-            "التدريب على الحركة الوظيفية (الوظائف اليومية)",
-            "التدريب على الاستخدام الآمن للأجهزة المساعدة",
-            "إعداد برامج تمارين منزلية مخصصة"
-          ]
-        }
-      ]
-    },
-    {
-      "label": "نطاق خدمات الإسعاف",
-      "blocks": [
-        {
-          "type": "ul",
-          "items": [
-            "زيارات المتابعة والفحوصات",
-            "نقل المرضى في الحالات غير الطارئة"
           ]
         }
       ]

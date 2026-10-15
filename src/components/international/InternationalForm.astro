@@ -75,11 +75,15 @@ const id = (n: string) => fieldId(ID, n);
   .intl { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; color: var(--color-navy); }
   .h3 { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: 16px; text-align: center; font-weight: 500; font-size: calc(18 * var(--u)); line-height: calc(23 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .card { margin: calc(16 * var(--u)) 16px 0; padding: 24px 16px; }
-  .card :global(.intl-form) { --rf-row: 22; }
-  .card :global(.sec) { margin-block-end: calc(20 * var(--u)); }
-  .card :global(.intl-country select) { padding-inline-start: calc(12 * var(--u)); }
-  .card :global(.area) { margin-block-start: calc(35 * var(--u)); }
-  .card :global(.f-consent-own) { margin-inline-start: calc(15 * var(--u)); gap: calc(11 * var(--u)); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+  /* Bug 124 (client 14 Oct 2026, form too large): compact type + 29-high boxes (forms.css "Compact grey-box forms"); rows 22 -> 14
+     apart, section label -> first row 20 -> 12, last row -> textarea 35 -> 20, textarea 125 -> 90 (desktop 66 = ~90px at 1440, drag to enlarge),
+     consent text 15 -> 12 like the labels, captcha -> SUBMIT 33.6 -> 20. Desktop: card 968 -> 800 wide, centred, padding 48 / 44 -> 28 / 32. */
+  .card :global(.intl-form) { --rf-row: 14; --f-gap-submit: 20; }
+  .card :global(.sec) { margin-block-end: calc(12 * var(--u)); }
+  .card :global(.intl-country select) { padding-inline-start: calc(10 * var(--u)); }
+  .card :global(.area) { margin-block-start: calc(20 * var(--u)); }
+  .card :global(.rf-area) { block-size: calc(90 * var(--u)); }
+  .card :global(.f-consent-own) { margin-inline-start: calc(15 * var(--u)); gap: calc(9 * var(--u)); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
   .card :global(.f-consent-own .txt) { padding: 0; }
   .card :global(.f-consent-own a) { font-weight: 400; color: inherit; text-decoration: none; }
   .card :global(.f-consent-own a:hover), .card :global(.f-consent-own a:focus-visible) { text-decoration: underline; }
@@ -87,6 +91,7 @@ const id = (n: string) => fieldId(ID, n);
   .card :global(.f-submit) { margin-inline: 0; }
   @media (min-width: 1024px) {
     .h3 { width: calc(651 * var(--u)); margin-inline-start: calc(200 * var(--u)); padding: 0; }
-    .card { width: calc(968 * var(--u)); margin-inline: calc(42 * var(--u)) 0; padding: calc(48 * var(--u)) calc(43 * var(--u)) calc(47 * var(--u)) calc(44 * var(--u)); }
+    .card { width: calc(800 * var(--u)); margin-inline: auto; padding: calc(28 * var(--u)) calc(32 * var(--u)); }
+    .card :global(.rf-area) { block-size: calc(66 * var(--u)); }
   }
 </style>

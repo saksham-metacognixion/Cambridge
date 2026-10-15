@@ -323,6 +323,7 @@ the hospital map "Phone" label and the country pop-up "UAE" chip (see each file'
 | `why/page.ar.json` | `meta.description` | A different standard of care: Cambridge Hospital is a specialized post-acute provider in the UAE and KSA, with multidisciplinary professiona |
 | `why/page.ar.json` | `specialized.text` | For patients and families, choosing the right care means more than finding a specialist. It means having access to the right expertise, prog |
 | `why/page.ar.json` | `team.photo.alt` | The Cambridge Hospital multidisciplinary team |
+| `media-hub/page.ar.json` | `latest.seeLess` | See Less (bug 127, 14 Oct 2026: Media Hub grid toggle once expanded; its "See More" reuses the approved عرض المزيد, R053) |
 
 
 ## New strings awaiting client approval (EN + AR)

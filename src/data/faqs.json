@@ -25,7 +25,7 @@
     {
       "id": "home-care",
       "label": {
-        "en": "Home Care",
+        "en": "Homecare",
         "ar": "الرعاية الصحية المنزلية"
       }
     }
@@ -188,18 +188,18 @@
     {
       "category": "home-care",
       "question": {
-        "en": "What is home care, and what does it include?",
+        "en": "What is homecare, and what does it include?",
         "ar": "ما هي الرعاية المنزلية، وماذا تتضمن؟"
       },
       "answer": {
-        "en": "Home Care brings clinical and rehabilitation services into the patient's own home. It can include skilled nursing — such as wound care, tube feeding, catheter and tracheostomy care, medication management, and intravenous therapy — as well as respiratory therapy including oxygen, nebulization, and ventilator management; home physiotherapy and occupational therapy; and physician home visits. Care is delivered by licensed teams to the same clinical standards as in our hospitals.",
+        "en": "Homecare brings clinical and rehabilitation services into the patient's own home. It can include skilled nursing — such as wound care, tube feeding, catheter and tracheostomy care, medication management, and intravenous therapy — as well as respiratory therapy including oxygen, nebulization, and ventilator management; home physiotherapy and occupational therapy; and physician home visits. Care is delivered by licensed teams to the same clinical standards as in our hospitals.",
         "ar": "تقدم الرعاية المنزلية الخدمات السريرية وخدمات إعادة التأهيل في منزل المريض نفسه. يمكن أن يشمل ذلك خدمات التمريض المتخصص — مثل العناية بالجروح، التغذية بالأنابيب، رعاية القسطرة والقصبة الهوائية، إدارة الأدوية، والعلاج الوريدي — بالإضافة إلى العلاج التنفسي بما في ذلك الأكسجين، والاستنشاق، وإدارة جهاز التنفس الصناعي؛ العلاج الطبيعي المنزلي والعلاج الوظيفي؛ وزيارات الأطباء المنزلية. يتم تقديم الرعاية من قبل فرق مرخصة وفقا لنفس المعايير السريرية الموجودة في مستشفياتنا."
       }
     },
     {
       "category": "home-care",
       "question": {
-        "en": "Who is home care for?",
+        "en": "Who is homecare for?",
         "ar": "لمن الرعاية المنزلية؟"
       },
       "answer": {
@@ -210,18 +210,18 @@
     {
       "category": "home-care",
       "question": {
-        "en": "Is home care only for patients who have been treated at Cambridge Hospital?",
+        "en": "Is homecare only for patients who have been treated at Cambridge Hospital?",
         "ar": "هل الرعاية المنزلية مخصصة فقط للمرضى الذين تلقوا العلاج في مستشفى كامبريدج؟"
       },
       "answer": {
-        "en": "No. Home care completes the recovery journey for many of our own patients, but you can arrange it directly whether or not you have been treated with us before.",
+        "en": "No. Homecare completes the recovery journey for many of our own patients, but you can arrange it directly whether or not you have been treated with us before.",
         "ar": "لا. تكمل الرعاية المنزلية رحلة التعافي للعديد من مرضانا، لكن يمكنك ترتيب ذلك مباشرة سواء كنت قد تلقيت العلاج معنا من قبل أم لا."
       }
     },
     {
       "category": "home-care",
       "question": {
-        "en": "How do I arrange home care?",
+        "en": "How do I arrange homecare?",
         "ar": "كيف اطلب خدمات الرعاية المنزلية؟"
       },
       "answer": {

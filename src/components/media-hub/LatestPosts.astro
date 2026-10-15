@@ -39,7 +39,31 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
   <!-- Pagination dots of the post row (Figma's dot divider, 58.83 below the cards): shared component, bug 012; recounted as
        the script appends more posts or a category is chosen. -->
   <Pagination for="latest-posts" class="mt-[calc(58.83*var(--u))]" />
+
+  <!-- Bug 127 (client, 14 Oct 2026): the whole list as a grid under the row, in place (same URL and ?category). See More expands it
+       (first GRID_STEP posts of the chosen category, newest first, from posts.json), the See More at its end adds the next ones
+       until the category is exhausted, See Less collapses it. Same PostCard as the row; 3 / 2 / 1 columns (>= 1024 / >= 768 / phones),
+       the desktop grid = the row's three-card window. Not in Figma: labels reuse the approved "See More" (عرض المزيد, R053). -->
+  <div class="mt-[calc(36.6*var(--u))] flex justify-center px-16">
+    <button type="button" class="ui-btn hit btn-fill relative cursor-pointer border-0" aria-expanded="false" aria-controls="latest-grid" data-grid-toggle data-label-more={c.seeMore} data-label-less={c.seeLess}><span data-label>{c.seeMore}</span></button>
+  </div>
+  <div id="latest-grid" class="mt-[calc(44*var(--u))]" hidden data-grid>
+    <ul class="lp-grid" aria-label={c.indexLabel} data-grid-list></ul>
+    <div class="mt-[calc(44*var(--u))] flex justify-center px-16">
+      <button type="button" class="ui-btn hit btn-fill relative cursor-pointer border-0" data-grid-more><span>{c.seeMore}</span></button>
+    </div>
+  </div>
 </section>
+
+<style>
+  .lp-grid { box-sizing: content-box; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(44 * var(--u)) calc(36.6 * var(--u)); max-inline-size: calc(248.389 * var(--u)); margin: 0 auto; padding: 0 16px; list-style: none; }
+  /* Cards fill their column (the row's fixed card width otherwise); the photo keeps the card's 248.389 x 175.333 ratio. */
+  .lp-grid > :global(li) > :global(.pc) { inline-size: 100%; }
+  .lp-grid > :global(li) > :global(.pc) > :global(div:first-child) { block-size: auto; aspect-ratio: 248.389 / 175.333; }
+  @media (min-width: 768px) { .lp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-inline-size: calc(533.378 * var(--u)); } }
+  @media (max-width: 1023.98px) { .lp-grid > :global(li) > :global(.pc) > :global(.pc-arrow) { margin-inline-start: 0; align-self: flex-end; } }
+  @media (min-width: 1024px) { .lp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-inline-size: calc(818.367 * var(--u)); padding: 0; } }
+</style>
 
 <script>
   import '../../scripts/media-hub';

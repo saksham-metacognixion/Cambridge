@@ -33,7 +33,10 @@
  },
  "care/heroes/icu-critical-care": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/ICU-Critical-Care.avif",
-  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/ICU-Critical-Care-KSA-2.avif"
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/ICU-Critical-Care-KSA-2.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/UAE/I1 Page banners/ICU-Critical-Care.png"
+  }
  },
  "care/heroes/in-school": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Inschool-Care-UAE-2.avif"
@@ -67,7 +70,10 @@
  },
  "care/heroes/neuro-rehab": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Neurorehabilitation-UAE-1.avif",
-  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Neurorhabilitation-Banner-KSA.avif"
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Neurorhabilitation-Banner-KSA.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Neurorehabilitation.png"
+  }
  },
  "care/heroes/neuromuscular-rehab": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Neuromuscular-Rehabilitation-UAE-Ped.avif",
@@ -148,61 +154,125 @@
   "sa": "crop"
  },
  "conditions/acquired-brain-injury": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Acquired-Brain-Injury.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Acquired-Brain-Injury.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Acquired-Brain-Injury.png",
+   "green": true
+  }
  },
  "conditions/amputation-prosthetic-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Amputation-Prosthetic-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Amputation-Prosthetic-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Amputation-Prosthetic-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/back-pain-lumbar-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Back-Pain-Lumbar-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Back-Pain-Lumbar-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Back-Pain-Lumbar-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/banner": {
   "global": "crop"
  },
  "conditions/epilepsy": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Epilepsy.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Epilepsy.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Epilepsy.png",
+   "green": true
+  }
  },
  "conditions/fracture-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Fracture-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Fracture-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Fracture-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/guillain-barre-syndrome": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Guillain-Barre-Syndrome.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Guillain-Barre-Syndrome.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Guillain-Barre-Syndrome.png",
+   "green": true
+  }
  },
  "conditions/hip-fracture-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/hip-knee-replacement-recovery": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Hip-Knee-Replacement-Recovery.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Hip-Knee-Replacement-Recovery.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Hip-Knee-Replacement-Recovery.png",
+   "green": true
+  }
  },
  "conditions/knee-ligament-cartilage-injuries": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Knee-Ligament-Cartilage-Injuries.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Knee-Ligament-Cartilage-Injuries.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Knee-Ligament-Cartilage-Injuries.png",
+   "green": true
+  }
  },
  "conditions/motor-neuron-diseases": {
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Motor-Neuron-Diseases.avif"
  },
  "conditions/multiple-sclerosis": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Multiple-Sclerosis.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Multiple-Sclerosis.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Multiple-Sclerosis.png",
+   "green": true
+  }
  },
  "conditions/musculoskeletal-orthopaedic-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Musculoskeletal-Orthopedic-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Musculoskeletal-Orthopedic-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Musculoskeletal-Orthopedic-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/neck-pain-cervical-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Neck-Pain-Cervical-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Neck-Pain-Cervical-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Neck-Pain-Cervical-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/parkinsons-disease": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Parkinsons-Disease.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Parkinsons-Disease.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Parkinsons-Disease.png",
+   "green": true
+  }
  },
  "conditions/shoulder-rotator-cuff-rehabilitation": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Shoulder-Injury-Rotator-Cuff-Rehabilitation.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Shoulder-Injury-Rotator-Cuff-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Shoulder-Injury-Rotator-Cuff-Rehabilitation.png",
+   "green": true
+  }
  },
  "conditions/spinal-cord-injury": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Spinal-Cord-Injury.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Spinal-Cord-Injury.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Spinal-Cord-Injury.png",
+   "green": true
+  }
  },
  "conditions/stroke-rehabilitation": {
   "global": "crop"
  },
  "conditions/tennis-elbow": {
-  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Tennis-Elbow.avif"
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Tennis-Elbow.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Tennis-Elbow.png",
+   "green": true
+  }
  },
  "conditions/traumatic-brain-injury": {
   "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Chiropractic-Therapy-KSA-1.avif"
@@ -289,7 +359,10 @@
  },
  "care/heroes/home-healthcare": {
   "global": "crop",
-  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Home-Health-Care-Banner-KSA.avif"
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Home-Health-Care-Banner-KSA.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/UAE/I2-R8 Hospital photos & gallery/Home-Healthcare.png"
+  }
  },
  "conditions/neurorehabilitation": {
   "global": "docs/client-assets/I5 Banners - condition pages/I5_Neurorehabilitation.png"

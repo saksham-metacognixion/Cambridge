@@ -63,9 +63,11 @@ const tabs = [
   .card :global(.rf-area-label) { margin-block-end: calc(9 * var(--u)); }                   /* label top -> textarea: 27 */
   .card :global(.rf-block + .rf-block) { margin-block-start: calc(37 * var(--u)); }   /* after .rf-grid + .rf-grid: a block gap wins */
   .card :global(.rf-sel-req) { inline-size: 100%; }
-  .card :global(.rf-sel-req select) { padding-inline: calc(15.51 * var(--u)) calc(26 * var(--u)); }
-  .card :global(.rf-sel-req .pf-chev) { inset-inline-end: calc(11.76 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7.24 * var(--u)); }
+  .card :global(.rf-sel-req select) { padding-inline: calc(12.5 * var(--u)) calc(26 * var(--u)); }
+  .card :global(.rf-sel-req .pf-chev) { inset-inline-end: calc(11.76 * var(--u)); inset-block-start: 50%; translate: 0 -50%; inline-size: calc(7.24 * var(--u)); } /* centred: boxes 29 high (bug 124) */
   .card :global(.f-consent) { margin-inline-start: 0; }
+  .card :global(.rf-area) { block-size: calc(90 * var(--u)); } /* bug 124: 125 -> 90 (6 lines at 14) on phones / tablets */
+  .card { --rf-row: 14; } /* bug 124: one-column rows 19 -> 14 apart */
   /* Bug 082 (phones / tablets, where the pills wrap): a pill grows with its label and keeps 10px inside its border
      ("For Corporate or Organisations" filled the 160 box edge to edge at 360). */
   @media (max-width: 1023.98px) {
@@ -87,5 +89,15 @@ const tabs = [
     .card :global(.rf-area-label) { margin-block-end: calc(6 * var(--u)); }
     .card :global(.rf-block + .rf-block) { margin-block-start: calc(18 * var(--u)); }
     .card :global(.rf-area) { block-size: calc(88 * var(--u)); }
+    /* Bug 124 (14 Oct 2026, client: still too large): compact type + 29-high boxes (forms.css "Compact grey-box forms"), card
+       968 -> 800 wide and centred (was x 42 = centred at 1052 too, now on the page centre at every width), padding 27 / 44 -> 24 / 32,
+       textareas 88 -> 66 (~90px at 1440, drag to enlarge), rows 7.4 -> 6 apart, blocks 18 -> 12, section label -> row 8 -> 5,
+       last field -> consent 20 -> 14. Healthcare Professionals at 1440: 1081 -> ~830px. */
+    .card { width: calc(800 * var(--u)); margin-inline: auto; padding: calc(20 * var(--u)) calc(32 * var(--u)); --rf-row: 6; --f-gap-consent: 14; }
+    .card :global(.rf-sel-req) { inline-size: 100%; }
+    .card :global(.rf-area) { block-size: calc(66 * var(--u)); }
+    .card :global(.rf-section) { margin-block-end: calc(5 * var(--u)); }
+    .card :global(.rf-area-label) { margin-block-end: calc(5 * var(--u)); }
+    .card :global(.rf-block + .rf-block) { margin-block-start: calc(12 * var(--u)); }
   }
 </style>

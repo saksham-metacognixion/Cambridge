@@ -1,9 +1,9 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Main Page.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4). Bug 109 (reopened 14 Oct 2026, client): the service name is spelled \"Post Acute Rehabilitation\" as on the live site and in Figma 41:1730 (\"Post Acute Care.\"), not the document's \"Post-Acute\" (B109c); the prose keeps \"post-acute\". /ae and /sa use post-acute-rehab.{ae,sa}.en.json (the live regional subtitle).",
+  "_note": "Source: Website Content - Suhad/Our Care/Inpatient/Post Acute Rehab/EN-Main Page.md (5 Oct 2026), text exactly as in the document (British spelling kept). hero.title lines = the document title split for the 385px hero column. banner only where Figma had one; other pages use the shared placeholder banner (docs/open-decisions.md CT4). Bug 121 (14 Oct 2026, client; closes B109c): the service name is spelled \"Post-Acute Rehabilitation\" (hyphen) everywhere, as in the document, replacing the live / Figma \"Post Acute\" kept for bug 109. /ae and /sa use post-acute-rehab.{ae,sa}.en.json (the live regional subtitle).",
   "hero": {
-    "ariaLabel": "Post Acute Rehabilitation",
+    "ariaLabel": "Post-Acute Rehabilitation",
     "title": [
-      "Post Acute",
+      "Post-Acute",
       "Rehabilitation"
     ],
     "text": "24/7 inpatient care with expert medical supervision, nursing support and rehabilitation programmes tailored to each patient’s condition.",
@@ -16,5 +16,5 @@
     "Post-acute care is short-term, time-limited inpatient rehabilitation for patients recovering from a stable acute illness or injury. At Cambridge Hospital, our post-acute rehabilitation programmes support recovery after stroke, traumatic brain injury, spinal cord injury, major surgery, road traffic accidents and other acute events that affect mobility, function and independence.",
     "Our post-acute rehabilitation programmes are delivered by multidisciplinary teams of physicians, nurses, physiotherapists, occupational therapists, and speech and language therapists, working together within one coordinated pathway. Through personalised care plans and measurable rehabilitation goals, our teams support patients in maximising independence, minimising the impact of impairment and returning to their highest possible level of function."
   ],
-  "cardsHeading": "Our Post Acute Rehabilitation Programmes"
+  "cardsHeading": "Our Post-Acute Rehabilitation Programmes"
 }

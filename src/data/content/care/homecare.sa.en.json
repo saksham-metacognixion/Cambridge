@@ -1,9 +1,9 @@
 {
-  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - KSA.md (5 Oct 2026): the KSA version of Home Care (two extra sections: Laboratory Services, Speech and Language Therapy Services; 'across Saudi Arabia'). Used on /sa; Global and /ae use home-care.en.json (UAE version), docs/open-decisions.md CT5. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px.",
+  "_note": "Source: Website Content - Suhad/Our Care/Home/EN-Home - KSA.md (5 Oct 2026): the KSA version of Home Care (two extra sections: Laboratory Services, Speech and Language Therapy Services; 'across Saudi Arabia'). Used on /sa; Global and /ae use home-care.en.json (UAE version), docs/open-decisions.md CT5. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Banner (missing-image audit, 9 Oct 2026): the live page's own people cut-out (/ae/care/home-healthcare/, saved through the user's Chrome) over the Figma banner background, tools/live-images/care-banners.py; heroLayout.small = the strip kept in view below 1024px. Bug 122 (14 Oct 2026): topics = the live sidebar (9 on /sa): Physician, Physical and Occupational Therapy and Ambulance removed, Medical Examination Services -> Care, Speech and Language Therapy Services -> Home SLP Services.",
   "hero": {
-    "ariaLabel": "Home Care",
+    "ariaLabel": "Homecare",
     "title": [
-      "Home Care"
+      "Homecare"
     ],
     "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
     "banner": {
@@ -12,28 +12,28 @@
     }
   },
   "overview": [
-    "Our home care services bring world-class care to patients in the comfort of their own homes. Whether patients are returning home after surgery, managing a health condition or continuing recovery after a rehabilitation programme, our home care teams provide the clinical support needed to recover safely and resume daily life with their families by their side."
+    "Our homecare services bring world-class care to patients in the comfort of their own homes. Whether patients are returning home after surgery, managing a health condition or continuing recovery after a rehabilitation programme, our homecare teams provide the clinical support needed to recover safely and resume daily life with their families by their side."
   ],
   "topics": [
     {
-      "label": "What Our Home Care Services Offer",
+      "label": "What our Homecare Services offer",
       "blocks": [
         {
           "type": "p",
-          "text": "Our home care services bring specialised clinical care into the home, delivered by highly qualified physicians, therapists, and skilled nurses. Services range from post-surgical recovery to ongoing condition management to post-rehabilitation care."
+          "text": "Our homecare services bring specialised clinical care into the home, delivered by highly qualified physicians, therapists, and skilled nurses. Services range from post-surgical recovery to ongoing condition management to post-rehabilitation care."
         },
         {
           "type": "p",
-          "text": "Built around comfort and continuity, home care enables patients to receive specialist medical care in familiar surroundings while remaining close to their families and support networks."
+          "text": "Built around comfort and continuity, homecare enables patients to receive specialist medical care in familiar surroundings while remaining close to their families and support networks."
         }
       ]
     },
     {
-      "label": "A True Continuum of Care",
+      "label": "A true continuum of care",
       "blocks": [
         {
           "type": "p",
-          "text": "Home care completes our continuum of care across inpatient and outpatient services, ensuring a smooth transition from the rehabilitation facility to home and into the community."
+          "text": "Homecare completes our continuum of care across inpatient and outpatient services, ensuring a smooth transition from the rehabilitation facility to home and into the community."
         },
         {
           "type": "p",
@@ -46,7 +46,7 @@
       "blocks": [
         {
           "type": "lead",
-          "text": "Home physiotherapy is one of our core home care services and is available for adults, seniors and children across Saudi Arabia. Our therapists provide specialised physiotherapy in the home, supporting patients with a range of conditions, including:"
+          "text": "Home physiotherapy is one of our core homecare services and is available for adults, seniors and children across Saudi Arabia. Our therapists provide specialised physiotherapy in the home, supporting patients with a range of conditions, including:"
         },
         {
           "type": "ul",
@@ -60,22 +60,6 @@
         {
           "type": "p",
           "text": "By delivering physiotherapy at home, we help patients maintain progress, rebuild strength and mobility and continue working towards their rehabilitation goals without the need to travel to a healthcare facility."
-        }
-      ]
-    },
-    {
-      "label": "Scope of Physician Services",
-      "blocks": [
-        {
-          "type": "ul",
-          "items": [
-            "Patient education and counselling",
-            "Prescription of medications and medical devices",
-            "Assessment of the patient’s home environment and patient safety",
-            "Clinical assessment and evaluation",
-            "Consultation and treatment",
-            "Specialist physician visits"
-          ]
         }
       ]
     },
@@ -118,33 +102,6 @@
       ]
     },
     {
-      "label": "Scope of Physical and Occupational Therapy Services",
-      "blocks": [
-        {
-          "type": "ul",
-          "items": [
-            "Pain management",
-            "Transfer and gait training",
-            "Functional mobility training",
-            "Safe use of adaptive devices",
-            "Developing personalised home exercise programmes"
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Scope of Ambulance Services",
-      "blocks": [
-        {
-          "type": "ul",
-          "items": [
-            "Follow-up and check-up visits",
-            "Non-emergency patient transport"
-          ]
-        }
-      ]
-    },
-    {
       "label": "Newborn Nursing Care",
       "blocks": [
         {
@@ -165,7 +122,7 @@
       ]
     },
     {
-      "label": "Medical Examination Services",
+      "label": "Medical Examination Care",
       "blocks": [
         {
           "type": "lead",
@@ -205,7 +162,7 @@
       ]
     },
     {
-      "label": "Speech and Language Therapy Services",
+      "label": "Home SLP Services",
       "blocks": [
         {
           "type": "lead",

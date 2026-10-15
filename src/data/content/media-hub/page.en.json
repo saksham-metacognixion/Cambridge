@@ -84,7 +84,9 @@
   "latest": {
     "eyebrow": "WHAT’S TRENDING",
     "title": "Latest Blogs & Posts",
-    "indexLabel": "Latest posts"
+    "indexLabel": "Latest posts",
+    "seeMore": "See More",
+    "seeLess": "See Less"
   },
   "newsletter": {
     "ariaLabel": "Newsletter",

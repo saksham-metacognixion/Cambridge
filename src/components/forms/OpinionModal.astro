@@ -105,15 +105,15 @@ const shared = { form: ID, edition, dialLabel: common.dialCodeLabel };
   .o-opt:nth-child(2) { margin-inline-start: calc(9.845 * var(--u)); }
   .o-opt:nth-child(3) { margin-inline-start: calc(9.85 * var(--u)); }
   .o-opt:nth-child(4) { margin-inline-start: calc(11.62 * var(--u)); }
-  /* Sentiment faces (bug 095): the Patient Feedback page treatment (FeedbackForm.astro): Deep Teal face on a light tint of its
-     level colour; hover: a stronger tint; selected: the full colour + a Deep Teal ring (white gap); keyboard focus: a dashed
+  /* Sentiment faces (bug 095): the Patient Feedback page treatment (FeedbackForm.astro): plain Deep Teal outline face, no fill
+     (bug 125, Figma); hover: a faint neutral disc; selected: the full colour + a Deep Teal ring (white gap); keyboard focus: a dashed
      Deep Teal outline outside the ring; forced colours: a system ring. */
   .o-opt :global(.rface) {
-    --face-fill: color-mix(in srgb, var(--face) 22%, #fff);
+    --face-fill: transparent;
     flex: none; display: block; inline-size: calc(19.443 * var(--u)); block-size: calc(19.443 * var(--u)); border-radius: 50%; color: var(--color-navy);
     transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
-  .o-opt:hover :global(.rface) { --face-fill: color-mix(in srgb, var(--face) 50%, #fff); }
+  .o-opt:hover input:not(:checked) + :global(.rface) { --face-fill: color-mix(in srgb, var(--color-navy) 8%, #fff); }
   .o-opt input:checked + :global(.rface) { --face-fill: var(--face); transform: scale(1.1); box-shadow: 0 0 0 calc(1.3 * var(--u)) #fff, 0 0 0 calc(2.6 * var(--u)) var(--color-navy); }
   .o-opt input:focus-visible + :global(.rface) { outline: calc(1.3 * var(--u)) dashed var(--color-navy); outline-offset: calc(4.5 * var(--u)); }
   .o-opt input:checked ~ .o-txt { font-weight: 500; }

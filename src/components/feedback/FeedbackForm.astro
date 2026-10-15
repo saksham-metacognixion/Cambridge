@@ -198,15 +198,15 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
   :global([dir='rtl']) .m-cell::before { translate: 50% -50%; }
   .m-row .f-err { clear: both; }
 
-  /* Sentiment faces (bug 095, RatingFace.astro; colours provisional in src/data/rating-faces.json). Unselected: Deep Teal face on
-     a light tint of its level colour; hover: a stronger tint; selected: the full colour + a Deep Teal ring (white gap), so the
+  /* Sentiment faces (bug 095, RatingFace.astro; colours provisional in src/data/rating-faces.json). Unselected: plain Deep Teal
+     outline face, no fill (bug 125, Figma); hover: a faint neutral disc; selected: the full colour + a Deep Teal ring (white gap), so the
      choice shows on every colour; keyboard focus: a dashed Deep Teal outline outside the ring. Forced colours: a system ring. */
   .m-cell :global(.rface) {
-    --face-fill: color-mix(in srgb, var(--face) 22%, #fff);
+    --face-fill: transparent;
     flex: none; display: block; inline-size: calc(var(--face-size) * var(--u)); block-size: calc(var(--face-size) * var(--u)); border-radius: 50%; color: var(--color-navy);
     transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
-  .m-cell:hover :global(.rface) { --face-fill: color-mix(in srgb, var(--face) 50%, #fff); }
+  .m-cell:hover input:not(:checked) + :global(.rface) { --face-fill: color-mix(in srgb, var(--color-navy) 8%, #fff); }
   .m-cell input:checked + :global(.rface) { --face-fill: var(--face); transform: scale(1.12); box-shadow: 0 0 0 calc(1.5 * var(--u)) #fff, 0 0 0 calc(3 * var(--u)) var(--color-navy); }
   .m-cell input:focus-visible + :global(.rface) { outline: calc(1.5 * var(--u)) dashed var(--color-navy); outline-offset: calc(5 * var(--u)); }
   @media (forced-colors: active) {

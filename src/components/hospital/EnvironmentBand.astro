@@ -36,7 +36,7 @@ const closeLabel = commonText(edition.locale).close as string;
       <img loading="lazy" src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
       <div id="hospital-video" class="video" data-video-facade data-host={video.host} data-id={video.id} data-aspect={video.aspect}>
         <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
-          <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565)]} sizes={vwSizes(565, '90vw')} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
+          <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565), px(565) * 2]} sizes={vwSizes(565, '90vw')} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
           {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
           <img loading="lazy" src={play.src} width={play.width} height={play.height} alt="" class="play" />
         </button>
@@ -66,7 +66,11 @@ const closeLabel = commonText(edition.locale).close as string;
   .play { position: absolute; width: calc(57.929 * var(--u)); height: calc(57.929 * var(--u)); inset-inline-start: calc(248.73 / 565 * 100%); top: calc(134.72 / 348 * 100%); max-width: none; }
   .video :global(.player) { display: block; width: 100%; height: 100%; border: 0; background: #000; }
   .h { position: relative; z-index: 1; margin: calc(30 * var(--u)) 0 0; max-width: calc(558 * var(--u)); font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
-  .text { position: relative; z-index: 1; margin-top: calc(13 * var(--u)); width: calc(539 * var(--u)); max-width: 100%; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); text-align: center; }
+  .text { position: relative; z-index: 1; margin-top: calc(13 * var(--u)); width: calc(539 * var(--u)); max-width: 100%; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+  /* Bug 123 (client, 14 Oct 2026): justified paragraphs (straight edges), the block itself stays centred (align-items above);
+     last lines start-aligned (the justify default), direction + hyphenation dictionary from <html dir/lang>. Phones: start-aligned,
+     a ~40-character measure gives rivers when justified. */
+  @media (max-width: 479.98px) { .text { text-align: start; } }
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(5 * var(--u)); }
   .tour { position: relative; z-index: 1; margin-top: calc(17 * var(--u)); } /* size / label / corners: .ui-btn (bugs 044/050); colours: .btn-fill */

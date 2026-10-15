@@ -954,8 +954,8 @@
    "description": "Coordinated care across inpatient, outpatient, and home settings — for every stage of recovery"
   },
   "/ae/care/homecare/": {
-   "title": "Home Care - Cambridge Hospital UAE",
-   "description": "Personalized  home care for adults, adolescents, and children — bringing rehabilitation, nursing, and medical care directly to the patient"
+   "title": "Homecare - Cambridge Hospital UAE",
+   "description": "Personalized  homecare for adults, adolescents, and children — bringing rehabilitation, nursing, and medical care directly to the patient"
   },
   "/ae/care/in-school/": {
    "title": "In-School Care - Cambridge Hospital UAE",
@@ -970,7 +970,7 @@
    "description": "24/7 critical care with continuous monitoring, advanced life support, and a specialist multidisciplinary team caring for the most complex and vulnerable patients"
   },
   "/ae/care/inpatient/long-term-care-rehab/": {
-   "title": "Long Term Care & Rehabilitation - Cambridge Hospital UAE",
+   "title": "Long-Term Care & Rehabilitation - Cambridge Hospital UAE",
    "description": "Long-term care at Cambridge Hospital — ongoing medical management, 24/7 nursing, and sustained rehabilitation for chronic, complex, geriatric, and pediatric needs."
   },
   "/ae/care/inpatient/long-term-care-rehab/geriatric-care/": {
@@ -990,7 +990,7 @@
    "description": "Specialized, round-the-clock long-term care for children with chronic medical, neurological, or developmental needs."
   },
   "/ae/care/inpatient/mechanical-ventilation/": {
-   "title": "Ventilated Patients Care - Cambridge Hospital UAE",
+   "title": "Ventilated Patient Care - Cambridge Hospital UAE",
    "description": "Care for patients who require respiratory support, mechanical ventilation, critical monitoring, or step-down care after ICU admission"
   },
   "/ae/care/inpatient/mechanical-ventilation/long-term-ventilated-care/": {
@@ -1022,7 +1022,7 @@
    "description": "Specialized therapy to support speech, language, voice, communication, and swallowing — for children and adults"
   },
   "/ae/care/inpatient/post-acute-rehab/": {
-   "title": "Post Acute Rehabilitation - Cambridge Hospital UAE",
+   "title": "Post-Acute Rehabilitation - Cambridge Hospital UAE",
    "description": "24/7 inpatient care with expert medical supervision, nursing support, and rehabilitation services tailored to your recovery in the UAE"
   },
   "/ae/care/inpatient/post-acute-rehab/neuro-rehab/": {
@@ -4448,8 +4448,8 @@
    "description": "Connected care spanning inpatient, outpatient, and home-based settings — supporting patients through every phase of their recovery"
   },
   "/sa/care/homecare/": {
-   "title": "Home Care - Cambridge Hospital KSA",
-   "description": "Personalized home care for adults, adolescents, and children — delivering rehabilitation, nursing, and medical care directly to the patient"
+   "title": "Homecare - Cambridge Hospital KSA",
+   "description": "Personalized homecare for adults, adolescents, and children — delivering rehabilitation, nursing, and medical care directly to the patient"
   },
   "/sa/care/inpatient/": {
    "title": "Inpatient Care - Cambridge Hospital KSA",
@@ -4460,7 +4460,7 @@
    "description": "Round-the-clock critical care with continuous monitoring, advanced life support, and a specialist multidisciplinary team caring for the most complex and vulnerable patients"
   },
   "/sa/care/inpatient/long-term-care-rehab/": {
-   "title": "Long Term Care & Rehabilitation - Cambridge Hospital KSA",
+   "title": "Long-Term Care & Rehabilitation - Cambridge Hospital KSA",
    "description": "Long-term care at Cambridge Hospital — ongoing medical management, 24/7 nursing, and sustained rehabilitation for chronic, complex, geriatric, and pediatric needs."
   },
   "/sa/care/inpatient/long-term-care-rehab/geriatric-care/": {
@@ -4512,7 +4512,7 @@
    "description": "Specialist therapy to support speech, language, voice, communication, and swallowing — for children and adults"
   },
   "/sa/care/inpatient/post-acute-rehab/": {
-   "title": "Post Acute Rehabilitation - Cambridge Hospital KSA",
+   "title": "Post-Acute Rehabilitation - Cambridge Hospital KSA",
    "description": "Round-the-clock inpatient care with expert medical supervision, nursing support, and rehabilitation services shaped around your recovery in Saudi Arabia"
   },
   "/sa/care/inpatient/post-acute-rehab/neuro-rehab/": {

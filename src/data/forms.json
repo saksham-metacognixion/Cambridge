@@ -585,7 +585,7 @@
           "name": "visit_date",
           "label": "Date of visit",
           "type": "date",
-          "required": false,
+          "required": true,
           "ui": {
             "group": "details",
             "inputAt": 96.69

@@ -5,6 +5,8 @@
 // The row auto-scrolls in a loop (bug 064, src/scripts/autoscroll.ts): `row` is the scroller, the cards live in its
 // [data-loop-row] list (the auto-scroll copies come after it). New cards go into that list, then 'autoscroll:refresh'
 // rebuilds the copies, so the loop grows as the visitor (or the auto-scroll) nears the end of the loaded posts.
+// Bug 127: See More opens the grid under the row (the same cards, GRID_STEP at a time, of the chosen category); a category
+// change re-fills it from the start. The grid is not part of the auto-scroll loop.
 
 type Card = {
   slug: string; category: string; href: string; title: string; excerpt: string; iso: string;
@@ -12,14 +14,19 @@ type Card = {
 };
 
 const CHUNK = 6;
+const GRID_STEP = 12;
 const root = document.querySelector<HTMLElement>('[data-latest]');
 const select = document.querySelector<HTMLSelectElement>('[data-category-select]');
 const row = root?.querySelector<HTMLElement>('[data-row]');
 const tpl = root?.querySelector<HTMLTemplateElement>('template[data-card-template]');
 const list = row?.querySelector<HTMLElement>('[data-loop-row]') ?? row;
 const sentinel = list?.querySelector<HTMLElement>('[data-sentinel]');
+const toggle = root?.querySelector<HTMLButtonElement>('[data-grid-toggle]');
+const grid = root?.querySelector<HTMLElement>('[data-grid]');
+const gridList = grid?.querySelector<HTMLElement>('[data-grid-list]');
+const more = grid?.querySelector<HTMLButtonElement>('[data-grid-more]');
 
-if (root && select && row && list && tpl && sentinel) {
+if (root && select && row && list && tpl && sentinel && toggle && grid && gridList && more) {
   const valid = new Set(Array.from(select.options).map((o) => o.value));
   let all: Card[] | null = null;
   let index: Promise<Card[]> | null = null;
@@ -27,6 +34,8 @@ if (root && select && row && list && tpl && sentinel) {
   let shown = list.querySelectorAll('[data-card]').length; // cards rendered at build time = newest posts, all categories
   let category = '';
   let run = 0;
+  let gridShown = 0;
+  let gridCategory: string | null = null; // category the grid holds (null = not filled yet)
 
   const fromUrl = () => {
     const c = new URL(location.href).searchParams.get('category') ?? '';
@@ -78,9 +87,49 @@ if (root && select && row && list && tpl && sentinel) {
     { root: row, rootMargin: '0px 400px' },
   );
 
+  // Grid: the next GRID_STEP posts of the category; `focus` moves keyboard focus to the first new card (See More at the end).
+  const gridAdd = (focus: boolean) => {
+    const posts = all!.filter((c) => !category || c.category === category);
+    const next = posts.slice(gridShown, gridShown + GRID_STEP).map((c) => {
+      const li = make(c);
+      li.removeAttribute('data-loop-item');
+      return li;
+    });
+    gridList.append(...next);
+    gridShown += next.length;
+    more.hidden = gridShown >= posts.length;
+    if (focus) next[0]?.querySelector<HTMLElement>('[data-title]')?.focus();
+  };
+
+  const gridFill = async () => {
+    const cat = category;
+    await load();
+    if (cat !== category || toggle.getAttribute('aria-expanded') !== 'true') return;
+    if (gridCategory === cat) return;
+    gridCategory = cat;
+    gridList.replaceChildren();
+    gridShown = 0;
+    gridAdd(false);
+  };
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('[data-label]')!.textContent = (open ? toggle.dataset.labelLess : toggle.dataset.labelMore) ?? '';
+    grid.hidden = !open;
+    if (open) gridFill();
+  };
+
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  more.addEventListener('click', () => gridAdd(true));
+
   const apply = async (cat: string, reset: boolean) => {
     category = cat;
     select.value = cat;
+    if (gridCategory !== cat) {
+      gridCategory = null; // never show the previous category's posts: emptied now, re-filled when open
+      gridList.replaceChildren();
+      if (!grid.hidden) gridFill();
+    }
     const id = ++run;
     io.unobserve(sentinel);
     if (!reset && !cat) {

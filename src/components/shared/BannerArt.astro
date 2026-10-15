@@ -36,9 +36,13 @@ const { w, h } = art;
 const S = home ? { w: 620, h: 548, top: 55, banner: 550, drop: 5 } : { w: 613, h: 500, top: 30, banner: 500, drop: 10 };
 const shapeTop = S.top - (S.banner + S.drop - h);
 const flip = mirror && !keep;
-// Rendered width: w live px at 1440 scaled with the page (desktop), x0.630 tablet, x0.561 phone; Astro never upscales.
+// Rendered width: w live px at 1440 scaled with the page (desktop), x0.630 tablet, x0.561 phone, each also at 2x for
+// high-density screens. Most cut-outs are the live files at 1x (w wide) and keep the 1x set; the 2x copies from the client's
+// originals (tools/banners/hd.py, 14 Oct 2026) are 2w wide. Only widths the file has (Astro never upscales).
+const widths = [0.561, 0.63, 1, 1.122, 1.26, 1.5, 2].map((f) => Math.round(w * f)).filter((v) => v <= art.image.width);
+if (art.image.width > w && widths.at(-1)! < art.image.width) widths.push(art.image.width); // e.g. a 1.93x copy
 const pic = {
-  formats: ['avif'], fallbackFormat: art.image.format === 'png' ? 'png' : 'webp', widths: [Math.round(w * 0.561), Math.round(w * 0.63), w].filter((v, i, a) => a.indexOf(v) === i),
+  formats: ['avif'], fallbackFormat: art.image.format === 'png' ? 'png' : 'webp', widths: widths.filter((v, i, a) => a.indexOf(v) === i),
   sizes: `(min-width: 1024px) ${((w / 1440) * 100).toFixed(2)}vw, (min-width: 690px) ${Math.round(w * 0.63)}px, ${Math.round(w * 0.561)}px`,
   loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;

@@ -37,3 +37,7 @@ api/forms/\[form\].js
 
 # Saved live-site pages (local reference only)
 docs/live-save-*/
+
+# Python caches
+__pycache__/
+*.pyc

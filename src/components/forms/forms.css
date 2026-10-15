@@ -72,6 +72,10 @@
 .gf-date { cursor: pointer; }
 .gf-date[data-empty]:not(:focus) { color: transparent; }
 .gf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(16.407 * var(--u)); inset-block-start: calc(4.51 * var(--u)); inline-size: calc(17.85 * var(--u)); block-size: calc(19.834 * var(--u)); }
+/* Arabic (bug 126 QA, 14 Oct 2026): the date box stays LTR but its calendar icon follows the RTL row to the box's left, so the
+   dd/mm/yyyy text (visible while focused, e.g. when a required date is empty) ran under it: clear the icon (16.407 + 17.85 + 6).
+   Physical left on purpose: the box itself is LTR, and the build lowers logical sides under [dir='rtl'] to the RTL side. */
+[dir='rtl'] .gf-date { padding-left: calc(40.26 * var(--u)); }
 
 /* Mobile: dial-code box + number box */
 .gf-dial { position: relative; flex: none; min-inline-size: calc(68.517 * var(--u)); min-block-size: calc(31.554 * var(--u)); }
@@ -204,7 +208,7 @@
    Geometry that differs per Figma frame is a custom property; defaults = Patient Feedback. A row's label column is --at
    (Figma px from the label start to its box), a box's width --w. */
 .pf-row { position: relative; display: flex; align-items: flex-start; }
-.pf-label { flex: none; box-sizing: border-box; min-inline-size: calc(var(--at) * var(--u)); padding-block-start: calc(8 * var(--u)); padding-inline-end: calc(4 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); white-space: nowrap; }
+.pf-label { flex: none; box-sizing: border-box; min-inline-size: calc(var(--at) * var(--at-k, 1) * var(--u)); padding-block-start: calc(8 * var(--u)); padding-inline-end: calc(4 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); white-space: nowrap; }
 .pf-box {
   box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
   inline-size: calc(var(--w, 319.889) * var(--u)); max-inline-size: 100%; block-size: calc(35 * var(--u)); padding: 0 calc(var(--pf-px, 9.17) * var(--u));
@@ -243,7 +247,7 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 
 @media (max-width: 1023.98px) {
   .pf-row { align-items: center; }
-  .pf-label { padding-block-start: 0; min-inline-size: calc(var(--at-n, var(--at)) * var(--u)); }
+  .pf-label { padding-block-start: 0; min-inline-size: calc(var(--at-n, var(--at)) * var(--at-k, 1) * var(--u)); }
   .pf-box, .pf-dial { min-block-size: 44px; }
   .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
   .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }
@@ -276,7 +280,7 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 .rf .rf-date-box[data-empty]:not(:focus) { color: transparent; }
 .rf .rf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(12.78 * var(--u)); inset-block-start: calc(5 * var(--u)); inline-size: calc(19.8 * var(--u)); block-size: calc(22 * var(--u)); }
 .rf .rf-radio { margin: 0; padding: 0; border: 0; min-inline-size: 0; display: flex; align-items: flex-start; flex-wrap: wrap; }
-.rf .rf-legend { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--u)); }
+.rf .rf-legend { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--at-k, 1) * var(--u)); }
 .rf .rf-opts { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)) calc(29.5 * var(--u)); padding-block-start: calc(8 * var(--u)); }
 .rf .rf-opt { display: flex; align-items: center; gap: calc(8 * var(--u)); min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
 /* 44px touch target on the radio options (responsive sweep, 9 Oct 2026): the .hit layer, invisible, the label box keeps its size */
@@ -291,6 +295,39 @@ label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var
 }
 @media (min-width: 1024px) {
   .rf .rf-grid { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }
+}
+
+/* Compact grey-box forms (bug 124, client 14 Oct 2026: Refer a Patient + International Patients too large). Only these two forms
+   (class "rf"); Patient Feedback / Calculators / pop-ups keep the Figma sizes above. Figma px: labels, field text and radio options
+   15 -> 12 (line 18.82 -> 15), section labels 15 -> 13, boxes 35 -> 29 high on desktop (touch / < 1024: the 44px floor above
+   stays), label columns x 0.8 with the text (--at-k: Arabic labelColumn 120 -> 96 still holds "البريد الإلكتروني" at 12),
+   icons centred in the box. Card width / textarea heights / gaps: ReferForm.astro, InternationalForm.astro. */
+.rf { --at-k: 0.8; --pf-dial-w: 66; --pf-flag-w: 15; --pf-flag-x: 5.5; --pf-dial-pad: 23.5; --pf-dial-chev-x: 5; --pf-dial-chev-w: 6.5; --pf-tel-gap: 8; --pf-px: 8; }
+.rf .pf-label, .rf .rf-opt { font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
+.rf .pf-box { font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); block-size: calc(29 * var(--u)); }
+.rf .pf-dial { min-block-size: calc(29 * var(--u)); }
+.rf .pf-dial .dial-code { margin-block-start: calc(7 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
+.rf .pf-label, .rf .rf-legend { padding-block-start: calc(7 * var(--u)); }
+.rf .rf-bold { padding-block-start: calc(7 * var(--u)); line-height: calc(15 * var(--u)); }
+.rf .rf-opts { padding-block-start: calc(7 * var(--u)); gap: calc(6 * var(--u)) calc(24 * var(--u)); }
+.rf .rf-opt { min-block-size: calc(15 * var(--u)); gap: calc(7 * var(--u)); }
+.rf .pf-q { font-size: calc(13 * var(--u)); line-height: calc(16 * var(--u)); }
+.rf .pf-select .pf-chev, .rf .pf-dial .pf-chev, .rf .pf-flag, .rf .rf-cal { inset-block-start: 50%; translate: 0 -50%; }
+.rf .pf-flag { block-size: calc(10 * var(--u)); }
+.rf .rf-cal { inline-size: calc(16 * var(--u)); block-size: calc(17.8 * var(--u)); inset-inline-end: calc(10 * var(--u)); }
+.rf .rf-sel-ref select { padding-inline-start: calc(17 * var(--u)); }
+.rf .rf-ph-in { padding-inline-start: calc(11 * var(--u)); }
+.rf .rf-area { padding: calc(10 * var(--u)) calc(11.5 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); resize: vertical; min-block-size: calc(66 * var(--u)); } /* shorter box: the user can drag it taller to review a long text */
+@media (max-width: 1023.98px) {
+  .rf .pf-label { padding-block-start: 0; }
+  .rf .pf-dial .dial-code { margin-block-start: 0; }
+}
+@media (max-width: 767.98px) {
+  .rf .pf-select select { font-size: max(16px, calc(12 * var(--u))); } /* bug 082: never below 16px on phones */
+}
+@media (min-width: 1024px) {
+  /* two equal columns filling the narrower card (Figma 410 + 60 + 410 in the 968 card) */
+  .rf .rf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: calc(40 * var(--u)); }
 }
 
 /* Arabic pages: form text that has no Arabic yet is shown in English (docs/open-decisions.md WP2 / CT24 / CT31). In an RTL

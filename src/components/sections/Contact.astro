@@ -27,7 +27,7 @@ const label = 'font-normal text-f9 leading-14 text-navy not-italic whitespace-no
 const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespace-normal [word-break:break-word]';
 ---
 
-<section id="contact" class="relative bg-white font-gotham" style="--h: 541">
+<section id="contact" class="relative bg-white font-gotham">
   <!-- Logo pattern (opacity .55), page x 4 -->
   <div class="pattern-wrap absolute inset-x-0 top-0 mx-auto w-full overflow-hidden pointer-events-none" style="max-width:calc(var(--max-w) * 1px);height:calc(497 * var(--u))" aria-hidden="true">
     <!-- 32-colour palette PNGs of the same artwork (tools/images/logo-pattern.mjs): 90 KB at 1430 px vs 208 KB as AVIF. -->
@@ -43,9 +43,9 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       class="pattern-img absolute object-cover opacity-55 max-w-none"
     />
   </div>
-  <!-- Grey band (full-bleed). Bug 093: band and section 44 Figma px taller than Figma (497 / 423) for the attachment row, so the
-       footer, which overlaps the section's foot, never covers the Send button. -->
-  <div class="absolute inset-x-0 top-4 h-467 bg-veil max-lg:inset-y-0 max-lg:h-auto max-lg:top-0" aria-hidden="true"></div>
+  <!-- Grey band (full-bleed). Bug 120: it runs to the section's foot (the footer covers the last 84 Figma px on desktop), so it
+       grows with the card and always shows behind the footer's rounded top corners. -->
+  <div class="absolute inset-x-0 top-4 bottom-0 bg-veil max-lg:top-0" aria-hidden="true"></div>
 
   <div class="stage max-lg:px-16 max-lg:py-40">
     <!-- Corner art (placed BELOW the card: see report): box 324x348 @ (0,95), clipped, rounded bottom-start (Figma r16; --radius-card, bug 049) -->
@@ -53,7 +53,7 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
       <div class="corner-art" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
     </div>
 
-    <div class="card relative bg-white rounded-(--radius-card) max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:absolute lg:start-177 lg:top-35 lg:w-698 lg:min-h-318">
+    <div class="card relative bg-white rounded-(--radius-card) max-lg:mx-auto max-lg:w-full max-lg:max-w-698 max-lg:p-24 max-lg:flex max-lg:flex-col max-lg:gap-30 lg:ms-177 lg:w-698 lg:min-h-318">
       <h2 id="home-contact-title" class="m-0 font-medium text-f23 leading-10 text-navy not-italic whitespace-normal [word-break:break-word] max-lg:leading-27 lg:absolute lg:start-52 lg:top-52 lg:w-278 lg:h-21">{txt.title}</h2>
 
       <div class="max-lg:flex max-lg:flex-col max-lg:gap-6 lg:contents">
@@ -123,6 +123,10 @@ const value = 'm-0 font-normal text-f9 leading-14 text-body not-italic whitespac
 
 <style>
   .pattern-img { inset-inline-start: 0; top: 0; width: 100%; height: 100%; }
+  /* Bug 120: on desktop the card is in flow (Figma x 177, y 35) and the section ends 110 Figma px below it, so the section
+     follows the card's real height (attachment, consent and error rows). The home page pulls the footer up 84 of those
+     110 (src/pages/[...base]/index.astro), leaving the Figma 26 px of patterned band between the card and the footer. */
+  @media (min-width: 1024px) { .stage { height: auto; padding-block: calc(35 * var(--u)) calc(110 * var(--u)); } } /* padding, not a card margin: a margin would collapse out of the section */
   @media (min-width: 1024px) {
     .pattern-img { inset-inline-start: calc(4 * var(--u)); width: calc(1045 * var(--u)); height: calc(497 * var(--u)); }
   }

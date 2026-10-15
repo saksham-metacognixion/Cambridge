@@ -96,13 +96,13 @@ def hd_copy(current, original, out, green=False, k=2.0, patch=False, log=print):
             keyed = warp(key_green(src), s, t, k, size)
             hd[..., :3] = core[..., None] * hd[..., :3] + (1 - core[..., None]) * keyed[..., :3]
             hd[..., 3] = np.maximum(keyed[..., 3], core) * outer
-            # thin green props the core misses (the Tennis Elbow band): opaque on the current image but keyed out here ->
-            # take the current pixels (upscaled) there
-            lost = cv2.GaussianBlur(((ca > 0.9) & (keyed[..., 3] < 0.6)).astype(np.float32), (0, 0), k * 0.5)[..., None]
-            upc = cv2.resize(cur, size, interpolation=cv2.INTER_CUBIC).clip(0, 1)
-            hd = lost * upc + (1 - lost) * hd
         else:  # an alpha original: its own edge, limited to the current cut
             hd[..., 3] = np.minimum(hd[..., 3], outer)
+        # Opaque on the current image but transparent here (thin green props keyed out, e.g. the Tennis Elbow band; the pill
+        # outlines drawn into the hospital-page cut-outs, absent from the originals): take the current pixels (upscaled).
+        lost = cv2.GaussianBlur(((ca > 0.9) & (hd[..., 3] < 0.6)).astype(np.float32), (0, 0), k * 0.5)[..., None]
+        upc = cv2.resize(cur, size, interpolation=cv2.INTER_CUBIC).clip(0, 1)
+        hd = lost * upc + (1 - lost) * hd
     # a strip the original does not reach (it is framed tighter than ours): fill it from the current image, upscaled
     up = cv2.resize(cur, size, interpolation=cv2.INTER_CUBIC).clip(0, 1)
     hd = reach * hd + (1 - reach) * up

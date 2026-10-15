@@ -50,7 +50,9 @@ def apply_hd(key, e, d):
     os.makedirs(os.path.dirname(tmp), exist_ok=True)
     print(f'hd     {key:52s} <- {hd["src"]}')
     green = hd.get('green', False)
-    hd_copy(d, hd['src'], tmp, green=green, patch=green)
+    # target = 2x the live display size (banner-art.json), so a re-run on an already-replaced copy gives the same size
+    live = json.load(open('src/data/banner-art.json'))[f'global:{key}']['w']
+    hd_copy(d, hd['src'], tmp, green=green, patch=green, k=2 * live / Image.open(d).width)
     out = dest(key, 'global', '.webp')
     shutil.move(tmp, out)
     return out
@@ -87,9 +89,9 @@ if '--hd-only' in sys.argv:
     import glob
     for key, e in cfg.items():
         if e.get('hd'):
-            cur = [f for f in glob.glob(f'src/assets/{key}-cutout.*') if not f.endswith('.webp')]
+            cur = glob.glob(f'src/assets/{key}-cutout.*')  # an already-replaced .webp realigns to itself (same result)
             if not cur:
-                sys.exit(f'{key}: no current (non-webp) cut-out to align to; run without --hd-only')
+                sys.exit(f'{key}: no current cut-out to align to; run without --hd-only')
             apply_hd(key, e, cur[0])
     sys.exit(0)
 

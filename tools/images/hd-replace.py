@@ -28,6 +28,8 @@ JOBS = [
 # Not used (trial run 14 Oct 2026):
 # - facilities/al-ain.png <- live Cambridge-Hospital-Al-Ain.avif: the live original's sky differs; a visible seam where
 #   our wider card frame is filled from the current image.
+# - facilities/jeddah.png + hospitals/jeddah.png <- client Cambridge-Hospital-Jeddah.png (1672px): same building, different
+#   moment (crowd, other sky); 45% patched back, blotchy sky.
 # - insurance/daman.png + wp/daman.jpg <- client daman-insurance-uae.png: a brighter blue and slightly narrower mark than
 #   our (live, navy) logo: a different version, not just more pixels (ask the client which is current).
 # - insurance/neuron.png + wp/neuron.jpg <- client neuron webp: only 1.18x, a quarter of it patched back.

@@ -1,5 +1,7 @@
 # Client Website Images folder (14 Oct 2026): what was used
 
+Second pass (15 Oct): every unmatched file feature-matched (SIFT) against every site image regardless of framing; nothing further usable.
+
 Source: Pramod's `Website Images - Global , UAE, KSA` (536 files, 391 unique; same as `OneDrive_2026-10-14 (1).zip`).
 404 of its 502 raster files are already on the site at the same size or smaller. The originals actually used are
 copied (unchanged) to `docs/client-assets/website-images-oct14/`.
@@ -40,7 +42,10 @@ Notes
 | Stroke condition original | ours is a different (Figma) picture |
 | Neck-Pain.png | a different picture from our news image |
 | UAE `Exterior-1..4.png` (one 1920px photo x4), `Reception.png` | not any photo on the site: ask where they go |
-| `Cambridge-Hospital-Jeddah.png` (1672px), Jeddah / Dhahran / Al Khobar 900px cards | different photos from ours: ask |
+| Al Khobar / Dhahran / Jeddah 900x975 (`KSA/Other`, `Global/Other`) | the hospital-page banner cut-outs at 1.55x, but those cut-outs have the pill outlines drawn in and the originals do not: the pills come out blurred / recoloured (tried, reverted). Needs the pill shape as SVG |
+| `Cambridge-Hospital-Jeddah.png` (1672px) | the Home / Our Hospitals Jeddah card building, shot at another moment (crowd, other sky): 45% patched back, blotchy sky (tried, reverted) |
+| 13 leadership portraits (1024px, `Global/I1 Page banners`) | Meet the Team page is not built (WP6, no Figma frame); Dr Ahmad / Dr Wael Sary are the suit portraits, not the doctor-profile photos |
+| CARF 720x520, Speech-Language KSA 579px, Media-Hub 540px | same pictures, no useful gain |
 | `MAP-Front-Page-Global-1.avif`, `Our-Hospital-MAP-*` | the live site's white-outline map, not our Figma Our Hospitals banner |
 
 ## Still soft, nothing larger supplied

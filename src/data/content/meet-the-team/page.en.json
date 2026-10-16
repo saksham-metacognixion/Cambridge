@@ -1,12 +1,12 @@
 {
-  "_note": "Meet the Team (Task 198, 16 Oct 2026; no Figma frame). Text = the live page https://cambridgehospital.com/about/meet-the-team/ (saved 16 Oct 2026, docs/cambridge-images-live/_pages/about/meet-the-team.html): title tag, hero, the country filter labels. Hero art = the live page's banner (its Find a Doctor banner) = our doctors-page/banner. The closing band = the site's shared recovery box (doctors/page recovery), the same text as the live page. Leaders: src/data/leadership.json.",
+  "_note": "Meet the Team (Task 198, 16 Oct 2026; no Figma frame). Text = the live page https://cambridgehospital.com/about/meet-the-team/ (saved 16 Oct 2026, docs/cambridge-images-live/_pages/about/meet-the-team.html): title tag, hero, the country filter labels. Hero art = the live page's banner (its Find a Doctor banner): meet-the-team/banner is that cut-out with its end edge feathered (the client file cuts the woman at the frame edge; user, 16 Oct 2026), so it sits inside the frame like every other banner instead of bleeding off the viewport. The closing band = the site's shared recovery box (doctors/page recovery), the same text as the live page. Leaders: src/data/leadership.json.",
   "meta": {
     "title": "Meet the Team | Cambridge Hospital",
     "description": "Explore the leadership team guiding our healthcare facilities across the UAE & KSA"
   },
   "hero": {
     "ariaLabel": "Meet our Team",
-    "banner": { "image": "doctors-page/banner", "alt": "" },
+    "banner": { "image": "meet-the-team/banner", "alt": "" },
     "title": ["Meet our Team"],
     "text": "Explore the leadership team guiding our healthcare facilities across the UAE & KSA"
   },

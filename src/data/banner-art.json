@@ -555,15 +555,6 @@
   "h": 414,
   "shape": true
  },
- "global:meet-the-team/banner": {
-  "w": 565,
-  "h": 462,
-  "shape": true,
-  "pills": [
-   0.6,
-   -13.8
-  ]
- },
  "global:patient-hub/banner": {
   "w": 500,
   "h": 450,

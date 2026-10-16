@@ -75,7 +75,11 @@ const closeLabel = commonText(edition.locale).close as string;
   .tour { position: relative; z-index: 1; margin-top: calc(17 * var(--u)); } /* size / label / corners: .ui-btn (bugs 044/050); colours: .btn-fill */
   @media (min-width: 1024px) {
     .in { padding-inline: 0; }
-    .pattern { display: block; position: absolute; inset-inline-start: calc(-126 * var(--u)); top: calc(39 * var(--u)); width: calc(423 * var(--u)); height: calc(433 * var(--u)); max-width: none; pointer-events: none; }
+    /* Bug 176 (16 Oct 2026): at the Figma x (-126) the pills (drawn to x 411 of the 423 box) ran 29 units under the centred heading
+       and text (.in is 1052 units wide from 1024 up, so the overlap was the same at every width). The pattern keeps its size and
+       height and moves towards the outer edge until its drawn end stops 12 units short of the widest text edge: the 558-unit
+       heading box, (1052 - 558) / 2 = 247. The part past the section edge is clipped as before (.in overflow-x: clip). */
+    .pattern { display: block; position: absolute; inset-inline-start: calc((247 - 12 - 411) * var(--u)); top: calc(39 * var(--u)); width: calc(423 * var(--u)); height: calc(433 * var(--u)); max-width: none; pointer-events: none; }
     :global([dir='rtl']) .pattern { scale: -1 1; }
   }
 </style>

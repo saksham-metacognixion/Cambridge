@@ -87,6 +87,14 @@ const pic = {
      cut-out) and covered the end of the intro and the button. The frame drops by whatever the copy's 40-unit bottom padding
      (PageHero) does not already absorb, so the shape stays under the text in both languages; the usual 450-tall cut-outs (30) are unchanged. */
   @media (max-width: 689.98px) { .bn-frame { margin-top: max(0px, calc(-1 * var(--st) * var(--s) * var(--lp) - 40 * var(--u))); } }
+  /* Bug 173 (16 Oct 2026): the Home copy has no bottom padding, so the rule above gave its frame 0 (it beat the Home's 24-unit
+     margin) and the outline pattern, 20 live px above the 580x480 cut-out, rose 9-11px behind the buttons. While the Home stacks
+     (< 768) the frame keeps 24 units under the buttons and the art box drops by the pattern's rise, measured on the art's real
+     width (the box is capped at the frame width on the narrowest phones), so the pills start 24 units under the buttons. */
+  @media (max-width: 767.98px) {
+    .bn-home { margin-top: calc(24 * var(--u)); }
+    .bn-home .bn-art { margin-top: max(0px, calc(-1 * var(--st) / var(--bw) * min(var(--bw) * var(--s) * var(--lp), 100%))); }
+  }
   /* Bugs 171/172 (16 Oct 2026): phones wider than the art (414-689) kept it on the start padding (33 | 56 at 414, 33 | 122 at 480).
      The art box plus the shape's start overhang (--ov x the box) is centred in the padded frame; the start margin is capped at the
      free space, so where the art fills the frame (390 and narrower) nothing moves. Bleed-end banners stay on the end edge (Bug 131). */

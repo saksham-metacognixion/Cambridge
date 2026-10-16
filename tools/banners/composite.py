@@ -22,9 +22,14 @@ from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hd import fit, warp, warp_full  # noqa: E402
+from defringe import defringe  # noqa: E402  (extract_new only)
 
 ROOT = 'docs/client-assets/website-images-oct16/'
 BG = ROOT + '_bg.png'
+# Bug 175: the cut-outs these composites replaced (aa07f83^, the live files), kept as the fixed alignment + silhouette reference.
+# Aligning to src/assets instead would fit each run to the previous run's output and widen its edge every time.
+REF = ROOT + '_ref/'
+EDGE_IN, EDGE_RAMP = 3, 1.5  # live px: reference colours in the outer band, the composite from EDGE_IN + EDGE_RAMP in
 
 
 # the composites' outline pills (stroke colours sampled from the shared background)
@@ -53,7 +58,9 @@ def key_alpha(comp, bg):
 
 
 def extract(file, key, region, outdir=None, log=print):
-    cur_path = (glob.glob(f'src/assets/regions/{region}/{key}-cutout.*') if region != 'global' else []) or glob.glob(f'src/assets/{key}-cutout.*')
+    cur_path = glob.glob(f'{REF}{key.replace("/", "__")}{"" if region == "global" else "." + region}.*')
+    if not cur_path:  # no saved reference yet: the current cut-out (first run only)
+        cur_path = (glob.glob(f'src/assets/regions/{region}/{key}-cutout.*') if region != 'global' else []) or glob.glob(f'src/assets/{key}-cutout.*')
     cur_path = cur_path[0]
     cur = np.asarray(Image.open(cur_path).convert('RGBA')).astype(np.float32) / 255
     comp = np.asarray(Image.open(ROOT + file).convert('RGBA')).astype(np.float32) / 255
@@ -72,15 +79,19 @@ def extract(file, key, region, outdir=None, log=print):
     hd = warp_full(np.dstack([comp[..., :3], np.ones_like(ak)]), M, k, size)
     hd[..., 3] = warp_full(np.dstack([ak, ak, ak, np.ones_like(ak)]), M, k, size)[..., 0]
     ca = cv2.resize(cur[..., 3], size, interpolation=cv2.INTER_CUBIC).clip(0, 1)
-    rad = max(1, round(k * 2))
-    ker = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * rad + 1, 2 * rad + 1))
-    gate = cv2.GaussianBlur(cv2.dilate((ca > 0.02).astype(np.float32), ker), (0, 0), k * 0.8)
-    core = cv2.erode((ca > 0.98).astype(np.float32), ker)
-    sharp = np.clip((ca - 0.5) * 3 + 0.5, 0, 1)
-    a = np.maximum(np.maximum(hd[..., 3] * gate, core), np.minimum(sharp, gate))
-    # colours straight from the composite: its gradient is the banner gradient we draw, so a partly blended edge pixel blends
-    # into the same colours on the page (un-blending amplified noise into dark rings)
-    out = np.dstack([hd[..., :3], a])
+    # Bug 175 (16 Oct 2026): the edge comes from the live reference, the interior from the composite. The composites' people
+    # carry a light rim of their own (pasted with a pale matte, lighter than the backdrop, so no key separates it from a white
+    # coat) and in places sit 1-2 px off the reference outline; keyed edges (the old gate allowed 2 live px past the outline)
+    # showed both as a white halo over the dark pill shape. Now: alpha = the live outline (upscaled, its own soft edge), colour =
+    # the composite's sharp pixels from EDGE_IN live px inside that outline, the reference's clean colours in the band outside.
+    pm = cv2.resize(cur[..., :3] * cur[..., 3:4], size, interpolation=cv2.INTER_CUBIC)
+    ref_rgb = np.clip(pm / np.maximum(ca, 1e-3)[..., None], 0, 1)  # un-premultiplied: no dark fringe from the transparent black
+    px = size[0] / live  # file px per live px
+    depth = cv2.distanceTransform((ca > 0.5).astype(np.uint8), cv2.DIST_L2, 5) / px  # live px inside the outline
+    t = np.clip((depth - EDGE_IN) / EDGE_RAMP, 0, 1)[..., None]
+    rgb = ref_rgb + (hd[..., :3] - ref_rgb) * t
+    a = ca
+    out = np.dstack([rgb, a])
     img = Image.fromarray((out * 255 + 0.5).astype(np.uint8))
     # sanity: the new copy at the current size vs the current cut-out
     back = cv2.resize(out, (w, h), interpolation=cv2.INTER_AREA)
@@ -143,6 +154,13 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
         strokes = cv2.dilate((P & line).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
         a[strokes] = 0
     a = fill_interior(a)
+    # Bug 175: no backdrop halo on the people (see extract). The crop box is measured before (so the picture keeps its place in the
+    # banner); the hospital buildings are left as they were: their painted edges have no halo, and split_pills reads the building
+    # edge, so a changed alpha there turns wall and hedge lines into pills.
+    box_a = a.copy()
+    rgb = comp[..., :3]
+    if not pills:
+        rgb, a = defringe(rgb, a, px=2 / NEW_SCALE)
     if pills:
         # hospital pages: the pill strokes (keyed against the plain gradient) outside the building, NOT hole-filled, so the
         # outlines stay thin for split_pills
@@ -153,13 +171,14 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
         ap[building] = 0
         a = np.maximum(a, ap)
     # specks
-    n, lab, stats, _ = cv2.connectedComponentsWithStats((a > 0.3).astype(np.uint8))
-    for i in range(1, n):
-        if stats[i, cv2.CC_STAT_AREA] < 400:
-            a[lab == i] = 0
-    ys, xs = np.nonzero(a > 0.05)
+    for m in (a, box_a):
+        n, lab, stats, _ = cv2.connectedComponentsWithStats((m > 0.3).astype(np.uint8))
+        for i in range(1, n):
+            if stats[i, cv2.CC_STAT_AREA] < 400:
+                m[lab == i] = 0
+    ys, xs = np.nonzero((a if pills else box_a) > 0.05)
     x0, x1, y0, y1 = max(0, xs.min() - 4), min(comp.shape[1], xs.max() + 5), max(0, ys.min() - 4), comp.shape[0]  # to the bottom edge
-    crop = np.dstack([comp[y0:y1, x0:x1, :3], a[y0:y1, x0:x1]])
+    crop = np.dstack([rgb[y0:y1, x0:x1], a[y0:y1, x0:x1]])
     size = (round((x1 - x0) * NEW_SCALE), round((y1 - y0) * NEW_SCALE))
     pm = crop.copy()
     pm[..., :3] *= pm[..., 3:4]

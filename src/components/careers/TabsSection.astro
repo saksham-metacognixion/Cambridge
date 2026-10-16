@@ -33,7 +33,7 @@ const { edition, id, heading, sub, tabsLabel, tabs, active, pending, panelWidth,
 ---
 
 <Band labelledby={`${id}-heading`}>
-  <img loading="lazy" src={pattern.src} alt="" aria-hidden="true" width="447" height="458.67" class="pattern" style={`top:calc(${patternTop} * var(--u))`} />
+  <img loading="lazy" src={pattern.src} alt="" aria-hidden="true" width="447" height="458.67" class="pattern" style={`top:calc(${patternTop} * var(--u));--pw:${panelWidth}`} />
   <div class="sec" style={`--pt:${padTop};--pb:${padBottom};--tg:${tabsGap}`}>
     <h2 id={`${id}-heading`} class="h">{heading}</h2>
     {sub && <p class="sub">{sub}</p>}
@@ -46,7 +46,11 @@ const { edition, id, heading, sub, tabsLabel, tabs, active, pending, panelWidth,
   .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
   .sub { margin: calc(8 * var(--u)) 0 0; font-weight: 400; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .tabs { margin-top: calc(var(--tg) * var(--u)); }
-  .pattern { position: absolute; z-index: 0; inset-inline-start: calc(720 * var(--u)); width: calc(447 * var(--u)); height: calc(458.67 * var(--u)); max-width: none; pointer-events: none; }
+  /* Bug 177 (16 Oct 2026): at the Figma x (720) the pills (drawn across the whole 447 box) crossed the panel text (x 441, 529 wide:
+     to 970) and its bullet list at every desktop width. The pattern keeps its size and height and starts 12 units after the panel's
+     end edge (441 + panel width + 12), so only the rounded pill ends show beside the text; the rest is cut at the frame edge by the
+     Band's overflow-x clip, as before. */
+  .pattern { position: absolute; z-index: 0; inset-inline-start: calc((441 + var(--pw) + 12) * var(--u)); width: calc(447 * var(--u)); height: calc(458.67 * var(--u)); max-width: none; pointer-events: none; }
   :global([dir='rtl']) .pattern { scale: -1 1; }
   @media (min-width: 1024px) {
     .h, .sub { margin-inline-start: calc(105 * var(--u)); width: calc(770 * var(--u)); }

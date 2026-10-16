@@ -87,7 +87,10 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
     .n { font-size: min(calc(35 * var(--u)), calc(100cqi / (var(--chars) * 0.66))); }
   }
   @media (min-width: 1024px) {
-    .sp { min-height: calc(693 * var(--u)); }
+    /* Bug 178 (16 Oct 2026): the bottom padding reserves the drawing's 222 + 16 so the in-flow content (button, bars' 38 margin)
+       always ends above it. English content ends 17-25 above the drawing at 1024-1440, so min-height still wins there (unchanged);
+       the taller Arabic copy grows the band instead of sliding the button under the drawing. */
+    .sp { min-height: calc(693 * var(--u)); padding-bottom: calc(238 * var(--u)); }
     .top { flex-direction: row; gap: 0; min-height: calc(153 * var(--u)); }
     .title { flex: none; width: calc(404 * var(--u)); margin-inline-start: calc(98 * var(--u)); margin-top: calc(12 * var(--u)); }
     .text { flex: none; width: calc(495 * var(--u)); }

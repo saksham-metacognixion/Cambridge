@@ -31,14 +31,6 @@
   "key": "care/banner-inpatient-care",
   "region": "global"
  },
- "Banners - Global/Insurance-Providers-Cambridge-Hospital.png": {
-  "key": "insurance-page/banner",
-  "region": "global"
- },
- "Banners - Global/Media-Hub.png": {
-  "key": "media-hub/banner",
-  "region": "global"
- },
  "Banners - Global/Our-Care-Global.png": {
   "key": "care/banner-our-care",
   "region": "global"

@@ -26,7 +26,7 @@ def _gray(a, bg):
     return cv2.cvtColor((rgb * 255).astype(np.uint8), cv2.COLOR_RGB2GRAY)
 
 
-def fit(cur, src):
+def fit(cur, src, max_rot=0.5):
     """Scale s and offset t with cur ~= src * s + t (pixels). Raises if the match is weak."""
     bg = np.median(np.concatenate([src[:8, :8, :3].reshape(-1, 3), src[:8, -8:, :3].reshape(-1, 3)]), axis=0)
     g1, g2 = _gray(cur, bg), _gray(src, bg)
@@ -43,8 +43,9 @@ def fit(cur, src):
     n_in = int(inl.sum())
     s = float(np.hypot(M[0, 0], M[1, 0]))
     rot = float(np.degrees(np.arctan2(M[1, 0], M[0, 0])))
-    if n_in < 12 or abs(rot) > 0.5:
+    if n_in < 12 or abs(rot) > max_rot:
         raise RuntimeError(f'weak fit: {n_in} inliers, rotation {rot:.2f} deg')
+    fit.last = {'M': M, 'rot': rot}  # the full similarity (with rotation) of the last fit, for warp_full()
     return s, (float(M[0, 2]), float(M[1, 2])), n_in
 
 
@@ -57,6 +58,18 @@ def key_green(src):
     out[..., 1] = np.minimum(g, np.maximum(r, b) + 0.02)  # despill: no pixel greener than its red/blue
     out[..., 3] = alpha
     return out
+
+
+def warp_full(src, M, k, size):
+    """Like warp() but with the full similarity M (rotation included, from fit.last): cur = M * src, scaled by k."""
+    A = M.copy() * k
+    A[:, 2] = M[:, 2] * k
+    pm = src.copy()
+    pm[..., :3] *= pm[..., 3:4]
+    w = cv2.warpAffine(pm, A, size, flags=cv2.INTER_AREA, borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0, 0))
+    a = w[..., 3:4]
+    w[..., :3] = np.where(a > 1e-4, w[..., :3] / np.maximum(a, 1e-4), 0)
+    return w
 
 
 def warp(src, s, t, k, size):

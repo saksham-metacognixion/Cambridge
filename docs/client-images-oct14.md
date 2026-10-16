@@ -77,7 +77,11 @@ strokes interpolated; stroke-coloured horizontal runs masked explicitly). The cu
 outside the live silhouette; solid interior kept, so pale coats on the pale gradient do not key out); colours straight from the
 composite (its gradient is ours). Result: 35 banners at 2x (Global 17, KSA 6, UAE/Global care 12), same framing and layout.
 
-Not applied: Media Hub (different hand crop, no alignment), Insurance (composite rotated 0.8 deg), International "Global" (KSA
-dress, as on 9 Oct, R067), the six hospital composites (NEW building pictures, not sharper copies: a design change to confirm),
-Jeddah.png / DSC07831.JPG / Be-Part-of-a-Purpose (no identified slot: the Careers "Be Part of a Purpose" section uses the
-nurse photo from Figma).
+Not applied: Media Hub (the hand at another angle: our outline does not fit it, tried with rotation), Insurance (a different
+picture: a woman in abaya replaces the man), International "Global" (KSA dress, as on 9 Oct, R067), the six hospital composites
+(NEW building pictures, not sharper copies: a design change to confirm), Jeddah.png / DSC07831.JPG (no identified slot),
+Be-Part-of-a-Purpose (the same two nurses as careers/nurse, 1.6x, but cut out on transparency while the Careers section shows
+the full photo with the building behind, as in Figma: not a drop-in).
+Verified 16 Oct (second pass): every banner-art entry tabled by file width vs 2x target (50 at 2x, 4 at 1.5x+, 72 at 1x: UAE Home,
+KSA care pages, the 4 calculators, ~20 care pages, Motor Neuron / TBI / Conditions, hospitals, Insurance, International, Media Hub);
+name-vs-match doubts (Paediatric Care/Outpatient, Long-Term Care) confirmed by eye.

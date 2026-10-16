@@ -21,7 +21,7 @@ import numpy as np
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from hd import fit, warp  # noqa: E402
+from hd import fit, warp, warp_full  # noqa: E402
 
 ROOT = 'docs/client-assets/website-images-oct16/'
 BG = ROOT + '_bg.png'
@@ -58,7 +58,10 @@ def extract(file, key, region, outdir=None, log=print):
     cur = np.asarray(Image.open(cur_path).convert('RGBA')).astype(np.float32) / 255
     comp = np.asarray(Image.open(ROOT + file).convert('RGBA')).astype(np.float32) / 255
     bg = np.asarray(Image.open(BG).convert('RGBA')).astype(np.float32) / 255
-    s, t, n_in = fit(cur, comp)  # cur ~= comp * s + t
+    s, t, n_in = fit(cur, comp, max_rot=20)  # cur ~= comp * s + t (a rotated composite is turned to our framing)
+    M = fit.last['M']
+    if abs(fit.last['rot']) > 0.3:
+        log(f'  rotation {fit.last["rot"]:.2f} deg applied')
     live = json.load(open('src/data/banner-art.json'))[f'{region}:{key}']['w']  # display size in live px
     k = min(1 / s, 2 * live / cur.shape[1])  # the composite's own pixels, at most 2x the display size
     h, w = cur.shape[:2]
@@ -66,8 +69,8 @@ def extract(file, key, region, outdir=None, log=print):
     ak = key_alpha(comp, bg)
     # colour and keyed alpha warped separately: warp() premultiplies, which would leave black where the key is ~0 while the
     # final alpha (bounded by the current outline) can be wider there
-    hd = warp(np.dstack([comp[..., :3], np.ones_like(ak)]), s, t, k, size)
-    hd[..., 3] = warp(np.dstack([ak, ak, ak, np.ones_like(ak)]), s, t, k, size)[..., 0]
+    hd = warp_full(np.dstack([comp[..., :3], np.ones_like(ak)]), M, k, size)
+    hd[..., 3] = warp_full(np.dstack([ak, ak, ak, np.ones_like(ak)]), M, k, size)[..., 0]
     ca = cv2.resize(cur[..., 3], size, interpolation=cv2.INTER_CUBIC).clip(0, 1)
     rad = max(1, round(k * 2))
     ker = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * rad + 1, 2 * rad + 1))

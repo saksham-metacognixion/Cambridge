@@ -66,7 +66,11 @@
  },
  "care/heroes/musculoskeletal-rehabilitation": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Musculoskeletal-Rehabilitation-UAE.avif",
-  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Musculoskeletal-Rehab-Banner-KSA.avif"
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Musculoskeletal-Rehab-Banner-KSA.avif",
+  "unfade": {
+   "global": "restore",
+   "sa": "restore"
+  }
  },
  "care/heroes/neuro-rehab": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Neurorehabilitation-UAE-1.avif",
@@ -140,7 +144,11 @@
  },
  "care/heroes/stroke-rehabilitation": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Stroke-Rehabilitation-UAE-1.avif",
-  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Stroke-Rehabilitation-Banner-KSA-1.avif"
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Stroke-Rehabilitation-Banner-KSA-1.avif",
+  "unfade": {
+   "global": "restore",
+   "sa": "restore"
+  }
  },
  "care/heroes/traumatic-brain-injury-rehabilitation": {
   "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Traumatic-Brain-Injury-UAE.avif",
@@ -157,7 +165,8 @@
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Acquired-Brain-Injury.avif",
   "hd": {
    "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Acquired-Brain-Injury.png",
-   "green": true
+   "green": true,
+   "solid": true
   }
  },
  "conditions/amputation-prosthetic-rehabilitation": {
@@ -226,7 +235,8 @@
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Multiple-Sclerosis.avif",
   "hd": {
    "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Multiple-Sclerosis.png",
-   "green": true
+   "green": true,
+   "solid": true
   }
  },
  "conditions/musculoskeletal-orthopaedic-rehabilitation": {
@@ -265,7 +275,10 @@
   }
  },
  "conditions/stroke-rehabilitation": {
-  "global": "crop"
+  "global": "crop",
+  "unfade": {
+   "global": "figma"
+  }
  },
  "conditions/tennis-elbow": {
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Tennis-Elbow.avif",
@@ -323,11 +336,18 @@
  "insurance-page/banner": {
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Insurance-Providers-Cambridge-Hospital.avif",
   "ae": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Insurance-UAE.avif",
-  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Insurance-KSA-2.avif"
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Insurance-KSA-2.avif",
+  "unfade": {
+   "ae": "restore",
+   "sa": "restore"
+  }
  },
  "international/banner": {
   "global": "crop",
-  "sa": "crop"
+  "sa": "crop",
+  "unfade": {
+   "sa": "restore"
+  }
  },
  "media-hub/banner": {
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Media-Hub.avif"
@@ -341,7 +361,10 @@
  },
  "testimonials-page/banner": {
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Patient-Testimonials-1.avif",
-  "sa": "crop"
+  "sa": "crop",
+  "unfade": {
+   "sa": "restore"
+  }
  },
  "who-we-are/banner": {
   "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Who-We-Are-Global.avif",
@@ -371,6 +394,9 @@
   }
  },
  "conditions/neurorehabilitation": {
-  "global": "docs/client-assets/I5 Banners - condition pages/I5_Neurorehabilitation.png"
+  "global": "docs/client-assets/I5 Banners - condition pages/I5_Neurorehabilitation.png",
+  "unfade": {
+   "global": "restore"
+  }
  }
 }

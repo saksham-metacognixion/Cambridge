@@ -9,7 +9,8 @@
 // Fallback (no key, Google rejects the key, the script fails): the Figma map image stays in place, the select and the card
 // (name, address, directions link) keep working, and the cause is logged. Never an iframe embed, never a search by name.
 // A hospital without a position (hospitals.json location lat / lng null: Jeddah until the client sends it) gets no marker and
-// no directions link; choosing it shows the overview and its card (name + address) and logs a warning.
+// no directions link; choosing it shows its card (name + address), keeps the overview extent but HIDES every marker (bug 182,
+// 16 Oct 2026: the other hospitals' pins read as "the map stays on Dhahran / Al Khobar") and logs a warning.
 type Spot = {
   id: string;
   name: string;
@@ -197,11 +198,12 @@ if (canvas && card) {
     showCard(s);
     if (!map) return;
     const has = !!s && validPos(s);
-    highlight(has ? s!.id : "");
+    // An unlocated hospital's id matches no marker, so highlight() hides them all (no stale pins of another city); "" shows all.
+    highlight(s?.id ?? "");
     if (!has) {
       if (s)
         console.warn(
-          `${TAG} "${s.name}" has no exact position yet: overview shown instead of its marker`,
+          `${TAG} "${s.name}" has no exact position yet: no marker to show (every pin hidden, overview extent kept)`,
         );
       return overview();
     }

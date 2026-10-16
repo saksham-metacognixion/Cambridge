@@ -5,7 +5,9 @@ import { px, vwSizes } from '../../lib/scale';
 
 /*
  * One service card (Figma Home "Services" 21:1398 cards, reused by the Our Care hub 36:5631 and the hospital pages 112:7721
- * via CareCards.astro): photo 222 x 244 standing 3 above the white box 222 x 342 (hairline .25 #418ea2); title Medium
+ * via CareCards.astro): photo 222 x 244 standing 3 above the white box 222 x 342 (hairline .25 #418ea2) in Figma; since bug 183
+ * (16 Oct 2026, client: the photo poked out over the top edge and the rounded corners of the outline) the photo starts AT the
+ * box's top edge instead (top 0, same size, so it ends 3 lower; the box keeps its Figma position via margin-top). Title Medium
  * 19 at (+24, +259), description Book 9/10 #6b6b6b at +281 (box 154 wide), cyan button at the start, 16 above the bottom.
  * `scale` shrinks everything but the button (hospital pages: 0.9884). Figma's button (74 x 17 r3, Medium 8 label) is the
  * shared .ui-btn now (bug 044/050) and the card corners --radius-card (Figma r15, bug 049).
@@ -55,7 +57,7 @@ const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTon
 
 <style>
   .cc { --cu: calc(var(--k) * var(--u)); position: relative; display: flex; flex-direction: column; box-sizing: border-box; width: 100%; min-height: calc(342 * var(--cu)); margin-top: calc(3 * var(--cu)); border-radius: var(--radius-card); background: #fff; font-family: var(--font-gotham); font-style: normal; }
-  .cc :global(.cc-img) { position: absolute; inset-inline-start: 0; top: calc(-3 * var(--cu)); display: block; width: 100%; height: calc(244 * var(--cu)); object-fit: cover; max-width: none; border-start-start-radius: var(--radius-card); border-start-end-radius: var(--radius-card); }
+  .cc :global(.cc-img) { position: absolute; inset-inline-start: 0; top: 0; display: block; width: 100%; height: calc(244 * var(--cu)); object-fit: cover; max-width: none; border-start-start-radius: var(--radius-card); border-start-end-radius: var(--radius-card); }
   .cc-body { position: relative; display: flex; flex-direction: column; flex: 1; box-sizing: border-box; padding: calc(257 * var(--cu)) calc(24 * var(--cu)) calc(16 * var(--cu)); }
   .cc-title { margin: 0; font-weight: 500; font-size: calc(19 * var(--cu)); line-height: 1; overflow-wrap: anywhere; }
   .cc-desc { margin: calc(5 * var(--cu)) 0 calc(8 * var(--cu)); max-width: calc(154 * var(--cu)); font-weight: 400; font-size: calc(9 * var(--cu)); line-height: calc(10 * var(--cu)); color: var(--color-body); overflow-wrap: anywhere; }

@@ -306,7 +306,10 @@ body {
    antialiases it (a 0.25px #418ea2 stroke renders as ~25% teal). So the stroke is never thinner than 1 device px and its
    colour is faded by the stroke's coverage as Figma renders it (Figma px x device pixel ratio, capped at 1): --sw .25 =
    25% teal on a 1x screen, as in the Figma render. Strokes of 1 Figma px or more (buttons, --sw:1) keep their full colour.
-   A colour fade, not opacity, so the card content is unaffected. User decision 2 Oct 2026. */
+   A colour fade, not opacity, so the card content is unaffected. User decision 2 Oct 2026.
+   Bug 183 (16 Oct 2026, client photo from an iPhone): a stroke of 1 DEVICE px (0.33 CSS px on a 3x phone, 0.5 on a 2x laptop)
+   is too fine to see on a high-density screen, so the floor is now 1 CSS px on every screen: what a 1x desktop already showed.
+   The coverage fade is unchanged (1x: 25% teal for --sw .25), so a 1x screen renders pixel for pixel as before. */
 :root { --hair-dpr: 1; }
 /* Consent link ("Privacy policy" / "Terms & conditions") inside a form: inline text, so its tap area is extended with padding
    (inline padding does not change the line layout). */
@@ -342,7 +345,7 @@ body {
 .hair-card::after {
   content: ""; position: absolute; inset: 0; box-sizing: border-box; pointer-events: none;
   --hair-cover: min(1, var(--sw, 0.25) * var(--hair-dpr));
-  border: max(1px / var(--hair-dpr), calc(var(--sw, 0.25) * var(--u))) solid
+  border: max(1px, calc(var(--sw, 0.25) * var(--u))) solid
     color-mix(in srgb, var(--sc, var(--color-teal-border)) calc(var(--hair-cover) * 100%), transparent);
   border-radius: inherit;
 }

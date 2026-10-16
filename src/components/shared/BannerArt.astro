@@ -1,19 +1,21 @@
 ---
 import { Picture } from 'astro:assets';
-import { bannerArt } from '../../lib/banner-art';
-import shape from '../../assets/banners/shape.avif';
-import pattern from '../../assets/banners/pattern.svg';
+import { bannerArt, pillBox, PILLS } from '../../lib/banner-art';
+import pills from '../../assets/banners/pills.svg';
 import type { RegionId } from '../../lib/editions';
 
 /*
  * Banner art as on the live site (banner brief 14 Oct 2026; user decisions: live geometry at 1440, scaled with the page like
  * the rest of the design; phones text first, the people under it). Live (cambridgehospital.com, measured with
- * .astro/qc-banner): every banner is a gradient (`banners/bg.avif`, background-size cover, set by the host section via
+ * .astro/qc-banner): every banner is a gradient (the live `banners/bg.avif`; Bug 180: lib/banner-art.ts bannerBgStyle, set by the host section via
  * bannerArt().bgStyle) with the pill shape (613x500) and ONE transparent people cut-out drawn at its natural size
  * (579x450, 500x450, 565x462 ...), right-aligned to the 72px content edge, its bottom 10px below the banner (Home: the
  * outline pattern 620x548 and a 580x480 cut-out in a 550px banner). The people drift with the cursor (scripts/hero-follow.ts);
- * the shape and gradient stay. Hospital pages (shape: false): the pills are drawn into the live file behind the building; we
- * keep them as `<key>-pills.svg` (tools/banners/split_pills.py) under the building-only cut-out, inside one moving subject.
+ * the shape and gradient stay.
+ * Bug 180 (16 Oct 2026): the client's banners of 16 Oct replace the live look: the filled navy/cyan/green pill shape (and the
+ * Home's filled pattern) is now the outline pill stack of those files (assets/banners/pills.svg, 562x430 live px, the same on
+ * every banner, Home and hospital pages included), placed in the people box where each file draws it (banner-art.json `pills`,
+ * else lib/banner-art.ts pillBox()). It stays behind the people and does not follow the cursor.
  * Units: --lp = one live px at 1440 = 1052/1440 Figma px (--u), so from 1024px up the art scales with the page width exactly
  * like the copy beside it. Below 1024px --u is fixed (1lp = 1px) and the art is a block under the copy at the live
  * phone / tablet size (325x265 / 365x298 for a 579x450 cut-out: x0.561 / x0.630 of the natural size), never distorted.
@@ -35,14 +37,15 @@ const { w, h } = art;
 // Bug 131: edge-cut files (lib/banner-art.ts BannerArtEntry): `bleed-end` pushes the subject past the viewport's end edge, `fade-start` /
 // `fade-top` feather a cut edge that faces the copy or the banner top (CSS below).
 const edge = [art.bleed === 'end' && 'bleed-end', ...(art.fade ?? '').split(' ').filter(Boolean).map((f) => `fade-${f}`)];
-// Shape box relative to the people box (live px): the pills sit 30px under the banner top (Home pattern: 55px), the people's
-// bottom 10px (Home 5px) under the banner bottom, both right-aligned to the same edge.
-const S = home ? { w: 620, h: 548, top: 55, banner: 550, drop: 5 } : { w: 613, h: 500, top: 30, banner: 500, drop: 10 };
-const shapeTop = S.top - (S.banner + S.drop - h);
+// The people's bottom sits 10px (Home 5px) under the banner bottom.
+const drop = home ? 5 : 10;
+// Pill stack box in the people box (live px; negative = past the box's top / start edge).
+const P = pillBox(art);
 const flip = mirror && !keep;
-// Bugs 171/172: the pill shape is wider than most cut-outs (613 vs 579) and overhangs the people box on the start side by this
-// fraction of the box width; phones centre the two together.
-const ov = art.shape ? Math.max(0, S.w - w) / w : 0;
+// Bugs 171/172: the pill stack is wider than most cut-outs and overhangs the people box on the start (and end) side by these
+// fractions of the box width; phones centre the two together.
+const ovs = art.shape ? Math.max(0, -P.x) / w : 0;
+const ove = art.shape ? Math.max(0, P.x + PILLS.w - w) / w : 0;
 // Rendered width: w live px at 1440 scaled with the page (desktop), x0.630 tablet, x0.561 phone, each also at 2x for
 // high-density screens. Most cut-outs are the live files at 1x (w wide) and keep the 1x set; the 2x copies from the client's
 // originals (tools/banners/hd.py, 14 Oct 2026) are 2w wide. Only widths the file has (Astro never upscales).
@@ -55,17 +58,10 @@ const pic = {
 } as const;
 ---
 
-<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop};--ov:${ov.toFixed(4)}`}>
+<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${PILLS.w};--sx:${P.x.toFixed(1)};--st:${P.y.toFixed(1)};--sd:${drop};--ovs:${ovs.toFixed(4)};--ove:${ove.toFixed(4)}`}>
   <div class:list={['bn-art', flip && 'bn-flip rtl:-scale-x-100']} data-hero-follow>
-    {art.shape && <img class="bn-shape" src={home ? pattern.src : shape.src} width={S.w} height={S.h} alt="" loading="eager" decoding="async" />}
-    {art.pills ? (
-      <div class="bn-people" data-hero-subject>
-        <img class="bn-pills" src={art.pills.src} width={w} height={h} alt="" loading="eager" decoding="async" />
-        <Picture src={art.image} alt={alt} fetchpriority="high" class="bn-people" {...pic} />
-      </div>
-    ) : (
-      <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
-    )}
+    {art.shape && <img class="bn-shape" src={pills.src} width={pills.width} height={pills.height} alt="" loading="eager" decoding="async" />}
+    <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
   </div>
 </div>
 
@@ -73,13 +69,9 @@ const pic = {
   .bn-frame { --lp: 1px; --s: 0.561; position: relative; z-index: 0; display: flex; justify-content: flex-start; padding-inline: calc(24 * var(--u)); pointer-events: none; }
   .bn-art { position: relative; width: calc(var(--bw) * var(--s) * var(--lp)); max-width: 100%; aspect-ratio: var(--bw) / var(--bh); flex: none; }
   .bn-people { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: 100% 100%; }
-  /* hospital pages: the pill outlines (SVG, same box as the building cut-out) behind the building */
-  .bn-pills { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
-  .bn-shape { position: absolute; z-index: -1; inset-inline-end: 0; top: calc(var(--st) / var(--bh) * 100%); width: calc(var(--sw) / var(--bw) * 100%); height: auto; max-width: none; }
-  /* Bug 145 (15 Oct 2026): the mirrored box (scale -1) already turns the English layout round, so the shape inside it is anchored
-     on the English side: in RTL inset-inline-end resolves to the left and the transform flipped it a second time, sending the pills
-     past the outer screen edge instead of behind the copy side (most visible with narrow cut-outs: Homecare 311 wide, shape 613). */
-  :global([dir='rtl']) .bn-flip .bn-shape { inset-inline-end: auto; inset-inline-start: 0; }
+  /* Bug 180: the pill stack in the people box at (--sx, --st) live px. Physical `left`: the box is the English composition, mirrored
+     as a whole in RTL (.bn-flip scale -1), so the stack lands on the copy side there too (Bug 145) without a second flip. */
+  .bn-shape { position: absolute; z-index: -1; left: calc(var(--sx) / var(--bw) * 100%); top: calc(var(--st) / var(--bh) * 100%); width: calc(var(--sw) / var(--bw) * 100%); height: auto; max-width: none; }
   /* Bug 146: a subject with readable / real-world content (banner-art.json `readable`: the calculator phone screens) is turned back
      inside the mirrored box, so the composition mirrors but the screen reads the right way (scripts/hero-follow.ts reads this scale). */
   :global([dir='rtl']) .bn-readable .bn-flip :global([data-hero-subject]) { scale: -1 1; }
@@ -96,10 +88,11 @@ const pic = {
     .bn-home .bn-art { margin-top: max(0px, calc(-1 * var(--st) / var(--bw) * min(var(--bw) * var(--s) * var(--lp), 100%))); }
   }
   /* Bugs 171/172 (16 Oct 2026): phones wider than the art (414-689) kept it on the start padding (33 | 56 at 414, 33 | 122 at 480).
-     The art box plus the shape's start overhang (--ov x the box) is centred in the padded frame; the start margin is capped at the
-     free space, so where the art fills the frame (390 and narrower) nothing moves. Bleed-end banners stay on the end edge (Bug 131). */
+     The art box plus the pill stack's start and end overhangs (--ovs / --ove x the box) is centred in the padded frame; the start
+     margin is capped at the free space, so where the art fills the frame (390 and narrower) nothing moves. Bleed-end banners stay
+     on the end edge (Bug 131). */
   @media (max-width: 689.98px) {
-    .bn-frame:not(.bleed-end) .bn-art { --a: min(calc(var(--bw) * var(--s) * var(--lp)), 100%); margin-inline-start: clamp(0px, (100% - var(--a) + var(--a) * var(--ov)) / 2, 100% - var(--a)); }
+    .bn-frame:not(.bleed-end) .bn-art { --a: min(calc(var(--bw) * var(--s) * var(--lp)), 100%); margin-inline-start: clamp(0px, (100% - var(--a) * (1 + var(--ovs) + var(--ove))) / 2 + var(--a) * var(--ovs), 100% - var(--a)); }
   }
   /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
   @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }

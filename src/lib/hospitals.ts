@@ -35,7 +35,7 @@ export interface Hospital {
   phone?: string;
   /** opening hours text per language; empty = not shown (B3) */
   hours?: Localized;
-  /** "Open in Google Maps" target; empty = the hospital's position (location), else a Google Maps search for the address */
+  /** the hospital's own Google Maps share link, used only while it has no position (location); empty = none */
   mapUrl?: string;
   /** exact position (bug 051): lat / lng null = not supplied yet (no marker, no directions link); placeId optional */
   location: {
@@ -115,13 +115,14 @@ export function directionsHref(h: Hospital): string {
     : (h.mapUrl ?? "");
 }
 
-/** Google Maps target: the hospital's own URL, else its exact position, else a Maps search for its address. */
-export function mapsHref(h: Hospital, locale: LocaleId): string {
-  if (h.mapUrl) return h.mapUrl;
+/** Hospital-page "Open in Google Maps" target, from the same location record as the Contact map (bug 182, 16 Oct 2026): the
+ *  hospital's exact position (+ Place ID when set), else its own Google Maps link (mapUrl), else empty = no button (MapBand).
+ *  Never a search by name or address: Google's text match landed on the wrong place for Jeddah (R051). */
+export function mapsHref(h: Hospital, _locale?: LocaleId): string {
   const p = hospitalPosition(h);
   return p
     ? `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}${placeParam(h, "query_place_id")}`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${hospitalName(h, "en")}, ${t(h.address, locale, "hospitals")}`)}`;
+    : (h.mapUrl ?? "");
 }
 
 /** One hospital as the Contact Us form + map see it (same list, same names, same edition filter as everywhere else). */

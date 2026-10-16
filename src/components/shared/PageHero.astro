@@ -30,8 +30,11 @@ import { bannerArt, bannerBgStyle, bannerH } from '../../lib/banner-art';
 /** titleSize: desktop title size in Figma px (default 39, line height 37/39 of it); bug 071 (Why Cambridge 4-line client title). */
 interface Pos { titleSize?: number; titleTop: number; titleW: number; titleMinH?: number; textGap?: number; textW?: number; textX?: number; buttonGap: number; labelX?: number; labelW?: number }
 interface Props {
-  /** button: absent = a hero without one (the calculator pages, as on the live site) */
-  content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button?: { label: string; href: string } };
+  /** button: absent = a hero without one (the calculator pages, as on the live site).
+   *  keepLines (content JSON): every title segment is one line, as the client composed it (bug 200, Arabic About / Who We Are /
+   *  Why Cambridge): on desktop the title box is as wide as the longest segment instead of the Figma column, which broke the
+   *  segments into single words. Below 1024px the segments already fit the column at the phone / tablet title sizes. */
+  content: { ariaLabel: string; banner: { image: string; alt: string }; title: string[]; text?: string; button?: { label: string; href: string }; keepLines?: boolean };
   pos: Pos;
   /** stage height in Figma px: 437 (banner) or 322 (cover) */
   h?: number;
@@ -115,7 +118,7 @@ const live = !!art || mapLive;
 const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u));--hero-edge-y:calc(${-MAP_UP} * var(--u));` : '';
 ---
 
-<section class:list={['relative', keepComposition && 'keep', side && 'side', live && 'bn-live', mapLive && 'map-live', art?.bleed && 'bn-bleed', g && 'hero-bleed', g && unflipped && 'unflipped', clearPills && 'clear-pills']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: ${live ? bannerH() : h};${edgeVars}${mapVars}`} aria-label={c.ariaLabel}>
+<section class:list={['relative', keepComposition && 'keep', side && 'side', live && 'bn-live', mapLive && 'map-live', art?.bleed && 'bn-bleed', g && 'hero-bleed', g && unflipped && 'unflipped', clearPills && 'clear-pills', c.keepLines && 'lines']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: ${live ? bannerH() : h};${edgeVars}${mapVars}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${live ? bannerH() : h}`}>
     <!-- The people drift with the cursor like the home hero (the former scripts/hero-follow.ts, removed 16 Oct 2026); the RTL flip sits on this box so the
          script's transform on the subject image never overrides it. -->
@@ -174,6 +177,9 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
        right-aligned, so the box is only as wide as the English paragraph (the area that is clear of the art). */
     :global([dir='rtl']) .keep .copy { inset-inline-start: auto; inset-inline-end: calc(95 * var(--u)); }
     :global([dir='rtl']) .keep .title { width: calc((var(--xx) + var(--xw)) * var(--u)); }
+    /* Bug 200: keepLines = the box hugs the composed lines (each segment is a block span), so none of them wraps. The size stays the
+       page's Figma size in --u, so the composition scales as one from 1024 to 1440. */
+    .lines .title, :global([dir='rtl']) .keep.lines .title { width: max-content; }
   }
   @media (min-width: 1024px) {
     .side { background: var(--color-mist-50); } /* bug 086: the post's plain surface reaches the viewport edges too */

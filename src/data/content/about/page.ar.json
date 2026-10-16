@@ -1,15 +1,17 @@
 {
-  "_note": "Website Content - Suhad 4/About Cambridge/AR- Main Page.docx (13 Oct 2026), text exactly as in the document (Arabic-Indic year digits as written): hero title (split in three lines for the hero column, like the English four) + text, intro subtitle + two paragraphs, the 17-entry timeline + heading, the 'Get to Know Cambridge' heading. Replaces the live-site Arabic of 6 Oct. Not in the document (kept from the live site): meta.title, intro.title, the four explore card titles / buttons. The closing 'Your recovery matters to us' box is contact/page.ar.json recovery (same Arabic on every page that shows it).",
+  "_note": "Website Content - Suhad 4/About Cambridge/AR- Main Page.docx (13 Oct 2026), text exactly as in the document (Arabic-Indic year digits as written): hero title (split in three lines for the hero column, like the English four) + text, intro subtitle + two paragraphs, the 17-entry timeline + heading, the 'Get to Know Cambridge' heading. Replaces the live-site Arabic of 6 Oct. Not in the document (kept from the live site): meta.title, intro.title, the four explore card titles / buttons. The closing 'Your recovery matters to us' box is contact/page.ar.json recovery (same Arabic on every page that shows it). Bug 200 (16 Oct 2026, client): hero title in the client's four lines (keepLines: one line per segment, the desktop title box hugs them), wording 'والرعاية الطويلة الأمد' as the client wrote it; 'التأهيل' kept (the client message's 'التآهيل' read as a typo).",
   "meta": {
     "title": "حول مستشفى كامبريدج | مستشفى كامبريدج"
   },
   "hero": {
-    "ariaLabel": "نموذج رائد في خدمات إعادة التأهيل والرعاية طويلة الأمد في المنطقة",
+    "ariaLabel": "نموذج رائد في خدمات إعادة التأهيل والرعاية الطويلة الأمد في المنطقة",
     "title": [
-      "نموذج رائد في خدمات",
-      "إعادة التأهيل والرعاية طويلة الأمد",
+      "نموذج رائد في",
+      "خدمات إعادة التأهيل",
+      "والرعاية الطويلة الأمد",
       "في المنطقة"
     ],
+    "keepLines": true,
     "text": "منظومة متكاملة تجمع بين عمق الخبرة الطبية المتخصصة والعناية الإنسانية، وتضع المرضى وأسرهم في صميم كل ما نقدمه، من المستشفى وحتى العودة إلى المنزل.",
     "button": {
       "label": "احجز موعد"

@@ -66,8 +66,12 @@ interface Props {
    *  'start' = both sides continue the banner's START column (the plain gradient side; the default for a flat banner,
    *  whose end edge is a photo that must not be smeared); 'none' = no bands (`side` posts: the plain surface continues). */
   bleed?: 'edges' | 'start' | 'none';
+  /** Bug 174 (16 Oct 2026, Conditions & Specialities): on tablets (690-1023px) the banner art is a block under the copy on the end
+   *  side, and the pill shape (613 live px x0.63 = 386px, 10px past the end edge) rises above it by -st (BannerArt): 169px for the
+   *  flat 212-tall Conditions cut-out, so it covered the end of the intro. true = the paragraph stops 24px before the shape. */
+  clearPills?: boolean;
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false, clearPills = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 // Live-site banner art (banner brief 14 Oct 2026, components/shared/BannerArt.astro): gradient + pill shape + the people cut-out at
 // the live size and place, on a 500px-at-1440 stage. Not for the Our Hospitals map (HeroMap pins over its own art) or news photos.
@@ -111,7 +115,7 @@ const live = !!art || mapLive;
 const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u));--hero-edge-y:calc(${-MAP_UP} * var(--u));` : '';
 ---
 
-<section class:list={['relative', keepComposition && 'keep', side && 'side', live && 'bn-live', mapLive && 'map-live', art?.bleed && 'bn-bleed', g && 'hero-bleed', g && unflipped && 'unflipped']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: ${live ? bannerH() : h};${edgeVars}${mapVars}`} aria-label={c.ariaLabel}>
+<section class:list={['relative', keepComposition && 'keep', side && 'side', live && 'bn-live', mapLive && 'map-live', art?.bleed && 'bn-bleed', g && 'hero-bleed', g && unflipped && 'unflipped', clearPills && 'clear-pills']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: ${live ? bannerH() : h};${edgeVars}${mapVars}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${live ? bannerH() : h}`}>
     <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
          script's transform on the subject image never overrides it. -->
@@ -187,5 +191,9 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
     /* Bug 167 (15 Oct 2026): the copy keeps the page's 16px gutter below 1024 like the sections under it (was 24 units = 33px). */
     .copy { --copy-gap: calc(16 * var(--u)); gap: var(--copy-gap); padding: calc(28 * var(--u)) 16px calc(40 * var(--u)); }
     .text { max-width: calc(var(--xw) * var(--u)); }
+  }
+  /* Bug 174: copy content box = 100% (16px gutters); shape start = 376px from the end edge, so the text ends 24px before it */
+  @media (min-width: 690px) and (max-width: 1023.98px) {
+    .clear-pills .text { max-width: min(calc(var(--xw) * var(--u)), calc(100% - (376px + 24px - 16px))); }
   }
 </style>

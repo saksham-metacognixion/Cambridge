@@ -202,6 +202,29 @@
   .modal-panel { max-inline-size: none; min-block-size: 100%; border-radius: 0; padding-block: 24px !important; }
   .modal-close { inset-block-start: 12px; inset-inline-end: 12px; }
 }
+/* Short landscape screens (phones turned sideways, <= 500 px tall; bug 170, 16 Oct 2026): the pop-up scrolled as one block, so the
+   title and the close button were ~400 px off screen by the time Submit came into view. Here the panel is held to the screen
+   height and only the form (or the success message) scrolls under the title row; the close button stays in the panel's top
+   corner. Taller screens (portrait phones, short laptops) keep the whole-dialog scroll. Not the country pop-up (no .modal-panel). */
+@media (max-height: 500px) {
+  .modal:has(> .modal-panel) {
+    height: 100vh; height: 100dvh;
+    padding-block: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom));
+    padding-inline: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  }
+  .modal[open]:has(> .modal-panel) { grid-template-rows: minmax(0, 1fr); }
+  .modal-panel { display: flex; flex-direction: column; max-block-size: 100%; }
+  .modal-panel > * { flex: none; }
+  /* 4px inline slack so the field focus rings are not clipped by the scroll box */
+  .modal-panel > :is(form, .f-success) {
+    flex: 0 1 auto; min-block-size: 0; overflow-y: auto; overscroll-behavior: contain;
+    margin-inline: -4px; padding-inline: 4px; scroll-padding-block: 8px;
+  }
+}
+@media (max-height: 500px) and (max-width: 767.98px) {
+  .modal:has(> .modal-panel) { padding: 0; }
+  .modal-panel { padding-block: 12px !important; padding-inline: max(16px, env(safe-area-inset-left), env(safe-area-inset-right)) !important; }
+}
 
 /* ───────── Page forms ("pf"): Patient Feedback (188:964), Refer a Patient (59:14344), International Patients (54:9239) ─────────
    Fields: fill rgba(217,217,217,.5), radius 10.754, h 35; labels Gotham Book 15 / 18.82 navy, text 8 below the box top.

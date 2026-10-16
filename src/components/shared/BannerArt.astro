@@ -40,6 +40,9 @@ const edge = [art.bleed === 'end' && 'bleed-end', ...(art.fade ?? '').split(' ')
 const S = home ? { w: 620, h: 548, top: 55, banner: 550, drop: 5 } : { w: 613, h: 500, top: 30, banner: 500, drop: 10 };
 const shapeTop = S.top - (S.banner + S.drop - h);
 const flip = mirror && !keep;
+// Bugs 171/172: the pill shape is wider than most cut-outs (613 vs 579) and overhangs the people box on the start side by this
+// fraction of the box width; phones centre the two together.
+const ov = art.shape ? Math.max(0, S.w - w) / w : 0;
 // Rendered width: w live px at 1440 scaled with the page (desktop), x0.630 tablet, x0.561 phone, each also at 2x for
 // high-density screens. Most cut-outs are the live files at 1x (w wide) and keep the 1x set; the 2x copies from the client's
 // originals (tools/banners/hd.py, 14 Oct 2026) are 2w wide. Only widths the file has (Astro never upscales).
@@ -52,7 +55,7 @@ const pic = {
 } as const;
 ---
 
-<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop}`}>
+<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${S.w};--sh:${S.h};--st:${shapeTop};--sd:${S.drop};--ov:${ov.toFixed(4)}`}>
   <div class:list={['bn-art', flip && 'bn-flip rtl:-scale-x-100']} data-hero-follow>
     {art.shape && <img class="bn-shape" src={home ? pattern.src : shape.src} width={S.w} height={S.h} alt="" loading="eager" decoding="async" />}
     {art.pills ? (
@@ -84,6 +87,12 @@ const pic = {
      cut-out) and covered the end of the intro and the button. The frame drops by whatever the copy's 40-unit bottom padding
      (PageHero) does not already absorb, so the shape stays under the text in both languages; the usual 450-tall cut-outs (30) are unchanged. */
   @media (max-width: 689.98px) { .bn-frame { margin-top: max(0px, calc(-1 * var(--st) * var(--s) * var(--lp) - 40 * var(--u))); } }
+  /* Bugs 171/172 (16 Oct 2026): phones wider than the art (414-689) kept it on the start padding (33 | 56 at 414, 33 | 122 at 480).
+     The art box plus the shape's start overhang (--ov x the box) is centred in the padded frame; the start margin is capped at the
+     free space, so where the art fills the frame (390 and narrower) nothing moves. Bleed-end banners stay on the end edge (Bug 131). */
+  @media (max-width: 689.98px) {
+    .bn-frame:not(.bleed-end) .bn-art { --a: min(calc(var(--bw) * var(--s) * var(--lp)), 100%); margin-inline-start: clamp(0px, (100% - var(--a) + var(--a) * var(--ov)) / 2, 100% - var(--a)); }
+  }
   /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
   @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }
   @media (min-width: 1024px) {

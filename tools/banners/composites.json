@@ -1,31 +1,39 @@
 {
  "Banners - Global/About-Cambridge-Banner-Global.png": {
   "key": "about/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Accreditations-Affiliations-Global.png": {
   "key": "accreditations/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Cambridge-Hospital-Restoring-Hope-Enabling-Life.png": {
   "key": "hero/banner3",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Career-Hub-Global-1-2.png": {
   "key": "careers/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Contact-Us-Global.png": {
   "key": "contact-page/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/FAQs-Cambridge-Hospital.png": {
   "key": "faq/hero",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Find-a-Doctor-Banner.png": {
   "key": "doctors-page/banner",
-  "region": "global"
+  "region": "global",
+  "full": true,
+  "extend": true
  },
  "Banners - Global/Inpatient-Care-UAE-1.png": {
   "key": "care/banner-inpatient-care",
@@ -34,23 +42,28 @@
  },
  "Banners - Global/Our-Care-Global.png": {
   "key": "care/banner-our-care",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Patient-Hub-Global.png": {
   "key": "patient-hub/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Patient-Testimonials-1.png": {
   "key": "testimonials-page/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Refer-a-Patient-Global-1.png": {
   "key": "refer/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Who-We-Are-Global.png": {
   "key": "who-we-are/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Why-Cambridge-Global.png": {
   "key": "why/banner",
@@ -59,59 +72,74 @@
  },
  "Banners - Global/Your-Opinion-Matters-Global.png": {
   "key": "forms/feedback-hero",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - KSA/About-Cambridge-Banner-KSA-1.png": {
   "key": "about/banner",
-  "region": "sa"
+  "region": "sa",
+  "full": true
  },
  "Banners - KSA/Cambridge-Hospital-Restoring-Hope-Enabling-Life-KSA-1.png": {
   "key": "hero/banner3",
-  "region": "sa"
+  "region": "sa",
+  "full": true
  },
  "Banners - KSA/Home-Health-Care-Banner-KSA.png": {
   "key": "care/heroes/home-healthcare",
-  "region": "sa"
+  "region": "sa",
+  "full": true
  },
  "Banners - KSA/Outpatient-Care-Banner-KSA-1.png": {
   "key": "care/heroes/outpatient",
-  "region": "sa"
+  "region": "sa",
+  "full": true
  },
  "Banners - KSA/Patient-Hub-Cambridge-Hospital-KSA.png": {
   "key": "patient-hub/banner",
-  "region": "sa"
+  "region": "sa",
+  "full": true
  },
  "Banners - KSA/Why-Cambridge-Banner-KSA-1.png": {
   "key": "why/banner",
-  "region": "sa"
+  "region": "sa",
+  "full": true
  },
  "Banners - UAE/Cerebral-Palsy-UAE.png": {
   "key": "care/heroes/cerebral-palsy-program",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/HOME-Health-CARE-UAE.png": {
   "key": "care/heroes/home-healthcare",
-  "region": "global"
+  "region": "global",
+  "full": true,
+  "extend": true
  },
  "Banners - UAE/ICU-Critical-Care.png": {
   "key": "care/heroes/icu-critical-care",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Inschool-Care-UAE-2.png": {
   "key": "care/heroes/in-school",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Long-Term-Care-UAE-1.png": {
   "key": "care/heroes/long-term-care-rehab",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Occupational-Therapy-UAE-Inner-Banner.png": {
   "key": "care/heroes/occupational-therapy",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Outpatient-Care-UAE-2.png": {
   "key": "care/heroes/outpatient",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Palliative-Care-UAE.png": {
   "key": "care/heroes/palliative-care",
@@ -125,15 +153,18 @@
  },
  "Banners - UAE/Pediatric-Outpatient-UAE.png": {
   "key": "care/heroes/pediatric-care",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Physiotherapy-Banner-UAE.png": {
   "key": "care/heroes/physiotherapy",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Post-Acute-Care-Banner-UAE.png": {
   "key": "care/banner-post-acute-care",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Speech-Language-Therapy-UAE.png": {
   "key": "care/heroes/speech-language-therapy",
@@ -142,7 +173,8 @@
  },
  "Banners - UAE/Ventilated-Patients-Care-UAE.png": {
   "key": "care/heroes/mechanical-ventilation",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Media-Hub.png": {
   "key": "media-hub/banner",

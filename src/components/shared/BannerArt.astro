@@ -37,8 +37,11 @@ const { w, h } = art;
 // Bug 131: edge-cut files (lib/banner-art.ts BannerArtEntry): `bleed-end` pushes the subject past the viewport's end edge, `fade-start` /
 // `fade-top` feather a cut edge that faces the copy or the banner top (CSS below).
 const edge = [art.bleed === 'end' && 'bleed-end', ...(art.fade ?? '').split(' ').filter(Boolean).map((f) => `fade-${f}`)];
-// The people's bottom sits 10px (Home 5px) under the banner bottom.
-const drop = home ? 5 : 10;
+// The people's bottom sits 10px (Home 5px) under the banner bottom; banners cut from the client's files stand on it (`drop` 0)
+// and keep the files' distance to the end edge (`end`, else the live 72), Bugs 185/186.
+const drop = art.drop ?? (home ? 5 : 10);
+// (--bend only when set: the CSS falls back to 72, so other frames carry nothing new)
+const bend = art.end === undefined ? '' : `--bend:${art.end};`;
 // Pill stack box in the people box (live px; negative = past the box's top / start edge).
 const P = pillBox(art);
 const flip = mirror && !keep;
@@ -58,7 +61,7 @@ const pic = {
 } as const;
 ---
 
-<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${PILLS.w};--sx:${P.x.toFixed(1)};--st:${P.y.toFixed(1)};--sd:${drop};--ovs:${ovs.toFixed(4)};--ove:${ove.toFixed(4)}`}>
+<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${PILLS.w};--sx:${P.x.toFixed(1)};--st:${P.y.toFixed(1)};--sd:${drop};${bend}--ovs:${ovs.toFixed(4)};--ove:${ove.toFixed(4)}`}>
   <div class:list={['bn-art', flip && 'bn-flip rtl:-scale-x-100']} data-hero-follow>
     {art.shape && <img class="bn-shape" src={pills.src} width={pills.width} height={pills.height} alt="" loading="eager" decoding="async" />}
     <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
@@ -96,9 +99,15 @@ const pic = {
   }
   /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
   @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }
+  /* Bug 185 (16 Oct 2026): at the client's scale several cut-outs are narrower than the pill stack, which overhangs the box's end
+     side by --ove x its width; on tablets (art on the end padding) that ran the stack up to ~55px off screen. The box keeps that
+     overhang as end margin, so the stack ends on the padding like the people did (bleed-end frames keep their own rule). */
+  @media (min-width: 690px) and (max-width: 1023.98px) {
+    .bn-frame:not(.bleed-end) .bn-art { margin-inline-end: calc(var(--bw) * var(--s) * var(--lp) * var(--ove)); }
+  }
   @media (min-width: 1024px) {
     .bn-frame { --lp: calc(var(--u) * 1052 / 1440); --s: 1; position: absolute; inset: 0; max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding: 0; display: block; }
-    .bn-art { position: absolute; inset-inline-end: calc(72 * var(--lp)); bottom: calc(-1 * var(--sd) * var(--lp)); max-width: none; }
+    .bn-art { position: absolute; inset-inline-end: calc(var(--bend, 72) * var(--lp)); bottom: calc(-1 * var(--sd) * var(--lp)); max-width: none; }
   }
 
   /* Bug 131 (15 Oct 2026): a subject cut flat by its file's END edge (lib/banner-art.ts `bleed`) is moved past the viewport's end

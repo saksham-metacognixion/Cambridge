@@ -28,6 +28,11 @@ export interface BannerArtEntry {
   /** Bug 180 (16 Oct 2026): top-left of the outline pill stack in the people box, live px, where the client's 16 Oct composite
    *  draws it (tools/banners/pill_place.py). Absent = pillBox()'s default. */
   pills?: [number, number];
+  /** Bugs 185/186 (16 Oct 2026): banners cut from the client's 16 Oct files (tools/banners/composite.py) sit where those files put
+   *  them: `end` = live px from the stage's end edge to the people box (absent = the live site's 72), `drop` = live px the people
+   *  sink under the banner bottom (absent = 10, Home 5; the files: 0). */
+  end?: number;
+  drop?: number;
 }
 
 export function bannerArt(

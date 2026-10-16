@@ -41,3 +41,6 @@ docs/live-save-*/
 # Python caches
 __pycache__/
 *.pyc
+
+# Prateek's 16 Oct 2026 banner composites (165 MB, OneDrive "Cambridge Hospital - Website Images"): source of tools/banners/composite.py, not tracked
+docs/client-assets/website-images-oct16/

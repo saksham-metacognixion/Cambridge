@@ -45,9 +45,10 @@ def colour(a, al, pts):
     return '#%02x%02x%02x' % tuple(int(v) for v in c)
 
 
-def split(key):
-    src = cfg[f'hospital-detail/banner-{key}']['global']
+def split(key, src=None, scale=1.0):
+    src = src or cfg[f'hospital-detail/banner-{key}']['global']
     im = Image.open(src).convert('RGBA')
+    S = scale
     a = np.asarray(im).astype(np.float32)
     al = a[..., 3]
     H, W = al.shape
@@ -67,7 +68,7 @@ def split(key):
     # 1. horizontal stroke runs, merged over consecutive rows
     strokes = []
     for y in range(H):
-        for x0, x1 in runs(pills_m[y], 25):
+        for x0, x1 in runs(pills_m[y], int(25 * S)):
             for s in strokes:
                 if y - s['y1'] <= 1 and min(x1, s['x1']) - max(x0, s['x0']) > 0.8 * min(x1 - x0, s['x1'] - s['x0']):
                     s['y1'], s['x0'], s['x1'] = y, min(s['x0'], x0), max(s['x1'], x1)
@@ -84,14 +85,14 @@ def split(key):
             b = strokes[j]
             dy = b['y0'] - t['y1']
             ov = min(t['x1'], b['x1']) - max(t['x0'], b['x0'])
-            if j not in used and 20 <= dy <= 40 and ov > 0.5 * min(t['x1'] - t['x0'], b['x1'] - b['x0']):
+            if j not in used and 20 * S <= dy <= 40 * S and ov > 0.5 * min(t['x1'] - t['x0'], b['x1'] - b['x0']):
                 used.update({i, j})
                 bands.append({'y0': t['y0'], 'y1': b['y1'] + 1, 'sw': ((t['y1'] - t['y0'] + 1) + (b['y1'] - b['y0'] + 1)) / 2,
                               'xs0': min(t['x0'], b['x0']), 'xs1': max(t['x1'], b['x1']), 'top': t['rows'], 'bot': b['rows']})
                 break
     # 2. rows where only the two end arcs show (the straight part behind a roof): arc components outside every band
     singles = []  # unpaired straight strokes: the other line of the row is hidden
-    hb = int(np.median([bd['y1'] - bd['y0'] for bd in bands])) if bands else 27
+    hb = int(np.median([bd['y1'] - bd['y0'] for bd in bands])) if bands else int(27 * S)
     for i, st in enumerate(strokes):
         if i in used or any(bd['y0'] - 3 <= st['y0'] <= bd['y1'] + 3 for bd in bands):
             continue
@@ -111,11 +112,11 @@ def split(key):
     if os.environ.get('PILLS_DEBUG'):
         print('  leftover components (x,y,w,h):', [tuple(int(v) for v in stats[i][:4]) for i in range(1, n) if stats[i, cv2.CC_STAT_AREA] > 8])
     comps = [(stats[i], cent[i]) for i in range(1, n) if stats[i, cv2.CC_STAT_AREA] > 8]
-    arcs = [c for c in comps if c[0][3] >= 12 and c[0][2] <= 30]
+    arcs = [c for c in comps if c[0][3] >= 12 * S and c[0][2] <= 30 * S]
     arcs.sort(key=lambda c: c[1][1])
     while arcs:
         s0, c0 = arcs.pop(0)
-        same = [c for c in arcs if abs(c[1][1] - c0[1]) < 10]
+        same = [c for c in arcs if abs(c[1][1] - c0[1]) < 10 * S]
         for c in same:
             arcs.remove(c)
         group = [(s0, c0)] + same
@@ -162,7 +163,7 @@ def split(key):
         if inner.size:
             groups = np.split(inner, np.nonzero(np.diff(inner) > 3)[0] + 1)
             for g in groups:
-                if len(g) >= 4:
+                if len(g) >= 4 * S:
                     splits.append(float(g.max() + 1))  # a ")" arc: its rightmost column
         segs = [xl] + splits + [xr]
         for i in range(len(segs) - 1):

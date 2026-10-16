@@ -63,3 +63,21 @@ hospital pages dev vs staging (hosp-shots.mjs), edge zooms.
 Most page-banner cut-outs (about 100 of 126: Home, About, Careers, Why, Our Care and care pages, hospital banners, KSA),
 Motor Neuron + TBI condition banners, the pill shape, Abu Dhabi / Jeddah gallery photos (1024px), Media Hub tiles (960px),
 insurer logos (325px), Our Hospitals banner (1052px; can be re-exported from Figma at 2x on our side).
+
+## Prateek's banner composites (16 Oct 2026): `Cambridge Hospital - Website Images`
+
+47 files (`docs/client-assets/website-images-oct16/`): 44 full-banner composites 2880x1370 (gradient + outline pills + people at
+2.5-3.4x our live size, opaque), a Jeddah photo (1536px), a Careers portrait (two nurses, 1107x1421) and a raw Abu Dhabi
+exterior (DSC07831.JPG, 7008px).
+
+`tools/banners/composite.py` (mapping `composites.json`, from a SIFT sweep of every file against every cut-out): aligns each
+composite to the current cut-out, takes the composite's pixels at 2x the display size and keys the people by difference against
+the shared background `_bg.png` (per-pixel mode across all composites where >=16 files agree, the row gradient elsewhere,
+strokes interpolated; stroke-coloured horizontal runs masked explicitly). The current cut-out's alpha bounds the key (nothing
+outside the live silhouette; solid interior kept, so pale coats on the pale gradient do not key out); colours straight from the
+composite (its gradient is ours). Result: 35 banners at 2x (Global 17, KSA 6, UAE/Global care 12), same framing and layout.
+
+Not applied: Media Hub (different hand crop, no alignment), Insurance (composite rotated 0.8 deg), International "Global" (KSA
+dress, as on 9 Oct, R067), the six hospital composites (NEW building pictures, not sharper copies: a design change to confirm),
+Jeddah.png / DSC07831.JPG / Be-Part-of-a-Purpose (no identified slot: the Careers "Be Part of a Purpose" section uses the
+nurse photo from Figma).

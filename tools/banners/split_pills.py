@@ -178,6 +178,11 @@ def split(key, src=None, scale=1.0):
         sw = st['y1'] - st['y0'] + 1
         pts = [(y, x) for (y, xa, xb) in st['rows'] for x in range(xa, xb + 1)]
         out.append({'kind': 'line', 'x': float(st['x0']), 'xr': float(st['x1'] + 1), 'yt': st['y0'] + sw / 2, 'sw': float(sw), 'color': colour(a, al, pts)})
+    # a near-grey "pill" is anti-aliasing residue, not a stroke (the strokes are teal / blue / green)
+    def grey(c):
+        r, g, b = int(c[1:3], 16), int(c[3:5], 16), int(c[5:7], 16)
+        return max(r, g, b) - min(r, g, b) < 30
+    out = [p for p in out if not grey(p['color'])]
     for p in out:
         for k, v in list(p.items()):
             if isinstance(v, float):
@@ -207,9 +212,10 @@ def svg(pills, size):
             + ''.join(path(p) for p in pills) + '</svg>\n')
 
 
-def write(key, outdir=None):
-    """Building-only cut-out + pills SVG for one hospital banner into src/assets (or a trial folder)."""
-    im, building, pills_m, pills, size = split(key)
+def write(key, outdir=None, src=None, scale=1.0):
+    """Building-only cut-out + pills SVG for one hospital banner into src/assets (or a trial folder). src/scale: another
+    source file than the live one (a 2x cut-out from a client composite, tools/banners/composite.py) and its pill scale."""
+    im, building, pills_m, pills, size = split(key, src=src, scale=scale)
     if outdir:
         os.makedirs(outdir, exist_ok=True)
         Image.fromarray(building.clip(0, 255).astype(np.uint8)).save(f'{outdir}/{key}-building.png')

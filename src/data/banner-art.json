@@ -385,65 +385,49 @@
   "shape": true
  },
  "global:hospital-detail/banner-abu-dhabi": {
-  "w": 555,
-  "h": 500,
-  "shape": false,
-  "bleed": "end",
-  "fade": "start"
+  "w": 586,
+  "h": 450,
+  "shape": false
  },
  "global:hospital-detail/banner-al-ain": {
-  "w": 579,
+  "w": 568,
   "h": 450,
-  "shape": false,
-  "bleed": "end",
-  "fade": "start"
+  "shape": false
  },
  "global:hospital-detail/banner-al-khobar": {
-  "w": 579,
+  "w": 582,
   "h": 450,
-  "shape": false,
-  "bleed": "end",
-  "fade": "start"
+  "shape": false
  },
  "global:hospital-detail/banner-al-mudeef-abu-dhabi": {
-  "w": 579,
+  "w": 576,
   "h": 450,
-  "shape": false,
-  "bleed": "end",
-  "fade": "start"
+  "shape": false
  },
  "global:hospital-detail/banner-dhahran": {
-  "w": 579,
+  "w": 566,
   "h": 450,
-  "shape": false,
-  "bleed": "end",
-  "fade": "start"
+  "shape": false
  },
  "global:hospital-detail/banner-jeddah": {
-  "w": 579,
+  "w": 566,
   "h": 450,
-  "shape": false,
-  "bleed": "end",
-  "fade": "start"
+  "shape": false
  },
  "global:insurance-page/banner": {
-  "w": 600,
-  "h": 460,
-  "shape": true,
-  "bleed": "end",
-  "fade": "start"
+  "w": 564,
+  "h": 384,
+  "shape": true
  },
  "global:international/banner": {
-  "w": 583,
-  "h": 417,
-  "shape": true,
-  "bleed": "end"
+  "w": 532,
+  "h": 388,
+  "shape": true
  },
  "global:media-hub/banner": {
-  "w": 510,
-  "h": 500,
-  "shape": true,
-  "bleed": "end"
+  "w": 374,
+  "h": 414,
+  "shape": true
  },
  "global:patient-hub/banner": {
   "w": 500,

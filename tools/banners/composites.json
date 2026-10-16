@@ -138,5 +138,56 @@
  "Banners - UAE/Ventilated-Patients-Care-UAE.png": {
   "key": "care/heroes/mechanical-ventilation",
   "region": "global"
+ },
+ "Banners - Global/Media-Hub.png": {
+  "key": "media-hub/banner",
+  "region": "global",
+  "new": true
+ },
+ "Banners - Global/Insurance-Providers-Cambridge-Hospital.png": {
+  "key": "insurance-page/banner",
+  "region": "global",
+  "new": true
+ },
+ "Banners - Global/International-Patients-Global-1.png": {
+  "key": "international/banner",
+  "region": "global",
+  "new": true
+ },
+ "Banners - UAE/Cambridge-Hospital-Abu-Dhabi.png": {
+  "key": "hospital-detail/banner-abu-dhabi",
+  "region": "global",
+  "new": true,
+  "pills": true
+ },
+ "Banners - UAE/Al-Mudeef-Center-UAE.png": {
+  "key": "hospital-detail/banner-al-mudeef-abu-dhabi",
+  "region": "global",
+  "new": true,
+  "pills": true
+ },
+ "Banners - UAE/Cambridge-Hospital-Al-Ain-UAE.png": {
+  "key": "hospital-detail/banner-al-ain",
+  "region": "global",
+  "new": true,
+  "pills": true
+ },
+ "Banners - KSA/Cambridge-Hospital-Al-Khobar.png": {
+  "key": "hospital-detail/banner-al-khobar",
+  "region": "global",
+  "new": true,
+  "pills": true
+ },
+ "Banners - KSA/Cambridge-Hospital-Dhahran.png": {
+  "key": "hospital-detail/banner-dhahran",
+  "region": "global",
+  "new": true,
+  "pills": true
+ },
+ "Banners - KSA/Cambridge-Hospital-Jeddah.png": {
+  "key": "hospital-detail/banner-jeddah",
+  "region": "global",
+  "new": true,
+  "pills": true
  }
 }

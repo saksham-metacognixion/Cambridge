@@ -99,6 +99,99 @@ def extract(file, key, region, outdir=None, log=print):
     return {'k': k, 'inliers': n_in, 'diff': float(d.mean() * 255), 'worst': float(blocks.max() * 255), 'size': size}
 
 
+# The composite is the Figma banner frame at 1440 (1440x685 = our 500-tall live stage x 1.3688, drawn at 2x), so one composite
+# pixel = 500/685 live px at 2x.
+NEW_SCALE = 500 / 685
+
+
+def fill_interior(a):
+    """Alpha with the subject's interior forced opaque: whatever the background flood (alpha < 0.15, from the border) does not
+    reach is inside the subject (a pale coat on the pale gradient keys as half-transparent otherwise)."""
+    h, w = a.shape
+    free = (a < 0.15).astype(np.uint8)
+    mask = np.zeros((h + 2, w + 2), np.uint8)
+    reach = np.zeros_like(free)
+    for seed in [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1), (w // 2, 0), (0, h // 2)]:
+        if free[seed[1], seed[0]]:
+            m = mask.copy()
+            cv2.floodFill(free.copy(), m, seed, 1, flags=4 | cv2.FLOODFILL_MASK_ONLY | (1 << 8))
+            reach |= m[1:-1, 1:-1]
+    interior = (reach == 0).astype(np.uint8)
+    interior = cv2.erode(interior, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+    return np.maximum(a, interior.astype(np.float32))
+
+
+def extract_new(file, key, region, pills=False, outdir=None, log=print):
+    """A composite whose picture is NOT on the site yet: the subject keyed against the background (pills included for the
+    hospital pages, which draw their own pill SVG from it), cropped to its box and scaled to 2x the live size; the display size
+    goes to banner-art.json. Returns the output path."""
+    comp = np.asarray(Image.open(ROOT + file).convert('RGBA')).astype(np.float32) / 255
+    bg = np.asarray(Image.open(ROOT + '_bg.png').convert('RGBA')).astype(np.float32) / 255
+    d = np.abs(comp[..., :3] - bg[..., :3]).max(axis=2)
+    a = np.clip((d - 0.03) / 0.13, 0, 1)
+    if True:  # the subject alone first (pill strokes erased, interior filled); the pills are added back below for the hospitals
+        a[pill_mask(comp)] = 0
+        # the pills' geometry (same canvas positions in every composite, `_pills.png`): within it, a pixel that is a THIN
+        # HORIZONTAL LINE (unlike the rows 5 px above and below, which match each other) is a stroke over the background and
+        # is erased; clothing in front of a pill shows no line and is kept
+        P = np.asarray(Image.open(ROOT + '_pills.png').convert('L')) > 0
+        rgb = comp[..., :3]
+        up, down = np.roll(rgb, 5, axis=0), np.roll(rgb, -5, axis=0)
+        line = (np.abs(rgb - up).max(axis=2) > 0.1) & (np.abs(rgb - down).max(axis=2) > 0.1) & (np.abs(up - down).max(axis=2) < 0.08)
+        left, right = np.roll(rgb, 5, axis=1), np.roll(rgb, -5, axis=1)  # the arcs at the pill ends
+        line |= (np.abs(rgb - left).max(axis=2) > 0.1) & (np.abs(rgb - right).max(axis=2) > 0.1) & (np.abs(left - right).max(axis=2) < 0.08)
+        strokes = cv2.dilate((P & line).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+        a[strokes] = 0
+    a = fill_interior(a)
+    if pills:
+        # hospital pages: the pill strokes (keyed against the plain gradient) outside the building, NOT hole-filled, so the
+        # outlines stay thin for split_pills
+        grad = np.asarray(Image.open(ROOT + '_grad.png').convert('RGBA')).astype(np.float32) / 255
+        dg = np.abs(comp[..., :3] - grad[..., :3]).max(axis=2)
+        ap = np.clip((dg - 0.03) / 0.13, 0, 1)
+        building = cv2.dilate((a > 0.5).astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
+        ap[building] = 0
+        a = np.maximum(a, ap)
+    # specks
+    n, lab, stats, _ = cv2.connectedComponentsWithStats((a > 0.3).astype(np.uint8))
+    for i in range(1, n):
+        if stats[i, cv2.CC_STAT_AREA] < 400:
+            a[lab == i] = 0
+    ys, xs = np.nonzero(a > 0.05)
+    x0, x1, y0, y1 = max(0, xs.min() - 4), min(comp.shape[1], xs.max() + 5), max(0, ys.min() - 4), comp.shape[0]  # to the bottom edge
+    crop = np.dstack([comp[y0:y1, x0:x1, :3], a[y0:y1, x0:x1]])
+    size = (round((x1 - x0) * NEW_SCALE), round((y1 - y0) * NEW_SCALE))
+    pm = crop.copy()
+    pm[..., :3] *= pm[..., 3:4]
+    out = cv2.resize(pm, size, interpolation=cv2.INTER_AREA)
+    al = out[..., 3:4]
+    out[..., :3] = np.where(al > 1e-4, out[..., :3] / np.maximum(al, 1e-4), 0)
+    img = Image.fromarray((out.clip(0, 1) * 255 + 0.5).astype(np.uint8))
+    disp = (round(size[0] / 2), round(size[1] / 2))
+    log(f'  new picture: subject box {x1 - x0}x{y1 - y0} -> {size[0]}x{size[1]} (display {disp[0]}x{disp[1]} live px)')
+    if outdir:
+        os.makedirs(outdir, exist_ok=True)
+        dest = f'{outdir}/{key.replace("/", "__")}{"" if region == "global" else "." + region}.png'
+        img.save(dest)
+    else:
+        dest = f'src/assets/regions/{region}/{key}-cutout.png' if region != 'global' else f'src/assets/{key}-cutout.png'
+        for old in glob.glob(dest[:-4] + '.*'):
+            os.remove(old)
+        img.save(dest, optimize=True)
+        mp = 'src/data/banner-art.json'
+        man = json.load(open(mp))
+        e = man.get(f'{region}:{key}', {'shape': not pills})
+        e.update({'w': disp[0], 'h': disp[1]})
+        for flag in ('bleed', 'fade'):
+            e.pop(flag, None)  # the old picture's cut-edge flags do not apply
+        man[f'{region}:{key}'] = e
+        json.dump(dict(sorted(man.items())), open(mp, 'w'), indent=1)
+        if pills:  # hospital page: building alone + <key>-pills.svg from this cut-out (pills 69 px tall here vs 27 in the live files)
+            from split_pills import write as split_write
+            split_write(key.split('/banner-')[1], src=dest, scale=2.55)
+    return dest
+
+
 if __name__ == '__main__':
     outdir = sys.argv[1] if len(sys.argv) > 1 else None
     only = sys.argv[2].split(',') if len(sys.argv) > 2 else None
@@ -108,6 +201,9 @@ if __name__ == '__main__':
             continue
         print(file, '->', e['region'], e['key'])
         try:
-            extract(file, e['key'], e['region'], outdir)
+            if e.get('new'):
+                extract_new(file, e['key'], e['region'], pills=e.get('pills', False), outdir=outdir)
+            else:
+                extract(file, e['key'], e['region'], outdir)
         except Exception as ex:
             print('  FAILED', ex)

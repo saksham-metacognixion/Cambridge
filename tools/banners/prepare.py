@@ -45,6 +45,10 @@ manifest = {}
 def apply_hd(key, e, d):
     """Hospital pages: split the live file into the building alone + <key>-pills.svg (split_pills.py), then, with an "hd"
     entry, a 2x copy of the cut-out d from the client original (global only); returns the new path."""
+    owned = {v['key'] for v in json.load(open('tools/banners/composites.json')).values() if v.get('new')}
+    if key in owned:  # the picture comes from a client composite (composite.py writes cut-out, pills SVG and display size)
+        print(f'skip   {key:52s} (composite.py)')
+        return d
     if key.startswith('hospital-detail/'):
         split_pills(key.split('/banner-')[1])
         d = f'src/assets/{key}-cutout.png'

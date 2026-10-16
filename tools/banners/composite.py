@@ -207,6 +207,8 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
         e.update({'w': disp[0], 'h': disp[1]})
         if not pills:
             e['pills'] = pills_at  # the old picture's placement does not apply either
+            if key == 'media-hub/banner':  # Bug 185: the client's frame spot too (Insurance / International already matched: unchanged)
+                e.update(frame_place(x1, comp.shape[1]))
         for flag in ('bleed', 'fade'):
             e.pop(flag, None)  # the old picture's cut-edge flags do not apply
         man[f'{region}:{key}'] = e
@@ -224,6 +226,20 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
 # the composite's own key in the strip it cropped or feathered (and anywhere outside the reference frame), at the composite's
 # own scale (people-to-pills as the client drew them) with the pill spot read off the canvas.
 FULL_FADE, FULL_RAMP, FULL_BOTTOM = 100, 30, 10  # live px: reference alpha trusted from FADE + RAMP in from its left edge, BOTTOM up from its bottom
+# Bugs 184-186 (16 Oct 2026, retest of d4ec6d8): every composite banner now uses `full` (the people at the client's scale, the
+# pill spot off the canvas; `extract` kept our live scale and the pills were centred on it, 5-139 live px off the client files).
+# `extend` (Find a Doctor, Homecare Global): the reference file itself cuts the woman / the wheelchair at its END edge (the old
+# `bleed: "end"` pushed that cut off screen); there the composite's key is also taken past the reference's end edge.
+FULL_END = 12  # live px: with `extend`, the key from this far inside the reference's end edge
+FULL_HALO = 4  # composite px (2x): the reference alpha fades out from this far outside the client's keyed subject
+
+
+def frame_place(x1, W):
+    """Bugs 185/186 (16 Oct 2026): where the client's frame puts the picture: `end` = live px from the frame's end edge to the
+    people box's end edge (the frame's end edge = the 1440 stage's, BannerArt.astro; the old fixed 72 put Homecare 126 px and Find
+    a Doctor 7 px off the client's whitespace), `drop` 0 = the people stand on the frame bottom as in the files (the live site
+    sank every cut-out 10 px)."""
+    return {'end': float(round((W - x1) * NEW_SCALE / 2, 1)), 'drop': 0}
 
 
 def _smooth01(x):
@@ -231,7 +247,7 @@ def _smooth01(x):
     return t * t * (3 - 2 * t)
 
 
-def extract_full(file, key, region, outdir=None, log=print):
+def extract_full(file, key, region, outdir=None, log=print, extend=False):
     comp = np.asarray(Image.open(ROOT + file).convert('RGBA')).astype(np.float32) / 255
     bg = np.asarray(Image.open(ROOT + '_bg.png').convert('RGBA')).astype(np.float32) / 255
     H, W = comp.shape[:2]
@@ -249,6 +265,8 @@ def extract_full(file, key, region, outdir=None, log=print):
     # the key only on the start side (left of FADE + RAMP, the file edge included) and under the reference's bottom: no reference
     # was cut on its top or end edge, and the pill ends there must not come back
     wr = _smooth01((xr - FULL_FADE) / FULL_RAMP) * _smooth01((rh - yr) / FULL_BOTTOM)
+    if extend:
+        wr = wr * _smooth01((rw - FULL_END - xr) / FULL_RAMP)
     # the composite's key (as extract_new, without the colour test for pill strokes: teal scrubs and blue sheets share those
     # colours; the pills are part of _bg, and the thin-line test below catches strokes the estimate misses)
     d = np.abs(comp[..., :3] - bg[..., :3]).max(axis=2)
@@ -273,12 +291,27 @@ def extract_full(file, key, region, outdir=None, log=print):
     # that translucent strip; on the pill geometry a see-through pixel is the stroke (the page draws its own stack there)
     # (after the interior fill, so a pale solid object such as the Why bed's footboard is opaque first and keeps its pixels)
     ka = fill_interior(ka)
-    ka[P & (ka < 0.9)] = 0
+    # Bug 184/195 (16 Oct 2026): the pill rows are no longer cut out of the translucent key. Zeroing `P & (a < 0.9)` tore the
+    # client's own fades (Inpatient blanket and rail end) into horizontal streaks; the client's pixels are kept instead: where the
+    # file fades into its backdrop the colour already carries the gradient + stroke, and the page draws the same gradient and the
+    # same stack at the same spot behind it (full mode: one canvas for both), so it reads as the client file.
     # in the strip the larger of the two: the reference where its edge is clean (no key notches on a pale coat), the key where
     # the reference was cropped or feathered
     a = wr * ref_a + (1 - wr) * np.maximum(ref_a, ka)
-    a[(wr < 0.5) & P & (a < 0.9)] = 0  # the composite's colour there carries the stroke seen through the fade
     a[(wr < 0.5) & (ka < 0.15) & (ref_a < 0.5)] = 0  # backdrop in the client file, only the reference's feather says otherwise
+    # Bug 185 (16 Oct 2026): the reference outline is never more than HALO px wider than the client's own subject (the key):
+    # where the old live file was cut wider or the client redrew an edge (KSA Homecare, In-School coat, Ventilation rail) the
+    # backdrop inside the old outline showed as a pale band with pill pieces.
+    far = cv2.distanceTransform((ka < 0.25).astype(np.uint8), cv2.DIST_L2, 5)
+    a = np.minimum(a, np.clip((FULL_HALO + 4 - far) / 4, 0, 1))
+    # thin pill-coloured slivers (stroke edges the background estimate misses: 1-4 px tall navy / cyan / green lines in the start
+    # strip, where a file's pill row runs further than `_pills.png`, e.g. Homecare, Contact, Cerebral Palsy): horizontal
+    # structures under 9 px tall, of a blue-green hue (grey wheel spokes, black tyres and skin are not), are removed in the key
+    # strip and on the pill geometry; the physiotherapy band and lanyards are 15+ px tall or vertical and stay
+    solid = cv2.morphologyEx((a > 0.05).astype(np.uint8), cv2.MORPH_OPEN, np.ones((9, 1), np.uint8))
+    hue = (np.maximum(rgb[..., 1], rgb[..., 2]) - rgb[..., 0]) > 0.08
+    zone = (cv2.dilate(P.astype(np.uint8), np.ones((7, 7), np.uint8)) > 0) | (wr < 0.5)
+    a[(a > 0) & (solid == 0) & hue & zone] = 0
     # the reference outline runs 1-2 px past the composite's subject in places, where a pill end shows: pill-coloured pixels
     # on the pill geometry within 8 px of the backdrop go (inside the subject they are cloth crossing a hidden line, kept)
     near = np.zeros(rgb.shape[:2], bool)
@@ -319,7 +352,7 @@ def extract_full(file, key, region, outdir=None, log=print):
     mp = 'src/data/banner-art.json'
     man = json.load(open(mp))
     e = man.get(f'{region}:{key}', {'shape': True})
-    e.update({'w': disp[0], 'h': disp[1], 'pills': pills_at})
+    e.update({'w': disp[0], 'h': disp[1], 'pills': pills_at, **frame_place(x1, W)})
     for flag in ('bleed', 'fade'):
         e.pop(flag, None)  # the feathered / cut edge is gone
     man[f'{region}:{key}'] = e
@@ -336,7 +369,7 @@ if __name__ == '__main__':
         print(file, '->', e['region'], e['key'])
         try:
             if e.get('full'):
-                extract_full(file, e['key'], e['region'], outdir=outdir)
+                extract_full(file, e['key'], e['region'], outdir=outdir, extend=e.get('extend', False))
             elif e.get('new'):
                 extract_new(file, e['key'], e['region'], pills=e.get('pills', False), outdir=outdir)
             else:

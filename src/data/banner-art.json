@@ -17,22 +17,26 @@
   "fade": "start"
  },
  "global:about/banner": {
-  "w": 579,
-  "h": 450,
+  "w": 594,
+  "h": 426,
   "shape": true,
   "pills": [
-   3.6,
-   15.0
-  ]
+   11.2,
+   -23.9
+  ],
+  "end": 40.1,
+  "drop": 0
  },
  "global:accreditations/banner": {
-  "w": 579,
-  "h": 450,
+  "w": 560,
+  "h": 392,
   "shape": true,
   "pills": [
-   13.7,
-   29.2
-  ]
+   -7.4,
+   -57.5
+  ],
+  "end": 56.2,
+  "drop": 0
  },
  "global:calculators/bmi": {
   "w": 565,
@@ -59,31 +63,37 @@
   "readable": true
  },
  "global:care/banner-inpatient-care": {
-  "w": 500,
+  "w": 494,
   "h": 383,
   "shape": true,
   "pills": [
-   -47.9,
+   -49.0,
    -66.2
-  ]
+  ],
+  "end": 79.9,
+  "drop": 0
  },
  "global:care/banner-our-care": {
-  "w": 500,
-  "h": 450,
+  "w": 517,
+  "h": 380,
   "shape": true,
   "pills": [
-   -22.0,
-   9.1
-  ]
+   -17.6,
+   -68.8
+  ],
+  "end": 88.3,
+  "drop": 0
  },
  "global:care/banner-post-acute-care": {
-  "w": 579,
-  "h": 450,
+  "w": 500,
+  "h": 390,
   "shape": true,
   "pills": [
-   11.5,
-   18.1
-  ]
+   -17.6,
+   -60.0
+  ],
+  "end": 104.7,
+  "drop": 0
  },
  "global:care/heroes/central-nervous-system": {
   "w": 579,
@@ -91,13 +101,15 @@
   "shape": true
  },
  "global:care/heroes/cerebral-palsy-program": {
-  "w": 500,
-  "h": 450,
+  "w": 376,
+  "h": 420,
   "shape": true,
   "pills": [
-   -32.6,
-   47.6
-  ]
+   -82.2,
+   -29.4
+  ],
+  "end": 165.3,
+  "drop": 0
  },
  "global:care/heroes/geriatric-care": {
   "w": 579,
@@ -105,32 +117,37 @@
   "shape": true
  },
  "global:care/heroes/home-healthcare": {
-  "w": 311,
-  "h": 496,
+  "w": 275,
+  "h": 422,
   "shape": true,
-  "bleed": "end",
   "pills": [
-   -106.9,
-   42.9
-  ]
+   -150.5,
+   -27.5
+  ],
+  "end": 197.8,
+  "drop": 0
  },
  "global:care/heroes/icu-critical-care": {
-  "w": 500,
-  "h": 450,
+  "w": 521,
+  "h": 402,
   "shape": true,
   "pills": [
-   -17.0,
-   40.8
-  ]
+   2.8,
+   -48.0
+  ],
+  "end": 105.1,
+  "drop": 0
  },
  "global:care/heroes/in-school": {
-  "w": 500,
-  "h": 450,
+  "w": 508,
+  "h": 369,
   "shape": true,
   "pills": [
-   -31.6,
-   9.7
-  ]
+   -33.3,
+   -80.5
+  ],
+  "end": 82.5,
+  "drop": 0
  },
  "global:care/heroes/long-term-acute-care": {
   "w": 500,
@@ -149,13 +166,15 @@
   "shape": true
  },
  "global:care/heroes/long-term-care-rehab": {
-  "w": 500,
-  "h": 450,
+  "w": 437,
+  "h": 421,
   "shape": true,
   "pills": [
-   -45.6,
-   24.0
-  ]
+   -62.9,
+   -28.6
+  ],
+  "end": 123.4,
+  "drop": 0
  },
  "global:care/heroes/long-term-ventilated-care": {
   "w": 579,
@@ -163,13 +182,15 @@
   "shape": true
  },
  "global:care/heroes/mechanical-ventilation": {
-  "w": 579,
-  "h": 450,
+  "w": 518,
+  "h": 317,
   "shape": true,
   "pills": [
-   6.0,
-   -3.1
-  ]
+   -33.3,
+   -132.6
+  ],
+  "end": 72.3,
+  "drop": 0
  },
  "global:care/heroes/musculoskeletal-rehabilitation": {
   "w": 500,
@@ -188,22 +209,26 @@
   "shape": true
  },
  "global:care/heroes/occupational-therapy": {
-  "w": 579,
-  "h": 450,
+  "w": 560,
+  "h": 372,
   "shape": true,
   "pills": [
-   14.0,
-   -6.7
-  ]
+   6.5,
+   -77.5
+  ],
+  "end": 69.3,
+  "drop": 0
  },
  "global:care/heroes/outpatient": {
-  "w": 500,
-  "h": 450,
+  "w": 496,
+  "h": 394,
   "shape": true,
   "pills": [
-   -30.0,
-   12.4
-  ]
+   -32.2,
+   -54.9
+  ],
+  "end": 94.2,
+  "drop": 0
  },
  "global:care/heroes/paediatric-post-acute-rehab": {
   "w": 500,
@@ -222,16 +247,20 @@
   "pills": [
    9.7,
    -66.2
-  ]
+  ],
+  "end": 68.6,
+  "drop": 0
  },
  "global:care/heroes/pediatric-care": {
-  "w": 579,
-  "h": 450,
+  "w": 550,
+  "h": 408,
   "shape": true,
   "pills": [
-   12.2,
-   -7.5
-  ]
+   -1.6,
+   -41.4
+  ],
+  "end": 70.8,
+  "drop": 0
  },
  "global:care/heroes/pediatric-long-term-care": {
   "w": 579,
@@ -240,13 +269,15 @@
   "bleed": "end"
  },
  "global:care/heroes/pediatric-rehab": {
-  "w": 608,
+  "w": 602,
   "h": 351,
   "shape": true,
   "pills": [
    25.4,
    -98.3
-  ]
+  ],
+  "end": 46.0,
+  "drop": 0
  },
  "global:care/heroes/physical-medicine-rehab-care": {
   "w": 579,
@@ -254,13 +285,15 @@
   "shape": true
  },
  "global:care/heroes/physiotherapy": {
-  "w": 579,
-  "h": 450,
+  "w": 422,
+  "h": 398,
   "shape": true,
   "pills": [
-   8.8,
-   4.6
-  ]
+   -68.4,
+   -50.9
+  ],
+  "end": 133.2,
+  "drop": 0
  },
  "global:care/heroes/post-surgical-rehab": {
   "w": 500,
@@ -289,7 +322,9 @@
   "pills": [
    -4.5,
    -106.4
-  ]
+  ],
+  "end": 64.2,
+  "drop": 0
  },
  "global:care/heroes/spinal-cord-injury-rehabilitation": {
   "w": 500,
@@ -312,13 +347,15 @@
   "shape": true
  },
  "global:careers/banner": {
-  "w": 500,
-  "h": 450,
+  "w": 548,
+  "h": 415,
   "shape": true,
   "pills": [
-   -44.2,
-   63.9
-  ]
+   -14.4,
+   -34.5
+  ],
+  "end": 60.9,
+  "drop": 0
  },
  "global:conditions/acquired-brain-injury": {
   "w": 579,
@@ -433,50 +470,59 @@
   "shape": true
  },
  "global:contact-page/banner": {
-  "w": 579,
-  "h": 450,
+  "w": 420,
+  "h": 433,
   "shape": true,
   "pills": [
-   -17.5,
-   -1.4
-  ]
+   -78.9,
+   -16.2
+  ],
+  "end": 123.7,
+  "drop": 0
  },
  "global:doctors-page/banner": {
-  "w": 565,
-  "h": 462,
+  "w": 514,
+  "h": 414,
   "shape": true,
-  "bleed": "end",
   "pills": [
-   0.6,
-   -13.8
-  ]
+   -30.4,
+   -35.2
+  ],
+  "end": 79.2,
+  "drop": 0
  },
  "global:faq/hero": {
-  "w": 540,
-  "h": 460,
+  "w": 408,
+  "h": 436,
   "shape": true,
   "pills": [
-   64.9,
-   2.6
-  ]
+   -57.1,
+   -13.3
+  ],
+  "end": 158.8,
+  "drop": 0
  },
  "global:forms/feedback-hero": {
-  "w": 565,
-  "h": 462,
+  "w": 313,
+  "h": 404,
   "shape": true,
   "pills": [
-   -0.9,
-   13.3
-  ]
+   -114.4,
+   -44.7
+  ],
+  "end": 195.6,
+  "drop": 0
  },
  "global:hero/banner3": {
-  "w": 580,
-  "h": 480,
+  "w": 492,
+  "h": 444,
   "shape": true,
   "pills": [
-   -17.1,
-   12.3
-  ]
+   -57.1,
+   -4.9
+  ],
+  "end": 73.7,
+  "drop": 0
  },
  "global:hospital-detail/banner-abu-dhabi": {
   "w": 586,
@@ -553,43 +599,57 @@
  "global:media-hub/banner": {
   "w": 374,
   "h": 414,
-  "shape": true
+  "shape": true,
+  "pills": [
+   -60.3,
+   -34.8
+  ],
+  "end": 189.1,
+  "drop": 0
  },
  "global:patient-hub/banner": {
-  "w": 500,
-  "h": 450,
+  "w": 380,
+  "h": 421,
   "shape": true,
   "pills": [
-   -29.3,
-   -10.6
-  ]
+   -91.7,
+   -28.6
+  ],
+  "end": 151.1,
+  "drop": 0
  },
  "global:refer/banner": {
-  "w": 565,
-  "h": 462,
+  "w": 568,
+  "h": 364,
   "shape": true,
   "pills": [
-   -20.5,
-   14.7
-  ]
+   -14.0,
+   -84.8
+  ],
+  "end": 40.5,
+  "drop": 0
  },
  "global:testimonials-page/banner": {
-  "w": 580,
-  "h": 480,
+  "w": 464,
+  "h": 407,
   "shape": true,
   "pills": [
-   4.6,
-   -1.0
-  ]
+   -66.2,
+   -42.5
+  ],
+  "end": 93.4,
+  "drop": 0
  },
  "global:who-we-are/banner": {
-  "w": 500,
-  "h": 450,
+  "w": 548,
+  "h": 397,
   "shape": true,
   "pills": [
-   -37.6,
-   13.9
-  ]
+   -5.2,
+   -52.4
+  ],
+  "end": 70.1,
+  "drop": 0
  },
  "global:why/banner": {
   "w": 517,
@@ -598,16 +658,20 @@
   "pills": [
    -21.3,
    -78.3
-  ]
+  ],
+  "end": 85.0,
+  "drop": 0
  },
  "sa:about/banner": {
-  "w": 579,
-  "h": 450,
+  "w": 540,
+  "h": 386,
   "shape": true,
   "pills": [
-   -4.8,
-   -7.0
-  ]
+   -16.9,
+   -62.9
+  ],
+  "end": 66.8,
+  "drop": 0
  },
  "sa:accreditations/banner": {
   "w": 579,
@@ -640,13 +704,15 @@
   "shape": true
  },
  "sa:care/heroes/home-healthcare": {
-  "w": 579,
-  "h": 450,
+  "w": 306,
+  "h": 409,
   "shape": true,
   "pills": [
-   -7.9,
-   -5.4
-  ]
+   -132.6,
+   -40.7
+  ],
+  "end": 184.3,
+  "drop": 0
  },
  "sa:care/heroes/icu-critical-care": {
   "w": 579,
@@ -699,13 +765,15 @@
   "shape": true
  },
  "sa:care/heroes/outpatient": {
-  "w": 579,
-  "h": 450,
+  "w": 514,
+  "h": 412,
   "shape": true,
   "pills": [
-   16.9,
-   2.9
-  ]
+   -23.1,
+   -37.4
+  ],
+  "end": 86.1,
+  "drop": 0
  },
  "sa:care/heroes/paediatric-post-acute-rehab": {
   "w": 579,
@@ -777,13 +845,15 @@
   "fade": "top"
  },
  "sa:hero/banner3": {
-  "w": 580,
-  "h": 480,
+  "w": 526,
+  "h": 390,
   "shape": true,
   "pills": [
-   -1.3,
-   7.7
-  ]
+   -26.8,
+   -59.3
+  ],
+  "end": 69.7,
+  "drop": 0
  },
  "sa:insurance-page/banner": {
   "w": 579,
@@ -799,13 +869,15 @@
   "bleed": "end"
  },
  "sa:patient-hub/banner": {
-  "w": 500,
-  "h": 450,
+  "w": 373,
+  "h": 420,
   "shape": true,
   "pills": [
-   -34.7,
-   -1.8
-  ]
+   -101.6,
+   -29.0
+  ],
+  "end": 148.5,
+  "drop": 0
  },
  "sa:testimonials-page/banner": {
   "w": 555,
@@ -819,12 +891,14 @@
   "shape": true
  },
  "sa:why/banner": {
-  "w": 579,
-  "h": 450,
+  "w": 548,
+  "h": 372,
   "shape": true,
   "pills": [
-   -2.9,
-   19.7
-  ]
+   9.4,
+   -77.2
+  ],
+  "end": 83.9,
+  "drop": 0
  }
 }

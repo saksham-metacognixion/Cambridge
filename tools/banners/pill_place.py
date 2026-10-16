@@ -26,7 +26,9 @@ ROOT = 'docs/client-assets/website-images-oct16/'
 LIVE = 500 / 1370  # live px per composite px
 STACK = (1172.68, 138.54, 1540.74, 1178.6)  # x, y, w, h in composite px (pills.svg viewBox origin and size)
 PW, PH = STACK[2] * LIVE, STACK[3] * LIVE
-SKIP = {'media-hub/banner'}  # Bug 179 (tracked separately): keeps the default placement
+SKIP = set()
+# Bugs 184-186 (16 Oct 2026): `full` and `new` banners (composites.json) are cut at the client's scale and composite.py reads
+# their pill spot straight off the canvas (exact, no fit); this script only places the rest and leaves those entries as written.
 
 
 def place(file, key, region, man):
@@ -50,7 +52,7 @@ if __name__ == '__main__':
     man = json.load(open(mp))
     rows = []
     for file, e in json.load(open('tools/banners/composites.json')).items():
-        if e['key'] in SKIP:
+        if e['key'] in SKIP or e.get('full') or e.get('new'):
             continue
         r = place(file, e['key'], e['region'], man)
         k = f"{e['region']}:{e['key']}"
@@ -61,6 +63,9 @@ if __name__ == '__main__':
             man[k]['pills'] = [r['x'], r['y']]
     # default for banners without a composite: from the fits drawn at (about) the composite's own size
     good = [r for _, r in rows if abs(r['scale'] - 1) <= 0.05]
+    if not good:  # every composite banner is `full` / `new` now: nothing to fit; lib/banner-art.ts pillBox() keeps its 16 Oct default
+        print('no banner left to place: all composite banners take their pill spot from composite.py')
+        sys.exit(0)
     dx = np.median([r['cx'] - r['w'] / 2 for r in good])
     gap = np.median([r['h'] - (r['y'] + PH) for r in good])
     print(f'default (from {len(good)} fits at scale 1 +- 0.05): stack centre {dx:+.1f} live px from the people box centre, bottom {gap:.1f} above the box bottom')

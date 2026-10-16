@@ -17,6 +17,10 @@ tools/banners/banners.json, per key:  "global" / "ae" / "sa" = a live file, or "
   from the client's Website Images folder (14 Oct 2026, docs/client-assets/website-images-oct14), aligned to the live
   framing by tools/banners/hd.py; the display size in banner-art.json stays the live one.
   `--hd-only` applies just that step (and the hospital split) to the cut-outs already in src/assets (no other banner is touched).
+  "hd": {..., "solid": true}: the green-screen key is not bounded by the live alpha (furniture the live retouching faded out
+  comes back opaque; Bugs 195/197, 16 Oct 2026).
+  "unfade" = {"<region>": "restore" | "figma"}: undo an edge fade baked into that cut-out (tools/banners/unfade.py), run after
+  the copy / crop; `--unfade-only` runs just that step from the sources. `--only=key1,key2` limits either mode to those keys.
 Shared art (identical on all three live editions): banners/bg.avif (gradient), banners/shape.avif (pills), banners/pattern.svg (Home).
 """
 import json
@@ -29,11 +33,12 @@ from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hd import hd_copy  # noqa: E402
+from unfade import unfade_all  # noqa: E402
 from split_pills import write as split_pills  # noqa: E402
 
 LIVE = 'docs/cambridge-images-live/wp-content/uploads/2026/06/'
 cfg = json.load(open('tools/banners/banners.json'))
-if '--hd-only' not in sys.argv:
+if '--hd-only' not in sys.argv and '--unfade-only' not in sys.argv:
     os.makedirs('src/assets/banners', exist_ok=True)
     shutil.copyfile(LIVE + 'Find-a-Doctor.avif', 'src/assets/banners/bg.avif')
     shutil.copyfile(LIVE + 'shape1.avif', 'src/assets/banners/shape.avif')
@@ -61,7 +66,7 @@ def apply_hd(key, e, d):
     green = hd.get('green', False)
     # target = 2x the live display size (banner-art.json), so a re-run on an already-replaced copy gives the same size
     live = json.load(open('src/data/banner-art.json'))[f'global:{key}']['w']
-    hd_copy(d, hd['src'], tmp, green=green, patch=green, k=2 * live / Image.open(d).width)
+    hd_copy(d, hd['src'], tmp, green=green, patch=green, solid=hd.get('solid', False), k=2 * live / Image.open(d).width)
     out = dest(key, 'global', '.webp')
     shutil.move(tmp, out)
     return out
@@ -94,14 +99,21 @@ def crop(key, region):
     return d, round(out.width * k), round(out.height * k), bb[3] == im.height
 
 
+only = next((a.split('=', 1)[1].split(',') for a in sys.argv if a.startswith('--only=')), None)
 if '--hd-only' in sys.argv:
     import glob
     for key, e in cfg.items():
+        if only and key not in only:
+            continue
         if e.get('hd') or key.startswith('hospital-detail/'):
             cur = glob.glob(f'src/assets/{key}-cutout.*')  # an already-replaced .webp realigns to itself (same result)
             if not cur:
                 sys.exit(f'{key}: no current cut-out to align to; run without --hd-only')
             apply_hd(key, e, cur[0])
+    sys.exit(0)
+
+if '--unfade-only' in sys.argv:
+    unfade_all(cfg, only)
     sys.exit(0)
 
 for key, e in cfg.items():
@@ -135,5 +147,6 @@ for key, e in cfg.items():
         manifest[f'{region}:{key}'] = {'w': w, 'h': h, 'shape': not key.startswith('hospital-detail/')}
         print(f'{region:6s} {key:52s} {w}x{h}  <- {src}')
 
+unfade_all(cfg)
 json.dump(dict(sorted(manifest.items())), open('src/data/banner-art.json', 'w'), indent=1)
 print(len(manifest), 'banner art entries -> src/data/banner-art.json')

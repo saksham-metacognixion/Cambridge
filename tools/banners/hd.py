@@ -87,7 +87,10 @@ def warp(src, s, t, k, size):
     return w
 
 
-def hd_copy(current, original, out, green=False, k=2.0, patch=False, log=print):
+def hd_copy(current, original, out, green=False, k=2.0, patch=False, solid=False, log=print):
+    """solid (green only; Bugs 195/197, user decision 16 Oct 2026): the studio key is NOT bounded by the current alpha, so the
+    furniture the live retouching faded out (chairs, table ends) is opaque wherever the original shows it, and the edge of the
+    original's own frame is a hard cut (nothing is filled from the faded current copy there)."""
     cur, src = _rgba(current), _rgba(original)
     s, t, n_in = fit(cur, src)
     k = min(k, 1 / s)  # never upscale the original
@@ -108,7 +111,7 @@ def hd_copy(current, original, out, green=False, k=2.0, patch=False, log=print):
         if green:
             keyed = warp(key_green(src), s, t, k, size)
             hd[..., :3] = core[..., None] * hd[..., :3] + (1 - core[..., None]) * keyed[..., :3]
-            hd[..., 3] = np.maximum(keyed[..., 3], core) * outer
+            hd[..., 3] = np.maximum(keyed[..., 3], core) * (reach[..., 0] if solid else outer)
         else:
             # an alpha original: its own edge, limited to the current cut; semi-transparent edge pixels of the original carry
             # its background colour (a blue sky fringe on the Jeddah towers), so inside the current edge they are made opaque
@@ -122,7 +125,8 @@ def hd_copy(current, original, out, green=False, k=2.0, patch=False, log=print):
         hd = lost * upc + (1 - lost) * hd
     # a strip the original does not reach (it is framed tighter than ours): fill it from the current image, upscaled
     up = cv2.resize(cur, size, interpolation=cv2.INTER_CUBIC).clip(0, 1)
-    hd = reach * hd + (1 - reach) * up
+    if not solid:
+        hd = reach * hd + (1 - reach) * up
     if patch:
         # The client's originals can predate the retouching on the live picture (the Cambridge Hospital logo on the scrubs,
         # a white tablet screen): where the content differs, keep the current pixels (upscaled) under a soft mask, so the

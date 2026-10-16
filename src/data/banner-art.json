@@ -13,8 +13,7 @@
   "w": 579,
   "h": 450,
   "shape": true,
-  "bleed": "end",
-  "fade": "start"
+  "bleed": "end"
  },
  "global:about/banner": {
   "w": 594,
@@ -195,8 +194,7 @@
  "global:care/heroes/musculoskeletal-rehabilitation": {
   "w": 500,
   "h": 450,
-  "shape": true,
-  "fade": "start"
+  "shape": true
  },
  "global:care/heroes/neuro-rehab": {
   "w": 500,
@@ -361,8 +359,7 @@
   "w": 579,
   "h": 450,
   "shape": true,
-  "bleed": "end",
-  "fade": "start"
+  "bleed": "end"
  },
  "global:conditions/amputation-prosthetic-rehabilitation": {
   "w": 579,
@@ -439,8 +436,7 @@
   "w": 579,
   "h": 450,
   "shape": true,
-  "bleed": "end",
-  "fade": "start"
+  "bleed": "end"
  },
  "global:conditions/shoulder-rotator-cuff-rehabilitation": {
   "w": 579,
@@ -456,8 +452,7 @@
   "w": 489,
   "h": 419,
   "shape": true,
-  "bleed": "end",
-  "fade": "start top"
+  "bleed": "end"
  },
  "global:conditions/tennis-elbow": {
   "w": 579,
@@ -788,8 +783,7 @@
  "sa:care/heroes/palliative-care": {
   "w": 579,
   "h": 450,
-  "shape": true,
-  "fade": "start"
+  "shape": true
  },
  "sa:care/heroes/physiotherapy": {
   "w": 579,
@@ -859,8 +853,7 @@
   "w": 579,
   "h": 450,
   "shape": true,
-  "bleed": "end",
-  "fade": "start"
+  "bleed": "end"
  },
  "sa:international/banner": {
   "w": 578,

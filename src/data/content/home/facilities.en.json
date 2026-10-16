@@ -28,7 +28,7 @@
   "stats": [
     {
       "number": "340,000+",
-      "label": "Unique OPD Visits",
+      "label": "Unique Outpatient Visits",
       "key": "opd"
     },
     {

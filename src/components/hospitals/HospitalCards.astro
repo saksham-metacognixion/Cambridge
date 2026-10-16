@@ -64,10 +64,14 @@ const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.f
   .btn { margin-top: auto; margin-inline-start: calc(-0.32 * var(--u)); background: var(--color-navy); color: #fff; } /* size / label / corners: .ui-btn (bugs 044/050) */
   /* Hover, as on the live page: the title is a link (out of the tab order; the button is the keyboard stop) that turns cyan.
      The View button keeps the shared .btn-fill-navy hover (cyan fill, white label; user decision 7 Oct 2026 over the live #7AFFCE, WP17).
-     Shown at once (all animations removed, 16 Oct 2026). */
-  .tlink { color: inherit; text-decoration: none; }
+     Timing = the live theme's link transition: 0.12s cubic-bezier(.455,.03,.515,.955). */
+  .tlink { color: inherit; text-decoration: none; transition: color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  :global(:root) .card .btn.btn-fill-navy { transition: background-color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955), color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
   @media (hover: hover) {
     .tlink:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tlink, :global(:root) .card .btn.btn-fill-navy { transition: none; }
   }
   @media (max-width: 1023.98px) {
     .hosp { padding-inline: 16px; }

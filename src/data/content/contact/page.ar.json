@@ -14,7 +14,24 @@
   "heading": "تواصل معنا",
   "details": {
     "web": "www.cambridgehospital.com/ar",
-    "webHref": "https://cambridgehospital.com/ar/"
+    "webHref": "https://cambridgehospital.com/ar/",
+    "byRegion": {
+      "global": {
+        "phones": [
+          {
+            "phone": "800-692273",
+            "phoneHref": "800692273",
+            "label": "الإمارات"
+          },
+          {
+            "phone": "9200-13122",
+            "phoneHref": "920013122",
+            "label": "السعودية"
+          }
+        ]
+      }
+    },
+    "_byRegionNote": "Global banner (client, 16 Oct 2026): both numbers; the Arabic labels are the Home contact card's approved words (home/contact.ar.json), nothing new translated."
   },
   "recovery": {
     "ariaLabel": "تعافيكُم غايتنا",

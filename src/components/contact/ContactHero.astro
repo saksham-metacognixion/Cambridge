@@ -15,7 +15,10 @@ const { edition } = parsePath(Astro.url.pathname);
 const page = content('contact/page', edition.locale);
 const c = page.hero;
 // Phone line of this edition (details.byRegion: the KSA number on /sa), the same one as in the details row under the form.
+// Global (client, 16 Oct 2026): details.byRegion.global.phones = the UAE and the KSA numbers, one line each, labelled as on the
+// Home contact card ("800-692273 - UAE"); without `phones` the single `phone` line is shown as before.
 const phone = { ...page.details, ...(page.details.byRegion?.[edition.region] ?? {}) };
+const phones: { phone: string; phoneHref: string; label?: string }[] = Array.isArray(phone.phones) && phone.phones.length ? phone.phones : [{ phone: phone.phone, phoneHref: phone.phoneHref }];
 // Live-site banner art (banner brief 14 Oct 2026): see PageHero / shared/BannerArt.astro.
 const art = bannerArt(c.banner.image, edition.region);
 const banner = art ? null : img(c.banner.image, edition.region);
@@ -55,10 +58,14 @@ const edgeVars = art ? '' : await heroEdgeVars(layers ? layers.background : bann
         <span class="block">{c.title[0]}</span>{c.title[1] && <span class="block">{c.title[1]}</span>}
       </h1>
       {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
-      <a href={`tel:${phone.phoneHref}`} class="phone hit inline-flex items-center font-gotham font-medium text-f12 leading-14 text-navy no-underline">
-        <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none" />
-        <span dir="ltr">{phone.phone}</span>
-      </a>
+      <div class="phones">
+        {phones.map((ph) => (
+          <a href={`tel:${ph.phoneHref}`} class="phone hit inline-flex items-center font-gotham font-medium text-f12 leading-14 text-navy no-underline">
+            <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none" />
+            <span dir="ltr">{ph.phone}</span>{ph.label && <span class="lbl">{ph.label}</span>}
+          </a>
+        ))}
+      </div>
       <!-- Button (bug 044/050): the shared .ui-btn size, 3px in from the title as in Figma (x98). -->
       <a href={c.button.href} class="btn ui-btn hit btn-outline hair-card relative no-underline text-navy" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
     </div>
@@ -75,12 +82,14 @@ const edgeVars = art ? '' : await heroEdgeVars(layers ? layers.background : bann
   }
   /* Phones / tablets: global .hero-copy flow (16px gaps). Desktop: our own flow column (global.css sets display:contents there). */
   .text { overflow-wrap: anywhere; }
+  .phones { display: flex; flex-direction: column; align-items: flex-start; gap: calc(4 * var(--u)); }
   .phone { gap: calc(7 * var(--u)); }
+  .lbl::before { content: '- '; } /* "800-692273 - UAE", as the Home contact card lists the two numbers */
   .phone img { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
   @media (min-width: 1024px) {
     .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
     .text { width: calc(389 * var(--u)); margin-top: calc(11 * var(--u)); margin-inline-start: calc(2 * var(--u)); }
-    .phone { margin-top: calc(8 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+    .phones { margin-top: calc(8 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
     .btn { margin-top: calc(15 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
   }
 </style>

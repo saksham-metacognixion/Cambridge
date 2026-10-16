@@ -1,16 +1,67 @@
 // Home hospital map (sections/Facilities.astro, bug 133 + the client's reference `cambridge-locations-3.html`, 15 Oct 2026).
-// - No entrance and no count-up (all animations removed, 16 Oct 2026): the map, pins, labels and the six counters are in place
-//   with their final text from the first paint.
-// - A pin's card opens on hover (mouse: pointerenter, closes 260 ms after the pointer leaves the pin AND the card: the grace that
-//   lets the pointer cross from the pin into the card), on tap (touch: toggles; a tap outside closes), on keyboard focus / Enter /
-//   Space (Escape closes and focuses the pin). One card at a time; aria-expanded mirrors the open state; data-active on the spot
-//   drives the pin's hover look.
+// - `.in` once 25 % of the section is in view, once (the CSS draws the map outline, drops the pins, fades the labels and
+//   counters in); the six counters beside the map then count 0 -> value as in the reference: 2 s each, ease-out cubic, starting
+//   0.7 s + 0.12 s per counter after the entrance. Reduced motion / no IntersectionObserver (html.aos absent): no motion,
+//   the counters keep their final text.
+// - A pin's card opens on hover (mouse: pointerenter, closes 260 ms after the pointer leaves the pin AND the card), on tap
+//   (touch: toggles; a tap outside closes), on keyboard focus / Enter / Space (Escape closes and focuses the pin). One card
+//   at a time; aria-expanded mirrors the open state; data-active on the spot drives the pin's hover look.
 // - Before a card shows it is placed like the reference: centred on the pin, 16 px above it when there is room (inside the
 //   viewport and the section), else 16 px under it (.below), kept 8 px inside the map's width (a card wider than the map
 //   overflows it evenly); --ax = the arrow's x on the pin's axis. Cards are absolutely positioned, so nothing in the page moves.
 
+const motion = document.documentElement.classList.contains("aos");
+const easeOut = (k: number) => 1 - Math.pow(1 - k, 3);
+
 for (const root of document.querySelectorAll<HTMLElement>("[data-hospital-map]")) {
   const mapin = root.querySelector<HTMLElement>("[data-mapin]") ?? root;
+
+  /* ---- counters ---- */
+  const counters = [...root.querySelectorAll<HTMLElement>("[data-hm-count]")].flatMap((el) => {
+    const text = el.textContent ?? "";
+    const m = text.match(/^(\D*)([\d,]+)(.*)$/);
+    if (!m) return [];
+    const [, pre, num, post] = m;
+    const value = Number(num.replace(/,/g, ""));
+    const grouped = num.includes(",");
+    const fmt = (n: number) => pre + (grouped ? Math.round(n).toLocaleString("en-US") : String(Math.round(n))) + post;
+    return [{ el, set: (p: number) => (el.textContent = fmt(value * p)), done: () => (el.textContent = text) }];
+  });
+  if (motion) counters.forEach((c) => c.set(0));
+  const runCounters = () => {
+    if (!motion) return;
+    counters.forEach((c, i) => {
+      setTimeout(() => {
+        const t0 = performance.now();
+        const tick = (now: number) => {
+          const k = Math.min((now - t0) / 2000, 1);
+          if (k < 1) {
+            c.set(easeOut(k));
+            requestAnimationFrame(tick);
+          } else c.done();
+        };
+        requestAnimationFrame(tick);
+      }, 700 + i * 120);
+    });
+  };
+
+  /* ---- entrance ---- */
+  const enter = () => {
+    root.classList.add("in");
+    runCounters();
+  };
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          enter();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(root);
+  } else enter();
 
   /* ---- pin cards ---- */
   // (the section's top / bottom are read at placement time, so the card follows the layout at any width)

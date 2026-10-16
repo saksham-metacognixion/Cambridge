@@ -132,5 +132,10 @@ const pills = pillX.map((x, i) => {
     [data-news] :global([data-card]) { max-width: none; }
   }
   /* Tabs: the shared .ui-pill rule (global.css); selected = the filled navy pill Figma uses in Care Support. */
-  /* Tab switch: the set swaps at once (all animations removed, 16 Oct 2026; scripts/news-tabs.ts). */
+  /* Tab switch, as on the live site: cards fade out, the set swaps, cards fade back in (script below). */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-news] :global([data-card]) { transition: opacity 250ms ease; }
+    [data-news] :global([data-news-cards].is-fading [data-card]) { opacity: 0.15; }
+    [data-news] :global([data-card].is-entering) { opacity: 0; }
+  }
 </style>

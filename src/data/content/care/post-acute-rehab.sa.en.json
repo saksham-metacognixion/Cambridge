@@ -16,5 +16,5 @@
     "Post-acute care is short-term, time-limited inpatient rehabilitation for patients recovering from a stable acute illness or injury. At Cambridge Hospital, our post-acute rehabilitation programmes support recovery after stroke, traumatic brain injury, spinal cord injury, major surgery, road traffic accidents and other acute events that affect mobility, function and independence.",
     "Our post-acute rehabilitation programmes are delivered by multidisciplinary teams of physicians, nurses, physiotherapists, occupational therapists, and speech and language therapists, working together within one coordinated pathway. Through personalised care plans and measurable rehabilitation goals, our teams support patients in maximising independence, minimising the impact of impairment and returning to their highest possible level of function."
   ],
-  "cardsHeading": "Our Post-Acute Rehabilitation Programmes"
+  "cardsHeading": ["Our Post-Acute", "Rehabilitation Programmes"]
 }

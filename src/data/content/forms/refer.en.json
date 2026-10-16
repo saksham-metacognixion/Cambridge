@@ -3,13 +3,13 @@
   "tabsLabel": "Who is referring",
   "tabs": {
     "doctor": "For Healthcare Professionals",
-    "other": "For You, Family or friends",
-    "corporate": "For Corporate or Organisations"
+    "other": "For You, Family or Friends",
+    "corporate": "For Corporate/Organisations"
   },
   "ariaLabel": {
     "doctor": "Patient referral form for healthcare professionals",
     "other": "Patient referral form for you, family or friends",
-    "corporate": "Patient referral form for corporate or organisations"
+    "corporate": "Patient referral form for corporate/organisations"
   },
   "sections": {
     "doctor": "Referring Doctor Details:",

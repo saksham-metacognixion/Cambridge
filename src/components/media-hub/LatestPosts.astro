@@ -20,7 +20,7 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
   <h2 id="latest-title" class="m-0 mx-auto max-lg:box-border max-lg:px-[16px] mt-[calc(27.64*var(--u))] max-w-[calc(457.328*var(--u))] text-center font-gotham font-bold text-f29p076 leading-[calc(34.336*var(--u))] text-navy not-italic [word-break:break-word]">{c.title}</h2>
 
   <!-- Swipe / scroll row (no arrows in Figma), auto-scrolling in a slow seamless loop like Testimonials / Care Support (bug 064,
-       the former scripts/autoscroll.ts, removed 16 Oct 2026: scroller [data-autoscroll] > [data-loop-row] > [data-loop-item]; pauses on hover / focus /
+       src/scripts/autoscroll.ts: scroller [data-autoscroll] > [data-loop-row] > [data-loop-item]; pauses on hover / focus /
        touch, off with prefers-reduced-motion). The script appends more posts to the loop row as it nears its end
        (scripts/media-hub.ts) and rebuilds the copies. Padding keeps the card shadows from being clipped, margins cancel it out. -->
   <!-- >= 1024 (bug 111, user decision 14 Oct 2026): the row is a centred window of exactly three cards (Figma 46:7903: cards at
@@ -28,7 +28,7 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
        818.367, plus 22 each side so the card shadows are not cut; mx-auto keeps it centred beyond 1440 (no --gutter needed).
        Cards glide in and out at the window edges. data-autoscroll-lead: the 22 lead shows on load only; the loop wraps past it,
        so it never pops back in when the loop restarts. Below 1024 the row stays full width (16px start). -->
-  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:mx-auto lg:w-[calc(862.367*var(--u))] lg:scroll-ps-[calc(22*var(--u))]" data-row>
+  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:mx-auto lg:w-[calc(862.367*var(--u))] lg:scroll-ps-[calc(22*var(--u))]" data-row data-autoscroll data-autoscroll-lead>
     <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-[calc(22*var(--u))] lg:pe-[calc(22*var(--u))]" data-loop-row aria-label={c.indexLabel}>
       {cards.map((card) => <li class="flex" data-loop-item><PostCard card={card} /></li>)}
       <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
@@ -68,4 +68,5 @@ const indexUrl = urlFor(edition, 'media-hub/posts.json');
 <script>
   import '../../scripts/media-hub';
   import '../../scripts/pagination';
+  import '../../scripts/autoscroll';
 </script>

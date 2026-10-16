@@ -8,7 +8,7 @@
         "ar": "رعاية المرضى المقيمين في المستشفى"
       },
       "desc": {
-        "en": "Comprehensive inpatient care for adults, adolescents and children, bringing together expert medical supervision, nursing care and rehabilitation within a structured clinical environment.",
+        "en": "Comprehensive inpatient care for children and adults, bringing together expert medical supervision, nursing care and rehabilitation within a structured clinical environment.",
         "ar": "رعاية متكاملة للمرضى البالغين والأطفال ممن تستدعي حالاتهم الإقامة في المستشفى، تجمع بين الإشراف الطبي المتخصص، والرعاية التمريضية، وخدمات التأهيل، ضمن بيئة سريرية متكاملة."
       },
       "figma": "83:226",
@@ -34,7 +34,7 @@
                 "ar": "إعادة التأهيل العصبي"
               },
               "desc": {
-                "en": "Rehabilitation for patients with neurological conditions affecting movement, cognition, balance and daily function.",
+                "en": "For neurological conditions affecting movement, cognition, balance and daily function.",
                 "ar": "برامج تأهيلية للمرضى الذين يعانون من حالات عصبية تؤثر في الحركة، أو القدرات الإدراكية، أو التوازن، أو أداء الأنشطة اليومية."
               },
               "children": [
@@ -45,7 +45,7 @@
                     "ar": "إعادة التأهيل بعد السكتة الدماغية"
                   },
                   "desc": {
-                    "en": "Tailored rehabilitation for neurological conditions affecting movement, cognition, balance and daily function",
+                    "en": "For neurological conditions affecting movement, cognition, balance and daily function.",
                     "ar": "إعادة تأهيل مصممة وفق احتياجات المرضى الذين تؤثر حالتهم العصبية في الحركة والقدرات الإدراكية والتوازن والقدرة على أداء المهام اليومية."
                   },
                   "children": [],
@@ -62,7 +62,7 @@
                     "ar": "إعادة التأهيل بعد إصابات الدماغ الرضحية"
                   },
                   "desc": {
-                    "en": "Multidisciplinary rehabilitation to support recovery following traumatic brain injury and address physical, cognitive, communication and functional difficulties",
+                    "en": "To support recovery after traumatic brain injury and address associated difficulties.",
                     "ar": "إعادة تأهيل متعددة التخصصات لدعم التعافي بعد إصابات الدماغ الرضحية والتعامل مع الصعوبات الجسدية والإدراكية والتواصلية والوظيفية المصاحبة لها."
                   },
                   "children": [],
@@ -79,7 +79,7 @@
                     "ar": "إعادة التأهيل بعد إصابات الحبل الشوكي"
                   },
                   "desc": {
-                    "en": "Specialised rehabilitation to support mobility, function and independence following spinal cord injury and its associated complications",
+                    "en": "To support mobility and function following spinal cord injury and associated complications.",
                     "ar": "إعادة تأهيل متخصصة لدعم الحركة والقدرة على أداء الوظائف اليومية والاستقلالية بعد إصابات الحبل الشوكي والمضاعفات المرتبطة بها."
                   },
                   "children": [],
@@ -103,7 +103,7 @@
                 "ar": "إعادة التأهيل العضلي الهيكلي"
               },
               "desc": {
-                "en": "Rehabilitation for patients with musculoskeletal injuries, chronic conditions and post-surgical limitations affecting movement and strength.",
+                "en": "For musculoskeletal injuries or chronic or post-surgical conditions affecting movement and strength.",
                 "ar": "برامج تأهيلية للمرضى الذين يعانون من إصابات أو حالات مزمنة في الجهاز العضلي الهيكلي، أو قيود وظيفية بعد الجراحة تؤثر في الحركة والقوة العضلية."
               },
               "children": [],
@@ -120,7 +120,7 @@
                 "ar": "إعادة التأهيل بعد الجراحة"
               },
               "desc": {
-                "en": "Rehabilitation for patients recovering from surgery, to restore mobility and reduce the risk of post-surgical complications.",
+                "en": "To restore mobility and reduce the risk of complications post-surgery.",
                 "ar": "برامج تأهيلية لمساعدة المرضى على التعافي بعد العمليات الجراحية، واستعادة الحركة والقدرات الوظيفية، والحد من خطر المضاعفات التالية للجراحة."
               },
               "children": [],
@@ -137,7 +137,7 @@
                 "ar": "إعادة التأهيل بعد حوادث المرور"
               },
               "desc": {
-                "en": "Rehabilitation for patients recovering from traumatic injuries following road traffic accidents, supporting recovery of movement and function.",
+                "en": "For traumatic injuries following road traffic accidents, to restore movement and function.",
                 "ar": "برامج تأهيلية للمرضى الذين يتعافون من إصابات رضحية ناجمة عن حوادث الطرق، بهدف استعادة الحركة، والقدرات الوظيفية، وتحسين الاستقلالية."
               },
               "children": [],
@@ -173,7 +173,7 @@
                 "ar": "الرعاية طويلة الأمد"
               },
               "desc": {
-                "en": "Comprehensive ongoing care for patients with chronic illness, disability or prolonged recovery needs.",
+                "en": "For patients with chronic illness, disability or prolonged recovery needs.",
                 "ar": "رعاية طبية مستمرة للمرضى الذين يعانون من أمراض مزمنة، أو إعاقات، أو يحتاجون إلى فترات تعافٍ طويلة."
               },
               "children": [],
@@ -190,7 +190,7 @@
                 "ar": "الرعاية طويلة الأمد وما بعد الحالات الحادة"
               },
               "desc": {
-                "en": "High-dependency medical care for clinically complex patients who require specialist oversight and intensive coordination.",
+                "en": "For clinically complex patients who require continuous intensive supervision.",
                 "ar": "رعاية طبية متخصصة للمرضى ذوي الحالات الصحية المعقدة والاحتياجات الطبية المكثفة، ممن يحتاجون إلى إشراف متخصص وتنسيق دقيق بين فرق الرعاية."
               },
               "children": [],
@@ -207,7 +207,7 @@
                 "ar": "رعاية كبار السن"
               },
               "desc": {
-                "en": "Integrated compassionate care for older adults with complex or age-related health needs.",
+                "en": "For older adults with complex or age-related health needs.",
                 "ar": "رعاية متكاملة وإنسانية لكبار السن الذين يعانون من مشكلات صحية معقدة أو احتياجات مرتبطة بالتقدم في العمر."
               },
               "children": [],
@@ -224,7 +224,7 @@
                 "ar": "الرعاية طويلة الأمد للأطفال"
               },
               "desc": {
-                "en": "Specialised long-term care for children with chronic medical, neurological or developmental needs.",
+                "en": "For children with chronic medical, neurological or developmental needs.",
                 "ar": "رعاية متخصصة طويلة الأمد للأطفال الذين يعانون من حالات طبية، أو عصبية، أو نمائية مزمنة، تتطلب متابعة مستمرة."
               },
               "children": [],
@@ -260,7 +260,7 @@
                 "ar": "برنامج الفطام عن جهاز التنفس الصناعي"
               },
               "desc": {
-                "en": "Structured respiratory management aimed at reducing and eventually removing dependence on mechanical ventilation, where clinically possible.",
+                "en": "Structured respiratory management to reduce or eliminate dependence on mechanical ventilation.",
                 "ar": "برنامج علاجي تنفسي منظم يهدف إلى تقليل اعتماد المريض على جهاز التنفس الصناعي وصولًا إلى الاستغناء عنه، متى كان ذلك ممكنًا من الناحية السريرية."
               },
               "children": [],
@@ -277,7 +277,7 @@
                 "ar": "رعاية المرضى الخاضعين للتنفس الصناعي طويل الأمد"
               },
               "desc": {
-                "en": "Ongoing respiratory and medical support for patients who require long-term mechanical ventilation.",
+                "en": "Ongoing medical support for patients who require long-term mechanical ventilation.",
                 "ar": "رعاية تنفسية وطبية مستمرة للمرضى الذين يحتاجون إلى التنفس الصناعي لفترات طويلة."
               },
               "children": [],
@@ -313,7 +313,7 @@
                 "ar": "إعادة التأهيل الرئوي للأطفال"
               },
               "desc": {
-                "en": "For children with chronic respiratory conditions requiring monitored therapy and long-term management, to help children breathe easier.",
+                "en": "For children with chronic respiratory conditions requiring monitored therapy and long-term management.",
                 "ar": "للأطفال الذين يعانون من أمراض تنفسية مزمنة أو احتياجات متخصصة تتعلق بوظائف الرئة."
               },
               "children": [],
@@ -326,7 +326,7 @@
                 "ar": "إعادة تأهيل النطق واللغة"
               },
               "desc": {
-                "en": "For children and adults with communication, speech or swallowing difficulties, to help patients communicate more clearly, confidently and independently.",
+                "en": "For children and adults with communication, speech or swallowing difficulties.",
                 "ar": "للأطفال الذين يواجهون صعوبات في النطق، أو اللغة، أو التواصل، أو البلع."
               },
               "children": [],
@@ -339,7 +339,7 @@
                 "ar": "إعادة التأهيل العصبي العضلي للأطفال"
               },
               "desc": {
-                "en": "For children with neuromuscular conditions affecting movement and muscle control, to build strength, improve function and support greater independence.",
+                "en": "For children with neuromuscular conditions affecting movement and muscle control.",
                 "ar": "للأطفال الذين يعانون من اضطرابات عصبية عضلية تؤثر في الحركة أو التحكم بالعضلات."
               },
               "children": [],
@@ -352,7 +352,7 @@
                 "ar": "إعادة التأهيل لحالات تشوهات الجهاز العصبي المركزي"
               },
               "desc": {
-                "en": "For children affected by neurological and developmental conditions, to help manage symptoms, support development and improve quality of life",
+                "en": "For children affected by neurological and developmental conditions.",
                 "ar": "للأطفال الذين يعانون من حالات عصبية أو نمائية تؤثر في قدراتهم ووظائفهم."
               },
               "children": [],
@@ -365,7 +365,7 @@
                 "ar": "إعادة التأهيل لحالات العيوب القلبية طويل الأمد"
               },
               "desc": {
-                "en": "For children with congenital or acquired heart conditions, to support recovery, manage symptoms and promote healthy growth and development.",
+                "en": "For children with congenital or acquired heart conditions.",
                 "ar": "للأطفال المصابين بأمراض القلب الخِلقية أو المكتسبة."
               },
               "children": [],
@@ -378,7 +378,7 @@
                 "ar": "الرعاية الانتقالية للأطفال"
               },
               "desc": {
-                "en": "For infants transitioning from hospital to home or between stages of care, to support a safe transition and healthy development.",
+                "en": "For infants transitioning from hospital to home or between stages of care.",
                 "ar": "للرضّع والأطفال خلال انتقالهم من المستشفى إلى المنزل أو من مرحلة علاجية إلى أخرى."
               },
               "children": [],
@@ -391,7 +391,7 @@
                 "ar": "إعادة التأهيل للأطفال ما بعد الحالات الحادة"
               },
               "desc": {
-                "en": "For children recovering from serious illness or injury, or living with complex long-term conditions, to support recovery, manage their condition and improve quality of life.",
+                "en": "For children recovering from serious illness or injury or living with complex long-term conditions.",
                 "ar": "للأطفال الذين يتعافون من أمراض خطيرة أو إصابات شديدة، أو يعانون من حالات صحية معقدة تتطلب رعاية وتأهيلًا متخصصين."
               },
               "children": [],
@@ -410,7 +410,7 @@
             "ar": "العناية المركّزة ورعاية الحالات الحرجة"
           },
           "desc": {
-            "en": "Advanced 24/7 care for patients with life threatening or unstable conditions, with continuous monitoring, medical treatment and critical support.",
+            "en": "Advanced 24/7 care for patients with life-threatening or unstable conditions, with continuous monitoring, medical treatment and critical support.",
             "ar": "رعاية طبية متقدمة على مدار الساعة للمرضى الذين يعانون من حالات حرجة أو غير مستقرة، تشمل المراقبة المستمرة وتقديم العلاج اللازم والدعم الطبي المكثف."
           },
           "image": "care/inpatient/icu-critical-care",
@@ -448,7 +448,7 @@
         "ar": "خدمات العيادات الخارجية"
       },
       "desc": {
-        "en": "Comprehensive outpatient rehabilitation for adults, adolescents and children, bringing together multidisciplinary teams to restore function, build independence and support them throughout their recovery.",
+        "en": "Comprehensive outpatient rehabilitation for children and adults, bringing together multidisciplinary teams to restore function, build independence and support them throughout their recovery.",
         "ar": "خدمات متكاملة لإعادة التأهيل في العيادات الخارجية للبالغين والأطفال، يقدمها فريق متعدد التخصصات بهدف استعادة القدرات الوظيفية، وتعزيز الاستقلالية، ومساندة المرضى في مختلف مراحل التعافي."
       },
       "children": [
@@ -459,7 +459,7 @@
             "ar": "الطب الفيزيائي وإعادة التأهيل"
           },
           "desc": {
-            "en": "Physician led care for adults and children with conditions affecting movement, function, pain and physical wellbeing.",
+            "en": "Physician-led care for adults and children with conditions affecting movement, function, pain and physical wellbeing.",
             "ar": "رعاية طبية بإشراف أطباء متخصصين للبالغين والأطفال الذين تؤثر حالاتهم الصحية في الحركة أو القدرات الوظيفية، أو تسبب لهم الألم وتحد من عافيتهم البدنية."
           },
           "image": "care/outpatient/physical-medicine-rehab-care",
@@ -477,7 +477,7 @@
             "ar": "الرعاية للأطفال"
           },
           "desc": {
-            "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement, function and daily activities.",
+            "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement or function.",
             "ar": "رعاية متخصصة للأطفال الذين يعانون من حالات جسدية أو عصبية أو نمائية تؤثر في حركتهم، وقدراتهم الوظيفية، وممارستهم للأنشطة اليومية."
           },
           "image": "care/outpatient/pediatric-care",
@@ -495,7 +495,7 @@
             "ar": "العلاج الطبيعي"
           },
           "desc": {
-            "en": "Movement based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
+            "en": "Movement-based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
             "ar": "برامج علاجية تعتمد على الحركة والتمارين العلاجية لمساعدة المرضى الذين يعانون من الألم، أو ضعف العضلات، أو محدودية الحركة، أو مشكلات التوازن والتناسق الحركي."
           },
           "image": "care/outpatient/physiotherapy",
@@ -513,7 +513,7 @@
             "ar": "العلاج الوظيفي"
           },
           "desc": {
-            "en": "Functional therapy for patients who need support with daily activities, independence, self care or participation at home, school or work.",
+            "en": "Functional therapy for patients who need support with daily activities, independence, self-care or participation at home, school or work.",
             "ar": "تأهيل يساعد المرضى على أداء الأنشطة اليومية بمزيد من الاستقلالية، بما في ذلك العناية الذاتية والمشاركة في أنشطة الحياة في المنزل، أو المدرسة، أو العمل."
           },
           "image": "care/outpatient/occupational-therapy",
@@ -569,7 +569,7 @@
         "ar": "خدمات الرعاية المنزلية"
       },
       "desc": {
-        "en": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
+        "en": "Comprehensive home-based care for children and adults, combining medical care, nursing and rehabilitation in the comfort of home.",
         "ar": "رعاية طبية عالية الجودة يتم تقديمها حتي باب المنزل."
       },
       "children": []

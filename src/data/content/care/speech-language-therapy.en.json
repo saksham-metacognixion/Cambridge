@@ -63,9 +63,9 @@
         {
           "type": "ul",
           "items": [
-            "**Articulation Therapy:** Shaping pronunciation so patients can produce speech sounds more clearly and improve the clarity and fluency of their speech, building confidence along the way.",
-            "**Language Comprehension Therapy:** Supporting patients with developmental difficulties or language delays, including those following a stroke or other conditions, who can communicate but may struggle to do so effectively.",
-            "**Oral, Swallowing and Feeding Therapy:** Targeted facial, jaw, lip and tongue exercises to strengthen the muscles used in eating and drinking and improve swallowing control."
+            "**Articulation therapy:** Shaping pronunciation so patients can produce speech sounds more clearly and improve the clarity and fluency of their speech, building confidence along the way.",
+            "**Language comprehension therapy:** Supporting patients with developmental difficulties or language delays, including those following a stroke or other conditions, who can communicate but may struggle to do so effectively.",
+            "**Oral, swallowing and feeding therapy:** Targeted facial, jaw, lip and tongue exercises to strengthen the muscles used in eating and drinking and improve swallowing control."
           ]
         }
       ]
@@ -83,7 +83,7 @@
         },
         {
           "type": "p",
-          "text": "**Learning Disabilities:** We identify each child’s strengths and areas for development, then build targeted strategies to improve motor skills, writing and reading comprehension, alongside cognitive and social development."
+          "text": "**Learning disabilities:** We identify each child’s strengths and areas for development, then build targeted strategies to improve motor skills, writing and reading comprehension, alongside cognitive and social development."
         }
       ]
     },

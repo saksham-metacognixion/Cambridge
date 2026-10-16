@@ -195,17 +195,18 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
   .map { display: block; overflow: visible; }
   .country { fill: #e7e7e7; fill-opacity: 0.45; stroke: rgba(255, 255, 255, 0.3); stroke-opacity: 0; stroke-width: 1.6; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 
-  /* Pins: box = the Figma pin box (.pm); --tip = the tip's y in it. .drop / .bob are plain wrappers (their entrance and idle bob
-     are gone: all animations removed, 16 Oct 2026), .shape = the drawn pin, .pulse = the (now invisible) ring at the tip. */
+  /* Pins: box = the Figma pin box (.pm); --tip = the tip's y in it. .drop = entrance, .bob = idle bob, .shape = hover scale (three
+     elements so the three transforms never fight), .pulse = the ring at the tip. */
   .spot { z-index: 1; }
   .spot[data-active], .spot:focus-within { z-index: 10; } /* above the neighbouring pins and the content column */
   .drop, .bob { position: absolute; inset: 0; }
   .pulse { position: absolute; left: 50%; top: calc(var(--tip) * var(--m)); width: calc(12 * var(--m)); height: calc(5 * var(--m)); margin: calc(-2.5 * var(--m)) 0 0 calc(-6 * var(--m)); border: 1.6px solid var(--color-cyan); border-radius: 50%; box-sizing: border-box; opacity: 0; pointer-events: none; }
   .pin { display: block; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; border-radius: 50%; color: var(--color-navy-alt); }
   .pin:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
-  .shape { display: block; width: 100%; height: 100%; overflow: visible; }
-  .shape path { fill: currentColor; stroke: var(--color-cyan); stroke-width: 3; }
-  .shape circle { fill: var(--color-cyan); }
+  .shape { display: block; width: 100%; height: 100%; overflow: visible; transition: transform 0.25s ease; }
+  .shape path { fill: currentColor; stroke: var(--color-cyan); stroke-width: 3; transition: fill 0.25s ease; }
+  .shape circle { fill: var(--color-cyan); transition: fill 0.25s ease; }
+  .spot[data-active] .shape, .pin:focus-visible .shape { transform: scale(1.18); }
   .spot[data-active] .shape path, .pin:focus-visible .shape path { fill: var(--color-cyan); }
   .spot[data-active] .shape circle, .pin:focus-visible .shape circle { fill: #fff; }
   /* Mouse / trackpad: the pointer target is the drawn pin, not its square box, so the Dhahran / Al Khobar pair each stay reachable
@@ -216,10 +217,11 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
   }
 
   /* Card (the reference's .hcard, styled as the removed list item): absolute in the map, placed by the script (left / top
-     relative to its .spot, --ax = the arrow's x), above the pin or [.below] it; shown at once. 464 wide (the
+     relative to its .spot, --ax = the arrow's x), above the pin or [.below] it; fades + slides over 0.22 s. 464 wide (the
      reference's 430 + 34) so the .ui-btn-sm pair sits on one line beside the 128px photo as in the reference. */
-  .hcard { position: absolute; left: 0; top: 0; z-index: 10; display: flex; flex-direction: column; gap: 12px; width: min(464px, calc(100vw - 32px)); padding: 12px; box-sizing: border-box; background: #fff; color: var(--color-navy); border-radius: var(--radius-card); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28); opacity: 0; visibility: hidden; pointer-events: none; }
-  .hcard.show { opacity: 1; visibility: visible; pointer-events: auto; }
+  .hcard { position: absolute; left: 0; top: 0; z-index: 10; display: flex; flex-direction: column; gap: 12px; width: min(464px, calc(100vw - 32px)); padding: 12px; box-sizing: border-box; background: #fff; color: var(--color-navy); border-radius: var(--radius-card); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28); opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px); transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s; }
+  .hcard.below { transform: translateY(-8px); }
+  .hcard.show { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition-delay: 0s; }
   .hcard::after { content: ''; position: absolute; left: var(--ax, 50%); bottom: -7px; width: 14px; height: 14px; background: #fff; transform: translateX(-50%) rotate(45deg); border-radius: 2px; }
   .hcard.below::after { top: -7px; bottom: auto; }
   .hrow { display: flex; gap: 14px; align-items: center; }
@@ -272,5 +274,35 @@ const stats = (c.stats as { number: string; label: string }[]).map((s) => ({ n: 
     .lbl-stat { white-space: normal; }
   }
 
-  /* No entrance (all animations removed, 16 Oct 2026): the map, pins, labels and counters are simply in place. */
+  /* Entrance (scripts/hospital-map.ts adds .in once 25 % of the section is in view; html.aos = IntersectionObserver present and
+     no prefers-reduced-motion, set in BaseLayout, so without either everything is simply visible). Timings = the reference. */
+  :global(html.aos) .hm .hm-title { transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; }
+  :global(html.aos) .hm:not(.in) .hm-title { opacity: 0; transform: translateY(24px); }
+  :global(html.aos) .hm .country { stroke-dasharray: 1; transition: stroke-dashoffset 2.2s cubic-bezier(0.65, 0, 0.35, 1), fill-opacity 1s ease 1.7s, stroke-opacity 1s ease 1.7s; }
+  :global(html.aos) .hm:not(.in) .country { stroke-dashoffset: 1; fill-opacity: 0; stroke-opacity: 1; }
+  :global(html.aos) .hm.in .country { stroke-dashoffset: 0; }
+  :global(html.aos) .hm .drop { opacity: 0; }
+  :global(html.aos) .hm.in .drop { animation: pin-drop 0.95s cubic-bezier(0.3, 0.6, 0.4, 1) var(--d) both; }
+  :global(html.aos) .hm.in .bob { animation: pin-bob 2.6s ease-in-out calc(var(--d) + 0.95s) infinite; }
+  :global(html.aos) .hm.in .pulse { animation: pin-pulse 2.6s ease-out calc(var(--d) + 0.95s) infinite; }
+  :global(html.aos) .hm .lbl { opacity: 0; transition: opacity 0.5s ease; }
+  :global(html.aos) .hm.in .lbl { opacity: 1; transition-delay: calc(var(--d) + 0.6s); }
+  :global(html.aos) .hm .stat { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  :global(html.aos) .hm.in .stat { opacity: 1; transform: none; transition-delay: calc(0.6s + var(--i) * 0.12s); }
+  @keyframes pin-drop {
+    0% { transform: translateY(calc(-140 * var(--m))); opacity: 0; }
+    55% { transform: translateY(0); opacity: 1; }
+    70% { transform: translateY(calc(-16 * var(--m))); }
+    84% { transform: translateY(0); }
+    92% { transform: translateY(calc(-5 * var(--m))); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes pin-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(-6 * var(--m))); } }
+  @keyframes pin-pulse { 0% { transform: scale(0.4); opacity: 0.9; } 100% { transform: scale(3.4); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hm .hm-title, .hm .country, .hm .drop, .hm .bob, .hm .pulse, .hm .lbl, .hm .stat { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; }
+    .hm .country { stroke-dashoffset: 0 !important; fill-opacity: 0.45 !important; stroke-opacity: 0 !important; }
+    .hm .pulse { opacity: 0 !important; }
+    .hcard { transition: none !important; }
+  }
 </style>

@@ -16,7 +16,7 @@ import pin from '../../assets/hospital-detail/map-pin.svg';
  * NOT in Figma, required by scope 2.5 (docs/open-decisions.md HD4): address, phone (tel: link) and opening hours as one centred
  * Book 12/14 white block 14 below the button; each line only when the data exists (hospitals.json).
  * Bug 182 (16 Oct 2026): the button only renders while lib/hospitals.ts mapsHref has a target (exact position, else the hospital's
- * own share link); Jeddah has neither yet, so its band shows the heading and address without a dead link.
+ * own share link); a hospital with neither shows the heading and address without a dead link (Jeddah until its pin was resolved, 16 Oct 2026).
  */
 interface Props { c: { ariaLabel: string; lead: string; button: string; phoneLabel: string; hoursLabel: string; addressLabel: string }; hospital: Hospital; city: string; locale: LocaleId }
 const { c, hospital: h, city, locale } = Astro.props;

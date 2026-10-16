@@ -30,7 +30,7 @@
       "playLabel": "Play video"
     },
     "title": "Cambridge Hospital",
-    "subtitle": "Personalised Care, Every Step of the Way",
+    "subtitle": ["Personalised Care, Every Step", "of the Way"],
     "lead": "",
     "text": [
       "Cambridge Hospital provides comprehensive and specialised post-acute, rehabilitation and long-term care for patients recovering from illness, injury or complex medical conditions, as well as those requiring ongoing support.",

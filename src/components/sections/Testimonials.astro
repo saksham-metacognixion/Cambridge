@@ -36,7 +36,7 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
 
     <!-- Live Home page (WordPress export, animation audit 8 Oct 2026): Greenshift Swiper, autoplay delay 0, speed 15000, loop,
          disablepause (no hover pause), autoplayrestore: one 15 s eased slide per card, one after the other (autoscroll.ts step mode). -->
-    <div class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
+    <div data-autoscroll="step" data-autoscroll-delay="0" data-autoscroll-speed="15000" data-autoscroll-pause="no" class="hscroll t-scroller absolute start-0 top-117 w-full" style={`padding-block-end:${u(OVERHANG)}`}>
       <div data-loop-row class="t-row flex" style={`gap:${u(GAP)}`}>
         {homeTestimonials.map((s) => (
           <div data-loop-item class="t-item shrink-0" style="scroll-snap-align:start">
@@ -50,6 +50,10 @@ const OVERHANG = (259.12 + 73.834 - 321.805) * S;
     <a href={txt.button.page ? urlFor(edition, pagePath(txt.button.page)) : txt.button.href} class="ui-btn hit t-btn btn-fill absolute top-391">{txt.button.label}</a>
   </div>
 </section>
+
+<script>
+  import '../../scripts/autoscroll';
+</script>
 
 <style>
   .t-head { display: contents; }

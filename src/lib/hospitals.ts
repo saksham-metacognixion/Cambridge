@@ -117,7 +117,8 @@ export function directionsHref(h: Hospital): string {
 
 /** Hospital-page "Open in Google Maps" target, from the same location record as the Contact map (bug 182, 16 Oct 2026): the
  *  hospital's exact position (+ Place ID when set), else its own Google Maps link (mapUrl), else empty = no button (MapBand).
- *  Never a search by name or address: Google's text match landed on the wrong place for Jeddah (R051). */
+ *  Never a search by name or address: Google's text match landed on the wrong place for Jeddah (R051; its real pin came from
+ *  the live site's share link, bug 182). */
 export function mapsHref(h: Hospital, _locale?: LocaleId): string {
   const p = hospitalPosition(h);
   return p

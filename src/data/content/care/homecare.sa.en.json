@@ -5,7 +5,7 @@
     "title": [
       "Homecare"
     ],
-    "text": "Comprehensive home-based care for adults, adolescents and children, combining medical care, nursing and rehabilitation in the comfort of home.",
+    "text": "Comprehensive home-based care for children and adults, combining medical care, nursing and rehabilitation in the comfort of home.",
     "banner": {
       "image": "care/heroes/home-healthcare",
       "alt": ""
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "label": "A true continuum of care",
+      "label": "A True Continuum of Care",
       "blocks": [
         {
           "type": "p",
@@ -45,7 +45,7 @@
       "label": "Home Physiotherapy",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Home physiotherapy is one of our core homecare services and is available for adults, seniors and children across Saudi Arabia. Our therapists provide specialised physiotherapy in the home, supporting patients with a range of conditions, including:"
         },
         {
@@ -105,7 +105,7 @@
       "label": "Newborn Nursing Care",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Specialist nursing support for newborns and their mothers in the comfort of home, helping families manage the earliest days with confidence and reassurance. Our teams provide:"
         },
         {
@@ -125,7 +125,7 @@
       "label": "Medical Examination Care",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Physician and nursing examinations carried out at home for patients who need regular review or may find it difficult to travel to a clinic. Our teams provide:"
         },
         {
@@ -145,7 +145,7 @@
       "label": "Laboratory Services",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Convenient laboratory sample collection and testing at home, allowing patients to complete routine and specialist tests without travelling to hospital. Our teams provide:"
         },
         {
@@ -165,7 +165,7 @@
       "label": "Home SLP Services",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Speech, language, communication and swallowing support delivered in the comfort of the patient’s home, for adults and children. Our services include:"
         },
         {

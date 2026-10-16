@@ -17,7 +17,7 @@ import type { Edition } from '../../lib/editions';
  * The player is NOT loaded here: src/scripts/video-facade.ts creates it on click in a lightbox whose frame takes the video's shape
  * (config src/data/about.json -> video { host, id, aspect }; the current Short is a square picture, aspect '1:1', bug 031).
  */
-interface Props { edition: Edition; c: { ariaLabel: string; video: { poster: string; alt: string; playLabel: string }; title: string; subtitle: string; lead?: string; text: string[] } }
+interface Props { edition: Edition; c: { ariaLabel: string; video: { poster: string; alt: string; playLabel: string }; title: string; subtitle: string | string[]; lead?: string; text: string[] } }
 const { edition, c } = Astro.props;
 const poster = img(c.video.poster, edition.region);
 const hasVideo = Boolean(about.video.host && about.video.id);
@@ -36,7 +36,7 @@ const closeLabel = commonText(edition.locale).close as string;
     <div class="copy">
       <h2 class="title">
         <span class="t1">{c.title}</span>
-        <span class="t2">{c.subtitle}</span>
+        <span class="t2">{[c.subtitle].flat().map((line) => <span class="block">{line}</span>)}</span>{/* lines as given in the JSON (client, 16 Oct 2026: "Personalised Care, Every Step / of the Way") */}
       </h2>
       <div class="body">
         {c.lead && <p class="lead">{c.lead}</p>}

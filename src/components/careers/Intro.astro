@@ -41,7 +41,7 @@ const photo = img(c.image.image, edition.region);
   @media (min-width: 1024px) {
     .row { flex-direction: row; align-items: flex-start; gap: 0; }
     .photo { margin-inline-start: calc(85 * var(--u)); }
-    .copy { flex: none; width: calc(496 * var(--u)); margin-top: calc(67 * var(--u)); margin-inline-start: calc(19 * var(--u)); }
+    .copy { flex: none; width: calc(496 * var(--u)); margin-top: calc(67 * var(--u)); margin-inline-start: calc(19 * var(--u)); padding-bottom: calc(41 * var(--u)); } /* client (16 Oct 2026): the copy is taller than the photo, its last line sat on the grey band; 41 = the Life band's bottom gap */
     .h { width: calc(320 * var(--u)); }
     .t { margin-inline-start: calc(1 * var(--u)); width: calc(495 * var(--u)); }
   }

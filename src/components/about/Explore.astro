@@ -33,7 +33,7 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
     {c.text && <p class="sub">{c.text}</p>}
     <ul class="grid" role="list">
       {cards.map((x, i) => (
-        <li class="cell">
+        <li data-aos="fade-up" style={`--aos-delay:${i * 50}ms`} class="cell">
           <article class="card hair-card" style="--sw:.25">
             <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(222)} height={px(244)} widths={[px(222), px(222) * 2]} sizes={vwSizes(222)} loading="lazy" decoding="async" alt={x.alt} class="img" pictureAttributes={{ class: 'contents' }} />
             <h3 class:list={['t', { long: x.title.length > 2 }]}>
@@ -48,7 +48,7 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
 </Band>
 
 <style>
-  /* Scroll entrance as on the live About page (data-aos="fade-up", the former scripts/aos.ts, removed 16 Oct 2026 + global.css): each card on its own,
+  /* Scroll entrance as on the live About page (data-aos="fade-up", scripts/aos.ts + global.css): each card on its own,
      0.8s, delays 0 / 50 / 100 / 150ms, replays on every return. The heading and the grey band do not move. */
   .wrap { padding-block: calc(55 * var(--u)) calc(69 * var(--u)); }
   .h { margin: 0; width: calc(664 * var(--u)); max-width: 100%; margin-inline: auto; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); text-align: center; overflow-wrap: anywhere; }
@@ -68,6 +68,7 @@ const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), hre
      whole-card link layer so each reacts on its own; the button is a second link to the same page, hidden from AT and Tab
      (the title link is the one they use). */
   .t .block, .btn { position: relative; z-index: 1; }
+  .t a { transition: color 160ms ease; }
   @media (hover: hover) { .t:has(.block:hover) a { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   .card:has(.stretch:focus-visible) { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   .btn { margin-top: auto; } /* size from .ui-btn (bug 044/050), colours from .btn-fill */

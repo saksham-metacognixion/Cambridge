@@ -8,7 +8,7 @@
 // that hospital in the form, so the dropdown, the map, the active marker and the card always agree (one activeId).
 // Fallback (no key, Google rejects the key, the script fails): the Figma map image stays in place, the select and the card
 // (name, address, directions link) keep working, and the cause is logged. Never an iframe embed, never a search by name.
-// A hospital without a position (hospitals.json location lat / lng null: Jeddah until the client sends it) gets no marker and
+// A hospital without a position (hospitals.json location lat / lng null; none since 16 Oct 2026, kept for new records) gets no marker and
 // no directions link; choosing it shows its card (name + address), keeps the overview extent but HIDES every marker (bug 182,
 // 16 Oct 2026: the other hospitals' pins read as "the map stays on Dhahran / Al Khobar") and logs a warning.
 type Spot = {

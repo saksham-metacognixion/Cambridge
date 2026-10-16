@@ -16,6 +16,9 @@ export const PAGE_PATHS = {
   whyCambridge: "about/why-cambridge-hospital",
   /** Who We Are (Figma 46:5841); live URL /about/who-we-are/ (WordPress export, 6 Oct 2026) */
   whoWeAre: "about/who-we-are",
+  /** Meet the Team (Task 198, 16 Oct 2026; no Figma frame, the live page's layout); live URL /about/meet-the-team/.
+   *  Profiles = leadership/<slug> (LEADER_PATHS in src/lib/leadership.ts, the live URLs). */
+  meetTheTeam: "about/meet-the-team",
   /** Accreditations & Partnerships (Figma 55:12215); live URL /about/accreditations-partnerships/ */
   accreditations: "about/accreditations-partnerships",
   /** Our Hospitals list (Figma 101:6247); live URL /hospitals/. Detail pages = hospitals/<path> (src/lib/hospitals.ts) */

@@ -21,6 +21,7 @@ import {
   CARE_PATHS,
 } from "./care";
 import posts from "../data/news/posts.json";
+import { leaders, leaderEditions, leaderHref, LEADER_PATHS } from "./leadership";
 
 export interface Redirect {
   from: string;
@@ -28,9 +29,8 @@ export interface Redirect {
 }
 
 /**
- * Meet the Team (WP6): no page yet, so the live URL and the leadership profiles go to About. When the page is built, add
- * `meetTheTeam: "about/meet-the-team"` to PAGE_PATHS: the /about/meet-the-team rule then drops out (the page answers
- * itself) and /leadership/* points at the new page, still one hop.
+ * Meet the Team (WP6): built 16 Oct 2026 (Task 198), PAGE_PATHS.meetTheTeam, so the /about/meet-the-team rule drops out (the
+ * page answers itself). Without that key the page and every /leadership/ URL would go to About again.
  */
 const MEET_THE_TEAM = (PAGE_PATHS as Record<string, string>).meetTheTeam as
   string | undefined;
@@ -150,6 +150,7 @@ export function pageRedirects(): Redirect[] {
           to: urlFor(e, DOCTOR_PATHS.list),
         });
   }
+  out.push(...leadershipRedirects());
   // The live Arabic home page was a WordPress page with its own slug.
   out.push({ from: "/ar/cambridge-hospital", to: urlFor(globalOf("ar")) });
   return out;
@@ -190,12 +191,41 @@ export function doctorRedirects(): Redirect[] {
 }
 
 /**
+ * Live /leadership/<slug>/ profiles (Task 198, 16 Oct 2026): every leader has a page at the live URL (LEADER_PATHS), so the
+ * live links need no rule. Exact rules only (a /leadership/* splat would shadow the profile pages):
+ *   - /leadership (the live section root) -> the edition's Meet the Team
+ *   - a leader of the other country in /ae or /sa (e.g. /sa/leadership/ahmad-al-khayer) -> that edition's Meet the Team
+ *   - a live slug that differs from ours (the Arabic /ar/leadership/dr-mohammed-halawani/) -> the profile, same edition
+ *   - live profiles not imported (RETIRED_LEADER_SLUGS) -> the edition's Meet the Team
+ * Any other /leadership/<x> is a 404 (the 404 page links the key sections).
+ */
+/** Arabic-only live profile without an English record (عظيم أنور, IT Director, /ar/leadership/azeem-anwar/): not imported (client). */
+const RETIRED_LEADER_SLUGS = ["azeem-anwar"];
+export function leadershipRedirects(): Redirect[] {
+  const out: Redirect[] = [];
+  for (const e of editions) {
+    const team = urlFor(e, PAGE_PATHS.meetTheTeam);
+    const at = (slug: string) => urlFor(e, LEADER_PATHS.profile(slug));
+    out.push({ from: urlFor(e, LEADER_PATHS.section), to: team });
+    for (const slug of RETIRED_LEADER_SLUGS) out.push({ from: at(slug), to: team });
+    for (const l of leaders) {
+      const home = leaderEditions(l).includes(e.id);
+      if (!home) out.push({ from: at(l.slug), to: team });
+      for (const old of l.old_urls) {
+        const slug = old.replace(/\/+$/, "").split("/").pop()!;
+        if (slug !== l.slug) out.push({ from: at(slug), to: home ? leaderHref(l, e) : team });
+      }
+    }
+  }
+  return out;
+}
+
+/**
  * Whole live sections without a page per item here, per edition (splat rules, after every exact rule):
  *   - /doctor/<x> not matched by doctorRedirects -> Find a Doctor (bug 059: a live slug we do not know yet never 404s)
  *   - /testimonial/<x> (12 live stories, docs/testimonial.json) -> Patient Testimonials (bug 060: one page, no story pages)
- *   - /leadership/<x> (17 live profiles, docs/leadership.json) -> About, like /about/meet-the-team until Meet the Team
- *     exists (bug 060 / 061, WP6). Change the target here and every rule follows (no chains).
- * The section roots themselves (/doctor/, /testimonial/, /leadership/) go to the same pages.
+ * The section roots themselves (/doctor/, /testimonial/) go to the same pages. /leadership/<x> used to be here (-> About,
+ * bug 060 / 061); since Task 198 the profiles exist at those URLs, see leadershipRedirects().
  */
 export function sectionRedirects(): Redirect[] {
   return editions.flatMap((e) => {
@@ -204,7 +234,6 @@ export function sectionRedirects(): Redirect[] {
       [
         ["doctor", urlFor(e, DOCTOR_PATHS.list)],
         ["testimonial", urlFor(e, PAGE_PATHS.patientTestimonials)],
-        ["leadership", meetTheTeamFor(e)],
       ] as const
     ).flatMap(([section, to]) => [
       { from: `${base}/${section}`, to },

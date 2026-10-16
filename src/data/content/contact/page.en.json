@@ -53,9 +53,23 @@
       "sa": {
         "phone": "9200-13122",
         "phoneHref": "920013122"
+      },
+      "global": {
+        "phones": [
+          {
+            "phone": "800-692273",
+            "phoneHref": "800692273",
+            "label": "UAE"
+          },
+          {
+            "phone": "9200-13122",
+            "phoneHref": "920013122",
+            "label": "KSA"
+          }
+        ]
       }
     },
-    "_byRegionNote": "Per-edition override of the details above: /sa shows the KSA line (the live site's number, as in home/contact and the FAQ), Global and /ae the UAE line."
+    "_byRegionNote": "Per-edition override of the details above: /sa shows the KSA line (the live site's number, as in home/contact and the FAQ), /ae the UAE line. Global (client, 16 Oct 2026): `phones` = both numbers in the banner, labels as on the Home contact card; the details row under the form keeps the single `phone` line."
   },
   "recovery": {
     "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",

@@ -187,7 +187,11 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
     out[..., :3] = np.where(al > 1e-4, out[..., :3] / np.maximum(al, 1e-4), 0)
     img = Image.fromarray((out.clip(0, 1) * 255 + 0.5).astype(np.uint8))
     disp = (round(size[0] / 2), round(size[1] / 2))
-    log(f'  new picture: subject box {x1 - x0}x{y1 - y0} -> {size[0]}x{size[1]} (display {disp[0]}x{disp[1]} live px)')
+    # Bugs 194/196 (16 Oct 2026): the outline pill stack sits at one canvas spot in every composite (pill_place.STACK), so its
+    # top-left in the people box is read straight off the crop box (no fit): composite px -> live px = NEW_SCALE / 2.
+    from pill_place import STACK
+    pills_at = [float(round((STACK[0] - x0) * NEW_SCALE / 2, 1)), float(round((STACK[1] - y0) * NEW_SCALE / 2, 1))]
+    log(f'  new picture: subject box {x1 - x0}x{y1 - y0} at ({x0}, {y0}) -> {size[0]}x{size[1]} (display {disp[0]}x{disp[1]} live px, pills {pills_at})')
     if outdir:
         os.makedirs(outdir, exist_ok=True)
         dest = f'{outdir}/{key.replace("/", "__")}{"" if region == "global" else "." + region}.png'
@@ -201,6 +205,8 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
         man = json.load(open(mp))
         e = man.get(f'{region}:{key}', {'shape': not pills})
         e.update({'w': disp[0], 'h': disp[1]})
+        if not pills:
+            e['pills'] = pills_at  # the old picture's placement does not apply either
         for flag in ('bleed', 'fade'):
             e.pop(flag, None)  # the old picture's cut-edge flags do not apply
         man[f'{region}:{key}'] = e
@@ -211,6 +217,115 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
     return dest
 
 
+
+# Bugs 194-197 (16 Oct 2026): the live reference cut-outs of these banners stop short of the client's picture on the start side
+# (a table, couch, bed or coat cut by the live file's left edge) and feather that edge out over up to ~100 live px; `extract`
+# copies that alpha, so the edge showed faded and short. `full` mode keeps the reference silhouette where it is clean and takes
+# the composite's own key in the strip it cropped or feathered (and anywhere outside the reference frame), at the composite's
+# own scale (people-to-pills as the client drew them) with the pill spot read off the canvas.
+FULL_FADE, FULL_RAMP, FULL_BOTTOM = 100, 30, 10  # live px: reference alpha trusted from FADE + RAMP in from its left edge, BOTTOM up from its bottom
+
+
+def _smooth01(x):
+    t = np.clip(x, 0, 1)
+    return t * t * (3 - 2 * t)
+
+
+def extract_full(file, key, region, outdir=None, log=print):
+    comp = np.asarray(Image.open(ROOT + file).convert('RGBA')).astype(np.float32) / 255
+    bg = np.asarray(Image.open(ROOT + '_bg.png').convert('RGBA')).astype(np.float32) / 255
+    H, W = comp.shape[:2]
+    ref_path = glob.glob(f'{REF}{key.replace("/", "__")}{"" if region == "global" else "." + region}.*')[0]
+    ref = np.asarray(Image.open(ref_path).convert('RGBA')).astype(np.float32) / 255
+    rh, rw = ref.shape[:2]
+    fit(ref, comp, max_rot=20)
+    M = fit.last['M']  # ref ~= M * comp
+    Minv = cv2.invertAffineTransform(M)
+    ref_a = cv2.warpAffine(ref[..., 3], Minv, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    # every canvas pixel in reference (= live px) coordinates
+    xs, ys = np.meshgrid(np.arange(W, dtype=np.float32), np.arange(H, dtype=np.float32))
+    xr = M[0, 0] * xs + M[0, 1] * ys + M[0, 2]
+    yr = M[1, 0] * xs + M[1, 1] * ys + M[1, 2]
+    # the key only on the start side (left of FADE + RAMP, the file edge included) and under the reference's bottom: no reference
+    # was cut on its top or end edge, and the pill ends there must not come back
+    wr = _smooth01((xr - FULL_FADE) / FULL_RAMP) * _smooth01((rh - yr) / FULL_BOTTOM)
+    # the composite's key (as extract_new, without the colour test for pill strokes: teal scrubs and blue sheets share those
+    # colours; the pills are part of _bg, and the thin-line test below catches strokes the estimate misses)
+    d = np.abs(comp[..., :3] - bg[..., :3]).max(axis=2)
+    ka = np.clip((d - 0.03) / 0.13, 0, 1)
+    P = np.asarray(Image.open(ROOT + '_pills.png').convert('L')) > 0
+    rgb = comp[..., :3]
+    up, down = np.roll(rgb, 5, axis=0), np.roll(rgb, -5, axis=0)
+    line = (np.abs(rgb - up).max(axis=2) > 0.1) & (np.abs(rgb - down).max(axis=2) > 0.1) & (np.abs(up - down).max(axis=2) < 0.08)
+    left, right = np.roll(rgb, 5, axis=1), np.roll(rgb, -5, axis=1)
+    line |= (np.abs(rgb - left).max(axis=2) > 0.1) & (np.abs(rgb - right).max(axis=2) > 0.1) & (np.abs(left - right).max(axis=2) < 0.08)
+    ka[cv2.dilate((P & line).astype(np.uint8), np.ones((3, 3), np.uint8)) > 0] = 0
+    # pill-coloured horizontal runs that are THIN (a stroke, ~4 px at 2x) where they touch the subject; a pill-coloured area 12+
+    # px tall (teal scrubs, a navy scarf) is cloth and stays
+    near = np.zeros(rgb.shape[:2], bool)
+    for c in PILL_COLOURS:
+        near |= np.abs(rgb - c).max(axis=2) < 0.07
+    m = near.astype(np.uint8)
+    runs = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((1, 24), np.uint8))
+    tall = cv2.morphologyEx(m, cv2.MORPH_OPEN, np.ones((12, 1), np.uint8))
+    ka[cv2.dilate(runs & (1 - cv2.dilate(tall, np.ones((5, 5), np.uint8))), np.ones((5, 5), np.uint8)) > 0] = 0
+    # Inpatient: the client file itself fades the blanket and rail out at the start end, and the pill strokes show through
+    # that translucent strip; on the pill geometry a see-through pixel is the stroke (the page draws its own stack there)
+    # (after the interior fill, so a pale solid object such as the Why bed's footboard is opaque first and keeps its pixels)
+    ka = fill_interior(ka)
+    ka[P & (ka < 0.9)] = 0
+    # in the strip the larger of the two: the reference where its edge is clean (no key notches on a pale coat), the key where
+    # the reference was cropped or feathered
+    a = wr * ref_a + (1 - wr) * np.maximum(ref_a, ka)
+    a[(wr < 0.5) & P & (a < 0.9)] = 0  # the composite's colour there carries the stroke seen through the fade
+    a[(wr < 0.5) & (ka < 0.15) & (ref_a < 0.5)] = 0  # backdrop in the client file, only the reference's feather says otherwise
+    # the reference outline runs 1-2 px past the composite's subject in places, where a pill end shows: pill-coloured pixels
+    # on the pill geometry within 8 px of the backdrop go (inside the subject they are cloth crossing a hidden line, kept)
+    near = np.zeros(rgb.shape[:2], bool)
+    for c in PILL_COLOURS:
+        near |= np.abs(rgb - c).max(axis=2) < 0.12
+    edge = cv2.distanceTransform((a > 0.05).astype(np.uint8), cv2.DIST_L2, 5) <= 8
+    a[edge & P & near] = 0
+    for _ in range(1):  # specks
+        n, lab, stats, _c = cv2.connectedComponentsWithStats((a > 0.3).astype(np.uint8))
+        for i in range(1, n):
+            if stats[i, cv2.CC_STAT_AREA] < 400:
+                a[lab == i] = 0
+    box_a = a.copy()
+    rgb, a = defringe(rgb, a, px=2 / NEW_SCALE)
+    ys_, xs_ = np.nonzero(box_a > 0.05)
+    x0, x1, y0, y1 = max(0, xs_.min() - 4), min(W, xs_.max() + 5), max(0, ys_.min() - 4), H
+    crop = np.dstack([rgb[y0:y1, x0:x1], a[y0:y1, x0:x1]])
+    size = (round((x1 - x0) * NEW_SCALE), round((y1 - y0) * NEW_SCALE))
+    pm = crop.copy()
+    pm[..., :3] *= pm[..., 3:4]
+    out = cv2.resize(pm, size, interpolation=cv2.INTER_AREA)
+    al = out[..., 3:4]
+    out[..., :3] = np.where(al > 1e-4, out[..., :3] / np.maximum(al, 1e-4), 0)
+    img = Image.fromarray((out.clip(0, 1) * 255 + 0.5).astype(np.uint8))
+    disp = (round(size[0] / 2), round(size[1] / 2))
+    from pill_place import STACK
+    pills_at = [float(round((STACK[0] - x0) * NEW_SCALE / 2, 1)), float(round((STACK[1] - y0) * NEW_SCALE / 2, 1))]
+    log(f'  full picture: box {x1 - x0}x{y1 - y0} at ({x0}, {y0}) -> {size[0]}x{size[1]} (display {disp[0]}x{disp[1]} live px, pills {pills_at}, reference x{1 / np.hypot(M[0, 0], M[1, 0]):.3f})')
+    if outdir:
+        os.makedirs(outdir, exist_ok=True)
+        dest = f'{outdir}/{key.replace("/", "__")}{"" if region == "global" else "." + region}.png'
+        img.save(dest)
+        return dest
+    dest = f'src/assets/regions/{region}/{key}-cutout.webp' if region != 'global' else f'src/assets/{key}-cutout.webp'
+    for old in glob.glob(dest[:-5] + '.*'):
+        os.remove(old)
+    img.save(dest, lossless=True, method=6)
+    mp = 'src/data/banner-art.json'
+    man = json.load(open(mp))
+    e = man.get(f'{region}:{key}', {'shape': True})
+    e.update({'w': disp[0], 'h': disp[1], 'pills': pills_at})
+    for flag in ('bleed', 'fade'):
+        e.pop(flag, None)  # the feathered / cut edge is gone
+    man[f'{region}:{key}'] = e
+    json.dump(dict(sorted(man.items())), open(mp, 'w'), indent=1)
+    return dest
+
 if __name__ == '__main__':
     outdir = sys.argv[1] if len(sys.argv) > 1 else None
     only = sys.argv[2].split(',') if len(sys.argv) > 2 else None
@@ -220,7 +335,9 @@ if __name__ == '__main__':
             continue
         print(file, '->', e['region'], e['key'])
         try:
-            if e.get('new'):
+            if e.get('full'):
+                extract_full(file, e['key'], e['region'], outdir=outdir)
+            elif e.get('new'):
                 extract_new(file, e['key'], e['region'], pills=e.get('pills', False), outdir=outdir)
             else:
                 extract(file, e['key'], e['region'], outdir)

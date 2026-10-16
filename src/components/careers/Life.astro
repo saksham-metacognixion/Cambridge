@@ -33,10 +33,10 @@ const paras = Array.isArray(c.text) ? c.text : [c.text];
   .life { padding-block: calc(57 * var(--u)) calc(41 * var(--u)); }
   .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
   .sub { margin: calc(8 * var(--u)) 0 0; font-weight: 400; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
-  .t { margin: calc(20 * var(--u)) 0 0; min-height: calc(83 * var(--u)); font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
+  .t { margin: calc(20 * var(--u)) 0 0; min-height: calc(64 * var(--u)); font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-body); overflow-wrap: anywhere; }
   .t p { margin: 0; }
   .t p + p { margin-top: calc(17 * var(--u)); } /* paragraphs separated by one empty 17px line (the Intro block's rule) */
-  .btns { display: flex; flex-wrap: wrap; gap: calc(12 * var(--u)) calc(26 * var(--u)); margin-top: calc(1 * var(--u)); }
+  .btns { display: flex; flex-wrap: wrap; gap: calc(12 * var(--u)) calc(26 * var(--u)); margin-top: calc(20 * var(--u)); } /* client (16 Oct 2026): a gap between the text and the buttons (Figma 83 + 1 kept for a short text: 64 + 20) */
   @media (min-width: 1024px) {
     .h, .sub { margin-inline-start: calc(105 * var(--u)); width: calc(770 * var(--u)); }
     .t { margin-inline-start: calc(106 * var(--u)); width: calc(649 * var(--u)); }

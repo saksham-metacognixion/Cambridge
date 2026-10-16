@@ -24,7 +24,7 @@ import { careRegionButtons } from '../../lib/region-buttons';
  *    two-line title in one card moves the text of the whole row down by the same amount and every text starts level.
  *  - row 12 "UAE and KSA, not Start Your Care": on the Global edition one button per country where the page exists.
  */
-interface Props { edition: Edition; trail: string[]; nodes: CareNode[]; heading: string; text: string[]; listLabel: string; button: string }
+interface Props { edition: Edition; trail: string[]; nodes: CareNode[]; heading: string | string[]; text: string[]; listLabel: string; button: string }
 const { edition, trail, nodes, heading, text, listLabel, button } = Astro.props;
 const loc = edition.locale;
 // Card title / text = how the PARENT's document names the child (cardTitle, desc); photo per child (Figma 83:226).
@@ -40,7 +40,7 @@ const cards = nodes.filter((s) => careInRegion(s.slug, edition.region)).map((s) 
 ---
 
 <section class="svc" aria-labelledby="service-heading">
-  <h2 id="service-heading" class="h">{heading}</h2>
+  <h2 id="service-heading" class="h">{[heading].flat().map((line) => <span class="block">{line}</span>)}</h2>
   {text.length > 0 && <div class="t">{text.map((p) => <p>{p}</p>)}</div>}
   <ul class="grid" role="list" aria-label={listLabel}>
     {cards.map((k) => (

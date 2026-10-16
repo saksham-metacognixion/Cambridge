@@ -42,6 +42,7 @@ export interface Pagination {
   mark(): void;
 }
 
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 /** Dots shown at once below 600px (Pagination.astro); wider lines show all of them. On touch screens every dot is a 44px-wide
  * target 44px apart (mobile QA L1, 13 Oct 2026), so there the window is also never more than fit the screen (a long row:
  * 22 pages at 768). Mouse / trackpad: the Figma spacing and the window exactly as before. */
@@ -102,8 +103,10 @@ export function createPagination(nav: HTMLElement, src: Source): Pagination {
 
 /**
  * Horizontal scroller as a page source; `watch` keeps the dots in step with scrolling, resizing and content changes.
- * A row that loops (the former scripts/autoscroll.ts, removed 16 Oct 2026 sets [data-loop-period] on it, e.g. the Media Hub Latest row, bug 064) has
+ * A row that loops (src/scripts/autoscroll.ts sets [data-loop-period] on it, e.g. the Media Hub Latest row, bug 064) has
  * no end: its pages tile one loop period (every card once, the copies excluded) and the position is taken inside it, as in
+ * the Home doctors row (doctors-row.ts); a dot click pauses the loop ('autoscroll:hold') so the smooth scroll is not
+ * overridden, and every rebuild of the copies ('autoscroll:change') recounts the pages.
  */
 export function scrollSource(
   row: HTMLElement,
@@ -121,9 +124,10 @@ export function scrollSource(
         ? loopPageIndex(Math.abs(row.scrollLeft), period(), row.clientWidth)
         : pageIndex(Math.abs(row.scrollLeft), max(), row.clientWidth),
     go: (i) => {
+      row.dispatchEvent(new Event("autoscroll:hold"));
       row.scrollTo({
         left: sign() * Math.min(i * row.clientWidth, max()),
-        behavior: "auto",
+        behavior: reduced ? "auto" : "smooth",
       });
     },
     watch(pg) {
@@ -136,6 +140,7 @@ export function scrollSource(
         },
         { passive: true },
       );
+      row.addEventListener("autoscroll:change", pg.update);
       new ResizeObserver(pg.update).observe(row);
       new MutationObserver(pg.update).observe(row, {
         childList: true,

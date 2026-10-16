@@ -39,7 +39,12 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
 
 <div class="ft-clip">
 <footer class="ft relative bg-navy rounded-t-(--radius-panel) font-gotham">
-  <!-- No scroll entrance (all animations removed, 16 Oct 2026): the footer is simply in place. -->
+  <!-- Reveal as on the live site (its footer block: data-aos="fade-up", 0.6s, Greenshift AOS; audited 7 Oct 2026): fade in +
+       rise from max(50px, 15 % of its height) below, ease-in-out, as soon as it is inside the viewport minus the bottom 5 %.
+       Armed here so no-JS stays visible. Replays on every entry: is-visible is removed once the footer has left the screen,
+       where the reset happens instantly (the transition lives on the visible state only).
+       The footer's own wrapper (.ft-clip, the same box on every page) clips while the footer is offset (it is the last thing on
+       the page, so the offset would add scroll); the clip is dropped once the slide ends and set again on reset. -->
   <script>
     // AN8: phone footer columns open one at a time, as the live footer script; tablets too since bug 097 (< 1024px). Desktop keeps the headings as plain text.
     const cols = [...document.querySelectorAll<HTMLElement>('.ft .col')];
@@ -57,6 +62,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     phone.addEventListener('change', apply);
     apply();
   </script>
+  <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e){var r=e[e.length-1];r.isIntersecting?f.classList.add("is-visible"):(f.classList.remove("is-visible"),w.style.overflow="clip")},{threshold:0,rootMargin:"0px 0px -5% 0px"}).observe(f);f.addEventListener("transitionend",function(e){e.target===f&&e.propertyName==="transform"&&f.classList.contains("is-visible")&&(w.style.overflow="")})}(document.currentScript.parentElement)</script>
   <!-- Bug 097 (13 Oct 2026, user): 7 quick links fewer, so from 1024px the rows under the link columns move up (Figma 368 ->
        321 tall): newsletter 21 closer to the seals, social icons / divider / copyright row 47 higher, same gaps between them;
        the divider stays 30 below the newsletter box so its error / thank-you line clears it from 1024px.
@@ -124,13 +130,15 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
 </div>
 
 <style>
+  .ft-armed { opacity: 0; transform: translate3d(0, max(50px, 15%), 0); }
+  .ft-armed.is-visible { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(0.42, 0, 0.58, 1), transform 600ms cubic-bezier(0.42, 0, 0.58, 1); }
   .ft ul { margin: 0; padding: 0; list-style: none; }
   /* Column headings are a button only on phones (AN8 below); elsewhere it is the heading text (disabled, not focusable). */
   .ft-tgl { all: unset; display: inline; color: inherit; font: inherit; cursor: default; }
   .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
   .ft h2.text-f13 { line-height: normal; }
   .links { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #e7e7e7; white-space: nowrap; }
-  .links a, .bot a { color: inherit; text-decoration: none; }
+  .links a, .bot a { color: inherit; text-decoration: none; transition: color var(--ui-ease), text-decoration-color var(--ui-ease); } /* live: a { transition: all .12s } */
   @media (hover: hover) { .links a:hover { color: #fff; } } /* live footer links: colour -> white on hover (the legal links are white already) */
   .col .links { margin-top: calc(3 * var(--u)); }
   /* Newsletter field: email + Subscribe in one white box (Figma 213 x 26, corners --radius-field, bug 049). Subscribe = the
@@ -138,7 +146,9 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   .nl .box { position: relative; display: flex; align-items: center; background: #fff; border-radius: var(--radius-field); width: calc(213 * var(--u)); min-height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
   .nl input[type="email"] { flex: 1 1 auto; min-width: 0; align-self: stretch; padding: 0; padding-inline-start: calc(10 * var(--u)); border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; border-radius: inherit; }
   .nl input::placeholder { color: #004059; opacity: 1; }
-  .nl button { border: 0; background: transparent; color: #004059; }
+  .nl button { border: 0; background: transparent; color: #004059; transition: transform .18s ease; } /* live footer form button: transform .18s ease, pressed = scale(.98) */
+  .nl button:active { transform: scale(0.98); }
+  @media (prefers-reduced-motion: reduce) { .nl button { transition: none; } .nl button:active { transform: none; } }
   .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
   /* Newsletter status lines (error / thank you; no Figma design): white on the navy footer, the box's text size. */
   .nl :global(.nl-msg) { margin: calc(5 * var(--u)) 0 0; font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; text-align: start; }
@@ -187,15 +197,15 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     .bot.right { text-align: start; }
     /* Tap targets: every footer link row is 44px high (text size, colour and order unchanged). */
     /* AN8 (9 Oct 2026) = the live footer below 768px (Code Snippet 287.css + its script): the three link columns start closed,
-       the heading is the toggle with a "+" (24px) at the inline end, "−" while open; the list opens at once (all animations
-       removed, 16 Oct 2026) with 10px below; opening one closes the others. Live caps the
+       the heading is the toggle with a "+" (24px) at the inline end, "−" while open, colour .2s ease; the list slides open
+       (max-height + opacity, all .3s cubic-bezier(.25,.8,.25,1)) with 10px below; opening one closes the others. Live caps the
        list at 400px; ours is 1000px because every link row here is 44px high (tap targets) and the Arabic labels wrap. The button is 44px high for the same
-       reason. Tablets (768-1023px) use it too since bug 097 (their open lists made the footer 870-1020px tall). */
+       reason. Off with reduced motion. Tablets (768-1023px) use it too since bug 097 (their open lists made the footer 870-1020px tall). */
     .col h2 { height: auto; white-space: normal; }
-    .ft-tgl { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 48px; padding: 0; cursor: pointer; }
+    .ft-tgl { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 48px; padding: 0; cursor: pointer; transition: color 0.2s ease; }
     .ft-tgl::after { content: '+'; font-size: 24px; line-height: 1; }
     .col.is-open .ft-tgl::after { content: '−'; }
-    .col .links { max-height: 0; overflow: hidden; opacity: 0; margin: 0; padding: 0; }
+    .col .links { max-height: 0; overflow: hidden; opacity: 0; margin: 0; padding: 0; transition: max-height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     .col.is-open .links { max-height: 1000px; opacity: 1; padding: 0 0 10px; }
     @media (max-width: 767.98px) {
       /* Bug 108 (14 Oct 2026, client): phone spacing per block instead of the 28-unit (38px) row gap.
@@ -224,6 +234,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
       .acc, .nl { flex: 1 1 calc(50% - 16px); }
       .icons, .bot { align-self: center; } /* icons, copyright and the 44px legal links on one centre line */
     }
+    @media (prefers-reduced-motion: reduce) { .ft-tgl, .col .links { transition: none; } }
     .links li a { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; }
     .links br { display: none; }
     .bot a { display: inline-flex; align-items: center; min-height: 44px; }

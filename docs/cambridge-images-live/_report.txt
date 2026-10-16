@@ -395,3 +395,71 @@ image  sa/wp-content/uploads/sites/3/2026/07/Spinal-Cord-Rehabilitation-Banner-K
 image  sa/wp-content/uploads/sites/3/2026/07/Stroke-Rehabilitation-Banner-KSA-1.avif -> 32725 B image/avif
 image  sa/wp-content/uploads/sites/3/2026/07/Traumatic-Brain-Injury-KSA.avif -> 20723 B image/avif
 
+Saved 2026-10-16T12:15:46.784Z with tools/live-images/fetch.mjs (job.json)
+pages  /about/meet-the-team/ -> 156990 B
+pages  /ar/about/meet-the-team/ -> 163811 B
+pages  /ae/about/meet-the-team/ -> fail
+pages  /sa/about/meet-the-team/ -> fail
+pages  /ae/ar/about/meet-the-team/ -> fail
+pages  /sa/ar/about/meet-the-team/ -> fail
+pages  /leadership/ahmad-al-khayer/ -> 114048 B
+pages  /ar/leadership/ahmad-al-khayer/ -> 118837 B
+json   /wp-json/wp/v2/leadership?per_page=100 -> fail
+json   /ar/wp-json/wp/v2/leadership?per_page=100 -> fail
+json   /wp-json/wp/v2/leader_country -> fail
+
+Saved 2026-10-16T12:17:47.972Z with tools/live-images/fetch.mjs (job2.json)
+skip   /leadership/ahmad-al-khayer/ (have)
+pages  /leadership/mohammed-halawani/ -> 113873 B
+pages  /leadership/arafat-alakhrass/ -> 113067 B
+pages  /leadership/mohammed-alhayyan/ -> 113071 B
+pages  /leadership/amal-al-hanwa/ -> 112852 B
+pages  /leadership/arafat-alakhrass-2/ -> 113108 B
+pages  /leadership/dr-naima-adam/ -> 113745 B
+pages  /leadership/mohammad-al-said/ -> 113002 B
+pages  /leadership/marwah-alhalawani/ -> 111745 B
+pages  /leadership/salma-al-ghaithi/ -> 113110 B
+pages  /leadership/wael-alsayed/ -> 113256 B
+pages  /leadership/rahma-al-badi/ -> 113079 B
+pages  /leadership/wasim-zubair/ -> 113172 B
+pages  /leadership/firas-atiyah/ -> 113238 B
+pages  /leadership/yaser-whbe/ -> 112886 B
+pages  /leadership/azmi-hamaydeh/ -> 113070 B
+pages  /leadership/hamzeh-abu-salha/ -> 113042 B
+skip   /ar/leadership/ahmad-al-khayer/ (have)
+pages  /ar/leadership/dr-mohammed-halawani/ -> 118612 B
+pages  /ar/leadership/arafat-alakhrass/ -> 117620 B
+pages  /ar/leadership/mohammed-alhayyan/ -> 116326 B
+pages  /ar/leadership/amal-al-hanwa/ -> 117183 B
+pages  /ar/leadership/arafat-alakhrass-2/ -> 117408 B
+pages  /ar/leadership/dr-naima-adam/ -> 118272 B
+pages  /ar/leadership/mohammad-al-said/ -> 117262 B
+pages  /ar/leadership/marwah-alhalawani/ -> 115465 B
+pages  /ar/leadership/salma-al-ghaithi/ -> 117237 B
+pages  /ar/leadership/wael-alsayed/ -> 117688 B
+pages  /ar/leadership/rahma-al-badi/ -> 117203 B
+pages  /ar/leadership/wasim-zubair/ -> 117481 B
+pages  /ar/leadership/firas-atiyah/ -> 117681 B
+pages  /ar/leadership/yaser-whbe/ -> 117101 B
+pages  /ar/leadership/azmi-hamaydeh/ -> 117267 B
+pages  /ar/leadership/hamzeh-abu-salha/ -> 117531 B
+pages  /ar/leadership/azeem-anwar/ -> 116476 B
+image  wp-content/uploads/2026/07/Amal-Mansoor-Al-Hanwa.avif -> 64316 B image/avif
+image  wp-content/uploads/2026/07/Arafat-Mohammad-Yousef-Alakhrass.avif -> 95813 B image/avif
+image  wp-content/uploads/2026/07/Azeem-Anwar.avif -> 61814 B image/avif
+image  wp-content/uploads/2026/07/Azmi-Ahmad-Abdelrahim-Hamaydeh.avif -> 87120 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Ahmad-Al-Khayer.avif -> 114968 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Mohammed-Alhayyan.avif -> 91474 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Mohammed-Halawani.avif -> 69660 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Wael-Alsayed.avif -> 98430 B image/avif
+image  wp-content/uploads/2026/07/Dr.-Wael-Sary.avif -> 85516 B image/avif
+image  wp-content/uploads/2026/07/Firas-Abdul-Haleem-Atiyah.avif -> 123295 B image/avif
+image  wp-content/uploads/2026/07/Hamzeh-Hamed-Ali-Abu-Salha.avif -> 116134 B image/avif
+image  wp-content/uploads/2026/07/Image.avif -> 135417 B image/avif
+image  wp-content/uploads/2026/07/Mohammad-Al-Said.avif -> 106642 B image/avif
+image  wp-content/uploads/2026/07/Rahma-Mohammed-Said-Al-Badi.avif -> 52580 B image/avif
+image  wp-content/uploads/2026/07/Salma-Saeed-Abdullah-Al-Ghaithi.avif -> 64527 B image/avif
+image  wp-content/uploads/2026/07/Wasim-Zubair.avif -> 89840 B image/avif
+image  wp-content/uploads/2026/07/Yaser-Whbe.avif -> 74417 B image/avif
+image  wp-content/uploads/2026/07/workfile-Executive.avif -> 93823 B image/avif
+

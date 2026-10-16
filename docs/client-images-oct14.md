@@ -88,3 +88,10 @@ cut out on transparency while the Careers section shows the full photo with the 
 Verified 16 Oct (second pass): every banner-art entry tabled by file width vs 2x target (50 at 2x, 4 at 1.5x+, 72 at 1x: UAE Home,
 KSA care pages, the 4 calculators, ~20 care pages, Motor Neuron / TBI / Conditions, hospitals, Insurance, International, Media Hub);
 name-vs-match doubts (Paediatric Care/Outpatient, Long-Term Care) confirmed by eye.
+
+Re-sent 16 Oct (`~/Downloads/Cambridge Hospital - Website Images 2`): the same 47 files, byte-identical (md5) to the folder above;
+nothing new. Still not received: UAE Home (white turban), the KSA care-page banners and KSA Accreditations / Our Care / Inpatient /
+Post-Acute / Careers / FAQs / Your Opinion Matters / Insurance / International / Testimonials / Who We Are, ~20 Global/UAE care
+pages (Geriatric, Long-Term, Long-Term Acute, Cardiac, Ventilated, CNS, Neuromuscular, Paediatric Post-Acute, Transitional,
+Pulmonary, RTA, Spinal Cord, Stroke, TBI, Weaning, Post-Surgical, Musculoskeletal, Physical Medicine, Speech & Language Rehab),
+the 4 calculators, the Conditions page, Motor Neuron / Neurorehabilitation / TBI.

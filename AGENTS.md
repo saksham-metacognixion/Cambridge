@@ -18,13 +18,11 @@ Read this file at the start of every session and follow it for all work.
   value by the scale factor **1440/1052 ≈ 1.3688**. The factor lives in ONE place so it can be changed.
 - Fonts: Gotham Light (300), Book (400), Medium (500). Self-host woff2 from `public/fonts/`. Never substitute
   another font. If files are missing, keep the `font-family` rule and ask.
-- **NO ANIMATIONS since 16 Oct 2026 (client task, docs/animations-removed.md).** Nothing moves, fades, slides, scales or turns on
-  load, scroll, hover, focus, click, resize or route change; scrolling is instant; carousels never move on their own (manual
-  swipe / drag / dots / arrows only); menus, pop-ups and accordions open at once. Hover / selected states keep their static colours.
-  The catch-all `*, *::before, *::after { animation: none !important; transition: none !important }` at the end of global.css is a
-  safety net, not the method: remove motion at its source. The bullets below that describe motion are history (what the site had
-  before 16 Oct), kept so the layer / markup notes still make sense.
-- (history) Animations as in Figma: hero image that follows the cursor, and the doctor animation. Smooth on laptop
+- **Banner / hero photos do NOT move (user decision, 16 Oct 2026, docs/animations-removed.md):** the cursor-follow script
+  (`src/scripts/hero-follow.ts`) is deleted; the `data-hero-follow` / `data-hero-subject` layers stay as static markup. Every other
+  animation (doctor row, auto-scroll, entrances, counters, hover transitions) stays as audited below. The 16 Oct "no animations
+  site-wide" commit 97d8679 was reverted to that narrower scope the same day.
+- Animations as in Figma: the doctor animation (the hero cursor-follow is gone, see above). Smooth on laptop
   and mobile.
   Since 7 Oct 2026 (user decision) every page hero follows the cursor like the Home one (`src/scripts/hero-follow.ts`,
   `data-hero-follow` box + `data-hero-subject` people layer in PageHero / ContactHero / FeedbackHero): only the people move,

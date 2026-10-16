@@ -204,6 +204,7 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
   .m-cell :global(.rface) {
     --face-fill: transparent;
     flex: none; display: block; inline-size: calc(var(--face-size) * var(--u)); block-size: calc(var(--face-size) * var(--u)); border-radius: 50%; color: var(--color-navy);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
   .m-cell:hover input:not(:checked) + :global(.rface) { --face-fill: color-mix(in srgb, var(--color-navy) 8%, #fff); }
   .m-cell input:checked + :global(.rface) { --face-fill: var(--face); transform: scale(1.12); box-shadow: 0 0 0 calc(1.5 * var(--u)) #fff, 0 0 0 calc(3 * var(--u)) var(--color-navy); }
@@ -211,6 +212,7 @@ const enLang = (s: string) => (edition.locale !== 'en' && !/[؀-ۿ]/.test(s) ? '
   @media (forced-colors: active) {
     .m-cell input:checked + :global(.rface) { outline: 3px solid Highlight; outline-offset: 2px; }
   }
+  @media (prefers-reduced-motion: reduce) { .m-cell :global(.rface) { transition: none; } }
 
   /* Tell us more (bug 094): the box 72 Figma px tall (~5 lines) instead of 194; radius --radius-field (bug 049), placeholder Book 11 */
   .improve { margin-block-start: calc(14 * var(--u)); }

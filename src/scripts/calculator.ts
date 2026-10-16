@@ -80,7 +80,7 @@ function setup(form: HTMLFormElement) {
       note.hidden = !text;
     }
     result.hidden = false;
-    result.scrollIntoView({ block: "nearest", behavior: "auto" });
+    result.scrollIntoView({ block: "nearest", behavior: "smooth" });
   });
 }
 

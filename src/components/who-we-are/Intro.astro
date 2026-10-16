@@ -3,13 +3,13 @@
  * Who We Are intro (Figma 46:5473 + 45:5202): heading Gotham Medium 28/32 #004059 at x56 (w881), page y 608 (52 below the hero);
  * 21 below it the text, Book 12/14 #6b6b6b at x56 (w861), paragraphs separated by one empty 14px line.
  */
-interface Props { c: { heading: string; text: string[] } }
+interface Props { c: { heading: string | string[]; text: string[] } }
 const { c } = Astro.props;
 ---
 
 <section class="intro" aria-labelledby="who-intro">
   <div class="in">
-    <h2 id="who-intro" class="h">{c.heading}</h2>
+    <h2 id="who-intro" class="h">{[c.heading].flat().map((line) => <span class="block">{line}</span>)}</h2>{/* heading lines as in the JSON (client, 16 Oct 2026: "Driven by Excellence." on its own line) */}
     <div class="t">{c.text.map((p) => <p>{p}</p>)}</div>
   </div>
 </section>

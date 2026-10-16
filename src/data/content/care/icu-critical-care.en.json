@@ -6,18 +6,18 @@
       "ICU and Critical",
       "Care"
     ],
-    "text": "For critically ill patients whose condition requires close monitoring and advanced support, to manage complex medical needs and accelerate recovery.",
+    "text": "For critically-ill patients whose condition requires close monitoring and advanced support, to manage complex medical needs and accelerate recovery.",
     "banner": {
       "image": "care/heroes/icu-critical-care",
       "alt": ""
     }
   },
   "overview": [
-    "Critically ill patients need more than treatment; they need constant monitoring and specialist attention. At Cambridge Hospital, our intensive care unit brings together intensivists, critical care nurses, respiratory therapists and rehabilitation specialists to stabilise, support and guide patients through the most critical stage of their illness and recovery."
+    "Critically-ill patients need more than treatment; they need constant monitoring and specialist attention. At Cambridge Hospital, our intensive care unit brings together intensivists, critical care nurses, respiratory therapists and rehabilitation specialists to stabilise, support and guide patients through the most critical stage of their illness and recovery."
   ],
   "topics": [
     {
-      "label": "What is ICU & Critical Care",
+      "label": "What is ICU and Critical Care",
       "blocks": [
         {
           "type": "p",

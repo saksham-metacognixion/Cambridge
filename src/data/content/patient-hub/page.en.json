@@ -15,12 +15,12 @@
     "heading": "Everything You Need, In One Place",
     "text": "Explore essential services and resources designed to support patients, families, and referring partners throughout every stage of care.",
     "cards": [
-      { "image": "patient-hub/card-conditions", "alt": "", "title": "Conditions & Specialities", "lines": ["Explore conditions we treat", "Expert care across specialties"], "button": "Explore Care", "page": "conditions" },
-      { "image": "patient-hub/card-find-doctor", "alt": "", "title": "Find a Doctor", "lines": ["Find the right specialist", "Care tailored to your needs"], "button": "Find a Doctor", "page": "findDoctor" },
-      { "image": "patient-hub/card-refer", "alt": "", "title": "Refer a Patient", "lines": ["Simple referral process", "Connect patients to care"], "button": "Refer Now", "page": "referPatient" },
-      { "image": "patient-hub/card-international", "alt": "", "title": "International Patients", "lines": ["Care beyond borders", "Support for global patients"], "button": "Learn More", "page": "internationalPatients" },
-      { "image": "patient-hub/card-insurance", "alt": "", "title": "Insurance & Networks", "lines": ["Check your coverage", "Trusted insurance partners"], "button": "View Insurance", "page": "insuranceProviders" },
-      { "image": "patient-hub/card-testimonials", "alt": "", "title": "Patient Testimonials", "lines": ["Real patient experiences", "Stories of recovery & care"], "button": "View Stories", "page": "patientTestimonials" }
+      { "image": "patient-hub/card-conditions", "alt": "", "title": "Conditions & Specialities", "lines": ["Explore conditions we treat"], "button": "Explore Care", "page": "conditions" },
+      { "image": "patient-hub/card-find-doctor", "alt": "", "title": "Find a Doctor", "lines": ["Find the right specialist"], "button": "Find a Doctor", "page": "findDoctor" },
+      { "image": "patient-hub/card-refer", "alt": "", "title": "Refer a Patient", "lines": ["Simple referral process"], "button": "Refer Now", "page": "referPatient" },
+      { "image": "patient-hub/card-international", "alt": "", "title": "International Patients", "lines": ["Care beyond borders"], "button": "Learn More", "page": "internationalPatients" },
+      { "image": "patient-hub/card-insurance", "alt": "", "title": "Insurance & Networks", "lines": ["Trusted insurance partners"], "button": "View Insurance", "page": "insuranceProviders" },
+      { "image": "patient-hub/card-testimonials", "alt": "", "title": "Patient Testimonials", "lines": ["Real patient recovery stories"], "button": "View Stories", "page": "patientTestimonials" }
     ]
   },
   "recovery": {

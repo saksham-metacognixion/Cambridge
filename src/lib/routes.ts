@@ -13,6 +13,7 @@ import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
 import { CARE_PATHS, allCareNodes, careInRegion } from "./care";
 import { calculators } from "./calculators";
 import { editions, urlFor, type Edition } from "./editions";
+import { leaders, leaderEditions, LEADER_PATHS } from "./leadership";
 
 export interface PageRoute {
   key: string;
@@ -36,6 +37,12 @@ function routes(): PageRoute[] {
     { key: "about", path: PAGE_PATHS.about },
     { key: "who-we-are", path: PAGE_PATHS.whoWeAre },
     { key: "why-cambridge", path: PAGE_PATHS.whyCambridge },
+    { key: "meet-the-team", path: PAGE_PATHS.meetTheTeam },
+    ...leaders.map((l) => ({
+      key: `leader-${l.slug}`,
+      path: LEADER_PATHS.profile(l.slug),
+      editions: leaderEditions(l),
+    })),
     { key: "accreditations", path: PAGE_PATHS.accreditations },
     { key: "hospitals", path: PAGE_PATHS.hospitals },
     ...hospitals.map((h) => ({
@@ -97,6 +104,8 @@ export function switchHref(target: Edition, path: string, fallback: "ancestor" |
   const paths = new Set(allRoutes(target).map((r) => r.path));
   let p = path.replace(/^\/+|\/+$/g, "");
   if (fallback === "home") p = paths.has(p) ? p : "";
+  // a section whose root has no page: its items fall back to the page that lists them (a KSA leader seen from /ae -> /ae Meet the Team)
+  if (fallback === "ancestor" && !paths.has(p) && p.startsWith(`${LEADER_PATHS.section}/`)) p = PAGE_PATHS.meetTheTeam;
   while (p && !paths.has(p)) p = p.includes("/") ? p.slice(0, p.lastIndexOf("/")) : "";
   return urlFor(target, p);
 }

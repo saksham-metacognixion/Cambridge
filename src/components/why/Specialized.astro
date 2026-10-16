@@ -17,7 +17,7 @@ import pills from '../../assets/why/pills.svg';
  * (border #004059, radius 7, label Medium 13; now the shared .ui-btn size, its centre kept at Figma x540, bug 044/050). Art: building drawing 1052 x 222 at the band bottom (page y1030), pill bars 346.6 x 356
  * at x361 y989 (under the drawing, cut at the band end, as in Figma; in flow 38 below the button since bug 044).
  * Count-up (live page audit 7 Oct 2026, "Why Cambridge Hospital _ Cambridge Hospital.html"): every stat is a Greenshift .gs-counter,
- * data-duration 1.5, postfix kept, counts once from 0 when 30 % in view (the former scripts/countup.ts, removed 16 Oct 2026 Greenshift mode, as on Our Hospitals).
+ * data-duration 1.5, postfix kept, counts once from 0 when 30 % in view (scripts/countup.ts Greenshift mode, as on Our Hospitals).
  * An invisible copy of the final text (.size) sizes the number's box, the counting text (.live) sits on top of it, so the stat
  * keeps its final width at every size and the count never reflows or rewraps the row.
  * Below 1024px (bug 039, 7 Oct 2026): the four stats are a 2 x 2 grid (never 3 + 1 or one per row); each cell is an inline-size
@@ -56,6 +56,10 @@ const hospitals = urlFor(edition, pagePath(c.button.page));
     <Picture src={wireframe} formats={['avif']} fallbackFormat="webp" width={px(1052)} height={px(222)} widths={[720, 1080, px(1052), 2104]} sizes="(min-width: 1024px) 100vw, calc(100vw - 66px)" loading="lazy" decoding="async" alt={c.art.wireframeAlt} class="wire" pictureAttributes={{ class: 'contents' }} />
   </div>
 </Band>
+
+<script>
+  import '../../scripts/countup';
+</script>
 
 <style>
   .sp { position: relative; padding-top: calc(67 * var(--u)); box-sizing: border-box; overflow: hidden; }

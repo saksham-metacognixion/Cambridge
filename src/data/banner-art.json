@@ -60,11 +60,11 @@
  },
  "global:care/banner-inpatient-care": {
   "w": 500,
-  "h": 450,
+  "h": 383,
   "shape": true,
   "pills": [
-   -41.2,
-   14.9
+   -47.9,
+   -66.2
   ]
  },
  "global:care/banner-our-care": {
@@ -216,13 +216,12 @@
   "shape": true
  },
  "global:care/heroes/palliative-care": {
-  "w": 579,
-  "h": 450,
+  "w": 564,
+  "h": 383,
   "shape": true,
-  "fade": "start",
   "pills": [
-   7.2,
-   -8.8
+   9.7,
+   -66.2
   ]
  },
  "global:care/heroes/pediatric-care": {
@@ -241,13 +240,12 @@
   "bleed": "end"
  },
  "global:care/heroes/pediatric-rehab": {
-  "w": 579,
-  "h": 450,
+  "w": 608,
+  "h": 351,
   "shape": true,
-  "fade": "start",
   "pills": [
-   3.0,
-   19.1
+   25.4,
+   -98.3
   ]
  },
  "global:care/heroes/physical-medicine-rehab-care": {
@@ -285,12 +283,12 @@
   "shape": true
  },
  "global:care/heroes/speech-language-therapy": {
-  "w": 500,
-  "h": 450,
+  "w": 554,
+  "h": 343,
   "shape": true,
   "pills": [
-   -32.4,
-   33.6
+   -4.5,
+   -106.4
   ]
  },
  "global:care/heroes/spinal-cord-injury-rehabilitation": {
@@ -594,13 +592,12 @@
   ]
  },
  "global:why/banner": {
-  "w": 500,
-  "h": 450,
+  "w": 517,
+  "h": 371,
   "shape": true,
-  "fade": "start",
   "pills": [
-   -36.6,
-   12.0
+   -21.3,
+   -78.3
   ]
  },
  "sa:about/banner": {

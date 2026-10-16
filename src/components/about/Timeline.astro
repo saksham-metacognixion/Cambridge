@@ -90,7 +90,7 @@ const next = c.nextLabel ?? 'Next';
   .arrow:focus-visible, .row:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
   .row:focus-visible { border-radius: calc(30 * var(--px)); }
   .dots { position: absolute; inset-inline: 0; bottom: calc(-20 * var(--px)); display: flex; justify-content: center; gap: calc(8 * var(--px)); line-height: 0; pointer-events: none; }
-  .dot { flex: none; width: calc(8 * var(--px)); height: calc(8 * var(--px)); border-radius: 100px; background: color-mix(in srgb, var(--color-cyan) 20%, transparent); }
+  .dot { flex: none; width: calc(8 * var(--px)); height: calc(8 * var(--px)); border-radius: 100px; background: color-mix(in srgb, var(--color-cyan) 20%, transparent); transition: width 0.4s ease-out; }
   .dot.on { width: calc(24 * var(--px)); background: var(--color-navy); }
   @media (min-width: 1024px) {
     .tl { width: calc(1296 * var(--px)); margin-inline: auto; }
@@ -106,4 +106,5 @@ const next = c.nextLabel ?? 'Next';
     .h { font-size: 22px; }
     .row { scroll-snap-stop: always; }
   }
+  @media (prefers-reduced-motion: reduce) { .dot { transition: none; } }
 </style>

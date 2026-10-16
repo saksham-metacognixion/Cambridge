@@ -33,7 +33,7 @@ const cards = (s.cards as { image: string; alt: string; title: string; desc: str
 
     <ul class="cards m-0 flex list-none flex-wrap justify-center gap-x-[calc(24*var(--u))] gap-y-[calc(32*var(--u))] p-0 max-lg:mt-[calc(32*var(--u))]">
       {cards.map((c, i) => (
-        <li class="cell">
+        <li data-aos="fade-up" style={`--aos-delay:${i * 50}ms`} class="cell">
           <CareCard src={c.img} alt={c.alt} title={c.title} desc={c.desc} href={c.href} button={s.cardButton} buttonLabel={`${s.cardButton}: ${c.title}`} buttons={c.buttons} />
         </li>
       ))}
@@ -41,7 +41,7 @@ const cards = (s.cards as { image: string; alt: string; title: string; desc: str
   </div>
 </section>
 <style>
-  /* Scroll entrance as on the live Home page (data-aos="fade-up", the former scripts/aos.ts, removed 16 Oct 2026 + global.css): each card on its own, 0.8s,
+  /* Scroll entrance as on the live Home page (data-aos="fade-up", scripts/aos.ts + global.css): each card on its own, 0.8s,
      delays 0 / 50 / 100 / 150ms, replays on every return. The heading, text and band do not move. */
   .cell { display: flex; width: calc(222 * var(--u)); flex: none; }
   @media (min-width: 1024px) {

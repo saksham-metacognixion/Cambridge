@@ -29,7 +29,8 @@
  },
  "Banners - Global/Inpatient-Care-UAE-1.png": {
   "key": "care/banner-inpatient-care",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Our-Care-Global.png": {
   "key": "care/banner-our-care",
@@ -53,7 +54,8 @@
  },
  "Banners - Global/Why-Cambridge-Global.png": {
   "key": "why/banner",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - Global/Your-Opinion-Matters-Global.png": {
   "key": "forms/feedback-hero",
@@ -113,11 +115,13 @@
  },
  "Banners - UAE/Palliative-Care-UAE.png": {
   "key": "care/heroes/palliative-care",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Pediatric-Care-UAE.png": {
   "key": "care/heroes/pediatric-rehab",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Pediatric-Outpatient-UAE.png": {
   "key": "care/heroes/pediatric-care",
@@ -133,7 +137,8 @@
  },
  "Banners - UAE/Speech-Language-Therapy-UAE.png": {
   "key": "care/heroes/speech-language-therapy",
-  "region": "global"
+  "region": "global",
+  "full": true
  },
  "Banners - UAE/Ventilated-Patients-Care-UAE.png": {
   "key": "care/heroes/mechanical-ventilation",

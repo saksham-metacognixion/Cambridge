@@ -12,7 +12,7 @@
     }
   },
   "overview": [
-    "Our In-School therapy programme brings structured, clinically supervised rehabilitation into the child’s everyday learning experience.",
+    "Our in-school therapy programme brings structured, clinically supervised rehabilitation into the child’s everyday learning experience.",
     "Delivered during the school day and woven into classroom activities, it moves therapy beyond the clinic and into the child’s real-life learning environment. This allows skills to be developed, practised and applied in real-time, in settings where they’re needed most."
   ],
   "topics": [
@@ -20,7 +20,7 @@
       "label": "Supporting Children Where They Learn",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Many children experience developmental or functional challenges that may be easily overlooked in the classroom, such as:"
         },
         {
@@ -42,7 +42,7 @@
       "label": "Our Approach",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "The programme is built on a medically led multidisciplinary approach, so every child receives structured, clinically grounded support:"
         },
         {
@@ -64,16 +64,16 @@
       "label": "Programme Structure",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "The programme provides a clear pathway from identification to measurable progress:"
         },
         {
           "type": "ul",
           "items": [
-            "**Referral and Identification** - through teacher observations, parental concerns or clinical referral",
-            "**Clinical Assessment** - a comprehensive evaluation of developmental, functional and communication needs",
-            "**Individualised Therapy Plan** - tailored to the child’s academic environment and developmental goals",
-            "**Therapy Delivery** - sessions during school hours integrated into the daily routine",
+            "**Referral and identification** - through teacher observations, parental concerns or clinical referral",
+            "**Clinical assessment** - a comprehensive evaluation of developmental, functional and communication needs",
+            "**Individualised therapy plan** - tailored to the child’s academic environment and developmental goals",
+            "**Therapy delivery** - sessions during school hours integrated into the daily routine",
             "**Progress monitoring** - continuous tracking and reporting to measure outcomes and adjust the treatment plan as needed"
           ]
         }
@@ -83,7 +83,7 @@
       "label": "Medical Oversight",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "What sets our programme apart is its paediatric medical leadership. Each child benefits from:"
         },
         {
@@ -153,7 +153,7 @@
       "label": "Benefits for Schools",
       "blocks": [
         {
-          "type": "lead",
+          "type": "p",
           "text": "Beyond the benefits to individual children, the programme can support the wider school community by:"
         },
         {

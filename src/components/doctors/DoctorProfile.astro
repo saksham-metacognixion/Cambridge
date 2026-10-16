@@ -18,16 +18,19 @@ import ruleSection from '../../assets/doctor-profile/rule-section.svg';
  * Book an Appointment (Figma 131 x 28, radius 5.766, label 9): the shared .ui-btn (bugs 044 / 050). Photo card corners
  * --radius-card (bug 049).
  */
-interface Props { doctor: Doctor; }
-const { doctor: d } = Astro.props;
+/* Meet the Team (Task 198) reuses this layout for a leadership profile (the live profile: breadcrumb, photo, name, title,
+   Professional Summary): `role` / `bio` in exactly the page language (an empty one is left out, never English on an Arabic page),
+   `list` = the breadcrumb's middle link, `book` false = no Book an Appointment, `fill` = an opaque square portrait covering the panel. */
+interface Props { doctor: Doctor; role?: string; bio?: string; list?: { label: string; href: string }; book?: boolean; fill?: boolean; }
+const { doctor: d, role: roleProp, bio: bioProp, list, book = true, fill: fillPanel = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('doctors/page', edition.locale).profile;
 const name = t(d.name, edition.locale, 'doctors');
-const role = doctorRole(d, edition.locale);
+const role = roleProp ?? doctorRole(d, edition.locale);
 const alt = (d.photo_alt && t(d.photo_alt, edition.locale, 'doctors')) || name;
 const photo = d.photo ? img(d.photo, edition.region) : null;
 const subs = d.sub_specialities.map((s) => t(s, edition.locale, 'doctors')).filter(Boolean);
-const bio = t(d.bio, edition.locale, 'doctors');
+const bio = bioProp ?? t(d.bio, edition.locale, 'doctors');
 ---
 
 <!-- Breadcrumb band: navy, 1052 x 67 at page y 119; text 8px at x 94, y 148 -->
@@ -36,7 +39,7 @@ const bio = t(d.bio, edition.locale, 'doctors');
   <ol class="crumbs-ol m-0 flex list-none flex-wrap p-0 font-gotham font-normal text-f8 text-white not-italic">
     <li><a href={urlFor(edition, '')} class="hit text-white no-underline">{c.home}</a></li>
     <li aria-hidden="true" class="sep">/</li>
-    <li><a href={urlFor(edition, DOCTOR_PATHS.list)} class="hit text-white no-underline">{c.list}</a></li>
+    <li><a href={list?.href ?? urlFor(edition, DOCTOR_PATHS.list)} class="hit text-white no-underline">{list?.label ?? c.list}</a></li>
     <li aria-hidden="true" class="sep">/</li>
     <li aria-current="page">{name}</li>
   </ol>
@@ -46,13 +49,13 @@ const bio = t(d.bio, edition.locale, 'doctors');
 <div class="frame">
 <section class="intro" aria-labelledby="dr-name">
   <!-- Photo card 244.577 x 215 at page (104, 240): border 0.288 #418ea2, radius 17.298 -->
-  <div class="card hair-card relative bg-white">
+  <div class:list={['card hair-card relative bg-white', fillPanel && 'is-fill']}>
     <div class="panel">
       <div class="shape" aria-hidden="true" style={`--mask:url("${mask.src}")`}>
         <img src={shape.src} alt="" width="222" height="225" loading="eager" decoding="async" />
       </div>
       {photo && (
-        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 16.7vw, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+        <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[240, 480]} sizes="(min-width: 1024px) 16.7vw, 240px" loading="eager" fetchpriority="high" decoding="async" alt={alt} class="photo" data-aos="fade" pictureAttributes={{ class: 'contents' }} />
       )}
     </div>
   </div>
@@ -61,9 +64,9 @@ const bio = t(d.bio, edition.locale, 'doctors');
     <div class="head">
       <div>
         <h1 id="dr-name" class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</h1>
-        <p class="role m-0 font-gotham font-normal not-italic">{role}</p>
+        {role && <p class="role m-0 font-gotham font-normal not-italic">{role}</p>}
       </div>
-      <a href="#book-appointment" data-doctor={d.slug} class="book ui-btn hit btn-fill-navy">{c.book}</a>
+      {book && <a href="#book-appointment" data-doctor={d.slug} class="book ui-btn hit btn-fill-navy">{c.book}</a>}
     </div>
     <img loading="lazy" class="rule-top" src={ruleTop.src} width="571" height="0.5" alt="" />
     {subs.length > 0 && (
@@ -105,6 +108,12 @@ const bio = t(d.bio, edition.locale, 'doctors');
   /* photo: 174.182 high, natural width (153.433 for Ahmad), centred, bottom on the panel edge */
   .photo { position: absolute; bottom: 0; inset-inline-start: calc(50% - 0.6 * var(--u)); translate: -50% 0; height: calc(174.182 * var(--u)); width: auto; max-width: none; }
   :global([dir='rtl']) .photo { translate: 50% 0; inset-inline-start: calc(50% + 0.6 * var(--u)); }
+
+  /* Task 198: a square portrait fills the panel (top-aligned, corners clipped by the panel radius) */
+  .is-fill .panel { overflow: hidden; }
+  .is-fill .shape { display: none; }
+  .is-fill .photo { inset: 0; translate: none; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+  :global([dir='rtl']) .is-fill .photo { translate: none; inset-inline-start: 0; }
 
   .info { flex: 1 1 0; min-width: 0; margin-inline-start: calc(33.4 * var(--u)); padding-top: calc(10 * var(--u)); max-width: calc(573 * var(--u)); }
   .head { display: flex; align-items: flex-start; justify-content: space-between; gap: calc(16 * var(--u)); }

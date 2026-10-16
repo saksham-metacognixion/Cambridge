@@ -1,15 +1,14 @@
 /*
  * Click-to-play videos (About intro, hospital "Environment of Care", news articles): the page ships only a poster + play
  * button. On click the player (iframe or <video>) opens in a lightbox (user decision, 6 Oct 2026, screen recording of the
- * live site): dark overlay, the player autoplays in the centre, a round close button on the player's top corner;
- * Esc, the close button or a click on the overlay closes it, the player is removed (stops the sound) and focus
+ * live site): dark overlay fades in, the player autoplays in the centre, a round close button on the player's top corner;
+ * Esc, the close button or a click on the overlay closes it (fade out), the player is removed (stops the sound) and focus
  * goes back to the play button. Nothing third-party loads before the click. Close label = data-close-label on the play
  * button (forms/common close). Source = data-host + data-id (src/data/about.json, hospital JSON).
  * Frame shape (bug 031, 7 Oct 2026): data-aspect on the facade ("16:9" default, "9:16" for a portrait Short, any "w:h" /
  * "w/h", or "portrait" / "landscape") becomes the --vl-ratio custom property (width / height) on the dialog; the CSS sizes
  * the frame from it, so a portrait video gets a portrait frame and a landscape one a 16:9 frame, both fitted to the
  * viewport (85dvh tall at most, never wider than the screen). Look: .video-lightbox rules in src/styles/global.css.
- * Opens and closes at once (all animations removed, 16 Oct 2026).
  */
 const RATIOS: Record<string, number> = {
   landscape: 16 / 9,
@@ -57,9 +56,11 @@ function embed(host: string, id: string): HTMLElement | null {
   return f;
 }
 
+const FADE_MS = 300; // the live GSLightbox transition (all .3s ease-in-out), see .video-lightbox in global.css
 let box: HTMLDialogElement | null = null;
 let frame: HTMLElement | null = null;
 let returnFocusTo: HTMLElement | null = null;
+let closeTimer = 0;
 
 function lightbox(label: string, closeLabel: string): HTMLDialogElement {
   if (box) return box;
@@ -77,7 +78,7 @@ function lightbox(label: string, closeLabel: string): HTMLDialogElement {
   box.addEventListener("click", (e) => {
     if (e.target === box) close();
   });
-  // Esc: run our cleanup instead of the bare native close.
+  // Esc: run our fade + cleanup instead of the instant native close.
   box.addEventListener("cancel", (e) => {
     e.preventDefault();
     close();
@@ -92,23 +93,34 @@ function open(player: HTMLElement, btn: HTMLElement, ratio: number) {
     btn.getAttribute("aria-label") ?? "Video",
     btn.dataset.closeLabel ?? "Close",
   );
+  window.clearTimeout(closeTimer);
   returnFocusTo = btn;
   d.style.setProperty("--vl-ratio", String(ratio));
   d.classList.toggle("is-portrait", ratio < 1);
   player.setAttribute("class", "video-lightbox-player");
   frame!.replaceChildren(player);
+  d.classList.remove("is-open");
   if (!d.open) d.showModal();
   document.documentElement.style.overflow = "hidden";
+  requestAnimationFrame(() => d.classList.add("is-open"));
   d.querySelector<HTMLElement>("[data-vl-close]")!.focus();
 }
 
 function close() {
   if (!box || !box.open) return;
-  box.close();
-  frame?.replaceChildren();
-  document.documentElement.style.overflow = "";
-  returnFocusTo?.focus();
-  returnFocusTo = null;
+  const d = box;
+  d.classList.remove("is-open");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  closeTimer = window.setTimeout(
+    () => {
+      d.close();
+      frame?.replaceChildren();
+      document.documentElement.style.overflow = "";
+      returnFocusTo?.focus();
+      returnFocusTo = null;
+    },
+    reduce ? 0 : FADE_MS,
+  );
 }
 
 document

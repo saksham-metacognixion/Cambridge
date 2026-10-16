@@ -14,7 +14,7 @@ import Band from '../careers/Band.astro';
  * copy (49, 151) w479 Book 14 / 17 white; Read More (49, 349) 118 x 30 #00b8ff radius 7; stats (680, 68) (677, 132) (675, 213) (675, 274),
  * number Medium 35, label Medium 12, line height 133.7 %; team photo 700.8 x 361.4 at (115, 312), bottom aligned with the box.
  * Count-up (live page audit 7 Oct 2026, "Why Cambridge Hospital _ Cambridge Hospital.html"): every stat is a Greenshift .gs-counter,
- * data-duration 1.5, postfix kept, counts once from 0 when 30 % in view (the former scripts/countup.ts, removed 16 Oct 2026 Greenshift mode, as on Our Hospitals).
+ * data-duration 1.5, postfix kept, counts once from 0 when 30 % in view (scripts/countup.ts Greenshift mode, as on Our Hospitals).
  * An invisible copy of the final text (.size) sizes the number's box, the counting text (.live) sits on top of it, so the stat
  * keeps its final width at every size and the count never reflows or rewraps the row.
  * Below 1024px (bug 039, 7 Oct 2026): the four stats are a 2 x 2 grid (never 3 + 1 or one per row); each cell is an inline-size
@@ -53,6 +53,10 @@ const more = urlFor(edition, pagePath(c.button.page));
     <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(700.8)} height={px(361.4)} widths={[560, px(700.8), 1788]} sizes={vwSizes(700.8, 'calc(100vw - 131px)')} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
   </div>
 </Band>
+
+<script>
+  import '../../scripts/countup';
+</script>
 
 <style>
   .nv { position: relative; box-sizing: border-box; background: var(--color-navy); color: #fff; font-style: normal; padding: calc(32 * var(--u)) calc(24 * var(--u)) 0; border-radius: 0 0 var(--radius-panel) var(--radius-panel); overflow: hidden; } /* bug 049 */

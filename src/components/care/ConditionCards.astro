@@ -23,7 +23,7 @@ import accident from '../../assets/care/post-acute/icon-accident.svg';
  * heading + two paragraphs + six text cards, same geometry as SubServiceGrid's intro).
  */
 interface Card { title: string; text: string; icon?: string; condition?: string; page?: string; href?: string }
-interface Props { edition: Edition; heading: string; text?: string[]; listLabel: string; button: string; cards: Card[] }
+interface Props { edition: Edition; heading: string | string[]; text?: string[]; listLabel: string; button: string; cards: Card[] }
 const { edition, heading, text = [], listLabel, button, cards } = Astro.props;
 const icons: Record<string, { src: string; width: number; height: number }> = { neuro, musculoskeletal, 'post-surgical': postSurgical, accident };
 const xs = [61, 298, 536, 773];
@@ -36,7 +36,7 @@ const list = cards.map((k, i) => ({
 ---
 
 <section class="cond" aria-labelledby="conditions-heading">
-  <h2 id="conditions-heading" class="h">{heading}</h2>
+  <h2 id="conditions-heading" class="h">{[heading].flat().map((line) => <span class="block">{line}</span>)}</h2>{/* an array = fixed lines (post-acute-rehab cardsHeading, client 16 Oct 2026) */}
   {text.length > 0 && <div class="t">{text.map((p) => <p>{p}</p>)}</div>}
   <ul class="grid" role="list" aria-label={listLabel}>
     {list.map((k) => (

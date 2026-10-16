@@ -48,7 +48,7 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 
     <!-- Live Home page (WordPress export, animation audit 8 Oct 2026): Greenshift Swiper, autoplay delay 0, speed 12000, loop,
          disablepause (no hover pause), autoplayrestore: one 12 s eased slide per tile, one after the other (autoscroll.ts step mode). -->
-    <div data-autoscroll="step" data-autoscroll-delay="0" data-autoscroll-speed="12000" data-autoscroll-pause="no" class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
+    <div class="hscroll dpos w-full" style="--x:0;--y:187;--w:1052;--h:110">
       <ul data-loop-row class="row flex gap-[calc(24*var(--u))] px-4 lg:block lg:relative lg:px-0 lg:gap-0 m-0 list-none">
         <li class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></li>
         {tiles.map((t) => (
@@ -62,10 +62,6 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
     </div>
   </div>
 </section>
-
-<script>
-  import '../../scripts/autoscroll';
-</script>
 
 <style>
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }

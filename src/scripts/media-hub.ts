@@ -2,8 +2,7 @@
 // The page ships with the newest posts. Choosing a category (or scrolling to the end of the row) loads posts.json once,
 // which holds ALL posts of the edition, and renders cards from the <template>. Filter state is in the URL
 // (?category=events): the back button works and the URL can be shared.
-// The row auto-scrolls in a loop (bug 064, src/scripts/autoscroll.ts): `row` is the scroller, the cards live in its
-// [data-loop-row] list (the auto-scroll copies come after it). New cards go into that list, then 'autoscroll:refresh'
+// The row auto-scrolls in a loop (bug 064, the former scripts/autoscroll.ts, removed 16 Oct 2026): `row` is the scroller, the cards live in its
 // rebuilds the copies, so the loop grows as the visitor (or the auto-scroll) nears the end of the loaded posts.
 // Bug 127: See More opens the grid under the row (the same cards, GRID_STEP at a time, of the chosen category); a category
 // change re-fills it from the start. The grid is not part of the auto-scroll loop.
@@ -70,7 +69,6 @@ if (root && select && row && list && tpl && sentinel && toggle && grid && gridLi
     const next = posts.slice(shown, shown + CHUNK);
     next.forEach((c) => list.insertBefore(make(c), sentinel));
     shown += next.length;
-    row.dispatchEvent(new Event('autoscroll:refresh'));
     io.unobserve(sentinel); // re-observe so a sentinel that is still in view loads the next chunk
     if (shown < posts.length) io.observe(sentinel);
   };

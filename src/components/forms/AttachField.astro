@@ -51,7 +51,6 @@ const id = fieldId(form, name);
   .att-face {
     display: flex; align-items: center; gap: calc(6 * var(--u)); box-sizing: border-box; inline-size: 100%; block-size: 100%; min-inline-size: 0;
     border: calc(1 * var(--u)) solid transparent; color: var(--color-body); cursor: pointer;
-    transition: background-color 0.25s ease, border-color 0.25s ease;
   }
   .att-clip { flex: none; inline-size: calc(12 * var(--u)); block-size: calc(12 * var(--u)); color: var(--color-navy); }
   .att-label { flex: none; font-style: italic; white-space: nowrap; }
@@ -100,5 +99,4 @@ const id = fieldId(form, name);
     .att-face { min-block-size: 44px; }
     .att-home .att-hint, .att-home .f-err { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); }
   }
-  @media (prefers-reduced-motion: reduce) { .att-face { transition: none; } }
 </style>

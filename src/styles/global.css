@@ -380,19 +380,13 @@ body {
    mirror at desktop widths. Desktop RTL rows scroll without snapping; mobile/tablet rows snap in both directions. */
 @media (min-width: 1024px) { [dir='rtl'] .hscroll { scroll-snap-type: none; } }
 /* Mouse drag on the rows (src/scripts/drag-scroll.ts, as on the live site's timeline): open hand over a row that overflows,
-   closed hand while dragging. Snapping and smooth scrolling are off during the drag so the row follows the pointer. */
+   closed hand while dragging. Snapping is off during the drag so the row follows the pointer. */
 @media (hover: hover) and (pointer: fine) { .hscroll[data-drag-scroll] { cursor: grab; } }
 .hscroll.is-dragging { scroll-snap-type: none !important; scroll-behavior: auto !important; user-select: none; -webkit-user-select: none; }
 .hscroll.is-dragging, .hscroll.is-dragging * { cursor: grabbing !important; }
 
-/* Doctor cards (Home row, Find a Doctor, the doctor rows on Care / Patient Hub / Hospitals / articles): the photo zooms a
-   little on hover or when a link in the card has keyboard focus (bug 019, as on the live site). Only the photo scales, from
-   its bottom edge (it stands on the panel), so the card keeps its size: no layout shift, nothing clipped in a scroller.
-   1.04 keeps the largest photo (174 on a 180 panel) inside the card. Off with prefers-reduced-motion. */
-.dr-photo { transform-origin: 50% 100%; transition: scale 0.5s cubic-bezier(0.42, 0, 0.58, 1); } /* live: .doctor-image-box img, all .5s cubic-bezier(.42,0,.58,1), scale 1.04 */
-@media (hover: hover) { .dr-card:hover .dr-photo { scale: 1.04; } }
-.dr-card:has(:focus-visible) .dr-photo { scale: 1.04; }
-@media (prefers-reduced-motion: reduce) { .dr-photo, .dr-card:hover .dr-photo, .dr-card:has(:focus-visible) .dr-photo { scale: none; transition: none; } }
+/* Doctor card photos: no hover zoom (all animations removed, 16 Oct 2026, docs/animations-removed.md). */
+.dr-photo { transform-origin: 50% 100%; }
 
 /* ───────────── Shared filter controls (Figma 62:783 pills, 62:186 boxes; reused on Conditions, Insurance, Testimonials) ─────────────
    .ui-pill: region pill 79 x 25, radius 12, 1px navy outline; pressed = navy fill. Place it with the parent's layout.
@@ -537,28 +531,13 @@ body {
                                                                        selected: --tab-selected (#418ea2) fill, white label
    Brand AA (8 Oct 2026): a label is never cyan or white on cyan; cyan marks a state as a fill, border or underline.
    Pressed / selected states are untouched. Hover only where a pointer can hover (no stuck hover after a tap); disabled and
-   aria-disabled controls keep their look. Colour transitions = the live theme's link transition (Blocksy --theme-transition:
-   0.12s cubic-bezier(.455,.03,.515,.955), the same on every live page; Why Cambridge animation audit 7 Oct 2026), off with
-   prefers-reduced-motion. Every rule starts with
+   aria-disabled controls keep their look. No colour transitions (all animations removed, 16 Oct 2026). Every rule starts with
    :root so it beats the component-scoped rules and the utility classes that set the resting colours. Labels inside a button
    (`> *`) follow the button's hover colour where a utility class set theirs (text-navy, text-cyan). CSS only; RTL-neutral. */
-:root { --ui-ease: 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
-:root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab {
-  transition: background-color var(--ui-ease), color var(--ui-ease), border-color var(--ui-ease), box-shadow var(--ui-ease);
-}
 /* Primary (.btn-fill) buttons: Deep Teal fill, white label at rest (bug 102; white on #004059 is 11.2:1). The cyan state always
    carries the Deep Teal label (brand AA, 8 Oct 2026: white on #00b8ff is 2.26:1). */
 :root .btn-fill { background-color: var(--color-navy); }
 :root .btn-fill, :root .btn-fill > * { color: #fff; }
-:root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color var(--ui-ease); }
-:root .btn-outline.hair-card::after { transition: border-color var(--ui-ease), border-width var(--ui-ease); }
-/* Tab buttons = the live Greenshift tabs (.t-btn { transition: all .4s ease-in-out }; saved FAQs / Who We Are pages, 9 Oct 2026). */
-:root .ui-tab { transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
-/* Tab panels on phones (< 768, the live vertical tabs): the shown panel rises 8px and fades in over .28s
-   (Code Snippet 19964.css: .t-panel.active { animation: gs-panel-in .28s cubic-bezier(.22,1,.36,1) both }). */
-@keyframes ui-panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 767.98px) { .topics [role='tabpanel']:not([hidden]), .faq [role='tabpanel']:not([hidden]) { animation: ui-panel-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; } }
-@media (prefers-reduced-motion: reduce) { .topics [role='tabpanel'], .faq [role='tabpanel'] { animation: none; } }
 @media (hover: hover) {
   :root :is(.btn-fill, .btn-fill-navy):not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: var(--color-navy); }
   :root :is(.btn-fill, .btn-fill-navy):not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-navy); }
@@ -581,10 +560,6 @@ body {
 }
 :root .btn-outline:focus-visible { border-color: var(--color-cyan); }
 :root .btn-outline.hair-card:focus-visible::after { border: 2px solid var(--color-cyan); }
-@media (prefers-reduced-motion: reduce) {
-  :root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab,
-  :root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > *, :root .btn-outline.hair-card::after { transition: none; }
-}
 
 /* Empty result of a client-side filter (Find a Doctor, Conditions, ...). No Figma design: body text style, centred.
    Wording + look flagged for Pramod's approval. */
@@ -609,28 +584,19 @@ body {
    portrait video fills the height and a landscape one the width, never wider or taller than the screen, no padding bars.
    The round close button sits on the stage's top inline-end corner (half outside), so it moves with the frame at every
    size; the 24px dialog padding is what keeps it (22px overhang) inside the viewport. Logical inset: top-left in RTL. */
-.video-lightbox { --vl-ratio: 1.7777778; --vl-max-h: 85vh; --vl-pad: 24px; position: fixed; inset: 0; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: var(--vl-pad); border: 0; background: rgba(0, 0, 0, 0.7); opacity: 0; overflow: hidden; transition: opacity 300ms ease-in-out; } /* live GSLightbox: all .3s ease-in-out */
+.video-lightbox { --vl-ratio: 1.7777778; --vl-max-h: 85vh; --vl-pad: 24px; position: fixed; inset: 0; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: var(--vl-pad); border: 0; background: rgba(0, 0, 0, 0.7); overflow: hidden; } /* opens and closes at once (all animations removed, 16 Oct 2026) */
 @supports (height: 1dvh) { .video-lightbox { --vl-max-h: 85dvh; } }
 .video-lightbox[open] { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; } /* explicit track: WebKit sized the auto track from the stage's aspect-ratio max-content (423px in a 342px dialog at 390x800, 10 Oct 2026) */
-.video-lightbox.is-open { opacity: 1; }
 .video-lightbox::backdrop { background: transparent; }
-.video-lightbox-stage { position: relative; width: min(100%, calc(100vw - 2 * var(--vl-pad)), calc(var(--vl-max-h) * var(--vl-ratio))); max-height: 100%; aspect-ratio: var(--vl-ratio); transform: scale(0.8); transition: transform 300ms ease-in-out; } /* the 100vw term: WebKit resolves the percentage against the dialog's outer box, so a portrait frame at 390 came out 382px in a 342px area (10 Oct 2026) */ /* live: .gs-lightbox-content scale(.8) -> 1, .3s ease-in-out */
-.video-lightbox.is-open .video-lightbox-stage { transform: none; }
+.video-lightbox-stage { position: relative; width: min(100%, calc(100vw - 2 * var(--vl-pad)), calc(var(--vl-max-h) * var(--vl-ratio))); max-height: 100%; aspect-ratio: var(--vl-ratio); } /* the 100vw term: WebKit resolves the percentage against the dialog's outer box, so a portrait frame at 390 came out 382px in a 342px area (10 Oct 2026) */
 .video-lightbox-frame { width: 100%; height: 100%; background: #000; }
 .video-lightbox-player { display: block; width: 100%; height: 100%; border: 0; background: #000; }
 .video-lightbox-close { position: absolute; z-index: 1; inset-block-start: -22px; inset-inline-end: -22px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: #fff; cursor: pointer; }
 .video-lightbox-close svg { width: 14px; height: 14px; }
 .video-lightbox-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .video-lightbox, .video-lightbox-stage { transition: none; } }
 
-/* Play-button pulse (About intro, hospital video): the live site's `play_button_pulse` CSS verbatim (animation audit 7 Oct 2026):
-   two 1px cyan rings on the button edge, each grows to 1.5x while fading out over 2s, the second 0.5s behind the first.
-   Sits on the play icon's box (.play); only when a video is set. */
+/* Play-button box (About intro, hospital video). The live pulse rings are gone: all animations removed, 16 Oct 2026. */
 .video-pulse { pointer-events: none; border-radius: 50%; }
-.video-pulse::before, .video-pulse::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--color-cyan); animation: video-pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
-.video-pulse::after { animation-delay: 0.5s; }
-@keyframes video-pulse { from { scale: 1; opacity: 1; } to { scale: 1.5; opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .video-pulse::before, .video-pulse::after { animation: none; } }
 
 /* Sticky header (AN1, 9 Oct 2026, see Header.astro): the page templates wrap <Header /> in a z-index <div>, and a sticky box can
    only move inside its parent, so that wrapper is the box that sticks (same offsets as .hd: the Figma top row scrolls away on
@@ -648,26 +614,23 @@ div:has(> .hd[data-sticky-header]) { position: sticky; top: 0; }
 /* "Go to top" button (AN1, 9 Oct 2026) = the live Blocksy .ct-back-to-top: fixed 25px from the bottom and the inline end (the live
    theme puts it right; mirrored here like every other control), 12px padding + 12px chevron, cyan (palette-3) with a Deep Teal
    icon (brand AA), hover Muted Teal (palette-4) with a white icon, radius 2px, theme shadow; hidden = transparent, 15px lower,
-   invisible; shown = in place; opacity / colour / background / transform / visibility .3s ease. Not on phones (live .ct-hidden-sm). */
-.to-top { position: fixed; z-index: 110; bottom: 25px; inset-inline-end: 25px; display: flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: 0; cursor: pointer; color: var(--color-navy); background: var(--color-cyan); box-shadow: 0 10px 20px rgba(41, 51, 61, 0.1); border-radius: 2px; opacity: 0; visibility: hidden; transform: translate3d(0, 15px, 0); transition: opacity 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
+   invisible; shown = in place, at once (all animations removed, 16 Oct 2026). Not on phones (live .ct-hidden-sm). */
+.to-top { position: fixed; z-index: 110; bottom: 25px; inset-inline-end: 25px; display: flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: 0; cursor: pointer; color: var(--color-navy); background: var(--color-cyan); box-shadow: 0 10px 20px rgba(41, 51, 61, 0.1); border-radius: 2px; opacity: 0; visibility: hidden; }
 .to-top svg { display: block; width: 12px; height: 12px; fill: currentColor; }
 .to-top::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; } /* 36px button -> 44px tap area on tablets (responsive audit 10 Oct 2026) */
-.to-top.is-shown { opacity: 1; visibility: visible; transform: translate3d(0, 0, 0); }
+.to-top.is-shown { opacity: 1; visibility: visible; }
 @media (hover: hover) { .to-top:hover { background: var(--color-teal-border); color: #fff; } }
 .to-top:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 2px; }
 @media (max-width: 689.98px) { .to-top { display: none; } }
-@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
 
 /* Card titles that link (AN10, 9 Oct 2026; the live card titles are links): colour and size come from the heading; hover = the
-   brand AA link treatment (Deep Teal text kept, 2px cyan underline) with the theme's .12s colour transition. Doctor names grow
-   their underline from 0 to 100 % over .7s ease like the live dynamic title (its background-image underline). Mouse only. */
-.title-link { color: inherit; text-decoration: underline 2px transparent; text-underline-offset: 0.25em; transition: text-decoration-color var(--ui-ease); }
-.title-link-grow { text-decoration: none; background-image: linear-gradient(transparent calc(100% - 2px), var(--color-cyan) 2px); background-repeat: no-repeat; background-size: 0% 100%; transition: background-size 0.7s ease; }
+   brand AA link treatment (Deep Teal text kept, 2px cyan underline), shown at once (all animations removed, 16 Oct 2026). Mouse only. */
+.title-link { color: inherit; text-decoration: underline 2px transparent; text-underline-offset: 0.25em; }
+.title-link-grow { text-decoration: none; background-image: linear-gradient(transparent calc(100% - 2px), var(--color-cyan) 2px); background-repeat: no-repeat; background-size: 0% 100%; }
 @media (hover: hover) {
   .title-link:hover { text-decoration-color: var(--color-cyan); }
   .title-link-grow:hover { background-size: 100% 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .title-link, .title-link-grow { transition: none; } }
 /* Touch targets (responsive sweep, 9 Oct 2026): card title links (doctor names, conditions, news, hospital titles .tlink) are
    14-30px high; below 1024 and on touch screens they get the .hit 44px layer, centred and invisible, so nothing moves. */
 @media (max-width: 1023.98px), (pointer: coarse) {
@@ -681,10 +644,9 @@ div:has(> .hd[data-sticky-header]) { position: sticky; top: 0; }
   html body :is(input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='hidden']), select, textarea, [role='combobox']) { font-size: 16px !important; } /* !important: the component rules (.nl input[type=email], .modal .gf-box input, ...) are more specific */
 }
 
-/* Scroll entrances (scripts/aos.ts): the live site's Greenshift AOS CSS. Hidden = transparent and, for fade-up, max(50px, 15 %
-   of its own height) lower; shown = in place. 0.8s ease-in-out both ways (--aos-dur to change it); --aos-delay (stagger)
-   applies on the way in only. Only the element moves, never its section background. */
-.aos [data-aos] { transition-property: opacity, transform; transition-duration: var(--aos-dur, 800ms); transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
-.aos [data-aos]:not(.aos-animate) { opacity: 0; }
-.aos [data-aos='fade-up']:not(.aos-animate) { transform: translate3d(0, max(50px, 15%), 0); }
-.aos [data-aos].aos-animate { transition-delay: var(--aos-delay, 0ms); }
+/* ───────────── No animations site-wide (client task, 16 Oct 2026; docs/animations-removed.md) ─────────────
+   Every animation, transition, scroll entrance, auto-scroll, parallax and smooth scroll was removed at its source (scripts deleted
+   or cut down, rules dropped). This catch-all covers whatever slips in later (a third-party widget, a new component): nothing on
+   the site moves, fades, slides, scales or turns, and scrolling is instant. Layout, colours and hover colours are untouched. */
+*, *::before, *::after { animation: none !important; transition: none !important; }
+html { scroll-behavior: auto !important; }

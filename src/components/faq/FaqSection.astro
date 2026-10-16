@@ -69,40 +69,8 @@ const emails = (l: string) => l.split(/([^\s@]+)(@[^\s@]+)/);
 
 <script>
   import '../../scripts/tabs';
-
   // Accordion: the <details> of one category share name="faq-<category>", so the browser closes the open one when another
-  // opens (bug 025); without JS that is the whole behaviour. With JS the open / close is animated like the live Greenshift
-  // accordion (animation audit, saved live FAQs page 9 Oct 2026: answer max-height 0 -> 5000px and opacity 0 -> 1 over .25s
-  // ease-out, the chevron turning over .3s): the script takes over the exclusivity (the name attribute is dropped, since the
-  // browser would close the other item at once), keeps `open` until the collapse has run, and sets .is-open a frame after
-  // opening so the transition has a start state. Off with prefers-reduced-motion (plain toggle).
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const MS = 260;
-  const closers = new WeakMap<HTMLDetailsElement, number>();
-  const collapse = (d: HTMLDetailsElement) => {
-    d.classList.remove('is-open');
-    if (reduce) { d.open = false; return; }
-    closers.set(d, window.setTimeout(() => { if (!d.classList.contains('is-open')) d.open = false; closers.delete(d); }, MS));
-  };
-  const expand = (d: HTMLDetailsElement) => {
-    window.clearTimeout(closers.get(d));
-    d.open = true;
-    if (reduce) { d.classList.add('is-open'); return; }
-    requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('is-open')));
-  };
-  document.querySelectorAll<HTMLDetailsElement>('details.qa').forEach((d) => {
-    const group = d.getAttribute('name') ?? '';
-    d.removeAttribute('name');
-    d.dataset.group = group;
-    d.querySelector('summary')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (d.classList.contains('is-open')) collapse(d);
-      else {
-        document.querySelectorAll<HTMLDetailsElement>(`details.qa.is-open[data-group="${group}"]`).forEach((o) => { if (o !== d) collapse(o); });
-        expand(d);
-      }
-    });
-  });
+  // opens (bug 025) and the toggle is instant (all animations removed, 16 Oct 2026). No script is needed for it.
 </script>
 
 <style>
@@ -120,19 +88,13 @@ const emails = (l: string) => l.split(/([^\s@]+)(@[^\s@]+)/);
   .bar::-webkit-details-marker { display: none; }
   .bar:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
   .qa[open] > .bar { background: var(--color-navy); color: #fff; } /* brand AA: white only on Deep Teal */
-  /* Motion = the live Greenshift accordion (saved FAQs page, 9 Oct 2026): title all .3s ease-in-out, icon transform .3s
-     ease-in-out, answer max-height / opacity all .25s ease-out (the live 5000px max-height: the height is in place almost at
-     once, the fade is what shows). Open-state colours wait for .is-open so the bar and the answer move together. */
-  .bar { transition: background-color .3s ease-in-out, color .3s ease-in-out; }
-  .qa[open]:not(.is-open) > .bar { background: rgba(231, 231, 231, 0.45); color: #004059; } /* = the closed bar: the open colours arrive with .is-open */
-  /* Bug 072: every row shows a chevron. Both Figma chevrons sit in the same box and cross-fade while turning: closed = the
-     #418ea2 one pointing up, open = the white one pointing down (Figma's directions, see the header note). */
-  .chev { display: block; transition: transform .3s ease-in-out, opacity .3s ease-in-out; }
-  .qa:not(.is-open) .chev { transform: rotate(180deg); }
-  .qa:not(.is-open) .chev-open, .qa.is-open .chev-closed { opacity: 0; }
-  .ans { overflow: hidden; max-height: 5000px; transition: max-height .25s ease-out, opacity .25s ease-out, padding .25s ease-out, min-height .25s ease-out; }
-  .qa:not(.is-open) .ans { max-height: 0; min-height: 0; opacity: 0; }
-  @media (prefers-reduced-motion: reduce) { .bar, .chev, .ans { transition: none; } }
+  /* No motion (all animations removed, 16 Oct 2026): the open / closed looks are keyed on the native [open] state. */
+  /* Bug 072: every row shows a chevron. Both Figma chevrons sit in the same box: closed = the #418ea2 one pointing up, open = the
+     white one pointing down (Figma's directions, see the header note). */
+  .chev { display: block; }
+  .qa:not([open]) .chev { transform: rotate(180deg); }
+  .qa:not([open]) .chev-open, .qa[open] .chev-closed { opacity: 0; }
+  .ans { overflow: hidden; }
   /* Bug 165 (15 Oct 2026): the Figma single-line bar height (26.7) was the line height (2.4 x the 11.041 font), so a wrapped question
      looked double-spaced. Leading 1.35 (14.9) with the rest as block padding: a one-line question keeps the same 26.7 box. */
   .q { margin: 0; padding-block: calc(5.9 * var(--u)); font-weight: 400; font-size: calc(11.041 * var(--u)); line-height: calc(14.9 * var(--u)); overflow-wrap: anywhere; }

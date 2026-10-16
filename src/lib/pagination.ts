@@ -6,7 +6,7 @@
  * row: scrollWidth - clientWidth), so the visitor can always reach the end cleanly. A row that does not overflow has 0 pages
  * (no dots). The current page is the one whose start is nearest to the scroll position.
  *
- * A looping row (Home doctors, src/scripts/autoscroll.ts) has no end: its positions repeat every `period`, so the pages
+ * A looping row (Home doctors, the former scripts/autoscroll.ts, removed 16 Oct 2026) has no end: its positions repeat every `period`, so the pages
  * tile one period and the distance is measured around the loop.
  */
 

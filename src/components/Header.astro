@@ -214,8 +214,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   .hd ul { margin: 0; padding: 0; list-style: none; }
   /* Sticky header = the live Blocksy header (AN1, 9 Oct 2026; data-sticky="shrink" without shrink values, so nothing shrinks):
      the top row scrolls away and the main row sticks at the top; stuck = the live row shadow 0 10px 20px rgba(0,64,89,.05),
-     .2s theme curve (scripts/sticky-header.ts sets .is-stuck and html scroll-padding-top). Below 1200px the whole bar sticks. */
-  .hd { position: sticky; top: 0; transition: box-shadow 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+     shown at once (scripts/sticky-header.ts sets .is-stuck and html scroll-padding-top). Below 1200px the whole bar sticks. */
+  .hd { position: sticky; top: 0; }
   /* Bug 085 (9 Oct 2026): the shared .stage clips horizontally (overflow-x: clip, global.css). In Safari a single-axis clip on a
      composited layer (this sticky header) also clips the other axis (WebKit bugs 271457 / 291895, open in Safari 16.5-17+), so
      every dropdown was cut at the header's bottom edge: only its first row (inside the 119-px stage) showed, the rest looked
@@ -239,13 +239,11 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   .hd.is-stuck { box-shadow: var(--shadow-bar), 0 10px 20px rgba(0, 64, 89, 0.05); }
   @media (min-width: 1200px) {
     .hd { top: calc((var(--hd-trim-top) - 51) * var(--u)); } /* Figma: the top row's lowest box (language chip) ends at 51 (minus the bug 103 trim, global.css) */
-    /* The Figma logo starts at 47, 4 above the cut: while stuck it sits 4 lower (.2s) so it is never clipped, and the top row's
+    /* The Figma logo starts at 47, 4 above the cut: while stuck it sits 4 lower so it is never clipped, and the top row's
        vertical separators (which reach 56) are hidden with the row they belong to. */
-    .logo { transition: transform 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
     .hd.is-stuck .logo { transform: translateY(calc(4 * var(--u))); }
     .hd.is-stuck .vl { visibility: hidden; }
   }
-  @media (prefers-reduced-motion: reduce) { .hd, .logo { transition: none; } }
   /* The list's Figma box (595 wide, Figma x 393) runs under the "Visit Cambridge Health Group" block (x 932..1043) and would
      take the clicks meant for it (bug 010): the box lets pointer events through, only its links take them.
      Start x: Figma 393; 345 for English since bug 044 (the long Book label); 331 in both languages since bug 046 (four dropdown
@@ -263,14 +261,12 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   .has-sub { position: relative; }
   .sub-head { display: flex; align-items: center; }
   .sub-btn { pointer-events: auto; display: flex; align-items: center; justify-content: center; flex: none; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; --hit-w: 24px; --hit-h: 30px; }
-  /* Motion (animation audit 8 Oct 2026, live Blocksy theme): every link colour eases with the theme's .12s curve (--ui-ease);
-     dropdown panels fade and rise from 10px over .2s ease (data-dropdown type-1); chevrons keep their .2s turn. */
-  .sub-item, .ritem, .mainnav a, .toplinks a { transition: color var(--ui-ease), text-decoration-color var(--ui-ease); }
+  /* No motion (all animations removed, 16 Oct 2026): link colours, dropdown panels and chevrons change at once. */
   /* Top row: brand AA = Deep Teal + cyan underline on hover. The main row (bug 116) recolours instead from 1200px, see below;
      the mobile menu (<1200) keeps the underline. */
   @media (hover: hover) { .toplinks a:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   @media (hover: hover) and (max-width: 1199.98px) { .mainnav li > a:hover, .mainnav .sub-head > a:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
-  .sub-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transition: transform .2s; }
+  .sub-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); }
   .has-sub[data-open] .sub-chev { transform: rotate(180deg); }
   .sub-btn:focus-visible, .sub-item:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   @media (max-width: 1199.98px) { .sub-item:hover, .sub-item[aria-current='page'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } } /* mobile menu: Deep Teal + cyan underline */
@@ -279,7 +275,6 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
      so it mirrors in Arabic), or an indented list below the row on mobile (chevron points down). Same markup at every depth. */
   .fly-head { display: flex; align-items: center; }
   .fly-btn { pointer-events: auto; display: flex; align-items: center; justify-content: center; flex: none; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
-  .fly-chev { transition: transform .2s; }
   .fly-btn:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   @media (max-width: 1199.98px) { .has-fly[data-open] > .fly-head > .sub-item { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
   /* Bug 116 (14 Oct 2026), desktop main row = the live Blocksy menu (docs/live-save-13oct/global.css: [data-id="menu"] links and
@@ -303,19 +298,19 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
   .region { z-index: 60; }
   .region-btn { display: flex; align-items: center; width: 100%; height: 100%; padding: 0; border: 0; background: none; font-family: inherit; cursor: pointer; white-space: nowrap; } /* size, weight and colour come from the element's own classes (text-f9 font-medium text-navy) */
   .region-btn:focus-visible, .ritem:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
-  .chev { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-inline-start: calc(5 * var(--u)); transition: transform .2s; }
+  .chev { flex: none; width: calc(18 * var(--u)); height: calc(18 * var(--u)); margin-inline-start: calc(5 * var(--u)); }
   .region[data-open] .chev { transform: rotate(180deg); }
   /* The open menu drops over the "Visit Cambridge Health Group" block (932..1043 x 71..103), so it is as wide as that
      column (111) and, with three rows, reaches below it (56..114): the white list hides the text under it completely
      instead of cutting through it. Stacking: .region (z 60) is above its sibling .visit inside the header, and the
      header (z-50) is above the page. */
-  .rmenu { visibility: hidden; opacity: 0; transform: translate3d(0, 10px, 0); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(111 * var(--u)); }
-  .region[data-open] .rmenu { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); }
+  .rmenu { visibility: hidden; opacity: 0; position: absolute; inset-inline-start: 0; top: 100%; padding-top: calc(8 * var(--u)); min-width: calc(111 * var(--u)); }
+  .region[data-open] .rmenu { visibility: visible; opacity: 1; }
   /* .hd .rlist, not .rlist: `.hd ul { padding: 0 }` above is more specific and used to strip the list's padding. */
   .hd .rlist { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(6 * var(--u)) calc(10 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); }
   .ritem { --hit-h: calc(100% + 10 * var(--u)); }
   .ritem:hover, .ritem[aria-current='true'] { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* current region: the header's highlight colour */
-  .visit { cursor: pointer; transition: color var(--ui-ease); }
+  .visit { cursor: pointer; }
   .visit:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } /* like the region menu's items */
   .visit:focus-visible { outline: 2px solid #00b8ff; outline-offset: 2px; border-radius: calc(3 * var(--u)); }
   .deco { pointer-events: none; object-fit: contain; } /* decorative lines must not swallow clicks meant for the links next to them */
@@ -334,8 +329,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .book { width: auto; min-width: calc(150 * var(--u)); height: auto; inset-inline-start: auto; inset-inline-end: calc((1052 - 905) * var(--u)); top: calc((84 - var(--hd-trim-top)) * var(--u) - var(--btn-h) / 2); }
     .has-sub { min-width: calc((var(--w) + 11) * var(--u)); }
     .sub-btn { margin-inline-start: calc(2 * var(--u)); width: calc(9 * var(--u)); height: calc(9 * var(--u)); }
-    .sub { pointer-events: auto; visibility: hidden; opacity: 0; transform: translate3d(0, 10px, 0); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; position: absolute; inset-inline-start: calc(-10 * var(--u)); top: 100%; padding-top: calc(10 * var(--u)); z-index: 60; }
-    .has-sub[data-open] .sub { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); } /* visibility flips at once on open (a link can take focus), after the fade on close */
+    .sub { pointer-events: auto; visibility: hidden; opacity: 0; position: absolute; inset-inline-start: calc(-10 * var(--u)); top: 100%; padding-top: calc(10 * var(--u)); z-index: 60; }
+    .has-sub[data-open] .sub { visibility: visible; opacity: 1; }
     .hd .sub-list { background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgba(0,0,0,.15); padding: calc(10 * var(--u)) calc(12 * var(--u)); display: flex; flex-direction: column; gap: calc(10 * var(--u)); min-width: calc(140 * var(--u)); }
     .sub-item { --hit-h: calc(100% + 10 * var(--u)); }
     /* Fly-out: starts at the panel's inline edge (the row ends 12 inside it, the list padding), its first item level with the
@@ -346,8 +341,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .fly-btn { margin-inline-start: auto; width: calc(9 * var(--u)); height: calc(9 * var(--u)); --hit-w: 24px; --hit-h: calc(100% + 10 * var(--u)); }
     .fly-chev { width: calc(9 * var(--u)); height: calc(9 * var(--u)); transform: rotate(-90deg); }
     :global([dir='rtl']) .fly-chev { transform: rotate(90deg); }
-    .fly { visibility: hidden; opacity: 0; transform: translate3d(0, 10px, 0); transition: opacity .2s ease, visibility .2s ease, transform .2s ease; position: absolute; inset-inline-start: 100%; top: calc(-10 * var(--u)); padding-inline-start: calc(16 * var(--u)); z-index: 1; }
-    .has-sub[data-open] .has-fly[data-open] > .fly { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); }
+    .fly { visibility: hidden; opacity: 0; position: absolute; inset-inline-start: 100%; top: calc(-10 * var(--u)); padding-inline-start: calc(16 * var(--u)); z-index: 1; }
+    .has-sub[data-open] .has-fly[data-open] > .fly { visibility: visible; opacity: 1; }
     /* Bug 104: a fly-out that would run past the viewport's inline end (the deep Our Care levels, e.g. Neurorehabilitation's
        programmes at 1200-1440, or a narrow window) opens on the other side of its list instead (scripts/nav-submenu.ts sets
        data-flip from a measurement, nested fly-outs keep their parent's side while it fits); its chevron turns with it. */
@@ -361,7 +356,7 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
        Their links join that panel's arrow-key list (scripts/nav-submenu.ts). */
     .mainnav .fly-list > li.has-fly[data-fly-inline] { height: auto; } /* every menu row is 15 tall (.mainnav li): this one holds its programmes too */
     .has-fly[data-fly-inline] > .fly-head > .fly-btn { display: none; }
-    .has-fly[data-fly-inline] > .fly { position: static; visibility: inherit; opacity: 1; transform: none; transition: none; padding: 0; margin-top: calc(7 * var(--u)); }
+    .has-fly[data-fly-inline] > .fly { position: static; visibility: inherit; opacity: 1; padding: 0; margin-top: calc(7 * var(--u)); }
     .hd .has-fly[data-fly-inline] > .fly > .fly-list { background: none; box-shadow: none; border-radius: 0; min-width: 0; gap: calc(7 * var(--u)); padding: 0; padding-inline-start: calc(9 * var(--u)); margin-inline-start: calc(1 * var(--u)); border-inline-start: calc(1 * var(--u)) solid var(--color-cyan); }
     .has-fly[data-fly-inline] > .fly .fly-item { font-size: calc(8 * var(--u)); }
   }
@@ -372,22 +367,17 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .stage { display: flex; align-items: center; justify-content: space-between; gap: calc(12 * var(--u)); padding: calc(15 * var(--u)) 16px; box-sizing: border-box; }
     .logo { display: block; width: calc(252 * var(--u)); max-width: calc(100% - 60px); flex: 0 1 auto; }
     .burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; align-items: center; cursor: pointer; flex: none; }
-    .burger span { display: block; width: 26px; height: 3px; border-radius: 2px; background: #004059; transition: transform .12s cubic-bezier(0.455, 0.03, 0.515, 0.955), opacity .12s cubic-bezier(0.455, 0.03, 0.515, 0.955); } /* live header trigger: all .12s theme curve */
+    .burger span { display: block; width: 26px; height: 3px; border-radius: 2px; background: #004059; }
     #nav-toggle:checked ~ .stage .burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     #nav-toggle:checked ~ .stage .burger span:nth-child(2) { opacity: 0; }
     #nav-toggle:checked ~ .stage .burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
     #nav-toggle:focus-visible ~ .stage .burger { outline: 2px solid #00b8ff; outline-offset: 2px; }
 
-    /* Open / close motion = the live Blocksy offcanvas (animation audit 8 Oct 2026): the panel fades over .25s ease-in-out while
-       its content slides in from 20 % off the inline end (.25s ease-in-out); hidden = visibility, so nothing inside can take focus. */
-    .menu { display: flex; visibility: hidden; opacity: 0; transform: translate3d(20%, 0, 0); position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 100%); max-height: calc(100dvh - 100%); overflow-y: auto; }
+    /* The panel opens and closes at once (all animations removed, 16 Oct 2026); hidden = visibility, so nothing inside can take focus. */
+    .menu { display: flex; visibility: hidden; opacity: 0; position: absolute; inset-inline-start: 0; inset-inline-end: 0; top: 100%; background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.06); padding: calc(16 * var(--u)) 16px calc(24 * var(--u)); flex-direction: column; align-items: flex-start; gap: calc(14 * var(--u)); box-sizing: border-box; max-height: calc(100vh - 100%); max-height: calc(100dvh - 100%); overflow-y: auto; }
     /* ^ 100% = the header's own height (the panel's containing block), so the panel ends at the viewport bottom whatever the
        logo scale makes the bar (85-103px below 1200, not the 80px assumed before); dvh keeps it above the iOS Safari toolbar. */
-    :global([dir='rtl']) .menu { transform: translate3d(-20%, 0, 0); }
-    /* The closing transition is armed by the first toggle (scripts/nav-submenu.ts adds .nav-toggled): a window resized across
-       the 1200px breakpoint must not slide the closed panel out of view. Opening always animates (the open state's own transition). */
-    .nav-toggled .menu { transition: opacity .25s ease-in-out, transform .25s ease-in-out, visibility 0s linear .25s; }
-    #nav-toggle:checked ~ .stage .menu { visibility: visible; opacity: 1; transform: translate3d(0, 0, 0); transition: opacity .25s ease-in-out, transform .25s ease-in-out, visibility 0s; }
+    #nav-toggle:checked ~ .stage .menu { visibility: visible; opacity: 1; }
     .deco, .chip, .pill { display: none; }
     .region { width: auto; height: auto; }
     .region-btn { width: auto; min-height: 44px; gap: calc(4 * var(--u)); }
@@ -405,9 +395,9 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .sub-head { justify-content: space-between; gap: 8px; }
     .sub-btn { width: 44px; height: 44px; }
     .sub-chev { width: 18px; height: 18px; }
-    /* Accordion slide = the live mobile menu (height .3s ease): a grid row grows from 0fr to 1fr, the list clipped meanwhile. */
-    .sub { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s ease, visibility 0s linear .3s; }
-    .has-sub[data-open] .sub { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s ease, visibility 0s; }
+    /* Accordion: a grid row at 0fr (closed) or 1fr (open), the list clipped; it opens at once (all animations removed, 16 Oct 2026). */
+    .sub { display: grid; grid-template-rows: 0fr; visibility: hidden; }
+    .has-sub[data-open] .sub { grid-template-rows: 1fr; visibility: visible; }
     .hd .sub-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; min-height: 0; overflow: clip; }
     .menu .sub-item { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; white-space: normal; }
     /* Second level on mobile: the service row works like a main row (link + 44px chevron), its sections indent once more. */
@@ -415,8 +405,8 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .fly-btn { width: 44px; height: 44px; }
     .fly-chev { width: 18px; height: 18px; }
     .has-fly[data-open] > .fly-head .fly-chev { transform: rotate(180deg); } /* its own row only: nested rows keep theirs until opened */
-    .fly { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows .3s ease, visibility 0s linear .3s; }
-    .has-fly[data-open] > .fly { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .3s ease, visibility 0s; }
+    .fly { display: grid; grid-template-rows: 0fr; visibility: hidden; }
+    .has-fly[data-open] > .fly { grid-template-rows: 1fr; visibility: visible; }
     .hd .fly-list { padding-inline-start: calc(12 * var(--u)); display: flex; flex-direction: column; min-height: 0; overflow: clip; }
     .lang { display: flex; gap: calc(12 * var(--u)); }
     .lang a { background: var(--color-mist); border-radius: var(--radius-btn); padding: calc(2 * var(--u)) calc(6 * var(--u)); }
@@ -431,9 +421,6 @@ const vlines =[ [916, 69], [828, 25], [916, 25], [515 - TOP_SHIFT, 25] ];
     .menu .sub-item { font-size: 14px; }
     .visit .font-medium { white-space: nowrap; }
     .visit .font-medium br { display: none; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .menu, .sub, .fly, .rmenu, .burger span, .sub-chev, .fly-chev, .chev { transition: none; }
   }
 </style>
 

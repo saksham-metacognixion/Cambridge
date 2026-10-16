@@ -48,7 +48,7 @@ interface Props {
   keepComposition?: boolean;
   /** extra attributes for the button link, e.g. { 'data-hospital': slug } so the Book pop-up knows the hospital */
   buttonAttrs?: Record<string, string>;
-  /** cursor-follow mode (scripts/hero-follow.ts, the live site's mouse parallax): 'people' (default) = the subject layer moves;
+  /** cursor-follow mode (the former scripts/hero-follow.ts, removed 16 Oct 2026, the live site's mouse parallax): 'people' (default) = the subject layer moves;
    *  'map' (Our Hospitals) = the subject layer AND every `[data-hero-subject]` in the section (HeroMap's vector overlay) move together. */
   follow?: 'people' | 'map';
   /** Phones / tablets (< 1024px, where the photo is its own block above the copy; styles/global.css .hero-media): the strip of
@@ -77,7 +77,7 @@ const { edition } = parsePath(Astro.url.pathname);
 // the live size and place, on a 500px-at-1440 stage. Not for the Our Hospitals map (HeroMap pins over its own art) or news photos.
 const art = !side && follow === 'people' ? bannerArt(c.banner.image, edition.region) : null;
 const banner = art ? null : img(c.banner.image, edition.region);
-// Cursor-follow (live-site mouse parallax, scripts/hero-follow.ts): the people (subject layer) move over the static background layer; a banner
+// Cursor-follow (live-site mouse parallax, the former scripts/hero-follow.ts, removed 16 Oct 2026): the people (subject layer) move over the static background layer; a banner
 // without layers (Our Hospitals, news photos) is one static picture.
 const layers = art ? null : heroLayers(c.banner.image, edition.region);
 const p = { titleSize: 39, titleMinH: 0, textGap: 0, textW: 374, textX: 97, labelX: 8, labelW: 145, ...pos };
@@ -117,7 +117,7 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
 
 <section class:list={['relative', keepComposition && 'keep', side && 'side', live && 'bn-live', mapLive && 'map-live', art?.bleed && 'bn-bleed', g && 'hero-bleed', g && unflipped && 'unflipped', clearPills && 'clear-pills']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: ${live ? bannerH() : h};${edgeVars}${mapVars}`} aria-label={c.ariaLabel}>
   <div class="stage hero" style={`--mh:${live ? bannerH() : h}`}>
-    <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on this box so the
+    <!-- The people drift with the cursor like the home hero (the former scripts/hero-follow.ts, removed 16 Oct 2026); the RTL flip sits on this box so the
          script's transform on the subject image never overrides it. -->
     {!art && <div class:list={['hero-media absolute inset-0 overflow-hidden pointer-events-none', mirror && !keepComposition && 'rtl:-scale-x-100']} data-hero-follow={layers ? follow : undefined} style={smallStyle} aria-hidden="true">
       {layers ? (
@@ -141,10 +141,6 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
     <slot name="art" />
   </div>
 </section>
-
-<script>
-  import '../../scripts/hero-follow';
-</script>
 
 <style>
   /* Live banner art: the cut-out drops 10 live px under the banner and the pills run past it, clipped like the live section. */

@@ -3,19 +3,16 @@
  *   Pills [data-country] all | sa | ae: show the cards whose data-sets contains it (ALL = every card), back to the first
  *   page, pages recounted. No URL state: the home page has several pill sets.
  *   Pagination dots: the shared component (src/scripts/pagination.ts), fed with this row's pages: a page = one visible
- *   width of the row. While the row loops ([data-looping], src/scripts/autoscroll.ts) it has no end, so the pages tile one
+ *   width of the row. While the row loops ([data-looping], the former scripts/autoscroll.ts, removed 16 Oct 2026) it has no end, so the pages tile one
  *   loop period (every shown card once) and the position is taken inside it; otherwise (prefers-reduced-motion) the pages
  *   are those of a plain scroller, the last one at the end of the row. Hidden when every card fits.
  *   Start: card 1 at the first stop (Figma x 94). Bug 157 (15 Oct 2026, client): the row no longer opens one stop in as Figma
  *   draws it (first card cut at the left edge); the auto-scroll moves it on from there.
- *   Auto-scroll: pills tell it to rebuild its copies ('autoscroll:refresh'); a dot click pauses it ('autoscroll:hold') so
- *   the smooth scroll is not overridden; after every rebuild ('autoscroll:change') the pages are recounted.
  * RTL: scrollLeft runs negative in RTL, so positions are taken as absolute values and the sign is put back on scroll.
  */
 import { loopPageCount, loopPageIndex, pageCount, pageIndex } from "../lib/pagination";
 import { createPagination } from "./pagination";
 
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 for (const section of document.querySelectorAll<HTMLElement>(
   "section:has([data-row])",
@@ -48,7 +45,7 @@ for (const section of document.querySelectorAll<HTMLElement>(
   const scroll = (x: number, smooth = true) =>
     row.scrollTo({
       left: sign() * x,
-      behavior: smooth && !reduced ? "smooth" : "auto",
+      behavior: "auto",
     });
 
   const pg = createPagination(nav, {
@@ -59,7 +56,6 @@ for (const section of document.querySelectorAll<HTMLElement>(
         ? loopPageIndex(pos(), period(), page())
         : pageIndex(pos(), max(), page()),
     go: (i) => {
-      row.dispatchEvent(new Event("autoscroll:hold"));
       scroll(Math.min(i * page(), max()));
     },
   });
@@ -70,7 +66,6 @@ for (const section of document.querySelectorAll<HTMLElement>(
     for (const p of pills)
       p.setAttribute("aria-pressed", String(p.dataset.country === country));
     scroll(0, false);
-    row.dispatchEvent(new Event("autoscroll:refresh"));
     pg.update();
   };
 
@@ -86,7 +81,6 @@ for (const section of document.querySelectorAll<HTMLElement>(
     { passive: true },
   );
   new ResizeObserver(() => pg.update()).observe(row);
-  row.addEventListener("autoscroll:change", () => pg.update());
 
   // UAE / KSA editions render with their country's pill pressed (Doctors.astro, bug 048): apply it so the row, the
   // auto-scroll copies and the dots all match it.

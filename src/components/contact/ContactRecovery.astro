@@ -94,15 +94,13 @@ const imax = Math.max(...icons.map((i) => i.size)); // the largest tile icon: ph
     .tile::after { display: none; }
     /* the tile box (border + hit) is drawn by the background div; only icon, label and the link area live here */
   }
-  /* Hover, as on the live CTA tiles: white -> #e7e7e7 fill, the live theme's link transition (0.12s cubic-bezier(.455,.03,.515,.955)).
+  /* Hover, as on the live CTA tiles: white -> #e7e7e7 fill, at once (all animations removed, 16 Oct 2026).
      Desktop draws the tile box on a separate background div (tile 1 sits under the corner art), so the hovered link recolours its div. */
-  .tile, .tbg { transition: background-color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
   @media (hover: hover) {
     @media (max-width: 1023.98px) { .tile:hover { background-color: var(--color-mist); } }
     .box:has([data-tile='0']:hover) .tbg-0, .box:has([data-tile='1']:hover) .tbg-1,
     .box:has([data-tile='2']:hover) .tbg-2, .box:has([data-tile='3']:hover) .tbg-3 { background-color: var(--color-mist); }
   }
-  @media (prefers-reduced-motion: reduce) { .tile, .tbg { transition: none; } }
   .art { overflow: hidden; }
   :global([dir='rtl']) .art { scale: -1 1; }
   .art-fill {

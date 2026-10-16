@@ -39,7 +39,7 @@ const { title, summary, href, button, headingId } = Astro.props;
 </article>
 
 <style>
-  .ccard { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; width: calc(198.097 * var(--u)); min-height: calc(176 * var(--u)); box-sizing: border-box; padding-bottom: calc(14 * var(--u)); transition: transform .2s ease; font-family: var(--font-gotham); font-style: normal; }
+  .ccard { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: flex-start; width: calc(198.097 * var(--u)); min-height: calc(176 * var(--u)); box-sizing: border-box; padding-bottom: calc(14 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
   .corner { position: absolute; z-index: 0; inset-inline-start: calc(30 * var(--u)); top: 0; width: calc(162.113 * var(--u)); height: calc(54.903 * var(--u)); max-width: none; transform: scaleY(-1); }
   .box { position: absolute; z-index: 1; inset: calc(4 * var(--u)) 0 0 0; background: var(--color-chip); border-radius: var(--radius-card); } /* bug 049 */
   .tag { position: relative; z-index: 3; display: flex; align-items: center; box-sizing: border-box; margin-inline-start: calc(10 * var(--u)); width: calc(180.5 * var(--u)); min-height: calc(54.38 * var(--u)); padding-inline: calc(21 * var(--u)) calc(23.726 * var(--u)); }
@@ -53,8 +53,6 @@ const { title, summary, href, button, headingId } = Astro.props;
   .btn { position: relative; z-index: 2; margin-top: auto; align-self: center; } /* colours: .btn-fill */
   .summary { margin-bottom: calc(14 * var(--u)); }
   .box { box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgb(0 36 54 / 0.06); }
-  @media (hover: hover) { .ccard:hover { transform: translateY(calc(-3 * var(--u))); } }
-  @media (prefers-reduced-motion: reduce) { .ccard { transition: none; } .ccard:hover { transform: none; } }
   /* Mirror the decoration in RTL (the tag's notch and the corner sit at the inline end). */
   :global([dir='rtl']) .tag-art { transform: scaleX(-1); }
   :global([dir='rtl']) .corner { transform: scale(-1, -1); }

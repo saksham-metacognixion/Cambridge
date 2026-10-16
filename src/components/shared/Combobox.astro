@@ -68,7 +68,6 @@ const listId = `${id}-list`;
   /* Field: .ui-field (global.css). Select-only box shows its value / placeholder on one line like the input. */
   .cb-select { display: flex; align-items: center; cursor: pointer; user-select: none; white-space: nowrap; overflow: hidden; }
   .cb-value { overflow: hidden; text-overflow: ellipsis; }
-  .cb-chev { transition: transform 0.15s ease; }
   .cb.is-open { z-index: 10; }
   .cb.is-open .cb-chev { transform: rotate(180deg); }
 
@@ -101,7 +100,6 @@ const listId = `${id}-list`;
   .cb-opt[aria-selected='true'] { background: color-mix(in srgb, var(--color-cyan) 14%, #fff); }
   .cb-opt[aria-selected='true'].is-active { background: color-mix(in srgb, var(--color-cyan) 22%, #fff); }
   @media (hover: hover) { .cb-opt[aria-selected='true']:hover { background: color-mix(in srgb, var(--color-cyan) 22%, #fff); } }
-  @media (prefers-reduced-motion: reduce) { .cb-chev { transition: none; } }
 
   /* Bug 054: arrow + clear buttons at the end of the box (the select-only box has the x only; its whole field opens the list) (logical insets: mirrored in RTL). The arrow's hit area is the
      31 Figma px end padding the chevron sits in; the x sits just before it and the text stops before both. */

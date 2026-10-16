@@ -57,7 +57,7 @@ const cover = 'absolute start-0 top-0 h-full w-full object-cover';
 //   items of the stage, so a gap on the stage itself would add phantom space above the heading.
 // RTL (bug 020): the whole composition is mirrored, as on the other page heroes (PageHero `rtl:-scale-x-100`): the
 //   text sits at the right, so background, people and bottom overlay flip and the people end up on the left. The
-//   people are flipped on their clipping box, not on the <img>, whose transform belongs to hero-follow.ts (which
+//   people are flipped on their clipping box, not on the <img>, whose transform belonged to the former hero-follow.ts, removed 16 Oct 2026 (which
 //   reverses its drift in RTL so they still follow the cursor).
 const phoneArt = 'max-md:w-[162%] max-md:left-[-62%] max-md:rtl:left-0 sm:max-md:w-full sm:max-md:left-0';
 const subjectMobile = `max-md:relative max-md:inset-auto max-md:h-auto max-md:max-w-none ${phoneArt}`;
@@ -76,7 +76,7 @@ const edgeVars = art ? '' : (await heroEdgeVars(layers ? layers.background : img
       <>
         <!-- fetchpriority: on phones the people sit below the fold, so this background is the LCP image. -->
         <Picture src={layers.background} alt="" fetchpriority="high" class={`${cover} max-lg:object-left rtl:-scale-x-100`} {...bannerProps} />
-        <!-- The mother and baby drift with the cursor (scripts/hero-follow.ts); clipped to the hero box. -->
+        <!-- The mother and baby drift with the cursor (the former scripts/hero-follow.ts, removed 16 Oct 2026); clipped to the hero box. -->
         <div data-hero-follow class="absolute inset-0 overflow-hidden rtl:-scale-x-100 max-md:relative max-md:inset-auto max-md:order-last max-md:mt-[calc(24*var(--u))] max-md:-mx-[calc(24*var(--u))] md:max-lg:relative md:max-lg:inset-auto md:max-lg:col-start-2 md:max-lg:row-start-1 md:max-lg:w-full md:max-lg:self-end md:max-lg:aspect-[572/500]">
           <!-- Phones (user, 10 Oct 2026: the hero background "disappeared" behind the people): the stage background is cropped to
                its plain start side, so the pill art behind the mother and baby is drawn again here with the people layer's exact
@@ -129,10 +129,6 @@ const edgeVars = art ? '' : (await heroEdgeVars(layers ? layers.background : img
     <!-- Static decorative pager dots (78:759), no behaviour -->
   </div>
 </section>
-
-<script>
-  import '../../scripts/hero-follow';
-</script>
 
 <style>
   .bn-live { overflow: clip; }

@@ -106,10 +106,7 @@ const pos = (len: number, active: number, i: number) => {
   .pick-slide :global(.ph) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }
   .pick-slide:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
   .dots { margin-top: calc(21.63 * var(--u)); align-self: stretch; }
-  @media (prefers-reduced-motion: no-preference) {
-    /* Slide timing = the live hospital page's Swiper (saved Abu Dhabi page, 9 Oct 2026: speed 800, wrapper timing CSS ease). */
-    .slide { transition: inset-inline-start .8s ease, top .8s ease, width .8s ease, height .8s ease, opacity .8s ease, visibility .8s; }
-  }
+  /* The photos change places at once (all animations removed, 16 Oct 2026). */
   /* Desktop: the Figma composition (positions in Figma px from the frame's left edge; the row is the full 1052 stage). */
   @media (min-width: 1024px) {
     .h { width: calc(677 * var(--u)); padding: 0; margin-inline-start: calc(206 * var(--u)); align-self: flex-start; text-align: start; }

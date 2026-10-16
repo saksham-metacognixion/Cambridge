@@ -14,7 +14,7 @@ import SectionIntro from './SectionIntro.astro';
  */
 interface Props {
   content: { heading: string; text: string; listLabel: string; slugs: string[] }; id?: string;
-  /** Our Care: the cards slide one at a time in an endless loop like the live page's Swiper (scripts/autoscroll.ts, step mode):
+  /** Our Care: the cards slide one at a time in an endless loop like the live page's Swiper (the former scripts/autoscroll.ts, removed 16 Oct 2026, step mode):
    *  four in view on desktop (Figma x 48, 215 wide, the 31 / 32 / 32 gaps averaged so every step is the same). */
   slider?: boolean;
 }
@@ -34,7 +34,7 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
   <!-- Bug 163 (15 Oct 2026): the slider is the desktop row only (display: none below 1024, where the grid below is shown instead;
        autoscroll.ts leaves a hidden scroller alone), so phones and tablets get the same stacked list / 2-up grid as every other page. -->
   {slider && (
-    <div class="hscroll slide desk" data-autoscroll="step" data-autoscroll-restore="no">
+    <div class="hscroll slide desk">
       <ul class="srow" role="list" aria-label={d.listLabel} data-loop-row>
         {doctors.map((doc: any) => (
           <li class="snap-start" data-loop-item><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
@@ -48,10 +48,6 @@ const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
     ))}
   </ul>
 </section>
-
-<script>
-  import '../../scripts/autoscroll';
-</script>
 
 <style>
   .docs { max-width: calc(var(--max-w) * 1px); margin-inline: auto; }

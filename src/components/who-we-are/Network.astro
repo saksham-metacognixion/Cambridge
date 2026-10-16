@@ -24,7 +24,7 @@ const stats = resolveStats(edition, c.stats);
 const photo = img(c.photo.image, edition.region);
 const cols = [504, 660, 802], rows = [125, 243];
 // Count-up seconds per stat, in order, from the live page's Greenshift counters (WordPress export, animation audit 8 Oct 2026:
-// data-duration 1 / 1.5 / 2 per row, linear, once, from 0 when 30 % in view; scripts/countup.ts Greenshift mode as on Our Hospitals).
+// data-duration 1 / 1.5 / 2 per row, linear, once, from 0 when 30 % in view; the former scripts/countup.ts, removed 16 Oct 2026 Greenshift mode as on Our Hospitals).
 const countSecs = [1, 1.5, 2, 1, 1.5, 2];
 const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)], secs: countSecs[i] ?? 2 }));
 ---
@@ -49,10 +49,6 @@ const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i 
     </div>
   </div>
 </section>
-
-<script>
-  import '../../scripts/countup';
-</script>
 
 <style>
   .net { font-family: var(--font-gotham); font-style: normal; }

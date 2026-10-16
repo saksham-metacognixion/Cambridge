@@ -35,7 +35,7 @@ const edgeVars = art ? '' : await heroEdgeVars(layers ? layers.background : bann
 <section class:list={['relative', art ? 'bn-live' : 'hero-bleed']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: 437;${edgeVars}`} aria-label={c.ariaLabel}>
   <div class="stage">
     <!-- Banner PNG is 1052x500 and drawn 114.42% of the 437 box (top-left anchored), exactly as in Figma. -->
-    <!-- The people drift with the cursor like the home hero (scripts/hero-follow.ts); the RTL flip sits on the box, not the image. -->
+    <!-- The people drift with the cursor like the home hero (the former scripts/hero-follow.ts, removed 16 Oct 2026); the RTL flip sits on the box, not the image. -->
     {!art && <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} style={crop?.style} aria-hidden="true">
       {layers ? (
         <>
@@ -65,10 +65,6 @@ const edgeVars = art ? '' : await heroEdgeVars(layers ? layers.background : bann
     {art && <BannerArt image={c.banner.image} region={edition.region} alt={c.banner.alt} />}
   </div>
 </section>
-
-<script>
-  import '../../scripts/hero-follow';
-</script>
 
 <style>
   .bn-live { overflow: clip; }

@@ -10,7 +10,7 @@ import type { RegionId } from '../../lib/editions';
  * .astro/qc-banner): every banner is a gradient (the live `banners/bg.avif`; Bug 180: lib/banner-art.ts bannerBgStyle, set by the host section via
  * bannerArt().bgStyle) with the pill shape (613x500) and ONE transparent people cut-out drawn at its natural size
  * (579x450, 500x450, 565x462 ...), right-aligned to the 72px content edge, its bottom 10px below the banner (Home: the
- * outline pattern 620x548 and a 580x480 cut-out in a 550px banner). The people drift with the cursor (scripts/hero-follow.ts);
+ * outline pattern 620x548 and a 580x480 cut-out in a 550px banner). The people drift with the cursor (the former scripts/hero-follow.ts, removed 16 Oct 2026);
  * the shape and gradient stay.
  * Bug 180 (16 Oct 2026): the client's banners of 16 Oct replace the live look: the filled navy/cyan/green pill shape (and the
  * Home's filled pattern) is now the outline pill stack of those files (assets/banners/pills.svg, 562x430 live px, the same on
@@ -73,7 +73,7 @@ const pic = {
      as a whole in RTL (.bn-flip scale -1), so the stack lands on the copy side there too (Bug 145) without a second flip. */
   .bn-shape { position: absolute; z-index: -1; left: calc(var(--sx) / var(--bw) * 100%); top: calc(var(--st) / var(--bh) * 100%); width: calc(var(--sw) / var(--bw) * 100%); height: auto; max-width: none; }
   /* Bug 146: a subject with readable / real-world content (banner-art.json `readable`: the calculator phone screens) is turned back
-     inside the mirrored box, so the composition mirrors but the screen reads the right way (scripts/hero-follow.ts reads this scale). */
+     inside the mirrored box, so the composition mirrors but the screen reads the right way (the former scripts/hero-follow.ts, removed 16 Oct 2026 reads this scale). */
   :global([dir='rtl']) .bn-readable .bn-flip :global([data-hero-subject]) { scale: -1 1; }
   /* Bug 139: phones stack the art under the copy; the pills rise above the art box by -st live px (Conditions: 268, a flat 458x212
      cut-out) and covered the end of the intro and the button. The frame drops by whatever the copy's 40-unit bottom padding

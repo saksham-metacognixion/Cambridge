@@ -104,7 +104,7 @@ export function createCombobox(root: HTMLElement, opts: ComboboxOptions) {
       if (r.bottom > window.innerHeight)
         window.scrollBy({
           top: Math.min(r.bottom - window.innerHeight + 12, r.top - 12),
-          behavior: "smooth",
+          behavior: "auto",
         });
     }
   }

@@ -128,6 +128,12 @@ export default defineConfig({
   build: { format: 'directory', inlineStylesheets: 'auto' },
   integrations: [notFoundPages(), browserCompatCss(), fontVersions()],
   devToolbar: { enabled: false },
+  // Bug 190 (16 Oct 2026): no quality was set anywhere, so every photo (<Picture> / <Image>) was encoded at sharp's default AVIF
+  // quality 50 with 4:2:0 chroma: soft faces and smeared patterns (the red-checked ghutra), banners 7-25 KB. src/lib/image-service.ts
+  // = the sharp service with a default quality (AVIF 80, WebP 85) in each image's options, so it is in the cache key and file
+  // name; AVIF chroma 4:4:4 here. Measured on the KSA Why / Accreditations cut-outs at their desktop widths: q80 4:4:4 =
+  // +7.3 / +5.6 dB PSNR for 2.1x the bytes (KSA Why 1x 15.6 -> 33.6 KB); 4:4:4 itself costs ~5%.
+  image: { service: { entrypoint: './src/lib/image-service.ts', config: { avif: { chromaSubsampling: '4:4:4' } } } },
   vite: {
     plugins: [tailwindcss(), devTrailingSlash()],
     // Staging: the dev server is exposed through ngrok (finalist-tamale-rhyme.ngrok-free.dev);

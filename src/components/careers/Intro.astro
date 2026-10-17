@@ -7,8 +7,10 @@ import type { Edition } from '../../lib/editions';
 
 /*
  * "Be Part of a Purpose That Transforms Lives" (Figma 112:7124 / 7125 / 7132), page y 556-969 = hero end to the grey band.
- * Photo 384 x 395 at x85, 18 below the hero; the PNG (1536x1024, transparent) is drawn 210.68% x 136.67% of that box at
- * left -32.81% / top -15.7% (Figma crop; physical left because the crop is inside a photo that never flips).
+ * Photo 384 x 395 at x85, 18 below the hero. Bug 189 (16 Oct 2026): the client's new file (Be-Part-of-a-Purpose-That-
+ * Transforms-Lives-2.png, 1107x1421, transparent: both clinicians down to the legs) replaces the old 1536x1024 crop, which was
+ * drawn 210.68% x 136.67% of the box and cut the pair at the waist. The new picture is shown whole in the same box (contain,
+ * centred, standing on the box bottom).
  * Heading x488 (top +67 from the photo top): Gotham 37 / 40 #004059, lines 1-2 Book, line 3 Medium, w320; paragraph x489 w495
  * Book 14/17 #6b6b6b, 13 below the 3 heading lines (Figma top 774), paragraphs separated by one empty 17px line.
  */
@@ -20,7 +22,7 @@ const photo = img(c.image.image, edition.region);
 <Band label={c.ariaLabel}>
   <div class="row">
     <div class="photo">
-      <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(809)} height={Math.round(px(809) / 1.5)} widths={[px(809), 1536]} sizes={vwSizes(809, '80vw')} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+      <Picture src={photo} formats={['avif']} fallbackFormat="webp" widths={[px(384), Math.min(px(768), photo.width)]} sizes={vwSizes(384, 'min(100vw, 526px)')} loading="lazy" decoding="async" alt={c.image.alt} class="img" pictureAttributes={{ class: 'contents' }} />
     </div>
     <div class="copy">
       <h2 class="h">{c.heading.map((line, i) => <span class:list={['block', i < c.heading.length - 1 && 'light']}>{line}</span>)}</h2>
@@ -32,7 +34,7 @@ const photo = img(c.image.image, edition.region);
 <style>
   .row { display: flex; flex-direction: column; gap: calc(24 * var(--u)); padding-block: calc(18 * var(--u)) 0; }
   .photo { position: relative; overflow: hidden; flex: none; width: calc(384 * var(--u)); max-width: 100%; aspect-ratio: 384 / 395; }
-  .img { position: absolute; left: -32.81%; top: -15.7%; width: 210.68%; height: 136.67%; max-width: none; }
+  .img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
   .h { margin: 0; font-weight: 500; font-size: calc(37 * var(--u)); line-height: calc(40 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
   .h .light { font-weight: 400; }
   .t { margin-top: calc(13 * var(--u)); color: var(--color-body); font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); }

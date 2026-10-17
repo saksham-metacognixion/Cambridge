@@ -170,12 +170,22 @@ def extract_new(file, key, region, pills=False, outdir=None, log=print):
         building = cv2.dilate((a > 0.5).astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
         ap[building] = 0
         a = np.maximum(a, ap)
-    # specks
+    # specks; Bug 191 (16 Oct 2026): and, for people banners, a loose pill outline (Media Hub: the bottom pill next to the wrist
+    # kept its stroke, which `_pills.png` misses there, and was drawn over the page's own pills): a piece apart from the subject
+    # that is a thin ring (under 15% of its box filled) in the pill stroke colours
+    def stray_pill(sel, st):
+        fill = st[cv2.CC_STAT_AREA] / (st[cv2.CC_STAT_WIDTH] * st[cv2.CC_STAT_HEIGHT])
+        c = comp[..., :3][sel].mean(axis=0)
+        return fill < 0.15 and np.abs(PILL_COLOURS - c).max(axis=1).min() < 0.12
+
     for m in (a, box_a):
         n, lab, stats, _ = cv2.connectedComponentsWithStats((m > 0.3).astype(np.uint8))
+        big = 1 + int(np.argmax(stats[1:, cv2.CC_STAT_AREA])) if n > 1 else 0
         for i in range(1, n):
             if stats[i, cv2.CC_STAT_AREA] < 400:
                 m[lab == i] = 0
+            elif not pills and i != big and stray_pill(lab == i, stats[i]):
+                m[cv2.dilate((lab == i).astype(np.uint8), np.ones((5, 5), np.uint8)) > 0] = 0  # with its faint rim
     ys, xs = np.nonzero((a if pills else box_a) > 0.05)
     x0, x1, y0, y1 = max(0, xs.min() - 4), min(comp.shape[1], xs.max() + 5), max(0, ys.min() - 4), comp.shape[0]  # to the bottom edge
     crop = np.dstack([rgb[y0:y1, x0:x1], a[y0:y1, x0:x1]])

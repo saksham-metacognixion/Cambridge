@@ -592,11 +592,11 @@
   ]
  },
  "global:media-hub/banner": {
-  "w": 374,
+  "w": 302,
   "h": 414,
   "shape": true,
   "pills": [
-   -60.3,
+   -131.9,
    -34.8
   ],
   "end": 189.1,

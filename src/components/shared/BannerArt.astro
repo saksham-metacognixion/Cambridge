@@ -49,6 +49,10 @@ const flip = mirror && !keep;
 // fractions of the box width; phones centre the two together.
 const ovs = art.shape ? Math.max(0, -P.x) / w : 0;
 const ove = art.shape ? Math.max(0, P.x + PILLS.w - w) / w : 0;
+// Bug 188 (16 Oct 2026): the same end overhang in live px. The art is placed by its people box, so the stack ran past the
+// screen's end edge (FAQs 15 px at 1440, Media Hub 22, Homecare 52-101, phones 5-52); every layout now keeps box + overhang
+// inside. 0 on banners placed from the client's files (`end`): their pills already sit where the file draws them.
+const oe = art.end === undefined ? ove * w : 0;
 // Rendered width: w live px at 1440 scaled with the page (desktop), x0.630 tablet, x0.561 phone, each also at 2x for
 // high-density screens. Most cut-outs are the live files at 1x (w wide) and keep the 1x set; the 2x copies from the client's
 // originals (tools/banners/hd.py, 14 Oct 2026) are 2w wide. Only widths the file has (Astro never upscales).
@@ -61,7 +65,7 @@ const pic = {
 } as const;
 ---
 
-<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${PILLS.w};--sx:${P.x.toFixed(1)};--st:${P.y.toFixed(1)};--sd:${drop};${bend}--ovs:${ovs.toFixed(4)};--ove:${ove.toFixed(4)}`}>
+<div class:list={['bn-frame', home && 'bn-home', flip && art.readable && 'bn-readable', ...edge, cls]} dir={keep ? 'ltr' : undefined} aria-hidden="true" style={`--bw:${w};--bh:${h};--sw:${PILLS.w};--sx:${P.x.toFixed(1)};--st:${P.y.toFixed(1)};--sd:${drop};${bend}--ovs:${ovs.toFixed(4)};--ove:${ove.toFixed(4)};--oe:${oe.toFixed(1)}`}>
   <div class:list={['bn-art', flip && 'bn-flip rtl:-scale-x-100']} data-hero-follow>
     {art.shape && <img class="bn-shape" src={pills.src} width={pills.width} height={pills.height} alt="" loading="eager" decoding="async" />}
     <Picture src={art.image} alt={alt} fetchpriority="high" data-hero-subject class="bn-people" {...pic} />
@@ -88,14 +92,16 @@ const pic = {
      width (the box is capped at the frame width on the narrowest phones), so the pills start 24 units under the buttons. */
   @media (max-width: 767.98px) {
     .bn-home { margin-top: calc(24 * var(--u)); }
-    .bn-home .bn-art { margin-top: max(0px, calc(-1 * var(--st) / var(--bw) * min(var(--bw) * var(--s) * var(--lp), 100%))); }
+    .bn-home .bn-art { margin-top: max(0px, calc(-1 * var(--st) / var(--bw) * var(--a, min(var(--bw) * var(--s) * var(--lp), 100%)))); }
   }
   /* Bugs 171/172 (16 Oct 2026): phones wider than the art (414-689) kept it on the start padding (33 | 56 at 414, 33 | 122 at 480).
      The art box plus the pill stack's start and end overhangs (--ovs / --ove x the box) is centred in the padded frame; the start
      margin is capped at the free space, so where the art fills the frame (390 and narrower) nothing moves. Bleed-end banners stay
      on the end edge (Bug 131). */
+  /* Bug 188 (16 Oct 2026): box + both overhangs fit the padded frame (the art narrows where they would not: the pill stack ran
+     past the screen edge on 390-430 phones), centred as above. */
   @media (max-width: 689.98px) {
-    .bn-frame:not(.bleed-end) .bn-art { --a: min(calc(var(--bw) * var(--s) * var(--lp)), 100%); margin-inline-start: clamp(0px, (100% - var(--a) * (1 + var(--ovs) + var(--ove))) / 2 + var(--a) * var(--ovs), 100% - var(--a)); }
+    .bn-frame:not(.bleed-end) .bn-art { --a: min(calc(var(--bw) * var(--s) * var(--lp)), calc(100% / (1 + var(--ovs) + var(--ove)))); width: var(--a); max-width: none; margin-inline-start: calc((100% - var(--a) * (1 + var(--ovs) + var(--ove))) / 2 + var(--a) * var(--ovs)); }
   }
   /* tablets: the live 365x298 size (x0.630), on the end side like the live tablet layout */
   @media (min-width: 690px) { .bn-frame { --s: 0.63; justify-content: flex-end; } }
@@ -105,9 +111,11 @@ const pic = {
   @media (min-width: 690px) and (max-width: 1023.98px) {
     .bn-frame:not(.bleed-end) .bn-art { margin-inline-end: calc(var(--bw) * var(--s) * var(--lp) * var(--ove)); }
   }
+  /* Bug 188: the end edge (the client file's distance, else the 72px content edge) holds the people box or, where the pill stack
+     runs further, the stack (--oe is 0 on client-placed banners) */
   @media (min-width: 1024px) {
     .bn-frame { --lp: calc(var(--u) * 1052 / 1440); --s: 1; position: absolute; inset: 0; max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding: 0; display: block; }
-    .bn-art { position: absolute; inset-inline-end: calc(var(--bend, 72) * var(--lp)); bottom: calc(-1 * var(--sd) * var(--lp)); max-width: none; }
+    .bn-art { position: absolute; inset-inline-end: calc((var(--bend, 72) + var(--oe, 0)) * var(--lp)); bottom: calc(-1 * var(--sd) * var(--lp)); max-width: none; }
   }
 
   /* Bug 131 (15 Oct 2026): a subject cut flat by its file's END edge (lib/banner-art.ts `bleed`) is moved past the viewport's end
@@ -117,11 +125,15 @@ const pic = {
      pills stay where the live site draws them (the people cover their ends). Below 1024 the block sits on the end side and
      overhangs it by the same 10 px; the host section clips (.bn-live overflow: clip). */
   @media (min-width: 1024px) {
-    .bleed-end .bn-art :global([data-hero-subject]) { translate: calc((100vw - min(100vw, var(--max-w) * 1px)) / 2 + 82 * var(--lp)) 0; }
+    .bleed-end .bn-art :global([data-hero-subject]) { translate: calc((100vw - min(100vw, var(--max-w) * 1px)) / 2 + (82 + var(--oe)) * var(--lp)) 0; }
   }
+  /* Bug 188: below 1024 the box (and its pills) ends the stack's end overhang plus the 24-unit padding in from the screen edge, and
+     the people alone are pushed out by that much + 10 px, so their cut stays off screen while the pills stay on it; the box narrows
+     where its start overhang would pass the start padding (KSA Your Opinion Matters at 320). */
   @media (max-width: 1023.98px) {
-    .bleed-end { justify-content: flex-end; padding-inline-end: 0; }
-    .bleed-end .bn-art { margin-inline-end: -10px; }
+    .bleed-end { --be: calc(var(--oe) * var(--s) * var(--lp) + 24 * var(--u)); justify-content: flex-end; padding-inline-end: 0; }
+    .bleed-end .bn-art { margin-inline-end: var(--be); max-width: calc((100% - var(--be)) / (1 + var(--ovs))); }
+    .bleed-end .bn-art :global([data-hero-subject]) { translate: calc(var(--be) + 10px) 0; }
   }
   /* A cut edge that faces the copy (start) or the banner top is feathered out over 48 live px (the mask is in the layer's own
      coordinates, so it follows the RTL mirror). Both edges: the two gradients intersect. */

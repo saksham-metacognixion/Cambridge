@@ -105,7 +105,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
       </div>
     </div>
 
-    <form class="nl a" style="--l:748;--t:116;--w:213;--ph:54" action="/api/forms/newsletter" method="POST" novalidate data-form="newsletter" data-config={clientConfig('newsletter', edition.locale)}>
+    <form class="nl a" style="--l:732;--t:116;--w:213;--ph:54" action="/api/forms/newsletter" method="POST" novalidate data-form="newsletter" data-config={clientConfig('newsletter', edition.locale)}>
       <!-- Newsletter (D10, 10 Oct 2026): not one of the scope's 4 forms, so it is email only like them: each sign-up is
            emailed to FORM_TO_NEWSLETTER, nothing is stored. Figma draws no consent box, so none is added (flagged). -->
       <input type="hidden" name="edition" value={edition.id} />
@@ -160,6 +160,11 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   /* each legal link is its own bidi run, so the pair reorders in RTL like the rest of the layout */
   .bot.right a { unicode-bidi: isolate; }
   .accimg { margin-top: calc(16 * var(--u)); width: calc(235 * var(--u)); height: calc(45 * var(--u)); overflow: hidden; }
+  /* Footer alignment (18 Oct 2026, user): the seals PNG has a transparent margin (101 px left / 121 px right of 2119, ~4.5% / ~5.4%
+     of the box once cover-cropped), so the first seal sat ~10 units in from the heading. Shift the image by that margin (a % of
+     its own box, so it holds at every width) and the newsletter block 748 -> 732: heading, seals and newsletter share one start edge. */
+  .accimg { translate: -4.47% 0; }
+  :global([dir="rtl"]) .accimg { translate: 5.38% 0; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .ft .stage > img { max-width: none; }
   /* Logo: the 242 x 242 SVG is mostly transparent; the box shows its painted band only (y 54-174 of 242, bugs 107 / 108). */

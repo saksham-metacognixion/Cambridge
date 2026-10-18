@@ -99,7 +99,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     </div>
 
     <div class="acc a" style="--l:732;--t:26;--w:235;--ph:76">
-      <h2 class="hd text-f12 font-light text-white" style="width:calc(175 * var(--u))">{c.accreditations.heading}</h2>
+      <h2 class="hd text-f12 font-medium text-white" style="width:calc(175 * var(--u))">{c.accreditations.heading}</h2>
       <div class="accimg">
         <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={vwSizes(235)} format="webp" loading="lazy" decoding="async" alt={c.accreditations.alt} class="block h-full w-full object-cover" />
       </div>

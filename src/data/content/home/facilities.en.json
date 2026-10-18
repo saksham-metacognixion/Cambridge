@@ -47,7 +47,7 @@
       "key": "professionals"
     },
     {
-      "number": "715+",
+      "number": "700+",
       "label": "Operational Beds",
       "key": "beds"
     },
@@ -57,5 +57,5 @@
       "key": "presence"
     }
   ],
-  "_note": "Home facilities section (Figma). Stats numbers = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026) counters (340,000+ OPD visits, 5,000+ improved inpatients, 30,000+ home care visits, 1,300+ professionals, 715+ beds); 'Improved Inpatients' / 'Home Care Visits' spelt as on the live site (Figma: 'Improved Impatients', 'Homecare Visits'). 'Care Presence' = Figma (no live counterpart). CT13 / WP4."
+  "_note": "Home facilities section (Figma). Stats numbers = the live site (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026) counters (340,000+ OPD visits, 5,000+ improved inpatients, 30,000+ home care visits, 1,300+ professionals, 700+ beds); 'Improved Inpatients' / 'Home Care Visits' spelt as on the live site (Figma: 'Improved Impatients', 'Homecare Visits'). 'Care Presence' = Figma (no live counterpart). CT13 / WP4."
 }

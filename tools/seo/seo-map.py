@@ -41,6 +41,10 @@ for p in sorted(ours):
     v=live.get(rest.get(mm.group(1),''))
     if v and v.get('status')==200 and v['title']: pages[p]={'title':v['title']}; n+=1
 print('doctor titles',n,'unmatched slugs',[s for s in {re.match(r'.*/find-a-doctor/([^/]+)/$',p).group(1) for p in ours if re.match(r'^/patient-hub/find-a-doctor/[^/]+/$',p)} if s not in rest])
+# Task 251 (client, 19 Oct 2026): British 'specialised' for 'specialized' in the live meta (the word only: never inside a URL,
+# file name or slug; specializing / specialization are not covered).
+british=lambda s:re.sub(r'(?<![\w/.-])([Ss])pecialized(?![\w/-]|\.\w)',r'\1pecialised',s)
+pages={p:{k:british(t) for k,t in v.items()} for p,v in pages.items()}
 json.dump(pages,open('.astro/seo-pages.json','w'),ensure_ascii=False,indent=1)
 open('.astro/seo-missing.txt','w').write('\n'.join(p for p in sorted(ours) if p not in pages))
 print('final with live meta',len(pages),'/',len(ours))

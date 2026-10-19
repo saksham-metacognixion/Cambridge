@@ -65,8 +65,20 @@ def profile(path):
 # RETIRED_LEADER_SLUGS in src/lib/redirects.ts.
 REMOVED = {'wael-alsayed'}
 # Client edits of 19 Oct 2026 over the live list: Amal Al Hanwa's card title, and Dr. Mohammed Alhayyan listed after her.
-TITLES = {'amal-al-hanwa': {'en': 'Hospital Director – Dhahran', 'ar': 'مدير المستشفى – الظهران'}}
+# Task 250 (19 Oct 2026): Arafat Alakhrass's and Mohammad Al-Said's English titles name their units; their Arabic titles stay as
+# published until the client sends the Arabic wording (update() keeps the live 'ar').
+TITLES = {
+    'amal-al-hanwa': {'en': 'Hospital Director – Dhahran', 'ar': 'مدير المستشفى – الظهران'},
+    'arafat-alakhrass-2': {'en': 'Director of Clinical Operations – Al Mudeef Centre'},
+    'mohammad-al-said': {'en': 'Director of Nursing & Clinical Operations – AD & AA'},
+}
 AFTER = {'mohammed-alhayyan': 'amal-al-hanwa'}
+
+
+def british(s):
+    """Task 251 (client, 19 Oct 2026): British 'specialised' for 'specialized' (the word only: never inside a URL, file name or
+    slug; specializing / specialization are not covered)."""
+    return re.sub(r'(?<![\w/.-])([Ss])pecialized(?![\w/-]|\.\w)', r'\1pecialised', s)
 
 
 def main():
@@ -93,8 +105,8 @@ def main():
             'id': w['id'], 'slug': slug, 'country': country, 'order': i + 1,
             'name': {'en': c['name'], 'ar': pa['name'] or a['name']},
             # the card title (wptexturize dashes, as the list shows it); the profile shows the same field
-            'title': {'en': c['title'], 'ar': a['title'] or pa['title']},
-            'bio': {'en': pe['bio'], 'ar': pa['bio']},
+            'title': {'en': british(c['title']), 'ar': a['title'] or pa['title']},
+            'bio': {'en': british(pe['bio']), 'ar': pa['bio']},
             'photo': f'leadership/{slug}',
             'old_urls': sorted({f'/leadership/{slug}', f'/ar/leadership/{ar_slug}'}),
         }

@@ -53,11 +53,6 @@ if (root && select && row && list && tpl && sentinel && toggle && grid && gridLi
     if (c.srcset) img.srcset = c.srcset;
     img.alt = c.alt;
     if (c.crop) img.setAttribute('style', c.crop);
-    const time = li.querySelector<HTMLTimeElement>('[data-time]')!;
-    time.dateTime = c.iso;
-    time.setAttribute('aria-label', c.dateFull);
-    li.querySelector('[data-day]')!.textContent = c.day;
-    li.querySelector('[data-weekday]')!.textContent = c.weekday;
     const title = li.querySelector<HTMLAnchorElement>('[data-title]')!;
     title.href = c.href;
     title.textContent = c.title;

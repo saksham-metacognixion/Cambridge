@@ -24,6 +24,10 @@ const { edition } = parsePath(Astro.url.pathname);
 const c = content('contact/page', edition.locale);
 // Email / web / phone line of this edition (details.byRegion: the KSA phone on /sa), never another country's number.
 const details = { ...c.details, ...(c.details.byRegion?.[edition.region] ?? {}) };
+// Phone lines of the row (client, 19 Oct 2026): Global = the UAE and the KSA numbers one under the other (details.phones, as in the
+// banner); /ae = the toll-free number with 800-MYCARE under it (details.rowPhones); otherwise the single `phone` line.
+type PhoneLine = { phone: string; phoneHref: string; label?: string };
+const rowPhones: PhoneLine[] = details.rowPhones ?? details.phones ?? [{ phone: details.phone, phoneHref: details.phoneHref }];
 const f = c.form;
 // Shared form behaviour (src/scripts/forms.ts): EN/AR validation, JSON submit, success message. Field rules = forms.json 'send-enquiry'.
 const common = commonText(edition.locale);
@@ -179,9 +183,14 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         <img loading="lazy" src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-653" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
         <a href={details.webHref} class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-656']}><span dir="ltr">{details.web}</span></a>
       </li>
-      <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
+      <li class:list={['max-lg:flex max-lg:gap-[calc(10*var(--u))] lg:contents', rowPhones.length > 1 ? 'max-lg:items-start' : 'max-lg:items-center']}>
         <img loading="lazy" src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-651" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`tel:${details.phoneHref}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(651.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}><span dir="ltr">{details.phone}</span></a>
+        <!-- Extra lines stack under the first one, which keeps its Figma place. -->
+        <div class="row-phones flex flex-col items-start lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(651.69*var(--u))]">
+          {rowPhones.map((ph) => (
+            <a href={`tel:${ph.phoneHref}`} class:list={[detail, 'hit lg:min-w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}><span dir="ltr">{ph.phone}</span>{ph.label && <span class="lbl">{ph.label}</span>}</a>
+          ))}
+        </div>
       </li>
     </ul>
   </div>
@@ -245,6 +254,9 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     .details { max-width: 100%; }
     .details a { font-size: min(calc(17.224 * var(--u)), 4.4vw); white-space: normal; overflow-wrap: anywhere; min-width: 0; }
   }
+  /* Two phone lines (Global / UAE): 8 apart; the label reads "800-692273 - UAE" as in the banner. */
+  .row-phones { gap: calc(8 * var(--u)); }
+  .row-phones .lbl::before { content: ' - '; white-space: pre; }
 
   /* Error lines (no Figma design: the shared form error style, P2) sit under their field on desktop. */
   .cf-err { margin: 0; }

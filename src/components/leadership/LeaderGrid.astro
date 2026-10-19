@@ -10,7 +10,7 @@ import DoctorCard from '../doctors/DoctorCard.astro';
  * (photo, name, title -> the profile) in the live order. Built from the site's own parts: the region pills (.ui-pill, the Home
  * doctors' ALL / UAE / KSA) and the Find a Doctor card and grid (DoctorCard, the same 4 x 215 columns), the photo filling the
  * card's panel (the leadership portraits are opaque squares), "Read More" -> the profile.
- * Editions: Global = all 17 with the filter (?country=ae|sa in the URL: shareable, Back works); /ae and /sa list their own
+ * Editions: Global = all 16 with the filter (?country=ae|sa in the URL: shareable, Back works); /ae and /sa list their own
  * country's leaders only, so no filter there. Every card is in the static HTML (no-JS visitors see the full list).
  */
 const { edition } = parsePath(Astro.url.pathname);

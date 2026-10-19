@@ -17,6 +17,9 @@ import { clientConfig } from '../lib/forms';
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
 const logo = img(c.logo.image, edition.region);
+// Bug 211 (19 Oct 2026): the logo links to this edition's home page, as the header logo does (same href and label).
+const homeHref = urlFor(edition);
+const homeLabel = content('layout/header', edition.locale).logo.homeLabel;
 const accredited = img(c.accreditations.image, edition.region);
 type Link = { label: string; href: string; path?: string; page?: string; query?: string; care?: string };
 // `page` = key in PAGE_PATHS (preferred), `path` = literal path inside the edition.
@@ -77,7 +80,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
        1440) instead of the 1024 worst case, 24 below it (one status line fits; the two-line send error adds 12, .stage:has
        below); 8 below the copyright row. 259 -> 196 + box (355 -> 308px at 1440). -->
   <div class="stage" style="--hb: 196">
-    <img loading="lazy" class="a logo" style="--l:32.5;--t:14;--w:242;--ph:120" src={logo.src} width="242" height="242" alt={c.logo.alt} />
+    <a href={homeHref} class="a logo-link hit" style="--l:32.5;--t:14;--w:242;--ph:120" aria-label={homeLabel}><img loading="lazy" class="logo" src={logo.src} width="242" height="242" alt={c.logo.alt} /></a>
 
     <div class="cols">
     <nav class="col c1 a" style="--l:329;--t:26;--w:148;--ph:102" aria-labelledby="ft-quick">
@@ -121,7 +124,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     </form>
 
     <img loading="lazy" class="a under" style="--l:62;--tb:168;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
-    <div class="a icons" style="--l:64;--t:150;--w:161;--ph:16.24"><SocialIcons src={group53.src} width="161" height="16.24" alt="" /></div>
+    <div class="a icons" style="--l:64;--t:150;--w:161;--ph:16.24"><SocialIcons src={group53.src} width="161" height="16.24" alt="" threads={{ x: 176, y: 1.12, size: 14, look: 'glyph' }} /></div>
 
     <p class="bot a under left" style="--l:228;--tb:176;--w:160;--ph:12">{c.copyright}</p>
     <p class="bot a under right" style="--l:718;--tb:176;--w:105;--ph:12"><a href={legal.compliance.href} class="hit">{legal.compliance.label}</a><span class="gap">       </span><a href={legal.privacy.href} class="hit">{legal.privacy.label}</a></p>
@@ -166,9 +169,11 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
   .accimg { translate: -4.47% 0; }
   :global([dir="rtl"]) .accimg { translate: 5.38% 0; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .ft .stage > img { max-width: none; }
+  .ft .stage > img, .ft .logo { max-width: none; }
   /* Logo: the 242 x 242 SVG is mostly transparent; the box shows its painted band only (y 54-174 of 242, bugs 107 / 108). */
   .logo { object-fit: cover; object-position: 50% 44.26%; }
+  /* Bug 211: the link is the positioned box (.a); the image fills it from 1024px, below it keeps its own size (bugs 097 / 154). */
+  .logo-link { display: block; }
   .cols { display: contents; } /* the three link columns: one box only on tablets (bug 097) */
 
   @media (min-width: 1024px) {
@@ -182,6 +187,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     .nl .box { margin-top: calc(13 * var(--u)); }
     .links { height: calc(84 * var(--u)); }
     .col .links { margin-top: calc(3 * var(--u)); }
+    .logo { width: 100%; height: 100%; }
   }
 
   @media (max-width: 1023.98px) {

@@ -61,6 +61,14 @@ def profile(path):
     return {'name': name, 'title': html.unescape(title.group(1)).strip() if title else '', 'bio': clean_html(bio.group(1)) if bio else ''}
 
 
+# Live profiles the client asked to take off the site (19 Oct 2026: Wael Alsayed, KSA; NOT Dr. Wael Sary). Keep in step with
+# RETIRED_LEADER_SLUGS in src/lib/redirects.ts.
+REMOVED = {'wael-alsayed'}
+# Client edits of 19 Oct 2026 over the live list: Amal Al Hanwa's card title, and Dr. Mohammed Alhayyan listed after her.
+TITLES = {'amal-al-hanwa': {'en': 'Hospital Director – Dhahran', 'ar': 'مدير المستشفى – الظهران'}}
+AFTER = {'mohammed-alhayyan': 'amal-al-hanwa'}
+
+
 def main():
     wp = {x['slug']: x for x in json.load(open('docs/leadership.json'))}
     en, ar = cards('about/meet-the-team.html'), cards('ar/about/meet-the-team.html')
@@ -69,6 +77,9 @@ def main():
     os.makedirs('src/assets/leadership', exist_ok=True)
     for i, c in enumerate(en):
         slug = c['href'].rstrip('/').split('/')[-1]
+        if slug in REMOVED:
+            notes.append(f'{slug}: removed by the client, not imported')
+            continue
         w = wp[slug]
         country = {94: 'ae', 95: 'sa'}[w['leader_country'][0]]
         assert f'leader_country-{"uae" if country == "ae" else "ksa"}' in w['class_list'], slug
@@ -97,6 +108,15 @@ def main():
         if pa['name'] != a['name']:
             notes.append(f'{slug}: Arabic name differs, card "{a["name"]}" vs profile "{pa["name"]}" (profile used)')
         leaders.append(rec)
+    for rec in leaders:
+        rec['title'].update(TITLES.get(rec['slug'], {}))
+    for slug, prev in AFTER.items():
+        rec = next(x for x in leaders if x['slug'] == slug)
+        leaders.remove(rec)
+        leaders.insert(next(i for i, x in enumerate(leaders) if x['slug'] == prev) + 1, rec)
+    orders = sorted(x['order'] for x in leaders)
+    for rec, o in zip(leaders, orders):
+        rec['order'] = o
     extra = [c for c in ar if c['img'] not in {x['img'] for x in en}]
     for c in extra:
         notes.append(f'Arabic-only card not imported: {c["name"]} ({c["title"]}) {c["href"]}')

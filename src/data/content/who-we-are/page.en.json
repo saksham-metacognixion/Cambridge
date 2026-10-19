@@ -5,15 +5,14 @@
     "description": "A leading provider of specialized rehabilitation and long-term care across the UAE and Saudi Arabia: six hospitals, two countries, one standard of care."
   },
   "hero": {
-    "ariaLabel": "A Leader in Post-Acute and Rehabilitation Care in the GCC",
+    "ariaLabel": "A Leader in Post-Acute Care in the GCC",
     "banner": {
       "image": "who-we-are/banner",
       "alt": ""
     },
     "title": [
       "A Leader in",
-      "Post-Acute and",
-      "Rehabilitation Care",
+      "Post-Acute Care",
       "in the GCC"
     ],
     "text": "Comprehensive care and clinical expertise centred on patients and families, from hospital to home.",
@@ -23,7 +22,10 @@
     }
   },
   "intro": {
-    "heading": ["Built Around People. Connected by Care.", "Driven by Excellence."],
+    "heading": [
+      "Built Around People. Connected by Care.",
+      "Driven by Excellence."
+    ],
     "text": [
       "Founded in 2012, Cambridge Hospital has spent over 14 years building what no other provider in the Gulf has matched: a fully integrated, dual-accredited clinical network across the UAE and Saudi Arabia. Our network supports patients through the full continuum of post-acute care, long-term care and rehabilitation, from the first day of recovery through active treatment, long-term management, community reintegration and home-based support.",
       "Today, our 6 purpose-built facilities and more than 700 beds bring together multidisciplinary teams and specialist expertise to care for patients with complex neurological conditions, long-term ventilation needs, post-surgical rehabilitation requirements and other medically complex conditions that require ongoing clinical support.",
@@ -33,18 +35,9 @@
   "network": {
     "ariaLabel": "Six Hospitals. Two Countries. One Standard of Care.",
     "heading": [
-      [
-        "Six Hospitals",
-        ". "
-      ],
-      [
-        "Two Countries",
-        ". "
-      ],
-      [
-        "One Standard of Care",
-        "."
-      ]
+      ["Six Hospitals", ". "],
+      ["Two Countries", ". "],
+      ["One Standard of Care", "."]
     ],
     "photo": {
       "image": "who-we-are/network",
@@ -59,7 +52,7 @@
         "label": "Beds Across the Network"
       },
       {
-        "number": "15+",
+        "number": "14+",
         "label": "Years of Clinical Delivery"
       },
       {
@@ -82,20 +75,20 @@
     "tabsLabel": "Our foundation of care",
     "tabs": [
       {
-        "label": "Our Mission",
-        "blocks": [
-          {
-            "type": "note",
-            "text": "To enhance quality of life by adopting best practices, creating stakeholder value and expanding access to care while empowering and engaging our employees."
-          }
-        ]
-      },
-      {
         "label": "Our Vision",
         "blocks": [
           {
             "type": "note",
-            "text": "To be the leader of post-acute and rehabilitation care in the GCC, delivering exceptional patient experiences and clinical outcomes for patients from the region and beyond."
+            "text": "To be the leader of post-acute and rehabilitation services providing exceptional patient experiences and clinical outcomes across the MENA region"
+          }
+        ]
+      },
+      {
+        "label": "Our Mission",
+        "blocks": [
+          {
+            "type": "note",
+            "text": "Enhancing quality of life by adopting best practices, creating stakeholder value, and expanding service access, while empowering and engaging our employees"
           }
         ]
       },
@@ -119,10 +112,7 @@
   },
   "expanding": {
     "ariaLabel": "Expanding Access to Exceptional Care",
-    "heading": [
-      "Expanding Access to",
-      "Exceptional Care"
-    ],
+    "heading": ["Expanding Access to", "Exceptional Care"],
     "headingDot": "",
     "image": {
       "image": "who-we-are/expanding",

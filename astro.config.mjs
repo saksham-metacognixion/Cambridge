@@ -7,6 +7,13 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { transform as lightningTransform, Features } from 'lightningcss';
+import { loadEnv } from 'vite';
+
+// Bug 209 (19 Oct 2026): the Contact Us map key is baked in at build time (ContactForm.astro). A deploy whose environment lacks
+// it built silently and shipped the placeholder map, so say so in the build log. A warning only: an unconfigured environment
+// still builds and shows the placeholder (scripts/contact-map.ts).
+if (!(process.env.PUBLIC_GOOGLE_MAPS_KEY || loadEnv('production', process.cwd(), 'PUBLIC_').PUBLIC_GOOGLE_MAPS_KEY))
+  console.warn('[contact-map] PUBLIC_GOOGLE_MAPS_KEY is not set for this build: Contact Us pages will show the placeholder map');
 
 /**
  * Cache-busting for the self-hosted fonts (performance audit, 10 Oct 2026). The fonts stay in public/fonts/ (project rule) under

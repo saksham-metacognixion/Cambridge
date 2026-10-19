@@ -54,6 +54,18 @@
         "phone": "9200-13122",
         "phoneHref": "920013122"
       },
+      "ae": {
+        "rowPhones": [
+          {
+            "phone": "800-692273",
+            "phoneHref": "800692273"
+          },
+          {
+            "phone": "800-MYCARE",
+            "phoneHref": "800692273"
+          }
+        ]
+      },
       "global": {
         "phones": [
           {
@@ -69,7 +81,7 @@
         ]
       }
     },
-    "_byRegionNote": "Per-edition override of the details above: /sa shows the KSA line (the live site's number, as in home/contact and the FAQ), /ae the UAE line. Global (client, 16 Oct 2026): `phones` = both numbers in the banner, labels as on the Home contact card; the details row under the form keeps the single `phone` line."
+    "_byRegionNote": "Per-edition override of the details above: /sa shows the KSA line (the live site's number, as in home/contact and the FAQ), /ae the UAE line. Global (client, 16 Oct 2026): `phones` = both numbers in the banner, labels as on the Home contact card; the details row under the form shows the same two lines (client, 19 Oct 2026). /ae: `rowPhones` = the details row only, 800-MYCARE under the toll-free number (client, 19 Oct 2026; the letters spell 692273, so it dials the same number)."
   },
   "recovery": {
     "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",

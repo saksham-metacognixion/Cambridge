@@ -150,6 +150,12 @@ export function pageRedirects(): Redirect[] {
           to: urlFor(e, DOCTOR_PATHS.list),
         });
   }
+  // Doctors the client took out of Find a Doctor who stay on Meet the Team: the old profile URL opens the leader profile.
+  for (const e of editions)
+    for (const [doctor, leader] of Object.entries(DOCTOR_TO_LEADER)) {
+      const l = leaders.find((x) => x.slug === leader);
+      if (l) out.push({ from: urlFor(e, DOCTOR_PATHS.profile(doctor)), to: leaderHref(l, e) });
+    }
   out.push(...leadershipRedirects());
   // The live Arabic home page was a WordPress page with its own slug.
   out.push({ from: "/ar/cambridge-hospital", to: urlFor(globalOf("ar")) });
@@ -199,8 +205,11 @@ export function doctorRedirects(): Redirect[] {
  *   - live profiles not imported (RETIRED_LEADER_SLUGS) -> the edition's Meet the Team
  * Any other /leadership/<x> is a 404 (the 404 page links the key sections).
  */
-/** Arabic-only live profile without an English record (عظيم أنور, IT Director, /ar/leadership/azeem-anwar/): not imported (client). */
-const RETIRED_LEADER_SLUGS = ["azeem-anwar"];
+/** Dr. Mohammed Halawani: removed as a doctor (client, 19 Oct 2026), kept as the KSA CEO on Meet the Team. */
+const DOCTOR_TO_LEADER: Record<string, string> = { "mohammed-halawani": "mohammed-halawani" };
+/** Arabic-only live profile without an English record (عظيم أنور, IT Director, /ar/leadership/azeem-anwar/): not imported (client).
+ *  wael-alsayed (Wael Alsayed, KSA): removed from the site by the client, 19 Oct 2026 (tools/leadership/import.py REMOVED). */
+const RETIRED_LEADER_SLUGS = ["azeem-anwar", "wael-alsayed"];
 export function leadershipRedirects(): Redirect[] {
   const out: Redirect[] = [];
   for (const e of editions) {

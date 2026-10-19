@@ -71,10 +71,33 @@
    ]
   },
   {
+   "id": 19605,
+   "slug": "amal-al-hanwa",
+   "country": "sa",
+   "order": 4,
+   "name": {
+    "en": "Amal Al Hanwa",
+    "ar": "أمل الحنوى"
+   },
+   "title": {
+    "en": "Hospital Director – Dhahran",
+    "ar": "مدير المستشفى – الظهران"
+   },
+   "bio": {
+    "en": "<p>Amal is the Hospital Director at Cambridge Hospital KSA.</p><p>Prior to joining the Cambridge Hospital team, Amal served in Saud AL Babtan Cardiac Center as Staff Nurse after that she spent Two years as Headof Nurse in Saud AL Babtan Cardiac Center after that she left to King Fahad Military Hospital as head of nurse, Cardiac Division Director in Saad Specialist Hospital for two years and three years as Critical Care Division Director and CNO in Saad Specialist Hospital from 2016 till 2017</p><p>She acquires the Saudi national and she is fluent in Arabic and English. She holds a Master degree in Management of Health Care from SBS.</p>",
+    "ar": "<p>أمل هي مديرة مستشفى كامبريدج في السعودية.</p><p>قبل انضمامها إلى فريق مستشفى كامبريدج، عملت أمل في مركز سعود الببتان للقلب كممرضة موظفة، ثم قضت عامين كرئيسة للتمريض في مركز سعود الببتان للقلب، ثم انتقلت إلى مستشفى الملك فهد العسكري كرئيسة للممرضة ومديرة قسم القلب في مستشفى سعد التخصصي لمدة عامين وثلاث سنوات كمديرة قسم العناية المركزة ورئيسة العمليات في مستشفى سعد المتخصص من 2016 حتى 2017</p><p>حصلت على الجنسية السعودية وتتقن العربية والإنجليزية. تحمل درجة الماجستير في إدارة الرعاية الصحية من SBS. </p>"
+   },
+   "photo": "leadership/amal-al-hanwa",
+   "old_urls": [
+    "/ar/leadership/amal-al-hanwa",
+    "/leadership/amal-al-hanwa"
+   ]
+  },
+  {
    "id": 19607,
    "slug": "mohammed-alhayyan",
    "country": "sa",
-   "order": 4,
+   "order": 5,
    "name": {
     "en": "Dr. Mohammed Alhayyan",
     "ar": "محمد الحيان"
@@ -91,29 +114,6 @@
    "old_urls": [
     "/ar/leadership/mohammed-alhayyan",
     "/leadership/mohammed-alhayyan"
-   ]
-  },
-  {
-   "id": 19605,
-   "slug": "amal-al-hanwa",
-   "country": "sa",
-   "order": 5,
-   "name": {
-    "en": "Amal Al Hanwa",
-    "ar": "أمل الحنوى"
-   },
-   "title": {
-    "en": "Hospital Director – KSA",
-    "ar": "مدير المستشفى"
-   },
-   "bio": {
-    "en": "<p>Amal is the Hospital Director at Cambridge Hospital KSA.</p><p>Prior to joining the Cambridge Hospital team, Amal served in Saud AL Babtan Cardiac Center as Staff Nurse after that she spent Two years as Headof Nurse in Saud AL Babtan Cardiac Center after that she left to King Fahad Military Hospital as head of nurse, Cardiac Division Director in Saad Specialist Hospital for two years and three years as Critical Care Division Director and CNO in Saad Specialist Hospital from 2016 till 2017</p><p>She acquires the Saudi national and she is fluent in Arabic and English. She holds a Master degree in Management of Health Care from SBS.</p>",
-    "ar": "<p>أمل هي مديرة مستشفى كامبريدج في السعودية.</p><p>قبل انضمامها إلى فريق مستشفى كامبريدج، عملت أمل في مركز سعود الببتان للقلب كممرضة موظفة، ثم قضت عامين كرئيسة للتمريض في مركز سعود الببتان للقلب، ثم انتقلت إلى مستشفى الملك فهد العسكري كرئيسة للممرضة ومديرة قسم القلب في مستشفى سعد التخصصي لمدة عامين وثلاث سنوات كمديرة قسم العناية المركزة ورئيسة العمليات في مستشفى سعد المتخصص من 2016 حتى 2017</p><p>حصلت على الجنسية السعودية وتتقن العربية والإنجليزية. تحمل درجة الماجستير في إدارة الرعاية الصحية من SBS. </p>"
-   },
-   "photo": "leadership/amal-al-hanwa",
-   "old_urls": [
-    "/ar/leadership/amal-al-hanwa",
-    "/leadership/amal-al-hanwa"
    ]
   },
   {
@@ -229,29 +229,6 @@
    "old_urls": [
     "/ar/leadership/salma-al-ghaithi",
     "/leadership/salma-al-ghaithi"
-   ]
-  },
-  {
-   "id": 19613,
-   "slug": "wael-alsayed",
-   "country": "sa",
-   "order": 11,
-   "name": {
-    "en": "Wael Alsayed",
-    "ar": "وائل السيد"
-   },
-   "title": {
-    "en": "Business Development Director – KSA",
-    "ar": "مدير تطوير الأعمال"
-   },
-   "bio": {
-    "en": "<p>Dr Wael Alsayed is the Director for Business Development, Marketing for Cambridge Hospital KSA.</p><p>He is A Firm accomplished &amp; well-seasoned sales and marketing manager with over 18 years of track Record accomplishments in health care Business Development and pharmaceutical field prior to his current role.</p><p>He works closely with the Managing Director to achieve strategic expansion goals. His duties see him liaise closely with the business development team, Marketing and patient relationship teams at Cambridge Hospital KSA.</p><p>Dr Wael specializes in planning, customer relationship management, customer satisfaction, innovative selling strategies, Marketing Strategy, Marketing Operations and creative business development in KSA market.</p><p>Dr Wael has earned his General MBA from Missouri state University Educational program in the USA, He holds a Bachelor’s degree in Veterinary Medicine .</p>",
-    "ar": "<p>الدكتور وائل السيد هو مدير تطوير الأعمال والتسويق في مستشفى كامبريدج في السعودية.</p><p>هو مدير مبيعات وتسويق متمرس ومتمرس في الشركة، ولديه أكثر من 18 عاما من الإنجازات الحافلة في تطوير الأعمال ومجال الأدوية قبل توليه منصبه الحالي.</p><p>يعمل عن كثب مع المدير العام لتحقيق أهداف التوسع الاستراتيجي. تتمثل مهامه في التواصل الوثيق مع فريق تطوير الأعمال، وفرق التسويق وعلاقات المرضى في مستشفى كامبريدج في KSA. </p><p>تتخصص الدكتورة وائل في التخطيط، إدارة علاقات العملاء، رضا العملاء، استراتيجيات البيع المبتكرة، استراتيجية التسويق، عمليات التسويق وتطوير الأعمال الإبداعية في سوق السعودية.</p><p>حصل الدكتور وائل على درجة الماجستير العامة في إدارة الأعمال من برنامج التعليم بجامعة ولاية ميزوري في الولايات المتحدة الأمريكية، ويحمل درجة البكالوريوس في الطب البيطري.</p>"
-   },
-   "photo": "leadership/wael-alsayed",
-   "old_urls": [
-    "/ar/leadership/wael-alsayed",
-    "/leadership/wael-alsayed"
    ]
   },
   {

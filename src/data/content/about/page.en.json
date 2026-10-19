@@ -5,15 +5,14 @@
     "description": "Learn about Cambridge Hospital Group, our mission, accreditations, partnerships and commitment to specialized healthcare and rehabilitation services."
   },
   "hero": {
-    "ariaLabel": "A Leader in Post-Acute and Rehabilitation Care in the GCC",
+    "ariaLabel": "A Leader in Post-Acute Care in the GCC",
     "banner": {
       "image": "about/banner",
       "alt": ""
     },
     "title": [
       "A Leader in",
-      "Post-Acute and",
-      "Rehabilitation Care",
+      "Post-Acute Care",
       "in the GCC"
     ],
     "text": "Comprehensive care and clinical expertise centred on patients and families, from hospital to home.",
@@ -45,121 +44,87 @@
     "items": [
       {
         "year": "2012",
-        "title": [
-          "Cambridge Group Establishment"
-        ],
+        "title": ["Cambridge Group Establishment"],
         "text": "The holding company was established to develop long-term care facilities across the region."
       },
       {
         "year": "2014",
-        "title": [
-          "UAE – Abu Dhabi and Al Ain Facilities Launch"
-        ],
+        "title": ["UAE – Abu Dhabi and Al Ain Facilities Launch"],
         "text": "Phase I in Abu Dhabi Hospital launched in June 2014, followed by Phase II in January 2015 and the Al Ain facility in April 2015."
       },
       {
         "year": "2015",
-        "title": [
-          "UAE - TVU Programme Launch"
-        ],
+        "title": ["UAE - TVU Programme Launch"],
         "text": "Launched the first Transitional Vent Unit (TVU) programme for mechanically ventilated patients."
       },
       {
         "year": "2016",
-        "title": [
-          "UAE & KSA Expansion"
-        ],
-        "text": "Secured a SAGIA license for expansion into Saudi Arabia and opened Phase II of Al Ain Facility."
+        "title": ["UAE & KSA Expansion"],
+        "text": "Secured a SAGIA (now MISA) license for expansion into Saudi Arabia and opened Phase II of Al Ain Facility."
       },
       {
         "year": "2019",
-        "title": [
-          "KSA - Dhahran Facility Launch"
-        ],
+        "title": ["KSA - Dhahran Facility Launch"],
         "text": "Opened the Eastern Province’s first dedicated inpatient and outpatient rehabilitation facility."
       },
       {
         "year": "2020",
-        "title": [
-          "UAE - Abu Dhabi Facility Expansion"
-        ],
-        "text": "Expanded the Abu Dhabi facility, with capacity planned to reach 106 beds."
+        "title": ["UAE - Abu Dhabi Facility Expansion"],
+        "text": "Expanded the Abu Dhabi facility, with capacity reaching 106 beds."
       },
       {
         "year": "2021",
-        "title": [
-          "Group Acquisition by Amanat"
-        ],
-        "text": "Strategic acquisition by Amanat Holdings to drive accelerated sustainable growth."
+        "title": ["Group Acquisition by Amanat"],
+        "text": "Strategic acquisition by Amanat Holdings of majority stake to drive accelerated sustainable growth."
       },
       {
         "year": "2023",
-        "title": [
-          "KSA - IECC Jeddah Acquisition"
-        ],
-        "text": "Group acquired a majority stake in the IECC facility in Jeddah, adding 100 beds to the group’s portfolio."
+        "title": ["KSA - IECC Jeddah Acquisition"],
+        "text": "Group acquired a majority stake in the IECC facility (now known as Cambridge Hospital Jeddah), adding 100 beds to the group’s portfolio."
       },
       {
         "year": "2023",
-        "title": [
-          "UAE - Al Ain Facility Expansion"
-        ],
+        "title": ["UAE - Al Ain Facility Expansion"],
         "text": "Expanded the Al Ain facility to a capacity of 109 beds."
       },
       {
         "year": "2024",
-        "title": [
-          "UAE - Al Mudeef Centre Partnership"
-        ],
-        "text": "Entered into a public-private partnership with Zayed Higher Organisation to operate and maintain the 80-bed Al Mudeef facility."
+        "title": ["UAE - Al Mudeef Centre Partnership"],
+        "text": "Entered into a public-private partnership with Zayed Authority for People of Determination to operate and maintain the 80-bed Al Mudeef facility."
       },
       {
         "year": "2024",
-        "title": [
-          "KSA - Al Khobar Facility Commissioning"
-        ],
+        "title": ["KSA - Al Khobar Facility Commissioning"],
         "text": "Commissioned a long-term care and ICU facility in Saudi Arabia’s Eastern Province."
       },
       {
         "year": "2025",
-        "title": [
-          "KSA - Al Khobar Facility Expansion"
-        ],
-        "text": "Licensed 100 additional beds, including 30 rehabilitation beds, bringing total capacity to 200 beds."
+        "title": ["KSA - Al Khobar Facility Expansion"],
+        "text": "Licensed 100 additional beds, including 30 rehabilitation beds, with planned target of 150 beds total."
       },
       {
         "year": "2025",
-        "title": [
-          "Cambridge Health Group Launch"
-        ],
+        "title": ["Cambridge Health Group Launch"],
         "text": "Established Cambridge Health Group as the regional healthcare platform for strategic growth and portfolio expansion."
       },
       {
         "year": "2026",
-        "title": [
-          "KSA - Al Khobar Facility Expansion"
-        ],
+        "title": ["KSA - Al Khobar Facility Expansion"],
         "text": "Increased the Al Khobar facility’s capacity to 150 beds as part of the group’s expansion in Saudi Arabia."
       },
       {
         "year": "2026",
-        "title": [
-          "Full Ownership by Amanat"
-        ],
-        "text": "Amanat Holdings acquired full ownership of Cambridge Health Group, supporting further growth and integration."
+        "title": ["Full Ownership by Amanat"],
+        "text": "Amanat Holdings completes its phased acquisition of Cambridge Health Group, taking its stake to 100%."
       },
       {
         "year": "2026",
-        "title": [
-          "Cambridge Hospital Brand Unification"
-        ],
-        "text": "CMRE, Al Mudeef Center and IECC facilities in the UAE and Saudi Arabia unified under the Cambridge Hospital brand."
+        "title": ["Cambridge Hospital Brand Unification"],
+        "text": "CMRC, Al Mudeef Center and IECC facilities in the UAE and Saudi Arabia unified under the Cambridge Hospital brand."
       },
       {
         "year": "2026",
-        "title": [
-          "KSA - Cambridge Homecare Launch"
-        ],
+        "title": ["KSA - Cambridge Homecare Launch"],
         "text": "Launched Cambridge Homecare in Saudi Arabia, providing initial home-based patient services."
       }
     ]
@@ -170,39 +135,28 @@
     "text": "",
     "cards": [
       {
-        "title": [
-          "Who We Are"
-        ],
+        "title": ["Who We Are"],
         "button": "Learn More",
         "page": "whoWeAre",
         "image": "about/card-about",
         "alt": ""
       },
       {
-        "title": [
-          "Why Choose",
-          "Cambridge",
-          "Hospital"
-        ],
+        "title": ["Why Choose", "Cambridge", "Hospital"],
         "button": "Discover More",
         "page": "whyCambridge",
         "image": "about/card-why",
         "alt": ""
       },
       {
-        "title": [
-          "Accreditations &",
-          "Partnerships"
-        ],
+        "title": ["Accreditations &", "Partnerships"],
         "button": "View Details",
         "page": "accreditations",
         "image": "about/card-accreditations",
         "alt": ""
       },
       {
-        "title": [
-          "Careers"
-        ],
+        "title": ["Careers"],
         "button": "Explore Careers",
         "page": "careers",
         "image": "about/card-careers",

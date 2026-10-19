@@ -3,7 +3,6 @@ import { Picture } from 'astro:assets';
 import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
 import type { Edition } from '../../lib/editions';
-import chevron from '../../assets/media-hub/select-chevron.svg';
 import Pagination from '../shared/Pagination.astro';
 
 /*
@@ -14,12 +13,19 @@ import Pagination from '../shared/Pagination.astro';
  * neighbours 270 x 166.154 r7.165 at x97 / x682 (opacity .75) and x-187 / x965 (opacity .5), vertically centred (Figma: left pair
  * 10 higher, normalised), BEHIND the active photo | 21.63 | pagination dots (Figma: its static dot divider, 40.972 x 8.716 centred).
  * Controls: the photos themselves (click / tap a side photo, arrow keys, swipe; src/scripts/hospital-gallery.ts) and the shared
- * pagination dots, one per photo of the shown area (bug 012; hidden with a single photo). The dropdown switches the area
- * (text + photos). One area ("Outdoor Spaces") in Figma.
+ * pagination dots, one per photo (bug 012; hidden with a single photo). Figma has an area dropdown ("Outdoor Spaces"); the client
+ * removed it (WhatsApp, 19 Oct 2026): every photo of the hospital shows in ONE strip, areas in their JSON order, a photo listed
+ * under two areas shown once. The hospital JSON keeps its areas so the grouping can come back.
  */
 interface Area { key: string; label: string; active?: number; images: { image: string; alt: string }[] }
 interface Props { edition: Edition; c: { heading: string; text: string[]; selectLabel: string; galleryLabel: string; slideLabel: string; showSlide: string }; text?: string[]; areas: Area[] }
-const { edition, c, areas } = Astro.props;
+const { edition, c } = Astro.props;
+const seen = new Set<string>();
+const areas: Area[] = [{
+  key: 'all',
+  label: c.heading,
+  images: Astro.props.areas.flatMap((a) => a.images).filter((im) => !seen.has(im.image) && !!seen.add(im.image)),
+}];
 // Section text: the client's "Designed for Comfort, Recovery and Wellbeing" paragraphs (same for every hospital, shared JSON; a
 // hospital file may override it). Photos per area only where they exist (Abu Dhabi, Figma); the other hospitals show the text alone.
 const text: string[] = Astro.props.text ?? c.text;
@@ -43,27 +49,12 @@ const pos = (len: number, active: number, i: number) => {
 
   {!hasPhotos && <div class="text solo text-justify-center">{text.map((p) => <p>{p}</p>)}</div>}
 
-  {!hasPhotos ? null : areas.length > 1 ? (
-    <div class="ui-box pick">
-      <label for="hospital-area" class="sr-only">{c.selectLabel}</label>
-      <select id="hospital-area" class="ui-field" data-gallery-select>
-        {areas.map((a) => <option value={a.key}>{a.label}</option>)}
-      </select>
-      <img loading="lazy" src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="ui-chev" />
-    </div>
-  ) : (
-    <div class="ui-box pick" aria-hidden="true">
-      <span class="ui-field one">{areas[0]?.label}</span>
-      <img loading="lazy" src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="ui-chev" />
-    </div>
-  )}
-
-  {areas.map((a, ai) => {
+  {hasPhotos && areas.map((a, ai) => {
     const active = Math.min(a.active ?? 0, a.images.length - 1);
     return (
       <div class="area" data-gallery-area={a.key} hidden={ai !== 0}>
-        <div class="text text-justify-center">{text.map((p) => <p>{p}</p>)}</div>
-        <ul class="slides" data-slides data-active={active} role="list" aria-label={fill(c.galleryLabel, { area: a.label })}>
+        <div class="text solo text-justify-center">{text.map((p) => <p>{p}</p>)}</div>
+        <ul class="slides" data-slides data-active={active} role="list" aria-labelledby="healing-heading">
           {a.images.map((im, i) => (
             <li class="slide" data-slide data-pos={pos(a.images.length, active, i)}>
               <button type="button" class="pick-slide" aria-label={fill(c.showSlide, { n: i + 1, total: a.images.length })} aria-current={i === active ? 'true' : undefined} tabindex={i === active ? 0 : -1}>
@@ -92,12 +83,10 @@ const pos = (len: number, active: number, i: number) => {
   .heal { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; display: flex; flex-direction: column; align-items: center; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .h { margin: 0; align-self: stretch; padding-inline: 16px; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
-  .pick { margin-top: calc(16 * var(--u)); width: calc(311 * var(--u)); max-width: calc(100% - 32px); }
-  .pick .one { display: flex; align-items: center; }
   .area { display: contents; }
   .area[hidden] { display: none; }
   .text { margin-top: calc(22 * var(--u)); width: calc(539 * var(--u)); max-width: calc(100% - 32px); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); } /* alignment: .text-justify-center (bug 132) */
-  .text.solo { margin-top: calc(16 * var(--u)); } /* no area dropdown: the text sits where the dropdown's top was */
+  .text.solo { margin-top: calc(16 * var(--u)); } /* no area dropdown (removed 19 Oct 2026): the text sits where its top was */
   .text p { margin: 0; overflow-wrap: anywhere; }
   .text p + p { margin-top: calc(14 * var(--u)); }
   .slides { position: relative; list-style: none; margin: calc(42 * var(--u)) 0 0; padding: 0; align-self: stretch; height: calc(397.648 * var(--u)); overflow: hidden; touch-action: pan-y; }

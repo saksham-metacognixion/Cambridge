@@ -19,7 +19,7 @@ import type { Localized } from "./content";
  * published, collision included: /leadership/arafat-alakhrass/ is Dr. Wael Sary, /leadership/arafat-alakhrass-2/ is Arafat
  * Alakhrass.
  *
- * Editions (no UAE / KSA mixing, like doctor profiles): Global lists all 17 (live order) with the All Countries / UAE / KSA
+ * Editions (no UAE / KSA mixing, like doctor profiles): Global lists all 16 (live order) with the All Countries / UAE / KSA
  * filter; /ae lists the UAE leaders, /sa the KSA leaders. A profile is built on Global and in its own country's editions.
  */
 export interface Leader {

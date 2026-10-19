@@ -12,7 +12,7 @@
   },
   "overviewHeading": "Overview",
   "date": {
-    "show": true,
+    "show": false,
     "label": "Published"
   },
   "pending": {

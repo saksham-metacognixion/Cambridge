@@ -1,8 +1,85 @@
 {
+ "ae:about/banner": {
+  "w": 594,
+  "h": 426,
+  "shape": true,
+  "pills": [
+   11.2,
+   -23.9
+  ],
+  "end": 40.1,
+  "drop": 0
+ },
+ "ae:accreditations/banner": {
+  "w": 560,
+  "h": 392,
+  "shape": true,
+  "pills": [
+   -7.4,
+   -57.5
+  ],
+  "end": 56.2,
+  "drop": 0
+ },
  "ae:care/heroes/post-surgical-rehab": {
   "w": 500,
   "h": 450,
   "shape": true
+ },
+ "ae:careers/banner": {
+  "w": 548,
+  "h": 415,
+  "shape": true,
+  "pills": [
+   -14.4,
+   -34.5
+  ],
+  "end": 60.9,
+  "drop": 0
+ },
+ "ae:conditions/banner": {
+  "w": 378,
+  "h": 402,
+  "shape": true,
+  "pills": [
+   -87.0,
+   -47.2
+  ],
+  "end": 157.7,
+  "drop": 0
+ },
+ "ae:contact-page/banner": {
+  "w": 420,
+  "h": 433,
+  "shape": true,
+  "pills": [
+   -78.9,
+   -16.2
+  ],
+  "end": 123.7,
+  "drop": 0
+ },
+ "ae:doctors-page/banner": {
+  "w": 514,
+  "h": 414,
+  "shape": true,
+  "pills": [
+   -30.4,
+   -35.2
+  ],
+  "end": 79.2,
+  "drop": 0
+ },
+ "ae:faq/hero": {
+  "w": 408,
+  "h": 436,
+  "shape": true,
+  "pills": [
+   -57.1,
+   -13.3
+  ],
+  "end": 158.8,
+  "drop": 0
  },
  "ae:hero/banner3": {
   "w": 580,
@@ -14,6 +91,81 @@
   "h": 450,
   "shape": true,
   "bleed": "end"
+ },
+ "ae:international/banner": {
+  "w": 532,
+  "h": 388,
+  "shape": true,
+  "pills": [
+   -6.6,
+   -61.1
+  ]
+ },
+ "ae:media-hub/banner": {
+  "w": 302,
+  "h": 414,
+  "shape": true,
+  "pills": [
+   -131.9,
+   -34.8
+  ],
+  "end": 189.1,
+  "drop": 0
+ },
+ "ae:patient-hub/banner": {
+  "w": 380,
+  "h": 421,
+  "shape": true,
+  "pills": [
+   -91.7,
+   -28.6
+  ],
+  "end": 151.1,
+  "drop": 0
+ },
+ "ae:refer/banner": {
+  "w": 568,
+  "h": 364,
+  "shape": true,
+  "pills": [
+   -14.0,
+   -84.8
+  ],
+  "end": 40.5,
+  "drop": 0
+ },
+ "ae:testimonials-page/banner": {
+  "w": 464,
+  "h": 407,
+  "shape": true,
+  "pills": [
+   -66.2,
+   -42.5
+  ],
+  "end": 93.4,
+  "drop": 0
+ },
+ "ae:who-we-are/banner": {
+  "w": 548,
+  "h": 397,
+  "shape": true,
+  "pills": [
+   -5.2,
+   -52.4
+  ],
+  "end": 70.1,
+  "drop": 0
+ },
+ "ae:why/banner": {
+  "w": 517,
+  "h": 371,
+  "shape": true,
+  "pills": [
+   -21.3,
+   -78.3
+  ],
+  "end": 85.0,
+  "drop": 0
  },
  "global:about/banner": {
   "w": 594,
@@ -826,6 +978,39 @@
   "shape": true,
   "bleed": "end"
  },
+ "sa:conditions/banner": {
+  "w": 378,
+  "h": 402,
+  "shape": true,
+  "pills": [
+   -87.0,
+   -47.2
+  ],
+  "end": 157.7,
+  "drop": 0
+ },
+ "sa:contact-page/banner": {
+  "w": 420,
+  "h": 433,
+  "shape": true,
+  "pills": [
+   -78.9,
+   -16.2
+  ],
+  "end": 123.7,
+  "drop": 0
+ },
+ "sa:doctors-page/banner": {
+  "w": 514,
+  "h": 414,
+  "shape": true,
+  "pills": [
+   -30.4,
+   -35.2
+  ],
+  "end": 79.2,
+  "drop": 0
+ },
  "sa:faq/hero": {
   "w": 540,
   "h": 460,
@@ -861,6 +1046,17 @@
   "shape": true,
   "bleed": "end"
  },
+ "sa:media-hub/banner": {
+  "w": 302,
+  "h": 414,
+  "shape": true,
+  "pills": [
+   -131.9,
+   -34.8
+  ],
+  "end": 189.1,
+  "drop": 0
+ },
  "sa:patient-hub/banner": {
   "w": 373,
   "h": 420,
@@ -870,6 +1066,17 @@
    -29.0
   ],
   "end": 148.5,
+  "drop": 0
+ },
+ "sa:refer/banner": {
+  "w": 568,
+  "h": 364,
+  "shape": true,
+  "pills": [
+   -14.0,
+   -84.8
+  ],
+  "end": 40.5,
   "drop": 0
  },
  "sa:testimonials-page/banner": {

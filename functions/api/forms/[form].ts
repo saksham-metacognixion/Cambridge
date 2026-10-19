@@ -1,23 +1,27 @@
 /*
- * POST /api/forms/<form>  — Book an Appointment, Send an Enquiry (page + pop-up), Refer a Patient, Your Opinion Matters
- * (pop-up + Patient Feedback page). Validate -> verify Turnstile -> send ONE email -> answer. Nothing is stored: no
+ * POST /api/forms/<form>  — Book an Appointment, Send an Enquiry (page + pop-up), Refer a Patient (doctor / other), Your Opinion Matters
+ * (pop-up + Patient Feedback page), Newsletter (footer + Media Hub; no consent box, D10). Validate -> verify Turnstile -> send ONE email -> answer. Nothing is stored: no
  * database, no KV, no logs of submissions (errors are logged by type only, never with field values).
  *
- * Request: multipart/form-data or urlencoded, fields per src/data/forms.json, plus
- *   consent=on (required on every form), cf-turnstile-response (added by the Turnstile widget), edition=<global|ae|sa>-<en|ar>.
+ * Request: multipart/form-data or urlencoded, fields per src/data/forms.json (type `file` = one optional attachment, multipart only,
+ *   rules in forms.json `attachments`: extension, size and first bytes checked here, renamed, emailed, never stored; bug 093), plus
+ *   consent=on (required on every form except `consent: false` ones), cf-turnstile-response (added by the Turnstile widget), edition=<global|ae|sa>-<en|ar>.
  * Response: JSON { ok: true } | { ok: false, error, fields?: { <name>: "required" | "invalid" | "too_long" } } when the
  * client asks for JSON (Accept: application/json); otherwise a 303 back to the page with ?form=sent|error, so the
  * form also works without JavaScript. The EN/AR messages for these codes live in src/data/content/forms/common.*.json.
- * Recipient: env FORM_TO_<INBOX> (e.g. FORM_TO_BOOK_APPOINTMENT), see .env.example.
+ * Recipient: env FORM_TO_<INBOX> (e.g. FORM_TO_BOOK_APPOINTMENT), or the form's own `inboxEnv` name, see .env.example.
  */
 import formsConfig from "../../../src/data/forms.json";
 import specialtiesData from "../../../src/data/specialties.json";
 import doctorsData from "../../../src/data/doctors.json";
 import hospitalsData from "../../../src/data/hospitals.json";
+import countriesData from "../../../src/data/countries.json";
 import dialData from "../../../src/data/dial-codes.json";
 import type { PagesContext } from "../../_lib/types";
 import { verifyTurnstile } from "../../_lib/turnstile";
-import { sendMail } from "../../_lib/email";
+import { mailConfigError, sendMail, type Attachment } from "../../_lib/email";
+import { resolveForms, type RawForm } from "../../../src/lib/form-config";
+import { checkFile, extOf, safeName, sniff, type AttachmentRules } from "../../../src/lib/attachments";
 
 type Field = {
   name: string;
@@ -28,14 +32,14 @@ type Field = {
   options?: string[];
   source?: string;
 };
-const forms = formsConfig.forms as Record<
-  string,
-  { subject: string; inbox: string; fields: Field[] }
->;
+const forms = resolveForms(
+  formsConfig.forms as Record<string, RawForm>,
+) as Record<string, { subject: string; inbox: string; inboxEnv?: string; consent: boolean; fields: Field[] }>;
 // Mobile fields post `<name>_code` = ISO country (src/data/dial-codes.json); the email shows its calling code.
 const dialCodes = new Map(dialData.countries.map((c) => [c.iso, c.code]));
 const REGIONS = ["global", "ae", "sa"];
 const MAX_BODY = 32 * 1024;
+const attachmentRules = formsConfig.attachments as AttachmentRules;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const TEL_RE = /^[0-9][0-9 ()-]{4,18}$/;
 const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -49,6 +53,7 @@ const sources: Record<string, Map<string, string>> = {
   hospitals: new Map(
     hospitalsData.hospitals.map((h) => [h.slug, `${h.brand.en} ${h.city.en}`]),
   ),
+  countries: new Map(countriesData.countries.map((c) => [c.code, c.name.en])),
 };
 
 export const onRequestPost = async ({
@@ -82,7 +87,11 @@ export const onRequestPost = async ({
   if (!form) return fail(404, "unknown_form");
 
   if (!originAllowed(request, env.ALLOWED_ORIGINS)) return fail(403, "origin");
-  if (Number(request.headers.get("Content-Length") ?? 0) > MAX_BODY)
+  // Text-only forms: 32 KB. A form with a file field: the file limit + room for the text fields and multipart framing.
+  const maxBody = form.fields.some((f) => f.type === "file")
+    ? attachmentRules.maxBytes + MAX_BODY
+    : MAX_BODY;
+  if (Number(request.headers.get("Content-Length") ?? 0) > maxBody)
     return fail(413, "too_large");
 
   let data: FormData;
@@ -95,38 +104,55 @@ export const onRequestPost = async ({
   // Validation (required, format, length, allowed options) + consent on every form.
   const fields: Record<string, string> = {};
   const rows: [string, string][] = [];
+  const attachments: Attachment[] = [];
   for (const f of form.fields) {
+    if (f.type === "file") {
+      const r = await readFile(f, data.get(f.name));
+      if (r.error) fields[f.name] = r.error;
+      if (r.file) attachments.push(r.file);
+      rows.push([f.label ?? f.name, r.file ? `${r.file.filename} (${Math.ceil(r.file.content.length / 1024)} KB, attached)` : ""]);
+      continue;
+    }
     const v = String(data.get(f.name) ?? "").trim();
     const error = check(f, v, data);
     if (error) fields[f.name] = error;
     rows.push([f.label ?? f.name, display(f, v, data)]);
   }
   const consent = String(data.get("consent") ?? "");
-  if (!["on", "true", "1", "yes"].includes(consent))
+  if (form.consent && !["on", "true", "1", "yes"].includes(consent))
     fields.consent = "required";
   if (Object.keys(fields).length) return fail(422, "validation", fields);
 
+  // Server settings: checked before Turnstile (whose token is single-use), and logged by variable NAME only, so a
+  // deployment without its environment variables shows up in the function log instead of failing silently.
+  // Edition id from the hidden field, whitelisted before it reaches the email subject (never raw user input there).
+  const rawEdition = String(data.get("edition") ?? "");
+  const edition = /^(global|ae|sa)-(en|ar)$/.test(rawEdition) ? rawEdition : "global-en";
+  const region = edition.split("-")[0];
+  const inboxEnv =
+    form.inboxEnv ?? `FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`;
+  const to = recipients(env[inboxEnv as keyof typeof env], region);
+  const setup = [
+    env.TURNSTILE_SECRET_KEY ? "" : "TURNSTILE_SECRET_KEY missing",
+    to.length ? "" : `${inboxEnv} has no valid address for region ${region}`,
+    mailConfigError(env) ?? "",
+  ].filter(Boolean);
+  if (setup.length) {
+    console.error(`form ${formId}: not configured (${setup.join("; ")})`);
+    return fail(500, "not_configured");
+  }
+
   // Spam protection.
-  if (!env.TURNSTILE_SECRET_KEY) return fail(500, "not_configured");
   const human = await verifyTurnstile(
     String(data.get("cf-turnstile-response") ?? ""),
-    env.TURNSTILE_SECRET_KEY,
+    env.TURNSTILE_SECRET_KEY!,
     request.headers.get("CF-Connecting-IP"),
   );
-  if (!human) return fail(403, "turnstile");
+  if (human === "config") return fail(500, "not_configured");
+  if (human !== "ok") return fail(403, "turnstile");
 
-  // Recipient for this form type in this region.
-  const edition = String(data.get("edition") ?? "global-en");
-  const region = REGIONS.includes(edition.split("-")[0])
-    ? edition.split("-")[0]
-    : "global";
-  const to = recipients(
-    env[`FORM_TO_${form.inbox.toUpperCase().replace(/-/g, "_")}`],
-    region,
-  );
-  if (!to.length) return fail(500, "not_configured");
-
-  rows.push(["Edition", edition], ["Consent", "yes"]);
+  rows.push(["Edition", edition]);
+  if (form.consent) rows.push(["Consent", "yes"]);
   const email = String(data.get("email") ?? "").trim();
   try {
     await sendMail(
@@ -136,6 +162,7 @@ export const onRequestPost = async ({
         text: rows.map(([k, v]) => `${k}: ${v}`).join("\n"),
         html: `<table>${rows.map(([k, v]) => `<tr><th align="left">${esc(k)}</th><td>${esc(v).replace(/\n/g, "<br>")}</td></tr>`).join("")}</table>`,
         replyTo: EMAIL_RE.test(email) ? email : undefined,
+        ...(attachments.length ? { attachments } : {}),
       },
       env,
     );
@@ -175,9 +202,43 @@ function check(f: Field, v: string, data: FormData): string | undefined {
     case "rating":
       return f.options?.includes(v) ? undefined : "invalid";
     case "select":
-      return f.source && !sources[f.source]?.has(v) ? "invalid" : undefined;
+      if (f.source) return sources[f.source]?.has(v) ? undefined : "invalid";
+      return f.options && !f.options.includes(v) ? "invalid" : undefined;
   }
   return undefined;
+}
+
+/**
+ * The attachment of a `file` field: nothing (no file chosen: absent, an empty file part, or a no-JS urlencoded post that only
+ * carries a name), an error code, or the file read into memory. Never trusts the browser: the extension must be configured,
+ * the size within the limit and the first bytes must match the extension; the email's MIME type comes from the config and
+ * the name is rebuilt (no path, no control characters). The bytes live only in this request (no temp file, no log).
+ */
+async function readFile(
+  f: Field,
+  v: FormDataEntryValue | null,
+): Promise<{ error?: string; file?: Attachment }> {
+  if (!v || typeof v === "string" || (!v.name && !v.size))
+    return f.required ? { error: "required" } : {};
+  const bad = checkFile(v.name, v.size, attachmentRules);
+  if (bad) return { error: bad };
+  const ext = extOf(v.name);
+  let content: Uint8Array;
+  try {
+    content = new Uint8Array(await v.arrayBuffer());
+  } catch {
+    return { error: "file_invalid" };
+  }
+  if (content.length !== v.size || content.length > attachmentRules.maxBytes)
+    return { error: content.length > attachmentRules.maxBytes ? "file_size" : "file_invalid" };
+  if (!sniff(ext, content.subarray(0, 16))) return { error: "file_invalid" };
+  return {
+    file: {
+      filename: safeName(v.name, ext),
+      content,
+      contentType: attachmentRules.types[ext],
+    },
+  };
 }
 
 /** Value as staff read it in the email. */
@@ -243,6 +304,8 @@ function sameOrigin(url: string, req: Request) {
   }
 }
 function originAllowed(req: Request, allowed?: string) {
+  // Modern browsers label cross-site posts; reject those outright (Turnstile still applies to the rest).
+  if (req.headers.get("Sec-Fetch-Site") === "cross-site") return false;
   const origin = req.headers.get("Origin");
   if (!origin) return true; // same-origin form posts from older browsers may omit it; Turnstile still applies
   const list = allowed

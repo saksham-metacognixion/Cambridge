@@ -1,0 +1,168 @@
+---
+import RichText from '../shared/RichText.astro';
+import { Picture } from 'astro:assets';
+import { px, vwSizes } from '../../lib/scale';
+import { img } from '../../lib/images';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * Reusable ARIA tabs (WAI-ARIA tablist / tab / tabpanel, vertical): used by the detail-page topics (Figma 41:2373) and
+ * both lists on Careers (112:7295). Behaviour: src/scripts/tabs.ts (arrow keys / Home / End, roving tabindex, Left/Right
+ * mirrored on RTL). Without JS the default tab's panel is visible (the others carry `hidden`).
+ * Look: the live site's tabs since 13 Oct 2026 (client: "exactly as live"; values at `const L` below). Was Figma 311 x 63, Book 13/14,
+ * active #418ea2 with a text shadow, others rgba(231,231,231,.45). Figma notes kept for history:
+ * Look (Figma px): tabs 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25; active #418ea2, white text with
+ * text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059. The panel sits `gap` right of the tabs
+ * (18 on detail pages, 24 on Careers), `top` below the tabs top (1 / 27), `width` wide (610 / 529 / 441), Book 12/14 #6b6b6b.
+ * Block types: p (paragraph) | h (sub-heading, Medium) | sec (sub-heading, Book, #004059: Accreditations) | lead (teal line, 22) |
+ * note (teal line, 14) | ul (bullets) | lines (several lines, line breaks kept) | bullets (lines starting with a literal bullet,
+ * first line 19 tall: Accreditations). One empty 14px line between blocks. Text goes through RichText ("[label](href)" links,
+ * "**bold**" lead-ins).
+ * `look` (Accreditations 55:12215: tabs 311 x 78, pitch 80.43, label Book 17 (active Bold) centred vertically, no text shadow):
+ * overrides the tab geometry; defaults = the values above. `item.image` = a picture placed inside the panel (page px x, y).
+ * Selected fill = the --tab-selected token in global.css (bug 056, 8 Oct 2026: #418ea2 as in Figma, not navy).
+ * Corners (bug 049, client request 7 Oct 2026; square in Figma): tabs --radius-btn, panel (its focus ring) --radius-card.
+ * `pending`: the text shown in an empty panel (staging only; the caller passes null in production).
+ * Below 1024 (bug 035, 7 Oct 2026; no Figma frame) the two columns are NOT stacked: the container is a grid of 2n rows
+ * and the tab list / panel list are subgrids over the same column, tab i in row 2i+1 and panel i in row 2i+2, so the open
+ * panel sits directly under its tab (accordion look) while the markup and the ARIA tabs pattern stay the same. Both lists
+ * cover the whole column, so they are pointer-events: none and their children auto. Browsers without subgrid keep the
+ * old stacked layout (@supports).
+ */
+export type Block =
+  | { type: 'p' | 'h' | 'lead' | 'note' | 'sec'; text: string }
+  | { type: 'lines' | 'bullets'; lines: string[] }
+  | { type: 'ul'; items: (string | string[])[] };
+interface Props {
+  edition: Edition;
+  label: string;
+  items: { label: string; blocks: Block[]; image?: { image: string; alt: string; x: number; y: number; w: number; h: number } }[];
+  look?: { tabH?: number; tabGap?: number; fontSize?: number; lineHeight?: number; activeWeight?: number; shadow?: boolean; center?: boolean; padStart?: number; labelW?: number };
+  /** page x / y of the panel text box, so `item.image` positions are page coordinates (Figma px) */
+  panelX?: number;
+  panelY?: number;
+  /** keep `item.image` in the panel's flow on desktop too: centred at the panel top, 32 px (23.378 Figma px) above the text (live Accreditations) */
+  artFlow?: boolean;
+  active?: number;
+  /** id prefix: two tab lists on one page need different ids */
+  idPrefix?: string;
+  pending?: string | null;
+  /** Figma px */
+  gap?: number;
+  top?: number;
+  width?: number;
+}
+const { edition, label, items, active: activeIn = 0, idPrefix = '', pending, gap = 21.917, top = 1, width = 610, look = {}, panelX = 0, panelY = 0, artFlow = false } = Astro.props;
+// Defaults = the live site's Greenshift tabs (client 13 Oct 2026: "exactly as live"; saved live Who We Are / Accreditations / FAQs,
+// docs/live-save-13oct), in Figma px at 1440 (px / 1.3688): 375 x 56 (two lines 88), 8 apart, label Book 16 on a 32 line at 25 in
+// (24 padding + 1 border), centred vertically, radius 14, inactive #f5f5f5, no text shadow; the panel 30 right of the tabs.
+const L = { tabH: 40.912, tabGap: 5.845, fontSize: 11.689, lineHeight: 23.378, activeWeight: 400, shadow: false, center: true, padStart: 18.264, labelW: 237.43, ...look };
+const photos = items.map((t) => (t.image ? { ...t.image, src: img(t.image.image, edition.region) } : null));
+const active = Math.min(activeIn, Math.max(items.length - 1, 0));
+const id = (kind: string, i: number) => `${idPrefix}${kind}-${i}`;
+---
+
+<div class:list={['topics', L.center && 'centered', artFlow && 'art-flow']} data-tabs style={`--rows:${items.length * 2};--pg:${gap};--pt:${top};--pw:${width};--th:${L.tabH};--tgp:${L.tabGap};--tfs:${L.fontSize};--tlh:${L.lineHeight};--taw:${L.activeWeight};--tsh:${L.shadow ? 1 : 0};--tps:${L.padStart};--tlw:${L.labelW}`}>
+  <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={label}>
+    {items.map((t, i) => (
+      <button type="button" role="tab" id={id('tab', i)} class="tab ui-tab" aria-selected={i === active ? 'true' : 'false'} aria-controls={id('panel', i)} tabindex={i === active ? 0 : -1} style={`--r:${2 * i + 1}`}>
+        <span class="tab-label">{t.label}</span>
+      </button>
+    ))}
+  </div>
+  <div class="panels">
+    {items.map((t, i) => (
+      <div role="tabpanel" id={id('panel', i)} class="panel" aria-labelledby={id('tab', i)} tabindex="0" hidden={i !== active} style={`--r:${2 * i + 2}`}>
+        {photos[i] && (
+          <Picture src={photos[i]!.src} formats={['avif']} fallbackFormat="webp" width={px(photos[i]!.w)} height={px(photos[i]!.h)} position={photos[i]!.position} widths={[px(photos[i]!.w), px(photos[i]!.w) * 2]} sizes={vwSizes(photos[i]!.w)} loading="lazy" decoding="async" alt={photos[i]!.alt} class="art" pictureAttributes={{ class: 'contents' }} style={`--ax:${photos[i]!.x - panelX};--ay:${photos[i]!.y - panelY};--aw:${photos[i]!.w};--ah:${photos[i]!.h}`} />
+        )}
+        {t.blocks.length === 0 && pending && <p class="pending">{pending}</p>}
+        {t.blocks.map((b) =>
+          b.type === 'ul' ? (
+            <ul class="ul">
+              {b.items.map((it) => (
+                <li>{Array.isArray(it) ? it.map((line, k) => (k === 0 ? <RichText text={line} edition={edition} /> : <><br /><RichText text={line} edition={edition} /></>)) : <RichText text={it} edition={edition} />}</li>
+              ))}
+            </ul>
+          ) : b.type === 'lines' ? (
+            <p class="lines">{b.lines.map((line, k) => (k === 0 ? <RichText text={line} edition={edition} /> : <><br /><RichText text={line} edition={edition} /></>))}</p>
+          ) : b.type === 'bullets' ? (
+            <p class="bullets"><span class="b1">{b.lines[0]}</span>{b.lines.slice(1).map((line) => <><br />{line}</>)}</p>
+          ) : b.type === 'h' ? (
+            <h3 class="sub"><RichText text={b.text} edition={edition} /></h3>
+          ) : (
+            <p class={b.type}><RichText text={b.text} edition={edition} /></p>
+          ),
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  import '../../scripts/tabs';
+</script>
+
+<style>
+  .topics { display: flex; flex-direction: column; gap: calc(18 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
+  .tablist { display: flex; flex-direction: column; gap: calc(var(--tgp, 2) * var(--u)); }
+  .tab { display: flex; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: max(44px, calc(var(--th, 63) * var(--u))); margin: 0; padding-block: calc(8.767 * var(--u)); padding-inline: calc(var(--tps, 24) * var(--u)); border: 0; border-radius: calc(10.228 * var(--u)); background: #f5f5f5; color: var(--color-navy); font: 400 calc(var(--tfs, 13) * var(--u)) / 1.35 var(--font-gotham); text-align: start; cursor: pointer; } /* bug 165 (15 Oct 2026): leading 1.35 instead of the live 32px single-line bar height (--tlh), which double-spaced a wrapped label; the bar height is min-height (--th), the label centred in it */ /* min-height >= 44 px: touch target (bug 090, the scaled 56 px is 40 at 1024) */
+  .tab[aria-selected='true'] { background: var(--tab-selected); color: #fff; font-weight: var(--taw, 400); text-shadow: 0 calc(4 * var(--u) * var(--tsh, 1)) calc(4 * var(--u) * var(--tsh, 1)) rgba(0, 0, 0, calc(0.25 * var(--tsh, 1))); }
+  .centered .tab { align-items: center; }
+  .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(-2 * var(--u)); }
+  .tab[aria-selected='true']:focus-visible { outline-color: var(--color-navy); } /* cyan on the #418ea2 fill is 1.7:1; Deep Teal 3:1 */
+  .tab-label { max-width: calc(var(--tlw, 265) * var(--u)); overflow-wrap: anywhere; }
+  .panel { position: relative; border-radius: var(--radius-card); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .panel:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(4 * var(--u)); }
+  .panel[hidden] { display: none; }
+  .panel > * { margin: calc(14 * var(--u)) 0 0; overflow-wrap: anywhere; }
+  .panel > :first-child { margin-top: 0; }
+  .panel > .sub + .lead, .panel > .lead + .ul { margin-top: 0; }
+  .sec { color: var(--color-navy-alt); }
+  .bullets { white-space: normal; }
+  .bullets .b1 { display: inline-block; line-height: calc(19 * var(--u)); }
+  .panel > .sec + .bullets { margin-top: 0; }
+  /* Below 1024 the art may shrink to the panel column (same proportions), so a wide seal never pushes the panel past a 320 px
+     screen (mobile QA H1, 13 Oct 2026: CBAHI 41 px over); the desktop rule below sets both sizes again. */
+  .panel :global(.art) { display: block; margin: 0 auto calc(14 * var(--u)); width: calc(var(--aw) * var(--u)); height: auto; aspect-ratio: var(--aw) / var(--ah); max-width: 100%; object-fit: cover; }
+  .panel > :global(picture:first-child) + * { margin-top: 0; }
+  @media (min-width: 1024px) { .panel > :global(picture:first-child) + * { margin-top: 0; } .panel :global(.art) { position: absolute; z-index: 1; margin: 0; max-width: none; object-fit: cover; width: calc(var(--aw) * var(--u)); height: calc(var(--ah) * var(--u)); inset-inline-start: calc(var(--ax) * var(--u)); top: calc(var(--ay) * var(--u)); } }
+  .art-flow .panel :global(.art) { margin-bottom: calc(23.378 * var(--u)); }
+  @media (min-width: 1024px) { .art-flow .panel :global(.art) { position: static; margin: 0 auto calc(23.378 * var(--u)); } }
+  .sub { font-weight: 500; font-size: inherit; line-height: inherit; color: var(--color-navy-alt); }
+  .lead { color: var(--color-navy); line-height: calc(22 * var(--u)); white-space: pre-wrap; }
+  .note { color: var(--color-navy); }
+  .ul { list-style: disc; padding: 0; }
+  .ul li { margin-inline-start: calc(18 * var(--u)); }
+  .ul li:first-child { padding-block: calc(2 * var(--u)); } /* Figma: first line box 18 (14 + 2 + 2) */
+  .pending { font-style: italic; color: var(--color-body); }
+  /* < 1024: accordion placement (see the note above). Tab spacing moves from the list's gap to the tabs' margins because the
+     empty rows of the hidden panels sit between them; the open panel is 18 (the desktop tabs->panel gap) above and below. */
+  @media (max-width: 1023.98px) {
+    @supports (grid-template-rows: subgrid) {
+      .topics { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(var(--rows), auto); gap: 0; }
+      .tablist, .panels { display: grid; grid-template-rows: subgrid; grid-area: 1 / 1 / -1 / 2; gap: 0; pointer-events: none; }
+      .tab, .panel { grid-row: var(--r); pointer-events: auto; }
+      .tab { margin-top: calc(var(--tgp, 2) * var(--u)); }
+      .tab:first-child { margin-top: 0; }
+      .panel { margin-block: calc(18 * var(--u)); }
+      .panel:last-child { margin-bottom: 0; }
+    }
+    /* Bug 148 (15 Oct 2026): as an accordion each bar shows its state, a chevron at the inline end (the FAQ chevron, in the bar's
+       text colour): down when closed, up when open; the label uses the whole bar (the 265-unit cap is the desktop tab column). */
+    .tab { align-items: center; gap: calc(12 * var(--u)); }
+    .tab-label { max-width: none; flex: 1 1 auto; }
+    .tab::after {
+      content: ''; flex: none; width: calc(9.661 * var(--u)); height: calc(5.806 * var(--u)); background: currentColor;
+      -webkit-mask: var(--tab-chev) center / contain no-repeat; mask: var(--tab-chev) center / contain no-repeat; transition: rotate 0.3s ease;
+    }
+    .tab[aria-selected='true']::after { rotate: 180deg; }
+  }
+  .topics { --tab-chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9.66096 5.80629'%3E%3Cpath d='M8.48303 0.202119C8.75252 -0.0673729 9.18935 -0.0673729 9.45884 0.202119C9.72833 0.47161 9.72833 0.908438 9.45884 1.17793L4.83048 5.80629L0.202119 1.17793C-0.0673729 0.908438 -0.0673729 0.47161 0.202119 0.202119C0.47161 -0.0673729 0.908438 -0.0673729 1.17793 0.202119L4.83048 3.85467L8.48303 0.202119Z'/%3E%3C/svg%3E"); }
+  @media (prefers-reduced-motion: reduce) { .tab::after { transition: none; } }
+  @media (min-width: 1024px) {
+    .topics { flex-direction: row; align-items: flex-start; gap: 0; }
+    .tablist { flex: none; width: calc(273.96 * var(--u)); } /* live 375px at 1440 */
+    .panels { flex: none; width: calc(var(--pw) * var(--u)); margin-top: calc(var(--pt) * var(--u)); margin-inline-start: calc(var(--pg) * var(--u)); }
+  }
+</style>

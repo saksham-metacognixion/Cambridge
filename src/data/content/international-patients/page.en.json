@@ -1,0 +1,30 @@
+{
+  "_note": "International Patients (Figma 54:9239). Text = Website Content - Suhad/Patient Hub/EN - Intl Patients.md (5 Oct 2026). meta.description from the document. Form text: forms/international.*.json.",
+  "meta": {
+    "title": "International Patients | Cambridge Hospital",
+    "description": "Comprehensive rehabilitation, post-acute and long-term care for international patients, with coordinated clinical and practical support throughout their stay."
+  },
+  "hero": {
+    "ariaLabel": "International Patients",
+    "banner": {
+      "image": "international/banner",
+      "alt": ""
+    },
+    "title": [
+      "International",
+      "Patient Care"
+    ],
+    "text": "Comprehensive rehabilitation, post-acute and long-term care for international patients, with coordinated clinical and practical support throughout their stay.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "intro": {
+    "heading": "Comprehensive Care for Patients Worldwide",
+    "text": [
+      "For patients travelling from other countries for healthcare, planning treatment and managing a stay away from home can be challenging. Cambridge Hospital provides a range of healthcare services alongside dedicated support for international patients, including care planning, coordination and practical support throughout their stay.",
+      "From initial assessment and personalised treatment planning through medical care, rehabilitation and follow-up, our teams work closely with patients and their families to coordinate their care, ensure a smooth experience and help them navigate each stage of their treatment journey."
+    ]
+  }
+}

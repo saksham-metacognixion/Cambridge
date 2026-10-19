@@ -1,0 +1,846 @@
+{
+ "pass": 140,
+ "fail": 0,
+ "checks": [
+  {
+   "group": "responsive",
+   "name": "responsive /",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /about",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /why-cambridge",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /accreditations-partnerships",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /careers",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /our-care",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /our-care/inpatient-care",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /our-care/inpatient-care/post-acute-care",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /conditions-specialities",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /conditions-specialities/accidents-rehabilitation",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /patient-hub",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /find-a-doctor",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /find-a-doctor/ahmad-al-khayer",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /our-hospitals",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /our-hospitals/abu-dhabi",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /our-hospitals/al-ain",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /media-hub",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /media-hub/first-patients-new-saudi-facility",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /contact",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /patient-feedback",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /refer-a-patient",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /international-patients",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /insurance-providers",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /patient-testimonials",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /faq",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /privacy-policy",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /404",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /ar",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /sa/ar/our-hospitals/al-khobar",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "responsive",
+   "name": "responsive /ae/ar/find-a-doctor",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "doctors",
+   "name": "country filter narrows the list",
+   "pass": true,
+   "note": "5 of 14"
+  },
+  {
+   "group": "doctors",
+   "name": "country in the URL",
+   "pass": true,
+   "note": "http://localhost:4400/find-a-doctor?country=sa"
+  },
+  {
+   "group": "doctors",
+   "name": "country stays selected when the speciality changes",
+   "pass": true,
+   "note": "pressed=sa url=http://localhost:4400/find-a-doctor?country=sa&specialty=physical-medicine-rehab"
+  },
+  {
+   "group": "doctors",
+   "name": "country stays selected when the name query changes",
+   "pass": true,
+   "note": "pressed=sa"
+  },
+  {
+   "group": "doctors",
+   "name": "empty state shown when nothing matches",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "doctors",
+   "name": "URL round trip restores country + speciality + query",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "doctors",
+   "name": "back button restores the previous filter state",
+   "pass": true,
+   "note": "pressed=ae"
+  },
+  {
+   "group": "doctors",
+   "name": "/ae/find-a-doctor lists only AE doctors by default",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "doctors",
+   "name": "/sa/find-a-doctor lists only SA doctors by default",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "6 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 882 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "4 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 677 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "5 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1398 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "4 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 879 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "3 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1626 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "3 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1655 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "9 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 2573 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [en]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [en]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "2 errors"
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [en]: error text is English",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [en]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1165 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [en]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [en]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "6 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 882 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Contact page (Send an Enquiry) [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "4 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 677 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Home \"Get in touch\" form [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "5 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1398 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Book an Appointment pop-up [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "4 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 879 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Send an Inquiry pop-up [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "3 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1626 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Your Opinion Matters pop-up [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "3 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1655 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Patient Feedback page [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "9 errors"
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 2573 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "Refer a Patient (For Doctors) [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [ar]: Turnstile slot present",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [ar]: required errors shown (incl. consent)",
+   "pass": true,
+   "note": "2 errors"
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [ar]: error text is Arabic (or English fallback, B4)",
+   "pass": true,
+   "note": "This field is required."
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [ar]: mocked submit shows the success message",
+   "pass": true,
+   "note": "posted 1165 bytes"
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [ar]: consent posted with the form",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "group": "forms",
+   "name": "International Patients [ar]: nothing stored in the browser",
+   "pass": true,
+   "note": "{\"ls\":\"\",\"ss\":\"ch_edition\",\"ck\":\"\"}"
+  },
+  {
+   "group": "keyboard",
+   "name": "Tab moves through the header menu in order",
+   "pass": true,
+   "note": "Toggle navigation menu > Cambridge Hospital home > We are listening > Your Opinion Matters > Media Hub > Careers > Knowledge Center > FAQs > EN > AR > Global, Choose region > About Cambridge > Our Care > Patient Hub"
+  },
+  {
+   "group": "keyboard",
+   "name": "Book pop-up: Enter opens, focus inside, Tab trapped, Escape closes and restores focus",
+   "pass": true,
+   "note": "inside=true/true closed=true restored=true"
+  },
+  {
+   "group": "keyboard",
+   "name": "Tabs: ArrowDown / End move selection and focus, panel follows",
+   "pass": true,
+   "note": "{\"t2\":{\"sel\":1,\"foc\":1},\"t3\":{\"sel\":6,\"n\":7,\"panelVisible\":true}}"
+  },
+  {
+   "group": "keyboard",
+   "name": "Contact form: fields reachable by Tab, consent toggles with Space",
+   "pass": true,
+   "note": "name,email,hospital,subject,message,consent,A,BUTTON"
+  },
+  {
+   "group": "keyboard",
+   "name": "Mobile menu: Space on the toggle opens it, Tab reaches its links",
+   "pass": true,
+   "note": "open=true first=We are listening"
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+---
+import { editions, editionFromBase, urlFor } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { PAGE_PATHS } from '../../../lib/paths';
+import { leaders, leaderEditions, own, LEADER_PATHS } from '../../../lib/leadership';
+import type { Doctor } from '../../../lib/doctors';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import DoctorProfile from '../../../components/doctors/DoctorProfile.astro';
+
+/* Leadership profile (Task 198): one page per leader at the live URL /leadership/<slug>/ on Global and in the leader's own country
+   (/ae/leadership/..., /sa/ar/leadership/...; leaderEditions). Layout = the doctor profile without Book an Appointment and
+   sub-specialities, as the live profile (breadcrumb, photo, name, title, Professional Summary). */
+export function getStaticPaths() {
+  return editions.flatMap((e) =>
+    leaders.filter((l) => leaderEditions(l).includes(e.id)).map((l) => ({ params: { base: e.base || undefined, slug: l.slug }, props: { leader: l } })),
+  );
+}
+
+const { leader: l } = Astro.props;
+const edition = editionFromBase(Astro.params.base);
+const c = content('meet-the-team/page', edition.locale);
+const name = own(l.name, edition.locale) || l.name.en;
+const title = own(l.title, edition.locale);
+const fill = (s: string) => s.replace('{name}', name).replace('{title}', title).replace(/^(.*?)[,،] \. /, '$1. ');
+const asDoctor = { id: String(l.id), slug: l.slug, name: l.name, title: l.title, specialties: [], hospital_id: '', country: l.country, languages: [], bio: l.bio, sub_specialities: [], photo: l.photo, show_book_now: false } as Doctor;
+---
+
+<BaseLayout edition={edition} path={LEADER_PATHS.profile(l.slug)} title={fill(c.profile.metaTitle)} description={fill(c.profile.metaDescription)}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <DoctorProfile doctor={asDoctor} role={title} bio={own(l.bio, edition.locale)} list={{ label: c.profile.list, href: urlFor(edition, PAGE_PATHS.meetTheTeam) }} book={false} fill />
+  </main>
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(35 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

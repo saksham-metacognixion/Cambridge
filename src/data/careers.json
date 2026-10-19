@@ -1,0 +1,29 @@
+{
+  "$comment": "Careers button destinations (ONE place). Figma has no destination for any of them (no job list, detail page or apply form), so all three point to the Contact page for now. A link is { \"page\": \"<key in PAGE_PATHS>\" } (edition-aware internal page) or { \"href\": \"https://...\" } (e.g. a future external jobs portal). joinUrl = 'Join our Team' (hero + Life at Cambridge), openRolesUrl = 'View Open Roles' (Life at Cambridge + the Start Your Career Journey band; a plain button since bug 088, the dropdown look is gone: no roles list exists), applyUrl = 'Apply Now'. See docs/open-decisions.md D3/D4.",
+  "joinUrl": {
+    "page": "contact"
+  },
+  "openRolesUrl": {
+    "page": "contact"
+  },
+  "applyUrl": {
+    "page": "contact"
+  },
+  "noOpenings": {
+    "$comment": "Bug 088 reopened (13 Oct 2026): 'View Open Roles' and 'Apply Now' must not send visitors to Contact; a click shows this panel in place instead (no navigation). OFF until the client confirms (1) there are no open roles to list (the site must not say 'no vacancies' while the hospital is hiring) and (2) the exact EN + AR wording (a new string: no Arabic exists, nothing translated, docs/open-decisions.md D4 / R053). It is shown per language only when that language's `text` is filled in; otherwise the button keeps its link above. `link` (optional 'Get in Touch' for candidates who still want to reach us) is left out when its label is empty. Without JavaScript the buttons keep their links. 'Join our Team' is not affected.",
+    "enabled": false,
+    "text": {
+      "en": "There are no vacancies listed at the moment. Send us your details and we'll be in touch.",
+      "ar": ""
+    },
+    "link": {
+      "label": {
+        "en": "Get in Touch",
+        "ar": ""
+      },
+      "to": {
+        "page": "contact"
+      }
+    }
+  }
+}

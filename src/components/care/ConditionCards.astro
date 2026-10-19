@@ -1,0 +1,91 @@
+---
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import { CONDITION_PATHS } from '../../lib/conditions';
+import { img } from '../../lib/images';
+import neuro from '../../assets/care/post-acute/icon-neuro.svg';
+import musculoskeletal from '../../assets/care/post-acute/icon-musculoskeletal.svg';
+import postSurgical from '../../assets/care/post-acute/icon-post-surgical.svg';
+import accident from '../../assets/care/post-acute/icon-accident.svg';
+
+/*
+ * "Conditions Treated by Our Specialists" (Figma 41:1730 Post Acute Care, page y 578-823). Section top = the H2 top.
+ * H2 Medium 28 #004059 at x56 (box 33) | 24 | cards 222 x 187, radius 10, border .5 #004059 at x 61 / 298 / 536 / 773 (gaps 15 / 16 / 15,
+ * normalised to the Figma x's). Inside (Figma px from the card's top-left; the designer nudged each card a little, normalised to card 1):
+ * icon at (15, 23), its own size (41.8 x 38.2 / 36.4 x 36.6 / 34.6 x 36.5 / 38.3 x 38.3); title Book 15 #004059 at x15, top 78 (Figma 77-84;
+ * 1 or 2 lines); text Book 9/10 #6b6b6b 2 below the title (w 192); button #004059 (Figma 74 x 17 r3 at (16, 152), label "Know More"
+ * Medium 8): now the shared .ui-btn (bugs 044 / 050), at the card's bottom. Card corners --radius-card (bug 049).
+ * Card target: `href` (a care page, CarePage), `condition` (detail slug) or `page` (PAGE_PATHS).
+ * `icon` is optional: one of the four Figma post-acute icons by name (also the three Neurorehabilitation cards, as on the live
+ * page: Stroke = neuro, Traumatic Brain Injury = musculoskeletal, Spinal Cord Injury = post-surgical; client sheet row 17), or an image key (src/assets path, e.g. care/icons/icon-geriatric-care:
+ * the client's programme icons, 9 Oct 2026, care.json `icon`). Without one (the condition lists under a programme) the card starts
+ * with the title at the icon's top (docs/open-decisions.md CT6). `text` = optional intro paragraphs under the heading (Outpatient Care:
+ * heading + two paragraphs + six text cards, same geometry as SubServiceGrid's intro).
+ */
+interface Card { title: string; text: string; icon?: string; condition?: string; page?: string; href?: string }
+interface Props { edition: Edition; heading: string | string[]; text?: string[]; listLabel: string; button: string; cards: Card[] }
+const { edition, heading, text = [], listLabel, button, cards } = Astro.props;
+const icons: Record<string, { src: string; width: number; height: number }> = { neuro, musculoskeletal, 'post-surgical': postSurgical, accident };
+const xs = [61, 298, 536, 773];
+const list = cards.map((k, i) => ({
+  ...k,
+  icon: k.icon ? (icons[k.icon] ?? img(k.icon, edition.region)) : undefined,
+  x: xs[i % 4],
+  href: k.href ?? (k.condition ? urlFor(edition, CONDITION_PATHS.detail(k.condition)) : k.page ? urlFor(edition, pagePath(k.page)) : '#'),
+}));
+---
+
+<section class="cond" aria-labelledby="conditions-heading">
+  <h2 id="conditions-heading" class="h">{[heading].flat().map((line) => <span class="block">{line}</span>)}</h2>{/* an array = fixed lines (post-acute-rehab cardsHeading, client 16 Oct 2026) */}
+  {text.length > 0 && <div class="t">{text.map((p) => <p>{p}</p>)}</div>}
+  <ul class="grid" role="list" aria-label={listLabel}>
+    {list.map((k) => (
+      <li class="cell">
+        <article class:list={['card', 'hair-card', !k.icon && 'no-icon']} style="--sw:.5;--sc:var(--color-navy)">
+          {k.icon && <img loading="lazy" src={k.icon.src} width={k.icon.width} height={k.icon.height} alt="" class="ico" style={`width:calc(${k.icon.width} * var(--u));height:calc(${k.icon.height} * var(--u))`} />}
+          <h3 class="title">{k.title}</h3>
+          <p class="text">{k.text}</p>
+          <a href={k.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${button}: ${k.title}`}><span>{button}</span></a>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .cond { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; text-wrap: balance; } /* bug 168 (15 Oct 2026): "Our Post-Acute Rehabilitation / Programmes" at 1440 */
+  .t { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .t p { margin: 0; overflow-wrap: anywhere; }
+  .t p + p { margin-top: calc(14 * var(--u)); }
+  .grid { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(222 * var(--u))); column-gap: calc(15.33 * var(--u)); row-gap: calc(24 * var(--u)); }
+  .cell { display: flex; }
+  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: 100%; min-height: calc(187 * var(--u)); padding: calc(23 * var(--u)) calc(15 * var(--u)) calc(18 * var(--u)); border-radius: var(--radius-card); background: #fff; } /* bug 049 */
+  .ico { display: block; max-width: none; flex: none; }
+  .title { margin: 0; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  /* Card text grey as on the live programme cards (.gsbp-1b98b3f { color: #6b6b6b }, saved Neurorehabilitation page): client sheet
+     "CH Website Comments.xlsx" row 17, 13 Oct 2026 (the site-wide body colour is Deep Teal). #6b6b6b on white = 5.3:1, AA. */
+  .text { margin: calc(2 * var(--u)) 0 0; width: 100%; font-size: calc(9 * var(--u)); line-height: calc(10 * var(--u)); color: #6b6b6b; overflow-wrap: anywhere; }
+  .btn { margin-top: auto; background: var(--color-navy); color: #fff; } /* bugs 044 / 050: shared .ui-btn size */
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .t { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .grid { margin-inline-start: calc(61 * var(--u)); justify-content: start; column-gap: 0; grid-template-columns: calc(222 * var(--u)) calc(15 * var(--u)) calc(222 * var(--u)) calc(16 * var(--u)) calc(222 * var(--u)) calc(15 * var(--u)) calc(222 * var(--u)); }
+    .grid > li:nth-child(4n + 1) { grid-column: 1; }
+    .grid > li:nth-child(4n + 2) { grid-column: 3; }
+    .grid > li:nth-child(4n + 3) { grid-column: 5; }
+    .grid > li:nth-child(4n) { grid-column: 7; }
+    .title { margin-top: calc(55 * var(--u) - var(--ih, 38.2) * var(--u)); } /* title top at 78 whatever the icon height: 78 - 23 = 55 from the icon top */
+    .no-icon .title { margin-top: 0; } /* no icon: the title starts where the icon would (card top + 23) */
+    .text { margin-bottom: calc(8 * var(--u)); }
+  }
+  @media (max-width: 1023.98px) {
+    .cond { padding-inline: 16px; }
+    /* Bug 159 (15 Oct 2026): the fixed 222-unit cells were centred in the gutter box; they fill it like the heading above (1 per row
+       on phones, 2 on tablets). The card already flows at its cell's width. */
+    .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+    .title { margin-top: calc(17 * var(--u)); }
+    .no-icon .title { margin-top: 0; }
+    .text { margin-bottom: calc(12 * var(--u)); }
+  }
+</style>

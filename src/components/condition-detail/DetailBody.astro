@@ -1,0 +1,63 @@
+---
+import RichText from '../shared/RichText.astro';
+import Tabs from '../shared/Tabs.astro';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * Overview + topic tabs of the condition / service detail template (Figma 41:2373 Accidents = reference, 67:3070 Stroke).
+ * Section top = the "Overview" H2 top (page y 475 = hero end 441 + 34). Figma px:
+ *   H2 41:1922 Medium 28 #004059 at x56, box h33 | 12 | intro 41:1920 Book 12/14 #6b6b6b at x58, w937 (paragraphs
+ *   separated by one empty 14px line) | 33 | tabs at x56: 311 x 63, 2 apart (pitch 65), label Book 13/14 at x +24, top +25;
+ *   active #418ea2 white + text-shadow 0 4 4 rgba(0,0,0,.25); others rgba(231,231,231,.45) #004059.
+ *   Panel at x385 (18 right of the tabs), 1 below the tabs top, w610, Book 12/14 #6b6b6b: empty 14px line between blocks;
+ *   sub-heading Medium #004059; lead line #418ea2 (line 22, no gap after the heading or before its list); bullets 18 in,
+ *   first item line box 18.
+ * Normalised to Accidents (first frame): Stroke's intro->tabs gap 30 -> 33; first tab #f4f4f4/#004059 -> as the others;
+ *   active label Medium without shadow -> Book with shadow; label widths 237/265 -> 265; panel top +1; lead line 14 -> 22,
+ *   empty line between heading and lead removed. The section ends 34 above the navy band, below the taller column.
+ * Tabs: ARIA tabs (vertical): arrows / Home / End move between them; src/scripts/tabs.ts. Without JS the
+ * selected topic stays visible.
+ */
+type Block =
+  | { type: 'p' | 'h' | 'lead'; text: string }
+  | { type: 'ul'; items: (string | string[])[] };
+interface Props {
+  edition: Edition;
+  heading: string;
+  overview: string[];
+  tabs?: { active: number; items: { label: string; blocks: Block[] }[] };
+  tabsLabel: string;
+  pendingTab?: string | null;
+}
+const { edition, heading, overview, tabs, tabsLabel, pendingTab } = Astro.props;
+const items = tabs?.items ?? [];
+const active = Math.min(tabs?.active ?? 0, Math.max(items.length - 1, 0));
+---
+
+<section class="detail" aria-labelledby="overview-heading">
+  <h2 id="overview-heading" class="h">{heading}</h2>
+  <div class="intro">
+    {overview.map((p) => <p><RichText text={p} edition={edition} /></p>)}
+  </div>
+
+  {items.length > 0 && (
+    <div class="topics-wrap">
+      <Tabs edition={edition} label={tabsLabel} items={items} active={active} pending={pendingTab} />
+    </div>
+  )}
+</section>
+
+<style>
+  .detail { max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .intro { margin-top: calc(12 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .intro p { margin: 0; overflow-wrap: anywhere; }
+  .intro p + p { margin-top: calc(14 * var(--u)); }
+  .topics-wrap { margin-top: calc(33 * var(--u)); }
+  @media (min-width: 1024px) {
+    .detail { padding-inline: 0; }
+    .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
+    .intro { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .topics-wrap { margin-inline-start: calc(56 * var(--u)); }
+  }
+</style>

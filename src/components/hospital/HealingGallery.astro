@@ -1,0 +1,126 @@
+---
+import { Picture } from 'astro:assets';
+import { px, vwSizes } from '../../lib/scale';
+import { img } from '../../lib/images';
+import type { Edition } from '../../lib/editions';
+import Pagination from '../shared/Pagination.astro';
+
+/*
+ * "A Healing Environment, Thoughtfully Designed" (Figma 112:7721, page y 1260-1941). Section top = the H2 top.
+ * H2 Medium 28 #004059 (box 27) at x206, w677 | 16 | area dropdown = shared .ui-box 311 x 35 centred (x371), Book 10/14 navy,
+ * chevron 7 x 4.207 at 17 from the end | 22 | text Book 12/14 #6b6b6b centred w539 (2 paragraphs, 14 apart... Figma: no extra gap)
+ * (text = the client's shared "Designed for Comfort" paragraphs, 5 Oct 2026) | 42 | gallery 397.648 tall: active photo 646.178 x 397.648 r17.148 shadow 0 4.573 4.573 3 rgba(0,0,0,.2) at x203.41;
+ * neighbours 270 x 166.154 r7.165 at x97 / x682 (opacity .75) and x-187 / x965 (opacity .5), vertically centred (Figma: left pair
+ * 10 higher, normalised), BEHIND the active photo | 21.63 | pagination dots (Figma: its static dot divider, 40.972 x 8.716 centred).
+ * Controls: the photos themselves (click / tap a side photo, arrow keys, swipe; src/scripts/hospital-gallery.ts) and the shared
+ * pagination dots, one per photo (bug 012; hidden with a single photo). Figma has an area dropdown ("Outdoor Spaces"); the client
+ * removed it (WhatsApp, 19 Oct 2026): every photo of the hospital shows in ONE strip, areas in their JSON order, a photo listed
+ * under two areas shown once. The hospital JSON keeps its areas so the grouping can come back.
+ */
+interface Area { key: string; label: string; active?: number; images: { image: string; alt: string }[] }
+interface Props { edition: Edition; c: { heading: string; text: string[]; selectLabel: string; galleryLabel: string; slideLabel: string; showSlide: string }; text?: string[]; areas: Area[] }
+const { edition, c } = Astro.props;
+const seen = new Set<string>();
+const areas: Area[] = [{
+  key: 'all',
+  label: c.heading,
+  images: Astro.props.areas.flatMap((a) => a.images).filter((im) => !seen.has(im.image) && !!seen.add(im.image)),
+}];
+// Section text: the client's "Designed for Comfort, Recovery and Wellbeing" paragraphs (same for every hospital, shared JSON; a
+// hospital file may override it). Photos per area only where they exist (Abu Dhabi, Figma); the other hospitals show the text alone.
+const text: string[] = Astro.props.text ?? c.text;
+const hasPhotos = areas.some((a) => a.images.length > 0);
+const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ''));
+const n = (len: number, i: number) => ((i % len) + len) % len;
+// position of slide i relative to the active one: 0 active, -1/1 neighbours, -2/2 far, else hidden (wraps around)
+const pos = (len: number, active: number, i: number) => {
+  const d = n(len, i - active);
+  if (d === 0) return 0;
+  if (d === 1) return 1;
+  if (d === 2 && len > 3) return 2;
+  if (d === len - 1) return -1;
+  if (d === len - 2 && len > 4) return -2;
+  return 9;
+};
+---
+
+<section class="heal" aria-labelledby="healing-heading" data-gallery>
+  <h2 id="healing-heading" class="h">{c.heading}</h2>
+
+  {!hasPhotos && <div class="text solo text-justify-center">{text.map((p) => <p>{p}</p>)}</div>}
+
+  {hasPhotos && areas.map((a, ai) => {
+    const active = Math.min(a.active ?? 0, a.images.length - 1);
+    return (
+      <div class="area" data-gallery-area={a.key} hidden={ai !== 0}>
+        <div class="text solo text-justify-center">{text.map((p) => <p>{p}</p>)}</div>
+        <ul class="slides" data-slides data-active={active} role="list" aria-labelledby="healing-heading">
+          {a.images.map((im, i) => (
+            <li class="slide" data-slide data-pos={pos(a.images.length, active, i)}>
+              <button type="button" class="pick-slide" aria-label={fill(c.showSlide, { n: i + 1, total: a.images.length })} aria-current={i === active ? 'true' : undefined} tabindex={i === active ? 0 : -1}>
+                <Picture src={img(im.image, edition.region)} formats={['avif']} fallbackFormat="webp" width={px(646.178)} height={px(397.648)} widths={[px(270), px(646.178), px(646.178) * 2]} sizes={vwSizes(646.178, '100vw')} loading="lazy" decoding="async" alt={im.alt} class="ph" pictureAttributes={{ class: 'contents' }} />
+              </button>
+            </li>
+          ))}
+        </ul>
+        <p class="sr-only" role="status" aria-live="polite" data-gallery-status data-template={c.slideLabel}></p>
+      </div>
+    );
+  })}
+
+  {hasPhotos && (
+    <div class="dots">
+      <Pagination mode="slides" />
+    </div>
+  )}
+</section>
+
+<script>
+  import '../../scripts/hospital-gallery';
+</script>
+
+<style>
+  .heal { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; display: flex; flex-direction: column; align-items: center; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .h { margin: 0; align-self: stretch; padding-inline: 16px; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
+  .area { display: contents; }
+  .area[hidden] { display: none; }
+  .text { margin-top: calc(22 * var(--u)); width: calc(539 * var(--u)); max-width: calc(100% - 32px); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); } /* alignment: .text-justify-center (bug 132) */
+  .text.solo { margin-top: calc(16 * var(--u)); } /* no area dropdown (removed 19 Oct 2026): the text sits where its top was */
+  .text p { margin: 0; overflow-wrap: anywhere; }
+  .text p + p { margin-top: calc(14 * var(--u)); }
+  .slides { position: relative; list-style: none; margin: calc(42 * var(--u)) 0 0; padding: 0; align-self: stretch; height: calc(397.648 * var(--u)); overflow: hidden; touch-action: pan-y; }
+  .slide { position: absolute; top: 0; inset-inline-start: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; }
+  .pick-slide { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: #e7e7e7; cursor: pointer; overflow: hidden; border-radius: var(--radius-card); } /* Figma 17.148 / 7.165 -> one card radius (bug 049) */
+  .pick-slide :global(.ph) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }
+  .pick-slide:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+  .dots { margin-top: calc(21.63 * var(--u)); align-self: stretch; }
+  @media (prefers-reduced-motion: no-preference) {
+    /* Slide timing = the live hospital page's Swiper (saved Abu Dhabi page, 9 Oct 2026: speed 800, wrapper timing CSS ease). */
+    .slide { transition: inset-inline-start .8s ease, top .8s ease, width .8s ease, height .8s ease, opacity .8s ease, visibility .8s; }
+  }
+  /* Desktop: the Figma composition (positions in Figma px from the frame's left edge; the row is the full 1052 stage). */
+  @media (min-width: 1024px) {
+    .h { width: calc(677 * var(--u)); padding: 0; margin-inline-start: calc(206 * var(--u)); align-self: flex-start; text-align: start; }
+    .slide { height: calc(166.154 * var(--u)); top: calc(115.75 * var(--u)); width: calc(270 * var(--u)); }
+    .slide[data-pos='0'] { inset-inline-start: calc(203.41 * var(--u)); top: 0; width: calc(646.178 * var(--u)); height: calc(397.648 * var(--u)); opacity: 1; visibility: visible; z-index: 3; }
+    .slide[data-pos='0'] .pick-slide { box-shadow: 0 calc(4.573 * var(--u)) calc(4.573 * var(--u)) calc(3 * var(--u)) rgba(0, 0, 0, 0.2); cursor: grab; }
+    .slide[data-pos='-1'] { inset-inline-start: calc(97 * var(--u)); opacity: .75; visibility: visible; z-index: 2; }
+    .slide[data-pos='1'] { inset-inline-start: calc(682 * var(--u)); opacity: .75; visibility: visible; z-index: 2; }
+    .slide[data-pos='-2'] { inset-inline-start: calc(-187 * var(--u)); opacity: .5; visibility: visible; z-index: 1; }
+    .slide[data-pos='2'] { inset-inline-start: calc(965 * var(--u)); opacity: .5; visibility: visible; z-index: 1; }
+    .slide[data-pos='9'] { inset-inline-start: calc(526 * var(--u)); width: 0; }
+    /* Screens wider than 1440 (responsive audit 10 Oct 2026): the strip is widened by the page gutter on both sides and every slide
+       shifted by it, so the outer photos run to the screen edge (.page clips) instead of being cut at the 1440 stage edge. */
+    .slides { margin-inline: calc(-1 * var(--gutter)); }
+    .slide { translate: var(--gutter) 0; }
+    :global([dir='rtl']) .slide { translate: calc(-1 * var(--gutter)) 0; }
+  }
+  /* Phones / tablets: the active photo fills the width; swipe, tap targets and arrow keys move between photos (no Figma design). */
+  @media (max-width: 1023.98px) {
+    .slides { margin-inline: 16px; height: auto; aspect-ratio: 646.178 / 397.648; }
+    .slide[data-pos='0'] { opacity: 1; visibility: visible; z-index: 2; }
+    .slide[data-pos='1'] { inset-inline-start: 100%; opacity: .75; visibility: visible; }
+    .slide[data-pos='-1'] { inset-inline-start: -100%; opacity: .75; visibility: visible; }
+  }
+</style>

@@ -1,0 +1,38 @@
+/*
+ * Vercel staging entry for POST /api/forms/<form>, bundled by tools/vercel/bundle.mjs into api/forms/[form].js (gitignored;
+ * Vercel's Node builder cannot resolve the shared handler's extension-less / JSON imports file by file). Vercel does not run
+ * Cloudflare Pages Functions (functions/), so this wraps the same handler: validation, Turnstile and email stay in ONE place
+ * (functions/api/forms/[form].ts). Env vars are the ones in .env.example, set in the Vercel project settings. Nothing is
+ * stored, same as on Cloudflare. Node.js runtime (not edge): the SMTP adapter needs TCP sockets (node:net / node:tls).
+ */
+import { onRequestPost } from "../../functions/api/forms/[form]";
+import type { Env } from "../../functions/_lib/types";
+
+export async function POST(request: Request): Promise<Response> {
+  const form = decodeURIComponent(
+    new URL(request.url).pathname.split("/").pop() ?? "",
+  );
+  // Turnstile's remoteip: Cloudflare sends CF-Connecting-IP; on Vercel the client IP is x-real-ip.
+  const headers = new Headers(request.headers);
+  const ip =
+    request.headers.get("x-real-ip") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim();
+  if (ip && !headers.has("CF-Connecting-IP"))
+    headers.set("CF-Connecting-IP", ip);
+  return onRequestPost({
+    request: new Request(request, { headers }),
+    env: process.env as unknown as Env,
+    params: { form },
+    next: () => Promise.resolve(new Response(null, { status: 404 })),
+  });
+}
+
+const notAllowed = () =>
+  new Response("Method Not Allowed", {
+    status: 405,
+    headers: { Allow: "POST" },
+  });
+export const GET = notAllowed;
+export const PUT = notAllowed;
+export const DELETE = notAllowed;
+export const PATCH = notAllowed;

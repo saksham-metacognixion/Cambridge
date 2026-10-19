@@ -3,60 +3,45 @@ import { content, t } from '../../lib/content';
 import { parsePath } from '../../lib/editions';
 import { defaultCountry } from '../../lib/doctor-filters';
 import { allDoctors, specialties } from '../../lib/doctors';
-import chevron from '../../assets/doctors-page/chevron.svg';
+import RegionPills from '../shared/RegionPills.astro';
+import Combobox from '../shared/Combobox.astro';
 
 /*
  * Filters row, Figma 62:783 (pills) + 62:186 / 62:190 (boxes). Page y 586..621, boxes 311 x 35, radius 10, 0.5px #418ea2.
- * The country pills are buttons (aria-pressed), the name box is a text input with the doctors' names as suggestions,
- * the specialty box is a select (no custom dropdown design exists in Figma, so the browser's own list opens).
+ * The country pills are buttons (aria-pressed); the name and specialty boxes are the shared custom dropdown (bug 053,
+ * Combobox.astro: the browser's datalist / select lists looked different in every browser). Options come from the doctor
+ * data; the script offers only those that fit the other filters (bug 052).
  * A hospital filter is NOT shown: it is not in Figma (the logic supports it, see src/lib/doctor-filters.ts).
  * Behaviour: src/scripts/doctor-filters.ts. Without JS the controls do nothing and the default list stays.
  */
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('doctors/page', edition.locale).filters;
 const active = defaultCountry(edition.region);
-const pillX: Record<string, number> = { all: 0, sa: 99, ae: 200 }; // Figma x of ALL / KSA / UAE minus 48
-const names = allDoctors.map((d) => t(d.name, edition.locale, 'doctors'));
+const names = [...new Set(allDoctors.map((d) => t(d.name, edition.locale, 'doctors')))].map((n) => ({ value: n, label: n }));
+const specialtyOpts = specialties.map((s) => ({ value: s.id, label: t(s.name, edition.locale, 'specialties') }));
+const empty = content('doctors/page', edition.locale).results.empty;
 ---
 
 <div class="filters" role="search" aria-label={c.ariaLabel}>
-  <div class="pills" role="group" aria-label={c.countryLabel}>
-    {c.countries.map((p: { value: string; label: string }) => (
-      <button type="button" data-country={p.value} aria-pressed={p.value === active ? 'true' : 'false'} class="pill hit" style={`--x:${pillX[p.value]}`}>{p.label}</button>
-    ))}
-  </div>
+  <RegionPills options={c.countries} active={active} label={c.countryLabel} class="df-pills" />
 
-  <div class="box">
-    <label class="sr-only" for="df-name">{c.nameLabel}</label>
-    <input id="df-name" name="q" type="text" class="field" list="df-names" placeholder={c.nameLabel} autocomplete="off" enterkeyhint="search" />
-    <datalist id="df-names">{names.map((n) => <option value={n} />)}</datalist>
-    <img class="chev" src={chevron.src} width="7" height="4.2" alt="" />
-  </div>
-
-  <div class="box">
-    <label class="sr-only" for="df-specialty">{c.specialtyLabel}</label>
-    <select id="df-specialty" name="specialty" class="field">
-      <option value="">{c.specialtyLabel}</option>
-      {specialties.map((s) => <option value={s.id}>{t(s.name, edition.locale, 'specialties')}</option>)}
-    </select>
-    <img class="chev" src={chevron.src} width="7" height="4.2" alt="" />
-  </div>
+  <Combobox id="df-name" name="q" label={c.nameLabel} options={names} editable emptyText={empty} clearLabel={c.clearName} />
+  <Combobox id="df-specialty" name="specialty" label={c.specialtyLabel} options={specialtyOpts} emptyText={empty} clearable clearLabel={c.clearSpecialty} />
 </div>
 
 <style>
   .filters { display: flex; align-items: center; flex-wrap: wrap; justify-content: center; gap: calc(12 * var(--u)); padding-inline: calc(16 * var(--u)); }
-  .pills { position: relative; flex: none; width: calc(279 * var(--u)); height: calc(25 * var(--u)); }
-  .pill { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: 0; width: calc(79 * var(--u)); height: calc(25 * var(--u)); border-radius: calc(12 * var(--u)); box-sizing: border-box; padding: calc(1 * var(--u)) 0 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
-  .pill[aria-pressed='true'] { background: var(--color-navy); color: #fff; border: 0; }
-  .box { position: relative; flex: none; width: calc(311 * var(--u)); max-width: 100%; height: calc(35 * var(--u)); }
-  .field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: calc(10 * var(--u)); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
-  .field::placeholder { color: var(--color-navy); opacity: 1; }
-  .field::-webkit-calendar-picker-indicator, .field::-webkit-list-button { display: none !important; opacity: 0; }
-  .field:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
-  .chev { position: absolute; inset-inline-end: calc(17 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); pointer-events: none; max-width: none; }
-  :global([dir='rtl']) .field { padding: 0 calc(15 * var(--u)) 0 calc(31 * var(--u)); }
+  .filters :global(.cb) { width: calc(311 * var(--u)); }
+  /* Bug 159 (15 Oct 2026): below 1024 the two 311-unit boxes were centred in the gutter (426px wide at 768 while the card grid
+     fills the box). The row is the same cell grid as the cards (1 per row on phones, 2 on tablets), the boxes fill their cells and
+     the country pills keep a centred row of their own above them. */
+  @media (max-width: 1023.98px) {
+    .filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); padding-inline: 16px; }
+    .filters :global(.df-pills) { grid-column: 1 / -1; justify-self: center; }
+    .filters :global(.cb) { width: auto; min-width: 0; }
+  }
   @media (min-width: 1024px) {
     .filters { flex-wrap: nowrap; justify-content: flex-start; gap: calc(12 * var(--u)); width: calc(955 * var(--u)); margin-inline: calc(48 * var(--u)) 0; padding-inline: 0; }
-    .pills { margin-inline-end: calc(30 * var(--u)); } /* 42 from the pills' right edge to the first box, minus the 12 flex gap */
+    .filters :global(.df-pills) { margin-inline-end: calc(30 * var(--u)); } /* 42 from the pills' right edge to the first box, minus the 12 flex gap */
   }
 </style>

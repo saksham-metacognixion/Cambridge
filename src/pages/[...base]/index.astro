@@ -57,8 +57,9 @@ const sections = [
       ))
     }
   </main>
-  <!-- Footer starts at Figma y 5285, Contact ends at 5403 -> overlaps by 118 -->
-  <div class="relative lg:mt-(--gap)" style="--gap:calc(-118 * var(--u));z-index:13">
+  <!-- Bug 120: Figma leaves 26 px of patterned band between the contact card and the footer. The Contact section ends 110 px
+       below its card on desktop (Contact.astro), so the footer overlaps it by 110 - 26 = 84 whatever the card's height. -->
+  <div class="relative lg:mt-(--gap)" style="--gap:calc(-84 * var(--u));z-index:13">
     <Footer />
   </div>
 </BaseLayout>

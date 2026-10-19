@@ -1,11 +1,12 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
 import { content, t } from '../../lib/content';
-import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
-import hospitalData from '../../data/hospitals.json';
-import Turnstile from '../forms/Turnstile.astro';
+import { px } from '../../lib/scale';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import { clientConfig, commonText } from '../../lib/forms';
+import AttachField from '../forms/AttachField.astro';
+import { mapSpots } from '../../lib/hospitals';
 import chevron from '../../assets/contact-page/select-chevron.svg';
 import checkbox from '../../assets/contact-page/checkbox.svg';
 import mailIcon from '../../assets/contact-page/icon-mail.svg';
@@ -13,136 +14,264 @@ import globeIcon from '../../assets/contact-page/icon-globe.svg';
 import phoneIcon from '../../assets/contact-page/icon-phone.svg';
 import cornerMask from '../../assets/contact-page/card-corner-mask.svg';
 import cornerFill from '../../assets/contact-page/card-corner-fill.svg';
+import mapImage from '../../assets/contact-page/map.png';
 
 // Figma 86:773 + 86:808 + grey band 86:432: section starts at page y 556, h 667. Spec y values are page y minus 556.
+// Bug 093: the "Attach file (optional)" row (not in Figma) sits at 452, one field pitch (55) below the message box like the
+// other rows; everything under it (consent, button, details row, section) is 55 lower and the card / navy panel 55 taller,
+// with the map and the corner art kept centred on the panel (+27.5).
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('contact/page', edition.locale);
+// Email / web / phone line of this edition (details.byRegion: the KSA phone on /sa), never another country's number.
+const details = { ...c.details, ...(c.details.byRegion?.[edition.region] ?? {}) };
+// Phone lines of the row (client, 19 Oct 2026): Global = the UAE and the KSA numbers one under the other (details.phones, as in the
+// banner); /ae = the toll-free number with 800-MYCARE under it (details.rowPhones); otherwise the single `phone` line.
+type PhoneLine = { phone: string; phoneHref: string; label?: string };
+const rowPhones: PhoneLine[] = details.rowPhones ?? details.phones ?? [{ phone: details.phone, phoneHref: details.phoneHref }];
 const f = c.form;
-const map = img(c.map.image, edition.region);
-// Hospital options come from hospitals.json (one spelling everywhere): the region's own hospitals, all of them on Global.
-const hospitals = hospitalData.hospitals
-  .filter((h) => edition.region === 'global' || h.region === edition.region)
-  .map((h) => ({ value: h.slug, label: t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals') }));
+// Shared form behaviour (src/scripts/forms.ts): EN/AR validation, JSON submit, success message. Field rules = forms.json 'send-enquiry'.
+const common = commonText(edition.locale);
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const err = 'f-err cf-err lg:absolute cf-col';
+// Hospitals (bug 051): ONE list for the Hospital select and the map (lib/hospitals.ts mapSpots: hospitals.json, the edition's own
+// hospitals, all six on Global, the site's own names and addresses). scripts/contact-map.ts loads the Maps JavaScript API once, when
+// the map nears the screen (or a hospital is chosen first), drops a marker per hospital with a position and fits them; choosing a
+// hospital (or clicking a marker) zooms to it and fills the card below. No key / API failure = this Figma image stays + the card.
+const spots = mapSpots(edition);
+const hospitals = spots.map((h) => ({ value: h.id, label: h.name }));
+const mapConfig = JSON.stringify({
+  key: import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? '',
+  lang: edition.locale,
+  region: edition.region === 'global' ? '' : edition.region.toUpperCase(),
+  spots,
+});
+const mapTitle = content('layout/header', edition.locale).mainLinks[3].label;
 
+// Bug 114 (reopened 14 Oct 2026): label column on desktop = Figma 88 (205 - 117) for the English labels; a locale whose longest
+// label is wider sets form.labelColumn (Figma units) in its contact/page JSON. Fields start after the column and keep their Figma
+// end edge (527, flush with the message box), so a wider column only makes them narrower; the labels never run under a field.
+const labelColumn = f.labelColumn ?? 88;
 const label = 'font-gotham font-normal text-[calc(15*var(--u))] leading-[calc(18.82*var(--u))] text-navy not-italic whitespace-nowrap max-lg:whitespace-normal';
 const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy not-italic whitespace-nowrap no-underline';
 ---
 
-<section id="contact-form" class="relative bg-veil" style="--h: 667" aria-labelledby="contact-title">
+<section id="contact-form" class="relative bg-veil" style={`--h: 722; --cf-lab: ${labelColumn}`} aria-labelledby="contact-title">
   <div class="stage max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-[calc(32*var(--u))] max-lg:px-[calc(16*var(--u))] max-lg:py-[calc(40*var(--u))]">
-    <h2 id="contact-title" class="m-0 font-gotham font-medium text-f28 leading-none text-navy-alt text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-201 lg:top-42 lg:w-651 lg:h-33">{c.heading}</h2>
+    <h2 id="contact-title" class:list={["m-0 font-gotham font-medium text-f28 leading-none text-navy-alt text-center not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-201 lg:w-651 lg:h-33", c.intro ? "lg:top-[calc(24*var(--u))]" : "lg:top-42"]}>{c.heading}</h2>
+    <!-- Intro line (client's Contact Us documents, Suhad 4, 14 Oct 2026; not in Figma): between the heading and the card, the heading
+         raised from 42 to 24 so the card and every field keep their Figma positions. -->
+    {c.intro && <p class="intro m-0 max-lg:-mt-[calc(20*var(--u))] max-lg:max-w-[calc(651*var(--u))] font-gotham font-normal text-f12 leading-14 text-body text-center not-italic lg:absolute lg:start-67 lg:top-[calc(66*var(--u))] lg:w-859">{c.intro}</p>}
 
-    <div class="card max-lg:w-full max-lg:max-w-[calc(859*var(--u))] max-lg:rounded-[calc(22.056*var(--u))] max-lg:bg-white max-lg:p-[calc(24*var(--u))] max-lg:flex max-lg:flex-col max-lg:gap-[calc(32*var(--u))] lg:contents">
-      <div class="hidden lg:block absolute start-67 top-96 w-859 h-463 bg-white rounded-[calc(22.056*var(--u))]" aria-hidden="true"></div>
+    <div class="card max-lg:w-full max-lg:max-w-[calc(859*var(--u))] max-lg:rounded-(--radius-panel) max-lg:bg-white max-lg:p-[calc(24*var(--u))] max-lg:flex max-lg:flex-col max-lg:gap-[calc(32*var(--u))] lg:contents">
+      <div class="hidden lg:block absolute start-67 top-96 w-859 h-518 bg-white rounded-(--radius-panel)" aria-hidden="true"></div>
 
-      <form action="/api/forms/send-enquiry" method="POST" aria-label={f.ariaLabel} class="max-lg:flex max-lg:flex-col max-lg:gap-[calc(14*var(--u))] lg:contents">
+      <form action="/api/forms/send-enquiry" method="POST" enctype="multipart/form-data" novalidate data-form="send-enquiry" data-config={clientConfig('send-enquiry', edition.locale)} aria-label={f.ariaLabel} class="max-lg:flex max-lg:flex-col max-lg:gap-[calc(14*var(--u))] lg:contents">
         <input type="hidden" name="edition" value={edition.id} />
 
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
-          <label for="cf-name" class:list={[label, 'lg:absolute lg:start-117 lg:top-134 lg:w-88']}>{f.nameLabel}</label>
-          <input id="cf-name" name="name" type="text" required autocomplete="name" class="field lg:absolute lg:start-205 lg:top-126" />
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="name">
+          <label for="cf-name" class:list={[label, 'lg:absolute lg:start-117 lg:top-134 cf-lab']}>{f.nameLabel}</label>
+          <input id="cf-name" name="name" type="text" required autocomplete="name" class="field cf-col lg:absolute lg:top-126" aria-describedby="cf-name-error" />
+          <p id="cf-name-error" class:list={[err, 'lg:top-[calc(162*var(--u))]']} hidden></p>
         </div>
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="email">
           <label for="cf-email" class:list={[label, 'lg:absolute lg:start-117 lg:top-189']}>{f.emailLabel}</label>
-          <input id="cf-email" name="email" type="email" required autocomplete="email" class="field lg:absolute lg:start-205 lg:top-181" />
+          <input id="cf-email" name="email" type="email" required autocomplete="email" class="field cf-col lg:absolute lg:top-181" aria-describedby="cf-email-error" />
+          <p id="cf-email-error" class:list={[err, 'lg:top-[calc(217*var(--u))]']} hidden></p>
         </div>
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="hospital">
           <label for="cf-hospital" class:list={[label, 'lg:absolute lg:start-117 lg:top-244']}>{f.hospitalLabel}</label>
-          <div class="relative max-lg:w-full lg:contents">
-            <select id="cf-hospital" name="hospital" required class="field select lg:absolute lg:start-205 lg:top-236">
+          <!-- The box is the select's own frame (positioned on desktop like the other fields), so the chevron is anchored to the field's end edge. -->
+          <div class="relative cf-col max-lg:w-full lg:absolute lg:top-236">
+            <select id="cf-hospital" name="hospital" required class="field select">
               <option value="" selected disabled>{f.hospitalPlaceholder}</option>
               {hospitals.map((h) => <option value={h.value}>{h.label}</option>)}
             </select>
-            <img src={chevron.src} width="7" height="4.207" alt="" class="chev pointer-events-none absolute max-w-none end-[calc(11*var(--u))] top-[calc(15*var(--u))] lg:end-auto lg:start-302 lg:top-254" style="width:calc(7*var(--u));height:calc(4.207*var(--u))" />
+            <img loading="lazy" src={chevron.src} width="7" height="4.207" alt="" class="chev" />
           </div>
+          <p id="cf-hospital-error" class:list={[err, 'lg:top-[calc(272*var(--u))]']} hidden></p>
         </div>
-        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents">
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="subject">
           <label for="cf-subject" class:list={[label, 'lg:absolute lg:start-117 lg:top-299']}>{f.subjectLabel}</label>
-          <input id="cf-subject" name="subject" type="text" required class="field lg:absolute lg:start-205 lg:top-291" />
+          <input id="cf-subject" name="subject" type="text" required class="field cf-col lg:absolute lg:top-291" aria-describedby="cf-subject-error" />
+          <p id="cf-subject-error" class:list={[err, 'lg:top-[calc(327*var(--u))]']} hidden></p>
         </div>
-        <textarea id="cf-message" name="message" required aria-label={f.messagePlaceholder} placeholder={f.messagePlaceholder} class="field area lg:absolute lg:start-117 lg:top-346"></textarea>
+        <div class="row max-lg:flex max-lg:flex-col max-lg:gap-[calc(4*var(--u))] lg:contents" data-field="message">
+          <textarea id="cf-message" name="message" required aria-label={f.messagePlaceholder} placeholder={f.messagePlaceholder} aria-describedby="cf-message-error" class="field area lg:absolute lg:start-117 lg:top-346"></textarea>
+          <p id="cf-message-error" class="f-err cf-err lg:absolute lg:start-117 lg:top-[calc(434*var(--u))] lg:w-410" hidden></p>
+        </div>
 
-        <label class="consent max-lg:flex max-lg:items-start max-lg:gap-[calc(10*var(--u))] lg:contents">
-          <input type="checkbox" name="consent" required class="consent-input" />
-          <span class="box pointer-events-none max-lg:relative max-lg:shrink-0 max-lg:mt-[calc(-1.7*var(--u))] max-lg:ms-[calc(-1.7*var(--u))] lg:absolute lg:start-[calc(122.267*var(--u))] lg:top-[calc(454.267*var(--u))]" aria-hidden="true">
-            <img src={checkbox.src} width="15.4667" height="15.4667" alt="" class="block max-w-none" style="width:calc(15.4667*var(--u));height:calc(15.4667*var(--u))" />
+        <!-- Bug 169: attachment, consent and button flow in ONE column on desktop (Figma 117 / 452, w 410). Each block's
+             min-block-size is the Figma distance to the next block's top, so with the Figma content every top is unchanged; a
+             taller attachment row (44px touch box below ~1257px, Arabic hint line height) pushes the consent and button down
+             instead of running under them. Below 1024 the wrapper is display: contents (the phone/tablet column is untouched). -->
+        <div class="cf-foot max-lg:contents lg:absolute lg:start-117 lg:top-452 lg:w-410 lg:flex lg:flex-col">
+        <AttachField form="send-enquiry" edition={edition} variant="page" class="cf-att" />
+
+        <div data-field="consent" class="cf-consent">
+        <label class="consent flex items-start max-lg:gap-[calc(10*var(--u))]">
+          <input type="checkbox" name="consent" required class="consent-input" aria-describedby="cf-consent-error" />
+          <span class="box pointer-events-none relative shrink-0 max-lg:mt-[calc(-1.7*var(--u))] max-lg:ms-[calc(-1.7*var(--u))] lg:mt-[calc(2.267*var(--u))] lg:ms-[calc(5.267*var(--u))]" aria-hidden="true">
+            <img loading="lazy" src={checkbox.src} width="15.4667" height="15.4667" alt="" class="block max-w-none" style="width:calc(15.4667*var(--u));height:calc(15.4667*var(--u))" />
             <span class="dot"></span>
           </span>
-          <span class="font-gotham font-light text-[calc(9.87*var(--u))] leading-10.5 text-navy not-italic lg:absolute lg:start-147 lg:top-452 lg:whitespace-nowrap">
-            <span class="block">{f.consent.before}<a href={f.consent.link.href} class="hit font-normal underline decoration-from-font [text-underline-position:from-font] text-navy">{f.consent.link.label}</a>{f.consent.after}</span>
+          <span class="font-gotham font-light text-[calc(9.87*var(--u))] leading-10.5 text-navy not-italic lg:ms-[calc(9.267*var(--u))] lg:whitespace-nowrap">
+            <span class="block">{f.consent.before}<a href={f.consent.link.page ? urlFor(edition, pagePath(f.consent.link.page)) : f.consent.link.href} class="hit font-normal underline decoration-from-font [text-underline-position:from-font] text-navy">{f.consent.link.label}</a>{f.consent.after}</span>
             <span class="block">{f.consent.line2}</span>
           </span>
         </label>
+        <p id="cf-consent-error" class="f-err cf-err" hidden></p>
+        </div>
 
-        <Turnstile locale={edition.locale} />
-        <button type="submit" class="hit relative block border-0 p-0 m-0 bg-cyan not-italic cursor-pointer rounded-[calc(18.673*var(--u))] w-108 h-36 lg:absolute lg:start-117 lg:top-493">
-          <span class="absolute block start-[calc(32.4*var(--u))] top-[calc(9.96*var(--u))] font-gotham font-bold text-[calc(10.8*var(--u))] text-white not-italic whitespace-nowrap">{f.submit}</span>
+        <!-- Button row (Figma 548): Turnstile 43 below it (591), the alert beside it (234 / 558). -->
+        <div class="max-lg:contents lg:relative">
+        {siteKey && <div class="ts-slot lg:absolute lg:start-0 lg:top-[calc(43*var(--u))]" data-sitekey={siteKey} data-language={edition.locale} data-appearance="interaction-only"></div>}
+        <p class="f-alert cf-err lg:absolute lg:start-[calc(117*var(--u))] lg:top-[calc(10*var(--u))] lg:w-[calc(293*var(--u))] lg:text-start" role="alert" hidden></p>
+        <!-- Shared button size (bugs 044 / 050): .ui-btn, at the Figma top-left of the 108 x 36 button. -->
+        <button type="submit" class="hit btn-fill ui-btn cf-submit relative border-0">
+          <span>{f.submit}</span>
+          <span class="spin" aria-hidden="true"></span>
         </button>
+        </div>
+        </div>
       </form>
+      <div class="f-success max-lg:py-0 lg:absolute lg:start-117 lg:top-[calc(240*var(--u))] lg:w-[calc(410*var(--u))]" data-success-for="send-enquiry" role="status" tabindex="-1" hidden>
+        <p class="s-title">{common.success.title}</p>
+        <p class="s-text">{common.success.text}</p>
+      </div>
 
       <!-- Navy panel is drawn above the card (and past its right edge), then the map and the corner art, as in Figma. -->
-      <div class="hidden lg:block absolute start-[calc(682.2*var(--u))] top-96 w-302 h-463 bg-navy rounded-e-[calc(19.409*var(--u))]" aria-hidden="true"></div>
-      <div class="art hidden lg:block absolute start-742 top-108 w-242 h-435" aria-hidden="true">
+      <div class="hidden lg:block absolute start-[calc(682.2*var(--u))] top-96 w-302 h-518 bg-navy rounded-e-(--radius-panel)" aria-hidden="true"></div>
+      <div class="art hidden lg:block absolute start-742 top-[calc(135.5*var(--u))] w-242 h-435" aria-hidden="true">
         <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
       </div>
-      <div class="map relative max-lg:w-full max-lg:max-w-[calc(307*var(--u))] max-lg:aspect-[307/375] lg:absolute lg:start-590 lg:top-140 lg:w-307 lg:h-375 rounded-[calc(28*var(--u))] overflow-hidden">
+      <div class="map relative max-lg:w-full max-md:max-w-[calc(307*var(--u))] max-lg:aspect-[307/375] md:max-lg:aspect-[2/1] lg:absolute lg:start-590 lg:top-[calc(167.5*var(--u))] lg:w-307 lg:h-375 rounded-(--radius-card) overflow-hidden">
+        <!-- Figma map image (86:807) as the placeholder for now (user, 9 Oct 2026; replaces the neutral SVG drawing). It stays under the
+             Google map, which covers it once loaded, and remains the backdrop of the card when the map can't load (no key, script blocked). -->
         <Picture
-          src={map}
+          src={mapImage}
           formats={['avif']}
           fallbackFormat="webp"
           width={px(307)}
           height={px(375)}
-          widths={[px(307), px(307) * 2]}
-          sizes="(min-width: 1440px) 420px, (min-width: 1024px) 29vw, 100vw"
+          widths={[px(307), 560, px(307) * 2]}
+          sizes="(min-width: 1024px) 29.18vw, min(420px, 74vw)"
           loading="lazy"
           decoding="async"
-          alt={c.map.alt}
-          class="absolute inset-0 h-full w-full max-w-none object-cover"
+          alt=""
+          class="mph absolute inset-0 h-full w-full max-w-none object-cover"
           pictureAttributes={{ class: 'contents' }}
         />
+        <div class="gmap" data-map-canvas role="region" aria-label={mapTitle} data-config={mapConfig} hidden></div>
+        <!-- The card: the selected hospital as the site names it (never Google's place name), its address and the directions link. -->
+        <div class="mcard" data-map-card aria-live="polite" hidden>
+          <p class="mcard-name" data-map-name></p>
+          <p class="mcard-addr" data-map-addr></p>
+          <a class="mcard-link hit" data-map-link target="_blank" rel="noopener" hidden>{c.map.directions}</a>
+        </div>
       </div>
     </div>
 
-    <!-- Contact details row (Figma 86:808). Text tops differ by a few px in Figma and are kept as they are. -->
+    <!-- Contact details row (Figma 86:808). Text tops differ by a few px in Figma and are kept as they are.
+         Bug 076: the LTR isolation sits on an inner span; dir="ltr" on the positioned link itself turned its inset-inline-start
+         into `left` on Arabic pages while the icons used `right`, so the three values piled up. -->
     <ul class="details m-0 list-none p-0 max-lg:flex max-lg:flex-col max-lg:items-start max-lg:gap-[calc(14*var(--u))] lg:contents">
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(597.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`mailto:${c.details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-598']}>{c.details.email}</a>
+        <img loading="lazy" src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(652.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
+        <a href={`mailto:${details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-653']}><span dir="ltr">{details.email}</span></a>
       </li>
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-598" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <span class:list={[detail, 'lg:absolute lg:start-451.25 lg:top-601']}>{c.details.web}</span>
+        <img loading="lazy" src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-653" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
+        <a href={details.webHref} class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-656']}><span dir="ltr">{details.web}</span></a>
       </li>
-      <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-596" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={`tel:${c.details.phoneHref}`} dir="ltr" class:list={[detail, 'hit lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(596.69*var(--u))] lg:w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}>{c.details.phone}</a>
+      <li class:list={['max-lg:flex max-lg:gap-[calc(10*var(--u))] lg:contents', rowPhones.length > 1 ? 'max-lg:items-start' : 'max-lg:items-center']}>
+        <img loading="lazy" src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-651" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
+        <!-- Extra lines stack under the first one, which keeps its Figma place. -->
+        <div class="row-phones flex flex-col items-start lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(651.69*var(--u))]">
+          {rowPhones.map((ph) => (
+            <a href={`tel:${ph.phoneHref}`} class:list={[detail, 'hit lg:min-w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}><span dir="ltr">{ph.phone}</span>{ph.label && <span class="lbl">{ph.label}</span>}</a>
+          ))}
+        </div>
       </li>
     </ul>
   </div>
 </section>
 
+<script>
+  import '../../scripts/contact-map';
+</script>
+
 <style>
+  /* Google map over the Figma placeholder image (bug 051): fades in once Google has drawn it; the box keeps the Figma size and corners. */
+  .gmap { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity .3s; }
+  .gmap.is-ready { opacity: 1; }
+  /* Card at the top of the map (Google's logo and terms stay visible at the bottom); brand colours, Book / Medium as the form. */
+  .mcard {
+    position: absolute; inset-inline: calc(8 * var(--u)); top: calc(8 * var(--u)); z-index: 1; box-sizing: border-box;
+    padding: calc(9 * var(--u)) calc(11 * var(--u)); background: #fff; border-radius: var(--radius-field);
+    box-shadow: 0 calc(2 * var(--u)) calc(8 * var(--u)) rgb(0 64 89 / .18); font-family: var(--font-gotham); color: var(--color-navy);
+    overflow-wrap: anywhere;
+  }
+  .mcard[hidden] { display: none; }
+  .mcard p { margin: 0; }
+  .mcard-name { font-weight: 500; font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
+  .mcard-addr { margin-top: calc(3 * var(--u)) !important; font-weight: 400; font-size: calc(10 * var(--u)); line-height: calc(13 * var(--u)); }
+  .mcard-link {
+    display: inline-flex; align-items: center; min-height: 44px; margin-block: calc(-6 * var(--u)) calc(-9 * var(--u));
+    font-weight: 500; font-size: calc(10 * var(--u)); line-height: calc(13 * var(--u)); color: var(--color-navy);
+    text-decoration: underline; text-underline-offset: calc(2 * var(--u));
+  }
+  .mcard-link[hidden] { display: none; }
+  .mcard-link:hover { text-decoration-thickness: 2px; }  /* no cyan text: 2.26:1 on white (brand AA) */
+  .mcard-link:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+  @media (prefers-reduced-motion: reduce) { .gmap { transition: none; } }
   .field {
     box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
-    background: #ececec; border-radius: calc(10.754 * var(--u));
+    background: var(--color-mist); border-radius: var(--radius-field); /* bug 049 (Figma 10.754) */
     width: 100%; height: calc(35 * var(--u)); padding: 0 calc(11 * var(--u));
     font-family: var(--font-gotham); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u));
     color: var(--color-body);
   }
-  .field:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
+  .field:focus-visible { outline: 0; }  /* the focus state is the white fill + cyan border below, as on the live form */
   .field::placeholder { color: var(--color-body); opacity: 1; font-style: italic; }
   .select { padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
   .select:invalid { color: var(--color-body); }
+  /* Figma: chevron 7 x 4.207 at 13 from the field's end edge, 18 below its top (= centre + 0.5 on the 35 tall field, kept
+     relative to the centre when the field grows to the 44px touch height). Logical inset, so it sits on the left in RTL. */
+  .chev { position: absolute; inset-inline-end: calc(13 * var(--u)); top: calc(50% + 0.5 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); max-width: none; pointer-events: none; }
   .area { height: calc(86 * var(--u)); padding: calc(8.94 * var(--u)) calc(7 * var(--u)); resize: none; }
   .field { min-height: 44px; }  /* touch target (scope 2.8): only bites below ~1346px wide, where 35 Figma px < 44px */
   @media (min-width: 1024px) {
-    .field { width: calc(322 * var(--u)); }
+    .field { width: calc((410 - var(--cf-lab)) * var(--u)); }  /* Figma 322 with the English 88 column */
     .area { width: calc(410 * var(--u)); }
+    .cf-col { inset-inline-start: calc((117 + var(--cf-lab)) * var(--u)); width: calc((410 - var(--cf-lab)) * var(--u)); }  /* Figma 205 / 322 */
+    .cf-lab { width: calc(var(--cf-lab) * var(--u)); }
   }
 
+  /* Contact details row on phones: the Figma 17.224 size is 23.6px there (--u is fixed below 1024) and the email / website ran
+     off both screen edges at 360-414. Scaled with the screen instead (capped at the design size; 4.4vw fits the 26-character
+     email beside its icon from 320 up), and a link may still break rather than overflow on an even narrower screen. */
+  @media (max-width: 1023.98px) {
+    .details { max-width: 100%; }
+    .details a { font-size: min(calc(17.224 * var(--u)), 4.4vw); white-space: normal; overflow-wrap: anywhere; min-width: 0; }
+  }
+  /* Two phone lines (Global / UAE): 8 apart; the label reads "800-692273 - UAE" as in the banner. */
+  .row-phones { gap: calc(8 * var(--u)); }
+  .row-phones .lbl::before { content: ' - '; white-space: pre; }
+
+  /* Error lines (no Figma design: the shared form error style, P2) sit under their field on desktop. */
+  .cf-err { margin: 0; }
   /* Consent: the real checkbox is invisible but keeps its 44px hit area; the circle is the Figma SVG, the dot is the checked state. */
   .consent { position: relative; cursor: pointer; }
-  .consent-input { position: absolute; margin: 0; opacity: 0; width: 44px; height: 44px; inset-inline-start: calc(130 * var(--u) - 22px); top: calc(462 * var(--u) - 22px); cursor: pointer; z-index: 1; }
+  /* Hit area centred on the Figma circle (130 / 517 = 13 / 10 inside the consent row that starts at 117 / 507) */
+  .consent-input { position: absolute; margin: 0; opacity: 0; width: 44px; height: 44px; inset-inline-start: calc(13 * var(--u) - 22px); top: calc(10 * var(--u) - 22px); cursor: pointer; z-index: 1; }
+  /* Bug 169: Figma pitches of the desktop column (.cf-foot): attachment 452 -> consent 507 -> button 548. border-box + a 3 px
+     end padding: the Figma tops hold while the content fits, and a taller row keeps a 3 gap to the next one. */
+  @media (min-width: 1024px) {
+    :global(.cf-att), .cf-consent { box-sizing: border-box; padding-block-end: calc(3 * var(--u)); }
+    :global(.cf-att) { min-block-size: calc(55 * var(--u)); }
+    .cf-consent { min-block-size: calc(41 * var(--u)); }
+    #cf-consent-error { margin-block-start: calc(2 * var(--u)); margin-inline-start: calc(30 * var(--u)); }  /* Figma 147 / 530 */
+  }
   .dot { position: absolute; inset-inline-start: calc(4.867 * var(--u)); top: calc(4.867 * var(--u)); width: calc(5.733 * var(--u)); height: calc(5.733 * var(--u)); border-radius: 50%; background: var(--color-navy); opacity: 0; }
   .consent-input:checked ~ .box .dot { opacity: 1; }
   .consent-input:focus-visible ~ .box { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
@@ -160,5 +289,43 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     background-repeat: no-repeat; background-size: 100% 100%;
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: calc(242 * var(--u)) calc(435 * var(--u)); mask-size: calc(242 * var(--u)) calc(435 * var(--u));
     -webkit-mask-position: calc(-17.395 * var(--u)) calc(-2 * var(--u)); mask-position: calc(-17.395 * var(--u)) calc(-2 * var(--u)); mask-mode: alpha;
+  }
+
+  /* ── Motion, matched to the live Contact Us form (bitform-custom-4.css + bitform JS, audited 7 Oct 2026). Figma has no states.
+     Fields: 1px transparent border; background and border colour ease over .25s; focus = white fill + cyan border; a field
+     reported invalid (aria-invalid, scripts/forms.ts) = white fill + the site error red (--color-error, one red site-wide since 8 Oct 2026). The 1px border sits inside the
+     box (border-box), so nothing moves. Button: shared .btn-fill hover (cyan) but with the live .25s ease, a soft shadow on
+     hover, scale(.985) over .18s while pressed and a spinning ring (live .bf-spinner: 1s linear) while the message is sent
+     (aria-disabled). Consent: the dot fades over .25s; the circle shrinks to .98 over .12s while pressed and gets the live
+     cyan ring on keyboard focus (the navy outline stays for contrast). Errors appear 100 ms after validation and fade in over
+     .2s (live: setTimeout 100 + the field item's .2s ease); the success message fades in over 1s ease-out (live .bf-form-msg).
+     All off with prefers-reduced-motion. Directions are symmetric, so RTL needs nothing extra. */
+  .field { border: calc(1 * var(--u)) solid transparent; transition: background-color 0.25s ease, border-color 0.25s ease; }
+  .field:focus { background: #fff; border-color: var(--color-cyan); }
+  .field[aria-invalid='true'], .field[aria-invalid='true']:focus { background: #fff; border-color: var(--color-error); }
+  button.cf-submit { transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.18s ease; }
+  button.cf-submit:not([aria-disabled='true']):active { transform: scale(0.985); }
+  @media (hover: hover) {
+    button.cf-submit:not([aria-disabled='true']):hover { box-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgb(0 0 0 / 0.1); }
+  }
+  .spin {
+    display: none; position: absolute; inset-inline-end: 6px; top: 50%; width: 11px; height: 11px;
+    margin-top: -5.5px; box-sizing: border-box; border-radius: 50%; border-top: calc(2 * var(--u)) solid #fff; border-inline-end: calc(2 * var(--u)) solid transparent;
+    animation: cf-spin 1s linear infinite;
+  }
+  .cf-submit[aria-disabled='true'] { cursor: progress; }
+  .cf-submit[aria-disabled='true'] .spin { display: block; }
+  @keyframes cf-spin { to { transform: rotate(360deg); } }
+  .dot { transition: opacity 0.25s ease; }
+  .box { transition: transform 0.12s ease, box-shadow 0.25s ease; }
+  .consent:active .box { transform: scale(0.98); }
+  .consent-input:focus-visible ~ .box { box-shadow: 0 0 0 calc(3 * var(--u)) rgb(0 184 255 / 0.15); }
+  .cf-err:not([hidden]) { animation: cf-fade 0.2s ease 0.1s both; }
+  .f-success:not([hidden]) { animation: cf-fade 1s ease-out both; }
+  @keyframes cf-fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .field, button.cf-submit, .box, .dot { transition: none; }
+    .cf-err:not([hidden]), .f-success:not([hidden]) { animation: none; }
+    button.cf-submit:not([aria-disabled='true']):active, .consent:active .box { transform: none; }
   }
 </style>

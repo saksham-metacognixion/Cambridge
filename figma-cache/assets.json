@@ -436,8 +436,9 @@
       "figma_asset_id": "0c4054f1-299b-4ceb-bca6-527ad53172ae"
     },
     "divider-group622": {
-      "file": "assets/news/divider-group622.svg",
-      "figma_asset_id": "d43aaea3-30ed-47ff-bd6b-82bd5594a403"
+      "file": null,
+      "figma_asset_id": "d43aaea3-30ed-47ff-bd6b-82bd5594a403",
+      "note": "file removed 6 Oct 2026 (bug 012): the dot divider is now the shared Pagination component (src/components/shared/Pagination.astro)"
     },
     "arrow-icon-group33": {
       "file": "assets/news/arrow-icon-group33.svg",
@@ -856,6 +857,111 @@
     "welcome/logo-vertical.svg": {
       "file": "assets/forms/welcome/logo-vertical.svg",
       "figma_call": 60
+    }
+  },
+  "conditions-40-318": {
+    "banner (Banner3 1, 32:219)": "src/assets/conditions/banner.png (1052x500 only)",
+    "Rectangle 118 tag": "src/assets/conditions/tag.svg",
+    "Rectangle 131 corner": "src/assets/conditions/corner.svg",
+    "Vector sliders icon (67:2882)": "src/assets/conditions/sort.svg",
+    "chevron 67:2878": "= src/assets/doctors-page/chevron.svg (identical bytes)",
+    "recovery icons": "= src/assets/contact-page/cta-*.svg"
+  },
+  "condition-detail": {
+    "41:1732 PAR-inside 1 (Accidents)": "src/assets/conditions/accidents-rehabilitation.png (1052x323 only)",
+    "67:3071 PAR-inside 1 (Stroke)": "src/assets/conditions/stroke-rehabilitation.png (1052x323 only)",
+    "doctors/band icons": "= existing doctors-page / contact-page assets"
+  },
+  "refer-59-14344": {
+    "Banner3 1 (46:8024)": "src/assets/refer/banner.png (1052x500 only)",
+    "Rectangle 107 card": "drawn in CSS (.pf-card); SVG kept in figma-cache/assets/refer/imgRectangle107.svg",
+    "UAE flag": "src/assets/refer/flag-uae.svg",
+    "chevrons": "src/assets/refer/chevron-{dial,speciality,doctor}.svg",
+    "Group 171/172 selects": "drawn in CSS (.pf-box + chevron); SVGs in figma-cache/assets/refer/",
+    "calendar Vector 46:8270": "src/assets/refer/calendar.svg",
+    "radio Group 199 / Ellipse 43": "src/assets/refer/radio-on.svg / radio-off.svg",
+    "note": "field icons moved to src/assets/page-form/ (shared with International Patients)"
+  },
+  "insurance-46-6844": {
+    "banner": "src/assets/insurance-page/banner.png (1052x500 only)",
+    "new logos": "src/assets/insurance/{cigna,dubai,orient,al-khazna,al-sagr,aafiya}.png, {al-buhaira,allianz,deutsche}.svg",
+    "reused (identical bytes)": "thiqa.jpg, daman.png, layout-set.png (ADNIC), neuron.png, logo-original.png (Almadallah), saico.jpg, images.png (Nextcare)"
+  },
+  "international-54-9239": {
+    "banner": "src/assets/international/banner.png (1052x500 only)",
+    "Group 200 terms circle": "src/assets/page-form/consent-off.svg",
+    "radios, flag, chevrons": "= src/assets/page-form/* (Refer copies; differ only in ids)",
+    "reCAPTCHA artwork": "not used (Turnstile per scope); kept in figma-cache/assets/international/"
+  },
+  "testimonials-62-2403": {
+    "banner": "src/assets/testimonials-page/banner.png (1052x500 only)",
+    "6 photos": "= src/assets/testimonials/{patient-1,patient-2,patient-4,patient-5,patient-6,shamma}.png (identical bytes; 555x693, below 2x for Shamma 1.85x and Patient-4 1.92x at 1440)",
+    "pattern/quote/badge": "= src/assets/testimonials/{pattern-mask,pattern-fill,quote-icon,corner-vector}.svg (same shapes, landing scale)"
+  },
+  "faq-100-5509": {
+    "PAR-inside 1": "src/assets/faq/hero.png (1052x323 only)",
+    "chevrons": "src/assets/faq/chevron-open.svg (white), chevron-closed.svg (#21b5be, Q2)"
+  },
+  "careers": {
+    "banner": {
+      "file": "assets/careers/banner.png",
+      "src": "src/assets/careers/banner.png"
+    },
+    "nurse": {
+      "file": "assets/careers/nurse.png",
+      "src": "src/assets/careers/nurse.png"
+    },
+    "pioneer": {
+      "file": "assets/careers/pioneer.png",
+      "src": "src/assets/careers/pioneer.png"
+    },
+    "pattern": {
+      "file": "assets/careers/pattern-full.svg",
+      "src": "src/assets/careers/pattern.svg"
+    },
+    "talent_lines": {
+      "file": "assets/careers/talent-lines.svg",
+      "src": "src/assets/careers/talent-lines.svg"
+    },
+    "chevron": {
+      "file": "assets/careers/chevron.svg",
+      "src": "src/assets/careers/chevron.svg"
+    },
+    "_note": "Figma 112:7295. banner 1052x500 only (1x), nurse 1536x1024 RGBA, pioneer 1080x1350. CTA band SVG (112:7230) is a plain #004059 rectangle: not stored."
+  },
+  "who-we-are": {
+    "banner": {
+      "file": "assets/who-we-are/banner.png",
+      "figma_asset": "56b21.png",
+      "note": "identical to assets/accreditations/raw/banner-r1.png (src/assets/accreditations/banner.png is used)"
+    },
+    "expanding-care1": {
+      "file": "assets/who-we-are/expanding-care1.png",
+      "figma_asset": "a4237.png",
+      "src": "src/assets/who-we-are/expanding.png"
+    },
+    "network-care2": {
+      "file": "assets/who-we-are/network-care2.png",
+      "figma_asset": "3acaa.png",
+      "src": "src/assets/who-we-are/network.png"
+    },
+    "network-lines": {
+      "file": "assets/who-we-are/network-lines.svg",
+      "figma_asset": "bf269.svg",
+      "src": "src/assets/who-we-are/lines.svg"
+    },
+    "network-lines-mask": {
+      "file": "assets/who-we-are/network-lines-mask.svg",
+      "figma_asset": "dec58.svg"
+    },
+    "cta-pattern": {
+      "file": "assets/who-we-are/cta-pattern.svg",
+      "figma_asset": "995fa.svg",
+      "note": "the shared ContactRecovery pattern"
+    },
+    "cta-pattern-mask": {
+      "file": "assets/who-we-are/cta-pattern-mask.svg",
+      "figma_asset": "c5645.svg"
     }
   }
 }

@@ -1,0 +1,78 @@
+---
+import { Picture } from 'astro:assets';
+import { px, vwSizes } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { resolveStats } from '../../lib/stats';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "Real Impact. Real Outcomes." (Figma 101:6235-6244), page y 1660-2045: full-width band rgba(231,231,231,.5), h385.
+ * Photo "Care 1" 410 x 385 at x-11 (crop of the 1052x1008 original: y from 2.04 %, pre-cut in care.png). Heading x469 y+72 w481,
+ * Gotham Medium 30 #418ea2 with the two full stops in #00b8ff; hairline 616 x .5 #418ea2 at x472 y+121; six stats Medium 35 / 12
+ * (line height 133.7 %) #004059 in two rows: (469, 691, 863) x (+158, +257).
+ */
+interface Props { edition: Edition; c: { ariaLabel: string; heading: [string, string][]; photo: { image: string; alt: string }; stats: any[] } }
+const { edition, c } = Astro.props;
+const stats = resolveStats(edition, c.stats);
+const photo = img(c.photo.image, edition.region);
+const cols = [469, 691, 863], rows = [158, 257];
+// Count-up seconds per stat, in order, from the live page's Greenshift counters (data-duration 1 / 1.5 / 2 per row; scripts/countup.ts).
+const countSecs = [1, 1.5, 2, 1, 1.5, 2];
+const items = stats.map((s, i) => ({ ...s, x: cols[i % 3], y: rows[Math.floor(i / 3)], secs: countSecs[i] ?? 2 }));
+---
+
+<section class="imp" aria-label={c.ariaLabel}>
+  <div class="in">
+    <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={px(410)} height={px(385)} widths={[px(410), 828, px(410) * 2]} sizes={vwSizes(410, '100vw')} loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+    <div class="copy">
+      <h2 class="h">{c.heading.map(([w, dot]) => <>{w}<span class="dot">{dot}</span></>)}</h2>
+      <hr class="rule" />
+      <ul class="stats" role="list">
+        {items.map((s) => (
+          <li class="stat" style={`--x:${s.x};--y:${s.y};--chars:${String(s.number).length}`}><span class="sr-only">{s.number}</span><span class="n" aria-hidden="true"><span class="size">{s.number}</span><span class="live" data-countup data-countup-duration={s.secs}>{s.number}</span></span><span class="l">{s.label}</span></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/countup';
+</script>
+
+<style>
+  .imp { position: relative; background: rgba(231, 231, 231, 0.5); font-family: var(--font-gotham); font-style: normal; }
+  .in { position: relative; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; }
+  .imp :global(.photo) { display: block; width: 100%; height: auto; aspect-ratio: 410 / 385; object-fit: cover; max-width: none; }
+  .copy { padding: calc(32 * var(--u)) 16px calc(40 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(30 * var(--u)); line-height: calc(36 * var(--u)); color: var(--color-teal-border); overflow-wrap: anywhere; }
+  .dot { color: var(--color-teal-border); } /* large accent: Muted Teal 3.74:1 passes AA large text; cyan (2.26) does not */
+  .rule { margin: calc(13 * var(--u)) 0 0; border: 0; height: 0; border-top: calc(0.5 * var(--u)) solid var(--color-teal-border); }
+  /* Bug 162 (15 Oct 2026): a wrapping flex row put the four wide numbers on rows of their own and the last two side by side;
+     below 1024 the stats are a 2-column grid (desktop keeps the Figma absolute positions). */
+  .stats { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(24 * var(--u)) calc(24 * var(--u)); }
+  .stat { color: var(--color-navy-alt); font-weight: 500; padding-top: calc(3 * var(--u)); }
+  /* An invisible copy of the final text (.size) sizes the box; the counting text (.live) sits on top, so the count-up never
+     changes the stat's width or the row's wrapping (no layout shift; same pattern as why/Team.astro). */
+  .n { display: block; position: relative; width: max-content; max-width: 100%; font-size: calc(35 * var(--u)); line-height: calc(35 * var(--u)); }
+  .n .size { visibility: hidden; }
+  .n .live { position: absolute; inset-inline-start: 0; top: 0; white-space: nowrap; }
+  .l { display: block; font-size: calc(12 * var(--u)); line-height: calc(12 * var(--u)); margin-top: calc(6 * var(--u)); }
+  @media (max-width: 1023.98px) {
+    /* Bug 162: a number wider than its half column ("340,000+" is ~230px at the 35-unit size, the column ~160px at 390) scales down
+       to fit (Gotham Medium digits ~0.63em; 0.66 leaves a margin), the Why page's rule (why/Specialized.astro). */
+    .stat { container-type: inline-size; }
+    .n { font-size: min(calc(35 * var(--u)), calc(100cqi / (var(--chars) * 0.66))); }
+  }
+  @media (min-width: 1024px) {
+    .in { height: calc(385 * var(--u)); }
+    .imp :global(.photo) { position: absolute; inset-inline-start: calc(-11 * var(--u)); top: 0; width: calc(410 * var(--u)); height: calc(385 * var(--u)); }
+    .copy { padding: 0; }
+    .h { position: absolute; inset-inline-start: calc(469 * var(--u)); top: calc(72 * var(--u)); width: calc(481 * var(--u)); }
+    /* Bug 162 (15 Oct 2026): Figma's 616-wide hairline runs past the frame (472 + 616 = 1088 > 1052, so to the screen edge at 1440);
+       it now ends where the stats column ends (x 982.3, "Years of Experience"). */
+    .rule { position: absolute; inset-inline-start: calc(472 * var(--u)); top: calc(121 * var(--u)); width: calc(510.3 * var(--u)); margin: 0; }
+    .stats { display: block; margin: 0; }
+    .stat { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); }
+  }
+</style>

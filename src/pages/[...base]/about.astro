@@ -1,0 +1,60 @@
+---
+import { editionFromBase, editionPaths } from '../../lib/editions';
+import { content } from '../../lib/content';
+import { PAGE_PATHS } from '../../lib/paths';
+import about from '../../data/about.json';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/shared/PageHero.astro';
+import Intro from '../../components/about/Intro.astro';
+import Timeline from '../../components/about/Timeline.astro';
+import Explore from '../../components/about/Explore.astro';
+import ContactRecovery from '../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('about/page', edition.locale);
+const showTimeline = about.showTimeline;
+
+/*
+ * About Cambridge template (Figma 45:4982, file LJIRtzU...). Gaps (Figma px) between blocks:
+ * Hero 119-556 -> intro (video / copy top 636): 80 | intro ends 900 -> grey "Explore" band 974: 74 |
+ * band 974-1537 -> "Your recovery matters" box 1603: 66 | box ends 1871 -> footer 1937: 66.
+ * With the timeline ON: since 14 Oct 2026 it is the LIVE section (user request), so its gaps are the live ones in Figma units
+ * (1 live px at 1440 = 1052/1440 u): intro -> heading 40 (two 20 section paddings) = 29.22; slider -> grey band 60, of which the
+ * dots' 20 are inside Timeline = 40 = 29.22. (Figma 307:494 had 91 / 92.)
+ * Hero = shared PageHero: title top 217 - 119 = 98 (w385), text 342 (14 below the 3 title lines), button 384 (15 below the text).
+ * Not in Figma: the "We are listening" section (scope 2.5), see docs/open-decisions.md A2 (blocking).
+ */
+const sections = [
+  { id: 'intro', C: Intro, props: { edition, c: c.intro }, mt: 80 },
+  ...(showTimeline ? [{ id: 'journey', C: Timeline, props: { c: c.timeline }, mt: 29.22 }] : []),
+  { id: 'explore', C: Explore, props: { edition, c: c.explore }, mt: showTimeline ? 29.22 : 74 },
+  { id: 'recovery', C: ContactRecovery, props: {}, mt: 66 },
+];
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.about} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative">
+      <!-- small: bug 027. The five staff stand at the right edge of the art (x 470-1052); below 1024px the photo shows the strip
+           from x 440 (30 Figma px of gradient before the first nurse) to the right edge, so nobody is cut and the group is centred. -->
+      <PageHero content={c.hero} pos={{ titleTop: 98, titleW: 385, textGap: 14, textW: 374, textX: 97, buttonGap: 15 }} small={{ x: 440, w: 612, maxH: 640 }} />
+    </div>
+    {
+      sections.map(({ id, C, props, mt }) => (
+        <div id={id} class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style={`--gap:calc(${mt} * var(--u))`}>
+          <C {...props} />
+        </div>
+      ))
+    }
+  </main>
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(66 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

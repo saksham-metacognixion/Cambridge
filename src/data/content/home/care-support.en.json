@@ -1,8 +1,6 @@
 {
-  "heading": "Complete Care Support",
-  "intro": ["A range of diagnostic, therapeutic, and support services designed to enhance patient ", "care and recovery."],
-  "filterLabel": "Filter services by country",
-  "filters": ["ALL", "KSA", "UAE"],
+  "heading": "A Complete Ecosystem of Care",
+  "intro": ["Our facilities bring together advanced diagnostics, specialised therapies and essential clinical ", "support to support comprehensive care and recovery."],
   "tiles": [
     { "label": "Radiology", "icon": "care-support/g67-3676-first" },
     { "label": "Laboratory", "icon": "care-support/g67-3717" },

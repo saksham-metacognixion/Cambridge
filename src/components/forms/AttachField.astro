@@ -1,0 +1,104 @@
+---
+/*
+ * Optional file attachment (bug 093) of the three Send an Enquiry forms: Contact page (`page`), Send an Inquiry pop-up
+ * (`glass`) and Home "Get in touch" (`home`). NOT IN FIGMA: the box takes the look of the form's own fields (fill, radius,
+ * height, the placeholder style for its label) so it reads as one more field; the paperclip / remove icons are plain line
+ * icons in the label colour. Rules (types, size) = src/data/forms.json `attachments` (provisional, F093); text = forms/common
+ * `attach`. Behaviour: src/scripts/forms.ts initAttach (file name, remove, reset) + validate; the server re-checks everything.
+ *
+ * The real <input type="file"> covers the box (transparent), so a click or tap anywhere opens the picker and keyboard /
+ * screen-reader users meet a native file button named by the visible label; the remove button sits above it at the end.
+ */
+import { attachText, fieldId } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+
+interface Props {
+  form: string;
+  edition: Edition;
+  variant: 'page' | 'glass' | 'home';
+  name?: string;
+  class?: string;
+}
+const { form, edition, variant, name = 'attachment', class: cls } = Astro.props;
+const t = attachText(edition.locale);
+const id = fieldId(form, name);
+---
+
+<div class:list={['att', `att-${variant}`, cls]} data-field={name} data-attach>
+  <div class="att-box">
+    <input id={id} type="file" name={name} accept={t.accept} class="att-input" aria-describedby={`${id}-hint ${id}-error`} />
+    <label for={id} class="att-face">
+      <svg class="att-clip" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.2 7.6 8 12.8a3.4 3.4 0 0 1-4.8-4.8l5.4-5.4a2.2 2.2 0 0 1 3.2 3.2L6.4 11.2a1.1 1.1 0 0 1-1.6-1.6l4.8-4.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      <span class="att-label">{t.label}</span>
+      <span class="att-name" dir="auto" data-att-name aria-hidden="true"></span>
+    </label>
+    <button type="button" class="att-remove" data-att-remove aria-label={t.remove} title={t.remove} hidden>
+      <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2 2 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" /></svg>
+    </button>
+  </div>
+  <p id={`${id}-hint`} class="att-hint">{t.hint}</p>
+  <p id={`${id}-error`} class="f-err" hidden></p>
+  <p class="sr-only" data-att-status aria-live="polite"></p>
+</div>
+
+<style>
+  .att { min-inline-size: 0; }
+  .att-box { position: relative; display: flex; align-items: center; box-sizing: border-box; inline-size: 100%; }
+  /* Touch height: always on the Contact page (its fields have it too), below 1024 elsewhere (as the pop-up / Home fields) */
+  .att-page .att-box { min-block-size: 44px; }
+  /* The native input = the whole box (picker on click / tap / Enter / Space), invisible; focus is drawn on the face. */
+  .att-input { position: absolute; inset: 0; z-index: 1; inline-size: 100%; block-size: 100%; margin: 0; padding: 0; opacity: 0; cursor: pointer; font-size: 16px; }
+  .att-face {
+    display: flex; align-items: center; gap: calc(6 * var(--u)); box-sizing: border-box; inline-size: 100%; block-size: 100%; min-inline-size: 0;
+    border: calc(1 * var(--u)) solid transparent; color: var(--color-body); cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+  .att-clip { flex: none; inline-size: calc(12 * var(--u)); block-size: calc(12 * var(--u)); color: var(--color-navy); }
+  .att-label { flex: none; font-style: italic; white-space: nowrap; }
+  .att-name { flex: 1 1 auto; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal; color: var(--color-navy); }
+  /* With a file: the name replaces the label on screen (the label stays the input's name for screen readers). */
+  .att[data-has-file] .att-label { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+  .att-remove {
+    position: relative; z-index: 2; flex: none; display: grid; place-items: center; inline-size: calc(18 * var(--u)); block-size: calc(18 * var(--u));
+    margin: 0; margin-inline-start: calc(-26 * var(--u)); padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--color-navy); cursor: pointer;
+  }
+  .att-remove[hidden] { display: none; }
+  .att-remove::before { content: ''; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; translate: -50% -50%; inline-size: 44px; block-size: 44px; }   /* 44px hit area */
+  :global([dir='rtl']) .att-remove::before { translate: 50% -50%; }
+  .att-remove svg { inline-size: calc(9 * var(--u)); block-size: calc(9 * var(--u)); }
+  .att-remove:hover { background: rgb(0 64 89 / 0.08); }
+  .att-remove:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(1 * var(--u)); }
+  .att[data-has-file] .att-face { padding-inline-end: calc(30 * var(--u)); }
+  .att-input:focus-visible + .att-face { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: 0; }
+  .att-input:hover + .att-face { border-color: var(--color-teal-border); }
+  .att-input[aria-invalid='true'] + .att-face { border-color: var(--color-error); }
+  .att-hint { margin: calc(3 * var(--u)) 0 0; font-weight: 300; color: var(--color-body); }
+  /* The error line says the same and more: it replaces the hint while shown. */
+  .att:has(.f-err:not([hidden])) .att-hint { display: none; }
+
+  /* Contact page (Figma 86:773 fields): mist fill, field radius, 35 tall, Book 12 / placeholder italic */
+  .att-page .att-box { block-size: calc(35 * var(--u)); }
+  .att-page .att-face { padding-inline: calc(11 * var(--u)); background: var(--color-mist); border-radius: var(--radius-field); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .att-page .att-hint { font-size: calc(9.87 * var(--u)); line-height: calc(12 * var(--u)); }
+  /* Send an Inquiry pop-up (101:6336 glass fields): white 50 %, 31.554 tall, the textarea placeholder size 10 */
+  .att-glass .att-box { block-size: calc(31.554 * var(--u)); }
+  .att-glass .att-face { padding-inline: calc(8.24 * var(--u)); background: rgba(255, 255, 255, 0.5); border-radius: var(--radius-field); font-size: calc(10 * var(--u)); line-height: calc(12.622 * var(--u)); }
+  .att-glass .att-hint { font-size: calc(8 * var(--u)); line-height: calc(10 * var(--u)); color: var(--color-navy); }
+  /* Home "Get in touch" (Figma field 26 tall, r8, 9 px text) */
+  .att-home .att-box { block-size: calc(26 * var(--u)); }
+  .att-home .att-face { padding-inline: calc(8 * var(--u)); background: var(--color-field); border-radius: var(--radius-field); font-size: calc(9 * var(--u)); line-height: calc(14 * var(--u)); }
+  .att-home .att-clip { inline-size: calc(10 * var(--u)); block-size: calc(10 * var(--u)); }
+  .att-home .att-hint, .att-home .f-err { font-size: calc(6.5 * var(--u)); line-height: calc(8 * var(--u)); }
+  .att-home .f-err { margin-block-start: calc(2 * var(--u)); }
+  .att-home .att-hint { margin-block-start: calc(2 * var(--u)); }
+  /* Focus = the Contact form's live focus state (white fill + cyan border, ContactForm.astro) on the page variant */
+  .att-page .att-input:focus-visible + .att-face { outline: 0; background: #fff; border-color: var(--color-cyan); }
+
+  /* Below 1024 the boxes are touch sized (44px), the text at a readable size like the other fields there */
+  @media (max-width: 1023.98px) {
+    .att-box { block-size: auto !important; min-block-size: 44px; }
+    .att-face { min-block-size: 44px; }
+    .att-home .att-hint, .att-home .f-err { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .att-face { transition: none; } }
+</style>

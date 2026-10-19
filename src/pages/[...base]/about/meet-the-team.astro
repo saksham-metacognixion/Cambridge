@@ -1,0 +1,40 @@
+---
+import { editionFromBase, editionPaths } from '../../../lib/editions';
+import { content } from '../../../lib/content';
+import { PAGE_PATHS } from '../../../lib/paths';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PageHero from '../../../components/shared/PageHero.astro';
+import LeaderGrid from '../../../components/leadership/LeaderGrid.astro';
+import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
+
+export const getStaticPaths = editionPaths;
+
+const edition = editionFromBase(Astro.params.base);
+const c = content('meet-the-team/page', edition.locale);
+const recovery = content('doctors/page', edition.locale).recovery;
+
+/*
+ * Meet the Team (Task 198, 16 Oct 2026; WP6). No Figma frame: the live page's order (hero, country filter + leader cards, the
+ * recovery band) on the Find a Doctor template's parts and gaps (hero -> list 30, list -> band 49.5, band -> footer 44).
+ */
+---
+
+<BaseLayout edition={edition} path={PAGE_PATHS.meetTheTeam} title={c.meta.title} description={c.meta.description}>
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <div id="hero" class="relative"><PageHero content={c.hero} pos={{ titleTop: 141, titleW: 374, textGap: 4, textW: 374, buttonGap: 18 }} /></div>
+    <div class="relative max-lg:mt-(--stack-gap) lg:mx-auto lg:mt-(--gap) lg:max-w-[calc(var(--max-w)*1px)]" style="--gap:calc(30 * var(--u))">
+      <LeaderGrid />
+    </div>
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(49.5 * var(--u))">
+      <ContactRecovery content={recovery} />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(44 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>

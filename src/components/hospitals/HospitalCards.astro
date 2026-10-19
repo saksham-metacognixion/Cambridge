@@ -1,0 +1,85 @@
+---
+import { Picture } from 'astro:assets';
+import { px, vwSizes } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { t } from '../../lib/content';
+import type { Edition } from '../../lib/editions';
+import { hospitals, viewHospitalHref } from '../../lib/hospitals';
+import config from '../../data/hospitals-page.json';
+import SectionIntro from '../shared/SectionIntro.astro';
+
+/*
+ * "Find Care Near You" (Figma 81:1676 + cards 81:1640, 101:6148 ...), section top = H2 top (page y 578).
+ * Same card geometry as the Patient Hub cards: columns x 53 / 376 / 699 (gap 26.79), card 296.21 wide, photo 296.21 x 325.564 on top,
+ * overhanging the white box (border .334 #418ea2, Figma radius 20.014 -> --radius-card, bug 049) by 4; rows 483 apart (photo tops 674 / 1157).
+ * Under the photo: 16.1 -> title (Medium 20.014 / 22, 2 lines, box 39) at x +23 -> 8 -> address (Book 12.008 / 13.343, x +22.68) ->
+ * button (#004059; Figma 98.737 x 22.683 r4.003, label Medium 10.674: now the shared .ui-btn size, bugs 044/050) at the box bottom
+ * (margin-top auto, 13.34 above the box bottom; the card grows with the button).
+ * Al Mudeef (one-line title) sits 8 lower in Figma (title +350, address +376): normalised to the two-line geometry (same rule as the
+ * Patient Hub cards). Text gaps: H2 box (h33) -> text 3; text box (h28) -> first photo 32.
+ * Hospitals from src/data/hospitals.json; region filter and button target from src/data/hospitals-page.json.
+ */
+interface Props { edition: Edition; c: { heading: string; text: string; listLabel: string; button: string; empty: string } }
+const { edition, c } = Astro.props;
+// Card title = listTitle ("Abu Dhabi Hospital", "Al Mudeef Centre": the client's Our Hospitals document, 5 Oct 2026), else brand + city;
+// button = listButton ("View Centre" for Al Mudeef) else the shared label.
+const list = (config.filterByRegion && edition.region !== 'global' ? hospitals.filter((h) => h.region === edition.region) : hospitals).map((h) => ({
+  slug: h.slug,
+  title: (h as any).listTitle ? [t((h as any).listTitle, edition.locale, 'hospitals')] : [t(h.brand, edition.locale, 'hospitals'), t(h.city, edition.locale, 'hospitals')],
+  button: (h as any).listButton ? t((h as any).listButton, edition.locale, 'hospitals') : c.button,
+  address: t((h as any).address, edition.locale, 'hospitals'),
+  src: img((h as any).listPhoto, edition.region),
+  href: viewHospitalHref(h.slug, edition),
+}));
+---
+
+<section class="hosp" aria-labelledby="hospitals-heading">
+  <SectionIntro id="hospitals-heading" heading={c.heading} text={c.text} gap={3} minH={28} />
+  {list.length === 0 && <p class="empty">{c.empty}</p>}
+  <ul class="grid" role="list" aria-label={c.listLabel}>
+    {list.map((h) => (
+      <li class="cell">
+        <article class="card">
+          <Picture src={h.src} formats={['avif']} fallbackFormat="webp" width={px(296.21)} height={px(325.564)} widths={[px(296.21), px(296.21) * 2]} sizes={vwSizes(296.21)} loading="lazy" decoding="async" alt="" class="img" pictureAttributes={{ class: 'contents' }} />
+          <h3 class="title m-0 font-gotham font-medium not-italic text-navy"><a href={h.href} class="tlink" tabindex="-1">{h.title.map((l) => <span class="block">{l}</span>)}</a></h3>
+          <p class="addr m-0 font-gotham font-normal not-italic text-body">{h.address}</p>
+          <a href={h.href} class="btn ui-btn hit btn-fill-navy" aria-label={`${h.button}: ${h.title.join(' ')}`}>{h.button}</a>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .hosp { max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
+  .empty { margin: calc(32 * var(--u)) 0 0; font: 400 calc(12 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+  .grid { list-style: none; margin: calc(32 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(296.21 * var(--u))); column-gap: calc(26.79 * var(--u)); row-gap: calc(34.69 * var(--u)); }
+  .cell { display: flex; }
+  .card { position: relative; display: flex; flex-direction: column; align-items: flex-start; box-sizing: border-box; width: 100%; min-height: calc(448.314 * var(--u)); padding: 0 calc(23 * var(--u)) calc(13.34 * var(--u)); }
+  .card::before { content: ''; position: absolute; inset: calc(4 * var(--u)) 0 0; background: #fff; border-radius: var(--radius-card); box-shadow: inset 0 0 0 calc(0.334 * var(--u)) var(--color-teal-border); }
+  .card > :global(*), .card :global(.img) { position: relative; }
+  .card :global(.img) { display: block; align-self: stretch; width: calc(100% + 46 * var(--u)); margin-inline: calc(-23 * var(--u)); height: auto; aspect-ratio: 296.21 / 325.564; object-fit: cover; max-width: none; border-start-start-radius: var(--radius-card); border-start-end-radius: var(--radius-card); }
+  .title { margin-top: calc(16.1 * var(--u)); min-height: calc(39 * var(--u)); font-size: calc(20.014 * var(--u)); line-height: calc(22 * var(--u)); overflow-wrap: anywhere; }
+  .addr { margin-top: calc(8 * var(--u)); margin-bottom: calc(12 * var(--u)); margin-inline-start: calc(-0.32 * var(--u)); min-height: calc(19.62 * var(--u)); font-size: calc(12.008 * var(--u)); line-height: calc(13.343 * var(--u)); overflow-wrap: anywhere; }
+  .btn { margin-top: auto; margin-inline-start: calc(-0.32 * var(--u)); background: var(--color-navy); color: #fff; } /* size / label / corners: .ui-btn (bugs 044/050) */
+  /* Hover, as on the live page: the title is a link (out of the tab order; the button is the keyboard stop) that turns cyan.
+     The View button keeps the shared .btn-fill-navy hover (cyan fill, white label; user decision 7 Oct 2026 over the live #7AFFCE, WP17).
+     Timing = the live theme's link transition: 0.12s cubic-bezier(.455,.03,.515,.955). */
+  .tlink { color: inherit; text-decoration: none; transition: color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  :global(:root) .card .btn.btn-fill-navy { transition: background-color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955), color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  @media (hover: hover) {
+    .tlink:hover { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tlink, :global(:root) .card .btn.btn-fill-navy { transition: none; }
+  }
+  @media (max-width: 1023.98px) {
+    .hosp { padding-inline: 16px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(296.21 * var(--u))), calc(296.21 * var(--u)))); }
+  }
+  /* Bug 142 (15 Oct 2026): tablets (768-1023) hold two cards per row, the Patient Hub rule (HubCards), instead of one phone-size card
+     with ~180px of white each side. */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .grid { justify-content: stretch; gap: calc(24.58 * var(--u)); grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+  }
+</style>

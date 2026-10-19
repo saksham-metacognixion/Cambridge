@@ -1,0 +1,20 @@
+{
+  "_note": "KSA variant of post-acute-rehab.en.json (bug 109 reopened, 14 Oct 2026, client): same content, hero.text = the live /sa/care/inpatient/post-acute-rehab/ subtitle word for word (saved page docs/cambridge-images-live/_pages/sa/care/inpatient/post-acute-rehab.html; no full stop on live). Keep the rest in step with post-acute-rehab.en.json. English only: /sa/ar keeps post-acute-rehab.ar.json (no approved Arabic regional line; src/lib/care.ts careContent).",
+  "hero": {
+    "ariaLabel": "Post-Acute Rehabilitation",
+    "title": [
+      "Post-Acute",
+      "Rehabilitation"
+    ],
+    "text": "Round-the-clock inpatient care with expert medical supervision, nursing support, and rehabilitation services shaped around your recovery in Saudi Arabia",
+    "banner": {
+      "image": "care/banner-post-acute-care",
+      "alt": ""
+    }
+  },
+  "overview": [
+    "Post-acute care is short-term, time-limited inpatient rehabilitation for patients recovering from a stable acute illness or injury. At Cambridge Hospital, our post-acute rehabilitation programmes support recovery after stroke, traumatic brain injury, spinal cord injury, major surgery, road traffic accidents and other acute events that affect mobility, function and independence.",
+    "Our post-acute rehabilitation programmes are delivered by multidisciplinary teams of physicians, nurses, physiotherapists, occupational therapists, and speech and language therapists, working together within one coordinated pathway. Through personalised care plans and measurable rehabilitation goals, our teams support patients in maximising independence, minimising the impact of impairment and returning to their highest possible level of function."
+  ],
+  "cardsHeading": ["Our Post-Acute", "Rehabilitation Programmes"]
+}

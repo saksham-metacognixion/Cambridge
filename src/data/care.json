@@ -1,0 +1,593 @@
+{
+  "$comment": "Our Care hierarchy = the folder structure of 'Website Content - Suhad/Our Care' (5 Oct 2026): hub -> 4 services -> sections -> programmes (up to 4 levels under /care). title/desc = the page title and lead line of each document; a child's card text (desc, cardTitle) comes from its PARENT's document where that lists it (Inpatient / Outpatient main pages, the programme lists of the section pages), else from the child's own lead line. Slugs: from the live site URLs quoted in the documents where given (care, inpatient, outpatient, pediatric-rehab, pulmonary-rehab, physical-medicine-rehab-care, pediatric-care, physiotherapy, occupational-therapy, speech-language-therapy, cerebral-palsy-program); home-healthcare and in-school from the live site's home / Our Care page links (WordPress export, 6 Oct 2026); live site /ae and /sa URLs confirmed by the client's bug 058 (8 Oct 2026): mechanical-ventilation (+ weaning-program, long-term-ventilated-care), post-acute-rehab (+ neuro-rehab, post-surgical-rehab, road-traffic-accident-rehab), long-term-care-rehab (+ pediatric-long-term-care); the other section / programme slugs are derived from the titles and UNCONFIRMED (docs/open-decisions.md CT2, U58). image = the Figma Inpatient Care card photos (83:226) for the six sections that had them; children without a photo render as text cards. Full page text: src/data/content/care/<slug>.en.json (+ <slug>.<region>.en.json for a region variant: home-care.sa). Paediatric Care (pediatric-rehab) has no document in the folder: generated from its card (CT3). Arabic service titles / card text = the live site's Arabic Our Care and home pages (WordPress export pages 19115 / 19153); the sections and programmes have no Arabic in the export. regions (optional) = the countries that offer a service (bug 047, 7 Oct 2026): In-School Care = UAE only (the live site has it under /ae/care/in-school only). Absent = every edition. Outpatient programmes and Paediatric Pulmonary Rehab are also UAE-only on the live site: to confirm with the client before tagging them (docs/open-decisions.md). icon (9 Oct 2026) = the programme card's icon: a ConditionCards name (neuro / musculoskeletal / post-surgical / accident, the Figma post-acute icons) or an image key under src/assets (care/icons/*, the client's programme icons). Bug 075 (9 Oct 2026, docs/open-decisions.md R053): section / programme titles and the five Paediatric programme card texts now have Arabic, copied from each page's own Arabic content file (content/care/<slug>.ar.json hero title / text = the live Arabic page, same English), Paediatric Care (inpatient) = the identical English title of the Outpatient Paediatric Care page (الرعاية للأطفال). Section card titles that differ from the page title (Post Acute Care, Long Term Care, Physical Medicine Care) and the section card texts still have no Arabic.",
+  "services": [
+    {
+      "slug": "inpatient",
+      "title": {
+        "en": "Inpatient Care",
+        "ar": "رعاية المرضى المقيمين في المستشفى"
+      },
+      "desc": {
+        "en": "Comprehensive inpatient care for children and adults, bringing together expert medical supervision, nursing care and rehabilitation within a structured clinical environment.",
+        "ar": "رعاية متكاملة للمرضى البالغين والأطفال ممن تستدعي حالاتهم الإقامة في المستشفى، تجمع بين الإشراف الطبي المتخصص، والرعاية التمريضية، وخدمات التأهيل، ضمن بيئة سريرية متكاملة."
+      },
+      "figma": "83:226",
+      "children": [
+        {
+          "slug": "post-acute-rehab",
+          "title": {
+            "en": "Post-Acute Rehabilitation",
+            "ar": "إعادة التأهيل ما بعد الحالات الحادة"
+          },
+          "desc": {
+            "en": "Individualised care for patients recovering from serious illness, injury or surgery, supporting medical stability, rehabilitation and a safe transition to the next stage of care.",
+            "ar": "رعاية مصممة وفقاً لاحتياجات المرضى المتعافين من أمراض خطيرة، أو إصابات، أو عمليات جراحية، بهدف استقرار حالتهم الصحية، واستعادة قدراتهم من خلال التأهيل، وتهيئتهم للانتقال الآمن إلى المرحلة التالية من الرعاية."
+          },
+          "figma": "41:1730",
+          "image": "care/inpatient/post-acute-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "neuro-rehab",
+              "title": {
+                "en": "Neurorehabilitation",
+                "ar": "إعادة التأهيل العصبي"
+              },
+              "desc": {
+                "en": "For neurological conditions affecting movement, cognition, balance and daily function.",
+                "ar": "برامج تأهيلية للمرضى الذين يعانون من حالات عصبية تؤثر في الحركة، أو القدرات الإدراكية، أو التوازن، أو أداء الأنشطة اليومية."
+              },
+              "children": [
+                {
+                  "slug": "stroke-rehabilitation",
+                  "title": {
+                    "en": "Stroke Rehabilitation",
+                    "ar": "إعادة التأهيل بعد السكتة الدماغية"
+                  },
+                  "desc": {
+                    "en": "For neurological conditions affecting movement, cognition, balance and daily function.",
+                    "ar": "إعادة تأهيل مصممة وفق احتياجات المرضى الذين تؤثر حالتهم العصبية في الحركة والقدرات الإدراكية والتوازن والقدرة على أداء المهام اليومية."
+                  },
+                  "children": [],
+                  "cardTitle": {
+                    "en": "Stroke Rehabilitation",
+                    "ar": "السكتة الدماغية"
+                  },
+                  "icon": "neuro"
+                },
+                {
+                  "slug": "traumatic-brain-injury-rehabilitation",
+                  "title": {
+                    "en": "Traumatic Brain Injury Rehabilitation",
+                    "ar": "إعادة التأهيل بعد إصابات الدماغ الرضحية"
+                  },
+                  "desc": {
+                    "en": "To support recovery after traumatic brain injury and address associated difficulties.",
+                    "ar": "إعادة تأهيل متعددة التخصصات لدعم التعافي بعد إصابات الدماغ الرضحية والتعامل مع الصعوبات الجسدية والإدراكية والتواصلية والوظيفية المصاحبة لها."
+                  },
+                  "children": [],
+                  "cardTitle": {
+                    "en": "Traumatic Brain Injury Rehabilitation",
+                    "ar": "إصابات الدماغ الرضحية"
+                  },
+                  "icon": "musculoskeletal"
+                },
+                {
+                  "slug": "spinal-cord-injury-rehabilitation",
+                  "title": {
+                    "en": "Spinal Cord Injury Rehabilitation",
+                    "ar": "إعادة التأهيل بعد إصابات الحبل الشوكي"
+                  },
+                  "desc": {
+                    "en": "To support mobility and function following spinal cord injury and associated complications.",
+                    "ar": "إعادة تأهيل متخصصة لدعم الحركة والقدرة على أداء الوظائف اليومية والاستقلالية بعد إصابات الحبل الشوكي والمضاعفات المرتبطة بها."
+                  },
+                  "children": [],
+                  "cardTitle": {
+                    "en": "Spinal Cord Injury Rehabilitation",
+                    "ar": "إصابات الحبل الشوكي"
+                  },
+                  "icon": "post-surgical"
+                }
+              ],
+              "cardTitle": {
+                "en": "Neurorehabilitation",
+                "ar": "إعادة التأهيل العصبي"
+              },
+              "icon": "neuro"
+            },
+            {
+              "slug": "musculoskeletal-rehabilitation",
+              "title": {
+                "en": "Musculoskeletal Rehabilitation",
+                "ar": "إعادة التأهيل العضلي الهيكلي"
+              },
+              "desc": {
+                "en": "For musculoskeletal injuries or chronic or post-surgical conditions affecting movement and strength.",
+                "ar": "برامج تأهيلية للمرضى الذين يعانون من إصابات أو حالات مزمنة في الجهاز العضلي الهيكلي، أو قيود وظيفية بعد الجراحة تؤثر في الحركة والقوة العضلية."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Musculoskeletal Rehabilitation",
+                "ar": "إعادة التأهيل العضلي الهيكلي"
+              },
+              "icon": "musculoskeletal"
+            },
+            {
+              "slug": "post-surgical-rehab",
+              "title": {
+                "en": "Post-Surgical Rehabilitation",
+                "ar": "إعادة التأهيل بعد الجراحة"
+              },
+              "desc": {
+                "en": "To restore mobility and reduce the risk of complications post-surgery.",
+                "ar": "برامج تأهيلية لمساعدة المرضى على التعافي بعد العمليات الجراحية، واستعادة الحركة والقدرات الوظيفية، والحد من خطر المضاعفات التالية للجراحة."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Post-Surgical Rehabilitation",
+                "ar": "إعادة التأهيل بعد الجراحة"
+              },
+              "icon": "post-surgical"
+            },
+            {
+              "slug": "road-traffic-accident-rehab",
+              "title": {
+                "en": "Road Traffic Accident Rehabilitation",
+                "ar": "إعادة التأهيل بعد حوادث المرور"
+              },
+              "desc": {
+                "en": "For traumatic injuries following road traffic accidents, to restore movement and function.",
+                "ar": "برامج تأهيلية للمرضى الذين يتعافون من إصابات رضحية ناجمة عن حوادث الطرق، بهدف استعادة الحركة، والقدرات الوظيفية، وتحسين الاستقلالية."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Road Traffic Accident Rehabilitation",
+                "ar": "إعادة التأهيل بعد حوادث المرور"
+              },
+              "icon": "accident"
+            }
+          ],
+          "cardTitle": {
+            "en": "Post-Acute Care",
+            "ar": "الرعاية ما بعد الحالات الحادة"
+          }
+        },
+        {
+          "slug": "long-term-care-rehab",
+          "title": {
+            "en": "Long-Term Care & Rehabilitation",
+            "ar": "الرعاية طويلة الأمد وإعادة التأهيل"
+          },
+          "desc": {
+            "en": "Ongoing medical and nursing care for patients with complex or chronic conditions who require continuous support, with a focus on comfort, stability, symptom management and quality of life.",
+            "ar": "رعاية طبية وتمريضية مستمرة للمرضى الذين يعانون من حالات مزمنة أو معقدة تستلزم دعماً متواصلاً، مع التركيز على الراحة، واستقرار الحالة الصحية، والسيطرة على الأعراض، وتحسين جودة الحياة."
+          },
+          "image": "care/inpatient/long-term-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "long-term-care",
+              "title": {
+                "en": "Long-Term Care",
+                "ar": "الرعاية طويلة الأمد"
+              },
+              "desc": {
+                "en": "For patients with chronic illness, disability or prolonged recovery needs.",
+                "ar": "رعاية طبية مستمرة للمرضى الذين يعانون من أمراض مزمنة، أو إعاقات، أو يحتاجون إلى فترات تعافٍ طويلة."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Long-Term Care",
+                "ar": "الرعاية طويلة الأمد"
+              },
+              "icon": "care/icons/icon-long-term-care"
+            },
+            {
+              "slug": "long-term-acute-care",
+              "title": {
+                "en": "Long-Term Acute Care",
+                "ar": "الرعاية طويلة الأمد وما بعد الحالات الحادة"
+              },
+              "desc": {
+                "en": "For clinically complex patients who require continuous intensive supervision.",
+                "ar": "رعاية طبية متخصصة للمرضى ذوي الحالات الصحية المعقدة والاحتياجات الطبية المكثفة، ممن يحتاجون إلى إشراف متخصص وتنسيق دقيق بين فرق الرعاية."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Long-Term Acute Care",
+                "ar": "الرعاية طويلة الأمد وما بعد الحالات الحادة"
+              },
+              "icon": "care/icons/icon-long-term-acute-care"
+            },
+            {
+              "slug": "geriatric-care",
+              "title": {
+                "en": "Geriatric Care",
+                "ar": "رعاية كبار السن"
+              },
+              "desc": {
+                "en": "For older adults with complex or age-related health needs.",
+                "ar": "رعاية متكاملة وإنسانية لكبار السن الذين يعانون من مشكلات صحية معقدة أو احتياجات مرتبطة بالتقدم في العمر."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Geriatric Care",
+                "ar": "رعاية كبار السن"
+              },
+              "icon": "care/icons/icon-geriatric-care"
+            },
+            {
+              "slug": "pediatric-long-term-care",
+              "title": {
+                "en": "Paediatric Long-Term Care",
+                "ar": "الرعاية طويلة الأمد للأطفال"
+              },
+              "desc": {
+                "en": "For children with chronic medical, neurological or developmental needs.",
+                "ar": "رعاية متخصصة طويلة الأمد للأطفال الذين يعانون من حالات طبية، أو عصبية، أو نمائية مزمنة، تتطلب متابعة مستمرة."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Paediatric Long-Term Care",
+                "ar": "الرعاية طويلة الأمد للأطفال"
+              },
+              "icon": "care/icons/icon-pediatric-long-term-care"
+            }
+          ],
+          "cardTitle": {
+            "en": "Long-Term Care",
+            "ar": "الرعاية طويلة الأمد وإعادة التأهيل"
+          }
+        },
+        {
+          "slug": "mechanical-ventilation",
+          "title": {
+            "en": "Ventilated Patient Care",
+            "ar": "رعاية مرضى أجهزة التنفس الصناعي"
+          },
+          "desc": {
+            "en": "Care for patients who require mechanical ventilation, providing respiratory support, continuous monitoring and management according to their clinical needs.",
+            "ar": "رعاية متخصصة للمرضى الذين يحتاجون إلى التنفس الصناعي، تشمل توفير الدعم التنفسي، ومراقبة حالتهم الصحية باستمرار، وتقديم الرعاية اللازمة وفقاً لاحتياجاتهم الطبية."
+          },
+          "image": "care/inpatient/ventilated-patients-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "weaning-program",
+              "title": {
+                "en": "Weaning Programme",
+                "ar": "برنامج الفطام عن جهاز التنفس الصناعي"
+              },
+              "desc": {
+                "en": "Structured respiratory management to reduce or eliminate dependence on mechanical ventilation.",
+                "ar": "برنامج علاجي تنفسي منظم يهدف إلى تقليل اعتماد المريض على جهاز التنفس الصناعي وصولًا إلى الاستغناء عنه، متى كان ذلك ممكنًا من الناحية السريرية."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Ventilator Weaning Programme",
+                "ar": "برنامج الفطام عن جهاز التنفس الصناعي"
+              },
+              "icon": "care/icons/icon-ventilator-weaning-program"
+            },
+            {
+              "slug": "long-term-ventilated-care",
+              "title": {
+                "en": "Long-Term Ventilated Care",
+                "ar": "رعاية المرضى الخاضعين للتنفس الصناعي طويل الأمد"
+              },
+              "desc": {
+                "en": "Ongoing medical support for patients who require long-term mechanical ventilation.",
+                "ar": "رعاية تنفسية وطبية مستمرة للمرضى الذين يحتاجون إلى التنفس الصناعي لفترات طويلة."
+              },
+              "children": [],
+              "cardTitle": {
+                "en": "Long-Term Ventilation Programme",
+                "ar": "برنامج التنفس الصناعي طويل الأمد"
+              },
+              "icon": "care/icons/icon-long-term-ventilation-program"
+            }
+          ],
+          "cardTitle": {
+            "en": "Ventilated Patient Care",
+            "ar": "رعاية مرضى أجهزة التنفس الصناعي"
+          }
+        },
+        {
+          "slug": "pediatric-rehab",
+          "title": {
+            "en": "Paediatric Care",
+            "ar": "إعادة التأهيل للأطفال"
+          },
+          "desc": {
+            "en": "Specialised inpatient care for children with complex medical, neurological or developmental needs, supporting their health, development, rehabilitation and functional progress.",
+            "ar": "رعاية متخصصة للأطفال الذين لديهم احتياجات طبية أو عصبية أو نمائية معقدة، تهدف إلى دعم صحتهم ونموهم، وتعزيز قدراتهم الوظيفية من خلال برامج التأهيل المناسبة."
+          },
+          "image": "care/inpatient/pediatric-care",
+          "alt": "",
+          "children": [
+            {
+              "slug": "pulmonary-rehab",
+              "title": {
+                "en": "Paediatric Pulmonary Rehabilitation",
+                "ar": "إعادة التأهيل الرئوي للأطفال"
+              },
+              "desc": {
+                "en": "For children with chronic respiratory conditions requiring monitored therapy and long-term management.",
+                "ar": "للأطفال الذين يعانون من أمراض تنفسية مزمنة أو احتياجات متخصصة تتعلق بوظائف الرئة."
+              },
+              "children": [],
+              "icon": "care/icons/icon-pulmonary-pediatric-rehabilitation"
+            },
+            {
+              "slug": "speech-language-rehab",
+              "title": {
+                "en": "Speech and Language Rehabilitation",
+                "ar": "إعادة تأهيل النطق واللغة"
+              },
+              "desc": {
+                "en": "For children and adults with communication, speech or swallowing difficulties.",
+                "ar": "للأطفال الذين يواجهون صعوبات في النطق، أو اللغة، أو التواصل، أو البلع."
+              },
+              "children": [],
+              "icon": "care/icons/icon-speech-language-rehabilitation"
+            },
+            {
+              "slug": "neuromuscular-rehab",
+              "title": {
+                "en": "Paediatric Neuromuscular Rehabilitation",
+                "ar": "إعادة التأهيل العصبي العضلي للأطفال"
+              },
+              "desc": {
+                "en": "For children with neuromuscular conditions affecting movement and muscle control.",
+                "ar": "للأطفال الذين يعانون من اضطرابات عصبية عضلية تؤثر في الحركة أو التحكم بالعضلات."
+              },
+              "children": [],
+              "icon": "care/icons/icon-pediatric-neuromusculare-rehabilitation"
+            },
+            {
+              "slug": "central-nervous-system",
+              "title": {
+                "en": "Central Nervous System Anomalies Rehabilitation",
+                "ar": "إعادة التأهيل لحالات تشوهات الجهاز العصبي المركزي"
+              },
+              "desc": {
+                "en": "For children affected by neurological and developmental conditions.",
+                "ar": "للأطفال الذين يعانون من حالات عصبية أو نمائية تؤثر في قدراتهم ووظائفهم."
+              },
+              "children": [],
+              "icon": "care/icons/icon-central-nervous-system-anomalies"
+            },
+            {
+              "slug": "long-term-cardiac",
+              "title": {
+                "en": "Long-Term Cardiac Anomalies Rehabilitation",
+                "ar": "إعادة التأهيل لحالات العيوب القلبية طويل الأمد"
+              },
+              "desc": {
+                "en": "For children with congenital or acquired heart conditions.",
+                "ar": "للأطفال المصابين بأمراض القلب الخِلقية أو المكتسبة."
+              },
+              "children": [],
+              "icon": "care/icons/icon-long-term-care-of-cardiac-anomalies"
+            },
+            {
+              "slug": "paediatric-transitional",
+              "title": {
+                "en": "Paediatric Transitional Care",
+                "ar": "الرعاية الانتقالية للأطفال"
+              },
+              "desc": {
+                "en": "For infants transitioning from hospital to home or between stages of care.",
+                "ar": "للرضّع والأطفال خلال انتقالهم من المستشفى إلى المنزل أو من مرحلة علاجية إلى أخرى."
+              },
+              "children": [],
+              "icon": "care/icons/icon-pediatric-transitional-care"
+            },
+            {
+              "slug": "paediatric-post-acute-rehab",
+              "title": {
+                "en": "Paediatric Post-Acute Rehabilitation",
+                "ar": "إعادة التأهيل للأطفال ما بعد الحالات الحادة"
+              },
+              "desc": {
+                "en": "For children recovering from serious illness or injury or living with complex long-term conditions.",
+                "ar": "للأطفال الذين يتعافون من أمراض خطيرة أو إصابات شديدة، أو يعانون من حالات صحية معقدة تتطلب رعاية وتأهيلًا متخصصين."
+              },
+              "children": [],
+              "icon": "care/icons/icon-pediatric-post-acute-care"
+            }
+          ],
+          "cardTitle": {
+            "en": "Paediatric Care",
+            "ar": "إعادة التأهيل للأطفال"
+          }
+        },
+        {
+          "slug": "icu-critical-care",
+          "title": {
+            "en": "ICU and Critical Care",
+            "ar": "العناية المركّزة ورعاية الحالات الحرجة"
+          },
+          "desc": {
+            "en": "Advanced 24/7 care for patients with life-threatening or unstable conditions, with continuous monitoring, medical treatment and critical support.",
+            "ar": "رعاية طبية متقدمة على مدار الساعة للمرضى الذين يعانون من حالات حرجة أو غير مستقرة، تشمل المراقبة المستمرة وتقديم العلاج اللازم والدعم الطبي المكثف."
+          },
+          "image": "care/inpatient/icu-critical-care",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "ICU and Critical Care",
+            "ar": "العناية المركّزة ورعاية الحالات الحرجة"
+          }
+        },
+        {
+          "slug": "palliative-care",
+          "title": {
+            "en": "Palliative Care",
+            "ar": "الرعاية التلطيفيّة"
+          },
+          "desc": {
+            "en": "Specialist care for patients living with serious or long-term illness, focused on managing symptoms, relieving discomfort and supporting patients and their families.",
+            "ar": "رعاية متخصصة للمرضى الذين يعانون من أمراض خطيرة أو طويلة الأمد، تهدف إلى تخفيف الأعراض والانزعاج وتحسين الراحة، مع تقديم الدعم للمرضى وعائلاتهم في مختلف مراحل المرض."
+          },
+          "image": "care/inpatient/palliative-care",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Palliative Care",
+            "ar": "الرعاية التلطيفية"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "outpatient",
+      "title": {
+        "en": "Outpatient Care",
+        "ar": "خدمات العيادات الخارجية"
+      },
+      "desc": {
+        "en": "Comprehensive outpatient rehabilitation for children and adults, bringing together multidisciplinary teams to restore function, build independence and support them throughout their recovery.",
+        "ar": "خدمات متكاملة لإعادة التأهيل في العيادات الخارجية للبالغين والأطفال، يقدمها فريق متعدد التخصصات بهدف استعادة القدرات الوظيفية، وتعزيز الاستقلالية، ومساندة المرضى في مختلف مراحل التعافي."
+      },
+      "children": [
+        {
+          "slug": "physical-medicine-rehab-care",
+          "title": {
+            "en": "Physical Medicine and Rehabilitation Care",
+            "ar": "الطب الفيزيائي وإعادة التأهيل"
+          },
+          "desc": {
+            "en": "Physician-led care for adults and children with conditions affecting movement, function, pain and physical wellbeing.",
+            "ar": "رعاية طبية بإشراف أطباء متخصصين للبالغين والأطفال الذين تؤثر حالاتهم الصحية في الحركة أو القدرات الوظيفية، أو تسبب لهم الألم وتحد من عافيتهم البدنية."
+          },
+          "image": "care/outpatient/physical-medicine-rehab-care",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Physical Medicine Care",
+            "ar": "الطب الفيزيائي وإعادة التأهيل"
+          }
+        },
+        {
+          "slug": "pediatric-care",
+          "title": {
+            "en": "Paediatric Care",
+            "ar": "الرعاية للأطفال"
+          },
+          "desc": {
+            "en": "Specialist care for children with physical, neurological or developmental conditions affecting movement or function.",
+            "ar": "رعاية متخصصة للأطفال الذين يعانون من حالات جسدية أو عصبية أو نمائية تؤثر في حركتهم، وقدراتهم الوظيفية، وممارستهم للأنشطة اليومية."
+          },
+          "image": "care/outpatient/pediatric-care",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Paediatric Care",
+            "ar": "رعاية الأطفال"
+          }
+        },
+        {
+          "slug": "physiotherapy",
+          "title": {
+            "en": "Physiotherapy",
+            "ar": "العلاج الطبيعي"
+          },
+          "desc": {
+            "en": "Movement-based therapy for patients experiencing pain, weakness, reduced mobility, balance problems or impaired coordination.",
+            "ar": "برامج علاجية تعتمد على الحركة والتمارين العلاجية لمساعدة المرضى الذين يعانون من الألم، أو ضعف العضلات، أو محدودية الحركة، أو مشكلات التوازن والتناسق الحركي."
+          },
+          "image": "care/outpatient/physiotherapy",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Physiotherapy",
+            "ar": "العلاج الطبيعي"
+          }
+        },
+        {
+          "slug": "occupational-therapy",
+          "title": {
+            "en": "Occupational Therapy",
+            "ar": "العلاج الوظيفي"
+          },
+          "desc": {
+            "en": "Functional therapy for patients who need support with daily activities, independence, self-care or participation at home, school or work.",
+            "ar": "تأهيل يساعد المرضى على أداء الأنشطة اليومية بمزيد من الاستقلالية، بما في ذلك العناية الذاتية والمشاركة في أنشطة الحياة في المنزل، أو المدرسة، أو العمل."
+          },
+          "image": "care/outpatient/occupational-therapy",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Occupational Therapy",
+            "ar": "العلاج الوظيفي"
+          }
+        },
+        {
+          "slug": "speech-language-therapy",
+          "title": {
+            "en": "Speech and Language Therapy",
+            "ar": "علاج النطق واللغة"
+          },
+          "desc": {
+            "en": "Specialist therapy for patients with difficulties affecting speech, language, communication, voice, feeding or swallowing.",
+            "ar": "جلسات علاجية متخصصة لمساعدة المرضى الذين يواجهون صعوبات في النطق، أو اللغة، أو التواصل، أو الصوت، أو في التغذية والبلع."
+          },
+          "image": "care/outpatient/speech-language-therapy",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Speech and Language Therapy",
+            "ar": "علاج النطق واللغة"
+          }
+        },
+        {
+          "slug": "cerebral-palsy-program",
+          "title": {
+            "en": "Cerebral Palsy Programme",
+            "ar": "برنامج إعادة التأهيل للشلل الدماغي"
+          },
+          "desc": {
+            "en": "Specialised rehabilitation for children and adults with cerebral palsy, addressing movement, muscle control, function and independence.",
+            "ar": "برامج تأهيل متخصصة للأطفال والبالغين المصابين بالشلل الدماغي، تركز على تحسين الحركة، والتحكم العضلي، والقدرات الوظيفية، وتعزيز الاستقلالية."
+          },
+          "image": "care/outpatient/cerebral-palsy-program",
+          "alt": "",
+          "children": [],
+          "cardTitle": {
+            "en": "Cerebral Palsy Programme",
+            "ar": "برنامج إعادة التأهيل للشلل الدماغي"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "homecare",
+      "title": {
+        "en": "Homecare",
+        "ar": "خدمات الرعاية المنزلية"
+      },
+      "desc": {
+        "en": "Comprehensive home-based care for children and adults, combining medical care, nursing and rehabilitation in the comfort of home.",
+        "ar": "رعاية طبية عالية الجودة يتم تقديمها حتي باب المنزل."
+      },
+      "children": []
+    },
+    {
+      "slug": "in-school",
+      "title": {
+        "en": "In-School Care",
+        "ar": "الرعاية المدرسية"
+      },
+      "desc": {
+        "en": "Specialist therapy and medical support delivered at school",
+        "ar": "توفير الرعاية في الموقع لدعم صحة الطلاب وسلامتهم."
+      },
+      "regions": [
+        "ae"
+      ],
+      "children": []
+    }
+  ]
+}

@@ -10,12 +10,15 @@ import BookAppointmentModal from './BookAppointmentModal.astro';
 import InquiryModal from './InquiryModal.astro';
 import OpinionModal from './OpinionModal.astro';
 import CountryPopup from './CountryPopup.astro';
+import RatingFace from '../feedback/RatingFace.astro';
 import type { Edition } from '../../lib/editions';
 
 interface Props { edition: Edition }
 const { edition } = Astro.props;
 ---
 
+<!-- Sentiment face drawings, once per page, outside the closed <dialog>s: the pop-up's ratings and the Patient Feedback matrix <use> them (bug 095) -->
+<RatingFace sprite />
 <BookAppointmentModal edition={edition} />
 <InquiryModal edition={edition} />
 <OpinionModal edition={edition} />
@@ -46,7 +49,8 @@ const { edition } = Astro.props;
   fromHash();
 
   // Page forms (e.g. Patient Feedback): load on first focus; a submit before that waits for the script.
-  document.addEventListener('focusin', (e) => {
+  // Also on change: a value can arrive without focus (a file dropped on the attachment box, autofill); initForm then syncs it.
+  for (const type of ['focusin', 'change']) document.addEventListener(type, (e) => {
     const f = (e.target as Element).closest?.('form[data-form]') as HTMLFormElement | null;
     if (f && !f.closest('dialog')) void load().then((m) => m.initForm(f));
   });

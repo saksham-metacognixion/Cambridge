@@ -1,39 +1,83 @@
-import { DOCTOR_PATHS } from './doctors';
+import { DOCTOR_PATHS } from "./doctors";
 
 /**
  * Page paths inside an edition, in ONE place (URL = urlFor(edition, path)). Content JSON names a page by key
  * (`"page": "referPatient"`), never by slug.
- * Slugs follow the Figma frame names (figma-cache/frames.md). UNCONFIRMED with Pramod: cambridgehospital.com answers
- * automated requests with 403, so the current site's paths could not be read. Change them here only.
- * Pages marked "not built" are linked already; add them to allRoutes() (src/lib/routes.ts) when their template exists,
- * so they enter the sitemaps and hreflang.
+ * Slugs = the current site's URL structure (CLAUDE.md 5): the page URLs of the live site's WordPress export
+ * (docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), which confirmed the ones quoted in the client's documents
+ * (5 Oct 2026) and settled the rest (/faqs/, /contact-us/, /about/why-cambridge-hospital/, /patient-hub/find-a-doctor/,
+ * /legal/<slug>/, /care/in-school/; the live /care/home-healthcare/ is /care/homecare/ since bug 096, 301 in redirects.ts). Arabic = /ar/ prefix. Doctor profile and article slugs stay
+ * unconfirmed (not in the export). Change them here only (docs/open-decisions.md CT1 / WP1).
  */
 export const PAGE_PATHS = {
-  patientHub: 'patient-hub',
-  /** Patient Feedback Form (Figma 188:964). Slug UNCONFIRMED: the current site's URL could not be read. */
-  patientFeedback: 'patient-feedback',
-  findDoctor: DOCTOR_PATHS.list,
-  /** not built (Figma 40:318) */
-  conditions: 'conditions-specialities',
-  /** not built (Figma 59:14344) */
-  referPatient: 'refer-a-patient',
-  /** not built (Figma 54:9239) */
-  internationalPatients: 'international-patients',
-  /** not built (Figma 46:6844) */
-  insuranceProviders: 'insurance-providers',
-  /** not built (Figma 62:2403) */
-  patientTestimonials: 'patient-testimonials',
+  /** About Cambridge (Figma 45:4982); live URL /about/ */
+  about: "about",
+  /** Why Cambridge (Figma 116:311); live URL /about/why-cambridge-hospital/ (WordPress export, 6 Oct 2026) */
+  whyCambridge: "about/why-cambridge-hospital",
+  /** Who We Are (Figma 46:5841); live URL /about/who-we-are/ (WordPress export, 6 Oct 2026) */
+  whoWeAre: "about/who-we-are",
+  /** Meet the Team (Task 198, 16 Oct 2026; no Figma frame, the live page's layout); live URL /about/meet-the-team/.
+   *  Profiles = leadership/<slug> (LEADER_PATHS in src/lib/leadership.ts, the live URLs). */
+  meetTheTeam: "about/meet-the-team",
+  /** Accreditations & Partnerships (Figma 55:12215); live URL /about/accreditations-partnerships/ */
+  accreditations: "about/accreditations-partnerships",
+  /** Our Hospitals list (Figma 101:6247); live URL /hospitals/. Detail pages = hospitals/<path> (src/lib/hospitals.ts) */
+  hospitals: "hospitals",
+  /** Contact Us (Figma 86:431); live URL /contact-us/ (WordPress export, 6 Oct 2026) */
+  contact: "contact-us",
+  /** Career Hub (Figma 112:7295); live URL /about/careers/ */
+  careers: "about/careers",
+  patientHub: "patient-hub",
   /**
-   * not built (Legal templates, scope 2.5). Still linked as "#" until the page exists: the consent row on every form
-   * (src/data/content/forms/common.*.json -> consent.link.href) and the footer "Privacy Policy". Point both here then.
+   * Health calculators (Home "Check Your Health in Seconds", bug 014; no Figma frame): live URLs kept so the old links
+   * work without a redirect (WordPress export, 6 Oct 2026). Template: src/pages/[...base]/[calculator].astro, fields in
+   * src/data/calculators.json, formulas in src/lib/calculator-formulas.ts.
    */
-  privacyPolicy: 'privacy-policy',
+  bmiCalculator: "bmi-calculator",
+  strokeRiskCalculator: "stroke-risk-calculator",
+  heartAgeCalculator: "heart-health-age-calculator",
+  lungHealthCalculator: "lung-health-calculator",
+  /** Your Opinion Matters / Patient Feedback Form (Figma 188:964); live URL /your-opinion-matters/ */
+  patientFeedback: "your-opinion-matters",
+  findDoctor: DOCTOR_PATHS.list,
+  /** Conditions & Specialities (Figma 40:318); live URL /patient-hub/conditions-specialities/; detail pages = <this>/<slug> (src/lib/conditions.ts) */
+  conditions: "patient-hub/conditions-specialities",
+  /** Refer a Patient (Figma 59:14344); live URL /patient-hub/refer-a-patient/ */
+  referPatient: "patient-hub/refer-a-patient",
+  /** International Patients (Figma 54:9239); live URL /patient-hub/international-patients/ */
+  internationalPatients: "patient-hub/international-patients",
+  /** Insurance Providers (Figma 46:6844); live URL /patient-hub/insurance-providers/ (WordPress export, 6 Oct 2026) */
+  insuranceProviders: "patient-hub/insurance-providers",
+  /** FAQ (Figma 100:5509); live URL /faqs/ (WordPress export, 6 Oct 2026) */
+  faq: "faqs",
+  /** Patient Testimonials (Figma 62:2403); live URL /patient-hub/testimonials/ */
+  patientTestimonials: "patient-hub/testimonials",
+  /** Our Care hub (Figma 36:5631); live URL /care/; services and programmes = care/<service>/... (CARE_PATHS in src/lib/care.ts) */
+  ourCare: "care",
+  /** Media Hub list (Figma 100:5522); live URL /media-hub/; articles = media-hub/<slug> (NEWS_PATHS in src/lib/news.ts) */
+  mediaHub: "media-hub",
+  /**
+   * Legal templates (scope 2.5, no Figma frame): one template, content pending (docs/open-decisions.md B10, L1).
+   * Slugs = the live site's six legal pages under /legal/ (WordPress export, 6 Oct 2026; src/data/legal.json).
+   * The consent row on every form (src/data/content/forms/common.*.json -> consent.link) and the footer legal links point here.
+   */
+  privacyPolicy: "legal/privacy-policy",
+  cookiePolicy: "legal/cookie-policy",
+  compliance: "legal/gdpr-compliance",
+  patientRights: "legal/patient-rights",
+  ethicsStatement: "legal/ethics-statement",
+  accessibilityStatement: "legal/accessibility-statement",
+  /** 404 page (scope 2.5, no Figma frame): /404, /ae/404, ... = the file each prefix serves for an unknown URL. Cards whose slug has no page link here. */
+  notFound: "404",
 } as const;
 
 export type PageKey = keyof typeof PAGE_PATHS;
 
 export function pagePath(key: string): string {
   const p = (PAGE_PATHS as Record<string, string>)[key];
-  if (p === undefined) throw new Error(`Unknown page key "${key}" (see PAGE_PATHS in src/lib/paths.ts)`);
+  if (p === undefined)
+    throw new Error(
+      `Unknown page key "${key}" (see PAGE_PATHS in src/lib/paths.ts)`,
+    );
   return p;
 }

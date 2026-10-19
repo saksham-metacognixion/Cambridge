@@ -1,36 +1,97 @@
 {
-  "logo": { "image": "footer/logo-vertical-negative", "alt": "Cambridge Hospital" },
+  "logo": {
+    "image": "footer/logo-vertical-negative",
+    "alt": "Cambridge Hospital"
+  },
   "quickLinks": {
     "heading": "QUICK LINKS",
     "rows": [
-      [{ "label": "Cambridge", "href": "#" }],
-      [{ "label": "Our Care", "href": "#" }],
-      [{ "label": "Patient Hub", "href": "#", "path": "patient-hub" }],
-      [{ "label": "Our Hospitals", "href": "#" }],
-      [{ "label": "Contact Us", "href": "#", "path": "contact" }],
-      [{ "label": "Book an Appointment", "href": "#book-appointment" }],
-      [{ "label": "Media Hub", "href": "#", "path": "media-hub" }],
-      [{ "label": "Careers", "href": "#" }],
-      [{ "label": "Knowledge Center", "href": "#" }],
-      [{ "label": "FAQs", "href": "#" }, { "label": "Your Opinion Matters", "href": "#your-opinion", "path": "patient-feedback" }],
-      [{ "label": "Find a Doctor", "href": "#", "path": "find-a-doctor" }],
-      [{ "label": "Search Conditions", "href": "#" }],
-      [{ "label": "Send an Inquiry", "href": "#send-inquiry" }]
+      [
+        {
+          "label": "Cambridge",
+          "href": "#",
+          "page": "about"
+        }
+      ],
+      [
+        {
+          "label": "Our Care",
+          "href": "#",
+          "page": "ourCare"
+        }
+      ],
+      [
+        {
+          "label": "Patient Hub",
+          "href": "#",
+          "page": "patientHub"
+        }
+      ],
+      [
+        {
+          "label": "Our Hospitals",
+          "href": "#",
+          "page": "hospitals"
+        }
+      ],
+      [
+        {
+          "label": "Contact Us",
+          "href": "#",
+          "page": "contact"
+        }
+      ],
+      [
+        {
+          "label": "Book an Appointment",
+          "href": "#book-appointment"
+        }
+      ],
+      [
+        {
+          "label": "FAQs",
+          "href": "#",
+          "page": "faq"
+        }
+      ]
     ]
   },
   "services": {
     "heading": "SERVICES",
     "links": [
-      { "label": "Inpatient Care", "href": "#" },
-      { "label": "Outpatient Care", "href": "#" },
-      { "label": "Home Health Care", "href": "#" },
-      { "label": "In School Care", "href": "#" }
+      {
+        "label": "Inpatient Care",
+        "href": "#",
+        "care": "inpatient"
+      },
+      {
+        "label": "Outpatient Care",
+        "href": "#",
+        "care": "outpatient"
+      },
+      {
+        "label": "Homecare",
+        "href": "#",
+        "care": "homecare"
+      },
+      {
+        "label": "In-School Care",
+        "href": "#",
+        "care": "in-school"
+      }
     ]
   },
   "hospitals": {
     "heading": "OUR HOSPITALS",
     "href": "#",
-    "slugs": ["abu-dhabi", "al-ain", "dhahran", "al-khobar", "jeddah", "al-mudeef-abu-dhabi"]
+    "slugs": [
+      "abu-dhabi",
+      "al-ain",
+      "dhahran",
+      "al-khobar",
+      "jeddah",
+      "al-mudeef-abu-dhabi"
+    ]
   },
   "accreditations": {
     "heading": "TRUSTED ACCREDITATIONS",
@@ -45,7 +106,16 @@
   },
   "copyright": "Cambridge Hospital All Rights Reserved",
   "legal": {
-    "compliance": { "label": "Compliance", "href": "#" },
-    "privacy": { "label": "Privacy Policy", "href": "#" }
-  }
+    "compliance": {
+      "label": "Compliance",
+      "href": "#",
+      "page": "compliance"
+    },
+    "privacy": {
+      "label": "Privacy Policy",
+      "href": "#",
+      "page": "privacyPolicy"
+    }
+  },
+  "_note": "Footer text (Figma). Quick links: bug 097 (13 Oct 2026, client) removed Media Hub, Career, Knowledge Centre, Your Opinion Matters, Find a Doctor, Search Conditions and Send an Inquiry to shorten the footer (FAQs kept; the pages stay in the header menus); services = the four Our Care services ('Home Care', 'In-School Care' as in the documents; `care` = service slug in src/data/care.json). Links: `page` = key in PAGE_PATHS, `href` = literal (pop-ups). Facility names come from hospitals.json. Legal links: 'Compliance' opens the live site's GDPR Compliance page (/legal/gdpr-compliance), 'Privacy Policy' /legal/privacy-policy (WordPress export, 6 Oct 2026)."
 }

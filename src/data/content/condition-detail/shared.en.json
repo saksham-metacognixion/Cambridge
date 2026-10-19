@@ -1,0 +1,62 @@
+{
+  "_note": "Shared parts of the condition detail template (Figma 41:2373 / 67:3070). Visible text exactly as in Figma. pending.* and generated.* are NOT in Figma (PLACEHOLDER). Arabic overviewHeading (shared.ar.json) = the documents' 'نبذة عن البرنامج' line; a page may override it (overviewHeading in its own file).",
+  "overviewHeading": "Overview",
+  "tabsLabel": "Topics",
+  "pending": {
+    "note": "Content pending: this page is generated from the condition card until the full text is supplied.",
+    "tab": "Content pending for this topic.",
+    "banner": "Banner photo pending for this condition: the shared placeholder is shown until the page's own photo is supplied."
+  },
+  "generated": {
+    "_note": "Pages without a content file (src/data/content/conditions/<slug>.en.json): hero title = card title, overview = card summary. Hero image + button are PLACEHOLDERS (Accidents Rehabilitation image), flagged. The same banner is the FALLBACK of a page whose own key (hero.banner.image = conditions/<slug>, bug 042) has no file in src/assets yet (R042) - shown with pending.banner on staging.",
+    "banner": {
+      "image": "conditions/accidents-rehabilitation",
+      "alt": ""
+    },
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    },
+    "metaTitle": "{title} | Cambridge Hospital"
+  },
+  "recovery": {
+    "ariaLabel": "Your recovery matters to us",
+    "text": "Care at Cambridge Hospital is a connected journey across inpatient, outpatient, home, and school services, supporting every stage of recovery.",
+    "lead": "Your recovery matters to us,",
+    "emphasis": [
+      " and we are with you every step of",
+      "the journey."
+    ],
+    "tiles": [
+      {
+        "label": "Book an Appointment",
+        "href": "#book-appointment"
+      },
+      {
+        "label": "Find a Doctor",
+        "href": "#",
+        "page": "findDoctor"
+      },
+      {
+        "label": "Search Conditions",
+        "href": "#",
+        "page": "conditions"
+      },
+      {
+        "label": "Send an Inquiry",
+        "href": "#send-inquiry"
+      }
+    ]
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-kassab"
+    ]
+  }
+}

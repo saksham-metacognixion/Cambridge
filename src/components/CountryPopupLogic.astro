@@ -1,37 +1,78 @@
 ---
 /*
- * Country pop-up, browser part (scope 2.3), Global editions only. NO UI yet: the Figma pop-up design has not
- * been fetched. This decides WHEN it must show and how the choice is saved; the pop-up component will listen
- * for the `ch:country-popup` event (or read `document.documentElement.dataset.countryPopup`).
- *   - shows only on Global, only if no `ch_edition` cookie exists (first visit), never again after a choice
- *   - detected country comes from the `ch_geo` cookie set by functions/_middleware.ts ("XX" if unknown)
- *   - window.chooseEdition('global' | 'ae' | 'sa') saves the choice for a year and goes to that edition's
- *     same-language home (the pop-up's buttons call it)
+ * Country pop-up, browser part (scope 2.3). Decides WHEN the pop-up must show (Global editions only) and saves the
+ * visitor's edition choice (every edition: the header region switch counts as a choice too, bug 084). The pop-up itself
+ * (src/components/forms/CountryPopup.astro) listens for `ch:country-popup` / reads html[data-country-popup].
+ * Config: src/data/country-popup.json.
+ *   - detected country = the `ch_geo` cookie set at the edge (root middleware.ts on Vercel: x-vercel-ip-country;
+ *     functions/_middleware.ts on Cloudflare; both via functions/_lib/geo.ts). Unknown country = no cookie. Since 10 Oct 2026
+ *     (user) `fallbackCountry` is "": only a country with its own version (AE) gets a pop-up; KSA, other and unknown
+ *     visitors stay on Global with none (no KSA version, B5). On a local dev server `devCountry` is assumed.
+ *   - a saved choice always wins over the detected country: the pop-up never shows again until it expires.
+ *   - `remember` says how long a choice is kept:
+ *       forever  -> cookie ch_edition for a year (bug 084, 9 Oct 2026; Path=/ so Global, /ae and /sa share it; Secure on https)
+ *       session  -> session cookie: back after the browser is closed
+ *       tab      -> sessionStorage ch_edition: back in every new tab / window (the 5 Oct 2026 decision, replaced)
+ *       never    -> no memory: on every page load
+ *     Saving always drops a stale sessionStorage value, so an old per-tab choice can never shadow the cookie, and `saved()`
+ *     only reads the store the current mode writes.
+ *   - window.chooseEdition('global' | 'ae' | 'sa') (pop-up buttons; Esc = 'global') saves the choice; another region = go
+ *     to the SAME page in that region's same-language edition (bug 037: /hospitals -> /ae/hospitals, query string and
+ *     #hash kept), or its home when the page does not exist there (src/lib/routes.ts switchHref; the 404 page counts as
+ *     not existing). The current region = only close, no navigation.
+ *   - [data-edition-choice] links (Header.astro region menu) save their region on click, then navigate as normal.
  */
-import { parsePath, editions, urlFor } from '../lib/editions';
+import { parsePath, editions } from '../lib/editions';
+import { switchHref } from '../lib/routes';
+import { PAGE_PATHS } from '../lib/paths';
+import config from '../data/country-popup.json';
 
-const { edition } = parsePath(Astro.url.pathname);
-const homes = Object.fromEntries(
-  editions.filter((e) => e.locale === edition.locale).map((e) => [e.region, urlFor(e)]),
-);
+const { edition, path } = parsePath(Astro.url.pathname);
+const page = path === PAGE_PATHS.notFound ? '' : path;
+const current = edition.region;
+const targets = current === 'global'
+  ? Object.fromEntries(editions.filter((e) => e.locale === edition.locale).map((e) => [e.region, switchHref(e, page, 'home')]))
+  : {};
+const remember = (config as { remember?: string }).remember ?? 'forever';
+const devCountry = import.meta.env.DEV ? ((config as { devCountry?: string }).devCountry ?? '') : '';
+const fallback = (config as { fallbackCountry?: string }).fallbackCountry ?? '';
+const known = Object.keys(config.countries);
 ---
 
-{edition.region === 'global' && (
-  <script is:inline define:vars={{ homes }}>
-    (function () {
-      var c = document.cookie;
-      function read(n) { var m = c.match(new RegExp('(?:^|;\\s*)' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
-      window.chooseEdition = function (region) {
-        if (!homes[region]) return;
-        document.cookie = 'ch_edition=' + region + '; Path=/; Max-Age=31536000; SameSite=Lax; Secure';
-        document.cookie = 'ch_geo=; Path=/; Max-Age=0';
-        if (region !== 'global') location.href = homes[region];
-        else document.documentElement.removeAttribute('data-country-popup');
-      };
-      if (read('ch_edition')) return;
-      var country = read('ch_geo') || 'XX';
-      document.documentElement.dataset.countryPopup = country;
-      document.dispatchEvent(new CustomEvent('ch:country-popup', { detail: { country: country } }));
-    })();
-  </script>
-)}
+<script is:inline define:vars={{ targets, current, remember, devCountry, fallback, known }}>
+  (function () {
+    var c = document.cookie;
+    var secure = location.protocol === 'https:' ? '; Secure' : '';
+    function read(n) { var m = c.match(new RegExp('(?:^|;\\s*)' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+    function saved() {
+      if (remember === 'never') return null;
+      if (remember === 'tab') { try { return sessionStorage.getItem('ch_edition'); } catch (e) { return null; } }
+      return read('ch_edition');
+    }
+    function save(region) {
+      try { sessionStorage.removeItem('ch_edition'); } catch (e) {}
+      if (remember === 'tab') { try { sessionStorage.setItem('ch_edition', region); } catch (e) {} }
+      else if (remember === 'session') document.cookie = 'ch_edition=' + region + '; Path=/; SameSite=Lax' + secure;
+      else if (remember === 'forever') document.cookie = 'ch_edition=' + region + '; Path=/; Max-Age=31536000; SameSite=Lax' + secure;
+      // The detection cookie is no longer needed once the visitor has chosen.
+      if (remember !== 'never') document.cookie = 'ch_geo=; Path=/; Max-Age=0';
+    }
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest && e.target.closest('[data-edition-choice]');
+      if (a) save(a.getAttribute('data-edition-choice'));
+    });
+    if (current !== 'global') return;
+    window.chooseEdition = function (region) {
+      if (!targets[region]) return;
+      save(region);
+      if (region !== current) location.href = targets[region] + location.search + location.hash;
+      else document.documentElement.removeAttribute('data-country-popup');
+    };
+    if (saved()) return;
+    var country = read('ch_geo') || devCountry || 'XX';
+    if (known.indexOf(country) < 0 && fallback) country = fallback;
+    if (known.indexOf(country) < 0) return;
+    document.documentElement.dataset.countryPopup = country;
+    document.dispatchEvent(new CustomEvent('ch:country-popup', { detail: { country: country } }));
+  })();
+</script>

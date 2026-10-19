@@ -1,0 +1,156 @@
+---
+import { content, t } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { INDEXABLE } from '../../lib/seo';
+import { showPendingNote } from '../../lib/conditions';
+import data from '../../data/faqs.json';
+import chevOpen from '../../assets/faq/chevron-open.svg';
+import chevClosed from '../../assets/faq/chevron-closed.svg';
+
+/*
+ * FAQ body (Figma 100:5509), section top = the first question's top (page y 516, 75 below the hero).
+ * Left column: H2 81:2408 Gotham Medium 22.866 / 25.533 #004059 at x 82.76, 3.62 below the section top, w208.056 |
+ * 43.3 | category tabs at x 86.45 (ARIA tabs + ?category= in the URL, src/scripts/tabs.ts). Figma 81:2396 had 217.372 x 28.983
+ * tabs, the selected one Book 12 on #418ea2, the others Book 10.351 #6b6b6b on no fill; client sheet "CH Website Comments.xlsx"
+ * (13 Oct 2026, rows 18 + 19: "all tabs like this", "needs alignment") -> the shared detail-page (ICU) tab look instead
+ * then (13 Oct, client: "exactly as live") the live site's tabs, as shared/Tabs.astro: 375 x 56 px at 1440 (273.96 x 40.912 Figma
+ * px), 8 px apart, Book 16 / 32 label at 25 px in, centred vertically, radius 14, #f5f5f5 / selected --tab-selected with a white label;
+ * the questions start 30 px right of the tabs as on the live FAQs page.
+ * Right column (x 343, w 628.652): native <details> per question (keyboard + no JS). Question bar 46.925 high, radius
+ * 11.731 (-> --radius-card, bug 049), Gotham Book 11.041 / 26.7 at x +19.32, top +8.97, chevron 9.661 x 5.806 at x +593.46, top +17.94: open = #418ea2
+ * bar, white text, chevron pointing DOWN; closed = rgba(231,231,231,.45) bar, #004059 text, chevron pointing UP (as in
+ * Figma: the reverse of the usual convention, flagged). Open answer panel: #f7f7f7, radius 10 (-> --radius-card), 629 wide, starting 9 below
+ * the bar top, answer Gotham Book 11.041 / 17.252 #004059 at x +23, 13.075 below the bar, w600, 15.24 above the panel end
+ * (min panel 118). Gaps: 10 after an open panel, 17.255 after a closed bar (Figma 17.26 / 11.03 / 17.26: normalised to
+ * the first). Closed chevron colour #418ea2 (Figma: first closed item; the others #418ea2, normalised).
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const loc = edition.locale;
+const c = content('faq/page', loc);
+const pending = showPendingNote(INDEXABLE);
+const cats = data.categories.map((x) => ({ id: x.id, label: t(x.label, loc, 'faqs'), items: data.questions.filter((q) => q.category === x.id).map((q) => ({ q: t(q.question, loc, 'faqs'), a: q.answer[loc] || q.answer.en })) }));
+const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
+// An answer is plain text: paragraphs separated by a blank line, line breaks inside a paragraph kept (src/data/faqs.json).
+const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
+// An email address may break before its "@" (<wbr>) rather than mid-word (mobile QA M1, 13 Oct 2026: "info@cambridgehospital.com," is
+// 4 px wider than the answer column at 320): [text, local part, @domain, text, ...]
+const emails = (l: string) => l.split(/([^\s@]+)(@[^\s@]+)/);
+---
+
+<section class="faq" aria-labelledby="faq-heading">
+  <div class="side">
+    <h2 id="faq-heading" class="h">{c.heading}</h2>
+    <div class="tablist" role="tablist" aria-orientation="vertical" aria-label={c.tabsLabel} data-tabs data-tabs-param="category">
+      {cats.map((cat, i) => (
+        <button type="button" role="tab" id={`faq-tab-${cat.id}`} data-key={cat.id} aria-controls={`faq-panel-${cat.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} class="tab ui-tab">{cat.label}</button>
+      ))}
+    </div>
+  </div>
+  <div class="panels">
+    {cats.map((cat, i) => (
+      <div role="tabpanel" id={`faq-panel-${cat.id}`} aria-labelledby={`faq-tab-${cat.id}`} hidden={i !== 0} class="panel">
+        {cat.items.length === 0 && <p class="ui-empty not-italic">{c.empty}</p>}
+        {cat.items.map((it, k) => (
+          <details class:list={['qa', k === 0 && 'is-open']} name={`faq-${cat.id}`} open={k === 0}>
+            <summary class="bar">
+              <h3 class="q">{n(k)}{it.q}</h3>
+              <img loading="lazy" class="chev chev-open" src={chevOpen.src} width="9.661" height="5.806" alt="" />
+              <img loading="lazy" class="chev chev-closed" src={chevClosed.src} width="9.661" height="5.806" alt="" />
+            </summary>
+            <div class="ans">
+              {it.a ? paras(it.a).map((lines) => <p>{lines.map((l, j) => (<>{j > 0 && <br />}{emails(l).map((s, m) => (m % 3 === 1 ? <>{s}<wbr /></> : s))}</>))}</p>) : pending && <p class="pending">{c.answerPending}</p>}
+            </div>
+          </details>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import '../../scripts/tabs';
+
+  // Accordion: the <details> of one category share name="faq-<category>", so the browser closes the open one when another
+  // opens (bug 025); without JS that is the whole behaviour. With JS the open / close is animated like the live Greenshift
+  // accordion (animation audit, saved live FAQs page 9 Oct 2026: answer max-height 0 -> 5000px and opacity 0 -> 1 over .25s
+  // ease-out, the chevron turning over .3s): the script takes over the exclusivity (the name attribute is dropped, since the
+  // browser would close the other item at once), keeps `open` until the collapse has run, and sets .is-open a frame after
+  // opening so the transition has a start state. Off with prefers-reduced-motion (plain toggle).
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const MS = 260;
+  const closers = new WeakMap<HTMLDetailsElement, number>();
+  const collapse = (d: HTMLDetailsElement) => {
+    d.classList.remove('is-open');
+    if (reduce) { d.open = false; return; }
+    closers.set(d, window.setTimeout(() => { if (!d.classList.contains('is-open')) d.open = false; closers.delete(d); }, MS));
+  };
+  const expand = (d: HTMLDetailsElement) => {
+    window.clearTimeout(closers.get(d));
+    d.open = true;
+    if (reduce) { d.classList.add('is-open'); return; }
+    requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('is-open')));
+  };
+  document.querySelectorAll<HTMLDetailsElement>('details.qa').forEach((d) => {
+    const group = d.getAttribute('name') ?? '';
+    d.removeAttribute('name');
+    d.dataset.group = group;
+    d.querySelector('summary')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (d.classList.contains('is-open')) collapse(d);
+      else {
+        document.querySelectorAll<HTMLDetailsElement>(`details.qa.is-open[data-group="${group}"]`).forEach((o) => { if (o !== d) collapse(o); });
+        expand(d);
+      }
+    });
+  });
+</script>
+
+<style>
+  .faq { max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: calc(24 * var(--u)); font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0; font-weight: 500; font-size: calc(22.866 * var(--u)); line-height: calc(25.533 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .tablist { display: flex; flex-direction: column; gap: calc(5.845 * var(--u)); margin-top: calc(43.3 * var(--u)); }
+  .tab { box-sizing: border-box; display: flex; align-items: center; width: calc(273.96 * var(--u)); max-width: 100%; min-height: max(44px, calc(40.912 * var(--u))); margin: 0; padding-block: calc(8.767 * var(--u)); padding-inline: calc(18.264 * var(--u)); border: 0; border-radius: calc(10.228 * var(--u)); background: #f5f5f5; color: var(--color-navy); font: 400 calc(11.689 * var(--u)) / calc(23.378 * var(--u)) var(--font-gotham); text-align: start; overflow-wrap: anywhere; cursor: pointer; } /* min-height >= 44 px: touch target (bug 090) */
+  .tab[aria-selected='true'] { background: var(--tab-selected); color: #fff; }
+  .tab:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+  .panel[hidden] { display: none; }
+  .qa { position: relative; }
+  .qa + .qa { margin-top: calc(17.255 * var(--u)); }
+  .qa[open] + .qa { margin-top: calc(10 * var(--u)); }
+  .bar { position: relative; z-index: 1; display: flex; align-items: flex-start; box-sizing: border-box; min-height: calc(46.925 * var(--u)); padding-block: calc(8.97 * var(--u)) calc(8 * var(--u)); padding-inline: calc(19.32 * var(--u)) calc(35 * var(--u)); border-radius: var(--radius-card); background: rgba(231, 231, 231, 0.45); color: #004059; cursor: pointer; list-style: none; }
+  .bar::-webkit-details-marker { display: none; }
+  .bar:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+  .qa[open] > .bar { background: var(--color-navy); color: #fff; } /* brand AA: white only on Deep Teal */
+  /* Motion = the live Greenshift accordion (saved FAQs page, 9 Oct 2026): title all .3s ease-in-out, icon transform .3s
+     ease-in-out, answer max-height / opacity all .25s ease-out (the live 5000px max-height: the height is in place almost at
+     once, the fade is what shows). Open-state colours wait for .is-open so the bar and the answer move together. */
+  .bar { transition: background-color .3s ease-in-out, color .3s ease-in-out; }
+  .qa[open]:not(.is-open) > .bar { background: rgba(231, 231, 231, 0.45); color: #004059; } /* = the closed bar: the open colours arrive with .is-open */
+  /* Bug 072: every row shows a chevron. Both Figma chevrons sit in the same box and cross-fade while turning: closed = the
+     #418ea2 one pointing up, open = the white one pointing down (Figma's directions, see the header note). */
+  .chev { display: block; transition: transform .3s ease-in-out, opacity .3s ease-in-out; }
+  .qa:not(.is-open) .chev { transform: rotate(180deg); }
+  .qa:not(.is-open) .chev-open, .qa.is-open .chev-closed { opacity: 0; }
+  .ans { overflow: hidden; max-height: 5000px; transition: max-height .25s ease-out, opacity .25s ease-out, padding .25s ease-out, min-height .25s ease-out; }
+  .qa:not(.is-open) .ans { max-height: 0; min-height: 0; opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .bar, .chev, .ans { transition: none; } }
+  /* Bug 165 (15 Oct 2026): the Figma single-line bar height (26.7) was the line height (2.4 x the 11.041 font), so a wrapped question
+     looked double-spaced. Leading 1.35 (14.9) with the rest as block padding: a one-line question keeps the same 26.7 box. */
+  .q { margin: 0; padding-block: calc(5.9 * var(--u)); font-weight: 400; font-size: calc(11.041 * var(--u)); line-height: calc(14.9 * var(--u)); overflow-wrap: anywhere; }
+  .chev { position: absolute; inset-inline-start: calc(593.46 * var(--u)); top: calc(17.94 * var(--u)); width: calc(9.661 * var(--u)); height: calc(5.806 * var(--u)); max-width: none; }
+  .ans { position: relative; box-sizing: border-box; min-height: calc(118 * var(--u)); margin-top: calc(-37.925 * var(--u)); padding-block: calc(51 * var(--u)) calc(15.24 * var(--u)); padding-inline: calc(23 * var(--u)) calc(6 * var(--u)); border-radius: var(--radius-card); background: var(--color-mist-25); width: calc(629 * var(--u)); max-width: 100%; }
+  .ans p + p { margin-top: calc(8 * var(--u)); }
+  .ans p { margin: 0; width: calc(600 * var(--u)); max-width: 100%; color: var(--color-navy-alt); font-size: calc(11.041 * var(--u)); line-height: calc(17.252 * var(--u)); overflow-wrap: anywhere; }
+  .ans .pending { font-style: italic; color: var(--color-body); }
+  @media (max-width: 1023.98px) {
+    .faq { padding-inline: calc(24 * var(--u)); } /* bug 082: the same inline inset as the hero copy above (PageHero), so both headings share one edge */
+    .chev { inset-inline-start: auto; inset-inline-end: calc(16 * var(--u)); }
+    .ans { width: auto; }
+    .tab { width: 100%; } /* bug 153: the category tabs span the column like the questions under them (were the 375px desktop tab) */
+  }
+  @media (min-width: 1024px) {
+    .faq { flex-direction: row; align-items: flex-start; gap: 0; padding: 0; }
+    .side { flex: none; width: calc(295.877 * var(--u)); margin-inline-start: calc(82.76 * var(--u)); padding-top: calc(3.62 * var(--u)); } /* live tab 273.96 + the live 30 px (21.917) gap to the questions */
+    .h { width: calc(208.056 * var(--u)); }
+    .panels { flex: none; width: calc(628.652 * var(--u)); }
+  }
+</style>

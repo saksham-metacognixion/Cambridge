@@ -1,0 +1,26 @@
+{
+  "$comment": "Files of this folder (the live /sa site, saved 8 Oct 2026, bug 063) for empty data slots, keyed by record slug; read by tools/import-wp-images.mjs (this folder has no WordPress media ids). Only empty slots are filled.",
+  "doctors": {
+    "saleh-damnan": "Dr.-Saleh-Awadh-Mohamed-Damnan.avif",
+    "nader-bin-taleb": "Dr.-Nader-Yaslam-Mubarak-Bin-Taleb.avif",
+    "mohamed-bahrudeen": "MOHAMED-ARSHADH-MOHAMED-BAHRUDEEN.avif",
+    "hesham-mustafa": "Dr.-Hesham-Abdulhai-Mohammed-Mustafa.avif",
+    "setelnesa-mohamed": "SETELNESA-ELZUBEIR-SAEED-MOHAMED-.avif",
+    "abdulaziz-almetrek": "Dr.-Abdulaziz-Almetrek-1.avif",
+    "mohammed-alhayyan": "Dr.-Mohammed-Alhayyan-1.avif",
+    "nansy-elnaggar": "Dr.-Nansy-Elnaggar.avif",
+    "souad-mohamed": "Dr.-Souad-Mohamed.avif",
+    "rawiyah-abdalla": "Dr.-Rawiyah-Abdalla.avif",
+    "mohammed-mugahed": "Dr.-Mohammed-Mugahed.avif",
+    "shayma-marganie": "Dr.-Shayma-Marganie-1.avif",
+    "amgad-ali": "Dr.Amgad-Elfatih-Ali.avif",
+    "safa-mohamed": "Dr.-Safaa-Mohamed.avif",
+    "ahmed-eldadah": "Dr.Ahmed-Taysir-Eldadah-1.avif",
+    "adnan-bahakam": "Dr.-Adnan-Bahakam-1.avif",
+    "mohamed-fathi": "Dr.Mohamed-Hussein-Fathi-1.avif",
+    "safa-alsayed": "Dr.Safa-Alsayed-Abdelgaffar.avif",
+    "ahmed-elenani": "Dr-Ahmed-Elenani.avif",
+    "walaa-elgheriany": "Dr.-Walaa-Metwally-ElGheriany-.avif",
+    "ali-mahmoud": "Ali-Mohamed-General-Practitioner.avif"
+  }
+}

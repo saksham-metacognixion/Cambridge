@@ -1,1 +1,9 @@
-{}
+{
+  "_note": "Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "title": "أرسل استفسار",
+  "fields": {
+    "email": {
+      "label": "البريد الإلكتروني*"
+    }
+  }
+}

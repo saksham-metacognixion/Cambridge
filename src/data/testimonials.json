@@ -1,0 +1,480 @@
+{
+  "$comment": "Patient testimonials (Patient Testimonials page, Figma 62:2403). name/quote = Website Content - Suhad/Patient Hub/EN-Patient Testimonials.md (12 stories, document order, 5 Oct 2026). The first six keep their Figma photos and card geometry; the other six have NO photo yet (card without the photo layer, docs/open-decisions.md CT12). regions: editions where the story is shown; all 'ae' until Pramod confirms each one's region (D15). photo: image key + box w x h at x,y in the 257.723 x 321.805 card (Figma px), optional bottom-end radius r and crop; pattern = the masked bar pieces (A-D) bottom-start; layers = Figma layer order (bottom to top) of pat / qi (quote icon) / quote / name / photo / badge. `home` = the six stories of the landing page's Testimonials row (Figma 2007:342 order; the row renders this card at 185 / 257.723). Arabic name/quote/alt = Website Content - Suhad 5/Patient Hub/AR-Patient Testimonials.docx (15 Oct 2026; replaced the live-site Arabic), same 12 stories in the same order, text exactly as written except one corrected slip: Mohamed Al Menhali 'عريمة' -> 'عزيمة' (the document's own word in Amani's identical sentence; CT33, to confirm).",
+  "home": [
+    "mohamed-al-menhali",
+    "mohamed-al-bloushi",
+    "tamams-mother",
+    "shammas-mother",
+    "salem-bin-saleh",
+    "nujood-saeed"
+  ],
+  "testimonials": [
+    {
+      "slug": "mohamed-al-menhali",
+      "name": {
+        "en": "Mohamed Al Menhali",
+        "ar": "محمد المنهالي"
+      },
+      "quote": {
+        "en": "With the help of God, and then Cambridge Hospital, I was able to return to my normal life, stronger and more determined than ever.",
+        "ar": "بفضل الله، ثم مستشفى كامبريدج، تمكنت من العودة إلى حياتي الطبيعية، وأنا اليوم أقوى وأكثر عزيمة من أي وقت مضى."
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-6",
+        "alt": {
+          "en": "Mohamed Al Menhali",
+          "ar": "محمد المنهالي"
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 17857
+    },
+    {
+      "slug": "nujood-saeed",
+      "name": {
+        "en": "Nujood Saeed",
+        "ar": "نجود سعيد"
+      },
+      "quote": {
+        "en": "I recommend that anyone facing a medical problem always hold on to hope and never lose faith in recovery, even during difficult times.",
+        "ar": "أنصح كل من يواجه مشكلة صحية بأن يتمسك بالأمل وألا يفقد ثقته بالتعافي، حتى في أصعب الأوقات."
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-5",
+        "alt": {
+          "en": "Nujood Saeed",
+          "ar": "نجود سعيد"
+        },
+        "w": 172.837,
+        "h": 215.813,
+        "x": 91.85,
+        "y": 105.88
+      },
+      "pattern": [
+        "A",
+        "B",
+        "B",
+        "C",
+        "D"
+      ],
+      "layers": [
+        "pat",
+        "qi",
+        "photo",
+        "quote",
+        "name",
+        "badge"
+      ],
+      "wp_media": 17855
+    },
+    {
+      "slug": "shammas-mother",
+      "name": {
+        "en": "Shamma’s Mother",
+        "ar": "والدة شمّة"
+      },
+      "quote": {
+        "en": "Shamma’s ability to communicate improved remarkably thanks to Cambridge Hospital, and we are deeply grateful.",
+        "ar": "تحسنت قدرة شمّة على التواصل بشكل ملحوظ بفضل مستشفى كامبريدج، ونحن ممتنون لهم من أعماق قلوبنا."
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/shamma",
+        "alt": {
+          "en": "Shamma’s Mother",
+          "ar": "والدة شمّة"
+        },
+        "w": 218.716,
+        "h": 243.792,
+        "x": 39.01,
+        "y": 78.01,
+        "r": 22.29,
+        "crop": {
+          "w": "100%",
+          "h": "112.02%",
+          "left": "0%",
+          "top": "-0.01%"
+        },
+        "ratio": 0.8009
+      },
+      "pattern": [
+        "A",
+        "B",
+        "B",
+        "C"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "qi",
+        "name",
+        "badge"
+      ],
+      "wp_media": 17853
+    },
+    {
+      "slug": "tamams-mother",
+      "name": {
+        "en": "Tamam’s Mother",
+        "ar": "والدة تمام"
+      },
+      "quote": {
+        "en": "We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities over time.",
+        "ar": "نحن ممتنون جدًا للتحسن الكبير الذي لاحظناه في قدرة تمام على التواصل مع مرور الوقت."
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-2",
+        "alt": {
+          "en": "Tamam’s Mother",
+          "ar": "والدة تمام"
+        },
+        "w": 176.601,
+        "h": 220.512,
+        "x": 66.87,
+        "y": 101.7
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "qi",
+        "pat",
+        "photo",
+        "quote",
+        "name",
+        "badge"
+      ],
+      "wp_media": 17852
+    },
+    {
+      "slug": "mohamed-al-bloushi",
+      "name": {
+        "en": "Mohamed Al Bloushi",
+        "ar": "محمد البلوشي"
+      },
+      "quote": {
+        "en": "Thank God, I was able to get back to walking within almost four months, with God’s will and the help of the team at Cambridge Hospital.",
+        "ar": "الحمد لله، تمكنت من استعادة قدرتي على المشي خلال نحو أربعة أشهر، بفضل الله ثم جهود فريق مستشفى كامبريدج."
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-1",
+        "alt": {
+          "en": "Mohamed Al Bloushi",
+          "ar": "محمد البلوشي"
+        },
+        "w": 158.62,
+        "h": 198.061,
+        "x": 80.8,
+        "y": 123.99
+      },
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "photo",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 17856
+    },
+    {
+      "slug": "salem-bin-saleh",
+      "name": {
+        "en": "Salem Bin Saleh",
+        "ar": "سالم بن صالح"
+      },
+      "quote": {
+        "en": "Previously, my daughter would walk three or four steps and then fall. Now, thank God, she walks without relying on anyone, covering thirty to forty metres.",
+        "ar": "في السابق، كانت ابنتي تمشي ثلاث أو أربع خطوات ثم تسقط. أما الآن، والحمد لله، فأصبحت تمشي دون الاعتماد على أحد، وتقطع مسافة تتراوح بين ثلاثين وأربعين مترًا."
+      },
+      "regions": [
+        "ae"
+      ],
+      "photo": {
+        "image": "testimonials/patient-4",
+        "alt": {
+          "en": "Salem Bin Saleh",
+          "ar": "سالم بن صالح"
+        },
+        "w": 183.889,
+        "h": 220.109,
+        "x": 73.83,
+        "y": 101.7,
+        "r": 25.076,
+        "crop": {
+          "w": "114.67%",
+          "h": "119.62%",
+          "left": "-0.14%",
+          "top": "0%"
+        },
+        "ratio": 0.8009
+      },
+      "pattern": [
+        "A",
+        "B",
+        "B",
+        "C",
+        "D"
+      ],
+      "layers": [
+        "qi",
+        "name",
+        "pat",
+        "photo",
+        "badge",
+        "quote"
+      ],
+      "wp_media": 17854
+    },
+    {
+      "slug": "amani",
+      "name": {
+        "en": "Amani",
+        "ar": "أماني"
+      },
+      "quote": {
+        "en": "At Cambridge Hospital, I regained my strength and hope, returning to my normal life, stronger and more determined than ever.",
+        "ar": "في مستشفى كامبريدج، استعدت قوتي وأملي، وتمكنت من العودة إلى حياتي الطبيعية وأنا أقوى وأكثر عزيمة من أي وقت مضى."
+      },
+      "regions": [
+        "sa"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 21510,
+      "photo": {
+        "image": "testimonials/wp/amani",
+        "alt": {
+          "en": "Amani",
+          "ar": "أماني"
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
+    },
+    {
+      "slug": "abdullah-jayoul",
+      "name": {
+        "en": "Abdullah Jayoul",
+        "ar": "عبدالله جيول"
+      },
+      "quote": {
+        "en": "After three months of care at Cambridge Hospital, I was able to come off the ventilator and breathe normally again.",
+        "ar": "بعد ثلاثة أشهر من الرعاية في مستشفى كامبريدج، تمكنت من التوقف عن استخدام جهاز التنفس الصناعي والعودة إلى التنفس بصورة طبيعية."
+      },
+      "regions": [
+        "sa"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "name",
+        "badge",
+        "qi"
+      ]
+    },
+    {
+      "slug": "yousef-al-mobbed",
+      "name": {
+        "en": "Yousef Al Mobbed",
+        "ar": "يوسف المعبّد"
+      },
+      "quote": {
+        "en": "After my stroke, Cambridge Hospital helped me recover through specialised rehabilitation and regain my independence.",
+        "ar": "بعد إصابتي بالسكتة الدماغية، ساعدني مستشفى كامبريدج على التعافي من خلال برنامج إعادة تأهيل متخصص، والعودة إلى ممارسة حياتي بصورة طبيعية."
+      },
+      "regions": [
+        "sa"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 21513,
+      "photo": {
+        "image": "testimonials/wp/yousef-al-mobbed",
+        "alt": {
+          "en": "Yousef Al Mobbed",
+          "ar": "يوسف المعبّد"
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
+    },
+    {
+      "slug": "mohamed-ghafil",
+      "name": {
+        "en": "Mohamed Ghafil",
+        "ar": "محمد غافل"
+      },
+      "quote": {
+        "en": "After suffering from a neurological disease, Cambridge Hospital helped me recover through rehabilitation and regain my independence.",
+        "ar": "بعد إصابتي بمرض عصبي، ساعدني مستشفى كامبريدج على التعافي والعودة إلى الاعتماد على نفسي."
+      },
+      "regions": [
+        "sa"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 21508,
+      "photo": {
+        "image": "testimonials/wp/mohamed-ghafil",
+        "alt": {
+          "en": "Mohamed Ghafil",
+          "ar": "محمد غافل"
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
+    },
+    {
+      "slug": "naeema-al-blooshi",
+      "name": {
+        "en": "Naeema Al Blooshi",
+        "ar": "نعيمة البلوشي"
+      },
+      "quote": {
+        "en": "Cambridge Hospital helped my wife recover from a rare neurological disease through specialised rehabilitation and regain her independence.",
+        "ar": "ساعد مستشفى كامبريدج زوجتي على التعافي من مرض عصبي نادر والعودة واستعادة استقلاليتها."
+      },
+      "regions": [
+        "sa"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 21506,
+      "photo": {
+        "image": "testimonials/wp/naeema-al-blooshi",
+        "alt": {
+          "en": "Naeema Al Blooshi",
+          "ar": "نعيمة البلوشي"
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
+    },
+    {
+      "slug": "ahmed-al-shamsi",
+      "name": {
+        "en": "Ahmed Al Shamsi",
+        "ar": "أحمد الشامسي"
+      },
+      "quote": {
+        "en": "Ahmed Al Shamsi suffered a thigh fracture, causing left-side weakness and diabetes, but now lives normally with his family.",
+        "ar": "أصيب أحمد بكسر في الفخذ أدى إلى ضعف في الجانب الأيسر من الجسم، إلى جانب إصابته بمرض السكري، لكنه يعيش الآن حياة طبيعية مع أسرته"
+      },
+      "regions": [
+        "sa"
+      ],
+      "pattern": [
+        "A",
+        "B"
+      ],
+      "layers": [
+        "pat",
+        "quote",
+        "photo",
+        "name",
+        "badge",
+        "qi"
+      ],
+      "wp_media": 21504,
+      "photo": {
+        "image": "testimonials/wp/ahmed-al-shamsi",
+        "alt": {
+          "en": "Ahmed Al Shamsi",
+          "ar": "أحمد الشامسي"
+        },
+        "w": 162.941,
+        "h": 203.456,
+        "x": 76.62,
+        "y": 118.42
+      }
+    }
+  ]
+}

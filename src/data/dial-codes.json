@@ -1,5 +1,5 @@
 {
- "$comment": "Country calling codes for the Mobile fields (all forms). UNCONFIRMED with Pramod (list, order, Arabic names). The box shows the code like Figma ('+971'); the open list shows the country name. Only the UAE flag exists in Figma, so other codes show no flag until flag artwork is supplied. `defaults` = preselected country per edition region.",
+ "$comment": "Country calling codes for the Mobile fields (all forms). UNCONFIRMED with Pramod (list, order, Arabic names). The box shows the code like Figma ('+971'); the open list shows the country name. Only the UAE flag exists in Figma, so other codes show no flag until flag artwork is supplied. `defaults` = preselected country per edition region. Arabic names (bug 075, 9 Oct 2026): copied by ISO code from src/data/countries.json, the International Patients form's country list (CLDR names, not client-written; to confirm with the client, R053). Kosovo (XK) is not in that list: English.",
  "defaults": {
   "global": "AE",
   "ae": "AE",
@@ -10,7 +10,7 @@
    "iso": "AF",
    "name": {
     "en": "Afghanistan",
-    "ar": ""
+    "ar": "أفغانستان"
    },
    "code": "+93"
   },
@@ -18,7 +18,7 @@
    "iso": "AL",
    "name": {
     "en": "Albania",
-    "ar": ""
+    "ar": "ألبانيا"
    },
    "code": "+355"
   },
@@ -26,7 +26,7 @@
    "iso": "DZ",
    "name": {
     "en": "Algeria",
-    "ar": ""
+    "ar": "الجزائر"
    },
    "code": "+213"
   },
@@ -34,7 +34,7 @@
    "iso": "AS",
    "name": {
     "en": "American Samoa",
-    "ar": ""
+    "ar": "ساموا الأمريكية"
    },
    "code": "+1684"
   },
@@ -42,7 +42,7 @@
    "iso": "AD",
    "name": {
     "en": "Andorra",
-    "ar": ""
+    "ar": "أندورا"
    },
    "code": "+376"
   },
@@ -50,7 +50,7 @@
    "iso": "AO",
    "name": {
     "en": "Angola",
-    "ar": ""
+    "ar": "أنغولا"
    },
    "code": "+244"
   },
@@ -58,7 +58,7 @@
    "iso": "AI",
    "name": {
     "en": "Anguilla",
-    "ar": ""
+    "ar": "أنغويلا"
    },
    "code": "+1264"
   },
@@ -66,7 +66,7 @@
    "iso": "AG",
    "name": {
     "en": "Antigua and Barbuda",
-    "ar": ""
+    "ar": "أنتيغوا وبربودا"
    },
    "code": "+1268"
   },
@@ -74,7 +74,7 @@
    "iso": "AR",
    "name": {
     "en": "Argentina",
-    "ar": ""
+    "ar": "الأرجنتين"
    },
    "code": "+54"
   },
@@ -82,7 +82,7 @@
    "iso": "AM",
    "name": {
     "en": "Armenia",
-    "ar": ""
+    "ar": "أرمينيا"
    },
    "code": "+374"
   },
@@ -90,7 +90,7 @@
    "iso": "AW",
    "name": {
     "en": "Aruba",
-    "ar": ""
+    "ar": "أروبا"
    },
    "code": "+297"
   },
@@ -98,7 +98,7 @@
    "iso": "AU",
    "name": {
     "en": "Australia",
-    "ar": ""
+    "ar": "أستراليا"
    },
    "code": "+61"
   },
@@ -106,7 +106,7 @@
    "iso": "AT",
    "name": {
     "en": "Austria",
-    "ar": ""
+    "ar": "النمسا"
    },
    "code": "+43"
   },
@@ -114,7 +114,7 @@
    "iso": "AZ",
    "name": {
     "en": "Azerbaijan",
-    "ar": ""
+    "ar": "أذربيجان"
    },
    "code": "+994"
   },
@@ -122,7 +122,7 @@
    "iso": "BS",
    "name": {
     "en": "Bahamas",
-    "ar": ""
+    "ar": "جزر البهاما"
    },
    "code": "+1242"
   },
@@ -130,7 +130,7 @@
    "iso": "BH",
    "name": {
     "en": "Bahrain",
-    "ar": ""
+    "ar": "البحرين"
    },
    "code": "+973"
   },
@@ -138,7 +138,7 @@
    "iso": "BD",
    "name": {
     "en": "Bangladesh",
-    "ar": ""
+    "ar": "بنغلاديش"
    },
    "code": "+880"
   },
@@ -146,7 +146,7 @@
    "iso": "BB",
    "name": {
     "en": "Barbados",
-    "ar": ""
+    "ar": "بربادوس"
    },
    "code": "+1246"
   },
@@ -154,7 +154,7 @@
    "iso": "BY",
    "name": {
     "en": "Belarus",
-    "ar": ""
+    "ar": "بيلاروس"
    },
    "code": "+375"
   },
@@ -162,7 +162,7 @@
    "iso": "BE",
    "name": {
     "en": "Belgium",
-    "ar": ""
+    "ar": "بلجيكا"
    },
    "code": "+32"
   },
@@ -170,7 +170,7 @@
    "iso": "BZ",
    "name": {
     "en": "Belize",
-    "ar": ""
+    "ar": "بليز"
    },
    "code": "+501"
   },
@@ -178,7 +178,7 @@
    "iso": "BJ",
    "name": {
     "en": "Benin",
-    "ar": ""
+    "ar": "بنين"
    },
    "code": "+229"
   },
@@ -186,7 +186,7 @@
    "iso": "BM",
    "name": {
     "en": "Bermuda",
-    "ar": ""
+    "ar": "برمودا"
    },
    "code": "+1441"
   },
@@ -194,7 +194,7 @@
    "iso": "BT",
    "name": {
     "en": "Bhutan",
-    "ar": ""
+    "ar": "بوتان"
    },
    "code": "+975"
   },
@@ -202,7 +202,7 @@
    "iso": "BO",
    "name": {
     "en": "Bolivia",
-    "ar": ""
+    "ar": "بوليفيا"
    },
    "code": "+591"
   },
@@ -210,7 +210,7 @@
    "iso": "BA",
    "name": {
     "en": "Bosnia and Herzegovina",
-    "ar": ""
+    "ar": "البوسنة والهرسك"
    },
    "code": "+387"
   },
@@ -218,7 +218,7 @@
    "iso": "BW",
    "name": {
     "en": "Botswana",
-    "ar": ""
+    "ar": "بوتسوانا"
    },
    "code": "+267"
   },
@@ -226,7 +226,7 @@
    "iso": "BR",
    "name": {
     "en": "Brazil",
-    "ar": ""
+    "ar": "البرازيل"
    },
    "code": "+55"
   },
@@ -234,7 +234,7 @@
    "iso": "VG",
    "name": {
     "en": "British Virgin Islands",
-    "ar": ""
+    "ar": "جزر فيرجن البريطانية"
    },
    "code": "+1284"
   },
@@ -242,7 +242,7 @@
    "iso": "BN",
    "name": {
     "en": "Brunei",
-    "ar": ""
+    "ar": "بروناي"
    },
    "code": "+673"
   },
@@ -250,7 +250,7 @@
    "iso": "BG",
    "name": {
     "en": "Bulgaria",
-    "ar": ""
+    "ar": "بلغاريا"
    },
    "code": "+359"
   },
@@ -258,7 +258,7 @@
    "iso": "BF",
    "name": {
     "en": "Burkina Faso",
-    "ar": ""
+    "ar": "بوركينا فاسو"
    },
    "code": "+226"
   },
@@ -266,7 +266,7 @@
    "iso": "BI",
    "name": {
     "en": "Burundi",
-    "ar": ""
+    "ar": "بوروندي"
    },
    "code": "+257"
   },
@@ -274,7 +274,7 @@
    "iso": "CV",
    "name": {
     "en": "Cabo Verde",
-    "ar": ""
+    "ar": "الرأس الأخضر"
    },
    "code": "+238"
   },
@@ -282,7 +282,7 @@
    "iso": "KH",
    "name": {
     "en": "Cambodia",
-    "ar": ""
+    "ar": "كمبوديا"
    },
    "code": "+855"
   },
@@ -290,7 +290,7 @@
    "iso": "CM",
    "name": {
     "en": "Cameroon",
-    "ar": ""
+    "ar": "الكاميرون"
    },
    "code": "+237"
   },
@@ -298,7 +298,7 @@
    "iso": "CA",
    "name": {
     "en": "Canada",
-    "ar": ""
+    "ar": "كندا"
    },
    "code": "+1"
   },
@@ -306,7 +306,7 @@
    "iso": "KY",
    "name": {
     "en": "Cayman Islands",
-    "ar": ""
+    "ar": "جزر كايمان"
    },
    "code": "+1345"
   },
@@ -314,7 +314,7 @@
    "iso": "CF",
    "name": {
     "en": "Central African Republic",
-    "ar": ""
+    "ar": "جمهورية أفريقيا الوسطى"
    },
    "code": "+236"
   },
@@ -322,7 +322,7 @@
    "iso": "TD",
    "name": {
     "en": "Chad",
-    "ar": ""
+    "ar": "تشاد"
    },
    "code": "+235"
   },
@@ -330,7 +330,7 @@
    "iso": "CL",
    "name": {
     "en": "Chile",
-    "ar": ""
+    "ar": "تشيلي"
    },
    "code": "+56"
   },
@@ -338,7 +338,7 @@
    "iso": "CN",
    "name": {
     "en": "China",
-    "ar": ""
+    "ar": "الصين"
    },
    "code": "+86"
   },
@@ -346,7 +346,7 @@
    "iso": "CO",
    "name": {
     "en": "Colombia",
-    "ar": ""
+    "ar": "كولومبيا"
    },
    "code": "+57"
   },
@@ -354,7 +354,7 @@
    "iso": "KM",
    "name": {
     "en": "Comoros",
-    "ar": ""
+    "ar": "جزر القمر"
    },
    "code": "+269"
   },
@@ -362,7 +362,7 @@
    "iso": "CG",
    "name": {
     "en": "Congo",
-    "ar": ""
+    "ar": "الكونغو - برازافيل"
    },
    "code": "+242"
   },
@@ -370,7 +370,7 @@
    "iso": "CD",
    "name": {
     "en": "Congo (DRC)",
-    "ar": ""
+    "ar": "الكونغو - كينشاسا"
    },
    "code": "+243"
   },
@@ -378,7 +378,7 @@
    "iso": "CK",
    "name": {
     "en": "Cook Islands",
-    "ar": ""
+    "ar": "جزر كوك"
    },
    "code": "+682"
   },
@@ -386,7 +386,7 @@
    "iso": "CR",
    "name": {
     "en": "Costa Rica",
-    "ar": ""
+    "ar": "كوستاريكا"
    },
    "code": "+506"
   },
@@ -394,7 +394,7 @@
    "iso": "CI",
    "name": {
     "en": "Côte d’Ivoire",
-    "ar": ""
+    "ar": "ساحل العاج"
    },
    "code": "+225"
   },
@@ -402,7 +402,7 @@
    "iso": "HR",
    "name": {
     "en": "Croatia",
-    "ar": ""
+    "ar": "كرواتيا"
    },
    "code": "+385"
   },
@@ -410,7 +410,7 @@
    "iso": "CU",
    "name": {
     "en": "Cuba",
-    "ar": ""
+    "ar": "كوبا"
    },
    "code": "+53"
   },
@@ -418,7 +418,7 @@
    "iso": "CW",
    "name": {
     "en": "Curaçao",
-    "ar": ""
+    "ar": "كوراساو"
    },
    "code": "+599"
   },
@@ -426,7 +426,7 @@
    "iso": "CY",
    "name": {
     "en": "Cyprus",
-    "ar": ""
+    "ar": "قبرص"
    },
    "code": "+357"
   },
@@ -434,7 +434,7 @@
    "iso": "CZ",
    "name": {
     "en": "Czechia",
-    "ar": ""
+    "ar": "التشيك"
    },
    "code": "+420"
   },
@@ -442,7 +442,7 @@
    "iso": "DK",
    "name": {
     "en": "Denmark",
-    "ar": ""
+    "ar": "الدانمرك"
    },
    "code": "+45"
   },
@@ -450,7 +450,7 @@
    "iso": "DJ",
    "name": {
     "en": "Djibouti",
-    "ar": ""
+    "ar": "جيبوتي"
    },
    "code": "+253"
   },
@@ -458,7 +458,7 @@
    "iso": "DM",
    "name": {
     "en": "Dominica",
-    "ar": ""
+    "ar": "دومينيكا"
    },
    "code": "+1767"
   },
@@ -466,7 +466,7 @@
    "iso": "DO",
    "name": {
     "en": "Dominican Republic",
-    "ar": ""
+    "ar": "جمهورية الدومينيكان"
    },
    "code": "+1809"
   },
@@ -474,7 +474,7 @@
    "iso": "EC",
    "name": {
     "en": "Ecuador",
-    "ar": ""
+    "ar": "الإكوادور"
    },
    "code": "+593"
   },
@@ -482,7 +482,7 @@
    "iso": "EG",
    "name": {
     "en": "Egypt",
-    "ar": ""
+    "ar": "مصر"
    },
    "code": "+20"
   },
@@ -490,7 +490,7 @@
    "iso": "SV",
    "name": {
     "en": "El Salvador",
-    "ar": ""
+    "ar": "السلفادور"
    },
    "code": "+503"
   },
@@ -498,7 +498,7 @@
    "iso": "GQ",
    "name": {
     "en": "Equatorial Guinea",
-    "ar": ""
+    "ar": "غينيا الاستوائية"
    },
    "code": "+240"
   },
@@ -506,7 +506,7 @@
    "iso": "ER",
    "name": {
     "en": "Eritrea",
-    "ar": ""
+    "ar": "إريتريا"
    },
    "code": "+291"
   },
@@ -514,7 +514,7 @@
    "iso": "EE",
    "name": {
     "en": "Estonia",
-    "ar": ""
+    "ar": "إستونيا"
    },
    "code": "+372"
   },
@@ -522,7 +522,7 @@
    "iso": "SZ",
    "name": {
     "en": "Eswatini",
-    "ar": ""
+    "ar": "إسواتيني"
    },
    "code": "+268"
   },
@@ -530,7 +530,7 @@
    "iso": "ET",
    "name": {
     "en": "Ethiopia",
-    "ar": ""
+    "ar": "إثيوبيا"
    },
    "code": "+251"
   },
@@ -538,7 +538,7 @@
    "iso": "FK",
    "name": {
     "en": "Falkland Islands",
-    "ar": ""
+    "ar": "جزر فوكلاند"
    },
    "code": "+500"
   },
@@ -546,7 +546,7 @@
    "iso": "FO",
    "name": {
     "en": "Faroe Islands",
-    "ar": ""
+    "ar": "جزر فارو"
    },
    "code": "+298"
   },
@@ -554,7 +554,7 @@
    "iso": "FJ",
    "name": {
     "en": "Fiji",
-    "ar": ""
+    "ar": "فيجي"
    },
    "code": "+679"
   },
@@ -562,7 +562,7 @@
    "iso": "FI",
    "name": {
     "en": "Finland",
-    "ar": ""
+    "ar": "فنلندا"
    },
    "code": "+358"
   },
@@ -570,7 +570,7 @@
    "iso": "FR",
    "name": {
     "en": "France",
-    "ar": ""
+    "ar": "فرنسا"
    },
    "code": "+33"
   },
@@ -578,7 +578,7 @@
    "iso": "GF",
    "name": {
     "en": "French Guiana",
-    "ar": ""
+    "ar": "غويانا الفرنسية"
    },
    "code": "+594"
   },
@@ -586,7 +586,7 @@
    "iso": "PF",
    "name": {
     "en": "French Polynesia",
-    "ar": ""
+    "ar": "بولينيزيا الفرنسية"
    },
    "code": "+689"
   },
@@ -594,7 +594,7 @@
    "iso": "GA",
    "name": {
     "en": "Gabon",
-    "ar": ""
+    "ar": "الغابون"
    },
    "code": "+241"
   },
@@ -602,7 +602,7 @@
    "iso": "GM",
    "name": {
     "en": "Gambia",
-    "ar": ""
+    "ar": "غامبيا"
    },
    "code": "+220"
   },
@@ -610,7 +610,7 @@
    "iso": "GE",
    "name": {
     "en": "Georgia",
-    "ar": ""
+    "ar": "جورجيا"
    },
    "code": "+995"
   },
@@ -618,7 +618,7 @@
    "iso": "DE",
    "name": {
     "en": "Germany",
-    "ar": ""
+    "ar": "ألمانيا"
    },
    "code": "+49"
   },
@@ -626,7 +626,7 @@
    "iso": "GH",
    "name": {
     "en": "Ghana",
-    "ar": ""
+    "ar": "غانا"
    },
    "code": "+233"
   },
@@ -634,7 +634,7 @@
    "iso": "GI",
    "name": {
     "en": "Gibraltar",
-    "ar": ""
+    "ar": "جبل طارق"
    },
    "code": "+350"
   },
@@ -642,7 +642,7 @@
    "iso": "GR",
    "name": {
     "en": "Greece",
-    "ar": ""
+    "ar": "اليونان"
    },
    "code": "+30"
   },
@@ -650,7 +650,7 @@
    "iso": "GL",
    "name": {
     "en": "Greenland",
-    "ar": ""
+    "ar": "غرينلاند"
    },
    "code": "+299"
   },
@@ -658,7 +658,7 @@
    "iso": "GD",
    "name": {
     "en": "Grenada",
-    "ar": ""
+    "ar": "غرينادا"
    },
    "code": "+1473"
   },
@@ -666,7 +666,7 @@
    "iso": "GP",
    "name": {
     "en": "Guadeloupe",
-    "ar": ""
+    "ar": "غوادلوب"
    },
    "code": "+590"
   },
@@ -674,7 +674,7 @@
    "iso": "GU",
    "name": {
     "en": "Guam",
-    "ar": ""
+    "ar": "غوام"
    },
    "code": "+1671"
   },
@@ -682,7 +682,7 @@
    "iso": "GT",
    "name": {
     "en": "Guatemala",
-    "ar": ""
+    "ar": "غواتيمالا"
    },
    "code": "+502"
   },
@@ -690,7 +690,7 @@
    "iso": "GN",
    "name": {
     "en": "Guinea",
-    "ar": ""
+    "ar": "غينيا"
    },
    "code": "+224"
   },
@@ -698,7 +698,7 @@
    "iso": "GW",
    "name": {
     "en": "Guinea-Bissau",
-    "ar": ""
+    "ar": "غينيا بيساو"
    },
    "code": "+245"
   },
@@ -706,7 +706,7 @@
    "iso": "GY",
    "name": {
     "en": "Guyana",
-    "ar": ""
+    "ar": "غيانا"
    },
    "code": "+592"
   },
@@ -714,7 +714,7 @@
    "iso": "HT",
    "name": {
     "en": "Haiti",
-    "ar": ""
+    "ar": "هايتي"
    },
    "code": "+509"
   },
@@ -722,7 +722,7 @@
    "iso": "HN",
    "name": {
     "en": "Honduras",
-    "ar": ""
+    "ar": "هندوراس"
    },
    "code": "+504"
   },
@@ -730,7 +730,7 @@
    "iso": "HK",
    "name": {
     "en": "Hong Kong",
-    "ar": ""
+    "ar": "هونغ كونغ الصينية (منطقة إدارية خاصة)"
    },
    "code": "+852"
   },
@@ -738,7 +738,7 @@
    "iso": "HU",
    "name": {
     "en": "Hungary",
-    "ar": ""
+    "ar": "هنغاريا"
    },
    "code": "+36"
   },
@@ -746,7 +746,7 @@
    "iso": "IS",
    "name": {
     "en": "Iceland",
-    "ar": ""
+    "ar": "آيسلندا"
    },
    "code": "+354"
   },
@@ -754,7 +754,7 @@
    "iso": "IN",
    "name": {
     "en": "India",
-    "ar": ""
+    "ar": "الهند"
    },
    "code": "+91"
   },
@@ -762,7 +762,7 @@
    "iso": "ID",
    "name": {
     "en": "Indonesia",
-    "ar": ""
+    "ar": "إندونيسيا"
    },
    "code": "+62"
   },
@@ -770,7 +770,7 @@
    "iso": "IR",
    "name": {
     "en": "Iran",
-    "ar": ""
+    "ar": "إيران"
    },
    "code": "+98"
   },
@@ -778,7 +778,7 @@
    "iso": "IQ",
    "name": {
     "en": "Iraq",
-    "ar": ""
+    "ar": "العراق"
    },
    "code": "+964"
   },
@@ -786,7 +786,7 @@
    "iso": "IE",
    "name": {
     "en": "Ireland",
-    "ar": ""
+    "ar": "أيرلندا"
    },
    "code": "+353"
   },
@@ -794,7 +794,7 @@
    "iso": "IL",
    "name": {
     "en": "Israel",
-    "ar": ""
+    "ar": "إسرائيل"
    },
    "code": "+972"
   },
@@ -802,7 +802,7 @@
    "iso": "IT",
    "name": {
     "en": "Italy",
-    "ar": ""
+    "ar": "إيطاليا"
    },
    "code": "+39"
   },
@@ -810,7 +810,7 @@
    "iso": "JM",
    "name": {
     "en": "Jamaica",
-    "ar": ""
+    "ar": "جامايكا"
    },
    "code": "+1876"
   },
@@ -818,7 +818,7 @@
    "iso": "JP",
    "name": {
     "en": "Japan",
-    "ar": ""
+    "ar": "اليابان"
    },
    "code": "+81"
   },
@@ -826,7 +826,7 @@
    "iso": "JO",
    "name": {
     "en": "Jordan",
-    "ar": ""
+    "ar": "الأردن"
    },
    "code": "+962"
   },
@@ -834,7 +834,7 @@
    "iso": "KZ",
    "name": {
     "en": "Kazakhstan",
-    "ar": ""
+    "ar": "كازاخستان"
    },
    "code": "+7"
   },
@@ -842,7 +842,7 @@
    "iso": "KE",
    "name": {
     "en": "Kenya",
-    "ar": ""
+    "ar": "كينيا"
    },
    "code": "+254"
   },
@@ -850,7 +850,7 @@
    "iso": "KI",
    "name": {
     "en": "Kiribati",
-    "ar": ""
+    "ar": "كيريباتي"
    },
    "code": "+686"
   },
@@ -866,7 +866,7 @@
    "iso": "KW",
    "name": {
     "en": "Kuwait",
-    "ar": ""
+    "ar": "الكويت"
    },
    "code": "+965"
   },
@@ -874,7 +874,7 @@
    "iso": "KG",
    "name": {
     "en": "Kyrgyzstan",
-    "ar": ""
+    "ar": "قيرغيزستان"
    },
    "code": "+996"
   },
@@ -882,7 +882,7 @@
    "iso": "LA",
    "name": {
     "en": "Laos",
-    "ar": ""
+    "ar": "لاوس"
    },
    "code": "+856"
   },
@@ -890,7 +890,7 @@
    "iso": "LV",
    "name": {
     "en": "Latvia",
-    "ar": ""
+    "ar": "لاتفيا"
    },
    "code": "+371"
   },
@@ -898,7 +898,7 @@
    "iso": "LB",
    "name": {
     "en": "Lebanon",
-    "ar": ""
+    "ar": "لبنان"
    },
    "code": "+961"
   },
@@ -906,7 +906,7 @@
    "iso": "LS",
    "name": {
     "en": "Lesotho",
-    "ar": ""
+    "ar": "ليسوتو"
    },
    "code": "+266"
   },
@@ -914,7 +914,7 @@
    "iso": "LR",
    "name": {
     "en": "Liberia",
-    "ar": ""
+    "ar": "ليبيريا"
    },
    "code": "+231"
   },
@@ -922,7 +922,7 @@
    "iso": "LY",
    "name": {
     "en": "Libya",
-    "ar": ""
+    "ar": "ليبيا"
    },
    "code": "+218"
   },
@@ -930,7 +930,7 @@
    "iso": "LI",
    "name": {
     "en": "Liechtenstein",
-    "ar": ""
+    "ar": "ليختنشتاين"
    },
    "code": "+423"
   },
@@ -938,7 +938,7 @@
    "iso": "LT",
    "name": {
     "en": "Lithuania",
-    "ar": ""
+    "ar": "ليتوانيا"
    },
    "code": "+370"
   },
@@ -946,7 +946,7 @@
    "iso": "LU",
    "name": {
     "en": "Luxembourg",
-    "ar": ""
+    "ar": "لوكسمبورغ"
    },
    "code": "+352"
   },
@@ -954,7 +954,7 @@
    "iso": "MO",
    "name": {
     "en": "Macao",
-    "ar": ""
+    "ar": "منطقة ماكاو الإدارية الخاصة"
    },
    "code": "+853"
   },
@@ -962,7 +962,7 @@
    "iso": "MG",
    "name": {
     "en": "Madagascar",
-    "ar": ""
+    "ar": "مدغشقر"
    },
    "code": "+261"
   },
@@ -970,7 +970,7 @@
    "iso": "MW",
    "name": {
     "en": "Malawi",
-    "ar": ""
+    "ar": "ملاوي"
    },
    "code": "+265"
   },
@@ -978,7 +978,7 @@
    "iso": "MY",
    "name": {
     "en": "Malaysia",
-    "ar": ""
+    "ar": "ماليزيا"
    },
    "code": "+60"
   },
@@ -986,7 +986,7 @@
    "iso": "MV",
    "name": {
     "en": "Maldives",
-    "ar": ""
+    "ar": "جزر المالديف"
    },
    "code": "+960"
   },
@@ -994,7 +994,7 @@
    "iso": "ML",
    "name": {
     "en": "Mali",
-    "ar": ""
+    "ar": "مالي"
    },
    "code": "+223"
   },
@@ -1002,7 +1002,7 @@
    "iso": "MT",
    "name": {
     "en": "Malta",
-    "ar": ""
+    "ar": "مالطا"
    },
    "code": "+356"
   },
@@ -1010,7 +1010,7 @@
    "iso": "MH",
    "name": {
     "en": "Marshall Islands",
-    "ar": ""
+    "ar": "جزر مارشال"
    },
    "code": "+692"
   },
@@ -1018,7 +1018,7 @@
    "iso": "MQ",
    "name": {
     "en": "Martinique",
-    "ar": ""
+    "ar": "جزر المارتينيك"
    },
    "code": "+596"
   },
@@ -1026,7 +1026,7 @@
    "iso": "MR",
    "name": {
     "en": "Mauritania",
-    "ar": ""
+    "ar": "موريتانيا"
    },
    "code": "+222"
   },
@@ -1034,7 +1034,7 @@
    "iso": "MU",
    "name": {
     "en": "Mauritius",
-    "ar": ""
+    "ar": "موريشيوس"
    },
    "code": "+230"
   },
@@ -1042,7 +1042,7 @@
    "iso": "YT",
    "name": {
     "en": "Mayotte",
-    "ar": ""
+    "ar": "مايوت"
    },
    "code": "+262"
   },
@@ -1050,7 +1050,7 @@
    "iso": "MX",
    "name": {
     "en": "Mexico",
-    "ar": ""
+    "ar": "المكسيك"
    },
    "code": "+52"
   },
@@ -1058,7 +1058,7 @@
    "iso": "FM",
    "name": {
     "en": "Micronesia",
-    "ar": ""
+    "ar": "ميكرونيزيا"
    },
    "code": "+691"
   },
@@ -1066,7 +1066,7 @@
    "iso": "MD",
    "name": {
     "en": "Moldova",
-    "ar": ""
+    "ar": "مولدوفا"
    },
    "code": "+373"
   },
@@ -1074,7 +1074,7 @@
    "iso": "MC",
    "name": {
     "en": "Monaco",
-    "ar": ""
+    "ar": "موناكو"
    },
    "code": "+377"
   },
@@ -1082,7 +1082,7 @@
    "iso": "MN",
    "name": {
     "en": "Mongolia",
-    "ar": ""
+    "ar": "منغوليا"
    },
    "code": "+976"
   },
@@ -1090,7 +1090,7 @@
    "iso": "ME",
    "name": {
     "en": "Montenegro",
-    "ar": ""
+    "ar": "الجبل الأسود"
    },
    "code": "+382"
   },
@@ -1098,7 +1098,7 @@
    "iso": "MS",
    "name": {
     "en": "Montserrat",
-    "ar": ""
+    "ar": "مونتسرات"
    },
    "code": "+1664"
   },
@@ -1106,7 +1106,7 @@
    "iso": "MA",
    "name": {
     "en": "Morocco",
-    "ar": ""
+    "ar": "المغرب"
    },
    "code": "+212"
   },
@@ -1114,7 +1114,7 @@
    "iso": "MZ",
    "name": {
     "en": "Mozambique",
-    "ar": ""
+    "ar": "موزمبيق"
    },
    "code": "+258"
   },
@@ -1122,7 +1122,7 @@
    "iso": "MM",
    "name": {
     "en": "Myanmar",
-    "ar": ""
+    "ar": "ميانمار (بورما)"
    },
    "code": "+95"
   },
@@ -1130,7 +1130,7 @@
    "iso": "NA",
    "name": {
     "en": "Namibia",
-    "ar": ""
+    "ar": "ناميبيا"
    },
    "code": "+264"
   },
@@ -1138,7 +1138,7 @@
    "iso": "NR",
    "name": {
     "en": "Nauru",
-    "ar": ""
+    "ar": "ناورو"
    },
    "code": "+674"
   },
@@ -1146,7 +1146,7 @@
    "iso": "NP",
    "name": {
     "en": "Nepal",
-    "ar": ""
+    "ar": "نيبال"
    },
    "code": "+977"
   },
@@ -1154,7 +1154,7 @@
    "iso": "NL",
    "name": {
     "en": "Netherlands",
-    "ar": ""
+    "ar": "هولندا"
    },
    "code": "+31"
   },
@@ -1162,7 +1162,7 @@
    "iso": "NC",
    "name": {
     "en": "New Caledonia",
-    "ar": ""
+    "ar": "كاليدونيا الجديدة"
    },
    "code": "+687"
   },
@@ -1170,7 +1170,7 @@
    "iso": "NZ",
    "name": {
     "en": "New Zealand",
-    "ar": ""
+    "ar": "نيوزيلندا"
    },
    "code": "+64"
   },
@@ -1178,7 +1178,7 @@
    "iso": "NI",
    "name": {
     "en": "Nicaragua",
-    "ar": ""
+    "ar": "نيكاراغوا"
    },
    "code": "+505"
   },
@@ -1186,7 +1186,7 @@
    "iso": "NE",
    "name": {
     "en": "Niger",
-    "ar": ""
+    "ar": "النيجر"
    },
    "code": "+227"
   },
@@ -1194,7 +1194,7 @@
    "iso": "NG",
    "name": {
     "en": "Nigeria",
-    "ar": ""
+    "ar": "نيجيريا"
    },
    "code": "+234"
   },
@@ -1202,7 +1202,7 @@
    "iso": "NU",
    "name": {
     "en": "Niue",
-    "ar": ""
+    "ar": "نيوي"
    },
    "code": "+683"
   },
@@ -1210,7 +1210,7 @@
    "iso": "KP",
    "name": {
     "en": "North Korea",
-    "ar": ""
+    "ar": "كوريا الشمالية"
    },
    "code": "+850"
   },
@@ -1218,7 +1218,7 @@
    "iso": "MK",
    "name": {
     "en": "North Macedonia",
-    "ar": ""
+    "ar": "مقدونيا الشمالية"
    },
    "code": "+389"
   },
@@ -1226,7 +1226,7 @@
    "iso": "MP",
    "name": {
     "en": "Northern Mariana Islands",
-    "ar": ""
+    "ar": "جزر ماريانا الشمالية"
    },
    "code": "+1670"
   },
@@ -1234,7 +1234,7 @@
    "iso": "NO",
    "name": {
     "en": "Norway",
-    "ar": ""
+    "ar": "النرويج"
    },
    "code": "+47"
   },
@@ -1242,7 +1242,7 @@
    "iso": "OM",
    "name": {
     "en": "Oman",
-    "ar": ""
+    "ar": "عُمان"
    },
    "code": "+968"
   },
@@ -1250,7 +1250,7 @@
    "iso": "PK",
    "name": {
     "en": "Pakistan",
-    "ar": ""
+    "ar": "باكستان"
    },
    "code": "+92"
   },
@@ -1258,7 +1258,7 @@
    "iso": "PW",
    "name": {
     "en": "Palau",
-    "ar": ""
+    "ar": "بالاو"
    },
    "code": "+680"
   },
@@ -1266,7 +1266,7 @@
    "iso": "PS",
    "name": {
     "en": "Palestine",
-    "ar": ""
+    "ar": "الأراضي الفلسطينية"
    },
    "code": "+970"
   },
@@ -1274,7 +1274,7 @@
    "iso": "PA",
    "name": {
     "en": "Panama",
-    "ar": ""
+    "ar": "بنما"
    },
    "code": "+507"
   },
@@ -1282,7 +1282,7 @@
    "iso": "PG",
    "name": {
     "en": "Papua New Guinea",
-    "ar": ""
+    "ar": "بابوا غينيا الجديدة"
    },
    "code": "+675"
   },
@@ -1290,7 +1290,7 @@
    "iso": "PY",
    "name": {
     "en": "Paraguay",
-    "ar": ""
+    "ar": "باراغواي"
    },
    "code": "+595"
   },
@@ -1298,7 +1298,7 @@
    "iso": "PE",
    "name": {
     "en": "Peru",
-    "ar": ""
+    "ar": "بيرو"
    },
    "code": "+51"
   },
@@ -1306,7 +1306,7 @@
    "iso": "PH",
    "name": {
     "en": "Philippines",
-    "ar": ""
+    "ar": "الفلبين"
    },
    "code": "+63"
   },
@@ -1314,7 +1314,7 @@
    "iso": "PL",
    "name": {
     "en": "Poland",
-    "ar": ""
+    "ar": "بولندا"
    },
    "code": "+48"
   },
@@ -1322,7 +1322,7 @@
    "iso": "PT",
    "name": {
     "en": "Portugal",
-    "ar": ""
+    "ar": "البرتغال"
    },
    "code": "+351"
   },
@@ -1330,7 +1330,7 @@
    "iso": "PR",
    "name": {
     "en": "Puerto Rico",
-    "ar": ""
+    "ar": "بورتوريكو"
    },
    "code": "+1787"
   },
@@ -1338,7 +1338,7 @@
    "iso": "QA",
    "name": {
     "en": "Qatar",
-    "ar": ""
+    "ar": "قطر"
    },
    "code": "+974"
   },
@@ -1346,7 +1346,7 @@
    "iso": "RE",
    "name": {
     "en": "Réunion",
-    "ar": ""
+    "ar": "روينيون"
    },
    "code": "+262"
   },
@@ -1354,7 +1354,7 @@
    "iso": "RO",
    "name": {
     "en": "Romania",
-    "ar": ""
+    "ar": "رومانيا"
    },
    "code": "+40"
   },
@@ -1362,7 +1362,7 @@
    "iso": "RU",
    "name": {
     "en": "Russia",
-    "ar": ""
+    "ar": "روسيا"
    },
    "code": "+7"
   },
@@ -1370,7 +1370,7 @@
    "iso": "RW",
    "name": {
     "en": "Rwanda",
-    "ar": ""
+    "ar": "رواندا"
    },
    "code": "+250"
   },
@@ -1378,7 +1378,7 @@
    "iso": "KN",
    "name": {
     "en": "Saint Kitts and Nevis",
-    "ar": ""
+    "ar": "سانت كيتس ونيفيس"
    },
    "code": "+1869"
   },
@@ -1386,7 +1386,7 @@
    "iso": "LC",
    "name": {
     "en": "Saint Lucia",
-    "ar": ""
+    "ar": "سانت لوسيا"
    },
    "code": "+1758"
   },
@@ -1394,7 +1394,7 @@
    "iso": "VC",
    "name": {
     "en": "Saint Vincent and the Grenadines",
-    "ar": ""
+    "ar": "سانت فنسنت وجزر غرينادين"
    },
    "code": "+1784"
   },
@@ -1402,7 +1402,7 @@
    "iso": "WS",
    "name": {
     "en": "Samoa",
-    "ar": ""
+    "ar": "ساموا"
    },
    "code": "+685"
   },
@@ -1410,7 +1410,7 @@
    "iso": "SM",
    "name": {
     "en": "San Marino",
-    "ar": ""
+    "ar": "سان مارينو"
    },
    "code": "+378"
   },
@@ -1418,7 +1418,7 @@
    "iso": "ST",
    "name": {
     "en": "São Tomé and Príncipe",
-    "ar": ""
+    "ar": "ساو تومي وبرينسيبي"
    },
    "code": "+239"
   },
@@ -1426,7 +1426,7 @@
    "iso": "SA",
    "name": {
     "en": "Saudi Arabia",
-    "ar": ""
+    "ar": "المملكة العربية السعودية"
    },
    "code": "+966"
   },
@@ -1434,7 +1434,7 @@
    "iso": "SN",
    "name": {
     "en": "Senegal",
-    "ar": ""
+    "ar": "السنغال"
    },
    "code": "+221"
   },
@@ -1442,7 +1442,7 @@
    "iso": "RS",
    "name": {
     "en": "Serbia",
-    "ar": ""
+    "ar": "صربيا"
    },
    "code": "+381"
   },
@@ -1450,7 +1450,7 @@
    "iso": "SC",
    "name": {
     "en": "Seychelles",
-    "ar": ""
+    "ar": "سيشل"
    },
    "code": "+248"
   },
@@ -1458,7 +1458,7 @@
    "iso": "SL",
    "name": {
     "en": "Sierra Leone",
-    "ar": ""
+    "ar": "سيراليون"
    },
    "code": "+232"
   },
@@ -1466,7 +1466,7 @@
    "iso": "SG",
    "name": {
     "en": "Singapore",
-    "ar": ""
+    "ar": "سنغافورة"
    },
    "code": "+65"
   },
@@ -1474,7 +1474,7 @@
    "iso": "SX",
    "name": {
     "en": "Sint Maarten",
-    "ar": ""
+    "ar": "سانت مارتن"
    },
    "code": "+1721"
   },
@@ -1482,7 +1482,7 @@
    "iso": "SK",
    "name": {
     "en": "Slovakia",
-    "ar": ""
+    "ar": "سلوفاكيا"
    },
    "code": "+421"
   },
@@ -1490,7 +1490,7 @@
    "iso": "SI",
    "name": {
     "en": "Slovenia",
-    "ar": ""
+    "ar": "سلوفينيا"
    },
    "code": "+386"
   },
@@ -1498,7 +1498,7 @@
    "iso": "SB",
    "name": {
     "en": "Solomon Islands",
-    "ar": ""
+    "ar": "جزر سليمان"
    },
    "code": "+677"
   },
@@ -1506,7 +1506,7 @@
    "iso": "SO",
    "name": {
     "en": "Somalia",
-    "ar": ""
+    "ar": "الصومال"
    },
    "code": "+252"
   },
@@ -1514,7 +1514,7 @@
    "iso": "ZA",
    "name": {
     "en": "South Africa",
-    "ar": ""
+    "ar": "جنوب أفريقيا"
    },
    "code": "+27"
   },
@@ -1522,7 +1522,7 @@
    "iso": "KR",
    "name": {
     "en": "South Korea",
-    "ar": ""
+    "ar": "كوريا الجنوبية"
    },
    "code": "+82"
   },
@@ -1530,7 +1530,7 @@
    "iso": "SS",
    "name": {
     "en": "South Sudan",
-    "ar": ""
+    "ar": "جنوب السودان"
    },
    "code": "+211"
   },
@@ -1538,7 +1538,7 @@
    "iso": "ES",
    "name": {
     "en": "Spain",
-    "ar": ""
+    "ar": "إسبانيا"
    },
    "code": "+34"
   },
@@ -1546,7 +1546,7 @@
    "iso": "LK",
    "name": {
     "en": "Sri Lanka",
-    "ar": ""
+    "ar": "سريلانكا"
    },
    "code": "+94"
   },
@@ -1554,7 +1554,7 @@
    "iso": "SD",
    "name": {
     "en": "Sudan",
-    "ar": ""
+    "ar": "السودان"
    },
    "code": "+249"
   },
@@ -1562,7 +1562,7 @@
    "iso": "SR",
    "name": {
     "en": "Suriname",
-    "ar": ""
+    "ar": "سورينام"
    },
    "code": "+597"
   },
@@ -1570,7 +1570,7 @@
    "iso": "SE",
    "name": {
     "en": "Sweden",
-    "ar": ""
+    "ar": "السويد"
    },
    "code": "+46"
   },
@@ -1578,7 +1578,7 @@
    "iso": "CH",
    "name": {
     "en": "Switzerland",
-    "ar": ""
+    "ar": "سويسرا"
    },
    "code": "+41"
   },
@@ -1586,7 +1586,7 @@
    "iso": "SY",
    "name": {
     "en": "Syria",
-    "ar": ""
+    "ar": "سوريا"
    },
    "code": "+963"
   },
@@ -1594,7 +1594,7 @@
    "iso": "TW",
    "name": {
     "en": "Taiwan",
-    "ar": ""
+    "ar": "تايوان"
    },
    "code": "+886"
   },
@@ -1602,7 +1602,7 @@
    "iso": "TJ",
    "name": {
     "en": "Tajikistan",
-    "ar": ""
+    "ar": "طاجيكستان"
    },
    "code": "+992"
   },
@@ -1610,7 +1610,7 @@
    "iso": "TZ",
    "name": {
     "en": "Tanzania",
-    "ar": ""
+    "ar": "تنزانيا"
    },
    "code": "+255"
   },
@@ -1618,7 +1618,7 @@
    "iso": "TH",
    "name": {
     "en": "Thailand",
-    "ar": ""
+    "ar": "تايلاند"
    },
    "code": "+66"
   },
@@ -1626,7 +1626,7 @@
    "iso": "TL",
    "name": {
     "en": "Timor-Leste",
-    "ar": ""
+    "ar": "تيمور - ليشتي"
    },
    "code": "+670"
   },
@@ -1634,7 +1634,7 @@
    "iso": "TG",
    "name": {
     "en": "Togo",
-    "ar": ""
+    "ar": "توغو"
    },
    "code": "+228"
   },
@@ -1642,7 +1642,7 @@
    "iso": "TO",
    "name": {
     "en": "Tonga",
-    "ar": ""
+    "ar": "تونغا"
    },
    "code": "+676"
   },
@@ -1650,7 +1650,7 @@
    "iso": "TT",
    "name": {
     "en": "Trinidad and Tobago",
-    "ar": ""
+    "ar": "ترينيداد وتوباغو"
    },
    "code": "+1868"
   },
@@ -1658,7 +1658,7 @@
    "iso": "TN",
    "name": {
     "en": "Tunisia",
-    "ar": ""
+    "ar": "تونس"
    },
    "code": "+216"
   },
@@ -1666,7 +1666,7 @@
    "iso": "TR",
    "name": {
     "en": "Türkiye",
-    "ar": ""
+    "ar": "تركيا"
    },
    "code": "+90"
   },
@@ -1674,7 +1674,7 @@
    "iso": "TM",
    "name": {
     "en": "Turkmenistan",
-    "ar": ""
+    "ar": "تركمانستان"
    },
    "code": "+993"
   },
@@ -1682,7 +1682,7 @@
    "iso": "TC",
    "name": {
     "en": "Turks and Caicos Islands",
-    "ar": ""
+    "ar": "جزر توركس وكايكوس"
    },
    "code": "+1649"
   },
@@ -1690,7 +1690,7 @@
    "iso": "TV",
    "name": {
     "en": "Tuvalu",
-    "ar": ""
+    "ar": "توفالو"
    },
    "code": "+688"
   },
@@ -1698,7 +1698,7 @@
    "iso": "UG",
    "name": {
     "en": "Uganda",
-    "ar": ""
+    "ar": "أوغندا"
    },
    "code": "+256"
   },
@@ -1706,7 +1706,7 @@
    "iso": "UA",
    "name": {
     "en": "Ukraine",
-    "ar": ""
+    "ar": "أوكرانيا"
    },
    "code": "+380"
   },
@@ -1714,7 +1714,7 @@
    "iso": "AE",
    "name": {
     "en": "United Arab Emirates",
-    "ar": ""
+    "ar": "الإمارات العربية المتحدة"
    },
    "code": "+971"
   },
@@ -1722,7 +1722,7 @@
    "iso": "GB",
    "name": {
     "en": "United Kingdom",
-    "ar": ""
+    "ar": "المملكة المتحدة"
    },
    "code": "+44"
   },
@@ -1730,7 +1730,7 @@
    "iso": "US",
    "name": {
     "en": "United States",
-    "ar": ""
+    "ar": "الولايات المتحدة"
    },
    "code": "+1"
   },
@@ -1738,7 +1738,7 @@
    "iso": "UY",
    "name": {
     "en": "Uruguay",
-    "ar": ""
+    "ar": "أورغواي"
    },
    "code": "+598"
   },
@@ -1746,7 +1746,7 @@
    "iso": "VI",
    "name": {
     "en": "U.S. Virgin Islands",
-    "ar": ""
+    "ar": "جزر فيرجن الأمريكية"
    },
    "code": "+1340"
   },
@@ -1754,7 +1754,7 @@
    "iso": "UZ",
    "name": {
     "en": "Uzbekistan",
-    "ar": ""
+    "ar": "أوزبكستان"
    },
    "code": "+998"
   },
@@ -1762,7 +1762,7 @@
    "iso": "VU",
    "name": {
     "en": "Vanuatu",
-    "ar": ""
+    "ar": "فانواتو"
    },
    "code": "+678"
   },
@@ -1770,7 +1770,7 @@
    "iso": "VA",
    "name": {
     "en": "Vatican City",
-    "ar": ""
+    "ar": "الفاتيكان"
    },
    "code": "+379"
   },
@@ -1778,7 +1778,7 @@
    "iso": "VE",
    "name": {
     "en": "Venezuela",
-    "ar": ""
+    "ar": "فنزويلا"
    },
    "code": "+58"
   },
@@ -1786,7 +1786,7 @@
    "iso": "VN",
    "name": {
     "en": "Vietnam",
-    "ar": ""
+    "ar": "فيتنام"
    },
    "code": "+84"
   },
@@ -1794,7 +1794,7 @@
    "iso": "WF",
    "name": {
     "en": "Wallis and Futuna",
-    "ar": ""
+    "ar": "جزر والس وفوتونا"
    },
    "code": "+681"
   },
@@ -1802,7 +1802,7 @@
    "iso": "YE",
    "name": {
     "en": "Yemen",
-    "ar": ""
+    "ar": "اليمن"
    },
    "code": "+967"
   },
@@ -1810,7 +1810,7 @@
    "iso": "ZM",
    "name": {
     "en": "Zambia",
-    "ar": ""
+    "ar": "زامبيا"
    },
    "code": "+260"
   },
@@ -1818,7 +1818,7 @@
    "iso": "ZW",
    "name": {
     "en": "Zimbabwe",
-    "ar": ""
+    "ar": "زيمبابوي"
    },
    "code": "+263"
   }

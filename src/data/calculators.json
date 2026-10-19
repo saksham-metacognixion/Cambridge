@@ -1,0 +1,53 @@
+{
+  "$comment": "Health calculators (Home 'Check Your Health in Seconds' -> BMI, Stroke Risk, Heart Health Age, Lung Health; bug 014, no Figma frame). Field structure = the live site's forms (cambridgehospital.com/<page>/, read 6 Oct 2026): name, type (select / number), option values, min and step as on the live inputs. Text (labels, placeholders, options, results) = src/data/content/calculators/<key>.<locale>.json; formulas = src/lib/calculator-formulas.ts; page = key in PAGE_PATHS (the live URL).",
+  "calculators": [
+    {
+      "key": "bmi",
+      "page": "bmiCalculator",
+      "fields": [
+        { "name": "unit", "type": "select", "options": ["metric", "imperial"] },
+        { "name": "weight", "type": "number", "min": 1, "step": 0.1 },
+        { "name": "height", "type": "number", "min": 1, "step": 0.1 }
+      ]
+    },
+    {
+      "key": "stroke-risk",
+      "page": "strokeRiskCalculator",
+      "fields": [
+        { "name": "sex", "type": "select", "options": ["male", "female"] },
+        { "name": "age", "type": "number", "min": 1, "step": 1 },
+        { "name": "sbp", "type": "number", "min": 1, "step": 1 },
+        { "name": "bp_meds", "type": "select", "options": ["0", "1"] },
+        { "name": "diabetes", "type": "select", "options": ["0", "1"] },
+        { "name": "smoker", "type": "select", "options": ["0", "1"] },
+        { "name": "heart_disease", "type": "select", "options": ["0", "1"] },
+        { "name": "af", "type": "select", "options": ["0", "1"] }
+      ]
+    },
+    {
+      "key": "heart-age",
+      "page": "heartAgeCalculator",
+      "fields": [
+        { "name": "sex", "type": "select", "options": ["male", "female"] },
+        { "name": "age", "type": "number", "min": 1, "step": 1 },
+        { "name": "total_chol", "type": "number", "min": 1, "step": 0.1 },
+        { "name": "hdl", "type": "number", "min": 1, "step": 0.1 },
+        { "name": "sbp", "type": "number", "min": 1, "step": 1 },
+        { "name": "bp_meds", "type": "select", "options": ["0", "1"] },
+        { "name": "smoker", "type": "select", "options": ["0", "1"] },
+        { "name": "diabetic", "type": "select", "options": ["0", "1"] }
+      ]
+    },
+    {
+      "key": "lung-health",
+      "page": "lungHealthCalculator",
+      "fields": [
+        { "name": "q1", "type": "select", "options": ["0", "1", "2"] },
+        { "name": "q2", "type": "select", "options": ["0", "1", "2"] },
+        { "name": "q3", "type": "select", "options": ["0", "1", "2"] },
+        { "name": "q4", "type": "select", "options": ["0", "2"] },
+        { "name": "q5", "type": "select", "options": ["0", "1", "2"] }
+      ]
+    }
+  ]
+}

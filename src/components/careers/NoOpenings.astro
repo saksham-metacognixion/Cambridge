@@ -1,0 +1,31 @@
+---
+import type { NoOpenings } from '../../lib/careers';
+
+/*
+ * "No openings" panel (bug 088 reopened, 13 Oct 2026; careers.json `noOpenings`). Not in Figma: client-requested, built from the
+ * section's own type and colours (the paragraph style of the band it sits in) so nothing new is designed. Hidden until a button
+ * with data-no-openings="<id>" is clicked (scripts/no-openings.ts); aria-live so screen readers hear it when it opens.
+ * `onDark` = the navy Start Your Career Journey band (white text, cyan link), else navy link on the light band.
+ */
+interface Props { id: string; n: NoOpenings; onDark?: boolean; class?: string }
+const { id, n, onDark = false, class: cls } = Astro.props;
+---
+
+<div id={id} class:list={['no-openings', onDark && 'dark', cls]} aria-live="polite" hidden>
+  <p class="msg">{n.text}</p>
+  {n.link && <a href={n.link.href} class="go hit">{n.link.label}</a>}
+</div>
+
+<script>
+  import '../../scripts/no-openings';
+</script>
+
+<style>
+  .no-openings { margin-top: calc(16 * var(--u)); font-family: var(--font-gotham); font-style: normal; color: var(--color-body); }
+  .msg { margin: 0; font-weight: 400; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); overflow-wrap: anywhere; }
+  .go { position: relative; display: inline-block; margin-top: calc(8 * var(--u)); font-weight: 500; font-size: calc(14 * var(--u)); line-height: calc(17 * var(--u)); color: var(--color-navy); text-decoration: underline; text-underline-offset: 0.2em; }
+  .dark { color: #fff; }
+  .dark .msg { font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .dark .go { color: var(--color-cyan); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  @media (max-width: 1023.98px) { .msg, .go, .dark .msg, .dark .go { font-size: 16px; line-height: 1.35; } }
+</style>

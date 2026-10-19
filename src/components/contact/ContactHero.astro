@@ -1,43 +1,95 @@
 ---
 import { Picture } from 'astro:assets';
+import { heroEdgeVars } from '../../lib/hero-edge';
 import { px } from '../../lib/scale';
+import phoneIcon from '../../assets/contact-page/icon-phone.svg';
 import { content } from '../../lib/content';
-import { img } from '../../lib/images';
+import { img, heroLayers } from '../../lib/images';
 import { parsePath } from '../../lib/editions';
+import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
+import BannerArt from '../shared/BannerArt.astro';
+import { bannerArt, bannerBgStyle, bannerH } from '../../lib/banner-art';
 
 // Figma 86:433, page y 119, h 437. Spec y values are page y minus 119.
 const { edition } = parsePath(Astro.url.pathname);
-const c = content('contact/page', edition.locale).hero;
-const banner = img(c.banner.image, edition.region);
+const page = content('contact/page', edition.locale);
+const c = page.hero;
+// Phone line of this edition (details.byRegion: the KSA number on /sa), the same one as in the details row under the form.
+// Global (client, 16 Oct 2026): details.byRegion.global.phones = the UAE and the KSA numbers, one line each, labelled as on the
+// Home contact card ("800-692273 - UAE"); without `phones` the single `phone` line is shown as before.
+const phone = { ...page.details, ...(page.details.byRegion?.[edition.region] ?? {}) };
+const phones: { phone: string; phoneHref: string; label?: string }[] = Array.isArray(phone.phones) && phone.phones.length ? phone.phones : [{ phone: phone.phone, phoneHref: phone.phoneHref }];
+// Live-site banner art (banner brief 14 Oct 2026): see PageHero / shared/BannerArt.astro.
+const art = bannerArt(c.banner.image, edition.region);
+const banner = art ? null : img(c.banner.image, edition.region);
+const layers = art ? null : heroLayers(c.banner.image, edition.region); // cursor-follow layers (7 Oct 2026), see PageHero
+// Below 1024px the photo is cropped to the people of the cut-out layer (lib/hero-strip.ts, 10 Oct 2026), as on PageHero.
+const strip = layers ? await heroSubjectStrip(layers.subject) : null;
+const crop = strip ? heroSmallCrop(strip, 500, '(min-width: 1440px) 1440px, 100vw') : null;
+const imgClass = 'absolute start-0 top-0 h-[114.42%] w-full max-w-none object-cover';
+const pic = {
+  formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(500), widths: [720, 1052],
+  sizes: crop ? crop.sizes : '(min-width: 1440px) 1440px, 100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
+} as const;
+// Bug 086: beyond 1440 px the background layer's edge columns continue to the viewport edges (global.css .hero-bleed).
+const edgeVars = art ? '' : await heroEdgeVars(layers ? layers.background : banner!); // build-time gradients of its edge columns
 ---
 
-<section class="relative" style="--h: 437" aria-label={c.ariaLabel}>
-  <div class="stage max-lg:flex max-lg:min-h-[calc(437*var(--u))] max-lg:flex-col max-lg:items-start max-lg:justify-center max-lg:gap-[calc(16*var(--u))] max-lg:px-[calc(24*var(--u))] max-lg:py-[calc(48*var(--u))]">
+<section class:list={['relative', art ? 'bn-live' : 'hero-bleed']} style={art ? `--h: ${bannerH()};${bannerBgStyle}` : `--h: 437;${edgeVars}`} aria-label={c.ariaLabel}>
+  <div class="stage">
     <!-- Banner PNG is 1052x500 and drawn 114.42% of the 437 box (top-left anchored), exactly as in Figma. -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <Picture
-        src={banner}
-        formats={['avif']}
-        fallbackFormat="webp"
-        width={px(1052)}
-        height={px(500)}
-        widths={[720, 1052]}
-        sizes="(min-width: 1440px) 1440px, 100vw"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        alt={c.banner.alt}
-        class="absolute start-0 top-0 h-[114.42%] w-full max-w-none object-cover rtl:-scale-x-100"
-        pictureAttributes={{ class: 'contents' }}
-      />
+    <!-- The people drift with the cursor like the home hero (the former scripts/hero-follow.ts, removed 16 Oct 2026); the RTL flip sits on the box, not the image. -->
+    {!art && <div class="hero-media absolute inset-0 overflow-hidden pointer-events-none rtl:-scale-x-100" data-hero-follow={layers ? true : undefined} style={crop?.style} aria-hidden="true">
+      {layers ? (
+        <>
+          <Picture src={layers.background} alt="" class={imgClass} {...pic} />
+          <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" data-hero-subject class={imgClass} {...pic} />
+        </>
+      ) : (
+        <Picture src={banner!} alt={c.banner.alt} fetchpriority="high" class={imgClass} {...pic} />
+      )}
+    </div>}
+
+    <!-- Copy in FLOW (like PageHero): title -> text -> phone -> button. The client's Contact Us documents (Suhad 4, 14 Oct 2026) add
+         the intro line under the title and the phone number at the top of the page; the block starts at 140 (Figma title 178) so it
+         stays centred on the banner. Title: Gotham Medium 39 on 37px lines (bug 015). -->
+    <div class="hero-copy lg:absolute lg:start-95 lg:top-[calc(140*var(--u))]">
+      <h1 class="hero-title relative m-0 font-gotham font-medium text-f39 leading-37 text-navy not-italic whitespace-normal lg:w-374">
+        <span class="block">{c.title[0]}</span>{c.title[1] && <span class="block">{c.title[1]}</span>}
+      </h1>
+      {c.text && <p class="text m-0 font-gotham font-normal text-f12 leading-14 text-body not-italic">{c.text}</p>}
+      <div class="phones">
+        {phones.map((ph) => (
+          <a href={`tel:${ph.phoneHref}`} class="phone hit inline-flex items-center font-gotham font-medium text-f12 leading-14 text-navy no-underline">
+            <img src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none" />
+            <span dir="ltr">{ph.phone}</span>{ph.label && <span class="lbl">{ph.label}</span>}
+          </a>
+        ))}
+      </div>
+      <!-- Button (bug 044/050): the shared .ui-btn size, 3px in from the title as in Figma (x98). -->
+      <a href={c.button.href} class="btn ui-btn hit btn-outline hair-card relative no-underline text-navy" style="--sw:1;--sc:var(--color-cyan)">{c.button.label}</a>
     </div>
-
-    <h1 class="relative m-0 font-gotham font-medium text-f39 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-95 lg:top-178 lg:w-374">
-      <span class="block">{c.title[0]}</span><span class="block">{c.title[1]}</span>
-    </h1>
-
-    <a href={c.button.href} class="hit hair-card relative block rounded-r7 no-underline lg:absolute lg:start-98 lg:top-265 lg:w-164 lg:h-30 max-lg:h-30 max-lg:w-164" style="--sw:1;--sc:var(--color-cyan)">
-      <span class="absolute top-9 start-8 block w-145 h-15 font-gotham font-medium text-f13 text-cyan text-center not-italic whitespace-nowrap">{c.button.label}</span>
-    </a>
+    {art && <BannerArt image={c.banner.image} region={edition.region} alt={c.banner.alt} />}
   </div>
 </section>
+
+<style>
+  .bn-live { overflow: clip; }
+  /* Live banner (see PageHero): the copy block centred vertically, 95 from the start as before; the banner grows only if needed. */
+  @media (min-width: 1024px) {
+    .bn-live .stage { display: flex; align-items: center; height: auto; min-height: calc(var(--h) * var(--u)); }
+    .bn-live .hero-copy { position: relative; inset: auto; top: auto; margin-inline-start: calc(95 * var(--u)); padding: calc(32 * var(--u) * 1052 / 1440) 0; }
+  }
+  /* Phones / tablets: global .hero-copy flow (16px gaps). Desktop: our own flow column (global.css sets display:contents there). */
+  .text { overflow-wrap: anywhere; }
+  .phones { display: flex; flex-direction: column; align-items: flex-start; gap: calc(4 * var(--u)); }
+  .phone { gap: calc(7 * var(--u)); }
+  .lbl::before { content: '- '; } /* "800-692273 - UAE", as the Home contact card lists the two numbers */
+  .phone img { width: calc(15 * var(--u)); height: calc(15 * var(--u)); }
+  @media (min-width: 1024px) {
+    .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
+    .text { width: calc(389 * var(--u)); margin-top: calc(11 * var(--u)); margin-inline-start: calc(2 * var(--u)); }
+    .phones { margin-top: calc(8 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+    .btn { margin-top: calc(15 * var(--u)); margin-inline-start: calc(3 * var(--u)); }
+  }
+</style>

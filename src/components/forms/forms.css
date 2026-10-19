@@ -14,16 +14,20 @@
   font-family: var(--font-gotham); color: var(--color-navy);
 }
 .modal[open] { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; }
+/* Short laptop windows (1366 x 768 minus browser bars = 625-660 px): a thinner margin round the panel, so a pop-up that fits
+   the window is not scrolled by its margin alone (bug 094 reopened, 14 Oct 2026) */
+@media (min-width: 1024px) and (max-height: 700px) { .modal { padding-block: 8px; } }
 /* Backdrop = Figma "Rectangle 132": rgba(217,217,217,.2) + GLASS radius 8 (approximated as a background blur). */
 .modal::backdrop {
   background: rgba(217, 217, 217, 0.2);
   -webkit-backdrop-filter: blur(calc(4 * min(100vw, 1440px) / 1052));
   backdrop-filter: blur(calc(4 * min(100vw, 1440px) / 1052));
 }
-/* Panel = Figma "Rectangle 4304": white 10% + GLASS radius 100 (approximated: background blur + light rim). */
+/* Panel = Figma "Rectangle 4304": white 10% + GLASS radius 100 (approximated: background blur + light rim). Corner: the
+   shared card radius (bug 049). */
 .modal-panel {
   position: relative; box-sizing: border-box;
-  border-radius: calc(17.051 * var(--u));
+  border-radius: var(--radius-card);
   background: rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(calc(50 * var(--u))) saturate(1.1);
   backdrop-filter: blur(calc(50 * var(--u))) saturate(1.1);
@@ -47,7 +51,7 @@
 }
 .gf-box {
   box-sizing: border-box; display: block; flex: 1 1 auto; min-inline-size: 0; block-size: calc(31.554 * var(--u)); margin: 0;
-  border: 0; border-radius: calc(9.695 * var(--u)); outline: 0; appearance: none; -webkit-appearance: none;
+  border: 0; border-radius: var(--radius-field); outline: 0; appearance: none; -webkit-appearance: none;
   background: rgba(255, 255, 255, 0.5);
   padding-block: 0; padding-inline: calc(8.24 * var(--u));
   font-family: var(--font-gotham); font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy);
@@ -55,7 +59,7 @@
 .gf-box.strong { background: rgba(255, 255, 255, 0.7); }           /* Figma: the Name box is 70% white, the others 50% */
 .gf-box::placeholder { color: var(--color-body); opacity: 1; }
 .gf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: 0; }
-.gf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) #ff4e4e; }
+.gf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) var(--color-error); }
 
 /* Selects with the placeholder as their visible label (Select Speciality / Select a Doctor) */
 .gf-select { position: relative; inline-size: calc(256.037 * var(--u)); max-inline-size: 100%; }
@@ -68,20 +72,39 @@
 .gf-date { cursor: pointer; }
 .gf-date[data-empty]:not(:focus) { color: transparent; }
 .gf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(16.407 * var(--u)); inset-block-start: calc(4.51 * var(--u)); inline-size: calc(17.85 * var(--u)); block-size: calc(19.834 * var(--u)); }
+/* Arabic (bug 126 QA, 14 Oct 2026): the date box stays LTR but its calendar icon follows the RTL row to the box's left, so the
+   dd/mm/yyyy text (visible while focused, e.g. when a required date is empty) ran under it: clear the icon (16.407 + 17.85 + 6).
+   Physical left on purpose: the box itself is LTR, and the build lowers logical sides under [dir='rtl'] to the RTL side. */
+[dir='rtl'] .gf-date { padding-left: calc(40.26 * var(--u)); }
 
 /* Mobile: dial-code box + number box */
-.gf-dial { position: relative; flex: none; inline-size: calc(68.517 * var(--u)); }
-.gf-dial select { inline-size: 100%; padding-inline: calc(23.44 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+.gf-dial { position: relative; flex: none; min-inline-size: calc(68.517 * var(--u)); min-block-size: calc(31.554 * var(--u)); }
+.gf-dial select { padding-inline: calc(23.44 * var(--u)) 0; color: var(--color-body); cursor: pointer; }
 .gf-flag { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-start: calc(5.41 * var(--u)); inset-block-start: calc(9.91 * var(--u)); inline-size: calc(14.875 * var(--u)); block-size: calc(9.917 * var(--u)); }
 .gf-dial .gf-chev { inset-inline-end: calc(5.19 * var(--u)); inset-block-start: calc(13.52 * var(--u)); inline-size: calc(6.527 * var(--u)); }
-.gf-tel { margin-inline-start: calc(8.113 * var(--u)); }
-/* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971"). */
-.dial-select { color: transparent !important; }
+/* Gap dial box -> number on the dial box (bug 118): the number input is dir="ltr", so ITS inline-start is the left side even
+   in an RTL row (Arabic: no gap, the number pulled in from the column end). The dial box follows the row direction. */
+.gf-dial { margin-inline-end: calc(8.113 * var(--u)); }
+/* Dial box (popup + page): the select's own text is hidden; .dial-code shows the code like Figma ("+971").
+   Bug 067: select and code share one grid cell with the code in flow, so the box is Figma's width (the min-inline-size
+   above; "+971" fits) or wider when a code needs it ("+966", "+1684"), always with --dial-gap between the code and the
+   chevron instead of running under it. The select covers the box absolutely, so it adds no width of its own (in flow, its
+   longest country name sized the box: Chrome ignores size containment on a select, WebKit a 0 / min 100% width); the box
+   height is therefore set on .gf-dial / .pf-dial (the Figma box heights, 44px on touch / narrow screens). */
+.dial { display: grid; inline-size: max-content; --dial-gap: 3; }
+.dial > select { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; min-block-size: 0; }
+/* overflow: the hidden country name ("United Arab Emirates (+971)") ran past the box; WebKit counted it as scrollable
+   width, so the booking pop-up scrolled 65px sideways at 320-375px (bug 091 follow-up). Clipping it changes nothing visible. */
+.dial-select { color: transparent !important; overflow: hidden; }
 .dial-select option { color: var(--color-navy); }
-.dial-code { position: absolute; pointer-events: none; white-space: nowrap; color: var(--color-body); font-weight: 400; }
-.gf-dial .dial-code { inset-inline-start: calc(23.44 * var(--u)); inset-block-start: calc(7.21 * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
-.pf-dial .dial-code { inset-inline-start: calc(25.62 * var(--u)); inset-block-start: calc(8 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+.dial-code { position: relative; align-self: start; pointer-events: none; white-space: nowrap; color: var(--color-body); font-weight: 400; }
+.dial-code bdi { unicode-bidi: isolate; } /* dir="ltr" in the markup: "+966" on Arabic pages, not "966+" */
+.gf-dial .dial-code { margin-block-start: calc(7.21 * var(--u)); margin-inline: calc(23.44 * var(--u)) calc((var(--dial-gap) + 5.19 + 6.527) * var(--u)); font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); }
+.pf-dial .dial-code { margin-block-start: calc(8 * var(--u)); margin-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) calc((var(--dial-gap) + var(--pf-dial-chev-x, 5.68) + var(--pf-dial-chev-w, 7.135)) * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
 .dial img[hidden] { display: none; }
+/* No flag file for the country: the code starts where the flag would, no empty slot. */
+.gf-dial:has(img[data-flag][hidden]) .dial-code { margin-inline-start: calc(5.41 * var(--u)); }
+.pf-dial:has(img[data-flag][hidden]) .dial-code { margin-inline-start: calc(var(--pf-flag-x, 5.91) * var(--u)); }
 
 .gf-area {
   block-size: calc(var(--h) * var(--u)); inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; resize: none;
@@ -92,22 +115,25 @@
 
 /* Error under a field (no Figma design: Gotham Book in the label navy; the box gets a thin red line, Figma red #ff4e4e) */
 .f-err { margin: calc(3 * var(--u)) 0 0; font-weight: 400; font-size: calc(9.917 * var(--u)); line-height: calc(12 * var(--u)); color: var(--color-navy); }
-.f-err::before { content: ''; display: inline-block; inline-size: calc(5 * var(--u)); block-size: calc(5 * var(--u)); margin-inline-end: calc(4 * var(--u)); border-radius: 50%; background: #ff4e4e; vertical-align: middle; }
+.f-err::before { content: ''; display: inline-block; inline-size: calc(5 * var(--u)); block-size: calc(5 * var(--u)); margin-inline-end: calc(4 * var(--u)); border-radius: 50%; background: var(--color-error); vertical-align: middle; }
 .f-err[hidden] { display: none; }
 
 /* Title + section labels */
 .gf-title { margin: 0; font-weight: 700; font-size: calc(13.523 * var(--u)); line-height: normal; color: var(--color-navy-alt); text-align: center; }
 .gf-section { margin: 0; font-weight: 700; font-size: calc(11.72 * var(--u)); line-height: normal; color: var(--color-navy); }
 
-/* Submit buttons */
-.f-submit {
-  position: relative; display: block; box-sizing: border-box; margin: 0 auto; padding: 0; border: 0; cursor: pointer;
-  inline-size: calc(var(--bw) * var(--u)); block-size: calc(var(--bh) * var(--u)); border-radius: calc(var(--br) * var(--u));
-  background: var(--color-cyan); color: #fff; font-family: var(--font-gotham); font-weight: 700; font-size: calc(var(--bfs) * var(--u)); line-height: normal; white-space: nowrap;
-}
-.f-submit > span { position: absolute; inset-inline: 0; inset-block-start: calc(var(--bty) * var(--u)); text-align: center; }
-.f-submit:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+/* Submit buttons: the shared .ui-btn size, label and corners (bugs 044 / 050: no more per-frame Figma boxes of 8-15px
+   labels), centred under the form; the label <span> is cap-centred by .ui-btn (bug 007). Only the look is set here. */
+.ui-btn.f-submit { display: flex; inline-size: fit-content; margin-inline: auto; border: 0; }
+/* colours, hover, focus-visible: the shared .btn-fill rules in global.css */
 .f-submit[aria-disabled='true'] { cursor: progress; }
+/* While sending (aria-disabled, scripts/forms.ts): a spinning ring beside the label, as the live Bit Forms (.bf-spinner, 1s linear;
+   animation audit 8 Oct 2026, bitform-1.css shared by every live form). The ring sits inside the button's end padding, so
+   nothing moves. */
+.ui-btn.f-submit { position: relative; }
+.ui-btn.f-submit > .f-spin { display: none; position: absolute; inset-inline-end: 6px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px; box-sizing: border-box; border-radius: 50%; border-top: calc(2 * var(--u)) solid currentColor; border-inline-end: calc(2 * var(--u)) solid transparent; animation: f-spin 1s linear infinite; }
+.ui-btn.f-submit[aria-disabled='true'] > .f-spin { display: block; }
+@keyframes f-spin { to { transform: rotate(360deg); } }
 
 /* Consent (Figma Contact page 86:799: circle 15.47 + Gotham Light 9.87 / 10.5 navy, link Gotham Book underlined) */
 .f-consent { position: relative; display: flex; align-items: flex-start; gap: calc(8.5 * var(--u)); cursor: pointer; font-weight: 300; font-size: calc(9.87 * var(--u)); line-height: calc(10.5 * var(--u)); color: var(--color-navy); }
@@ -117,9 +143,17 @@
 .f-consent .dot { position: absolute; inset-inline-start: calc(4.867 * var(--u)); inset-block-start: calc(4.867 * var(--u)); inline-size: calc(5.733 * var(--u)); block-size: calc(5.733 * var(--u)); border-radius: 50%; background: var(--color-navy); opacity: 0; }
 .f-consent input:checked ~ .box .dot { opacity: 1; }
 .f-consent input:focus-visible ~ .box { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
-.f-consent input[aria-invalid='true'] ~ .box img { filter: drop-shadow(0 0 calc(0.6 * var(--u)) #ff4e4e); }
+.f-consent input[aria-invalid='true'] ~ .box img { filter: drop-shadow(0 0 calc(0.6 * var(--u)) var(--color-error)); }
 .f-consent a { font-weight: 400; color: var(--color-navy); text-decoration: underline; text-decoration-thickness: from-font; text-underline-position: from-font; }
 .f-consent .txt { padding-block-start: calc(2 * var(--u)); }
+/* Page-specific consent look (FormShell `consent`): a radio-style circle (--cs Figma px box) with the Figma images */
+.f-consent-own .own { position: relative; display: grid; place-items: center; flex: none; inline-size: calc(var(--cs) * var(--u)); block-size: calc(var(--cs) * var(--u)); }
+.f-consent-own .own img { grid-area: 1 / 1; max-inline-size: none; inline-size: calc(16.467 * var(--u)); block-size: calc(16.467 * var(--u)); }
+.f-consent-own .own .on { opacity: 0; }
+.f-consent-own input:checked ~ .own .on { opacity: 1; }
+.f-consent-own input:checked ~ .own .off { opacity: 0; }
+.f-consent-own input:focus-visible ~ .own { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+.f-consent-own input { inset-inline-start: calc(var(--cs) / 2 * var(--u) - 22px); inset-block-start: calc(var(--cs) / 2 * var(--u) - 22px); }
 
 .f-alert { margin: calc(8 * var(--u)) 0 0; font-size: calc(9.917 * var(--u)); line-height: calc(12 * var(--u)); color: var(--color-navy); text-align: center; }
 .f-alert[hidden] { display: none; }
@@ -130,6 +164,13 @@
 .f-success { text-align: center; padding-block: calc(24 * var(--u)); }
 .f-success:focus { outline: 0; }
 .f-success[hidden] { display: none; }
+/* The success message fades in over 1s ease-out, as the live Bit Forms (.bf-form-msg.active). */
+.f-success:not([hidden]) { animation: f-fade 1s ease-out both; }
+@keyframes f-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .f-spin { animation: none; }
+  .f-success:not([hidden]) { animation: none; }
+}
 .f-success .s-title { margin: 0 0 calc(8 * var(--u)); font-weight: 700; font-size: calc(13.523 * var(--u)); color: var(--color-navy-alt); }
 .f-success .s-text { margin: 0; font-weight: 400; font-size: calc(13.523 * var(--u)); line-height: calc(16.967 * var(--u)); color: var(--color-navy); }
 
@@ -137,12 +178,13 @@
 
 /* Touch screens and narrow windows: every control at least 44px tall without changing its look on desktop (scope 2.8). */
 @media (pointer: coarse), (max-width: 1023.98px) {
-  .gf-box, .gf-select select, .gf-dial select { min-block-size: 44px; }
+  .gf-box, .gf-select select, .gf-dial { min-block-size: 44px; }
   .gf-row { align-items: center; }
   .gf-label { padding-block-start: 0; }
   .gf-cal { inset-block-start: 50%; translate: 0 -50%; }
   .gf-select .gf-chev, .gf-dial .gf-chev { inset-block-start: 50%; translate: 0 -50%; }
-  .gf-flag, .gf-dial .dial-code { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-flag { inset-block-start: 50%; translate: 0 -50%; }
+  .gf-dial .dial-code { align-self: center; margin-block-start: 0; }
 }
 
 /* ───────── Below 1024: same design, one column, full width; below 768: full screen ───────── */
@@ -159,4 +201,171 @@
   .modal[open] { place-items: stretch; }
   .modal-panel { max-inline-size: none; min-block-size: 100%; border-radius: 0; padding-block: 24px !important; }
   .modal-close { inset-block-start: 12px; inset-inline-end: 12px; }
+}
+/* Short landscape screens (phones turned sideways, <= 500 px tall; bug 170, 16 Oct 2026): the pop-up scrolled as one block, so the
+   title and the close button were ~400 px off screen by the time Submit came into view. Here the panel is held to the screen
+   height and only the form (or the success message) scrolls under the title row; the close button stays in the panel's top
+   corner. Taller screens (portrait phones, short laptops) keep the whole-dialog scroll. Not the country pop-up (no .modal-panel). */
+@media (max-height: 500px) {
+  .modal:has(> .modal-panel) {
+    height: 100vh; height: 100dvh;
+    padding-block: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom));
+    padding-inline: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  }
+  .modal[open]:has(> .modal-panel) { grid-template-rows: minmax(0, 1fr); }
+  .modal-panel { display: flex; flex-direction: column; max-block-size: 100%; }
+  .modal-panel > * { flex: none; }
+  /* 4px inline slack so the field focus rings are not clipped by the scroll box */
+  .modal-panel > :is(form, .f-success) {
+    flex: 0 1 auto; min-block-size: 0; overflow-y: auto; overscroll-behavior: contain;
+    margin-inline: -4px; padding-inline: 4px; scroll-padding-block: 8px;
+  }
+}
+@media (max-height: 500px) and (max-width: 767.98px) {
+  .modal:has(> .modal-panel) { padding: 0; }
+  .modal-panel { padding-block: 12px !important; padding-inline: max(16px, env(safe-area-inset-left), env(safe-area-inset-right)) !important; }
+}
+
+/* ───────── Page forms ("pf"): Patient Feedback (188:964), Refer a Patient (59:14344), International Patients (54:9239) ─────────
+   Fields: fill rgba(217,217,217,.5), radius 10.754, h 35; labels Gotham Book 15 / 18.82 navy, text 8 below the box top.
+   Geometry that differs per Figma frame is a custom property; defaults = Patient Feedback. A row's label column is --at
+   (Figma px from the label start to its box), a box's width --w. */
+.pf-row { position: relative; display: flex; align-items: flex-start; }
+.pf-label { flex: none; box-sizing: border-box; min-inline-size: calc(var(--at) * var(--at-k, 1) * var(--u)); padding-block-start: calc(8 * var(--u)); padding-inline-end: calc(4 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); white-space: nowrap; }
+.pf-box {
+  box-sizing: border-box; display: block; margin: 0; border: 0; outline: 0; appearance: none; -webkit-appearance: none;
+  inline-size: calc(var(--w, 319.889) * var(--u)); max-inline-size: 100%; block-size: calc(35 * var(--u)); padding: 0 calc(var(--pf-px, 9.17) * var(--u));
+  border-radius: var(--radius-field); background: rgba(217, 217, 217, 0.5);
+  font-family: var(--font-gotham); font-weight: 400; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); color: var(--color-navy);
+}
+.pf-box::placeholder { color: var(--color-body); opacity: 1; }
+.pf-box:focus-visible { outline: calc(1 * var(--u)) solid var(--color-navy); }
+.pf-box[aria-invalid='true'] { box-shadow: inset 0 0 0 calc(1 * var(--u)) var(--color-error); }
+.pf-select { position: relative; inline-size: calc(var(--w) * var(--u)); max-inline-size: 100%; }
+.pf-select select { inline-size: 100%; padding-inline-end: calc(26 * var(--u)); cursor: pointer; }
+.pf-select .pf-chev { inset-inline-end: calc(var(--pf-sel-chev-x, 16.2) * var(--u)); inset-block-start: calc(var(--pf-sel-chev-y, 18) * var(--u)); inline-size: calc(var(--pf-sel-chev-w, 7.24) * var(--u)); }
+.pf-chev, .pf-flag { position: absolute; pointer-events: none; max-inline-size: none; block-size: auto; }
+.pf-dial { position: relative; flex: none; min-inline-size: calc(var(--pf-dial-w, 74.901) * var(--u)); min-block-size: calc(35 * var(--u)); }
+.pf-dial select { padding-inline: calc(var(--pf-dial-pad, 25.62) * var(--u)) 0; color: var(--color-body); cursor: pointer; }
+.pf-flag { inset-inline-start: calc(var(--pf-flag-x, 5.91) * var(--u)); inset-block-start: calc(11 * var(--u)); inline-size: calc(var(--pf-flag-w, 16.261) * var(--u)); block-size: calc(11 * var(--u)); }
+.pf-dial .pf-chev { inset-inline-end: calc(var(--pf-dial-chev-x, 5.68) * var(--u)); inset-block-start: calc(15 * var(--u)); inline-size: calc(var(--pf-dial-chev-w, 7.135) * var(--u)); }
+.pf-dial { margin-inline-end: calc(var(--pf-tel-gap, 9.85) * var(--u)); } /* the dial -> number gap, on the dial box: see .gf-dial (bug 118) */
+.pf-tel { flex: 0 1 auto; min-inline-size: 0; }
+
+/* White form card (Patient Feedback 188:964, Refer a Patient 46:8029 "Rectangle 107"; bug 098: every page form panel,
+   International Patients included, uses it unchanged): drop shadow 0 0 15.696 rgba(0,0,0,.25),
+   corners the shared card radius (bug 049; Figma 14.32 / 15). Size and padding: the page. */
+.pf-card { position: relative; box-sizing: border-box; background: #fff; border-radius: var(--radius-card); box-shadow: 0 0 calc(15.696 * var(--u)) rgba(0, 0, 0, 0.25); }
+
+/* Questions / section labels: Gotham Bold 15 navy */
+.pf-q { display: block; margin: 0; padding: 0; font-weight: 700; font-size: calc(15 * var(--u)); line-height: calc(18 * var(--u)); color: var(--color-navy); }
+
+.pf-radio { display: grid; place-items: center; flex: none; inline-size: calc(var(--pf-radio-box, 12.812) * var(--u)); block-size: calc(13 * var(--u)); }
+.pf-radio img { grid-area: 1 / 1; max-inline-size: none; inline-size: calc(var(--pf-radio-w, 16.279) * var(--u)); block-size: calc(var(--pf-radio-h, 16.467) * var(--u)); }
+.pf-radio .off { inline-size: calc(var(--pf-radio-off, var(--pf-radio-w, 16.279)) * var(--u)); block-size: calc(var(--pf-radio-off, var(--pf-radio-h, 16.467)) * var(--u)); }
+.pf-radio .on { opacity: 0; }
+label:has(input:checked) .pf-radio .on { opacity: 1; }
+label:has(input:checked) .pf-radio .off { opacity: 0; }
+label:has(input:focus-visible) .pf-radio { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
+
+@media (max-width: 1023.98px) {
+  .pf-row { align-items: center; }
+  .pf-label { padding-block-start: 0; min-inline-size: calc(var(--at-n, var(--at)) * var(--at-k, 1) * var(--u)); }
+  .pf-box, .pf-dial { min-block-size: 44px; }
+  .pf-row > .pf-box, .pf-select { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
+  .pf-select .pf-chev, .pf-dial .pf-chev, .pf-flag { inset-block-start: 50%; translate: 0 -50%; }
+  .pf-dial .dial-code { align-self: center; margin-block-start: 0; }
+}
+@media (max-width: 767.98px) {
+  .pf-row { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .pf-label { grid-column: 1 / -1; min-inline-size: 0; padding-block-end: 6px; }
+  .pf-row > .pf-box, .pf-select { inline-size: 100%; }
+  .pf-tel { inline-size: auto !important; }
+  /* Bug 082: select labels at 16px (no iOS zoom) and ellipsis, so "Select a Doctor (Optional)" fits a 360 screen */
+  .pf-select select { font-size: max(16px, min(calc(15 * var(--u)), 4.4vw)); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+}
+
+/* ───────── Grey-box page form fields (Refer a Patient 59:14344, International Patients 54:9239): forms with class "rf" ─────────
+   Shared Figma sizes of both frames (dial box 76, flag 16.5, radios 13 / 11, ...). Row gap: --rf-row (Figma px). */
+.rf { --pf-dial-w: 76; --pf-flag-x: 6; --pf-flag-w: 16.5; --pf-dial-pad: 26; --pf-dial-chev-x: 5.76; --pf-dial-chev-w: 7.24; --pf-tel-gap: 10; --pf-px: 9; --pf-radio-box: 13; --pf-radio-w: 16.467; --pf-radio-h: 16.467; --pf-radio-off: 11; }
+.rf .rf-grid { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: calc(var(--rf-row, 19) * var(--u)); }
+.rf .rf-grid + .rf-grid { margin-block-start: calc(var(--rf-row, 19) * var(--u)); }
+.rf .rf-grow { flex: 1 1 0; inline-size: auto; min-inline-size: 0; }
+.rf .rf-bold { font-weight: 700; padding-block-start: calc(11 * var(--u)); line-height: calc(18 * var(--u)); }
+.rf .rf-ph { color: var(--color-body); }
+.rf .rf-ph:has(option:checked:not([value=''])) { color: var(--color-navy); }
+.rf .rf-sel-ref select { padding-inline: calc(21 * var(--u)) calc(26 * var(--u)); }
+.rf .rf-sel-ref .pf-chev { inset-inline-end: calc(13 * var(--u)); inset-block-start: calc(18 * var(--u)); inline-size: calc(7 * var(--u)); }
+.rf .rf-ph-in { padding-inline-start: calc(14 * var(--u)); }
+.rf .rf-date { position: relative; }
+.rf .rf-date-box { inline-size: 100%; cursor: pointer; }
+.rf .rf-date-box::-webkit-calendar-picker-indicator { display: none; }
+.rf .rf-date-box[data-empty]:not(:focus) { color: transparent; }
+.rf .rf-cal { position: absolute; pointer-events: none; max-inline-size: none; inset-inline-end: calc(12.78 * var(--u)); inset-block-start: calc(5 * var(--u)); inline-size: calc(19.8 * var(--u)); block-size: calc(22 * var(--u)); }
+.rf .rf-radio { margin: 0; padding: 0; border: 0; min-inline-size: 0; display: flex; align-items: flex-start; flex-wrap: wrap; }
+.rf .rf-legend { float: inline-start; padding: calc(8 * var(--u)) 0 0; min-inline-size: calc(var(--at) * var(--at-k, 1) * var(--u)); }
+.rf .rf-opts { display: flex; flex-wrap: wrap; gap: calc(8 * var(--u)) calc(29.5 * var(--u)); padding-block-start: calc(8 * var(--u)); }
+.rf .rf-opt { display: flex; align-items: center; gap: calc(8 * var(--u)); min-block-size: calc(18.82 * var(--u)); cursor: pointer; font-size: calc(15 * var(--u)); line-height: calc(18.82 * var(--u)); }
+/* 44px touch target on the radio options (responsive sweep, 9 Oct 2026): the .hit layer, invisible, the label box keeps its size */
+.rf .rf-opt { position: relative; }
+.rf .rf-opt::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 44px); height: max(100%, 44px); }
+.rf .rf-radio .f-err { flex-basis: 100%; }
+.rf .rf-area { inline-size: 100%; block-size: calc(125 * var(--u)); padding: calc(13 * var(--u)) calc(14.19 * var(--u)); resize: none; line-height: calc(14 * var(--u)); }
+.rf .rf-area::placeholder { font-style: italic; }
+@media (max-width: 767.98px) {
+  /* dial box + number side by side under the label (as on Patient Feedback) */
+  .rf .rf-tel-field .pf-row { grid-template-columns: auto minmax(0, 1fr); }
+}
+@media (min-width: 1024px) {
+  .rf .rf-grid { grid-template-columns: calc(410 * var(--u)) calc(410 * var(--u)); column-gap: calc(60 * var(--u)); }
+}
+
+/* Compact grey-box forms (bug 124, client 14 Oct 2026: Refer a Patient + International Patients too large). Only these two forms
+   (class "rf"); Patient Feedback / Calculators / pop-ups keep the Figma sizes above. Figma px: labels, field text and radio options
+   15 -> 12 (line 18.82 -> 15), section labels 15 -> 13, boxes 35 -> 29 high on desktop (touch / < 1024: the 44px floor above
+   stays), label columns x 0.8 with the text (--at-k: Arabic labelColumn 120 -> 96 still holds "البريد الإلكتروني" at 12),
+   icons centred in the box. Card width / textarea heights / gaps: ReferForm.astro, InternationalForm.astro. */
+.rf { --at-k: 0.8; --pf-dial-w: 66; --pf-flag-w: 15; --pf-flag-x: 5.5; --pf-dial-pad: 23.5; --pf-dial-chev-x: 5; --pf-dial-chev-w: 6.5; --pf-tel-gap: 8; --pf-px: 8; }
+.rf .pf-label, .rf .rf-opt { font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
+.rf .pf-box { font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); block-size: calc(29 * var(--u)); }
+.rf .pf-dial { min-block-size: calc(29 * var(--u)); }
+.rf .pf-dial .dial-code { margin-block-start: calc(7 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(15 * var(--u)); }
+.rf .pf-label, .rf .rf-legend { padding-block-start: calc(7 * var(--u)); }
+.rf .rf-bold { padding-block-start: calc(7 * var(--u)); line-height: calc(15 * var(--u)); }
+.rf .rf-opts { padding-block-start: calc(7 * var(--u)); gap: calc(6 * var(--u)) calc(24 * var(--u)); }
+.rf .rf-opt { min-block-size: calc(15 * var(--u)); gap: calc(7 * var(--u)); }
+.rf .pf-q { font-size: calc(13 * var(--u)); line-height: calc(16 * var(--u)); }
+.rf .pf-select .pf-chev, .rf .pf-dial .pf-chev, .rf .pf-flag, .rf .rf-cal { inset-block-start: 50%; translate: 0 -50%; }
+.rf .pf-flag { block-size: calc(10 * var(--u)); }
+.rf .rf-cal { inline-size: calc(16 * var(--u)); block-size: calc(17.8 * var(--u)); inset-inline-end: calc(10 * var(--u)); }
+.rf .rf-sel-ref select { padding-inline-start: calc(17 * var(--u)); }
+.rf .rf-ph-in { padding-inline-start: calc(11 * var(--u)); }
+.rf .rf-area { padding: calc(10 * var(--u)) calc(11.5 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); resize: vertical; min-block-size: calc(66 * var(--u)); } /* shorter box: the user can drag it taller to review a long text */
+@media (max-width: 1023.98px) {
+  /* Bug 149 (15 Oct 2026): the options drop their top padding with the legend (it is a .pf-label), so the radios sit on the
+     "Gender" line instead of ~10px under it (both languages). */
+  .rf .pf-label, .rf .rf-opts { padding-block-start: 0; }
+  .rf .pf-dial .dial-code { margin-block-start: 0; }
+}
+@media (max-width: 767.98px) {
+  .rf .pf-select select { font-size: max(16px, calc(12 * var(--u))); } /* bug 082: never below 16px on phones */
+}
+@media (min-width: 1024px) {
+  /* two equal columns filling the narrower card (Figma 410 + 60 + 410 in the 968 card) */
+  .rf .rf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: calc(40 * var(--u)); }
+}
+
+/* Arabic pages: form text that has no Arabic yet is shown in English (docs/open-decisions.md WP2 / CT24 / CT31). In an RTL
+   paragraph its trailing punctuation moved to the wrong end (":Address", "*Full Name", ".This field is required",
+   "...Write Something"; mobile QA H2, 13 Oct 2026). `plaintext` takes each line's direction from its own first letter, so English
+   reads left-to-right with its punctuation in place and Arabic stays right-to-left; the text stays on the right edge (= the start
+   edge on these pages; `match-parent` resolves to left in Chrome once the line is LTR). Placeholders: inputs in every engine,
+   textareas in Chrome / Safari (Firefox keeps the old order there). A dir="ltr" field (phone numbers) is left as it is. */
+[dir='rtl'] :is(form label:not(.f-consent), form legend, .rf-legend, .f-consent .txt, .f-err, .f-alert, .gf-section, .pf-q, .bidi-auto) { unicode-bidi: plaintext; text-align: right; }
+[dir='rtl'] :is(input, textarea):not([dir='ltr'])::placeholder { unicode-bidi: plaintext; text-align: right; }
+
+/* No backdrop blur (mobile QA S1, 13 Oct 2026): the glass panel is only 10% white, so the page would show through the form.
+   Where the browser cannot blur, the panel is near-opaque instead; browsers with the blur keep the Figma glass unchanged. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .modal-panel { background: rgba(255, 255, 255, 0.94); }
 }

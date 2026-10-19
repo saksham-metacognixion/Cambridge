@@ -1,0 +1,88 @@
+---
+import { Picture } from 'astro:assets';
+import { px, vwSizes } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { urlFor, type Edition } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
+import Band from '../careers/Band.astro';
+
+/*
+ * "Explore Our Care, Expertise, and Opportunities" (Figma 45:4982, grey band rgba(231,231,231,.5), page y 974-1537, h 563).
+ * Heading Gotham Medium 28 #004059 at x194, band top + 55, box 664 x 27; sub Book 12/14 #6b6b6b at x262 (w528), 5 below the
+ * heading box; cards 47 below the sub box. Four cards 222 x 342 at x53 / 295 / 537 / 779 (gap 20), white box, radius 15,
+ * hairline .25 #418ea2; photo 222 x 244 (top corners radius 15). In Figma the photo sits 3 px above the box top (card 2: 4 px,
+ * 1122 / 1123 vs 1126), which on the page reads as a strip of photo above the border (bug 028, client review 7 Oct 2026): the
+ * photo now starts exactly at the card top and the card clips to its own rounded box, so no photo pixel can leave it; the
+ * hairline border (.hair-card::after) paints above the photo. Title Medium 19 #004059 at box + (24, 260) in a 32 tall box (a 1-line title is centred in it: Careers Hub 1394);
+ * button 74 x 17 (#00b8ff, radius 3) at box + (24, 309), label Medium 8 / 10 white centred; now the shared .ui-btn size (bug 044/050)
+ * and the card / photo corners --radius-card (bug 049). Box bottom 69 above the band end.
+ * Each card is a column: photo space, title, then the button pushed to the bottom (margin-top: auto). Cards in a row stretch
+ * to the tallest one, so a longer title (client copy "Why Choose Cambridge Hospital" = 3 lines at 174 wide, Figma has
+ * "Why Choose Cambridge") grows every card in the row and all buttons stay on one line (bug 008). The title lines are given
+ * in the JSON; Figma's 16 line height only holds 2 lines, so a title of 3+ lines gets 21 (1.1em) so the lines don't crowd.
+ */
+interface Card { title: string[]; button: string; page: string; image: string; alt: string }
+interface Props { edition: Edition; c: { ariaLabel: string; heading: string; text: string; cards: Card[] } }
+const { edition, c } = Astro.props;
+const cards = c.cards.map((x) => ({ ...x, src: img(x.image, edition.region), href: urlFor(edition, pagePath(x.page)) }));
+---
+
+<Band bg="rgba(231,231,231,0.5)" labelledby="about-explore-heading">
+  <div class="wrap">
+    <h2 id="about-explore-heading" class="h">{c.heading}</h2>
+    {c.text && <p class="sub">{c.text}</p>}
+    <ul class="grid" role="list">
+      {cards.map((x, i) => (
+        <li data-aos="fade-up" style={`--aos-delay:${i * 50}ms`} class="cell">
+          <article class="card hair-card" style="--sw:.25">
+            <Picture src={x.src} formats={['avif']} fallbackFormat="webp" width={px(222)} height={px(244)} widths={[px(222), px(222) * 2]} sizes={vwSizes(222)} loading="lazy" decoding="async" alt={x.alt} class="img" pictureAttributes={{ class: 'contents' }} />
+            <h3 class:list={['t', { long: x.title.length > 2 }]}>
+              <a href={x.href} class="stretch">{x.title.map((l) => <span class="block">{l}</span>)}</a>
+            </h3>
+            <a href={x.href} class="btn ui-btn btn-fill" tabindex="-1" aria-hidden="true">{x.button}</a>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Band>
+
+<style>
+  /* Scroll entrance as on the live About page (data-aos="fade-up", scripts/aos.ts + global.css): each card on its own,
+     0.8s, delays 0 / 50 / 100 / 150ms, replays on every return. The heading and the grey band do not move. */
+  .wrap { padding-block: calc(55 * var(--u)) calc(69 * var(--u)); }
+  .h { margin: 0; width: calc(664 * var(--u)); max-width: 100%; margin-inline: auto; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(27 * var(--u)); color: var(--color-navy); text-align: center; overflow-wrap: anywhere; }
+  .sub { margin: calc(5 * var(--u)) auto 0; width: calc(528 * var(--u)); max-width: 100%; min-height: calc(18 * var(--u)); font-weight: 400; font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); color: var(--color-body); text-align: center; }
+  .grid { list-style: none; margin: calc(47 * var(--u)) 0 0; } /* 47 below the sub box; without a sub line (client text) the sub's 5 + 18 are added so the cards keep their Figma y */
+  .h + .grid { margin-top: calc(70 * var(--u)); }
+  .grid { padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(222 * var(--u)), calc(222 * var(--u)))); justify-content: center; gap: calc(40 * var(--u)) calc(20 * var(--u)); }
+  .cell { display: flex; }
+  .card { position: relative; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; width: calc(222 * var(--u)); min-height: calc(342 * var(--u)); padding: calc(260 * var(--u)) calc(24 * var(--u)) calc(16 * var(--u)); background: #fff; border-radius: var(--radius-card); overflow: clip; } /* bug 049 */
+  .card :global(.img) { position: absolute; inset-inline-start: 0; top: 0; width: 100%; height: calc(244 * var(--u)); object-fit: cover; max-width: none; border-start-start-radius: var(--radius-card); border-start-end-radius: var(--radius-card); }
+  .t { margin: 0 0 calc(17 * var(--u)); display: flex; align-items: center; min-height: calc(32 * var(--u)); font-weight: 500; font-size: calc(19 * var(--u)); line-height: calc(16 * var(--u)); color: var(--color-navy); font-style: normal; }
+  .t.long { line-height: calc(21 * var(--u)); }
+  .t a { color: inherit; text-decoration: none; }
+  .stretch::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-card); }
+  .stretch:focus-visible { outline: none; }
+  /* Hovers as on the live About cards: the title text turns cyan, the button cyan (shared .btn-fill). Both sit above the
+     whole-card link layer so each reacts on its own; the button is a second link to the same page, hidden from AT and Tab
+     (the title link is the one they use). */
+  .t .block, .btn { position: relative; z-index: 1; }
+  .t a { transition: color 160ms ease; }
+  @media (hover: hover) { .t:has(.block:hover) a { color: var(--color-navy); text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; } }
+  .card:has(.stretch:focus-visible) { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
+  .btn { margin-top: auto; } /* size from .ui-btn (bug 044/050), colours from .btn-fill */
+  @media (min-width: 1024px) {
+    .grid { grid-template-columns: repeat(4, calc(222 * var(--u))); column-gap: calc(20 * var(--u)); }
+  }
+  /* Bug 154 (15 Oct 2026): stacked (< 1024) the heading -> cards gap is flow spacing (32px), not the Figma 70 / 47 units of the
+     desktop canvas (~96px / ~64px). */
+  @media (max-width: 1023.98px) {
+    .grid, .h + .grid { margin-top: 32px; }
+    /* same card gutters as the other card lists (CareCards, Patient Hub): full width on phones, two per row on tablets */
+    .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+    .card { width: 100%; }
+  }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .h { font-size: var(--ar-phone-h2); } }
+</style>

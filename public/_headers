@@ -1,0 +1,7 @@
+# Cloudflare Pages response headers (performance audit, 10 Oct 2026). Both paths change URL when their content changes:
+# /_astro/* has hashed file names, /fonts/* is referenced as ?v=<content hash> (fontVersions() in astro.config.mjs).
+# Vercel staging gets the same rule from vercel.json (tools/vercel-json.mjs), nginx from deploy/nginx.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,10 +1,10 @@
 ---
 import { Picture } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { img } from '../../lib/images';
-import { urlFor, type Edition } from '../../lib/editions';
+import type { Edition } from '../../lib/editions';
 import { t } from '../../lib/content';
-import { DOCTOR_PATHS, type Doctor } from '../../lib/doctors';
+import { doctorHref, doctorRole, type Doctor } from '../../lib/doctors';
 import mask from '../../assets/doctors-page/card-mask.svg';
 import fill from '../../assets/doctors-page/card-fill.svg';
 
@@ -12,22 +12,28 @@ import fill from '../../assets/doctors-page/card-fill.svg';
  * Doctor card, Figma 62:223 / 62:310 (215 x 268.459, radius 17.432). FLOW layout: the panel is fixed (180.135), the text
  * under it grows with the name and role, the card grows with it. Absolute only for the decorative bars and the photo.
  * All numbers below are Figma px (scaled by --u). Text sizes are the card's own (13.946 / 9.297), not the Home card's.
+ * Buttons (Figma 82.514 x 15.108, radius 5.811, label 9.297): the shared small size .ui-btn.ui-btn-sm (bugs 044 / 050: two buttons
+ * share the card), level at the card's bottom, wrapping onto two lines of buttons if they do not fit side by side.
+ * Card + panel corners --radius-card (bug 049).
  */
 /* `heading`: the name's level in the page outline (h2 on Find a Doctor, h3 under a section h2 elsewhere). `book`: false hides Book Now. */
-interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; heading?: 'h2' | 'h3'; book?: boolean; }
-const { doctor: d, edition, labels, heading: Name = 'h2', book = true } = Astro.props;
+/* Meet the Team (Task 198) reuses this card for the leadership: `href` / `role` given by the caller (a leader profile, the
+   leader's title in exactly this language: no English fallback), `fill` = an opaque square portrait (the live leadership photos,
+   white or green backdrop) that covers the photo panel instead of a cut-out standing on it. */
+interface Props { doctor: Doctor; edition: Edition; labels: { seeMore: string; bookNow: string }; heading?: 'h2' | 'h3'; book?: boolean; href?: string; role?: string; fill?: boolean; }
+const { doctor: d, edition, labels, heading: Name = 'h2', book = true, href: hrefProp, role: roleProp, fill: fillPanel = false } = Astro.props;
 const name = t(d.name, edition.locale, 'doctors');
-const role = t(d.title, edition.locale, 'doctors');
+const role = roleProp ?? doctorRole(d, edition.locale);
 const alt = (d.photo_alt && t(d.photo_alt, edition.locale, 'doctors')) || name;
 const photo = d.photo ? img(d.photo, edition.region) : null;
 // Default photo box for real data (Pramod's JSON has no card_photo): 169 square, centred, bottom on the panel edge.
 const w = d.card_photo?.w ?? d.card_photo?.size ?? 169;
 const h = d.card_photo?.h ?? d.card_photo?.size ?? 169;
 const dx = d.card_photo?.dx ?? 0;
-const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
+const href = hrefProp ?? doctorHref(d, edition);
 ---
 
-<article class="card hair-card relative flex flex-col bg-white" style="--sw:.291" aria-label={name}>
+<article class:list={['card dr-card hair-card relative flex flex-col bg-white', fillPanel && 'is-fill']} style="--sw:.291" aria-label={name}>
   <div class="panel relative" aria-hidden={photo ? undefined : 'true'}>
     <div class="shape" aria-hidden="true" style={`--mask:url("${mask.src}")`}>
       <img src={fill.src} alt="" width="196" height="198" loading="lazy" decoding="async" />
@@ -37,32 +43,32 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
         src={photo}
         formats={['avif']}
         fallbackFormat="webp"
-        width={px(w)}
-        height={px(h)}
-        widths={[px(w), px(w) * 2]}
-        sizes={`${px(w)}px`}
+        width={fillPanel ? px(208) : px(w)}
+        height={fillPanel ? px(180) : px(h)}
+        widths={fillPanel ? [px(208), px(208) * 2] : [px(w), px(w) * 2]}
+        sizes={vwSizes(fillPanel ? 208 : w)}
         loading="lazy"
         decoding="async"
         alt={alt}
-        class="photo object-cover"
+        class="photo dr-photo object-cover"
         pictureAttributes={{ class: 'contents' }}
         style={`--pw:${w};--ph:${h};--dx:${dx}`}
       />
     )}
   </div>
-  <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic">{name}</Name>
+  <Name class="name m-0 font-gotham font-medium text-navy-alt not-italic"><a href={href} class="title-link title-link-grow" tabindex="-1">{name}</a></Name>
   <p class="role m-0 font-gotham font-normal text-body not-italic">{role}</p>
   <div class="actions">
-    <a href={href} class="btn btn-see hit font-gotham font-medium no-underline" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
+    <a href={href} class="btn btn-see ui-btn ui-btn-sm hit btn-fill" aria-label={`${labels.seeMore} - ${name}`}>{labels.seeMore}</a>
     {book && d.show_book_now && (
-      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book hit font-gotham font-normal no-underline" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
+      <a href="#book-appointment" data-doctor={d.slug} class="btn btn-book ui-btn ui-btn-sm hit btn-fill-navy" aria-label={`${labels.bookNow} - ${name}`}>{labels.bookNow}</a>
     )}
   </div>
 </article>
 
 <style>
-  .card { width: calc(215 * var(--u)); min-height: calc(268.459 * var(--u)); border-radius: calc(17.432 * var(--u)); padding-bottom: calc(18.59 * var(--u)); box-sizing: border-box; }
-  .panel { margin: calc(3.487 * var(--u)) calc(3.487 * var(--u)) 0; height: calc(180.135 * var(--u)); border-radius: calc(17.432 * var(--u)); background: var(--color-veil); flex: none; }
+  .card { width: calc(215 * var(--u)); min-height: calc(268.459 * var(--u)); border-radius: var(--radius-card); padding-bottom: calc(18.59 * var(--u)); box-sizing: border-box; }
+  .panel { margin: calc(3.487 * var(--u)) calc(3.487 * var(--u)) 0; height: calc(180.135 * var(--u)); border-radius: var(--radius-card); background: var(--color-veil); flex: none; }
   /* Decorative bars: the fill artwork is clipped by the panel-shaped mask (mask 208.027 x 179.576, art offset 6.589 / 4.052). */
   .shape { position: absolute; inset-inline-start: 0; top: 0; width: calc(208.027 * var(--u)); height: calc(179.576 * var(--u)); -webkit-mask: var(--mask) 0 0 / 100% 100% no-repeat; mask: var(--mask) 0 0 / 100% 100% no-repeat; mask-mode: alpha; pointer-events: none; }
   .shape img { position: absolute; inset-inline-start: calc(6.589 * var(--u)); top: calc(4.052 * var(--u)); width: calc(195.719 * var(--u)); height: calc(198.331 * var(--u)); max-width: none; }
@@ -71,8 +77,14 @@ const href = urlFor(edition, DOCTOR_PATHS.profile(d.slug));
   :global([dir='rtl']) .photo { translate: 50% 0; inset-inline-start: calc(50% - var(--dx) * var(--u)); }
   .name { margin-top: calc(13.81 * var(--u)); margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); font-size: calc(13.946 * var(--u)); line-height: calc(17.432 * var(--u)); overflow-wrap: anywhere; }
   .role { margin-inline: calc(17.43 * var(--u)) 0; width: calc(172 * var(--u)); min-height: calc(11.622 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); overflow-wrap: anywhere; }
-  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline-start: calc(17.43 * var(--u)); display: flex; gap: calc(7.06 * var(--u)); }
-  .btn { display: block; box-sizing: border-box; min-width: calc(82.514 * var(--u)); height: calc(15.108 * var(--u)); padding: calc(2.32 * var(--u)) calc(13.95 * var(--u)) 0 calc(16.27 * var(--u)); border-radius: calc(5.811 * var(--u)); font-size: calc(9.297 * var(--u)); line-height: calc(11.622 * var(--u)); color: #fff; text-align: center; white-space: nowrap; }
-  .btn-see { background: var(--color-cyan); }
-  .btn-book { background: #21b573; }
+  .actions { margin-top: auto; padding-top: calc(8.14 * var(--u)); margin-inline: calc(17.43 * var(--u)) calc(6 * var(--u)); display: flex; flex-wrap: wrap; gap: 8px calc(7.06 * var(--u)); width: fit-content; max-width: 100%; }
+  /* bug 044: on one line each button keeps its own width; stacked (narrow cards, ~1024) both take the row width, aligned */
+  .actions > .btn { flex-grow: 1; }
+  .btn { color: #fff; } /* white only on Deep Teal (brand AA); See More colours: .btn-fill */ /* bugs 044 / 050: .ui-btn-sm size */
+  .btn-book { background: var(--color-navy); } /* was Medical Green: white on green is 2.65:1 */
+  /* Task 198: a square portrait fills the panel (corners clipped by the panel radius), top-aligned so no head is cut */
+  .is-fill .panel { overflow: hidden; }
+  .is-fill .shape { display: none; }
+  .is-fill .photo { inset: 0; translate: none; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+  :global([dir='rtl']) .is-fill .photo { translate: none; inset-inline-start: 0; }
 </style>

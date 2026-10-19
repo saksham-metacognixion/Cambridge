@@ -1,0 +1,17 @@
+{
+  "_note": "FAQ (Figma 100:5509). Visible text exactly as in Figma; meta.*, tabsLabel, empty/pending texts are NOT in Figma (PLACEHOLDER). Questions: src/data/faqs.json.",
+  "meta": {
+    "title": "Frequently Asked Questions | Cambridge Hospital",
+    "description": "Answers to common questions about inpatient, outpatient, home health and in-school care at Cambridge Hospital."
+  },
+  "hero": {
+    "ariaLabel": "FAQ",
+    "banner": { "image": "faq/hero", "alt": "" },
+    "title": ["Everything You Need to Know"],
+    "button": { "label": "Consult for a Care Plan", "href": "#book-appointment" }
+  },
+  "heading": "Frequently Asked Questions",
+  "tabsLabel": "FAQ categories",
+  "empty": "Questions for this category will be available soon.",
+  "answerPending": "Answer pending."
+}

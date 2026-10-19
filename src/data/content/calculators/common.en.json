@@ -1,0 +1,10 @@
+{
+  "$comment": "Shared text of the four health calculators. errors.invalid = the live heart-age script's only validation message, shown once above the button with the invalid fields marked. cta = the live calculators' call to action after a result; href = the Book an Appointment pop-up.",
+  "errors": {
+    "invalid": "Please enter valid values in all fields."
+  },
+  "cta": {
+    "label": "Book an Appointment",
+    "href": "#book-appointment"
+  }
+}

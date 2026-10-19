@@ -1,11 +1,219 @@
 {
-  "$comment": "PLACEHOLDER: the 6 facilities shown on the Figma Home page and footer, text exactly as in Figma. Replace with Pramod's export. Full name = brand + ' ' + city. region = edition that lists it.",
+  "$comment": "The six facilities. slug = internal id (doctors.json, forms, footer, tests); path = URL segment under hospitals/ (the live site's URLs quoted in Website Content - Suhad/Our Hospitals, e.g. /ae/hospitals/cambridge-hospital-abu-dhabi/). Full name = brand + ' ' + city ('Al Mudeef Centre' spelling from the documents, one spelling site-wide). listTitle / listButton = the Our Hospitals list card ('Abu Dhabi Hospital' ... 'Al Mudeef Centre' + 'View Centre', from the Our Hospitals main page document, 5 Oct 2026). address + listPhoto as in Figma 101:6247. Detail pages (Figma 112:7721): phone (click-to-call, international format) and hours ({en, ar}) are NOT in Figma or the documents and wait for Pramod (empty = not shown). mapUrl = the live site's own 'Open in Google Maps' link of each hospital page (maps.app.goo.gl share links, saved live pages docs/cambridge-images-live/_pages/*/hospitals/*.html, 9 Oct 2026): the hospital pages' Google Maps button, and the Contact map card's directions link while a hospital has no position (Jeddah). Arabic names, list titles, addresses and 'View Centre' = the live site's Arabic Our Hospitals page and footer (WordPress export pages 19104 / 19153 / block 19169, 6 Oct 2026). location (bug 051, the ONE place for hospital positions: Contact Us map markers, directions links, hospital-page 'Open in Google Maps'): lat / lng = the hospital's exact position (required for a marker), placeId = its Google Place ID (optional, sharpens the directions link), source = where the value comes from. Five positions = the hospital's own Google place, checked 7 Oct 2026 (client approval pending, R051). Jeddah's position (bug 182, 16 Oct 2026) = the live site's own share link resolved to its Google place 'Cambridge Hospital Jeddah' (Al-Ruwais), the only hospital with a placeId so far; never fill a position with a guess or a Google text-search result. Bug 182 (16 Oct 2026): every Google Maps target (Contact map marker + directions, hospital page button) now comes from location first; mapUrl is only a fallback while a hospital has no position, and a hospital without a position gets no marker, no directions link and no button rather than a dead or wrong destination (Jeddah was in that state until its share link was resolved the same day).",
   "hospitals": [
-    { "slug": "abu-dhabi", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Abu Dhabi", "ar": "" }, "region": "ae", "photo": "facilities/auh-new" },
-    { "slug": "al-ain", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Al Ain", "ar": "" }, "region": "ae", "photo": "facilities/al-ain" },
-    { "slug": "dhahran", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Dhahran", "ar": "" }, "region": "sa", "photo": "facilities/dhahran" },
-    { "slug": "al-khobar", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Al Khobar", "ar": "" }, "region": "sa", "photo": "facilities/al-khobar" },
-    { "slug": "jeddah", "brand": { "en": "Cambridge Hospital", "ar": "" }, "city": { "en": "Jeddah", "ar": "" }, "region": "sa", "photo": "facilities/jeddah" },
-    { "slug": "al-mudeef-abu-dhabi", "brand": { "en": "Al Mudeef Center", "ar": "" }, "city": { "en": "Abu Dhabi", "ar": "" }, "region": "ae", "photo": "facilities/al-mudeef" }
+    {
+      "slug": "abu-dhabi",
+      "path": "cambridge-hospital-abu-dhabi",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": "مستشفى كامبريدج"
+      },
+      "city": {
+        "en": "Abu Dhabi",
+        "ar": "أبوظبي"
+      },
+      "region": "ae",
+      "listTitle": {
+        "en": "Abu Dhabi Hospital",
+        "ar": "مستشفى أبوظبي"
+      },
+      "photo": "facilities/auh-new",
+      "address": {
+        "en": "Shakbout City, Abu Dhabi - UAE",
+        "ar": "مدينة شخبوط، أبوظبي، الامارات"
+      },
+      "listPhoto": "hospitals/abu-dhabi",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": "https://maps.app.goo.gl/cNwu7Y3DRKWeeLG7A",
+      "location": {
+        "lat": 24.3507866,
+        "lng": 54.6375318,
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+      }
+    },
+    {
+      "slug": "al-ain",
+      "path": "cambridge-hospital-al-ain",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": "مستشفى كامبريدج"
+      },
+      "city": {
+        "en": "Al Ain",
+        "ar": "العين"
+      },
+      "region": "ae",
+      "listTitle": {
+        "en": "Al Ain Hospital",
+        "ar": "مستشفى العين"
+      },
+      "photo": "facilities/al-ain",
+      "address": {
+        "en": "Al Khabisi, Al Ain - UAE",
+        "ar": "شارع الخبيسي، العين، الامارات"
+      },
+      "listPhoto": "hospitals/al-ain",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": "https://maps.app.goo.gl/1keH2pXrpWKsJ3Qs5",
+      "location": {
+        "lat": 24.2311383,
+        "lng": 55.6805982,
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+      }
+    },
+    {
+      "slug": "al-mudeef-abu-dhabi",
+      "path": "al-mudeef-center-abu-dhabi",
+      "brand": {
+        "en": "Al Mudeef Centre",
+        "ar": "مركز المضيف"
+      },
+      "city": {
+        "en": "Abu Dhabi",
+        "ar": "أبوظبي"
+      },
+      "region": "ae",
+      "listTitle": {
+        "en": "Al Mudeef Centre",
+        "ar": "المضيف"
+      },
+      "listButton": {
+        "en": "View Centre",
+        "ar": "عرض المركز"
+      },
+      "photo": "facilities/al-mudeef",
+      "address": {
+        "en": "Shakbout City, Abu Dhabi - UAE",
+        "ar": "مدينة شخبوط، أبوظبي، الامارات"
+      },
+      "listPhoto": "hospitals/al-mudeef-abu-dhabi",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": "https://maps.app.goo.gl/oamDRPNaKShr1P5s5",
+      "location": {
+        "lat": 24.3239001,
+        "lng": 54.6089327,
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+      }
+    },
+    {
+      "slug": "dhahran",
+      "path": "cambridge-hospital-dhahran",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": "مستشفى كامبريدج"
+      },
+      "city": {
+        "en": "Dhahran",
+        "ar": "الظهران"
+      },
+      "region": "sa",
+      "listTitle": {
+        "en": "Dhahran Hospital",
+        "ar": "مستشفى الظهران"
+      },
+      "photo": "facilities/dhahran",
+      "address": {
+        "en": "Al Doha Al Janubia, Dhahran - KSA",
+        "ar": "الدوحة الجنوبية، ظهران - المملكة العربية السعودية"
+      },
+      "listPhoto": "hospitals/dhahran",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": "https://maps.app.goo.gl/8KEQpYS5NZETYFx39",
+      "location": {
+        "lat": 26.3191904,
+        "lng": 50.1556885,
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+      }
+    },
+    {
+      "slug": "al-khobar",
+      "path": "cambridge-hospital-al-khobar",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": "مستشفى كامبريدج"
+      },
+      "city": {
+        "en": "Al Khobar",
+        "ar": "الخبر"
+      },
+      "region": "sa",
+      "listTitle": {
+        "en": "Al Khobar Hospital",
+        "ar": "مستشفى الخبر"
+      },
+      "photo": "facilities/al-khobar",
+      "address": {
+        "en": "Al Tahliyah, Al Khobar - KSA",
+        "ar": "الطهلية، الخبر - المملكة العربية السعودية"
+      },
+      "listPhoto": "hospitals/al-khobar",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": "https://maps.app.goo.gl/MnsFmy7xkuJ15rtk8",
+      "location": {
+        "lat": 26.1862228,
+        "lng": 50.2090257,
+        "placeId": "",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+      }
+    },
+    {
+      "slug": "jeddah",
+      "path": "cambridge-hospital-jeddah",
+      "brand": {
+        "en": "Cambridge Hospital",
+        "ar": "مستشفى كامبريدج"
+      },
+      "city": {
+        "en": "Jeddah",
+        "ar": "جدة"
+      },
+      "region": "sa",
+      "listTitle": {
+        "en": "Jeddah Hospital",
+        "ar": "مستشفى جدة"
+      },
+      "photo": "facilities/jeddah",
+      "address": {
+        "en": "Al Ruwais, Jeddah - KSA",
+        "ar": "الرويس، جدة - المملكة العربية السعودية"
+      },
+      "listPhoto": "hospitals/jeddah",
+      "phone": "",
+      "hours": {
+        "en": "",
+        "ar": ""
+      },
+      "mapUrl": "",
+      "location": {
+        "lat": 21.515867,
+        "lng": 39.1800471,
+        "placeId": "ChIJS3zLvL7PwxURLpH4ofWEoKc",
+        "source": "The live site's own 'Open in Google Maps' share link (maps.app.goo.gl/2d3gdXqVvhR8BSTa6, the client's pin), resolved 16 Oct 2026 (bug 182): Google place 'Cambridge Hospital Jeddah', 4783 Bouzour Al Iman, Al-Ruwais, Jeddah 23214 (feature id 0x15c3cfbebccb7c4b:0xa7a084f5a1f8912e, the Place ID is that id encoded; both open the same place). The short link itself times out for the client, so mapUrl stays empty and every target uses this position. Client approval pending (R051)."
+      }
+    }
   ]
 }

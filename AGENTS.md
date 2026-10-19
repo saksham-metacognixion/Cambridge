@@ -18,12 +18,31 @@ Read this file at the start of every session and follow it for all work.
   value by the scale factor **1440/1052 ≈ 1.3688**. The factor lives in ONE place so it can be changed.
 - Fonts: Gotham Light (300), Book (400), Medium (500). Self-host woff2 from `public/fonts/`. Never substitute
   another font. If files are missing, keep the `font-family` rule and ask.
-- Animations as in Figma: hero image that follows the cursor, and the doctor animation. Smooth on laptop
+- **Banner / hero photos do NOT move (user decision, 16 Oct 2026, docs/animations-removed.md):** the cursor-follow script
+  (`src/scripts/hero-follow.ts`) is deleted; the `data-hero-follow` / `data-hero-subject` layers stay as static markup. Every other
+  animation (doctor row, auto-scroll, entrances, counters, hover transitions) stays as audited below. The 16 Oct "no animations
+  site-wide" commit 97d8679 was reverted to that narrower scope the same day.
+- Animations as in Figma: the doctor animation (the hero cursor-follow is gone, see above). Smooth on laptop
   and mobile.
+  Since 7 Oct 2026 (user decision) every page hero follows the cursor like the Home one (`src/scripts/hero-follow.ts`,
+  `data-hero-follow` box + `data-hero-subject` people layer in PageHero / ContactHero / FeedbackHero): only the people move,
+  gradient and pills stay. Our Hospitals: the map group drifts in both axes (`follow="map"`, the live site's map motion).
+  Layers `<key>-subject` / `<key>-bg` come from `tools/hero-layers/run-all.sh` (HF1 in docs/open-decisions.md).
+- Hero cut-outs cut flat by their own file edge carry `bleed: "end"` / `fade: "start"|"top"` in `src/data/banner-art.json`
+  (bug 131, 15 Oct 2026: the subject runs off the viewport's end edge, a cut edge facing the copy is feathered; BannerArt.astro).
+- Home "Bringing Expert Care Closer" (bug 133, 15 Oct 2026, client design, no Figma frame): no hospital list; centred map with
+  pin buttons that open a hospital card on hover / tap / focus (`src/scripts/hospital-map.ts`), map + pin entrance animation,
+  nothing moves with prefers-reduced-motion. Since the second brief (15 Oct, B133b) the section reproduces the client's
+  reference `cambridge-locations-2.html`: outline draw-in, pin drop + bob + pulse, counters ON the map, floating card, ONE
+  Abu Dhabi pin whose card lists Abu Dhabi Hospital + Al Mudeef Centre. Never make `.mapbox` a CSS container (`--u` is cqw).
 - Doctors / Testimonials rows overflow the frame in Figma: CSS scroll-snap rows, swipe/scroll, no arrows or
   dots unless Figma shows them. Exception (user decision, 2 Oct 2026, matching the live site): Testimonials and
   Care Support rows auto-scroll in a slow seamless loop (`src/scripts/autoscroll.ts`) — pauses on hover/focus/touch,
-  off with prefers-reduced-motion, clones aria-hidden + inert. Doctors row: still no autoplay.
+  off with prefers-reduced-motion, copies aria-hidden + out of the tab order (still clickable). Home Doctors row: same
+  auto-scroll since 6 Oct 2026 (bug 018, matching the live site); its pills/dots drive it via `autoscroll:*` events.
+  Since 8 Oct 2026 (animation audit, docs/animation-audit.md) these rows use the live Swiper settings from the WordPress export:
+  Home doctors + Our Care doctors = 1 s pause + 1 s eased slide, hover pauses, a drag ends it; Care Support = one tile per 12 s,
+  Testimonials = one card per 15 s, eased per slide, no hover pause (`data-autoscroll-delay/-speed/-pause/-restore`).
 - If exact Figma colours fail WCAG AA contrast on buttons/text, do NOT change them silently — flag it and ask.
 
 ## 3. Figma MCP usage
@@ -58,14 +77,23 @@ Read this file at the start of every session and follow it for all work.
 - Language switch keeps the visitor on the same page in the other language.
 
 ### Country pop-up (Global only)
-- First visit to Global: detect country at the edge (Cloudflare country header or middleware), show the
-  Figma pop-up (Global / UAE / KSA), save choice in a cookie, never show again. No pop-up on `/ae` or `/sa`.
+- On Global: detect country at the edge (Cloudflare country header or middleware), show the Figma pop-up
+  (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. State since 10 Oct 2026 (user, bug 083 again): only visitors DETECTED in the UAE see
+  the UAE pop-up (root `middleware.ts` reads `x-vercel-ip-country` on Vercel, `functions/_middleware.ts` Cloudflare, shared
+  `functions/_lib/geo.ts` -> `ch_geo` cookie; `fallbackCountry: ""`); KSA, other and unknown countries get no pop-up (no KSA
+  version); the choice (pop-up button or header region switch) is kept ONE YEAR in the cookie `ch_edition`
+  (`remember: "forever"` in `src/data/country-popup.json`), so it survives new tabs and browser restarts; a stale
+  sessionStorage value never shadows it. `remember: "tab"` restores the 5 Oct "every new tab" behaviour. B5.
 
 ### Arabic (RTL)
 - `dir="rtl"` on Arabic pages; full mirror of logo, navigation, icons, arrows.
 - Use CSS logical properties only (`margin-inline-start`, `ps-*`/`pe-*`, `start`/`end`) — never left/right —
   so one stylesheet works both ways.
 - Arabic text exactly as in Figma. **No translating.** No English left on Arabic pages.
+- Arabic typography (bugs 129/130, 15 Oct 2026): `html:lang(ar)` headings = GE SS Two Bold on 1.45 lines, running text = Medium
+  on 1.65 (one `!important` block in `src/styles/global.css`; English line heights untouched). Sections that hold a heading + intro
+  in Figma boxes use grid tracks with the Figma box as the minimum (Home Services/Doctors/Care Support/Recovery/Testimonials), so
+  Arabic grows the section and English keeps its positions. No Regular/Light Arabic file exists (B130).
 
 ## 6. Page templates
 Home (hero + doctor animations, region images) · About ("We are listening" section + nav link) · Patient ·

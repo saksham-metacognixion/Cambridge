@@ -649,14 +649,33 @@ div:has(> .hd[data-sticky-header]) { position: sticky; top: 0; }
    theme puts it right; mirrored here like every other control), 12px padding + 12px chevron, cyan (palette-3) with a Deep Teal
    icon (brand AA), hover Muted Teal (palette-4) with a white icon, radius 2px, theme shadow; hidden = transparent, 15px lower,
    invisible; shown = in place; opacity / colour / background / transform / visibility .3s ease. Not on phones (live .ct-hidden-sm). */
-.to-top { position: fixed; z-index: 110; bottom: 25px; inset-inline-end: 25px; display: flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: 0; cursor: pointer; color: var(--color-navy); background: var(--color-cyan); box-shadow: 0 10px 20px rgba(41, 51, 61, 0.1); border-radius: 2px; opacity: 0; visibility: hidden; transform: translate3d(0, 15px, 0); transition: opacity 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
-.to-top svg { display: block; width: 12px; height: 12px; fill: currentColor; }
-.to-top::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; } /* 36px button -> 44px tap area on tablets (responsive audit 10 Oct 2026) */
+.to-top, .to-call { position: fixed; z-index: 110; inset-inline-end: 25px; display: flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: 0; cursor: pointer; color: var(--color-navy); background: var(--color-cyan); box-shadow: 0 10px 20px rgba(41, 51, 61, 0.1); border-radius: 2px; transition: opacity 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
+.to-top { bottom: 25px; opacity: 0; visibility: hidden; transform: translate3d(0, 15px, 0); }
+.to-top svg, .to-call svg { display: block; width: 12px; height: 12px; fill: currentColor; }
+.to-top::before, .to-call::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; } /* 36px button -> 44px tap area on tablets (responsive audit 10 Oct 2026) */
 .to-top.is-shown { opacity: 1; visibility: visible; transform: translate3d(0, 0, 0); }
-@media (hover: hover) { .to-top:hover { background: var(--color-teal-border); color: #fff; } }
-.to-top:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 2px; }
+@media (hover: hover) { .to-top:hover, .to-call:hover { background: var(--color-teal-border); color: #fff; } }
+.to-top:focus-visible, .to-call:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 2px; }
 @media (max-width: 689.98px) { .to-top { display: none; } }
-@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .to-top, .to-call { transition: none; } }
+
+/* "Call us" (Task 205, 19 Oct 2026, BaseLayout.astro): the "Go to top" button's twin (rule above), always visible, stacked on the
+   same inline end 10px above it: 25 + 36 (the arrow: 12 + 12 + 12) + 10 = 71px. Phones (< 690, no arrow there): it takes the
+   arrow's 25px corner, plus the iOS home-indicator inset when the page ever opts into viewport-fit=cover. Pressed = the hover
+   colours (touch screens have no hover). Hidden while the mobile menu panel is open, so it never sits on the menu's last items.
+   Destination on hold (src/data/call-button.json): the placeholder is aria-disabled with a not-allowed cursor, no action. */
+.to-call { bottom: 71px; text-decoration: none; }
+.to-call:active { background: var(--color-teal-border); color: #fff; }
+.to-call[aria-disabled="true"] { cursor: not-allowed; }
+@media (max-width: 689.98px) { .to-call { bottom: calc(25px + env(safe-area-inset-bottom, 0px)); } }
+@media (max-width: 1199.98px) { body:has(#nav-toggle:checked) .to-call { opacity: 0; visibility: hidden; } }
+/* --float-clear = the height the floating stack takes at the viewport's bottom inline-end corner + 12px air. Below 1024 the footer's
+   last row (copyright + legal links) is a full-width flow row that ends in that corner when the page is scrolled to the bottom,
+   so Footer.astro keeps at least this much padding under it (Task 205 QA: "Privacy Policy" sat under the buttons at 320-1023).
+   690-1023: arrow + call = 71 + 36 + 12; phones: call only = 25 + 36 + 12 (+ safe area). Desktop footer: its own Figma layout. */
+:root { --float-clear: 0px; }
+@media (max-width: 1023.98px) { :root { --float-clear: 119px; } }
+@media (max-width: 689.98px) { :root { --float-clear: calc(73px + env(safe-area-inset-bottom, 0px)); } }
 
 /* Card titles that link (AN10, 9 Oct 2026; the live card titles are links): colour and size come from the heading; hover = the
    brand AA link treatment (Deep Teal text kept, 2px cyan underline) with the theme's .12s colour transition. Doctor names grow

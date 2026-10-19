@@ -45,7 +45,7 @@ const pending = showPendingNote(INDEXABLE) ? c.pendingTab : null;
     <Intro edition={edition} c={c.intro} />
     <div id="life"><Life c={c.life} joinHref={join} openRolesHref={openRoles} noOpen={noOpen} /></div>
     <div id="teams">
-      <TabsSection edition={edition} id="teams" heading={c.multi.heading} sub={c.multi.sub} tabsLabel={c.multi.tabsLabel} tabs={c.multi.tabs} active={c.multi.active} pending={pending} panelWidth={529} padTop={56} padBottom={51} tabsGap={28} patternTop={42.17} />
+      <TabsSection edition={edition} id="teams" heading={c.multi.heading} sub={c.multi.sub} tabsLabel={c.multi.tabsLabel} tabs={c.multi.tabs} active={c.multi.active} pending={pending} panelWidth={529} padTop={56} padBottom={51} tabsGap={28} patternTop={42.17} panelTop={0} />
     </div>
     <div id="talent"><Talent edition={edition} c={c.talent} /></div>
     <div id="start"><CtaBand c={c.cta} openRolesHref={openRoles} applyHref={apply} noOpen={noOpen} /></div>

@@ -13,6 +13,9 @@ const FRAME_W = 1106;
 const FRAME_H = 356;
 const ROW_X = -22;
 // Tile corners: --radius-card (Figma r5, bug 049). icon inset % = [top, right, bottom, left] of the frame. Design only; label + icon key come from home/care-support JSON, zipped by index.
+// Bug 206 (19 Oct 2026): the insets only give each icon's SIZE (iw x ih, = the SVG's own box). Its position no longer comes from
+// them: Figma placed five icons off-centre in the 89 x 87 tile (Radiology, Outpatient Gym, Hydrotherapy, Dialysis, Blood Bank), so
+// every icon is now centred by the tile itself (.tile-bg: grid + place-items center).
 const design = [
   { x: 0, cx: 37, w: 60, inset: [58.99, 94.81, 29.66, 1.54] },
   { x: 113, cx: 157, w: 60, inset: [59.06, 84.41, 28.88, 12.84] },
@@ -29,8 +32,6 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
   const [it, ir, ib, il] = t.inset;
   return {
     ...t,
-    ix: (il * FRAME_W) / 100 - t.x,
-    iy: (it * FRAME_H) / 100 - 187,
     iw: (FRAME_W * (100 - il - ir)) / 100,
     ih: (FRAME_H * (100 - it - ib)) / 100,
     lx: t.cx - t.w / 2 - t.x,
@@ -53,8 +54,9 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
         <li class="w-0 shrink-0 snap-start lg:absolute lg:start-0" aria-hidden="true"></li>
         {tiles.map((t) => (
           <li data-loop-item class="tile relative shrink-0 snap-start" style={`--l:${t.x}`}>
-            <div class="pos bg-cyan rounded-(--radius-card) shadow-tile" style="--x:0;--y:0;--w:89;--h:87"></div>
-            <img class="pos max-w-none" src={t.icon.src} width={px(t.iw)} height={px(t.ih)} alt="" loading="lazy" decoding="async" style={`--x:${t.ix};--y:${t.iy};--w:${t.iw};--h:${t.ih}`} />
+            <div class="pos tile-bg bg-cyan rounded-(--radius-card) shadow-tile" style="--x:0;--y:0;--w:89;--h:87">
+              <img class="icon max-w-none" src={t.icon.src} width={px(t.iw)} height={px(t.ih)} alt="" loading="lazy" decoding="async" style={`--iw:${t.iw};--ih:${t.ih}`} />
+            </div>
             <p class="pos m-0 font-gotham font-normal text-f10 leading-10 text-navy text-center not-italic whitespace-normal [word-break:break-word]" style={`--x:${t.lx};--y:100;--w:${t.w};--h:10`}>{t.label}</p>
           </li>
         ))}
@@ -70,6 +72,9 @@ const tiles = design.map((d, i) => ({ ...d, label: c.tiles[i].label as string, i
 <style>
   .pos { position: absolute; inset-inline-start: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); box-sizing: border-box; }
   .tile { width: calc(89 * var(--u)); height: calc(110 * var(--u)); }
+  /* Bug 206: the tile centres its icon on both axes (the same in RTL: centring has no direction); the icon keeps its Figma size. */
+  .tile-bg { display: grid; place-items: center; }
+  .icon { display: block; width: calc(var(--iw) * var(--u)); height: calc(var(--ih) * var(--u)); }
   /* Bug 138 (15 Oct 2026, Arabic only): the label is a 10u Figma box at the tile's bottom edge (y 100 of 110) and the scroller clips
      vertical overflow, so with the Arabic 1.65 line height (bug 129: one 16.5u line, two lines for CT Scan / Sensory Rooms /
      Inpatient Gym = 33u) the glyphs ran under the edge. Arabic labels size to their text (10u minimum) and the tile grows to

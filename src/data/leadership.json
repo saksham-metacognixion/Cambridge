@@ -281,7 +281,7 @@
    "id": 19612,
    "slug": "wasim-zubair",
    "country": "ae",
-   "order": 13,
+   "order": 14,
    "name": {
     "en": "Wasim Zubair",
     "ar": "وسيم زبير"
@@ -304,7 +304,7 @@
    "id": 19614,
    "slug": "firas-atiyah",
    "country": "ae",
-   "order": 14,
+   "order": 15,
    "name": {
     "en": "Firas Atiyah",
     "ar": "فيراس عطية"
@@ -327,7 +327,7 @@
    "id": 19610,
    "slug": "yaser-whbe",
    "country": "ae",
-   "order": 15,
+   "order": 16,
    "name": {
     "en": "Yaser Wahbe",
     "ar": "ياسر وبي"
@@ -350,7 +350,7 @@
    "id": 19618,
    "slug": "azmi-hamaydeh",
    "country": "ae",
-   "order": 16,
+   "order": 17,
    "name": {
     "en": "Azmi Hamaydeh",
     "ar": "عزمي حميدة"
@@ -373,7 +373,7 @@
    "id": 19617,
    "slug": "hamzeh-abu-salha",
    "country": "ae",
-   "order": 17,
+   "order": 13,
    "name": {
     "en": "Hamzeh Abu Salha",
     "ar": "حمزة أبو صالح"

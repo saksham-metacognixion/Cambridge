@@ -186,6 +186,9 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
 
   @media (max-width: 1023.98px) {
     .stage { display: flex; flex-wrap: wrap; gap: calc(28 * var(--u)) calc(30 * var(--u)); padding: calc(32 * var(--u)) 16px; box-sizing: border-box; align-items: flex-start; }
+    /* Task 205 (19 Oct 2026): the last row (copyright + legal links) ends above the floating Call us / Go to top buttons, which sit
+       in the bottom inline-end corner (--float-clear, global.css); the padding-block bottoms below are max()ed with it. */
+    .stage { padding-block-end: max(calc(32 * var(--u)), var(--float-clear)); }
     .logo { width: calc(110px * 242 / 120); height: auto; aspect-ratio: 242 / 120; } /* bug 097: 110px tall (was 164) */
     /* Bug 154 (15 Oct 2026): the artwork starts 17.3 of the file's 242 px in from its edge (~16px here), so the logo sat inset from the
        gutter the column toggles below use; the box is pulled back by that margin so the mark lines up with them (both directions). */
@@ -217,7 +220,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
          Bug 097 reopened (14 Oct 2026, client: 771 -> ~640px at 390): 24 / 16 above / below, logo 110px tall, 24 between the
          blocks; the social icons come right under the newsletter (24, was 48 with the divider between them), then the divider;
          the copyright line wraps beside the legal links when both fit (copyright >= 140px), else the legal links go below it. */
-      .stage { row-gap: 0; column-gap: 16px; padding-block: 24px 16px; }
+      .stage { row-gap: 0; column-gap: 16px; padding-block: 24px max(16px, var(--float-clear)); }
       .logo { margin-bottom: 8px; }
       .acc { margin-top: 24px; }
       .nl { margin-top: 24px; }
@@ -230,7 +233,7 @@ const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.regio
     /* Bug 097 reopened (tablet, 768-1023px): the logo beside the three column toggles, seals beside the newsletter, 24px
        between the rows (was 38, and 71 above the divider). */
     @media (min-width: 768px) {
-      .stage { row-gap: 24px; column-gap: 32px; padding-block: 32px 20px; }
+      .stage { row-gap: 24px; column-gap: 32px; padding-block: 32px max(20px, var(--float-clear)); }
       .cols { display: flex; flex-direction: column; flex: 1 1 60%; min-width: 0; } /* the rest of the logo's row: seals + newsletter wrap below */
       .col { flex: none; }
       /* Bug 153 (15 Oct 2026): the toggles span the ~470px column beside the logo, so a row-end "+" sat ~480px from its label;

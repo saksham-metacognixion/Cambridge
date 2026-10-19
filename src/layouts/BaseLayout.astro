@@ -7,6 +7,7 @@ import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
 import { allRoutes } from '../lib/routes';
 import { content } from '../lib/content';
 import { pages as seoPages } from '../data/seo.json';
+import callButton from '../data/call-button.json';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 import Modals from '../components/forms/Modals.astro';
 
@@ -36,6 +37,14 @@ const editionsWithPage = Astro.props.editionsWithPage ?? allRoutes().find((r) =>
 const robotsContent = !INDEXABLE ? 'noindex, nofollow' : robots;
 const canonical = absolute(urlFor(edition, path));
 const ogImageUrl = ogImage ? absolute(ogImage) : undefined;
+
+// Floating "Call us" button (Task 205): the region's number from src/data/call-button.json. ON HOLD until the client confirms it:
+// null = an inert placeholder button (aria-disabled, no tel: link, no action), never a guessed number.
+const header = content('layout/header', edition.locale);
+const callPhone = (callButton.phone as Record<string, string | null>)[edition.region];
+const callHref = callPhone ? `tel:${callPhone.replace(/[^+\d]/g, '')}` : null;
+// The handset glyph of the site's own phone icon (src/assets/contact-page/icon-phone.svg), inlined so it takes currentColor.
+const PHONE_PATH = 'M18.9453 14.1846V17.0367C18.9463 17.3015 18.892 17.5636 18.7857 17.8062C18.6794 18.0488 18.5236 18.2665 18.3281 18.4455C18.1326 18.6245 17.9018 18.7608 17.6505 18.8456C17.3991 18.9305 17.1328 18.962 16.8686 18.9381C13.9373 18.6203 11.1216 17.6206 8.64774 16.0195C6.34612 14.5598 4.39474 12.6123 2.93219 10.3152C1.32229 7.83505 0.320414 5.01125 0.00773191 2.07263C-0.0160729 1.80973 0.0152335 1.54476 0.0996574 1.2946C0.184081 1.04443 0.319773 0.814551 0.498094 0.619592C0.676415 0.424632 0.893457 0.268865 1.1354 0.162208C1.37735 0.0555511 1.63889 0.000340763 1.90339 9.21731e-05H4.76117C5.22347 -0.00444882 5.67165 0.158935 6.02217 0.459789C6.3727 0.760644 6.60165 1.17844 6.66635 1.6353C6.78697 2.54804 7.01067 3.44424 7.33317 4.30679C7.46133 4.64707 7.48907 5.01688 7.41309 5.37241C7.33712 5.72794 7.16062 6.05429 6.9045 6.31277L5.69471 7.52017C7.05078 9.9003 9.0254 11.871 11.4103 13.2244L12.6201 12.017C12.8791 11.7614 13.206 11.5852 13.5623 11.5094C13.9185 11.4336 14.2891 11.4613 14.63 11.5892C15.4943 11.911 16.3923 12.1343 17.3068 12.2547C17.7695 12.3198 18.1921 12.5524 18.4942 12.9083C18.7963 13.2641 18.9569 13.7184 18.9453 14.1846Z';
 
 // Preload the main font only when the file has actually been added (avoids a 404 preload while Gotham is pending).
 const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
@@ -84,7 +93,19 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <div id="consent-banner" hidden></div>
     <!-- "Go to top" = the live Blocksy back-to-top button (AN1, 9 Oct 2026): fixed at the bottom inline end, shown once the page is
          scrolled (scripts/back-to-top.ts), smooth scroll to the top on click; not on phones (live .ct-hidden-sm). -->
-    <button type="button" class="to-top" data-to-top aria-label={content('layout/header', edition.locale).toTop}>
+    <!-- "Call us" (Task 205, 19 Oct 2026): fixed above "Go to top" (same size / colours / shadow, global.css .to-call), always shown,
+         phones included. Destination ON HOLD pending client confirmation (src/data/call-button.json): until then a disabled
+         placeholder button with no action; with a confirmed number, a tel: link. -->
+    {callHref ? (
+      <a class="to-call" href={callHref} aria-label={header.callUs}>
+        <svg width="12" height="12" viewBox="0 0 18.9459 18.9459" aria-hidden="true" focusable="false"><path d={PHONE_PATH} /></svg>
+      </a>
+    ) : (
+      <button type="button" class="to-call" aria-label={header.callUs} aria-disabled="true" data-call-pending>
+        <svg width="12" height="12" viewBox="0 0 18.9459 18.9459" aria-hidden="true" focusable="false"><path d={PHONE_PATH} /></svg>
+      </button>
+    )}
+    <button type="button" class="to-top" data-to-top aria-label={header.toTop}>
       <svg width="12" height="12" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2.3 15.2L10 7.5l7.7 7.6c.6.7 1.2.7 1.8 0 .6-.6.6-1.3 0-1.9l-8.6-8.6c-.2-.3-.5-.4-.9-.4s-.7.1-.9.4L.5 13.2c-.6.6-.6 1.2 0 1.9.6.8 1.2.7 1.8.1z" /></svg>
     </button>
     <CountryPopupLogic />

@@ -1,5 +1,5 @@
 {
-  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/cambridge-hospital-al-ain/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. The live page lists the same photos under every tab; they are sorted into the tabs here by their file names (to be confirmed by the client). Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/cambridge-hospital-al-ain/, Cambridge-Hospital-Al-Ain-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers). 13 Oct 2026 (Website Content - Suhad 4, EN - UAE / KSA Hospitals): new hero title, hero line and 'Experience the Environment of Care' paragraphs. 19 Oct 2026 (client WhatsApp): the Backyard photo (cambridge-hospital-al-ain-backyard, the building front) is removed from Outdoor Spaces.",
+  "_note": "Al Ain Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/cambridge-hospital-al-ain/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. The live page lists the same photos under every tab; they are sorted into the tabs here by their file names (to be confirmed by the client). Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/cambridge-hospital-al-ain/, Cambridge-Hospital-Al-Ain-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers). 13 Oct 2026 (Website Content - Suhad 4, EN - UAE / KSA Hospitals): new hero title, hero line and 'Experience the Environment of Care' paragraphs. 19 Oct 2026 (client WhatsApp): the Backyard photo (cambridge-hospital-al-ain-backyard, the building front) is removed from Outdoor Spaces. 19 Oct 2026 (user): video = YouTube Jug_m6xsvxY (https://www.youtube.com/watch?v=Jug_m6xsvxY, title 'Cambridge Hospital Al Ain'), played in place of the poster (EnvironmentBand inline mode). Poster = the video's own YouTube thumbnail (video.poster, tools/video-posters/fetch.py).",
   "hero": {
     "title": [
       "Cambridge Hospital Al Ain"
@@ -11,8 +11,9 @@
     }
   },
   "video": {
-    "host": "",
-    "id": ""
+    "host": "youtube",
+    "id": "Jug_m6xsvxY",
+    "poster": "hospital-detail/al-ain/video-poster"
   },
   "environment": {
     "text": [

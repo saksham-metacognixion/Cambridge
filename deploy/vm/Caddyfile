@@ -1,19 +1,30 @@
-# Caddy on the Azure VM (deploy/vm/README.md): public ports 80/443 -> the site on 127.0.0.1:8080.
+# Caddy on the Azure VM (deploy/vm/README.md): Cloudflare -> HTTPS :443 -> the site on 127.0.0.1:8080.
 # Installed by deploy/vm/setup.sh as /etc/caddy/Caddyfile. Caddy passes the visitor's Host header through and sets
 # X-Forwarded-For / X-Forwarded-Proto, which the server uses for the form origin check and Turnstile.
 
-# Until the domain points at this VM: plain HTTP on the IP address.
-:80 {
-	reverse_proxy 127.0.0.1:8080
+{
+	servers {
+		# Cloudflare's edge (https://www.cloudflare.com/ips/, checked 19 Oct 2026). Only requests from these addresses may
+		# bring their own X-Forwarded-For, so the visitor's IP (not Cloudflare's) reaches the site; anyone else's is replaced.
+		trusted_proxies static 173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22 2400:cb00::/32 2606:4700::/32 2803:f800::/32 2405:b500::/32 2405:8100::/32 2a06:98c0::/29 2c0f:f248::/32
+	}
 }
 
-# Go-live: replace the block above with these two. Caddy then obtains and renews the Let's Encrypt certificates
-# itself (ports 80 and 443 open, DNS A records pointing at the VM). The bare domain is the canonical one (site.config.mjs).
-#
-# cambridgehospital.com {
-# 	reverse_proxy 127.0.0.1:8080
-# }
-#
-# www.cambridgehospital.com {
-# 	redir https://cambridgehospital.com{uri} permanent
-# }
+# Cloudflare Origin Certificate (SSL/TLS > Origin Server, *.cambridgehospital.com + cambridgehospital.com, valid until
+# Oct 2041). Trusted by Cloudflare only, which is what Cloudflare's "Full (strict)" mode checks. Secret: never in the repo,
+# installed on the VM by hand (deploy/vm/README.md, "HTTPS").
+(origin_tls) {
+	tls /etc/caddy/certs/origin.pem /etc/caddy/certs/origin.key
+}
+
+# The bare domain is the canonical one (site.config.mjs SITE_URL).
+www.cambridgehospital.com {
+	import origin_tls
+	redir https://cambridgehospital.com{uri} permanent
+}
+
+# The site, and any staging subdomain pointed at this VM in Cloudflare (e.g. new.cambridgehospital.com).
+cambridgehospital.com, *.cambridgehospital.com {
+	import origin_tls
+	reverse_proxy 127.0.0.1:8080
+}

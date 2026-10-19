@@ -11,7 +11,7 @@ import PageHero from '../../../../components/shared/PageHero.astro';
 import DetailBody from '../../../../components/condition-detail/DetailBody.astro';
 import ContactRecovery from '../../../../components/contact/ContactRecovery.astro';
 import DoctorsRow from '../../../../components/shared/DoctorsRow.astro';
-import { profileDoctors, doctorsForEdition } from '../../../../lib/doctors';
+import { isListed, profileDoctors, doctorsForEdition } from '../../../../lib/doctors';
 
 /*
  * Condition / service detail template (Figma 41:2373 Accidents Rehabilitation = reference, 67:3070 Stroke Rehabilitation).
@@ -51,8 +51,8 @@ if (!ownBanner && !bannerWarned.has(slug)) {
 const hero = ownBanner ? page.hero : { ...page.hero, banner: shared.generated.banner };
 const bannerPending = !ownBanner && showPendingNote(INDEXABLE);
 // Doctors linked from this condition on the live site (conditions.json `doctors`, bug 041), this edition's country first;
-// the shared Figma sample list only when a condition has none.
-const linked = (card?.doctors ?? []).map((s) => profileDoctors.find((d) => d.slug === s)).filter((d) => d !== undefined);
+// the shared Figma sample list only when a condition has none. Doctors without a photo get no card (isListed).
+const linked = (card?.doctors ?? []).map((s) => profileDoctors.find((d) => d.slug === s)).filter((d) => d !== undefined).filter(isListed);
 const doctors = { ...shared.doctors, slugs: linked.length ? doctorsForEdition(linked, edition).map((d) => d.slug) : shared.doctors.slugs };
 ---
 

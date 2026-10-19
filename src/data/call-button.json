@@ -1,8 +1,8 @@
 {
-  "$comment": "Floating \"Call us\" button (Task 205, 19 Oct 2026; BaseLayout.astro, CSS .to-call in global.css), stacked above \"Go to top\" on every page of every edition: a tel: link to the region's number on that region's EN + AR pages. Numbers CONFIRMED by the client (WhatsApp, 19 Oct 2026, 9:23 pm): Global and UAE = 800692273, KSA = 920013122 (the same numbers as the Contact page / Home contact card, written as there). Kept in local format, not +971 / +966: UAE 800 toll-free and KSA 9200 unified numbers are dialled domestically only. Spaces and dashes are fine, BaseLayout strips them for the tel: href. null = an inert placeholder button (<button aria-disabled=\"true\">, no tel: link, no click action); never fill a region with a guessed number.",
+  "$comment": "Floating \"Call us\" button (Task 205, 19 Oct 2026; BaseLayout.astro, CSS .to-call in global.css), stacked above \"Go to top\" on every page of every edition: a tel: link to the region's number below, on the region's EN + AR pages (BaseLayout strips spaces and dashes for the href). Numbers confirmed by the user 19 Oct 2026: Global = the UAE mobile +971 56 488 4880 (international format: a Global visitor may call from any country); UAE = the toll-free 800 692273 and KSA = the unified number 9200 13122, both in LOCAL format on purpose (these numbers only connect when dialled locally; same numbers as the Contact page links). null = an inert placeholder button (aria-disabled, no action): never fill with a guessed number.",
   "phone": {
-    "global": "800-692273",
-    "ae": "800-692273",
-    "sa": "9200-13122"
+    "global": "+971 56 488 4880",
+    "ae": "800 692273",
+    "sa": "9200 13122"
   }
 }

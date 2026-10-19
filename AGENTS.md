@@ -77,6 +77,12 @@ Read this file at the start of every session and follow it for all work.
 - Language switch keeps the visitor on the same page in the other language.
 
 ### Country pop-up (Global only)
+**Since 20 Oct 2026 (user): the site opens by location, no pop-up.** A Global page opens the SAME page in `/ae` for a visitor
+detected in the UAE and in `/sa` for one in Saudi Arabia (same language, query + hash kept, only where that page exists);
+every other or unknown country (India, crawlers...) stays on Global. Detection = Cloudflare `CF-IPCountry` (cambridgehospital.com
+is proxied by Cloudflare) -> `ch_geo` cookie (unchanged edge code below). A region picked in the header (`ch_edition`) wins
+over the location. Config `redirect` + `enabled: false` in `src/data/country-popup.json`; logic in
+`src/components/CountryPopupLogic.astro`, first in `<head>`. The history below is the pop-up era.
 - On Global: detect country at the edge (Cloudflare country header or middleware), show the Figma pop-up
   (Global / UAE / KSA). No pop-up on `/ae` or `/sa`. State since 10 Oct 2026 (user, bug 083 again): only visitors DETECTED in the UAE see
   the UAE pop-up (root `middleware.ts` reads `x-vercel-ip-country` on Vercel, `functions/_middleware.ts` Cloudflare, shared

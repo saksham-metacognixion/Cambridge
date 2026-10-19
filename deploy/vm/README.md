@@ -4,7 +4,7 @@ Production runs on an Azure VM (Ubuntu 24.04, UAE North): App Service could not 
 (App Service quota 0 in UAE North, October 2026; the App Service setup stays in `deploy/azure/` should that change).
 
 ```
-Visitor ──► Caddy :80 / :443 (HTTPS, Let's Encrypt certificates, renewed by Caddy)
+Visitor ──► Cloudflare (HTTPS, CDN, country header) ──► Caddy :443 (Cloudflare Origin Certificate)
               └─► node dist-server/server.mjs on 127.0.0.1:8080   (systemd unit cambridge-web, user cambridge)
                     /srv/cambridge/current ──► /srv/cambridge/releases/<UTC time>-<commit>/   (the live one + 4 previous)
 
@@ -54,8 +54,8 @@ ssh azureuser@<vm-ip> "sudo bash /tmp/vm/setup.sh '$(cat ~/.ssh/cambridge_deploy
 | Variable | `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (build time) |
 | Variable | `PUBLIC_GOOGLE_MAPS_KEY` | Maps JavaScript API browser key (build time) |
 
-Then Actions > Deploy to Azure VM > Run workflow (later pushes to `main` deploy by themselves). Check
-`http://<vm-ip>/`.
+Then Actions > Deploy to Azure VM > Run workflow (later pushes to `main` deploy by themselves). Check the site on
+the domain (section 6).
 
 ## 5. Run-time settings (when the keys arrive)
 
@@ -65,14 +65,34 @@ sudo nano /etc/cambridge-web.env          # SMTP, Turnstile secret, form inboxes
 sudo systemctl restart cambridge-web
 ```
 
-## 6. Go-live
+## 6. HTTPS (Cloudflare)
 
-1. GoDaddy: A records for `cambridgehospital.com` and `www` -> the VM IP (static Standard SKU IP).
-2. Edit `deploy/vm/Caddyfile`: replace the `:80` block with the commented domain blocks and commit. Then repeat step 3
-   (copy `deploy/vm` and re-run `setup.sh`), which installs the new Caddyfile and reloads Caddy. Caddy fetches the
-   certificates on the first request.
-3. `INDEXABLE = true` in `site.config.mjs`, push.
-4. After a stable period: back up and delete the old WordPress resource group.
+The domain's DNS is on Cloudflare: visitors connect to Cloudflare, which connects to the VM over HTTPS and checks the
+VM's certificate (SSL/TLS mode **Full (strict)**). The VM's certificate is a Cloudflare Origin Certificate
+(`*.cambridgehospital.com` + `cambridgehospital.com`, valid until Oct 2041), trusted by Cloudflare only. Cloudflare
+also sends the visitor's country (`CF-IPCountry`), which the country pop-up reads.
+
+Install the certificate before `setup.sh` (it refuses to install the Caddyfile without it). From the folder with the two
+files Cloudflare showed (certificate, private key):
+
+```bash
+scp origin.pem origin.key azureuser@<vm-ip>:
+ssh azureuser@<vm-ip> 'sudo install -d -m 750 -o root -g caddy /etc/caddy/certs &&
+  sudo install -m 644 -o root -g caddy origin.pem /etc/caddy/certs/origin.pem &&
+  sudo install -m 640 -o root -g caddy origin.key /etc/caddy/certs/origin.key &&
+  shred -u origin.key && rm origin.pem && sudo systemctl reload caddy'
+```
+
+Cloudflare settings: SSL/TLS > Overview **Full (strict)**; Edge Certificates **Always Use HTTPS**; DNS: an `A` record,
+**Proxied**, for each name served from the VM (a staging subdomain first, `@` and `www` at go-live). Optional: limit the
+VM's inbound 80/443 rules to Cloudflare's addresses (https://www.cloudflare.com/ips/), the same list as `trusted_proxies`
+in the Caddyfile, so nobody reaches the VM around Cloudflare.
+
+## 7. Go-live
+
+1. Cloudflare DNS: point `@` and `www` (Proxied) at the VM IP, replacing the WordPress server.
+2. `INDEXABLE = true` in `site.config.mjs`, push.
+3. After a stable period: back up and delete the old WordPress resource group.
 
 ## Operations
 

@@ -21,25 +21,42 @@
  *     #hash kept), or its home when the page does not exist there (src/lib/routes.ts switchHref; the 404 page counts as
  *     not existing). The current region = only close, no navigation.
  *   - [data-edition-choice] links (Header.astro region menu) save their region on click, then navigate as normal.
+ *   - Location redirect (user decision, 20 Oct 2026: "based on their location the site has to open"): on a Global page the
+ *     visitor's region = the saved choice, else the detected country's edition in config `redirect` (AE -> ae, SA -> sa;
+ *     any other or unknown country = Global). A UAE / KSA region opens the SAME page in that region's same-language edition
+ *     (query string and #hash kept) with location.replace, so Back does not bounce. Only when that page exists there
+ *     (samePageHref): a Global-only page, or the 404 page, stays on Global. No redirect without a region, so crawlers and
+ *     visitors outside the UAE / KSA always get Global. Not saved as a choice: the location keeps deciding until the
+ *     visitor picks a region in the header. Runs in <head> (BaseLayout), before the Global page is painted.
+ *   - The pop-up part only runs when the pop-up is on (src/lib/country-popup.ts; off since 20 Oct 2026: the redirect
+ *     replaces it).
  */
 import { parsePath, editions } from '../lib/editions';
-import { switchHref } from '../lib/routes';
+import { samePageHref, switchHref } from '../lib/routes';
 import { PAGE_PATHS } from '../lib/paths';
+import { countryPopupOn } from '../lib/country-popup';
 import config from '../data/country-popup.json';
 
 const { edition, path } = parsePath(Astro.url.pathname);
-const page = path === PAGE_PATHS.notFound ? '' : path;
+const notFound = path === PAGE_PATHS.notFound;
+const page = notFound ? '' : path;
 const current = edition.region;
+const sameLocale = editions.filter((e) => e.locale === edition.locale && e.region !== current);
 const targets = current === 'global'
   ? Object.fromEntries(editions.filter((e) => e.locale === edition.locale).map((e) => [e.region, switchHref(e, page, 'home')]))
   : {};
+// Location redirect targets: region -> the same page there, only where it exists (never from the 404 page).
+const regional = current === 'global' && !notFound
+  ? Object.fromEntries(sameLocale.map((e) => [e.region, samePageHref(e, page)]).filter(([, href]) => href))
+  : {};
+const redirect: Record<string, string> = config.redirect;
 const remember = (config as { remember?: string }).remember ?? 'forever';
 const devCountry = import.meta.env.DEV ? ((config as { devCountry?: string }).devCountry ?? '') : '';
 const fallback = (config as { fallbackCountry?: string }).fallbackCountry ?? '';
-const known = Object.keys(config.countries);
+const known = countryPopupOn ? Object.keys(config.countries) : [];
 ---
 
-<script is:inline define:vars={{ targets, current, remember, devCountry, fallback, known }}>
+<script is:inline define:vars={{ targets, regional, redirect, current, remember, devCountry, fallback, known }}>
   (function () {
     var c = document.cookie;
     var secure = location.protocol === 'https:' ? '; Secure' : '';
@@ -68,8 +85,15 @@ const known = Object.keys(config.countries);
       if (region !== current) location.href = targets[region] + location.search + location.hash;
       else document.documentElement.removeAttribute('data-country-popup');
     };
-    if (saved()) return;
-    var country = read('ch_geo') || devCountry || 'XX';
+    var choice = saved();
+    var geo = read('ch_geo') || devCountry || 'XX';
+    var region = choice || redirect[geo];
+    if (region && region !== current && regional[region]) {
+      location.replace(regional[region] + location.search + location.hash);
+      return;
+    }
+    if (choice) return;
+    var country = geo;
     if (known.indexOf(country) < 0 && fallback) country = fallback;
     if (known.indexOf(country) < 0) return;
     document.documentElement.dataset.countryPopup = country;

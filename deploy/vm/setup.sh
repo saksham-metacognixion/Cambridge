@@ -43,6 +43,10 @@ visudo -cf "$sudoers"
 [ -f /etc/cambridge-web.env ] || install -m 600 -o root -g root "$here/cambridge-web.env.example" /etc/cambridge-web.env
 
 install -m 644 "$here/cambridge-web.service" /etc/systemd/system/cambridge-web.service
+# The Caddyfile serves HTTPS with the Cloudflare Origin Certificate, a secret installed by hand (README, "HTTPS").
+for f in /etc/caddy/certs/origin.pem /etc/caddy/certs/origin.key; do
+  [ -f "$f" ] || { echo "Missing $f: install the Cloudflare Origin Certificate first (deploy/vm/README.md, HTTPS)." >&2; exit 1; }
+done
 install -m 644 "$here/Caddyfile" /etc/caddy/Caddyfile
 systemctl daemon-reload
 # Enabled for boot; it first starts with the first release (deploy/vm/activate.sh).

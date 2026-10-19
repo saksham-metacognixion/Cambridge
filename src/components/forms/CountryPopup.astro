@@ -12,6 +12,7 @@
  */
 import { Picture } from 'astro:assets';
 import config from '../../data/country-popup.json';
+import { countryPopupOn } from '../../lib/country-popup';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { px, vwSizes } from '../../lib/scale';
@@ -22,7 +23,7 @@ import pinDot from '../../assets/forms/welcome/pin-dot.svg';
 
 interface Props { edition: Edition }
 const { edition } = Astro.props;
-const on = config.enabled || import.meta.env.PUBLIC_COUNTRY_POPUP === 'on';
+const on = countryPopupOn;
 const c = content('forms/welcome', edition.locale);
 const countries = Object.entries(config.countries) as [string, (typeof config.countries)['AE']][];
 ---

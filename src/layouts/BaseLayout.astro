@@ -38,7 +38,7 @@ const robotsContent = !INDEXABLE ? 'noindex, nofollow' : robots;
 const canonical = absolute(urlFor(edition, path));
 const ogImageUrl = ogImage ? absolute(ogImage) : undefined;
 
-// Floating "Call us" button (Task 205): the region's number from src/data/call-button.json. ON HOLD until the client confirms it:
+// Floating "Call us" button (Task 205): the region's number from src/data/call-button.json (client-confirmed 19 Oct 2026).
 // null = an inert placeholder button (aria-disabled, no tel: link, no action), never a guessed number.
 const header = content('layout/header', edition.locale);
 const callPhone = (callButton.phone as Record<string, string | null>)[edition.region];
@@ -94,8 +94,8 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <!-- "Go to top" = the live Blocksy back-to-top button (AN1, 9 Oct 2026): fixed at the bottom inline end, shown once the page is
          scrolled (scripts/back-to-top.ts), smooth scroll to the top on click; not on phones (live .ct-hidden-sm). -->
     <!-- "Call us" (Task 205, 19 Oct 2026): fixed above "Go to top" (same size / colours / shadow, global.css .to-call), always shown,
-         phones included. Destination ON HOLD pending client confirmation (src/data/call-button.json): until then a disabled
-         placeholder button with no action; with a confirmed number, a tel: link. -->
+         phones included. A tel: link to the region's client-confirmed number (src/data/call-button.json, 19 Oct 2026);
+         a region without a number gets a disabled placeholder button with no action. -->
     {callHref ? (
       <a class="to-call" href={callHref} aria-label={header.callUs}>
         <svg width="12" height="12" viewBox="0 0 18.9459 18.9459" aria-hidden="true" focusable="false"><path d={PHONE_PATH} /></svg>

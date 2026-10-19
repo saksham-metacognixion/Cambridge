@@ -27,6 +27,9 @@ const decode = (s) =>
   s.replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
     .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&hellip;/g, '…').replace(/&nbsp;/g, ' ');
 const text = (html) => decode(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+// Task 251 (client, 19 Oct 2026): British "specialised" for "specialized" (the word only: never inside a URL, file name or slug;
+// specializing / specialization are not covered).
+const british = (s) => s.replace(/(?<![\w/.-])([Ss])pecialized(?![\w/-]|\.\w)/g, '$1pecialised');
 /** Gutenberg HTML -> plain <p>/<ul> HTML (block classes dropped; the build-time sanitizer does the rest). */
 const html = (h) => h.replace(/<!--[\s\S]*?-->/g, '').replace(/\s(class|style|id)="[^"]*"/g, '').replace(/\n{2,}/g, '\n').trim();
 const terms = (r, tax) => r.class_list.filter((c) => c.startsWith(tax + '-')).map((c) => c.slice(tax.length + 1));
@@ -74,7 +77,7 @@ const doctors = ordered.map((w, i) => {
   if (countries.length !== 1) report.push(`- doctor \`${w.slug}\` (${name}): ${countries.length ? 'several countries' : 'no country'} in WordPress -> listed on Global only`);
   if (old && old.name.en !== name) report.push(`- doctor \`${w.slug}\`: name "${old.name.en}" (Figma) -> "${name}" (WordPress)`);
   const excerpt = html(w.excerpt.rendered);
-  const bio = old?.bio?.en || (text(excerpt) ? excerpt : '') || leaderBio(name);
+  const bio = british(old?.bio?.en || (text(excerpt) ? excerpt : '') || leaderBio(name));
   const subs = old?.sub_specialities?.length ? old.sub_specialities : terms(w, 'doctor_condition').map((c) => ({ en: tn('doctor_condition', c), ar: '' }));
   const rec = {
     id: `wp-${w.id}`,

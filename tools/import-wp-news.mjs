@@ -33,6 +33,9 @@ const OUT = 'src/data/news/posts.json';
 const REPORT = 'docs/news-import.md';
 const EXCERPT_MAX = 160;
 const SITE = 'https://cambridgehospital.com';
+// Task 251 (client, 19 Oct 2026): British "specialised" for "specialized" (the word only: never inside a URL, file name or slug;
+// specializing / specialization are not covered).
+const british = (s) => s.replace(/(?<![\w/.-])([Ss])pecialized(?![\w/-]|\.\w)/g, '$1pecialised');
 
 const xml = fs.readFileSync(SRC, 'utf8');
 
@@ -198,11 +201,11 @@ for (const p of rawPosts) {
       report.arOwnImage.push(`${slug}: ${enAtt.url.split('/').pop()} | ${att.url.split('/').pop()}`);
     } else if (enAtt) source = enAtt.url;
   }
-  const body = transformBody(p.content, p);
+  const body = british(transformBody(p.content, p));
   posts.push({
     slug,
     old_url: new URL(p.link).pathname,
-    title: p.title,
+    title: british(p.title),
     date: p.date.slice(0, 10),
     category,
     excerpt: excerptOf(body),

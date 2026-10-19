@@ -1251,17 +1251,6 @@
   "end": 116.8,
   "drop": 0
  },
- "sa:who-we-are/banner": {
-  "w": 584.2,
-  "h": 454.0,
-  "shape": true,
-  "pills": [
-   -3.9,
-   4.7
-  ],
-  "end": 34.9,
-  "drop": 0.0
- },
  "sa:why/banner": {
   "w": 548,
   "h": 372,

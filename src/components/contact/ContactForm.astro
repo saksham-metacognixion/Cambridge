@@ -28,6 +28,7 @@ const details = { ...c.details, ...(c.details.byRegion?.[edition.region] ?? {}) 
 // banner); /ae = the toll-free number with 800-MYCARE under it (details.rowPhones); otherwise the single `phone` line.
 type PhoneLine = { phone: string; phoneHref: string; label?: string };
 const rowPhones: PhoneLine[] = details.rowPhones ?? details.phones ?? [{ phone: details.phone, phoneHref: details.phoneHref }];
+const multiPhone = rowPhones.length > 1;
 const f = c.form;
 // Shared form behaviour (src/scripts/forms.ts): EN/AR validation, JSON submit, success message. Field rules = forms.json 'send-enquiry'.
 const common = commonText(edition.locale);
@@ -179,16 +180,19 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
         <img loading="lazy" src={mailIcon.src} width="20.668" height="18.946" alt="" class="max-w-none lg:absolute lg:start-119 lg:top-[calc(652.4*var(--u))]" style="width:calc(20.668*var(--u));height:calc(18.946*var(--u))" />
         <a href={`mailto:${details.email}`} class:list={[detail, 'hit lg:absolute lg:start-[calc(148.11*var(--u))] lg:top-653']}><span dir="ltr">{details.email}</span></a>
       </li>
+      <!-- Bug 248: the website text and globe share the email's top (were 656 / 653, a 3 px lower baseline than the email). -->
       <li class="max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))] lg:contents">
-        <img loading="lazy" src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-653" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <a href={details.webHref} class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-656']}><span dir="ltr">{details.web}</span></a>
+        <img loading="lazy" src={globeIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-423 lg:top-[calc(652.4*var(--u))]" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
+        <a href={details.webHref} class:list={[detail, 'hit lg:absolute lg:start-451.25 lg:top-653']}><span dir="ltr">{details.web}</span></a>
       </li>
-      <li class:list={['max-lg:flex max-lg:gap-[calc(10*var(--u))] lg:contents', rowPhones.length > 1 ? 'max-lg:items-start' : 'max-lg:items-center']}>
-        <img loading="lazy" src={phoneIcon.src} width="18.946" height="18.946" alt="" class="max-w-none lg:absolute lg:start-773 lg:top-651" style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
-        <!-- Extra lines stack under the first one, which keeps its Figma place. -->
-        <div class="row-phones flex flex-col items-start lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(651.69*var(--u))]">
+      <!-- One phone (KSA): icon and number at their Figma places. Two phones (Global / UAE, bug 248): icon + the compact two-line block
+           in one row, one email line high from the email's top (1lh at the detail size), both centred on it, so the block sits
+           centred on the email / website line instead of hanging below it. -->
+      <li class:list={['max-lg:flex max-lg:items-center max-lg:gap-[calc(10*var(--u))]', multiPhone ? 'multi font-gotham lg:absolute lg:start-773 lg:top-653 lg:h-[1lh] lg:flex lg:items-center lg:gap-[calc(8.614*var(--u))]' : 'lg:contents']}>
+        <img loading="lazy" src={phoneIcon.src} width="18.946" height="18.946" alt="" class:list={['max-w-none', !multiPhone && 'lg:absolute lg:start-773 lg:top-651']} style="width:calc(18.946*var(--u));height:calc(18.946*var(--u))" />
+        <div class:list={['row-phones flex flex-col items-start', !multiPhone && 'lg:absolute lg:start-[calc(800.56*var(--u))] lg:top-[calc(651.69*var(--u))]']}>
           {rowPhones.map((ph) => (
-            <a href={`tel:${ph.phoneHref}`} class:list={[detail, 'hit lg:min-w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}><span dir="ltr">{ph.phone}</span>{ph.label && <span class="lbl">{ph.label}</span>}</a>
+            <a href={`tel:${ph.phoneHref}`} class:list={[detail, 'hit', !multiPhone && 'lg:min-w-[calc(132.621*var(--u))] lg:h-[calc(22.391*var(--u))]']}><span dir="ltr">{ph.phone}</span>{ph.label && <span class="lbl">{ph.label}</span>}</a>
           ))}
         </div>
       </li>
@@ -254,8 +258,14 @@ const detail = 'font-gotham font-normal text-[calc(17.224*var(--u))] text-navy n
     .details { max-width: 100%; }
     .details a { font-size: min(calc(17.224 * var(--u)), 4.4vw); white-space: normal; overflow-wrap: anywhere; min-width: 0; }
   }
-  /* Two phone lines (Global / UAE): 8 apart; the label reads "800-692273 - UAE" as in the banner. */
-  .row-phones { gap: calc(8 * var(--u)); }
+  /* Two phone lines (Global / UAE; the label reads "800-692273 - UAE" as in the banner). Bug 248 (client, 19 Oct 2026): 0.85 of
+     the row's text size on 1.15 lines, 2.5 apart. The row (.multi) carries the email's size, so its 1lh = the email line box (Arabic:
+     the 1.65 li line height) and 0.85em scales with it. Each number's touch layer = its line + the gap, so the two meet without
+     overlapping (a 44 px layer on each line would hand the lower half of the first number to the second). */
+  .multi { font-size: calc(17.224 * var(--u)); }
+  @media (max-width: 1023.98px) { .multi { font-size: min(calc(17.224 * var(--u)), 4.4vw); } }
+  .row-phones { gap: calc(2.5 * var(--u)); }
+  .details .multi a { font-size: 0.85em; line-height: 1.15; --hit-h: calc(100% + 2.5 * var(--u)); }
   .row-phones .lbl::before { content: ' - '; white-space: pre; }
 
   /* Error lines (no Figma design: the shared form error style, P2) sit under their field on desktop. */

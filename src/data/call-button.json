@@ -1,8 +1,8 @@
 {
-  "$comment": "Floating \"Call us\" button (Task 205, 19 Oct 2026; BaseLayout.astro, CSS .to-call in global.css), stacked above \"Go to top\" on every page of every edition. DESTINATION ON HOLD - PENDING CLIENT CONFIRMATION: the client has not confirmed the number or link yet, so every region is null and the button renders as an inert placeholder (<button aria-disabled=\"true\">, no tel: link, no click action). When the client confirms, put the number per region under `phone` in international format (e.g. \"+971 2 000 0000\"; spaces and dashes are fine, BaseLayout strips them for the tel: href) and the button becomes a real tel: link on that region's EN + AR pages. Never fill this with a guessed number (the contact-page numbers in src/data/content/contact are NOT confirmed as this button's destination).",
+  "$comment": "Floating \"Call us\" button (Task 205, 19 Oct 2026; BaseLayout.astro, CSS .to-call in global.css), stacked above \"Go to top\" on every page of every edition: a tel: link to the region's number on that region's EN + AR pages. Numbers CONFIRMED by the client (WhatsApp, 19 Oct 2026, 9:23 pm): Global and UAE = 800692273, KSA = 920013122 (the same numbers as the Contact page / Home contact card, written as there). Kept in local format, not +971 / +966: UAE 800 toll-free and KSA 9200 unified numbers are dialled domestically only. Spaces and dashes are fine, BaseLayout strips them for the tel: href. null = an inert placeholder button (<button aria-disabled=\"true\">, no tel: link, no click action); never fill a region with a guessed number.",
   "phone": {
-    "global": null,
-    "ae": null,
-    "sa": null
+    "global": "800-692273",
+    "ae": "800-692273",
+    "sa": "9200-13122"
   }
 }

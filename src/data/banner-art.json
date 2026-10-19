@@ -821,29 +821,59 @@
   "drop": 0
  },
  "sa:accreditations/banner": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 536.9,
+  "h": 417.5,
+  "shape": true,
+  "pills": [
+   -12.8,
+   -31.8
+  ],
+  "end": 73.3,
+  "drop": 0
  },
  "sa:care/banner-inpatient-care": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 580.5,
+  "h": 451.2,
+  "shape": true,
+  "pills": [
+   16.7,
+   1.9
+  ],
+  "end": 59.2,
+  "drop": 0.0
  },
  "sa:care/banner-our-care": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 576.7,
+  "h": 448.2,
+  "shape": true,
+  "pills": [
+   15.4,
+   -1.1
+  ],
+  "end": 61.7,
+  "drop": 0.0
  },
  "sa:care/banner-post-acute-care": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 539.9,
+  "h": 419.7,
+  "shape": true,
+  "pills": [
+   -11.3,
+   -29.6
+  ],
+  "end": 71.8,
+  "drop": 0
  },
  "sa:care/heroes/cerebral-palsy-program": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 525.3,
+  "h": 408.8,
+  "shape": true,
+  "pills": [
+   -21.5,
+   -40.5
+  ],
+  "end": 76.2,
+  "drop": 0
  },
  "sa:care/heroes/geriatric-care": {
   "w": 579,
@@ -862,9 +892,15 @@
   "drop": 0
  },
  "sa:care/heroes/icu-critical-care": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 528.4,
+  "h": 410.9,
+  "shape": true,
+  "pills": [
+   -12.8,
+   -38.4
+  ],
+  "end": 81.8,
+  "drop": 0
  },
  "sa:care/heroes/long-term-acute-care": {
   "w": 579,
@@ -882,9 +918,15 @@
   "shape": true
  },
  "sa:care/heroes/long-term-care-rehab": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 668.3,
+  "h": 519.4,
+  "shape": true,
+  "pills": [
+   36.1,
+   70.1
+  ],
+  "end": -9.2,
+  "drop": 0.0
  },
  "sa:care/heroes/long-term-ventilated-care": {
   "w": 579,
@@ -907,9 +949,15 @@
   "shape": true
  },
  "sa:care/heroes/occupational-therapy": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 544.3,
+  "h": 423.4,
+  "shape": true,
+  "pills": [
+   -8.4,
+   -25.9
+  ],
+  "end": 70.3,
+  "drop": 0
  },
  "sa:care/heroes/outpatient": {
   "w": 514,
@@ -933,14 +981,26 @@
   "shape": true
  },
  "sa:care/heroes/palliative-care": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 539.9,
+  "h": 419.7,
+  "shape": true,
+  "pills": [
+   -11.3,
+   -29.6
+  ],
+  "end": 71.8,
+  "drop": 0
  },
  "sa:care/heroes/physiotherapy": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 593.2,
+  "h": 461.0,
+  "shape": true,
+  "pills": [
+   15.5,
+   11.7
+  ],
+  "end": 45.3,
+  "drop": 0.0
  },
  "sa:care/heroes/post-surgical-rehab": {
   "w": 579,
@@ -953,9 +1013,15 @@
   "shape": true
  },
  "sa:care/heroes/speech-language-therapy": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 621.4,
+  "h": 482.9,
+  "shape": true,
+  "pills": [
+   5.5,
+   33.6
+  ],
+  "end": 7.1,
+  "drop": 0.0
  },
  "sa:care/heroes/spinal-cord-injury-rehabilitation": {
   "w": 579,
@@ -973,10 +1039,15 @@
   "shape": true
  },
  "sa:careers/banner": {
-  "w": 576,
-  "h": 456,
+  "w": 548,
+  "h": 415,
   "shape": true,
-  "bleed": "end"
+  "pills": [
+   -14.4,
+   -34.5
+  ],
+  "end": 60.9,
+  "drop": 0
  },
  "sa:conditions/banner": {
   "w": 378,
@@ -1012,9 +1083,15 @@
   "drop": 0
  },
  "sa:faq/hero": {
-  "w": 540,
-  "h": 460,
-  "shape": true
+  "w": 458.8,
+  "h": 391.2,
+  "shape": true,
+  "pills": [
+   -17.2,
+   -58.1
+  ],
+  "end": 147.0,
+  "drop": 0
  },
  "sa:forms/feedback-hero": {
   "w": 429,
@@ -1041,10 +1118,13 @@
   "bleed": "end"
  },
  "sa:international/banner": {
-  "w": 578,
-  "h": 408,
+  "w": 532,
+  "h": 388,
   "shape": true,
-  "bleed": "end"
+  "pills": [
+   -6.6,
+   -61.1
+  ]
  },
  "sa:media-hub/banner": {
   "w": 302,
@@ -1086,9 +1166,15 @@
   "bleed": "end"
  },
  "sa:who-we-are/banner": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 584.2,
+  "h": 454.0,
+  "shape": true,
+  "pills": [
+   -3.9,
+   4.7
+  ],
+  "end": 34.9,
+  "drop": 0.0
  },
  "sa:why/banner": {
   "w": 548,

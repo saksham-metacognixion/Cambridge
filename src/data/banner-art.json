@@ -21,11 +21,6 @@
   "end": 56.2,
   "drop": 0
  },
- "ae:care/heroes/post-surgical-rehab": {
-  "w": 500,
-  "h": 450,
-  "shape": true
- },
  "ae:careers/banner": {
   "w": 548,
   "h": 415,
@@ -319,9 +314,15 @@
   "shape": true
  },
  "global:care/heroes/long-term-care": {
-  "w": 500,
-  "h": 450,
-  "shape": true
+  "w": 406.5,
+  "h": 380.5,
+  "shape": true,
+  "pills": [
+   -83.7,
+   -68.8
+  ],
+  "end": 132.8,
+  "drop": 0
  },
  "global:care/heroes/long-term-care-rehab": {
   "w": 437,
@@ -335,9 +336,15 @@
   "drop": 0
  },
  "global:care/heroes/long-term-ventilated-care": {
-  "w": 579,
-  "h": 450,
-  "shape": true
+  "w": 493.5,
+  "h": 334.5,
+  "shape": true,
+  "pills": [
+   -26.8,
+   -115.1
+  ],
+  "end": 102.9,
+  "drop": 0
  },
  "global:care/heroes/mechanical-ventilation": {
   "w": 518,
@@ -361,9 +368,15 @@
   "shape": true
  },
  "global:care/heroes/neuromuscular-rehab": {
-  "w": 500,
-  "h": 450,
-  "shape": true
+  "w": 466.5,
+  "h": 385.0,
+  "shape": true,
+  "pills": [
+   -53.8,
+   -64.4
+  ],
+  "end": 102.9,
+  "drop": 0
  },
  "global:care/heroes/occupational-therapy": {
   "w": 560,
@@ -470,9 +483,15 @@
   "drop": 0
  },
  "global:care/heroes/post-surgical-rehab": {
-  "w": 500,
-  "h": 450,
-  "shape": true
+  "w": 503.5,
+  "h": 373.0,
+  "shape": true,
+  "pills": [
+   -49.5,
+   -76.4
+  ],
+  "end": 70.1,
+  "drop": 0
  },
  "global:care/heroes/pulmonary-rehab": {
   "w": 579,
@@ -524,9 +543,15 @@
   "drop": 0
  },
  "global:care/heroes/stroke-rehabilitation": {
-  "w": 500,
-  "h": 450,
-  "shape": true
+  "w": 356.0,
+  "h": 352.0,
+  "shape": true,
+  "pills": [
+   -88.6,
+   -97.4
+  ],
+  "end": 178.5,
+  "drop": 0
  },
  "global:care/heroes/traumatic-brain-injury-rehabilitation": {
   "w": 351.5,
@@ -978,14 +1003,14 @@
   "drop": 0
  },
  "sa:care/heroes/long-term-care": {
-  "w": 407.5,
+  "w": 407.0,
   "h": 400.5,
   "shape": true,
   "pills": [
    -66.2,
    -49.1
   ],
-  "end": 149.6,
+  "end": 150.0,
   "drop": 0
  },
  "sa:care/heroes/long-term-care-rehab": {
@@ -998,17 +1023,6 @@
   ],
   "end": -9.2,
   "drop": 0.0
- },
- "sa:care/heroes/long-term-ventilated-care": {
-  "w": 493.5,
-  "h": 334.0,
-  "shape": true,
-  "pills": [
-   -26.8,
-   -115.5
-  ],
-  "end": 102.9,
-  "drop": 0
  },
  "sa:care/heroes/musculoskeletal-rehabilitation": {
   "w": 450.5,
@@ -1030,17 +1044,6 @@
    -80.1
   ],
   "end": 187.2,
-  "drop": 0
- },
- "sa:care/heroes/neuromuscular-rehab": {
-  "w": 466.5,
-  "h": 385.5,
-  "shape": true,
-  "pills": [
-   -53.8,
-   -64.0
-  ],
-  "end": 102.9,
   "drop": 0
  },
  "sa:care/heroes/occupational-therapy": {
@@ -1109,28 +1112,6 @@
   "end": 45.3,
   "drop": 0.0
  },
- "sa:care/heroes/post-surgical-rehab": {
-  "w": 503.5,
-  "h": 373.0,
-  "shape": true,
-  "pills": [
-   -49.4,
-   -76.4
-  ],
-  "end": 70.1,
-  "drop": 0
- },
- "sa:care/heroes/speech-language-therapy": {
-  "w": 621.4,
-  "h": 482.9,
-  "shape": true,
-  "pills": [
-   5.5,
-   33.6
-  ],
-  "end": 7.1,
-  "drop": 0.0
- },
  "sa:care/heroes/spinal-cord-injury-rehabilitation": {
   "w": 439.5,
   "h": 392.5,
@@ -1140,17 +1121,6 @@
    -56.7
   ],
   "end": 138.7,
-  "drop": 0
- },
- "sa:care/heroes/stroke-rehabilitation": {
-  "w": 356.0,
-  "h": 352.0,
-  "shape": true,
-  "pills": [
-   -88.4,
-   -97.6
-  ],
-  "end": 178.8,
   "drop": 0
  },
  "sa:careers/banner": {

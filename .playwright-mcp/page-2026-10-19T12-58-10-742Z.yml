@@ -1,0 +1,231 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e4]:
+      - checkbox "Toggle navigation menu" [ref=e5]
+      - generic [ref=e6]:
+        - link "Cambridge Hospital home" [ref=e7] [cursor=pointer]:
+          - /url: /ae/ar/
+          - img "مستشفى كامبريدج" [ref=e8]
+        - navigation "Main" [ref=e9]:
+          - list [ref=e10]:
+            - listitem [ref=e11]:
+              - link "رأيكم يهمنا" [ref=e12] [cursor=pointer]:
+                - /url: "#your-opinion"
+            - listitem [ref=e13]:
+              - link "المركز الإعلامي" [ref=e14] [cursor=pointer]:
+                - /url: /ae/ar/media-hub/
+            - listitem [ref=e15]:
+              - link "مركز التوظيف" [ref=e16] [cursor=pointer]:
+                - /url: /ae/ar/about/careers/
+            - listitem [ref=e17]:
+              - link "المقالات الصحية" [ref=e18] [cursor=pointer]:
+                - /url: /ae/ar/media-hub/?category=health-articles#latest
+            - listitem [ref=e19]:
+              - link "الأسئلة الشائعة" [ref=e20] [cursor=pointer]:
+                - /url: /ae/ar/faqs/
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "EN" [ref=e25] [cursor=pointer]:
+                - /url: /ae/contact-us/
+            - listitem [ref=e26]:
+              - link "AR" [ref=e27] [cursor=pointer]:
+                - /url: /ae/ar/contact-us/
+          - button "الإمارات, Choose region" [ref=e29] [cursor=pointer]:
+            - generic [ref=e30]: الإمارات
+          - link [ref=e33] [cursor=pointer]:
+            - /url: https://cambridge-health.com/
+            - text: قم بزيارة موقع
+            - generic [ref=e34]: مجموعة كامبريدج للصحة
+          - list:
+            - listitem:
+              - generic:
+                - link "حول مستشفى كامبريدج" [ref=e35] [cursor=pointer]:
+                  - /url: /ae/ar/about/
+                - button "حول مستشفى كامبريدج" [ref=e36] [cursor=pointer]
+            - listitem:
+              - generic:
+                - link "خدماتنا" [ref=e39] [cursor=pointer]:
+                  - /url: /ae/ar/care/
+                - button "خدماتنا" [ref=e40] [cursor=pointer]
+            - listitem:
+              - generic:
+                - link "مستشفياتنا" [ref=e43] [cursor=pointer]:
+                  - /url: /ae/ar/hospitals/
+                - button "مستشفياتنا" [ref=e44] [cursor=pointer]
+            - listitem:
+              - generic:
+                - link "مركز المرضى" [ref=e47] [cursor=pointer]:
+                  - /url: /ae/ar/patient-hub/
+                - button "مركز المرضى" [ref=e48] [cursor=pointer]
+            - listitem:
+              - link "اتصل بنا" [ref=e51] [cursor=pointer]:
+                - /url: /ae/ar/contact-us/
+          - link "احجز موعد" [ref=e52] [cursor=pointer]:
+            - /url: "#book-appointment"
+    - main [ref=e54]:
+      - region "تواصل مع مستشفى كامبريدج" [ref=e56]:
+        - generic [ref=e58]:
+          - heading "نحن هنا لمساعدتكم" [level=1] [ref=e59]
+          - paragraph [ref=e61]: فريقنا على استعداد للإجابة عن استفساراتكم وتقديم المساعدة التي تحتاجون إليها.
+          - link "800-692273" [ref=e63] [cursor=pointer]:
+            - /url: tel:800692273
+          - link "Inquire Now" [ref=e65] [cursor=pointer]:
+            - /url: "#contact-form"
+      - region [ref=e67]:
+        - generic [ref=e68]:
+          - heading "تواصل معنا" [level=2] [ref=e69]
+          - paragraph [ref=e70]: يرجى تعبئة النموذج أدناه، وسيتولى فريقنا متابعة طلبكم والتواصل معكم في أقرب وقت ممكن.
+          - form "Send an enquiry" [ref=e73]:
+            - generic [ref=e74]:
+              - generic [ref=e75]: Full Name*
+              - textbox "Full Name*" [ref=e76]
+            - generic [ref=e77]:
+              - generic [ref=e78]: البريد الإلكتروني*
+              - textbox "البريد الإلكتروني*" [ref=e79]
+            - generic [ref=e80]:
+              - generic [ref=e81]: Hospital*
+              - combobox "Hospital*" [ref=e83] [cursor=pointer]:
+                - option "Select Hospital" [disabled] [selected]
+                - option "مستشفى كامبريدج أبوظبي"
+                - option "مستشفى كامبريدج العين"
+                - option "مركز المضيف أبوظبي"
+            - generic [ref=e84]:
+              - generic [ref=e85]: Subject*
+              - textbox "Subject*" [ref=e86]
+            - textbox "Type your Message*" [ref=e88]
+            - generic [ref=e89]:
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - button "Attach file (optional)" [ref=e92] [cursor=pointer]
+                  - generic [ref=e93] [cursor=pointer]: Attach file (optional)
+                - paragraph [ref=e97]: PDF, JPG, PNG, DOC or DOCX, up to 4 MB
+                - paragraph [ref=e98]
+              - generic [ref=e100] [cursor=pointer]:
+                - checkbox "I have read the Privacy policy and I consent to the transfer and processing of my personal data." [ref=e101]
+                - generic [ref=e102]:
+                  - generic [ref=e103]:
+                    - text: I have read the
+                    - link "Privacy policy" [ref=e104]:
+                      - /url: /ae/ar/legal/privacy-policy/
+                    - text: and I consent to the transfer and processing of
+                  - generic [ref=e105]: my personal data.
+              - button "SUBMIT" [ref=e107] [cursor=pointer]
+          - list [ref=e114]:
+            - listitem [ref=e115]:
+              - link "info@cambridgehospital.com" [ref=e116] [cursor=pointer]:
+                - /url: mailto:info@cambridgehospital.com
+            - listitem [ref=e117]:
+              - link "www.cambridgehospital.com/ar" [ref=e118] [cursor=pointer]:
+                - /url: https://cambridgehospital.com/ar/
+            - listitem [ref=e119]:
+              - generic [ref=e120]:
+                - link "800-692273" [ref=e121] [cursor=pointer]:
+                  - /url: tel:800692273
+                - link "800-MYCARE" [ref=e122] [cursor=pointer]:
+                  - /url: tel:800692273
+      - region "تعافيكُم غايتنا" [ref=e124]:
+        - generic [ref=e126]:
+          - heading [level=2] [ref=e127]:
+            - text: تعافيكُم غايتنا،
+            - generic [ref=e128]: ونرافقكم في كل خطوة على امتداد رحلة التعافي.
+          - paragraph [ref=e129]: في مستشفى كامبريدج، تتكامل خدمات الرعاية المقدمة للمرضى المقيمين في المستشفى، ومرضى العيادات الخارجية، إلى جانب الرعاية المنزلية والرعاية داخل المدارس، لتلبية احتياجات المرضى في مختلف بيئات الرعاية ومراحل التعافي.
+          - generic [ref=e136]:
+            - link "احجز موعد" [ref=e137] [cursor=pointer]:
+              - /url: "#book-appointment"
+            - link "ابحث عن طبيب" [ref=e139] [cursor=pointer]:
+              - /url: /ae/ar/patient-hub/find-a-doctor/
+            - link "إحالة مريض" [ref=e141] [cursor=pointer]:
+              - /url: /ae/ar/patient-hub/refer-a-patient/
+            - link "أرسل استفسار" [ref=e143] [cursor=pointer]:
+              - /url: "#send-inquiry"
+    - contentinfo [ref=e147]:
+      - generic [ref=e148]:
+        - link "Cambridge Hospital home" [ref=e149] [cursor=pointer]:
+          - /url: /ae/ar/
+          - img "مستشفى كامبريدج" [ref=e150]
+        - generic [ref=e151]:
+          - navigation [ref=e152]:
+            - heading [level=2] [ref=e153]:
+              - button "روابط سريعة" [disabled] [ref=e154]
+            - list [ref=e155]:
+              - listitem [ref=e156]:
+                - link "حول مستشفى كامبريدج" [ref=e157] [cursor=pointer]:
+                  - /url: /ae/ar/about/
+              - listitem [ref=e158]:
+                - link "خدماتنا" [ref=e159] [cursor=pointer]:
+                  - /url: /ae/ar/care/
+              - listitem [ref=e160]:
+                - link "مركز المرضى" [ref=e161] [cursor=pointer]:
+                  - /url: /ae/ar/patient-hub/
+              - listitem [ref=e162]:
+                - link "مستشفياتنا" [ref=e163] [cursor=pointer]:
+                  - /url: /ae/ar/hospitals/
+              - listitem [ref=e164]:
+                - link "اتصل بنا" [ref=e165] [cursor=pointer]:
+                  - /url: /ae/ar/contact-us/
+              - listitem [ref=e166]:
+                - link "احجز موعد" [ref=e167] [cursor=pointer]:
+                  - /url: "#book-appointment"
+              - listitem [ref=e168]:
+                - link "الأسئلة الشائعة" [ref=e169] [cursor=pointer]:
+                  - /url: /ae/ar/faqs/
+          - navigation [ref=e170]:
+            - heading [level=2] [ref=e171]:
+              - button "خدماتنا" [disabled] [ref=e172]
+            - list [ref=e173]:
+              - listitem [ref=e174]:
+                - link "خدمات المرضى الداخلية" [ref=e175] [cursor=pointer]:
+                  - /url: /ae/ar/care/inpatient/
+              - listitem [ref=e176]:
+                - link "خدمات العيادات الخارجية" [ref=e177] [cursor=pointer]:
+                  - /url: /ae/ar/care/outpatient/
+              - listitem [ref=e178]:
+                - link "خدمات الرعاية المنزلية" [ref=e179] [cursor=pointer]:
+                  - /url: /ae/ar/care/homecare/
+              - listitem [ref=e180]:
+                - link "الرعاية المدرسية" [ref=e181] [cursor=pointer]:
+                  - /url: /ae/ar/care/in-school/
+          - navigation [ref=e182]:
+            - heading [level=2] [ref=e183]:
+              - button "مستشفياتنا" [disabled] [ref=e184]
+            - list [ref=e185]:
+              - listitem [ref=e186]:
+                - link "مستشفى كامبريدج أبوظبي" [ref=e187] [cursor=pointer]:
+                  - /url: /ae/ar/hospitals/cambridge-hospital-abu-dhabi/
+              - listitem [ref=e188]:
+                - link "مستشفى كامبريدج العين" [ref=e189] [cursor=pointer]:
+                  - /url: /ae/ar/hospitals/cambridge-hospital-al-ain/
+              - listitem [ref=e190]:
+                - link "مركز المضيف أبوظبي" [ref=e191] [cursor=pointer]:
+                  - /url: /ae/ar/hospitals/al-mudeef-center-abu-dhabi/
+        - generic [ref=e192]:
+          - heading "اعتمادات موثوقة" [level=2] [ref=e193]
+          - img "الاعتمادات الموثوقة لمستشفى كامبريدج" [ref=e195]
+        - generic [ref=e196]:
+          - heading "اشترك في نشرتنا الإخبارية" [level=2] [ref=e197]
+          - generic [ref=e199]:
+            - generic [ref=e200]: بريدك الإلكتروني
+            - textbox "بريدك الإلكتروني" [ref=e201]
+            - button "اشترك" [ref=e202] [cursor=pointer]
+        - list [ref=e205]:
+          - listitem [ref=e206]:
+            - link "Facebook" [ref=e207] [cursor=pointer]:
+              - /url: https://www.facebook.com/cambridgehospital.uae
+          - listitem [ref=e209]:
+            - link "Instagram" [ref=e210] [cursor=pointer]:
+              - /url: https://www.instagram.com/cambridgehospital.uae
+          - listitem [ref=e212]:
+            - link "X (Twitter)" [ref=e213] [cursor=pointer]:
+              - /url: https://x.com/cambridgehosp
+          - listitem [ref=e215]:
+            - link "YouTube" [ref=e216] [cursor=pointer]:
+              - /url: https://www.youtube.com/@cambridgehospitaluae
+          - listitem [ref=e218]
+          - listitem [ref=e219]
+        - paragraph [ref=e220]: © 2026 مجموعة كامبريدج للصحة. جميع الحقوق محفوظة.
+        - paragraph [ref=e221]:
+          - link "حماية البيانات (GDPR)" [ref=e222] [cursor=pointer]:
+            - /url: /ae/ar/legal/gdpr-compliance/
+          - link "سياسة الخصوصية" [ref=e223] [cursor=pointer]:
+            - /url: /ae/ar/legal/privacy-policy/
+  - button "اتصل بنا" [disabled] [ref=e224]

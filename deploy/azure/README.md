@@ -1,5 +1,8 @@
 # Azure App Service deployment
 
+> Not in use: App Service could not be created on this subscription (quota 0 in UAE North, October 2026).
+> Production runs on a VM: `deploy/vm/README.md`. The server (`tools/azure/`) is the same.
+
 The site is the static Astro build (`dist/`) plus one Node program, `dist-server/server.mjs`, that App Service runs. The
 program serves the pages and does what Cloudflare Pages / Vercel do on their own:
 

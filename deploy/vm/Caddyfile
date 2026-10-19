@@ -1,0 +1,19 @@
+# Caddy on the Azure VM (deploy/vm/README.md): public ports 80/443 -> the site on 127.0.0.1:8080.
+# Installed by deploy/vm/setup.sh as /etc/caddy/Caddyfile. Caddy passes the visitor's Host header through and sets
+# X-Forwarded-For / X-Forwarded-Proto, which the server uses for the form origin check and Turnstile.
+
+# Until the domain points at this VM: plain HTTP on the IP address.
+:80 {
+	reverse_proxy 127.0.0.1:8080
+}
+
+# Go-live: replace the block above with these two. Caddy then obtains and renews the Let's Encrypt certificates
+# itself (ports 80 and 443 open, DNS A records pointing at the VM). The bare domain is the canonical one (site.config.mjs).
+#
+# cambridgehospital.com {
+# 	reverse_proxy 127.0.0.1:8080
+# }
+#
+# www.cambridgehospital.com {
+# 	redir https://cambridgehospital.com{uri} permanent
+# }

@@ -1,7 +1,7 @@
 /*
- * Azure App Service entry: `node dist-server/server.mjs` (bundled by tools/azure/bundle.mjs). Serves the Astro build in
- * dist/ next to it through tools/azure/handler.ts. App Service sets PORT; the env vars are the ones in .env.example,
- * set as App Service application settings. See deploy/azure/README.md.
+ * Node entry for Azure: `node dist-server/server.mjs` (bundled by tools/azure/bundle.mjs). Serves the Astro build in
+ * dist/ next to it through tools/azure/handler.ts. PORT / HOST and the env vars of .env.example come from App Service
+ * application settings (deploy/azure/README.md) or the VM's systemd unit and env file (deploy/vm/README.md).
  */
 import { createServer } from "node:http";
 import { dirname, join } from "node:path";
@@ -28,6 +28,8 @@ const server = createServer(async (req, res) => {
 });
 
 const port = Number(process.env.PORT) || 8080;
-server.listen(port, () => console.log(`serving ${root} on port ${port}`));
+// HOST unset = every interface (App Service). Behind a local reverse proxy (the VM, deploy/vm/) it is 127.0.0.1.
+const host = process.env.HOST || undefined;
+server.listen(port, host, () => console.log(`serving ${root} on ${host ?? "*"}:${port}`));
 // App Service stops the container with SIGTERM: finish the requests in flight, then exit.
 process.on("SIGTERM", () => server.close(() => process.exit(0)));

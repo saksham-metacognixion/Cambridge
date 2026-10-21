@@ -1,10 +1,13 @@
 import type { Edition, LocaleId } from "./editions";
 import posts from "../data/news/posts.json";
+import sitePosts from "../data/news/site-posts.json";
 import samples from "../data/news/sample-images.json";
 import { img } from "./images";
 
 /*
- * News posts (src/data/news/posts.json, schema in the README next to it).
+ * News posts, schema in src/data/news/README.md. Two sources, one list: posts.json (GENERATED from the WordPress export,
+ * never edited by hand) + site-posts.json (posts written for this site, e.g. press releases the client sends as documents;
+ * kept by hand, never touched by the import). A slug may live in only one of them.
  * Every edition lists ALL posts (region rule still to be confirmed with Pramod; `region` stays in the data).
  * URL pattern in ONE place: list = Media Hub, article = media-hub/<slug>. UNCONFIRMED with Pramod (the current site's
  * post URLs could not be read, docs/open-decisions.md D7 / AR2); `old_url` on each post feeds the 301 map
@@ -28,9 +31,20 @@ export interface Post {
   region: string;
   language: LocaleId;
   image_crop?: { h: string; l: string; t: string; w: string };
+  /** site-posts.json only: the document the text was taken from */
+  source?: string;
 }
 
-const all = posts as Post[];
+const wordpress = posts as Post[];
+const authored = sitePosts.posts as Post[];
+// One slug, one source: a site post may not shadow (or be shadowed by) a WordPress post after a re-import.
+const wpSlugs = new Set(wordpress.map((p) => p.slug));
+for (const p of authored)
+  if (wpSlugs.has(p.slug))
+    throw new Error(
+      `News: slug "${p.slug}" is in both posts.json (WordPress import) and site-posts.json; rename the site post`,
+    );
+const all: Post[] = [...wordpress, ...authored];
 
 /** Posts for an edition, newest first. A slug without a record in the edition's language falls back to English. */
 export function postsFor(edition: Edition): Post[] {
@@ -98,4 +112,19 @@ export function postImage(post: Pick<Post, "slug" | "image">): { key: string; sa
   if (post.image && hasImg(post.image)) return { key: post.image, sample: false };
   if (!samples.enabled || !samples.images.length) return { key: "", sample: false };
   return { key: samples.images[(categoryRank.get(post.slug) ?? 0) % samples.images.length], sample: true };
+}
+
+/**
+ * Desktop title size of a post's hero, in Figma px (PageHero `titleSize`; user, 21 Oct 2026: "decrease the heading size so
+ * that it fits"). The Figma hero is a 322 stage with a 385-wide title column at 39 px. Longer titles step down to 32 / 26 so
+ * they stay inside the Figma height instead of making a tall banner; short titles keep the Figma size. The steps are per
+ * language: Arabic (GE SS Two Bold, 1.45 line height, bug 129) fills the column with fewer characters than Gotham, so it steps
+ * down sooner. Measured over every post at 1024 / 1440 (21 Oct 2026). If a title still needs more room, the hero grows with it
+ * (PageHero `.side`), so nothing can overflow.
+ */
+const TITLE_STEPS: Record<LocaleId, [number, number]> = { en: [60, 100], ar: [55, 80] };
+export function postTitleSize(title: string, locale: LocaleId): number {
+  const n = [...title].length;
+  const [figma, medium] = TITLE_STEPS[locale];
+  return n <= figma ? 39 : n <= medium ? 32 : 26;
 }

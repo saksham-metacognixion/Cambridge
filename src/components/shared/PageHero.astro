@@ -185,6 +185,15 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
     .side { background: var(--color-mist-50); } /* bug 086: the post's plain surface reaches the viewport edges too */
     .side .stage { background: var(--color-mist-50); }
     .side .hero-media { inset-inline-start: 45%; }
+    /* Long post titles (user, 21 Oct 2026): the Figma post hero (Health Article Layout) has a one-line title in a fixed 322 stage,
+       so a long title (or a medium one plus the button at 1024-1440) ran out of the stage over the Overview heading. The stage
+       keeps 322 as its minimum and grows with the copy, as the live banners do (.bn-live): the copy is in flow at the same Figma
+       place (95 in, `titleTop` down) with 8 below it (the Figma composition itself leaves ~10 under an Arabic button, so a short
+       title never makes the stage taller than Figma), and the photo fills the grown stage (object-cover). Long titles also
+       step down in size first (lib/news.ts postTitleSize). */
+    .side .stage { height: auto; min-height: calc(var(--h) * var(--u)); }
+    .side .copy { position: relative; inset: auto; top: auto; margin-inline-start: calc(95 * var(--u)); padding-block: calc(var(--tt) * var(--u)) calc(8 * var(--u)); }
+    .side .cover { height: calc(100% + 1 * var(--u)); }
     .side .hero-media::after { content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 30%; background: linear-gradient(to right, var(--color-mist-50), transparent); }
     :global([dir='rtl']) .side .hero-media::after { background: linear-gradient(to left, var(--color-mist-50), transparent); }
   }

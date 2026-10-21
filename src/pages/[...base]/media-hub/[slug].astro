@@ -2,7 +2,7 @@
 import { getImage } from 'astro:assets';
 import { editions, editionFromBase } from '../../../lib/editions';
 import { content } from '../../../lib/content';
-import { allPostSlugs, postFor, postImage, badgeDate, NEWS_PATHS } from '../../../lib/news';
+import { allPostSlugs, postFor, postImage, postTitleSize, badgeDate, NEWS_PATHS } from '../../../lib/news';
 import { sanitizeHtml } from '../../../lib/sanitize';
 import { img } from '../../../lib/images';
 import { showPendingNote } from '../../../lib/conditions';
@@ -62,7 +62,7 @@ const hero = {
   title: [post.title],
   button: c.hero.button,
 };
-const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
+const pos = { titleSize: postTitleSize(post.title, post.language), titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
 ---
 
 <BaseLayout edition={edition} path={NEWS_PATHS.article(slug)} title={title} description={description} ogImage={ogImage}>

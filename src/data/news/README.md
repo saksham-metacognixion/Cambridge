@@ -26,5 +26,14 @@ files are never overwritten). What the import does with each field is documented
 | language | `en` or `ar`. An edition uses its language's record for a slug, and falls back to the English record |
 | image_crop | optional, Figma placeholder only (unused since the import): `{h,l,t,w}` crop copied from Figma |
 
+## Posts written for this site (`site-posts.json`)
+
+Posts that were never on the WordPress site (e.g. a press release the client sends as a Word document) go in
+`site-posts.json`, kept **by hand**; the import never touches it. Same fields as above (`old_url` empty, plus `source` =
+the document the text came from). `src/lib/news.ts` lists both files together, newest first, and stops the build if a slug
+is in both. A photo inside the text is `<figure data-image="<asset key>"><img alt="..."></figure>`: the key is a file
+under `src/assets` without extension (e.g. `news/<slug>-2`), rendered as an optimised picture
+(`src/components/article/ArticleImage.astro`).
+
 `src/data/news.json` is a different file: the three Home "News & Insights" cards with their Figma text and crops; their
 slugs point at posts of this file so "Read more" opens the article.

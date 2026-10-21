@@ -1,5 +1,7 @@
 ---
 // One News card in a Figma slot (x positions from News.astro). The Figma posts keep their exact image crop;
+// desktop stacks image, title, excerpt and arrow in flow with the Figma boxes as minimums (title 241-320 = four 18-unit lines + 7 below, kept as padding; excerpt 320-362),
+// so a title longer than the four Figma lines pushes the excerpt down instead of running into it (21 Oct 2026).
 // any other post (tab filters) fills the same image box with object-cover. Image box corners: --radius-card (Figma r21.9, bug 049).
 import { Picture } from 'astro:assets';
 import { px } from '../lib/scale';
@@ -16,7 +18,7 @@ const { slot: c, F, crop, src, alt, title, text, readMore } = Astro.props;
 const iw = crop ? crop.iw : c.w;
 ---
 
-<article class="relative w-full max-w-289 lg:absolute lg:top-113 lg:h-[calc(var(--u)*362)]" style={`--cx:${c.x + F}; --w:${c.w}`} data-card>
+<article class="relative w-full max-w-289" style={`--cx:${c.x + F}; --w:${c.w}`} data-card>
   <div class="relative overflow-hidden rounded-(--radius-card) shadow-news aspect-[289/220] lg:aspect-auto lg:h-220 w-full">
     {!src ? null : crop ? (
       <Picture
@@ -49,9 +51,9 @@ const iw = crop ? crop.iw : c.w;
       />
     )}
   </div>
-  <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-241 lg:w-289" style={`--lx:${c.hx - c.x}`}><a href={readMore.href} class="title-link" tabindex="-1">{title}</a></h3>
-  <p class="m-0 mt-10 font-normal text-f9 leading-11 text-body not-italic whitespace-normal [word-break:break-word] lg:absolute lg:mt-0 lg:top-320 lg:w-282 lg:h-44" style={`--lx:${c.ex - c.x}`}>{text}</p>
-  <a href={readMore.href} aria-label={readMore.label} class="hit block mt-10 lg:absolute lg:mt-0 lg:top-362" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
+  <h3 class="m-0 mt-20 font-medium text-f16 leading-18 text-navy not-italic whitespace-normal [word-break:break-word] lg:mt-21 lg:min-h-79 lg:pb-7 lg:w-289" style={`--lx:${c.hx - c.x}`}><a href={readMore.href} class="title-link" tabindex="-1">{title}</a></h3>
+  <p class="m-0 mt-10 font-normal text-f9 leading-11 text-body not-italic whitespace-normal [word-break:break-word] lg:mt-0 lg:w-282 lg:min-h-42" style={`--lx:${c.ex - c.x}`}>{text}</p>
+  <a href={readMore.href} aria-label={readMore.label} class="hit block mt-10 lg:mt-0" style={`--lx:${c.ax - c.x};width:calc(36.528 * var(--u));height:calc(36.528 * var(--u))`}>
     <img loading="lazy" src={arrow.src} width={arrow.width} height={arrow.height} alt="" class="block w-full h-full rtl:-scale-x-100" /><!-- bug 074: points left in Arabic -->
   </a>
 </article>

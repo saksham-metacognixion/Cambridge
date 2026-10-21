@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import { heroEdge } from '../../lib/hero-edge';
 import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 import { px } from '../../lib/scale';
@@ -102,6 +102,18 @@ const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052, 1440, 2104],
   sizes: crop ? crop.sizes : side ? '(min-width: 1024px) 55vw, 100vw' : '100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
+// News post photo (`side`, user, 21 Oct 2026: "on mobile we are not able to see the full image"): the desktop files are the
+// 1052x323 crop of the photo (fit cover), and below 1024 the phone box crops that strip again, so only part of the photo showed.
+// Art direction, one <picture>: >= 1024 the same crop and widths as before (desktop unchanged); below 1024 the WHOLE photo at its
+// own aspect ratio, full width (layout constrained: widths never above the original, which is never read here, lib/images.ts).
+const postPhoto = side && !layers && banner
+  ? await (async () => {
+      const desk = (format: 'avif' | 'webp') => getImage({ src: banner, format, width: pic.width, height: pic.height, widths: [...pic.widths] });
+      const phone = (format: 'avif' | 'webp') => getImage({ src: banner, format, layout: 'constrained' });
+      const [dAvif, dWebp, mAvif, mWebp] = await Promise.all([desk('avif'), desk('webp'), phone('avif'), phone('webp')]);
+      return { dAvif, dWebp, mAvif, mWebp };
+    })()
+  : null;
 // Bug 086: the background's edge columns continue to the viewport edges beyond 1440 px (global.css .hero-bleed). The band
 // image = the static layer; a flat banner continues its start column on both sides (its end edge is a photo), unless told otherwise.
 const bleed = Astro.props.bleed ?? (side ? 'none' : layers ? 'edges' : 'start');
@@ -129,7 +141,14 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
           <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" data-hero-subject class:list={imgClass} {...pic} />
         </>
       ) : (
-        <Picture src={banner!} alt={c.banner.alt} fetchpriority="high" class:list={imgClass} {...pic} />
+        postPhoto ? (
+          <picture class="contents">
+            <source media="(min-width: 1024px)" type="image/avif" srcset={postPhoto.dAvif.srcSet.attribute} sizes="55vw" />
+            <source media="(min-width: 1024px)" type="image/webp" srcset={postPhoto.dWebp.srcSet.attribute} sizes="55vw" />
+            <source type="image/avif" srcset={postPhoto.mAvif.srcSet.attribute} sizes="100vw" width={postPhoto.mAvif.attributes.width} height={postPhoto.mAvif.attributes.height} />
+            <img src={postPhoto.mWebp.src} srcset={postPhoto.mWebp.srcSet.attribute} sizes="100vw" width={postPhoto.mWebp.attributes.width} height={postPhoto.mWebp.attributes.height} alt={c.banner.alt} fetchpriority="high" loading="eager" decoding="async" class:list={[...imgClass, 'post-photo']} />
+          </picture>
+        ) : <Picture src={banner!} alt={c.banner.alt} fetchpriority="high" class:list={imgClass} {...pic} />
       )}
     </div>}
 
@@ -199,6 +218,9 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
   }
   @media (max-width: 1023.98px) {
     .cover { top: 0; height: 100%; }
+    /* News post photo below 1024: the whole photo at its own aspect ratio (the <picture> serves the uncropped file here). */
+    .side .hero-media { height: auto; aspect-ratio: auto; max-height: none; }
+    .side .post-photo { position: static; height: auto; object-fit: fill; }
     /* Bug 167 (15 Oct 2026): the copy keeps the page's 16px gutter below 1024 like the sections under it (was 24 units = 33px). */
     .copy { --copy-gap: calc(16 * var(--u)); gap: var(--copy-gap); padding: calc(28 * var(--u)) 16px calc(40 * var(--u)); }
     .text { max-width: calc(var(--xw) * var(--u)); }

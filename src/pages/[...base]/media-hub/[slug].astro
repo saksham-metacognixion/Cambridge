@@ -60,7 +60,7 @@ const hero = {
   ariaLabel: post.title,
   banner: { image, alt: post.image_alt || '' },
   title: [post.title],
-  button: c.hero.button,
+  button: post.hero_button === false ? undefined : c.hero.button, // per-post opt-out (news README: hero_button)
 };
 const pos = { titleSize: postTitleSize(post.title, post.language), titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
 ---

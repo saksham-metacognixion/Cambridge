@@ -31,6 +31,8 @@ export interface Post {
   region: string;
   language: LocaleId;
   image_crop?: { h: string; l: string; t: string; w: string };
+  /** false = the article hero shows no button ("Consult for a Care Plan"); absent = it shows */
+  hero_button?: boolean;
   /** site-posts.json only: the document the text was taken from */
   source?: string;
 }

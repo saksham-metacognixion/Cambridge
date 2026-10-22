@@ -24,6 +24,7 @@ files are never overwritten). What the import does with each field is documented
 | image_alt | the attachment's alt text on the current site; falls back to the title when empty |
 | region | `global` for every post (the export has no region; every edition lists all posts, D15) |
 | language | `en` or `ar`. An edition uses its language's record for a slug, and falls back to the English record |
+| hero_button | optional; `false` = the article hero shows no "Consult for a Care Plan" button (per post, user decision). Absent = the button shows |
 | image_crop | optional, Figma placeholder only (unused since the import): `{h,l,t,w}` crop copied from Figma |
 
 ## Posts written for this site (`site-posts.json`)

@@ -17,17 +17,14 @@ const F = 60;
 const design = [
   {
     slot: { x: 0, w: 289, hx: 0, ex: 0, ax: 238 },
-    figmaSlug: 'cambridge-hospital-al-khobar',
     crop: { h: '100.02%', l: '-12.39%', t: '-0.01%', w: '116.51%', iw: 289 * 1.1651, ratio: 706 / 1080 },
   },
   {
     slot: { x: 313, w: 289, hx: 313, ex: 313, ax: 565 },
-    figmaSlug: 'abdullah-success-story',
     crop: { h: '100.12%', l: '-10.73%', t: '-0.06%', w: '116.61%', iw: 289 * 1.1661, ratio: 832 / 1273 },
   },
   {
     slot: { x: 627, w: 288, hx: 626, ex: 626, ax: 878 },
-    figmaSlug: 'dr-robert-kassab-sabah-al-arabiya',
     crop: { h: '102.73%', l: '-0.04%', t: '-2.73%', w: '100.07%', iw: 288 * 1.0007, ratio: 832 / 1061 },
   },
 ];
@@ -38,13 +35,12 @@ const card = (post: Post) => ({
   title: t(post.title, edition.locale, 'news'),
   text: t(post.excerpt, edition.locale, 'news'),
 });
-// Default view (no tab pressed): the posts listed by slug in home/news JSON. A Figma post keeps its Figma crop
-// whichever slot it lands in; any other post fills the image box with object-cover.
+// Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, with their Figma crops.
 const cards = design.map((d, i) => {
   const slug: string = txt.posts[i];
   const post = news.posts.find((n) => n.slug === slug);
   if (!post) throw new Error(`home/news: unknown post slug "${slug}"`);
-  return { slot: d.slot, crop: design.find((f) => f.figmaSlug === slug)?.crop, ...card(post) };
+  return { ...d, ...card(post) };
 });
 // Tabs: filterCategories (home/news JSON) pairs each pill with a `category` value on the posts in news.json.
 // Each tab's first 3 posts are rendered into a <template>; a category with no posts yet gets no template and its

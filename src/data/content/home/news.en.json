@@ -2,6 +2,6 @@
   "title": "News & Insights",
   "filters": ["Blogs", "News", "Events"],
   "filterCategories": ["blog", "news", "event"],
-  "posts": ["cambridge-health-group-oracle-mou", "cambridge-hospital-al-khobar", "abdullah-success-story"],
+  "posts": ["cambridge-hospital-al-khobar", "abdullah-success-story", "dr-robert-kassab-sabah-al-arabiya"],
   "readMore": { "label": "Read more", "href": "#" }
 }

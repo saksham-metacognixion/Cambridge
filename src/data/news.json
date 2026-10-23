@@ -2,6 +2,14 @@
   "$comment": "PLACEHOLDER: the 3 posts shown on the Figma Home page, text exactly as in Figma. Replace with Pramod's export (~259 posts). image = image key.",
   "posts": [
     {
+      "slug": "cambridge-health-group-oracle-mou",
+      "category": "news",
+      "title": { "en": "Cambridge Health Group and Oracle team to strengthen healthcare efficiency and patient care", "ar": "" },
+      "excerpt": { "en": "Agreement will integrate technology, data and AI across CHG’s expanding healthcare network in the UAE and Saudi Arabia", "ar": "" },
+      "image": "news/chg-oracle-mou",
+      "imageAlt": { "en": "Cambridge Health Group and Oracle representatives signing the Memorandum of Understanding", "ar": "" }
+    },
+    {
       "slug": "cambridge-hospital-al-khobar",
       "title": { "en": "Cambridge Hospital Al Khobar, a state-of-the-art rehabilitative hospital in the Eastern Province of Kingdom of Saudi Arabia.", "ar": "" },
       "excerpt": { "en": "In Q2 2019, Cambridge Medical & Rehabilitation, the UAE’s leading post-acute rehabilitation and long-term care facility, announced the opening of its first medical and rehabilitation facility....", "ar": "" },

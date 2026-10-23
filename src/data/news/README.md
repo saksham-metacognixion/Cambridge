@@ -25,6 +25,7 @@ files are never overwritten). What the import does with each field is documented
 | region | `global` for every post (the export has no region; every edition lists all posts, D15) |
 | language | `en` or `ar`. An edition uses its language's record for a slug, and falls back to the English record |
 | hero_button | optional; `false` = the article hero shows no "Consult for a Care Plan" button (per post, user decision). Absent = the button shows |
+| hero_photo | optional; `"full"` = on desktop (>= 1024 px) the article hero shows the whole photo in its ~16:9 box instead of the 1052x323 strip (which the box crops again, e.g. heads cut off). Set on the client press releases (user, 23 Oct 2026); other posts unchanged |
 | image_crop | optional, Figma placeholder only (unused since the import): `{h,l,t,w}` crop copied from Figma |
 
 ## Posts written for this site (`site-posts.json`)

@@ -33,6 +33,8 @@ export interface Post {
   image_crop?: { h: string; l: string; t: string; w: string };
   /** false = the article hero shows no button ("Consult for a Care Plan"); absent = it shows */
   hero_button?: boolean;
+  /** "full" = the desktop hero shows the whole photo, not the 1052x323 strip (news README: hero_photo) */
+  hero_photo?: 'full';
   /** site-posts.json only: the document the text was taken from */
   source?: string;
 }

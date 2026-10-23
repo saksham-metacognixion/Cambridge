@@ -64,6 +64,9 @@ interface Props {
    *  170:839: photo on the right, the title on a light plain area), its leading edge fading into the light surface. A post
    *  image is any shape or pattern (the live "Emblem" pill artwork, busy photos), so it never runs under the title. */
   side?: boolean;
+  /** `side` posts with `hero_photo: "full"` (news README, user 23 Oct 2026: "proper full image"): >= 1024 the WHOLE photo fills the
+   *  ~16:9 box (object-cover), not the 1052x323 strip that the box then cropped again (heads cut off). Below 1024 unchanged. */
+  fullPhoto?: boolean;
   /** Bug 086 (screens wider than 1440): how the background reaches the viewport edges (styles/global.css .hero-bleed).
    *  'edges' = each side continues the background layer's own edge column (gradient + pills; the default with layers);
    *  'start' = both sides continue the banner's START column (the plain gradient side; the default for a flat banner,
@@ -74,7 +77,7 @@ interface Props {
    *  flat 212-tall Conditions cut-out, so it covered the end of the intro. true = the paragraph stops 24px before the shape. */
   clearPills?: boolean;
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false, clearPills = false } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false, fullPhoto = false, clearPills = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 // Live-site banner art (banner brief 14 Oct 2026, components/shared/BannerArt.astro): gradient + pill shape + the people cut-out at
 // the live size and place, on a 500px-at-1440 stage. Not for the Our Hospitals map (HeroMap pins over its own art) or news photos.
@@ -108,7 +111,7 @@ const pic = {
 // own aspect ratio, full width (layout constrained: widths never above the original, which is never read here, lib/images.ts).
 const postPhoto = side && !layers && banner
   ? await (async () => {
-      const desk = (format: 'avif' | 'webp') => getImage({ src: banner, format, width: pic.width, height: pic.height, widths: [...pic.widths] });
+      const desk = (format: 'avif' | 'webp') => getImage({ src: banner, format, width: pic.width, ...(fullPhoto ? {} : { height: pic.height }), widths: [...pic.widths] });
       const phone = (format: 'avif' | 'webp') => getImage({ src: banner, format, layout: 'constrained' });
       const [dAvif, dWebp, mAvif, mWebp] = await Promise.all([desk('avif'), desk('webp'), phone('avif'), phone('webp')]);
       return { dAvif, dWebp, mAvif, mWebp };

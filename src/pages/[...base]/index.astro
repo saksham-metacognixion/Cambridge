@@ -1,6 +1,7 @@
 ---
 import { editionFromBase, editionPaths } from '../../lib/editions';
 import { content } from '../../lib/content';
+import { ldJson, organizationSchema } from '../../lib/schema';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -45,6 +46,7 @@ const sections = [
 ---
 
 <BaseLayout edition={edition} path="" title={page.title} description={page.description}>
+  <script slot="head" type="application/ld+json" set:html={ldJson(organizationSchema(edition))} />
   <div class="relative" style="z-index:14">
     <Header />
   </div>

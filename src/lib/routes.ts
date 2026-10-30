@@ -8,7 +8,7 @@ import { DOCTOR_PATHS, profileDoctors, doctorEditions } from "./doctors";
 import { PAGE_PATHS, pagePath } from "./paths";
 import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
-import { NEWS_PATHS, allPostSlugs } from "./news";
+import { NEWS_PATHS, allPostSlugs, postFor, postsFor } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
 import { CARE_PATHS, allCareNodes, careInRegion } from "./care";
 import { calculators } from "./calculators";
@@ -21,6 +21,8 @@ export interface PageRoute {
   path: string;
   /** edition ids that have the page; absent = all 6 */
   editions?: string[];
+  /** sitemap <lastmod> (YYYY-MM-DD) in an edition; only where the data holds a real date (news), absent = no lastmod */
+  lastmod?: (edition: Edition) => string | undefined;
 }
 
 /** Every route; with an edition, only the routes that exist in it. */
@@ -59,10 +61,11 @@ function routes(): PageRoute[] {
     })),
     { key: "contact", path: PAGE_PATHS.contact },
     { key: "careers", path: PAGE_PATHS.careers },
-    { key: "media-hub", path: NEWS_PATHS.list },
+    { key: "media-hub", path: NEWS_PATHS.list, lastmod: (e: Edition) => postsFor(e)[0]?.date },
     ...allPostSlugs.map((slug) => ({
       key: `post-${slug}`,
       path: NEWS_PATHS.article(slug),
+      lastmod: (e: Edition) => postFor(slug, e)?.date,
     })),
     { key: "patient-hub", path: PAGE_PATHS.patientHub },
     ...calculators.map((c) => ({

@@ -1,12 +1,13 @@
 ---
 import { getImage } from 'astro:assets';
-import { editions, editionFromBase } from '../../../lib/editions';
+import { editions, editionFromBase, urlFor } from '../../../lib/editions';
 import { content } from '../../../lib/content';
 import { allPostSlugs, postFor, postImage, badgeDate, NEWS_PATHS } from '../../../lib/news';
 import { sanitizeHtml } from '../../../lib/sanitize';
 import { img } from '../../../lib/images';
 import { showPendingNote } from '../../../lib/conditions';
-import { INDEXABLE } from '../../../lib/seo';
+import { INDEXABLE, absolute } from '../../../lib/seo';
+import { ldJson, articleSchema } from '../../../lib/schema';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
@@ -48,8 +49,9 @@ const date = c.date.show ? { iso: post.date, text: badgeDate(post.date, loc).ful
 // Hero image = the post image (object-cover inside the 322 stage, like the condition pages' 1052x323 PNG).
 let image = '';
 let ogImage: string | undefined;
+let sampleImage = false;
 try {
-  image = postImage(post).key; // missing file -> temporary sample photo (NW1)
+  ({ key: image, sample: sampleImage } = postImage(post)); // missing file -> temporary sample photo (NW1)
   img(image, edition.region);
   ogImage = (await getImage({ src: img(image, edition.region), width: 1200, format: 'webp' })).src;
 } catch {
@@ -68,6 +70,8 @@ const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
 <BaseLayout edition={edition} path={NEWS_PATHS.article(slug)} title={title} description={description} ogImage={ogImage}>
   <Fragment slot="head">
     <meta property="article:published_time" content={post.date} />
+    <!-- Article / NewsArticle structured data (src/lib/schema.ts); a temporary sample photo (NW1) is never given as the article's image. -->
+    <script type="application/ld+json" set:html={ldJson(articleSchema(post, edition, { url: absolute(urlFor(edition, NEWS_PATHS.article(slug))), description, image: ogImage && !sampleImage ? absolute(ogImage) : undefined }))} />
   </Fragment>
   <div class="relative" style="z-index:14">
     <Header />

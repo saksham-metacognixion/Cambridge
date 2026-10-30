@@ -8,7 +8,10 @@ import { z } from "astro/zod";
  * edit) can never ship a broken post. `.strict()`: an unknown key is an error, not silently ignored.
  * Migrated posts carry only the fields the WordPress export had plus type / status / editions; the dashboard fills the rest.
  */
+/** YYYY-MM-DD that is a real calendar date (2026-13-45 is not). */
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const date = () =>
+  z.string().regex(DATE).refine((d) => { const t = Date.parse(`${d}T00:00:00Z`); return !Number.isNaN(t) && new Date(t).toISOString().startsWith(d); }, { message: "Not a real calendar date" });
 
 export const localeSchema = z
   .object({
@@ -40,9 +43,9 @@ export const postSchema = z
     /** = the file name; URL media-hub/<slug> in every edition */
     slug: z.string().regex(/^[\p{L}\p{N}-]+$/u),
     /** publish date YYYY-MM-DD (datePublished, sitemap lastmod) */
-    date: z.string().regex(DATE),
+    date: date(),
     /** last edit YYYY-MM-DD (dateModified); absent = date */
-    updated: z.string().regex(DATE).optional(),
+    updated: date().optional(),
     /** Media Hub dropdown key (src/data/content/media-hub/page.en.json) or "interviews" */
     category: z.string().min(1),
     /** spec: Blog (Article schema) = health articles; PR (NewsArticle) = press releases, events, conferences, interviews */

@@ -1,0 +1,108 @@
+// Tests for the dashboard's admin service, tools/admin/server.ts, over real HTTP against a temporary copy of two posts
+// (the repo's content is never touched). Run: npm run test:admin
+import assert from 'node:assert/strict';
+import { build } from 'esbuild';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const tmp = mkdtempSync(join(tmpdir(), 'ch-admin-'));
+const out = join(tmp, 'admin-server.mjs');
+await build({ entryPoints: ['tools/admin/server.ts'], bundle: true, format: 'esm', platform: 'node', outfile: out, logLevel: 'warning' });
+const { start, hashPassword } = await import(pathToFileURL(out).href);
+
+// Content root = a temp folder with two real posts copied in.
+const root = join(tmp, 'site');
+mkdirSync(join(root, 'src/content/news'), { recursive: true });
+const SLUGS = ['12-exercises-and-stretches-for-shoulder-pain', 'cambridge-hospital-at-the-global-health-exhibition-in-riyadh'];
+for (const s of SLUGS) cpSync(`src/content/news/${s}.json`, join(root, `src/content/news/${s}.json`));
+Object.assign(process.env, {
+  CONTENT_ROOT: root, LOCAL_DEV: 'true', ADMIN_EMAIL: 'Admin@Example.test', ADMIN_PASSWORD_HASH: hashPassword('correct horse battery'),
+  ADMIN_SESSION_SECRET: 'test-secret', PUBLISH_COMMAND: 'echo building && echo done',
+});
+
+const server = start(0, '127.0.0.1');
+await new Promise((r) => server.once('listening', r));
+const base = `http://127.0.0.1:${server.address().port}`;
+let cookie = '';
+const call = async (method, path, body, headers = {}) => {
+  const res = await fetch(`${base}${path}`, {
+    method, headers: { 'Content-Type': 'application/json', Cookie: cookie, ...headers }, body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const set = res.headers.get('set-cookie');
+  if (set) cookie = set.split(';')[0];
+  return { status: res.status, body: await res.json().catch(() => null) };
+};
+const write = (method, path, body) => call(method, path, body, { 'X-Requested-With': 'admin' });
+const ok = (label) => console.log(`  ok   ${label}`);
+
+// --- auth ---
+assert.equal((await call('GET', '/api/admin/posts')).status, 401); ok('no session -> 401');
+assert.equal((await call('POST', '/api/admin/login', { email: 'admin@example.test', password: 'wrong' })).status, 401);
+for (let i = 0; i < 4; i++) await call('POST', '/api/admin/login', { email: 'admin@example.test', password: 'wrong' });
+assert.equal((await call('POST', '/api/admin/login', { email: 'admin@example.test', password: 'correct horse battery' })).status, 429);
+ok('5 wrong passwords -> 429 even with the right one');
+// a fresh client (other IP) via X-Forwarded-For is not rate limited
+let r = await call('POST', '/api/admin/login', { email: 'admin@example.test', password: 'correct horse battery' }, { 'X-Forwarded-For': '203.0.113.9' });
+assert.equal(r.status, 200); assert.ok(cookie.startsWith('ch_admin=')); ok('login sets the session cookie (email case-insensitive)');
+assert.equal((await call('GET', '/api/admin/me')).body.email, 'admin@example.test');
+assert.equal((await call('PUT', '/api/admin/posts/x', {})).status, 403); ok('write without X-Requested-With -> 403');
+
+// --- posts ---
+r = await call('GET', '/api/admin/posts');
+assert.equal(r.body.items.length, 2); assert.ok(r.body.items[0].title && !('body' in r.body.items[0])); ok('list = summaries, no bodies');
+const slug = SLUGS[0];
+r = await call('GET', `/api/admin/posts/${slug}`);
+const post = r.body.item; assert.equal(post.slug, slug); assert.ok(post.en.body.length > 100); ok('get one post');
+
+r = await write('PUT', `/api/admin/posts/${slug}`, { ...post, date: '2026-13-45', typo: 1 });
+assert.equal(r.status, 400); assert.deepEqual(r.body.details.map((d) => d.field).sort(), ['(root)', 'date']); ok('invalid post -> 400 naming the fields');
+assert.deepEqual(readFileSync(join(root, `src/content/news/${slug}.json`), 'utf8'), JSON.stringify(post, null, 2) + '\n'); ok('a rejected save changes nothing');
+
+r = await write('PUT', `/api/admin/posts/${slug}`, { ...post, en: { ...post.en, focus_keyword: 'shoulder pain' }, updated: '2026-10-30' });
+assert.equal(r.status, 200);
+assert.equal(JSON.parse(readFileSync(join(root, `src/content/news/${slug}.json`), 'utf8')).en.focus_keyword, 'shoulder pain');
+r = await call('GET', `/api/admin/posts/${slug}/versions`);
+assert.equal(r.body.versions.length, 1); const v1 = r.body.versions[0].id; ok('save writes the file and keeps the previous version');
+
+r = await write('POST', `/api/admin/posts/${slug}/restore`, { version: v1 });
+assert.equal(r.status, 200);
+assert.equal(JSON.parse(readFileSync(join(root, `src/content/news/${slug}.json`), 'utf8')).en.focus_keyword, undefined); ok('restore brings the earlier version back');
+
+r = await write('POST', '/api/admin/posts', { ...post, slug: 'new-post-2026', previous_slugs: [] });
+assert.equal(r.status, 201); assert.equal((await write('POST', '/api/admin/posts', { ...post, slug: 'new-post-2026' })).status, 409); ok('create; a second create of the same slug -> 409');
+
+r = await write('POST', '/api/admin/posts/new-post-2026/rename', { slug: 'renamed-post-2026' });
+assert.equal(r.status, 200);
+const renamed = JSON.parse(readFileSync(join(root, 'src/content/news/renamed-post-2026.json'), 'utf8'));
+assert.deepEqual(renamed.previous_slugs, ['new-post-2026']); assert.ok(!existsSync(join(root, 'src/content/news/new-post-2026.json'))); ok('rename moves the file and records the old slug');
+
+assert.equal((await write('DELETE', '/api/admin/posts/renamed-post-2026')).status, 400);
+assert.equal((await write('DELETE', '/api/admin/posts/renamed-post-2026?confirm=renamed-post-2026')).status, 200);
+assert.ok(readdirSync(join(root, '.admin/versions/posts/renamed-post-2026')).some((f) => f.includes('deleted'))); ok('delete needs ?confirm=<slug> and keeps a copy under versions');
+assert.equal((await write('DELETE', '/api/admin/posts/..%2F..%2Fetc?confirm=x')).status, 400); ok('path characters in a slug -> 400');
+
+// --- authors ---
+r = await write('POST', '/api/admin/authors', { slug: 'dr-test', name: { en: 'Dr Test' }, role: { en: 'Neurologist' } });
+assert.equal(r.status, 201);
+assert.equal((await call('GET', '/api/admin/authors')).body.items[0].name.en, 'Dr Test'); ok('author create + list');
+await write('PUT', `/api/admin/posts/${slug}`, { ...post, reviewer: 'dr-test' });
+r = await write('DELETE', '/api/admin/authors/dr-test?confirm=dr-test');
+assert.equal(r.status, 409); assert.deepEqual(r.body.posts, [slug]); ok('an author in use cannot be deleted');
+await write('PUT', `/api/admin/posts/${slug}`, post);
+assert.equal((await write('DELETE', '/api/admin/authors/dr-test?confirm=dr-test')).status, 200); ok('unused author deleted');
+
+// --- publish ---
+r = await write('POST', '/api/admin/publish');
+assert.equal(r.status, 202);
+for (let i = 0; i < 50 && (await call('GET', '/api/admin/publish')).body.publish.state === 'running'; i++) await new Promise((t) => setTimeout(t, 100));
+r = await call('GET', '/api/admin/publish');
+assert.equal(r.body.publish.state, 'ok'); assert.deepEqual(r.body.publish.output, ['building', 'done']); ok('publish runs the build command and reports its output');
+
+// --- logout ---
+await write('POST', '/api/admin/logout');
+assert.equal((await call('GET', '/api/admin/me')).status, 401); ok('logout clears the session');
+
+server.close();
+console.log('admin server: all passed');

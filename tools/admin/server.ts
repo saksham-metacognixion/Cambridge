@@ -18,13 +18,23 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { postSchema } from "../../src/lib/news-schema";
 import { authorSchema } from "../../src/lib/authors-schema";
+import { SITE_URL } from "../../site.config.mjs";
+import mediaHub from "../../src/data/content/media-hub/page.en.json";
 
 type Kind = "posts" | "authors";
 const KINDS: Record<Kind, { dir: string; schema: typeof postSchema | typeof authorSchema }> = {
   posts: { dir: "src/content/news", schema: postSchema },
   authors: { dir: "src/content/authors", schema: authorSchema },
 };
-const SLUG = /^[\p{L}\p{N}-]{1,120}$/u;
+// Letters, digits, hyphens; up to 200 characters (the longest imported slug is ~150; file names allow 255).
+const SLUG = /^[\p{L}\p{N}-]{1,200}$/u;
+// The UI (tools/admin/ui, bundled next to this file) and the few site files it needs from the repo checkout.
+const UI_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), "ui");
+const SITE_FILES: Record<string, [string, string]> = {
+  "/admin/logo.svg": ["src/assets/header/logo.svg", "image/svg+xml"],
+  "/admin/favicon.svg": ["public/favicon.svg", "image/svg+xml"],
+};
+const TYPES: Record<string, string> = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".woff2": "font/woff2", ".svg": "image/svg+xml" };
 const MAX_BODY = 2 * 1024 * 1024; // a post with both languages is ~10 KB; 2 MB leaves room for long articles
 const SESSION_HOURS = 12;
 
@@ -135,7 +145,24 @@ function postSummary(p: Record<string, any>) {
     slug: p.slug, date: p.date, updated: p.updated, category: p.category, type: p.type, status: p.status, editions: p.editions,
     image: p.image, author: p.author ?? "", reviewer: p.reviewer ?? "", title: en.title, hasArabic: !!p.ar,
     seo: !!(en.seo?.title && en.seo?.description), imageAlt: !!en.image_alt, keyword: !!en.focus_keyword,
+    keywords: [en.focus_keyword, p.ar?.focus_keyword].filter(Boolean),
   };
+}
+/** Spec section 2: an image without alt text blocks publishing (drafts can be saved without it). */
+function checkPublishable(kind: Kind, raw: Record<string, any>) {
+  if (kind !== "posts") return;
+  const live = raw.status === "published" || raw.status === "scheduled";
+  if (live && raw.image && !String(raw.en?.image_alt ?? "").trim())
+    throw new HttpError(400, "invalid", [{ field: "en.image_alt", message: "Describe the featured image (alt text) before publishing" }]);
+}
+/** A file of the UI bundle or one of the site files it uses; null when the path is not one of them. */
+function staticFile(p: string): Response | null {
+  let file = "", type = "";
+  if (p === "/admin" || (p.startsWith("/admin/") && !path.extname(p))) { file = path.join(UI_DIR, "index.html"); type = TYPES[".html"]; }
+  else if (SITE_FILES[p]) { [file, type] = [path.join(root(), SITE_FILES[p][0]), SITE_FILES[p][1]]; }
+  else if (/^\/(admin|fonts)\/[\w.-]+$/.test(p)) { file = p.startsWith("/fonts/") ? path.join(root(), "public", p) : path.join(UI_DIR, path.basename(p)); type = TYPES[path.extname(p)] ?? ""; }
+  if (!file || !type || !fs.existsSync(file)) return null;
+  return new Response(fs.readFileSync(file), { status: 200, headers: { "Content-Type": type, "Cache-Control": type.startsWith("font") ? "public, max-age=31536000" : "no-cache", "X-Robots-Tag": "noindex" } });
 }
 function authorsInUse(slug: string) {
   return listKind("posts").filter((p: any) => p.author === slug || p.reviewer === slug).map((p: any) => p.slug);
@@ -189,6 +216,7 @@ export async function handle(req: IncomingMessage): Promise<Response> {
   const p = url.pathname.replace(/\/+$/, "") || "/";
   const method = req.method ?? "GET";
   if (p === "/healthz") return new Response("ok");
+  if (method === "GET" && !p.startsWith("/api/")) return staticFile(p) ?? json(404, { ok: false, error: "not_found" });
   if (!p.startsWith("/api/admin/") && p !== "/api/admin") return json(404, { ok: false, error: "not_found" });
   const route = p.slice("/api/admin".length);
   const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0].trim() || req.socket.remoteAddress || "?";
@@ -209,7 +237,8 @@ export async function handle(req: IncomingMessage): Promise<Response> {
   const user = sessionFrom(req);
   if (!user) return json(401, { ok: false, error: "not_signed_in" });
   if (route === "/logout" && method === "POST") return json(200, { ok: true }, { "Set-Cookie": cookieHeader("", 0) });
-  if (route === "/me" && method === "GET") return json(200, { ok: true, email: user });
+  if (route === "/me" && method === "GET")
+    return json(200, { ok: true, email: user, siteUrl: env.ADMIN_SITE_URL || SITE_URL, categories: (mediaHub.explore.categories as { key: string; label: string }[]).map(({ key, label }) => ({ key, label })) });
   // Every write needs the custom header: a cross-site form or image tag cannot add it (CSRF, on top of SameSite=Strict).
   if (method !== "GET" && req.headers["x-requested-with"] !== "admin") return json(403, { ok: false, error: "missing_header" });
 
@@ -238,7 +267,9 @@ export async function handle(req: IncomingMessage): Promise<Response> {
       const s = typeof body.slug === "string" ? body.slug : "";
       if (!SLUG.test(s)) return json(400, { ok: false, error: "bad_slug" });
       if (fs.existsSync(fileOf(kind, s))) return json(409, { ok: false, error: "exists" });
-      writeJson(fileOf(kind, s), validate(kind, s, body));
+      const data = validate(kind, s, body);
+      checkPublishable(kind, data);
+      writeJson(fileOf(kind, s), data);
       return json(201, { ok: true, slug: s });
     }
     return json(405, { ok: false, error: "method" });
@@ -280,6 +311,7 @@ export async function handle(req: IncomingMessage): Promise<Response> {
   }
   if (method === "PUT") {
     const data = validate(kind, slug, await readBody(req));
+    checkPublishable(kind, data);
     const existed = snapshot(kind, slug);
     writeJson(file, data);
     return json(200, { ok: true, created: !existed });

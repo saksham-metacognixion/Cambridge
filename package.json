@@ -36,6 +36,7 @@
     "esbuild": true
   },
   "devDependencies": {
-    "playwright-core": "^1.63.0"
+    "playwright-core": "^1.63.0",
+    "preact": "^10.29.8"
   }
 }

@@ -17,6 +17,8 @@ const root = join(tmp, 'site');
 mkdirSync(join(root, 'src/content/news'), { recursive: true });
 const SLUGS = ['12-exercises-and-stretches-for-shoulder-pain', 'cambridge-hospital-at-the-global-health-exhibition-in-riyadh'];
 for (const s of SLUGS) cpSync(`src/content/news/${s}.json`, join(root, `src/content/news/${s}.json`));
+mkdirSync(join(root, 'public/fonts'), { recursive: true });
+cpSync('public/fonts/Gotham-Book.woff2', join(root, 'public/fonts/Gotham-Book.woff2'));
 Object.assign(process.env, {
   CONTENT_ROOT: root, LOCAL_DEV: 'true', ADMIN_EMAIL: 'Admin@Example.test', ADMIN_PASSWORD_HASH: hashPassword('correct horse battery'),
   ADMIN_SESSION_SECRET: 'test-secret', PUBLISH_COMMAND: 'echo building && echo done',
@@ -54,7 +56,14 @@ r = await call('GET', '/api/admin/posts');
 assert.equal(r.body.items.length, 2); assert.ok(r.body.items[0].title && !('body' in r.body.items[0])); ok('list = summaries, no bodies');
 const slug = SLUGS[0];
 r = await call('GET', `/api/admin/posts/${slug}`);
-const post = r.body.item; assert.equal(post.slug, slug); assert.ok(post.en.body.length > 100); ok('get one post');
+const migrated = r.body.item; assert.equal(migrated.slug, slug); assert.ok(migrated.en.body.length > 100); ok('get one post');
+// Spec: a published post with a featured image needs alt text. The migrated post has none, so saving it as published is refused
+// until the alt text is added (drafts are fine).
+r = await write('PUT', `/api/admin/posts/${slug}`, migrated);
+assert.equal(r.status, 400); assert.equal(r.body.details[0].field, 'en.image_alt'); ok('publishing without alt text -> 400');
+assert.equal((await write('PUT', `/api/admin/posts/${slug}`, { ...migrated, status: 'draft' })).status, 200);
+const post = { ...migrated, en: { ...migrated.en, image_alt: 'Physiotherapist guiding shoulder exercises' } };
+assert.equal((await write('PUT', `/api/admin/posts/${slug}`, post)).status, 200); ok('with alt text the post saves as published');
 
 r = await write('PUT', `/api/admin/posts/${slug}`, { ...post, date: '2026-13-45', typo: 1 });
 assert.equal(r.status, 400); assert.deepEqual(r.body.details.map((d) => d.field).sort(), ['(root)', 'date']); ok('invalid post -> 400 naming the fields');
@@ -63,8 +72,12 @@ assert.deepEqual(readFileSync(join(root, `src/content/news/${slug}.json`), 'utf8
 r = await write('PUT', `/api/admin/posts/${slug}`, { ...post, en: { ...post.en, focus_keyword: 'shoulder pain' }, updated: '2026-10-30' });
 assert.equal(r.status, 200);
 assert.equal(JSON.parse(readFileSync(join(root, `src/content/news/${slug}.json`), 'utf8')).en.focus_keyword, 'shoulder pain');
+assert.deepEqual((await call('GET', '/api/admin/posts')).body.items.find((i) => i.slug === slug).keywords, ['shoulder pain']);
 r = await call('GET', `/api/admin/posts/${slug}/versions`);
-assert.equal(r.body.versions.length, 1); const v1 = r.body.versions[0].id; ok('save writes the file and keeps the previous version');
+assert.equal(r.body.versions.length, 3); const v1 = r.body.versions[0].id; ok('save writes the file and keeps the previous version');
+assert.equal((await call('GET', '/api/admin/me')).body.categories.length, 4); ok('/me lists the categories and site URL');
+r = await fetch(`${base}/fonts/Gotham-Book.woff2`); assert.equal(r.status, 200); assert.equal(r.headers.get('content-type'), 'font/woff2');
+r = await fetch(`${base}/fonts/..%2F..%2Fpackage.json`); assert.equal(r.status, 404); ok('fonts served from the checkout, no path tricks');
 
 r = await write('POST', `/api/admin/posts/${slug}/restore`, { version: v1 });
 assert.equal(r.status, 200);

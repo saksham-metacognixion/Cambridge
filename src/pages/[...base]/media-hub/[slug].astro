@@ -7,7 +7,12 @@ import { sanitizeHtml } from '../../../lib/sanitize';
 import { img } from '../../../lib/images';
 import { showPendingNote } from '../../../lib/conditions';
 import { INDEXABLE, absolute } from '../../../lib/seo';
-import { ldJson, articleSchema } from '../../../lib/schema';
+import { ldJson, articleSchema, faqSchema } from '../../../lib/schema';
+import { authorBySlug } from '../../../lib/authors';
+import ArticleByline from '../../../components/article/ArticleByline.astro';
+import ArticleTakeaways from '../../../components/article/ArticleTakeaways.astro';
+import ArticleFaq from '../../../components/article/ArticleFaq.astro';
+import ArticleSources from '../../../components/article/ArticleSources.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
@@ -48,6 +53,14 @@ const lead = plain(post.excerpt ?? '').replace(/(\.\.\.|…|\[…\])$/, '').repl
 const intro = post.excerpt && !(lead && firstPara.startsWith(lead)) ? [post.excerpt] : [];
 const pending = !html && showPendingNote(INDEXABLE) ? c.pending.body : null;
 const date = c.date.show ? { iso: post.date, text: badgeDate(post.date, loc).full, label: c.date.label } : null;
+// GEO blocks (SEO & GEO dashboard, 30 Oct 2026): only what the post carries. The byline appears once a post has an author, a
+// reviewer or an `updated` date, so the migrated posts look exactly as before until they are edited in the dashboard.
+const author = authorBySlug(post.author);
+const reviewer = authorBySlug(post.reviewer);
+const byline = !!(author || reviewer || post.updated);
+const takeaways = post.key_takeaways?.filter(Boolean) ?? [];
+const faqs = post.faqs?.filter((f) => f.q.trim() && f.a.trim()) ?? [];
+const sources = post.sources?.filter((s) => s.url.trim()) ?? [];
 
 // Hero image = the post image (object-cover inside the 322 stage, like the condition pages' 1052x323 PNG).
 let image = '';
@@ -74,7 +87,9 @@ const pos = { titleSize: postTitleSize(post.title, post.language), titleTop: 99,
   <Fragment slot="head">
     <meta property="article:published_time" content={post.date} />
     <!-- Article / NewsArticle structured data (src/lib/schema.ts); a temporary sample photo (NW1) is never given as the article's image. -->
-    <script type="application/ld+json" set:html={ldJson(articleSchema(post, edition, { url: absolute(urlFor(edition, NEWS_PATHS.article(slug))), description: excerptDescription, image: ogImage && !sampleImage ? absolute(ogImage) : undefined }))} />
+    <script type="application/ld+json" set:html={ldJson(articleSchema(post, edition, { url: absolute(urlFor(edition, NEWS_PATHS.article(slug))), description: excerptDescription, image: ogImage && !sampleImage ? absolute(ogImage) : undefined, author, reviewer }))} />
+    {faqs.length > 0 && <script type="application/ld+json" set:html={ldJson(faqSchema(faqs, edition))} />}
+    {post.updated && <meta property="article:modified_time" content={post.updated} />}
   </Fragment>
   <div class="relative" style="z-index:14">
     <Header />
@@ -85,7 +100,16 @@ const pos = { titleSize: postTitleSize(post.title, post.language), titleTop: 99,
         {image ? <PageHero content={hero} pos={pos} h={322} variant="cover" mirror={false} side fullPhoto={post.hero_photo === 'full'} /> : <PageHero content={{ ...hero, banner: { image: 'conditions/accidents-rehabilitation', alt: '' } }} pos={pos} h={322} variant="cover" />}
       </div>
       <div id="overview" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
-        <ArticleBody heading={c.overviewHeading} date={date} intro={intro} html={html} pending={pending} video={c.video} />
+        <ArticleBody heading={c.overviewHeading} date={date} intro={intro} html={html} pending={pending} video={c.video}>
+          {byline && <ArticleByline slot="byline" author={author} reviewer={reviewer} date={post.date} updated={post.updated} labels={c.geo} />}
+          {takeaways.length > 0 && <ArticleTakeaways slot="before-body" heading={c.geo.takeaways} items={takeaways} />}
+          {(faqs.length > 0 || sources.length > 0) && (
+            <Fragment slot="after-body">
+              {faqs.length > 0 && <ArticleFaq heading={c.geo.faq} items={faqs} />}
+              {sources.length > 0 && <ArticleSources heading={c.geo.sources} items={sources} />}
+            </Fragment>
+          )}
+        </ArticleBody>
       </div>
     </article>
     <div id="doctors" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(48 * var(--u))">

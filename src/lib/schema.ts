@@ -7,6 +7,8 @@ import { absolute } from "./seo";
 import { t } from "./content";
 import { hospitalsIn, hospitalName, hospitalPosition, HOSPITAL_PATHS, type Hospital } from "./hospitals";
 import type { Post } from "./news";
+import type { AuthorFile } from "./authors-schema";
+import { authorBio, authorHref, authorName, authorRole } from "./authors";
 
 /*
  * JSON-LD structured data (SEO & GEO Dashboard Spec, Phase 1, 29 Oct 2026): the group on the edition homes, a Hospital on each
@@ -81,20 +83,58 @@ export function hospitalSchema(h: Hospital, edition: Edition) {
   };
 }
 
-/** A Media Hub post: Article for health articles (spec: blogs), NewsArticle for press releases, events, conferences, interviews. */
-export function articleSchema(post: Post, edition: Edition, o: { url: string; description: string; image?: string }) {
+const personId = (a: AuthorFile) => `${SITE_URL}/#person-${a.slug}`;
+const personRef = (a: AuthorFile, edition: Edition) => ({ "@type": "Person", "@id": personId(a), name: authorName(a, edition.locale), url: absolute(authorHref(a, edition)) });
+
+/** An author / reviewer (author page, and referenced from the articles): name, role, credentials, bio, photo, profiles. */
+export function personSchema(a: AuthorFile, edition: Edition, photo?: string) {
+  const loc = edition.locale;
+  const role = authorRole(a, loc);
+  const bio = authorBio(a, loc);
   return {
     "@context": "https://schema.org",
-    "@type": post.category === "health-articles" ? "Article" : "NewsArticle",
+    ...personRef(a, edition),
+    ...(role && { jobTitle: role }),
+    ...(bio && { description: bio }),
+    ...(photo && { image: photo }),
+    ...(a.credentials && { hasCredential: { "@type": "EducationalOccupationalCredential", name: a.credentials } }),
+    sameAs: [a.linkedin, ...a.same_as].filter(Boolean),
+    worksFor: orgRef(),
+  };
+}
+
+/** FAQPage for the questions of an article (the FAQ page builds its own). */
+export function faqSchema(faqs: { q: string; a: string }[], edition: Edition) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: edition.lang,
+    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/\s*\n\s*/g, " ") } })),
+  };
+}
+
+/**
+ * A Media Hub post: Article for the spec's blogs (`type` blog = health articles), NewsArticle for press releases, events,
+ * conferences, interviews. GEO fields when the post has them: a named author / reviewer (Person), dateModified from
+ * `updated`, the key takeaways as the description, the sources as citations.
+ */
+export function articleSchema(post: Post, edition: Edition, o: { url: string; description: string; image?: string; author?: AuthorFile; reviewer?: AuthorFile }) {
+  const takeaways = post.key_takeaways?.filter(Boolean) ?? [];
+  const sources = post.sources?.filter((s) => s.url) ?? [];
+  return {
+    "@context": "https://schema.org",
+    "@type": post.type === "blog" ? "Article" : "NewsArticle",
     headline: post.title,
-    description: o.description,
+    description: takeaways.length ? takeaways.join(" ") : o.description,
     url: o.url,
     mainEntityOfPage: o.url,
     inLanguage: edition.lang,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated || post.date,
     ...(o.image && { image: [o.image] }),
-    author: orgRef(),
+    author: o.author ? personRef(o.author, edition) : orgRef(),
+    ...(o.reviewer && { reviewedBy: personRef(o.reviewer, edition) }),
     publisher: orgRef(),
+    ...(sources.length && { citation: sources.map((s) => ({ "@type": "CreativeWork", name: s.title || s.url, url: s.url })) }),
   };
 }

@@ -42,5 +42,6 @@ a nightly job copies `src/content` + `.admin` to Azure Blob. Not set up yet: nee
 
 ## Not built yet
 
-Image upload (WebP ≤ 200 KB) from the dashboard, a rich-text editor for the article body (HTML today), the visible GEO
-blocks + author page on the site (templates), scheduled-publish cron, Azure wiring.
+Image upload (WebP ≤ 200 KB) from the dashboard, a rich-text editor for the article body (HTML today), scheduled-publish
+cron, Azure wiring. The GEO blocks (byline, key takeaways, FAQ, sources) and the author page are on the site since 30 Oct
+2026 (src/components/article/Article*.astro, src/pages/[...base]/media-hub/author/).

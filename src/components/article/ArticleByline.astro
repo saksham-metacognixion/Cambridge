@@ -1,0 +1,41 @@
+---
+/*
+ * Article byline (SEO & GEO dashboard, 30 Oct 2026; designed in the site's style, no Figma frame): under the "Overview"
+ * heading, in the intro's type (Book 12/14, body colour): "Written by <name>, <role> · Reviewed by <name>, <role> ·
+ * Published <date> · Last updated <date>". Names link to the author page in Deep Teal (Medium). Shown only when the post has an
+ * author, a reviewer or an `updated` date, so migrated posts look as before until they are edited.
+ */
+import type { AuthorFile } from '../../lib/authors-schema';
+import { authorHref, authorName, authorRole } from '../../lib/authors';
+import { parsePath } from '../../lib/editions';
+import { badgeDate } from '../../lib/news';
+
+interface Props {
+  author?: AuthorFile;
+  reviewer?: AuthorFile;
+  date: string;
+  updated?: string;
+  labels: { writtenBy: string; reviewedBy: string; published: string; updated: string };
+}
+const { author, reviewer, date, updated, labels } = Astro.props;
+const { edition } = parsePath(Astro.url.pathname);
+const loc = edition.locale;
+const person = (a: AuthorFile) => ({ href: authorHref(a, edition), name: authorName(a, loc), role: authorRole(a, loc) });
+const by = author && person(author);
+const rev = reviewer && person(reviewer);
+---
+
+<p class="byline">
+  {by && <span class="part">{labels.writtenBy} <a href={by.href} rel="author">{by.name}</a>{by.role && <>, {by.role}</>}</span>}
+  {rev && <span class="part">{labels.reviewedBy} <a href={rev.href}>{rev.name}</a>{rev.role && <>, {rev.role}</>}</span>}
+  <span class="part">{labels.published} <time datetime={date}>{badgeDate(date, loc).full}</time></span>
+  {updated && updated !== date && <span class="part">{labels.updated} <time datetime={updated}>{badgeDate(updated, loc).full}</time></span>}
+</p>
+
+<style>
+  .byline { margin: 0; display: flex; flex-wrap: wrap; gap: 0 calc(8 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(18 * var(--u)); }
+  .part + .part::before { content: '·'; margin-inline-end: calc(8 * var(--u)); color: var(--color-teal-border); }
+  a { color: var(--color-navy); font-weight: 500; text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; text-underline-position: from-font; }
+  a:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(1 * var(--u)); }
+</style>

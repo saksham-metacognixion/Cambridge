@@ -9,6 +9,7 @@ import { PAGE_PATHS, pagePath } from "./paths";
 import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
 import { NEWS_PATHS, allPostSlugs, postEditions, postFor, postsFor } from "./news";
+import { AUTHOR_PATHS, activeAuthors, authorEditions } from "./authors";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
 import { CARE_PATHS, allCareNodes, careInRegion } from "./care";
 import { calculators } from "./calculators";
@@ -67,6 +68,11 @@ function routes(): PageRoute[] {
       path: NEWS_PATHS.article(slug),
       editions: postEditions(slug),
       lastmod: (e: Edition) => { const p = postFor(slug, e); return p && (p.updated || p.date); },
+    })),
+    ...activeAuthors.map((a) => ({
+      key: `author-${a.slug}`,
+      path: AUTHOR_PATHS.page(a.slug),
+      editions: authorEditions(),
     })),
     { key: "patient-hub", path: PAGE_PATHS.patientHub },
     ...calculators.map((c) => ({

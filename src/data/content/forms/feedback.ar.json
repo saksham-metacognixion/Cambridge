@@ -1,1 +1,63 @@
-{}
+{
+  "_note": "Website Content - Suhad 4/Navigation Bar/AR - Your Opinion Matters.docx (13 Oct 2026), text exactly as in the document: hero title + text (also meta, as in English), intro heading + text, the rating question (matrix.label) and its six rows, the recommend question, 'Tell us more' label + placeholder. The document's extra heading 'تقييم تجربتكم' above the rating question is shown as matrix.heading (Arabic only; user request 14 Oct 2026, the English form has none). Name / Hospital / Mobile / Email labels, the answer options, rating columns and SUBMIT have no Arabic in any document or on the live site: English shown (CT31). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "meta": {
+    "title": "رأيكم يصنع الفرق | مستشفى كامبريدج",
+    "description": "في مستشفى كامبريدج، نولي اهتمامًا كبيرًا لآراء المرضى وأسرهم، ونعتبرها جزءًا أساسيًا من تطوير خدماتنا وتحسين جودة الرعاية. يسعدنا أن نعرف كيف كانت تجربتكم معنا، وكيف يمكننا الارتقاء بخدماتنا لنلبّي تطلعاتكم."
+  },
+  "hero": {
+    "title": [
+      "رأيكم يصنع الفرق"
+    ],
+    "text": "في مستشفى كامبريدج، نولي اهتمامًا كبيرًا لآراء المرضى وأسرهم، ونعتبرها جزءًا أساسيًا من تطوير خدماتنا وتحسين جودة الرعاية. يسعدنا أن نعرف كيف كانت تجربتكم معنا، وكيف يمكننا الارتقاء بخدماتنا لنلبّي تطلعاتكم."
+  },
+  "intro": {
+    "heading": "شاركونا تجربتكم",
+    "text": "نرحب بملاحظاتكم ومقترحاتكم، ونقدّر لكم وقتكم وثقتكم بمستشفى كامبريدج."
+  },
+  "matrix": {
+    "heading": "تقييم تجربتكم",
+    "label": "كيف تقيّمون الجوانب التالية من تجربتكم في المستشفى؟"
+  },
+  "fields": {
+    "quality": {
+      "label": [
+        "مستوى الرعاية الطبية المقدمة"
+      ]
+    },
+    "communication": {
+      "label": [
+        "سهولة التواصل مع فريق الرعاية وتلقي المعلومات الواضحة"
+      ]
+    },
+    "cleanliness": {
+      "label": [
+        "نظافة مرافق المستشفى والعناية بها"
+      ]
+    },
+    "information": {
+      "label": [
+        "شمولية ووضوح المعلومات المتعلقة بالتشخيص والخطة العلاجية"
+      ]
+    },
+    "admission": {
+      "label": [
+        "سهولة إجراءات الدخول إلى المستشفى والخروج منه"
+      ]
+    },
+    "responsiveness": {
+      "label": [
+        "سرعة استجابة فريق العمل لاحتياجاتكم"
+      ]
+    },
+    "recommend": {
+      "label": "ما مدى احتمالية أن توصي عائلتك وأصدقاؤك بتلقي الرعاية في مستشفى كامبريدج؟"
+    },
+    "message": {
+      "label": "نود معرفة المزيد",
+      "placeholder": "ما أكثر ما نال رضاكم خلال تجربتكم معنا؟ وما الذي ترون أنه يمكننا العمل على تحسينه؟"
+    },
+    "email": {
+      "label": "البريد الإلكتروني"
+    }
+  }
+}

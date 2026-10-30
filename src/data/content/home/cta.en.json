@@ -3,7 +3,7 @@
   "items": [
     { "label": "Book an Appointment", "href": "#book-appointment", "icon": "cta/calendar-clock" },
     { "label": "Find a Doctor", "href": "#doctors", "icon": "cta/stethoscope" },
-    { "label": "Search Conditions", "href": "#", "icon": "cta/magnifer" },
+    { "label": "Search Conditions", "href": "#", "page": "conditions", "icon": "cta/magnifer" },
     { "label": "Send an Inquiry", "href": "#send-inquiry", "icon": "cta/message-square-share" }
   ]
 }

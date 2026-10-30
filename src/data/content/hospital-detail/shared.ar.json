@@ -1,0 +1,39 @@
+{
+  "_note": "Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site: hero button, the care cards heading / text (home page 19153), doctors block, 'Take a Tour' / map labels: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Start Your Care\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (care cards button, 5 of 6 pages); \"Open in Google Maps\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html; \"Find Us in\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (\"Find Us in <city>\" heading). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"Phone\" = home/contact.ar.json phoneLabel (live Arabic, WordPress export page 19153). \"Designed for Comfort, Recovery and Wellbeing\" heading + text (healing.*, the same on all six hospitals) = Website Content - Suhad 4/Our Hospitals/AR- KSA Hospitals.docx (14 Oct 2026, as in jeddah/dhahran/al-khobar.ar.json), applied to the UAE hospitals too (client, 19 Oct 2026: English left on the Arabic Abu Dhabi page). \"Take a Tour\": still no Arabic.",
+  "hero": {
+    "button": {
+      "label": "احجز موعد"
+    }
+  },
+  "care": {
+    "heading": "خدمات مميزة في كل مرحلة من مراحل الرعاية",
+    "text": "في مستشفى كامبريدج، نلتزم بتقديم رعاية متقدمة مرتكزة على المريض مع تميز سريري، ونوفر مجموعة كاملة من الخدمات المصممة خصيصًا لتلبية احتياجاتكم الفردية",
+    "_cardsNote": "No Arabic hospital document: the Inpatient card keeps the Home services Arabic text (set here so the English override of shared.en.json does not leak through the locale merge).",
+    "cards": {
+      "inpatient": {
+        "desc": "رعاية طبية وتأهيلية متخصصة على مدار الساعة طوال أيام الأسبوع"
+      }
+    },
+    "button": "ابدأ رعايتك"
+  },
+  "doctors": {
+    "heading": "رعاية متخصصة، أطباء موثوق بهم",
+    "text": "يلتزم متخصصونا بتقديم الرعاية المناسبة في كل مرحلة من مراحل رحلتك"
+  },
+  "environment": {
+    "ariaLabel": "اختبر بيئة الرعاية",
+    "heading": "اختبر بيئة الرعاية"
+  },
+  "healing": {
+    "heading": "أجواء مريحة، ومساحات تدعم رحلة التعافي",
+    "text": [
+      "في مستشفى كامبريدج، نحرص على أن تكون تجربة المريض وأسرته مريحة ومطمئنة في كل مرحلة من مراحل العلاج. فمن المساحات الداخلية المهيأة للراحة وقضاء الوقت مع الأسرة، إلى الحدائق والمساحات الخارجية التي تتيح فرصة الاستمتاع بالهواء الطلق والضوء الطبيعي، صُممت مرافقنا لتمنح شعورًا بالراحة بعيدًا عن أجواء العلاج التقليدية.",
+      "كما تضم منشآتنا صالات متخصصة للتأهيل، مجهّزة لدعم جلسات العلاج والتدريب لاستعادة القدرات الوظيفية وفقًا لأهداف كل مريض. وتتكامل هذه المساحات الداخلية والخارجية مع موافق التأهيل والعلاج لتوفير بيئة رعاية متوازنة، تراعي متطلبات التعافي السريري، وتدعم الراحة والصحة النفسية واستعادة القدرة على أداء الأنشطة اليومية."
+    ]
+  },
+  "map": {
+    "button": "فتح الموقع في خرائط Google",
+    "lead": "ابحث عنا في ",
+    "phoneLabel": "الهاتف"
+  }
+}

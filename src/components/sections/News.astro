@@ -1,14 +1,22 @@
 ---
 import NewsCard from '../NewsCard.astro';
-import dots from '../../assets/news/divider-group622.svg';
+import Pagination from '../shared/Pagination.astro';
 import line from '../../assets/news/line23.svg';
 import { content, t } from '../../lib/content';
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { hasPost, NEWS_PATHS, postFor, postImage, postsFor, type Post as NewsPost } from '../../lib/news';
+import { PAGE_PATHS } from '../../lib/paths';
 import news from '../../data/news.json';
 
 const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/news', edition.locale);
+// "Read more" -> the post's article page (media-hub/<slug>); a slug that is in no export record goes to the 404 page (AR5).
+// Default cards: the three slugs of home/news JSON with the Figma photos + crops (news.json); their title and excerpt come
+// from the post record in the edition's language (src/content/news/<slug>.json), so the Arabic editions show the Arabic post.
+// Tabs: each pill = a category of the export (filterCategories in home/news JSON); pressing it shows that category's three
+// latest posts of the edition's language. A post whose image file is not downloaded yet shows a temporary sample photo (src/data/news/sample-images.json, NW1).
+const articleHref = (slug: string) => (hasPost(slug) ? urlFor(edition, NEWS_PATHS.article(slug)) : urlFor(edition, PAGE_PATHS.notFound));
 
 // crop.ratio = intrinsic height/width of the source file. Hardcoded on purpose: reading c.src.width/height
 // makes Astro copy the full-size original into dist.
@@ -28,27 +36,41 @@ const design = [
     crop: { h: '102.73%', l: '-0.04%', t: '-2.73%', w: '100.07%', iw: 288 * 1.0007, ratio: 832 / 1061 },
   },
 ];
-type Post = (typeof news.posts)[number] & { category?: string };
-const card = (post: Post) => ({
-  src: img(post.image, edition.region),
-  alt: t(post.imageAlt, edition.locale, 'news'),
-  title: t(post.title, edition.locale, 'news'),
-  text: t(post.excerpt, edition.locale, 'news'),
-});
-// Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, with their Figma crops.
+type FigmaPost = (typeof news.posts)[number];
+const safeImg = (key: string, slug: string) => {
+  try { return img(key, edition.region); } catch { console.warn(`[news] home: image "${key}" of ${slug} not found in src/assets; empty image box`); return null; }
+};
+// Default view (no tab pressed, as in Figma): the posts listed by slug in home/news JSON, Figma photo + crop, live text.
 const cards = design.map((d, i) => {
   const slug: string = txt.posts[i];
-  const post = news.posts.find((n) => n.slug === slug);
-  if (!post) throw new Error(`home/news: unknown post slug "${slug}"`);
-  return { ...d, ...card(post) };
+  const figma = news.posts.find((n) => n.slug === slug) as FigmaPost | undefined;
+  if (!figma) throw new Error(`home/news: unknown post slug "${slug}"`);
+  const post = postFor(slug, edition);
+  return {
+    ...d,
+    src: img(figma.image, edition.region),
+    alt: post?.image_alt || t(figma.imageAlt, edition.locale, 'news'),
+    title: post?.title ?? t(figma.title, edition.locale, 'news'),
+    // A post without an excerpt in the export (a video-only post such as the Dr. Kassab interview, 15 Oct 2026) shows the
+    // Figma card text of the edition's language; no English on Arabic pages, so an Arabic edition keeps the box empty.
+    text: post?.excerpt || figma.excerpt[edition.locale] || '',
+    readMore: { label: txt.readMore.label, href: articleHref(slug) },
+  };
 });
-// Tabs: filterCategories (home/news JSON) pairs each pill with a `category` value on the posts in news.json.
-// Each tab's first 3 posts are rendered into a <template>; a category with no posts yet gets no template and its
-// tab keeps the default cards.
+const card = (post: NewsPost) => ({
+  src: postImage(post).key ? safeImg(postImage(post).key, post.slug) : null, // missing file -> temporary sample photo (NW1)
+  alt: post.image_alt || post.title,
+  title: post.title,
+  text: post.excerpt,
+  readMore: { label: txt.readMore.label, href: articleHref(post.slug) },
+});
+// Tabs: filterCategories (home/news JSON) = export categories; each tab's three latest posts (edition language, newest
+// first) are rendered into a <template>. A category with no posts gets no template and its tab keeps the default cards.
+const all = postsFor(edition);
 const pillX = [321, 420, 519];
 const pills = pillX.map((x, i) => {
   const key: string = txt.filterCategories[i];
-  const posts = (news.posts as Post[]).filter((n) => n.category === key).slice(0, design.length);
+  const posts = all.filter((n) => n.category === key).slice(0, design.length);
   return { label: txt.filters[i] as string, x, key, sets: posts.map((post, j) => ({ slot: design[j].slot, ...card(post) })) };
 });
 ---
@@ -64,42 +86,59 @@ const pills = pillX.map((x, i) => {
           aria-pressed="false"
           aria-controls="news-cards"
           data-news-tab={p.key}
-          class="news-tab hit hair-100 border-navy rounded-r12 bg-transparent p-0 flex items-center justify-center h-25 w-79 box-border font-gotham font-medium text-f10 leading-10 text-navy text-center not-italic cursor-pointer lg:absolute lg:top-51"
+          class="news-tab hit ui-pill lg:absolute lg:top-51"
           style={`--x:${p.x + F}`}
           data-x
         >{p.label}</button>
       ))}
     </div>
 
-    <div id="news-cards" data-news-cards class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40 lg:contents">
-      {cards.map((c) => <NewsCard F={F} readMore={txt.readMore} {...c} />)}
+    <div id="news-cards" data-news-cards class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40">
+      {cards.map((c) => <NewsCard F={F} {...c} />)}
     </div>
     {pills.filter((p) => p.sets.length).map((p) => (
       <template data-news-set={p.key}>
-        {p.sets.map((c) => <NewsCard F={F} readMore={txt.readMore} {...c} />)}
+        {p.sets.map((c) => <NewsCard F={F} {...c} />)}
       </template>
     ))}
 
-    <img src={dots.src} width={dots.width} height={dots.height} alt="" class="hidden lg:block absolute start-506 top-544" style="width:calc(40.972 * var(--u));height:calc(8.716 * var(--u))" />
-    <div class="hidden lg:block absolute start-60 -rotate-[0.31deg]" style="top:calc(587.375 * var(--u));width:calc(915.014 * var(--u));height:calc(0.25 * var(--u))">
-      <img src={line.src} width={line.width} height={line.height} alt="" class="block w-full h-full" />
+    <!-- Pagination dots of the cards box (Figma's dot divider at y 544, cyan active dot): shared component (bug 012). Shown
+         only when the box overflows sideways; the three cards fit at every width (stacked below 1024), so nothing shows today. -->
+    <div class="news-dots max-lg:mt-30">
+      <Pagination for="news-cards" tone="cyan" />
+    </div>
+    <div class="news-line hidden lg:block -rotate-[0.31deg]">
+      <img loading="lazy" src={line.src} width={line.width} height={line.height} alt="" class="block w-full h-full" />
     </div>
   </div>
 </section>
 
 <script>
   import '../../scripts/news-tabs';
+  import '../../scripts/pagination';
 </script>
 
 <style>
   @media (min-width: 1024px) {
     [data-x] { inset-inline-start: calc(var(--x) * var(--u)); }
-    [data-news] :global([data-card]) { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
-    [data-news] :global([data-card] > :not(:first-child)) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
+    /* Rows from the Figma y positions: cards at 113, dots at 544, divider line at 587.375. The cards row is a minimum, so a card
+       taller than Figma's (a long post title, Arabic line heights) grows the section instead of overlapping the line. The three
+       cards share the row's one cell, each offset by its Figma x, so the row is as tall as the tallest card. */
+    [data-news] .stage { display: grid; grid-template-columns: 100%; grid-template-rows: calc(113 * var(--u)) minmax(calc(431 * var(--u)), auto) minmax(calc(43.375 * var(--u)), auto) auto; align-content: start; height: auto; min-height: calc(var(--h) * var(--u)); }
+    [data-news-cards] { grid-row: 2; display: grid; grid-template-columns: 100%; align-items: start; }
+    [data-news] :global([data-card]) { grid-area: 1 / 1; margin-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
+    [data-news] :global([data-card] > :not(:first-child)) { margin-inline-start: calc((var(--lx, 0)) * var(--u)); }
+    .news-dots { grid-row: 3; }
+    .news-line { grid-row: 4; margin-inline-start: calc(60 * var(--u)); width: calc(915.014 * var(--u)); height: calc(0.25 * var(--u)); }
   }
-  /* Selected tab: the filled pill Figma uses in Care Support (navy, white text). The border stays, in navy, so the
-     label doesn't move by the border width. */
-  .news-tab[aria-pressed='true'] { background: var(--color-navy, #004059); border-color: var(--color-navy, #004059); color: #fff; }
+  /* Bug 158 (15 Oct 2026): 768-1023 the three cards sat in one 396px column (the phone stack). Tablets get the 2-up step used by
+     HospitalCards / SubServiceGrid (cells of at least 240 units, 24-unit column gap), the cards fill their cells, so they sit 2 + 1.
+     Phones keep the centred stack. */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    [data-news-cards] { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); column-gap: calc(24 * var(--u)); row-gap: calc(40 * var(--u)); align-items: start; }
+    [data-news] :global([data-card]) { max-width: none; }
+  }
+  /* Tabs: the shared .ui-pill rule (global.css); selected = the filled navy pill Figma uses in Care Support. */
   /* Tab switch, as on the live site: cards fade out, the set swaps, cards fade back in (script below). */
   @media (prefers-reduced-motion: no-preference) {
     [data-news] :global([data-card]) { transition: opacity 250ms ease; }

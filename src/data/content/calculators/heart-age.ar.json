@@ -1,0 +1,85 @@
+{
+  "_note": "Live site Arabic calculator page (WordPress export 6 Oct 2026 for the hero and intro; the form text and result strings = the live calculator's Arabic strings, read 6 Oct 2026).",
+  "meta": {
+    "title": "حاسبة عمر صحة القلب | مستشفى كامبريدج",
+    "description": "قدر عمر صحة قلبك باستخدام عوامل خطر القلب الرئيسية."
+  },
+  "hero": {
+    "ariaLabel": "حاسبة عمر صحة القلب",
+    "title": [
+      "تحقق من صحة قلبك وعمرك."
+    ],
+    "text": "قدر عمر صحة قلبك باستخدام عوامل خطر القلب الرئيسية."
+  },
+  "intro": {
+    "heading": "ما تقيس هذه الحاسبة",
+    "text": "تستخدم هذه الحاسبة عوامل مثل العمر، الكوليسترول، ضغط الدم، التدخين، السكري، وحالة علاج ضغط الدم لتقدير صحة قلبك وعمرك."
+  },
+  "form": {
+    "ariaLabel": "حاسبة عمر صحة القلب",
+    "submit": "احسب عمر صحة القلب",
+    "fields": {
+      "sex": {
+        "label": "الجنس",
+        "placeholder": "اختر إجابة",
+        "options": {
+          "male": "ذكر",
+          "female": "أنثى"
+        }
+      },
+      "age": {
+        "label": "العمر",
+        "placeholder": "مثال: 45"
+      },
+      "total_chol": {
+        "label": "الكوليسترول الكلي",
+        "placeholder": "مثال: 200"
+      },
+      "hdl": {
+        "label": "كوليسترول HDL",
+        "placeholder": "مثال: 50"
+      },
+      "sbp": {
+        "label": "ضغط الدم الانقباضي",
+        "placeholder": "مثال: 120"
+      },
+      "bp_meds": {
+        "label": "هل تتناول دواءً لضغط الدم؟",
+        "placeholder": "اختر إجابة",
+        "options": {
+          "0": "لا",
+          "1": "نعم"
+        }
+      },
+      "smoker": {
+        "label": "هل أنت مدخن؟",
+        "placeholder": "اختر إجابة",
+        "options": {
+          "0": "لا",
+          "1": "نعم"
+        }
+      },
+      "diabetic": {
+        "label": "هل لديك سكري؟",
+        "placeholder": "اختر إجابة",
+        "options": {
+          "0": "لا",
+          "1": "نعم"
+        }
+      }
+    }
+  },
+  "result": {
+    "title": "عمر صحة القلب",
+    "categories": {
+      "younger": "أصغر من عمرك",
+      "similar": "قريب من عمرك",
+      "older": "أكبر من عمرك"
+    },
+    "notes": {
+      "younger": "يشير هذا التقدير إلى أن عمر صحة قلبك أصغر من عمرك الفعلي.",
+      "similar": "يشير هذا التقدير إلى أن عمر صحة قلبك قريب من عمرك الفعلي.",
+      "older": "يشير هذا التقدير إلى أن عمر صحة قلبك أكبر من عمرك الفعلي."
+    }
+  }
+}

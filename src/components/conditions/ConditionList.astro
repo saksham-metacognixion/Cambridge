@@ -1,0 +1,109 @@
+---
+import { content, t } from '../../lib/content';
+import { parsePath, urlFor } from '../../lib/editions';
+import { conditions, CONDITION_PATHS } from '../../lib/conditions';
+import { specialties } from '../../lib/doctors';
+import ConditionCard from './ConditionCard.astro';
+import chevron from '../../assets/doctors-page/chevron.svg';
+import sortIcon from '../../assets/conditions/sort.svg';
+
+/*
+ * "Our Specialities" block of Conditions & Specialities (Figma 40:318), section top = H2 top (page y 598).
+ * H2 67:2873 Gotham Medium 28 #004059, centred, w651, box h33 | 35 | filters row 67:2874 / 67:4623 (page y 666, h35):
+ *   [select 311] 14 [A-Z 92] 21 [select 311] 14 [A-Z 92] from x 97 | 56 | card grid (tag tops 757): 4 x 198.097, column gap
+ *   24.903 (pitch 223) from x 92, row pitch 210 = card 188 + 22 (Figma's 4th row sits 13px lower: normalised to 210).
+ * Selects: same box as Find a Doctor (.ui-box). A-Z button (Figma 92 x 35, radius 10, sliders icon sort.svg 21 x 17.327,
+ * "A - Z" Gotham Book 10/14 navy): now the shared .ui-btn label / padding (bugs 044 / 050) and --radius-btn (bug 049), as tall
+ * as the select next to it; the 0.5 teal outline stays. Behaviour: src/scripts/condition-filters.ts (URL state, back button).
+ * Without JS the controls do nothing and all cards stay visible (Figma order).
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('conditions-specialities/page', edition.locale);
+const loc = edition.locale;
+const items = conditions.map((x) => ({
+  slug: x.slug,
+  title: t(x.title, loc, 'conditions'),
+  summary: t(x.summary, loc, 'conditions'),
+  specialties: x.specialties,
+  href: urlFor(edition, CONDITION_PATHS.detail(x.slug)),
+}));
+// Dropdown = the specialties that have at least one condition (WordPress condition_specialty), in data order; the A-Z buttons
+// sort the cards (see src/lib/condition-filters.ts).
+const options = specialties.filter((s) => conditions.some((x) => x.specialties.includes(s.id)));
+---
+
+<section class="list" aria-labelledby="conditions-heading" data-condition-filters data-locale={edition.lang}>
+  <h2 id="conditions-heading" class="h">{c.heading}</h2>
+
+  <div class="filters" role="search" aria-label={c.filters.ariaLabel}>
+    <div class="pair">
+      <div class="ui-box sel">
+        <label class="sr-only" for="cf-specialty">{c.filters.specialtyLabel}</label>
+        <select id="cf-specialty" name="specialty" class="ui-field">
+          <option value="">{c.filters.specialtyLabel}</option>
+          {options.map((s) => <option value={s.id}>{t(s.name, loc, 'specialties')}</option>)}
+        </select>
+        <img loading="lazy" class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
+      </div>
+      <button type="button" class="az ui-btn hit btn-outline" data-sort aria-pressed="false" aria-label={c.filters.sortSpecialtyAria}>
+        <img loading="lazy" class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
+        <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
+      </button>
+    </div>
+    <div class="pair">
+      <div class="ui-box sel">
+        <label class="sr-only" for="cf-condition">{c.filters.conditionLabel}</label>
+        <select id="cf-condition" name="condition" class="ui-field">
+          <option value="">{c.filters.conditionLabel}</option>
+          {items.map((x) => <option value={x.slug}>{x.title}</option>)}
+        </select>
+        <img loading="lazy" class="ui-chev" src={chevron.src} width="7" height="4.2" alt="" />
+      </div>
+      <button type="button" class="az ui-btn hit btn-outline" data-sort aria-pressed="false" aria-label={c.filters.sortConditionAria}>
+        <img loading="lazy" class="az-icon" src={sortIcon.src} width="21" height="17.327" alt="" />
+        <span class="az-label" aria-hidden="true">{c.filters.sortLabel}</span>
+      </button>
+    </div>
+  </div>
+
+  <ul class="grid" role="list" aria-label={c.results.listLabel} data-condition-list>
+    {items.map((x) => (
+      <li data-slug={x.slug} data-title={x.title} data-specialties={x.specialties.join(' ')}>
+        <ConditionCard slug={x.slug} title={x.title} summary={x.summary} href={x.href} button={c.card.button} headingId={`cond-${x.slug}`} />
+      </li>
+    ))}
+  </ul>
+  <p class="ui-empty not-italic" data-condition-empty hidden>{c.results.empty}</p>
+  <p class="sr-only" role="status" aria-live="polite" data-condition-status data-template={c.results.found}></p>
+</section>
+
+<style>
+  .list { max-width: calc(var(--max-w) * 1px); margin-inline: auto; font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0 auto; max-width: calc(651 * var(--u)); padding-inline: 16px; box-sizing: border-box; text-align: center; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(16 * var(--u)) calc(21 * var(--u)); margin-top: calc(35 * var(--u)); padding-inline: 16px; }
+  .pair { display: flex; gap: calc(14 * var(--u)); width: calc(417 * var(--u)); max-width: 100%; }
+  .sel { flex: 1 1 auto; min-width: 0; width: calc(311 * var(--u)); }
+  .az { position: relative; height: auto; background: transparent; border: calc(0.5 * var(--u)) solid var(--color-teal-border); color: var(--color-navy); } /* bugs 044 / 049 / 050: size, label, corners = .ui-btn */
+  .az[aria-pressed='true'] { background: var(--color-chip); } /* no pressed state in Figma: subtle chip fill, flagged */
+  .az-icon { width: calc(21 * var(--u)); max-width: 24px; height: auto; }
+  .grid { list-style: none; margin: calc(56 * var(--u)) 0 0; padding: 0 16px; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(198.097 * var(--u))); column-gap: calc(24.903 * var(--u)); row-gap: calc(22 * var(--u)); }
+  .grid > li { display: flex; }
+  .grid > li[hidden] { display: none; }
+  /* Bug 159 (15 Oct 2026): below 1024 the fixed 198-unit cards were centred in the gutter box (271px wide, 60px margins at 390)
+     under filters that span the gutter. The cells now fill the box (1 per row on phones, 2 on tablets, the Patient Hub rule) and
+     each card is drawn at its cell's width: the card's own --u = cell width / 198.097 (the page --u is a fixed px value below
+     1024, so the cell can be a size container; the DoctorsRow pattern from bug 143), so the whole composition scales as one piece. */
+  @media (max-width: 1023.98px) {
+    .filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+    .pair { width: auto; }
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.ccard) { --u: calc(100cqw / 198.097); }
+    }
+  }
+  @media (min-width: 1024px) {
+    .filters { flex-wrap: nowrap; justify-content: flex-start; width: calc(855 * var(--u)); margin-inline-start: calc(97 * var(--u)); padding-inline: 0; }
+    .grid { width: calc(867.097 * var(--u)); margin-inline-start: calc(92 * var(--u)); padding: 0; justify-content: start; grid-template-columns: repeat(4, calc(198.097 * var(--u))); }
+  }
+</style>

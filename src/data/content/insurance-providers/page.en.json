@@ -1,0 +1,31 @@
+{
+  "_note": "Insurance Providers (Figma 46:6844). Visible text exactly as in Figma. meta.*, ariaLabel/listLabel, results.* (empty state + screen-reader status) are NOT in Figma (PLACEHOLDER). Insurers: src/data/insurers.json.",
+  "meta": {
+    "title": "Insurance Providers | Cambridge Hospital",
+    "description": "Insurance providers accepted at Cambridge Hospital in the UAE and Saudi Arabia, for seamless access to post-acute rehabilitation and long-term care."
+  },
+  "hero": {
+    "ariaLabel": "Insurance Providers",
+    "banner": { "image": "insurance-page/banner", "alt": "" },
+    "title": ["Seamless Coverage, Simplified Care"],
+    "text": "We work with a wide network of insurance providers to ensure you receive the care you need with ease, clarity, and confidence.",
+    "button": { "label": "Book an Appointment", "href": "#book-appointment" }
+  },
+  "intro": {
+    "heading": "Accepted Insurance Providers",
+    "text": "Our extensive insurance network enables seamless access to high-quality care, supporting patients with efficient and reliable coverage solutions."
+  },
+  "filters": {
+    "countryLabel": "Country",
+    "countries": [
+      { "value": "all", "label": "ALL" },
+      { "value": "sa", "label": "KSA" },
+      { "value": "ae", "label": "UAE" }
+    ]
+  },
+  "results": {
+    "listLabel": "Insurance providers",
+    "empty": "The list of insurance providers for this country will be available soon.",
+    "found": "{n} insurance providers shown"
+  }
+}

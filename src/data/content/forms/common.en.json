@@ -1,10 +1,13 @@
 {
-  "$comment": "Shared form text. Figma has no design or copy for the close button, errors or success message: these strings are NOT from Figma and need Pramod's approval (English) and his Arabic text. The consent text is the Figma Contact page consent (86:799).",
+  "$comment": "Shared form text. Figma has no design or copy for the close button, errors or success message: these strings are NOT from Figma and need Pramod's approval (English) and his Arabic text. The consent text is the Figma Contact page consent (86:799). consent.link.page = key in PAGE_PATHS (the Privacy Policy page), resolved per edition by FormShell.",
   "close": "Close",
   "dialCodeLabel": "Country code",
   "consent": {
     "before": "I have read the ",
-    "link": { "label": "Privacy policy", "href": "#" },
+    "link": {
+      "label": "Privacy policy",
+      "page": "privacyPolicy"
+    },
     "after": " and I consent to the transfer and processing of",
     "line2": "my personal data."
   },
@@ -25,5 +28,19 @@
     "title": "Thank you",
     "text": "Your message has been sent. Our team will contact you soon."
   },
-  "sending": "Sending…"
+  "sending": "Sending…",
+  "attach": {
+    "$comment": "Bug 093: optional attachment on the Send an Enquiry forms (Contact page, pop-up, Home). Not in Figma; the label is the issue tracker's wording, the rest needs Pramod's approval (English) and his Arabic text (common.ar.json is empty: English shows on Arabic pages, as for every other shared form string). {types} / {size} are filled from src/data/forms.json `attachments`.",
+    "label": "Attach file (optional)",
+    "hint": "{types}, up to {size}",
+    "or": "or",
+    "remove": "Remove attachment",
+    "selected": "File attached: {name}",
+    "removed": "Attachment removed",
+    "errors": {
+      "file_type": "Please choose a {types} file.",
+      "file_size": "This file is too large. The maximum size is {size}.",
+      "file_invalid": "This file could not be read. Please choose another file."
+    }
+  }
 }

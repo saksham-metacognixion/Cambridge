@@ -1,0 +1,91 @@
+---
+import { content } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { leadersForEdition, leaderHref, own } from '../../lib/leadership';
+import type { Doctor } from '../../lib/doctors';
+import DoctorCard from '../doctors/DoctorCard.astro';
+
+/*
+ * Meet the Team list (Task 198, 16 Oct 2026; no Figma frame). The live page: an All Countries / UAE / KSA filter over photo cards
+ * (photo, name, title -> the profile) in the live order. Built from the site's own parts: the region pills (.ui-pill, the Home
+ * doctors' ALL / UAE / KSA) and the Find a Doctor card and grid (DoctorCard, the same 4 x 215 columns), the photo filling the
+ * card's panel (the leadership portraits are opaque squares), "Read More" -> the profile.
+ * Editions: Global = all 16 with the filter (?country=ae|sa in the URL: shareable, Back works); /ae and /sa list their own
+ * country's leaders only, so no filter there. Every card is in the static HTML (no-JS visitors see the full list).
+ */
+const { edition } = parsePath(Astro.url.pathname);
+const c = content('meet-the-team/page', edition.locale);
+const list = leadersForEdition(edition);
+const showFilter = edition.region === 'global';
+const asDoctor = (l: (typeof list)[number]) =>
+  ({ id: String(l.id), slug: l.slug, name: l.name, title: l.title, specialties: [], hospital_id: '', country: l.country, languages: [], bio: l.bio, sub_specialities: [], photo: l.photo, show_book_now: false }) as Doctor;
+---
+
+<div data-leaders>
+  {showFilter && (
+    <div class="filter" role="group" aria-label={c.filter.label}>
+      {(['all', 'ae', 'sa'] as const).map((k) => (
+        <button type="button" class="ui-pill hit" data-country={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{c.filter[k]}</button>
+      ))}
+    </div>
+  )}
+  <ul class="grid" role="list" aria-label={c.listLabel}>
+    {list.map((l) => (
+      <li data-country={l.country}>
+        <DoctorCard doctor={asDoctor(l)} edition={edition} labels={c.card} book={false} href={leaderHref(l, edition)} role={own(l.title, edition.locale)} fill />
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  /* Country filter (Global only): ?country=ae|sa, pushState so Back restores the previous choice. */
+  const root = document.querySelector<HTMLElement>('[data-leaders]');
+  const pills = root ? [...root.querySelectorAll<HTMLButtonElement>('.filter [data-country]')] : [];
+  const items = root ? [...root.querySelectorAll<HTMLElement>('li[data-country]')] : [];
+  const read = () => {
+    const v = new URLSearchParams(location.search).get('country');
+    return v === 'ae' || v === 'sa' ? v : 'all';
+  };
+  const apply = (k: string) => {
+    pills.forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.country === k)));
+    items.forEach((li) => (li.hidden = k !== 'all' && li.dataset.country !== k));
+  };
+  if (pills.length) {
+    apply(read());
+    pills.forEach((p) =>
+      p.addEventListener('click', () => {
+        const k = p.dataset.country!;
+        const u = new URL(location.href);
+        if (k === 'all') u.searchParams.delete('country');
+        else u.searchParams.set('country', k);
+        if (u.href !== location.href) history.pushState(null, '', u);
+        apply(k);
+      }),
+    );
+    addEventListener('popstate', () => apply(read()));
+  }
+</script>
+
+<style>
+  .filter { display: flex; flex-wrap: wrap; justify-content: center; gap: calc(10 * var(--u)); margin-bottom: calc(31 * var(--u)); }
+  /* the region pill (79 wide) grows with a longer label (All Countries, the Arabic labels), so the three stay on one line */
+  .filter .ui-pill { width: auto; min-width: calc(79 * var(--u)); padding-inline: calc(14 * var(--u)); white-space: nowrap; }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; justify-content: center; grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u)); }
+  .grid > li { display: flex; }
+  .grid > li[hidden] { display: none; }
+  /* the Find a Doctor grid (DoctorGrid, bug 159): cells fill the gutter box below 1024, each card scaled to its cell */
+  @media (max-width: 1023.98px) {
+    .filter { padding-inline: 16px; margin-bottom: var(--stack-gap); gap: 8px; }
+    .filter .ui-pill { min-width: 88px; padding-inline: 16px; } /* one row from 360px up (the 79-unit pill is ~108px here) */
+    .grid { padding-inline: 16px; }
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.card) { --u: calc(100cqw / 215); }
+    }
+  }
+  @media (min-width: 1024px) {
+    .grid { width: calc(955 * var(--u)); margin-inline: auto; justify-content: start; grid-template-columns: repeat(4, calc(215 * var(--u))); column-gap: calc(31.667 * var(--u)); }
+  }
+</style>

@@ -4,7 +4,7 @@ import { content } from '../../lib/content';
 import { parsePath, urlFor } from '../../lib/editions';
 import { postsFor } from '../../lib/news';
 import { cardData } from '../../lib/news-image';
-import dots from '../../assets/media-hub/divider-group620.svg';
+import Pagination from '../shared/Pagination.astro';
 
 // Figma 46:7903 (page y 1236, h 656.769). The first posts are rendered here; the rest are added by the script
 // from posts.json when the row is scrolled or a category is chosen (the row can hold all ~259 posts).
@@ -15,20 +15,58 @@ const cards = await Promise.all(postsFor(edition).slice(0, FIRST).map((p) => car
 const indexUrl = urlFor(edition, 'media-hub/posts.json');
 ---
 
-<section id="latest" data-latest data-index={indexUrl} class="relative mt-[calc(44.28*var(--u))] bg-[#f2f2f2] pt-65 pb-72" aria-labelledby="latest-title">
+<section id="latest" data-latest data-index={indexUrl} class="relative mt-[calc(44.28*var(--u))] bg-mist-50 pt-65 pb-72" aria-labelledby="latest-title">
   <p class="m-0 mx-auto h-17 max-w-282 text-center font-gotham font-light text-f14p173 leading-17 tracking-[calc(1.4173*var(--u))] text-navy uppercase not-italic">{c.eyebrow}</p>
-  <h2 id="latest-title" class="m-0 mx-auto mt-[calc(27.64*var(--u))] max-w-[calc(457.328*var(--u))] text-center font-gotham font-bold text-f29p076 leading-[calc(34.336*var(--u))] text-navy not-italic [word-break:break-word]">{c.title}</h2>
+  <h2 id="latest-title" class="m-0 mx-auto max-lg:box-border max-lg:px-[16px] mt-[calc(27.64*var(--u))] max-w-[calc(457.328*var(--u))] text-center font-gotham font-bold text-f29p076 leading-[calc(34.336*var(--u))] text-navy not-italic [word-break:break-word]">{c.title}</h2>
 
-  <!-- Swipe / scroll row (no arrows): padding keeps the card shadows from being clipped, margins cancel it out. -->
-  <ul class="hscroll m-0 mt-[calc(1.64*var(--u))] -mb-30 flex list-none gap-[calc(36.6*var(--u))] p-0 py-30 ps-16 pe-16 scroll-ps-16 lg:ps-115 lg:pe-115 lg:scroll-ps-115" data-row aria-label={c.indexLabel}>
-    {cards.map((card) => <li class="flex"><PostCard card={card} /></li>)}
-    <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
-  </ul>
-  <template data-card-template><li class="flex"><PostCard /></li></template>
+  <!-- Swipe / scroll row (no arrows in Figma), auto-scrolling in a slow seamless loop like Testimonials / Care Support (bug 064,
+       src/scripts/autoscroll.ts: scroller [data-autoscroll] > [data-loop-row] > [data-loop-item]; pauses on hover / focus /
+       touch, off with prefers-reduced-motion). The script appends more posts to the loop row as it nears its end
+       (scripts/media-hub.ts) and rebuilds the copies. Padding keeps the card shadows from being clipped, margins cancel it out. -->
+  <!-- >= 1024 (bug 111, user decision 14 Oct 2026): the row is a centred window of exactly three cards (Figma 46:7903: cards at
+       x 115 / 401 / 685, equal space left and right) instead of running off the right screen edge: 3 x 248.389 + 2 x 36.6 =
+       818.367, plus 22 each side so the card shadows are not cut; mx-auto keeps it centred beyond 1440 (no --gutter needed).
+       Cards glide in and out at the window edges. data-autoscroll-lead: the 22 lead shows on load only; the loop wraps past it,
+       so it never pops back in when the loop restarts. Below 1024 the row stays full width (16px start). -->
+  <div id="latest-posts" class="hscroll mt-[calc(1.64*var(--u))] -mb-30 py-30 scroll-ps-16 lg:mx-auto lg:w-[calc(862.367*var(--u))] lg:scroll-ps-[calc(22*var(--u))]" data-row data-autoscroll data-autoscroll-lead>
+    <ul class="m-0 flex w-max list-none gap-[calc(36.6*var(--u))] p-0 ps-16 pe-16 lg:ps-[calc(22*var(--u))] lg:pe-[calc(22*var(--u))]" data-loop-row aria-label={c.indexLabel}>
+      {cards.map((card) => <li class="flex" data-loop-item><PostCard card={card} /></li>)}
+      <li class="w-1 shrink-0" data-sentinel aria-hidden="true"></li>
+    </ul>
+  </div>
+  <template data-card-template><li class="flex" data-loop-item><PostCard /></li></template>
 
-  <img src={dots.src} width={dots.width} height={dots.height} alt="" class="mx-auto mt-[calc(58.83*var(--u))] block w-[calc(40.972*var(--u))] h-[calc(8.716*var(--u))]" />
+  <!-- Pagination dots of the post row (Figma's dot divider, 58.83 below the cards): shared component, bug 012; recounted as
+       the script appends more posts or a category is chosen. -->
+  <Pagination for="latest-posts" class="mt-[calc(58.83*var(--u))]" />
+
+  <!-- Bug 127 (client, 14 Oct 2026): the whole list as a grid under the row, in place (same URL and ?category). See More expands it
+       (first GRID_STEP posts of the chosen category, newest first, from posts.json), the See More at its end adds the next ones
+       until the category is exhausted, See Less collapses it. Same PostCard as the row; 3 / 2 / 1 columns (>= 1024 / >= 768 / phones),
+       the desktop grid = the row's three-card window. Not in Figma: labels reuse the approved "See More" (عرض المزيد, R053). -->
+  <div class="mt-[calc(36.6*var(--u))] flex justify-center px-16">
+    <button type="button" class="ui-btn hit btn-fill relative cursor-pointer border-0" aria-expanded="false" aria-controls="latest-grid" data-grid-toggle data-label-more={c.seeMore} data-label-less={c.seeLess}><span data-label>{c.seeMore}</span></button>
+  </div>
+  <div id="latest-grid" class="mt-[calc(44*var(--u))]" hidden data-grid>
+    <ul class="lp-grid" aria-label={c.indexLabel} data-grid-list></ul>
+    <div class="mt-[calc(44*var(--u))] flex justify-center px-16">
+      <button type="button" class="ui-btn hit btn-fill relative cursor-pointer border-0" data-grid-more><span>{c.seeMore}</span></button>
+    </div>
+  </div>
 </section>
+
+<style>
+  .lp-grid { box-sizing: content-box; display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(44 * var(--u)) calc(36.6 * var(--u)); max-inline-size: calc(248.389 * var(--u)); margin: 0 auto; padding: 0 16px; list-style: none; }
+  /* Cards fill their column (the row's fixed card width otherwise); the photo keeps the card's 248.389 x 175.333 ratio. */
+  .lp-grid > :global(li) > :global(.pc) { inline-size: 100%; }
+  .lp-grid > :global(li) > :global(.pc) > :global(div:first-child) { block-size: auto; aspect-ratio: 248.389 / 175.333; }
+  @media (min-width: 768px) { .lp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-inline-size: calc(533.378 * var(--u)); } }
+  @media (max-width: 1023.98px) { .lp-grid > :global(li) > :global(.pc) > :global(.pc-arrow) { margin-inline-start: 0; align-self: flex-end; } }
+  @media (min-width: 1024px) { .lp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-inline-size: calc(818.367 * var(--u)); padding: 0; } }
+</style>
 
 <script>
   import '../../scripts/media-hub';
+  import '../../scripts/pagination';
+  import '../../scripts/autoscroll';
 </script>

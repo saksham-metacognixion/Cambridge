@@ -10,5 +10,5 @@
     { "image": "insurance/saico", "alt": "SAICO" },
     { "image": "insurance/images", "alt": "Nextcare" }
   ],
-  "button": { "label": "View All", "href": "#" }
+  "button": { "label": "View All", "href": "#", "page": "insuranceProviders" }
 }

@@ -1,0 +1,4 @@
+[     159ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4329/fonts/Gotham-Medium.woff2:0
+[     159ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4329/fonts/Gotham-Book.woff2:0
+[     159ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4329/fonts/Gotham-Light.woff2:0
+[     159ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4329/fonts/Gotham-Bold.woff2:0

@@ -1,119 +1,257 @@
 ---
 import { Image } from 'astro:assets';
-import { px } from '../lib/scale';
+import { px, vwSizes } from '../lib/scale';
 import line24 from '../assets/footer/line24.svg';
 import group53 from '../assets/footer/group53.svg';
 import { parsePath, urlFor } from '../lib/editions';
+import { pagePath } from '../lib/paths';
 import { content, t } from '../lib/content';
 import { img } from '../lib/images';
 import hospitalData from '../data/hospitals.json';
+import { hospitalHref } from '../lib/hospitals';
+import { CARE_PATHS, careInRegion } from '../lib/care';
+import SocialIcons from './shared/SocialIcons.astro';
+import NewsletterStatus from './forms/NewsletterStatus.astro';
+import { clientConfig } from '../lib/forms';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('layout/footer', edition.locale);
 const logo = img(c.logo.image, edition.region);
+// Bug 211 (19 Oct 2026): the logo links to this edition's home page, as the header logo does (same href and label).
+const homeHref = urlFor(edition);
+const homeLabel = content('layout/header', edition.locale).logo.homeLabel;
 const accredited = img(c.accreditations.image, edition.region);
-type Link = { label: string; href: string; path?: string };
-const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: x.path === undefined ? x.href : urlFor(edition, x.path) })));
-const services: Link[] = c.services.links;
+type Link = { label: string; href: string; path?: string; page?: string; query?: string; care?: string };
+// `page` = key in PAGE_PATHS (preferred), `path` = literal path inside the edition.
+const target = (x: Link) => (x.page !== undefined ? urlFor(edition, pagePath(x.page)) : x.path !== undefined ? urlFor(edition, x.path) : x.href) + (x.query ?? '');
+const quick: Link[][] = c.quickLinks.rows.map((g: Link[]) => g.map((x) => ({ ...x, href: target(x) })));
+// Services column: each entry links to its service page (`care` = slug in src/data/care.json -> our-care/<slug>).
+// Services offered in this edition's country only (bug 047).
+const services: Link[] = c.services.links.filter((x: Link) => !x.care || careInRegion(x.care, edition.region)).map((x: Link) => ({ ...x, href: x.care ? urlFor(edition, CARE_PATHS.service(x.care)) : x.href }));
+// Legal links (bottom right): `path` = the legal pages (src/data/legal.json), edition-aware.
+const legal = { compliance: { ...c.legal.compliance, href: target(c.legal.compliance) }, privacy: { ...c.legal.privacy, href: target(c.legal.privacy) } };
 // Facility names come from hospitals.json (one spelling everywhere): brand + ' ' + city, in the footer JSON's slug order.
-const hospitals = (c.hospitals.slugs as string[]).map((slug) => {
+// Each links to its detail page (in this edition, or in the hospital's own region when this edition has no page for it).
+// UAE / KSA editions list their own country's hospitals only (bug 048); Global lists all six.
+const hospitals = (c.hospitals.slugs as string[]).filter((slug) => edition.region === 'global' || hospitalData.hospitals.find((x) => x.slug === slug)?.region === edition.region).map((slug) => {
   const h = hospitalData.hospitals.find((x) => x.slug === slug);
   if (!h) throw new Error(`Footer: unknown hospital slug "${slug}"`);
-  return t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals');
+  return { name: t(h.brand, edition.locale, 'hospitals') + ' ' + t(h.city, edition.locale, 'hospitals'), href: hospitalHref(slug, edition) };
 });
 ---
 
-<footer class="ft relative bg-navy rounded-t-r30 font-gotham">
-  <!-- Reveal as on the live site: fade in + slide up when the footer enters view. Armed here so no-JS stays visible.
-       The parent clips while the footer is offset (it is the last thing on the page, so the offset would add scroll),
-       and the clip is dropped once the slide ends. -->
-  <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e,o){e[0].isIntersecting&&(f.classList.add("is-visible"),o.disconnect())},{threshold:.15}).observe(f);f.addEventListener("transitionend",function d(e){e.target===f&&e.propertyName==="transform"&&(w.style.overflow="",f.classList.remove("ft-armed","is-visible"),f.removeEventListener("transitionend",d))})}(document.currentScript.parentElement)</script>
-  <div class="stage" style="--h: 368">
-    <img class="a logo" style="--l:32.5;--t:10;--w:242;--ph:242" src={logo.src} width="242" height="242" alt={c.logo.alt} />
+<div class="ft-clip">
+<footer class="ft relative bg-navy rounded-t-(--radius-panel) font-gotham">
+  <!-- Reveal as on the live site (its footer block: data-aos="fade-up", 0.6s, Greenshift AOS; audited 7 Oct 2026): fade in +
+       rise from max(50px, 15 % of its height) below, ease-in-out, as soon as it is inside the viewport minus the bottom 5 %.
+       Armed here so no-JS stays visible. Replays on every entry: is-visible is removed once the footer has left the screen,
+       where the reset happens instantly (the transition lives on the visible state only).
+       The footer's own wrapper (.ft-clip, the same box on every page) clips while the footer is offset (it is the last thing on
+       the page, so the offset would add scroll); the clip is dropped once the slide ends and set again on reset. -->
+  <script>
+    // AN8: phone footer columns open one at a time, as the live footer script; tablets too since bug 097 (< 1024px). Desktop keeps the headings as plain text.
+    const cols = [...document.querySelectorAll<HTMLElement>('.ft .col')];
+    const tgls = cols.map((col) => col.querySelector<HTMLButtonElement>('.ft-tgl'));
+    const phone = matchMedia('(max-width: 1023.98px)');
+    const apply = () => {
+      tgls.forEach((t, i) => { if (!t) return; t.disabled = !phone.matches; if (!phone.matches) { cols[i].classList.remove('is-open'); t.setAttribute('aria-expanded', 'false'); } });
+    };
+    tgls.forEach((t, i) => t?.addEventListener('click', () => {
+      if (!phone.matches) return;
+      cols.forEach((o, k) => { if (k !== i) { o.classList.remove('is-open'); tgls[k]?.setAttribute('aria-expanded', 'false'); } });
+      const open = cols[i].classList.toggle('is-open');
+      t.setAttribute('aria-expanded', String(open));
+    }));
+    phone.addEventListener('change', apply);
+    apply();
+  </script>
+  <script is:inline>!function(f){if(!("IntersectionObserver"in window)||!matchMedia("(prefers-reduced-motion: no-preference)").matches)return;var w=f.parentElement;f.classList.add("ft-armed");w.style.overflow="clip";new IntersectionObserver(function(e){var r=e[e.length-1];r.isIntersecting?f.classList.add("is-visible"):(f.classList.remove("is-visible"),w.style.overflow="clip")},{threshold:0,rootMargin:"0px 0px -5% 0px"}).observe(f);f.addEventListener("transitionend",function(e){e.target===f&&e.propertyName==="transform"&&f.classList.contains("is-visible")&&(w.style.overflow="")})}(document.currentScript.parentElement)</script>
+  <!-- Bug 097 (13 Oct 2026, user): 7 quick links fewer, so from 1024px the rows under the link columns move up (Figma 368 ->
+       321 tall): newsletter 21 closer to the seals, social icons / divider / copyright row 47 higher, same gaps between them;
+       the divider stays 30 below the newsletter box so its error / thank-you line clears it from 1024px.
+       The quick-link list = 7 rows x 12. Below 1024px the flow layout is unchanged.
+       Bugs 107 / 108 (14 Oct 2026, client): less empty space. From 1024px everything moves 43 up (headings 33 below the top
+       edge = 45px at 1440, was 104px); social icons -> copyright row 41.5 -> 20 (the divider 33 below the newsletter box, so the
+       error / thank-you line clears it at 1024px too, where the box is taller); 21 -> 15 below; 321 -> 259 tall (439 -> 355px at 1440). The logo box is cropped to its painted part
+       (SVG y 56.5-171.5 of 242, object-fit below), so the mark keeps its size and place relative to the headings.
+       Bug 097 reopened (14 Oct 2026, client: 355 -> ~310px at 1440): everything 7 higher (headings 26 below the top edge), heading
+       -> seals 24 -> 16, newsletter 14 below the seals, the social icons under the logo (level with the newsletter box) instead of
+       their own row; the divider and the copyright row hang from the newsletter box's real height (--btn-h, 36px at 1024, 29 at
+       1440) instead of the 1024 worst case, 24 below it (one status line fits; the two-line send error adds 12, .stage:has
+       below); 8 below the copyright row. 259 -> 196 + box (355 -> 308px at 1440). -->
+  <div class="stage" style="--hb: 196">
+    <a href={homeHref} class="a logo-link hit" style="--l:32.5;--t:14;--w:242;--ph:120" aria-label={homeLabel}><img loading="lazy" class="logo" src={logo.src} width="242" height="242" alt={c.logo.alt} /></a>
 
-    <nav class="col c1 a" style="--l:329;--t:76;--w:148;--ph:193" aria-labelledby="ft-quick">
-      <h2 id="ft-quick" class="hd text-f13 font-medium text-white">{c.quickLinks.heading}</h2>
-      <ul class="links" style="--w:138">
+    <div class="cols">
+    <nav class="col c1 a" style="--l:329;--t:26;--w:148;--ph:102" aria-labelledby="ft-quick">
+      <h2 id="ft-quick" class="hd text-f13 font-medium text-white"><button type="button" class="ft-tgl" aria-expanded="false" aria-controls="ft-quick-list" disabled>{c.quickLinks.heading}</button></h2>
+      <ul id="ft-quick-list" class="links" style="--w:138">
         {quick.map((g) => (
           <li>{g.map((x, i) => (<>{i > 0 && <br />}<a href={x.href} class="hit dense">{x.label}</a></>))}</li>
         ))}
       </ul>
     </nav>
-    <nav class="col c2 a" style="--l:452;--t:76;--w:148;--ph:193" aria-labelledby="ft-serv">
-      <h2 id="ft-serv" class="hd text-f13 font-medium text-white">{c.services.heading}</h2>
-      <ul class="links">{services.map((s) => <li><a href={s.href} class="hit dense">{s.label}</a></li>)}</ul>
+    <nav class="col c2 a" style="--l:452;--t:26;--w:148;--ph:102" aria-labelledby="ft-serv">
+      <h2 id="ft-serv" class="hd text-f13 font-medium text-white"><button type="button" class="ft-tgl" aria-expanded="false" aria-controls="ft-serv-list" disabled>{c.services.heading}</button></h2>
+      <ul id="ft-serv-list" class="links">{services.map((s) => <li><a href={s.href} class="hit dense">{s.label}</a></li>)}</ul>
     </nav>
-    <nav class="col c3 a" style="--l:562;--t:76;--w:148;--ph:193" aria-labelledby="ft-hosp">
-      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white">{c.hospitals.heading}</h2>
-      <ul class="links">{hospitals.map((s) => <li><a href={c.hospitals.href} class="hit dense">{s}</a></li>)}</ul>
+    <nav class="col c3 a" style="--l:562;--t:26;--w:148;--ph:102" aria-labelledby="ft-hosp">
+      <h2 id="ft-hosp" class="hd text-f13 font-medium text-white"><button type="button" class="ft-tgl" aria-expanded="false" aria-controls="ft-hosp-list" disabled>{c.hospitals.heading}</button></h2>
+      <ul id="ft-hosp-list" class="links">{hospitals.map((s) => <li><a href={s.href} class="hit dense">{s.name}</a></li>)}</ul>
     </nav>
+    </div>
 
-    <div class="acc a" style="--l:732;--t:76;--w:235;--ph:84">
-      <h2 class="hd text-f12 font-light text-white" style="width:calc(175 * var(--u))">{c.accreditations.heading}</h2>
+    <div class="acc a" style="--l:732;--t:26;--w:235;--ph:76">
+      <h2 class="hd text-f12 font-medium text-white" style="width:calc(175 * var(--u))">{c.accreditations.heading}</h2>
       <div class="accimg">
-        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={`${px(235)}px`} format="webp" loading="lazy" decoding="async" alt={c.accreditations.alt} class="block h-full w-full object-cover" />
+        <Image src={accredited} width={px(235) * 2} height={Math.round(px(235) * 2 * 403 / 2119)} widths={[px(235), px(235) * 2]} sizes={vwSizes(235)} format="webp" loading="lazy" decoding="async" alt={c.accreditations.alt} class="block h-full w-full object-cover" />
       </div>
     </div>
 
-    <form class="nl a" style="--l:748;--t:201;--w:213;--ph:54" action="/api/forms/newsletter" method="POST">
-      <!-- Newsletter is not one of the scope's 4 forms (and a mailing list means storing data): the function rejects it
-           until Pramod decides what it should do. -->
+    <form class="nl a" style="--l:732;--t:116;--w:213;--ph:54" action="/api/forms/newsletter" method="POST" novalidate data-form="newsletter" data-config={clientConfig('newsletter', edition.locale)}>
+      <!-- Newsletter (D10, 10 Oct 2026): not one of the scope's 4 forms, so it is email only like them: each sign-up is
+           emailed to FORM_TO_NEWSLETTER, nothing is stored. Figma draws no consent box, so none is added (flagged). -->
       <input type="hidden" name="edition" value={edition.id} />
       <h2 class="hd text-f12 font-light text-white">{c.newsletter.heading}</h2>
-      <div class="box">
-        <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
-        <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" />
-        <button type="submit" class="hit">{c.newsletter.submit}</button>
+      <div data-field="email">
+        <div class="box">
+          <label class="sr-only" for="ft-email">{c.newsletter.emailLabel}</label>
+          <input id="ft-email" type="email" name="email" placeholder={c.newsletter.emailPlaceholder} required autocomplete="email" aria-describedby="ft-email-error" />
+          <button type="submit" class="ui-btn hit btn-text">{c.newsletter.submit}</button>
+        </div>
+        <NewsletterStatus edition={edition} errorId="ft-email-error" />
       </div>
     </form>
 
-    <img class="a" style="--l:62;--t:319;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
-    <img class="a icons" style="--l:64;--t:277.3;--w:161;--ph:16.24" src={group53.src} width="161" height="16.24" alt="" />
+    <img loading="lazy" class="a under" style="--l:62;--tb:168;--w:913;--ph:1" src={line24.src} width="913" height="1" alt="" />
+    <div class="a icons" style="--l:64;--t:150;--w:161;--ph:16.24"><SocialIcons src={group53.src} width="161" height="16.24" alt="" threads={{ x: 176, y: 1.12, size: 14, look: 'glyph' }} /></div>
 
-    <p class="bot a left" style="--l:228;--t:335;--w:160;--ph:12">{c.copyright}</p>
-    <p class="bot a right" style="--l:718;--t:335;--w:105;--ph:12"><a href={c.legal.compliance.href} class="hit">{c.legal.compliance.label}</a><span class="gap">       </span><a href={c.legal.privacy.href} class="hit">{c.legal.privacy.label}</a></p>
+    <p class="bot a under left" style="--l:228;--tb:176;--w:160;--ph:12">{c.copyright}</p>
+    <p class="bot a under right" style="--l:718;--tb:176;--w:105;--ph:12"><a href={legal.compliance.href} class="hit">{legal.compliance.label}</a><span class="gap">       </span><a href={legal.privacy.href} class="hit">{legal.privacy.label}</a></p>
   </div>
 </footer>
+</div>
 
 <style>
-  .ft-armed { opacity: 0; transform: translateY(60px); transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
-  .ft-armed.is-visible { opacity: 1; transform: none; }
+  .ft-armed { opacity: 0; transform: translate3d(0, max(50px, 15%), 0); }
+  .ft-armed.is-visible { opacity: 1; transform: none; transition: opacity 600ms cubic-bezier(0.42, 0, 0.58, 1), transform 600ms cubic-bezier(0.42, 0, 0.58, 1); }
   .ft ul { margin: 0; padding: 0; list-style: none; }
+  /* Column headings are a button only on phones (AN8 below); elsewhere it is the heading text (disabled, not focusable). */
+  .ft-tgl { all: unset; display: inline; color: inherit; font: inherit; cursor: default; }
   .ft h2 { margin: 0; font-style: normal; height: calc(15 * var(--u)); line-height: calc(15 * var(--u)); white-space: nowrap; }
   .ft h2.text-f13 { line-height: normal; }
   .links { font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #e7e7e7; white-space: nowrap; }
-  .links a, .bot a { color: inherit; text-decoration: none; }
+  .links a, .bot a { color: inherit; text-decoration: none; transition: color var(--ui-ease), text-decoration-color var(--ui-ease); } /* live: a { transition: all .12s } */
+  @media (hover: hover) { .links a:hover { color: #fff; } } /* live footer links: colour -> white on hover (the legal links are white already) */
   .col .links { margin-top: calc(3 * var(--u)); }
-  .nl .box { position: relative; background: #fff; border-radius: calc(8 * var(--u)); width: calc(213 * var(--u)); height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
-  .nl input[type="email"] { position: absolute; inset-inline-start: calc(10 * var(--u)); top: calc(9 * var(--u)); width: calc(150 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  /* Newsletter field: email + Subscribe in one white box (Figma 213 x 26, corners --radius-field, bug 049). Subscribe = the
+     shared .ui-btn size (bug 044/050; Figma 36 x 15, label 9) with the .btn-text look, so the box is as tall as the button. */
+  .nl .box { position: relative; display: flex; align-items: center; background: #fff; border-radius: var(--radius-field); width: calc(213 * var(--u)); min-height: calc(26 * var(--u)); margin-top: calc(13 * var(--u)); }
+  .nl input[type="email"] { flex: 1 1 auto; min-width: 0; align-self: stretch; padding: 0; padding-inline-start: calc(10 * var(--u)); border: 0; outline: 0; background: transparent; font: 300 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; border-radius: inherit; }
   .nl input::placeholder { color: #004059; opacity: 1; }
-  .nl button { position: absolute; inset-inline-start: calc(169 * var(--u)); top: calc(9 * var(--u)); width: calc(36 * var(--u)); height: calc(15 * var(--u)); padding: 0; border: 0; background: transparent; cursor: pointer; text-align: start; font: 500 calc(9 * var(--u)) / calc(15 * var(--u)) var(--font-gotham); color: #004059; }
+  .nl button { border: 0; background: transparent; color: #004059; transition: transform .18s ease; } /* live footer form button: transform .18s ease, pressed = scale(.98) */
+  .nl button:active { transform: scale(0.98); }
+  @media (prefers-reduced-motion: reduce) { .nl button { transition: none; } .nl button:active { transform: none; } }
   .nl input:focus-visible, .nl button:focus-visible { outline: 1px solid #00b8ff; }
+  /* Newsletter status lines (error / thank you; no Figma design): white on the navy footer, the box's text size. */
+  .nl :global(.nl-msg) { margin: calc(5 * var(--u)) 0 0; font-size: calc(9 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; text-align: start; }
+  .nl :global(.nl-msg[hidden]) { display: none; }
+  .nl :global(.ts-slot) { margin-top: calc(5 * var(--u)); }
   .bot { margin: 0; font-size: calc(7 * var(--u)); line-height: calc(12 * var(--u)); font-weight: 400; color: #fff; white-space: pre; }
   .bot.right { text-align: end; }
+  .bot.left { width: max-content; min-width: calc(var(--w) * var(--u)); } /* the Arabic copyright is longer than the Figma 160 box (cross-browser sweep 9 Oct 2026): the line keeps its start edge and takes its own width */
   /* each legal link is its own bidi run, so the pair reorders in RTL like the rest of the layout */
   .bot.right a { unicode-bidi: isolate; }
-  .accimg { margin-top: calc(24 * var(--u)); width: calc(235 * var(--u)); height: calc(45 * var(--u)); overflow: hidden; }
+  .accimg { margin-top: calc(16 * var(--u)); width: calc(235 * var(--u)); height: calc(45 * var(--u)); overflow: hidden; }
+  /* Footer alignment (18 Oct 2026, user): the seals PNG has a transparent margin (101 px left / 121 px right of 2119, ~4.5% / ~5.4%
+     of the box once cover-cropped), so the first seal sat ~10 units in from the heading. Shift the image by that margin (a % of
+     its own box, so it holds at every width) and the newsletter block 748 -> 732: heading, seals and newsletter share one start edge. */
+  .accimg { translate: -4.47% 0; }
+  :global([dir="rtl"]) .accimg { translate: 5.38% 0; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .ft .stage > img { max-width: none; }
+  .ft .stage > img, .ft .logo { max-width: none; }
+  /* Logo: the 242 x 242 SVG is mostly transparent; the box shows its painted band only (y 54-174 of 242, bugs 107 / 108). */
+  .logo { object-fit: cover; object-position: 50% 44.26%; }
+  /* Bug 211: the link is the positioned box (.a); the image fills it from 1024px, below it keeps its own size (bugs 097 / 154). */
+  .logo-link { display: block; }
+  .cols { display: contents; } /* the three link columns: one box only on tablets (bug 097) */
 
   @media (min-width: 1024px) {
     .a { position: absolute; inset-inline-start: calc(var(--l) * var(--u)); top: calc(var(--t) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--ph) * var(--u)); }
+    /* Bug 097: the divider and copyright row sit --tb below the newsletter box's top edge + its height (= the Subscribe button,
+       --btn-h), so the error / thank-you line under the box clears the divider at every width; the footer ends 8 below them.
+       The two-line send error (f-alert) moves them 12 lower while it shows. */
+    .ft .stage { --nlx: 0; height: calc((var(--hb) + var(--nlx)) * var(--u) + var(--btn-h)); }
+    .ft .stage:has(.nl .f-alert:not([hidden])) { --nlx: 12; }
+    .under { top: calc((var(--tb) + var(--nlx)) * var(--u) + var(--btn-h)); }
     .nl .box { margin-top: calc(13 * var(--u)); }
-    .links { height: calc(174 * var(--u)); }
+    .links { height: calc(84 * var(--u)); }
     .col .links { margin-top: calc(3 * var(--u)); }
+    .logo { width: 100%; height: 100%; }
   }
 
   @media (max-width: 1023.98px) {
     .stage { display: flex; flex-wrap: wrap; gap: calc(28 * var(--u)) calc(30 * var(--u)); padding: calc(32 * var(--u)) 16px; box-sizing: border-box; align-items: flex-start; }
-    .logo { width: calc(242 * var(--u)); max-width: 60vw; height: auto; }
+    /* Task 205 (19 Oct 2026): the last row (copyright + legal links) ends above the floating Call us / Go to top buttons, which sit
+       in the bottom inline-end corner (--float-clear, global.css); the padding-block bottoms below are max()ed with it. */
+    .stage { padding-block-end: max(calc(32 * var(--u)), var(--float-clear)); }
+    .logo { width: calc(110px * 242 / 120); height: auto; aspect-ratio: 242 / 120; } /* bug 097: 110px tall (was 164) */
+    /* Bug 154 (15 Oct 2026): the artwork starts 17.3 of the file's 242 px in from its edge (~16px here), so the logo sat inset from the
+       gutter the column toggles below use; the box is pulled back by that margin so the mark lines up with them (both directions). */
+    .logo { margin-inline-start: calc(-110px * 17.3 / 120); }
     .col { flex: 1 1 calc(138 * var(--u)); min-width: 0; }
     .col, .acc, .nl { position: static; }
     .acc, .nl { flex: 1 1 calc(235 * var(--u)); }
+    /* Seals strip (Figma 235 x 45 = ~322px) is wider than a 320-345px phone's content box: it shrinks to fit, same ratio. */
+    .acc { min-width: 0; }
+    .accimg { max-width: 100%; height: auto; aspect-ratio: 235 / 45; margin-top: 12px; } /* bug 097: heading -> seals 33 -> 12px */
     .icons { width: calc(161 * var(--u)); height: auto; }
-    .stage > img[src*="line24"], .stage > img:not(.logo):not(.icons) { width: 100%; height: auto; flex: 1 1 100%; }
-    .bot { flex: 1 1 auto; white-space: pre-wrap; }
+    .stage > img[src*="line24"], .stage > img:not(.logo) { width: 100%; height: auto; flex: 1 1 100%; }
+    .bot { flex: 1 1 auto; white-space: pre-wrap; font-size: 12px; line-height: 1.4; } /* bug 082: readable legal line (Figma 7 = 9.6px) */
     .bot.right { text-align: start; }
+    /* Tap targets: every footer link row is 44px high (text size, colour and order unchanged). */
+    /* AN8 (9 Oct 2026) = the live footer below 768px (Code Snippet 287.css + its script): the three link columns start closed,
+       the heading is the toggle with a "+" (24px) at the inline end, "−" while open, colour .2s ease; the list slides open
+       (max-height + opacity, all .3s cubic-bezier(.25,.8,.25,1)) with 10px below; opening one closes the others. Live caps the
+       list at 400px; ours is 1000px because every link row here is 44px high (tap targets) and the Arabic labels wrap. The button is 44px high for the same
+       reason. Off with reduced motion. Tablets (768-1023px) use it too since bug 097 (their open lists made the footer 870-1020px tall). */
+    .col h2 { height: auto; white-space: normal; }
+    .ft-tgl { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 48px; padding: 0; cursor: pointer; transition: color 0.2s ease; }
+    .ft-tgl::after { content: '+'; font-size: 24px; line-height: 1; }
+    .col.is-open .ft-tgl::after { content: '−'; }
+    .col .links { max-height: 0; overflow: hidden; opacity: 0; margin: 0; padding: 0; transition: max-height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), padding 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .col.is-open .links { max-height: 1000px; opacity: 1; padding: 0 0 10px; }
+    @media (max-width: 767.98px) {
+      /* Bug 108 (14 Oct 2026, client): phone spacing per block instead of the 28-unit (38px) row gap.
+         Bug 097 reopened (14 Oct 2026, client: 771 -> ~640px at 390): 24 / 16 above / below, logo 110px tall, 24 between the
+         blocks; the social icons come right under the newsletter (24, was 48 with the divider between them), then the divider;
+         the copyright line wraps beside the legal links when both fit (copyright >= 140px), else the legal links go below it. */
+      .stage { row-gap: 0; column-gap: 16px; padding-block: 24px max(16px, var(--float-clear)); }
+      .logo { margin-bottom: 8px; }
+      .acc { margin-top: 24px; }
+      .nl { margin-top: 24px; }
+      .icons { margin-top: 24px; }
+      .stage > img:not(.logo) { order: 1; margin-top: 16px; } /* the divider: after the icons on phones (it comes first in the DOM) */
+      .bot { order: 2; margin-top: 8px; }
+      .bot.left { flex: 1 1 140px; min-width: 0; align-self: center; }
+      .bot.right { flex: 0 1 auto; }
+    }
+    /* Bug 097 reopened (tablet, 768-1023px): the logo beside the three column toggles, seals beside the newsletter, 24px
+       between the rows (was 38, and 71 above the divider). */
+    @media (min-width: 768px) {
+      .stage { row-gap: 24px; column-gap: 32px; padding-block: 32px max(20px, var(--float-clear)); }
+      .cols { display: flex; flex-direction: column; flex: 1 1 60%; min-width: 0; } /* the rest of the logo's row: seals + newsletter wrap below */
+      .col { flex: none; }
+      /* Bug 153 (15 Oct 2026): the toggles span the ~470px column beside the logo, so a row-end "+" sat ~480px from its label;
+         on tablets it follows the label (both directions). Phones keep the live full-row toggle. */
+      .ft-tgl { justify-content: flex-start; gap: 16px; }
+      .acc, .nl { flex: 1 1 calc(50% - 16px); }
+      .icons, .bot { align-self: center; } /* icons, copyright and the 44px legal links on one centre line */
+    }
+    @media (prefers-reduced-motion: reduce) { .ft-tgl, .col .links { transition: none; } }
+    .links li a { display: flex; align-items: center; min-height: 44px; --hit-h: 100%; }
+    .links br { display: none; }
+    .bot a { display: inline-flex; align-items: center; min-height: 44px; }
   }
   /* link lists are 12 Figma px apart: the hit layer can't grow taller than the line without overlapping */
   .dense { --hit-h: 100%; }

@@ -1,6 +1,7 @@
 ---
 import { content } from '../../lib/content';
 import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import calendar from '../../assets/contact-page/cta-calendar-clock.svg';
 import search from '../../assets/contact-page/cta-search.svg';
 import message from '../../assets/contact-page/cta-message-share.svg';
@@ -10,6 +11,13 @@ import cornerFill from '../../assets/contact-page/cta-corner-fill.svg';
 
 // Figma 86:842, page y 1271, h 268. Spec y values are page y minus 1271.
 // Layer order as in Figma: navy box, texts, tile 1, corner art, tiles 2-4, then labels and icons.
+// Tile icons as in Figma (contact-page-spec.md): calendar-clock = Book, stethoscope = Find a Doctor, magnifier ("Search / Magnifer")
+// = Refer a Patient, message-share = Send an Inquiry. Verified against 86:842 on 7 Oct 2026 (bug 029): the magnifier is correct.
+// Below 1024px (no Figma frame) the band stacks: copy, then the four tiles in a 2 x 2 grid. On narrow phones a tile is too narrow
+// for the unbreakable word "Appointment" (6.69 em in Gotham Medium = 119px at 13 Figma px; bug 029). Fix, all fluid so nothing
+// jumps: the box's side padding, the grid gap and the tile's side padding shrink with the band (percent, capped at their Figma
+// values), and each tile is a size container whose label font is capped at (tile content width / 6.9), i.e. the longest label word
+// always fits with ~3% slack plus the tile padding. From ~400px up the cap is above 13 Figma px and the label keeps its size.
 const { edition } = parsePath(Astro.url.pathname);
 // Default content = Contact page; other pages (Find a Doctor) pass their own `content` (same layout, other tile labels).
 const c = Astro.props.content ?? content('contact/page', edition.locale).recovery;
@@ -24,34 +32,40 @@ const icons = [
   { src: message, size: 26, x: 84, y: 10 },
 ];
 // Tile boxes (194x68) and label offsets inside the tile, in Figma px. Order = Book, Find a Doctor, Refer, Send.
+// Tile target: `page` (key in PAGE_PATHS) or `path` (path inside the edition) wins over the literal `href`.
+const tileHref = (t: { href: string; path?: string; page?: string }) =>
+  t.page !== undefined ? urlFor(edition, pagePath(t.page)) : t.path !== undefined ? urlFor(edition, t.path) : t.href;
 const tiles = [
   { x: 527, y: 51, lx: 23, ly: 43 },
   { x: 742, y: 51, lx: 18, ly: 43 },
   { x: 527, y: 152, lx: 19, ly: 41 },
   { x: 742, y: 152, lx: 23, ly: 41 },
-].map((d, i) => ({ ...d, ...c.tiles[i], href: c.tiles[i].path === undefined ? c.tiles[i].href : urlFor(edition, c.tiles[i].path), icon: icons[i] }));
+].map((d, i) => ({ ...d, ...c.tiles[i], href: tileHref(c.tiles[i]), icon: icons[i] }));
+const imax = Math.max(...icons.map((i) => i.size)); // the largest tile icon: phone layout lines the icon bottoms up on it
 ---
 
 <section class="relative" style="--h: 268" aria-label={c.ariaLabel ?? c.lead}>
-  <div class="stage max-lg:px-[calc(16*var(--u))]">
-    <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-r15 max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
+  <div class="stage max-lg:px-[16px]">
+    <div class="box absolute start-57 top-0 w-938 h-268 bg-navy rounded-(--radius-panel) max-lg:static max-lg:w-full max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:gap-[calc(24*var(--u))] max-lg:p-[calc(32*var(--u))] max-lg:mx-auto max-lg:max-w-[calc(938*var(--u))]">
       <h2 class="m-0 font-gotham text-f28 leading-[calc(27.25*var(--u))] text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-52 lg:top-(--ht) lg:w-331 lg:h-109" style={`--ht:calc(${headTop} * var(--u))`}>
-        <span class="font-normal">{c.lead}</span><span class="font-medium">{c.emphasis[0]}<br />{c.emphasis[1]}</span>
+        <!-- Bug 164 (15 Oct 2026): the break between the two emphasis strings is Figma's desktop line; below 1024 the heading wraps
+             on its own (the forced break left "step of / the journey." stubs on phones). -->
+        <span class="font-normal">{c.lead}</span><span class="font-medium">{c.emphasis[0]}<br class="max-lg:hidden" />{' '}{c.emphasis[1]}</span>
       </h2>
       <p class="m-0 font-gotham font-normal text-f12 leading-14 text-white not-italic whitespace-normal [word-break:break-word] lg:absolute lg:start-53 lg:top-172 lg:w-324 lg:h-44">{c.text}</p>
 
       <!-- Tile backgrounds (desktop): tile 1 sits under the corner art, the other three above it. -->
       {tiles.map((t, i) => (
-        <div class:list={['hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-[calc(10*var(--u))]', i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
+        <div class:list={['tbg hidden lg:block hair-card absolute w-194 h-68 bg-white rounded-(--radius-card)', `tbg-${i}`, i === 0 ? 'z-0' : 'z-[2]']} style={`inset-inline-start:calc(${t.x - 57} * var(--u));top:calc(${t.y} * var(--u));--sw:.15`} aria-hidden="true"></div>
       ))}
       <div class="art hidden lg:block absolute z-[1] start-505 w-433 h-[calc(265.8*var(--u))] top-[calc(-4*var(--u))]" aria-hidden="true">
         <div class="art-fill" style={`background-image:url('${cornerFill.src}');-webkit-mask-image:url('${cornerMask.src}');mask-image:url('${cornerMask.src}')`}></div>
       </div>
 
-      <div class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
-        {tiles.map((t) => (
-          <a href={t.href} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-[calc(10*var(--u))] max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
-            <img class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
+      <div style={`--imax:${imax}`} class="tiles max-lg:grid max-lg:grid-cols-2 max-lg:gap-[calc(12*var(--u))] lg:contents">
+        {tiles.map((t, i) => (
+          <a href={t.href} data-tile={i} class="tile hit hair-card relative z-[3] no-underline max-lg:flex max-lg:min-h-[calc(68*var(--u))] max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:gap-[calc(6*var(--u))] max-lg:bg-white max-lg:rounded-(--radius-card) max-lg:p-[calc(8*var(--u))] lg:absolute lg:w-194 lg:h-68" style={`--sw:.15;--hit-w:0px;--hit-h:0px;--lx:${t.lx};--ly:${t.ly};--ix:${t.icon.x};--iy:${t.icon.y};--iw:${t.icon.size};--tx:${t.x - 57};--ty:${t.y}`}>
+            <img loading="lazy" class="icon max-w-none" src={t.icon.src.src} width={t.icon.size} height={t.icon.size} alt="" style={`width:calc(${t.icon.size}*var(--u));height:calc(${t.icon.size}*var(--u))`} />
             <span class="lbl block font-gotham font-medium text-f13 text-navy-alt text-center not-italic whitespace-nowrap max-lg:whitespace-normal">{t.label}</span>
           </a>
         ))}
@@ -61,7 +75,18 @@ const tiles = [
 </section>
 
 <style>
-  .tile::after { border-radius: calc(10 * var(--u)); }
+  .tile::after { border-radius: var(--radius-card); } /* corners: band --radius-panel, tiles --radius-card (bug 049) */
+  @media (max-width: 1023.98px) {
+    .box { padding-inline: min(calc(32 * var(--u)), 7%); }     /* 32 Figma px from ~670px up, ~19px at 320 */
+    .tiles { gap: min(calc(12 * var(--u)), 4%); }               /* 12 Figma px from ~450px up */
+    .tile { container-type: inline-size; padding-inline: min(calc(8 * var(--u)), 6%); } /* 8 Figma px from ~180px-wide tiles up */
+    .tile .lbl { font-size: min(calc(13 * var(--u)), calc(100cqw / 6.9)); }
+    /* Icons level across a row when one label wraps to two lines and the other doesn't (mobile QA L7, 13 Oct 2026: centred, the
+       two-line tile's icon sat 5-9 px higher): content from the top of every tile, and each icon pushed down by the difference to
+       the largest icon (--imax), so all icon bottoms, and so all label tops, line up. */
+    .tile { justify-content: flex-start; }
+    .tile .icon { margin-top: calc((var(--imax) - var(--iw)) * var(--u)); }
+  }
   @media (min-width: 1024px) {
     .tile { inset-inline-start: calc(var(--tx) * var(--u)); top: calc(var(--ty) * var(--u)); background: transparent; }
     .tile .icon { position: absolute; inset-inline-start: calc(var(--ix) * var(--u)); top: calc(var(--iy) * var(--u)); }
@@ -69,6 +94,15 @@ const tiles = [
     .tile::after { display: none; }
     /* the tile box (border + hit) is drawn by the background div; only icon, label and the link area live here */
   }
+  /* Hover, as on the live CTA tiles: white -> #e7e7e7 fill, the live theme's link transition (0.12s cubic-bezier(.455,.03,.515,.955)).
+     Desktop draws the tile box on a separate background div (tile 1 sits under the corner art), so the hovered link recolours its div. */
+  .tile, .tbg { transition: background-color 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  @media (hover: hover) {
+    @media (max-width: 1023.98px) { .tile:hover { background-color: var(--color-mist); } }
+    .box:has([data-tile='0']:hover) .tbg-0, .box:has([data-tile='1']:hover) .tbg-1,
+    .box:has([data-tile='2']:hover) .tbg-2, .box:has([data-tile='3']:hover) .tbg-3 { background-color: var(--color-mist); }
+  }
+  @media (prefers-reduced-motion: reduce) { .tile, .tbg { transition: none; } }
   .art { overflow: hidden; }
   :global([dir='rtl']) .art { scale: -1 1; }
   .art-fill {
@@ -78,4 +112,8 @@ const tiles = [
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: calc(433 * var(--u)) calc(266.622 * var(--u)); mask-size: calc(433 * var(--u)) calc(266.622 * var(--u));
     -webkit-mask-position: calc(-17.395 * var(--u)) calc(127.28 * var(--u)); mask-position: calc(-17.395 * var(--u)) calc(127.28 * var(--u)); mask-mode: alpha;
   }
+  /* Bug 164 (15 Oct 2026): English phone heading 22 units (was 28 = 38px at 390, six lines); the box stays under a third of the screen. */
+  @media (max-width: 479.98px) { .box > h2 { font-size: calc(20 * var(--u)); line-height: 1.15; text-wrap: balance; } }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .box > h2 { font-size: calc(28 * 0.65 * var(--u)); } }
 </style>

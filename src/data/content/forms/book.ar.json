@@ -1,1 +1,15 @@
-{}
+{
+  "_note": "Pop-up title = Website Content - Suhad 4/Navigation Bar/AR - Book an appointment.docx (14 Oct 2026 export), exactly as in the document; its intro sentence is left out as the document's own note says. Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "title": "احجز موعدًا في مستشفى كامبريدج",
+  "fields": {
+    "gender": {
+      "options": {
+        "male": "ذكر",
+        "female": "أنثى"
+      }
+    },
+    "email": {
+      "label": "البريد الإلكتروني"
+    }
+  }
+}

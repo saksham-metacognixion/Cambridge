@@ -1,15 +1,47 @@
 {
-  "$comment": "Country pop-up (Welcome Page, Figma 76:196; scope 2.3). OFF until Pramod confirms the flow: set enabled=true to ship it. Shown only on Global (EN + AR), only on a first visit, only when the visitor's detected country (Cloudflare, functions/_middleware.ts -> ch_geo cookie) has an entry under `countries`. Figma has the UAE version only, so other countries see nothing. Per country: `text` = key in src/data/content/forms/welcome.<locale>.json, `map` / `flag` = image keys under src/assets, `buttons[].target` = the edition region saved in the ch_edition cookie (window.chooseEdition). Targets for AE are an interpretation of the Figma text ('Continue Here' = the UAE website, 'Go to Global Website' = stay on Global): change them here once Pramod confirms. Closing with Esc saves 'global' (the visitor stays where they are) so it is not shown again.",
-  "enabled": false,
+  "$comment": "Country pop-up (Welcome Page, Figma 76:196; scope 2.3). ON for UAE visitors only (user decision 2 Oct 2026): Figma has the UAE version only; KSA / other countries wait for Pramod (add an entry under `countries`). Shown only on Global (EN + AR), only when the visitor's detected country (Cloudflare, functions/_middleware.ts -> ch_geo cookie) has an entry under `countries`. Figma has the UAE version only, so other countries see nothing. Per country: `text` = key in src/data/content/forms/welcome.<locale>.json, `map` / `flag` = image keys under src/assets, `buttons[].target` = the edition region saved in the ch_edition cookie (window.chooseEdition): another region = the SAME page in that region (bug 037, 7 Oct 2026: /hospitals -> /ae/hospitals; the edition home when the page does not exist there), the current region = the pop-up just closes. `text` = `aeOnGlobal` (labels that say what the buttons do: 'Go to UAE Website' / 'Stay on Global Website', bug 037) or `ae` (the Figma words 'Continue Here' / 'Go to Global Website', written for a visitor already on the UAE site). Closing with Esc counts as 'global' (the visitor stays where they are). `remember` = how long a choice is kept (the pop-up buttons AND the header region switch save it): 'forever' = cookie ch_edition for one year (bug 084, 9 Oct 2026: the choice must survive new tabs and browser restarts; replaces the 5 Oct 'tab' decision), 'session' = until the browser is closed, 'tab' = sessionStorage, back in every new tab or window, 'never' = on every page load. `fallbackCountry` = the version shown when the visitor's country is unknown (10 Oct 2026 later, user: back to 'AE' = every Global visitor sees the UAE pop-up, incl. staging without detection; the earlier 10 Oct '' = only visitors DETECTED in the UAE; detection = functions/_lib/geo.ts via middleware.ts on Vercel / functions/_middleware.ts on Cloudflare, ch_geo cookie) (the nginx QA staging has no Cloudflare, so every visitor is 'XX') or has no entry under `countries` (user decision 5 Oct 2026: the pop-up must appear whenever the site is opened, and only the UAE version exists in Figma; set it to '' to show nothing to those visitors, as before). `devCountry` = the country assumed on a local dev server (no Cloudflare header there) so the pop-up can be seen; ignored in production. 20 Oct 2026 (user): the site opens by the visitor's location instead: `redirect` = detected country (Cloudflare CF-IPCountry -> ch_geo cookie, functions/_lib/geo.ts) -> the edition a Global page sends that visitor to, same page and language (src/components/CountryPopupLogic.astro); every other or unknown country stays on Global. A region the visitor picked in the header (ch_edition) wins over the location. The pop-up is OFF (`enabled` false: the redirect replaces it), `fallbackCountry` '' and `devCountry` '' (a local dev server has no Cloudflare: set the ch_geo cookie by hand to try a country). 20 Oct 2026 later (user): the pop-up is back as a CONFIRMATION after the redirect (`enabled` true): a visitor redirected to their region (`redirect`) sees that country's `onRegion` version there (AE = the Figma words 'You’re on Our UAE Website', 'Continue Here' = stay, 'Go to Global Website' = the same page on Global) until they choose; Esc = stay where they are. `onGlobal` (the bug 037 'Go to UAE Website' / 'Stay on Global Website' words) is shown on a Global page only when the visitor was NOT redirected (that page does not exist in their region). A country without `onRegion` (KSA: no Figma version) is redirected without a pop-up. Per country: `map` / `flag` = image keys under src/assets, `onRegion` / `onGlobal` = { `text` = key in src/data/content/forms/welcome.<locale>.json, `buttons[].target` = the edition region chosen }. 20 Oct 2026, last (user: 'bring the old pop back as it is'): `fallbackCountry` is 'AE' again, so every Global visitor who is not redirected (India, any other or unknown country) sees the UAE pop-up on launch as before 20 Oct (`onGlobal`: 'Looks like you’re in the UAE' / 'Go to UAE Website' / 'Stay on Global Website'); UAE / KSA visitors are still redirected first.",
+  "enabled": true,
+  "remember": "forever",
+  "devCountry": "",
+  "fallbackCountry": "AE",
+  "redirect": {
+    "AE": "ae",
+    "SA": "sa"
+  },
   "countries": {
     "AE": {
-      "text": "ae",
       "map": "forms/welcome/map",
       "flag": "forms/welcome/flag-uae-round",
-      "buttons": [
-        { "key": "continue", "style": "primary", "target": "ae" },
-        { "key": "global", "style": "secondary", "target": "global" }
-      ]
+      "onRegion": {
+        "text": "ae",
+        "buttons": [
+          {
+            "key": "continue",
+            "style": "primary",
+            "target": "ae"
+          },
+          {
+            "key": "global",
+            "style": "secondary",
+            "target": "global"
+          }
+        ]
+      },
+      "onGlobal": {
+        "text": "aeOnGlobal",
+        "buttons": [
+          {
+            "key": "continue",
+            "style": "primary",
+            "target": "ae"
+          },
+          {
+            "key": "global",
+            "style": "secondary",
+            "target": "global"
+          }
+        ]
+      }
     }
   }
 }

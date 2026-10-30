@@ -1,0 +1,4 @@
+[     202ms] [ERROR] [contact-map] no Google Maps API key (set PUBLIC_GOOGLE_MAPS_KEY, see .env.example); showing the placeholder map instead @ http://localhost:8091/_astro/ContactForm.astro_astro_type_script_index_0_lang.CgTWIVVI.js:0
+[  102487ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8091/_astro/logo-vertical-negative.htfkuVcK.svg:0
+[  102504ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8091/_astro/accredited.Dy2YiJWJ_l9kHN.webp:0
+[  103336ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:8091/_astro/line24.wj9rVJ06.svg:0

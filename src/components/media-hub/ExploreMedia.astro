@@ -1,12 +1,13 @@
 ---
 import { Picture, Image } from 'astro:assets';
-import { px } from '../../lib/scale';
+import { px, vwSizes } from '../../lib/scale';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { parsePath, urlFor } from '../../lib/editions';
+import { PAGE_PATHS } from '../../lib/paths';
 import chevron from '../../assets/media-hub/select-chevron.svg';
 import overlay from '../../assets/media-hub/tile-overlay.png';
-import dots from '../../assets/media-hub/divider-group620.svg';
+import Pagination from '../shared/Pagination.astro';
 import arrow1 from '../../assets/media-hub/tile-arrow-1.svg';
 import arrow2 from '../../assets/media-hub/tile-arrow-2.svg';
 import arrow3 from '../../assets/media-hub/tile-arrow-3.svg';
@@ -15,7 +16,7 @@ import arrow4 from '../../assets/media-hub/tile-arrow-4.svg';
 // Figma 47:8510 and 46:7942..46:8507 (page y 593-1191). Flow layout; gaps are the Figma distances between neighbouring blocks.
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('media-hub/page', edition.locale).explore;
-const listUrl = urlFor(edition, 'media-hub');
+const listUrl = urlFor(edition, PAGE_PATHS.mediaHub);
 // Corner arrow wrapper position inside each tile (Figma px; the designer nudged them slightly) and the rotation of tile 1's arrow.
 const corner = [
   { x: 176, y: 1, rot: 'rotate(-45.51deg) skewX(-1.02deg)', w: 41.485, h: 42.233, icon: arrow1 },
@@ -33,33 +34,38 @@ const tiles = c.tiles.map((t: any, i: number) => ({
 ---
 
 <section class="relative" aria-labelledby="explore-title">
-  <h2 id="explore-title" class="m-0 mx-auto mt-37 h-27 max-w-430 text-center font-gotham font-medium text-f28 leading-27 text-navy not-italic [word-break:break-word] max-lg:px-16">{c.title}</h2>
-  <p class="m-0 mx-auto mt-10 min-h-32 max-w-577 text-center font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] max-lg:px-16">{c.text}</p>
+  <h2 id="explore-title" class="m-0 mx-auto mt-37 min-h-27 max-w-430 text-center font-gotham font-medium text-f28 leading-27 text-navy not-italic [word-break:break-word] max-lg:px-16">{c.title}</h2>
+  {c.text && <p class="m-0 mx-auto mt-10 min-h-32 max-w-577 text-center font-gotham font-normal text-f12 leading-14 text-body not-italic [word-break:break-word] max-lg:px-16">{c.text}</p>}
 
   <!-- Category dropdown. The visible box is 311x35 like Figma; the <select> is 44px tall (touch target) and transparent. -->
-  <div class="relative mx-auto mt-37 h-35 w-311 max-w-[calc(100%-32px)] rounded-r10 hair-50 border-teal-border">
+  <div class="relative mx-auto mt-37 h-35 w-311 max-w-[calc(100%-32px)] rounded-(--radius-field) hair-50 border-teal-border">
     <label for="media-category" class="sr-only">{c.select.label}</label>
-    <select id="media-category" data-category-select class="absolute inset-x-0 -top-4.5 h-44 w-full cursor-pointer appearance-none rounded-r10 border-0 bg-transparent ps-15 pe-30 font-gotham font-normal text-f10 leading-14 text-navy not-italic outline-offset-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan">
+    <select id="media-category" data-category-select class="absolute inset-x-0 -top-4.5 h-44 w-full cursor-pointer appearance-none rounded-(--radius-field) border-0 bg-transparent ps-15 pe-30 font-gotham font-normal text-f10 leading-14 text-navy not-italic outline-offset-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan">
       <option value="">{c.select.label}</option>
       {c.categories.map((x: any) => <option value={x.key}>{x.label}</option>)}
     </select>
-    <img src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="pointer-events-none absolute top-17 end-17 block w-7 h-[calc(4.207*var(--u))]" />
+    <img loading="lazy" src={chevron.src} width={chevron.width} height={chevron.height} alt="" class="pointer-events-none absolute top-17 end-17 block w-7 h-[calc(4.207*var(--u))]" />
   </div>
 
-  <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005). -->
-  <ul class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 lg:ps-48 lg:pe-47" data-tiles>
+  <!-- Category tiles: swipe / scroll row; at 1052 all four fit (48 + 4 x 222 + 3 x 23 = 1005), so the dots only show below.
+       The tiles fade in when the row comes into view, as on the live Media Hub (data-aos="fade", 0.8s, scripts/aos.ts); swiping
+       the row never hides them (they follow the row, not their own sideways position, mobile QA M3). -->
+  <!-- Beyond 1440px (responsive audit 9 Oct 2026) the row keeps its Figma start on the centred stage (48 + the page gutter, global.css --gutter) and runs off the real screen edge. -->
+  <!-- Bug 151 (15 Oct 2026): scroll padding = the inline padding, so the snap keeps the first tile on the gutter (it snapped flush to the
+       screen edge in both directions). -->
+  <ul id="media-tiles" class="hscroll m-0 mt-43 flex list-none gap-23 p-0 ps-16 pe-16 scroll-ps-16 scroll-pe-16 lg:ps-[calc(48*var(--u)+var(--gutter))] lg:pe-[calc(47*var(--u)+var(--gutter))] lg:scroll-ps-[calc(48*var(--u)+var(--gutter))] lg:scroll-pe-[calc(47*var(--u)+var(--gutter))]" data-tiles>
     {
       tiles.map((t: any) => (
-        <li class="relative h-342 w-222 shrink-0 snap-start">
-          <div class="absolute inset-0 overflow-hidden rounded-r15">
+        <li data-aos="fade" class="relative h-342 w-222 shrink-0 snap-start">
+          <div class="absolute inset-0 overflow-hidden rounded-(--radius-card)">
             <Picture
               src={t.src}
               formats={['avif']}
               fallbackFormat="webp"
               width={px(t.crop ? 222 * 3.1441 : 222)}
               height={px(342)}
-              widths={[px(t.crop ? 222 * 3.1441 : 222)]}
-              sizes="(min-width: 1440px) 304px, 222px"
+              widths={[px(t.crop ? 222 * 3.1441 : 222), px(t.crop ? 222 * 3.1441 : 222) * 2]}
+              sizes={vwSizes(t.crop ? 222 * 3.1441 : 222)}
               loading="lazy"
               decoding="async"
               alt={t.alt}
@@ -70,24 +76,27 @@ const tiles = c.tiles.map((t: any, i: number) => ({
             <Image src={overlay} width={px(222)} height={px(342)} format="webp" alt="" loading="lazy" class="absolute inset-0 block h-full w-full max-w-none" />
           </div>
           <div class="absolute inset-0 flex flex-col items-start justify-end ps-16 pe-10 pb-22">
-            <span class="block rounded-r5p044 bg-cyan px-[calc(4.2*var(--u))] py-[calc(3.7*var(--u))] font-gotham font-medium text-f12p61 leading-[calc(15.367*var(--u))] text-white uppercase not-italic whitespace-nowrap">{t.label}</span>
-            <h3 class="m-0 mt-5 w-190 max-w-full font-gotham font-medium text-f20p26 leading-24 text-white not-italic [word-break:break-word]">
-              <a href={t.href} class="tile-link text-inherit no-underline">{t.title}</a>
-            </h3>
+            <!-- Category pill only, no title under it (user, 13 Oct 2026); the pill is the tile's one link. -->
+            <a href={t.href} class="tile-link block rounded-(--radius-btn) bg-cyan px-[calc(4.2*var(--u))] py-[calc(3.7*var(--u))] font-gotham font-medium text-f12p61 leading-[calc(15.367*var(--u))] text-navy uppercase not-italic whitespace-nowrap no-underline">{t.label}</a>
           </div>
-          <span class="pointer-events-none absolute flex items-center justify-center" style={`inset-inline-start:calc(${t.corner.x} * var(--u));top:calc(${t.corner.y} * var(--u));width:calc(${t.corner.w} * var(--u));height:calc(${t.corner.h} * var(--u))`} aria-hidden="true">
-            <img src={t.corner.icon.src} width={t.corner.icon.width} height={t.corner.icon.height} alt="" class="block flex-none" style={`width:calc(29.6 * var(--u));height:calc(29.6 * var(--u));transform:${t.corner.rot}`} />
+          <span class="pointer-events-none absolute flex items-center justify-center rtl:-scale-x-100" style={`inset-inline-start:calc(${t.corner.x} * var(--u));top:calc(${t.corner.y} * var(--u));width:calc(${t.corner.w} * var(--u));height:calc(${t.corner.h} * var(--u))`} aria-hidden="true">
+            <img loading="lazy" src={t.corner.icon.src} width={t.corner.icon.width} height={t.corner.icon.height} alt="" class="block flex-none" style={`width:calc(29.6 * var(--u));height:calc(29.6 * var(--u));transform:${t.corner.rot}`} />
           </span>
         </li>
       ))
     }
   </ul>
 
-  <img src={dots.src} width={dots.width} height={dots.height} alt="" class="mx-auto mt-64 block w-[calc(40.972*var(--u))] h-[calc(8.716*var(--u))]" />
+  <!-- Pagination dots of the tile row (Figma's dot divider, 64 below the tiles): shared component, bug 012. -->
+  <Pagination for="media-tiles" class="mt-64" />
 </section>
 
+<script>
+  import '../../scripts/pagination';
+</script>
+
 <style>
-  .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: calc(15 * var(--u)); }
+  .tile-link::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-card); } /* corners: bug 049 tokens */
   .tile-link:focus-visible { outline: none; }
   .tile-link:focus-visible::after { outline: 2px solid var(--color-cyan); outline-offset: 2px; }
 </style>

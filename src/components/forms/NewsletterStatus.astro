@@ -1,0 +1,19 @@
+---
+/*
+ * Status lines under a newsletter box (footer + Media Hub): the field error, the send error, the thank-you line and the
+ * Turnstile slot (invisible unless Cloudflare needs a click). Figma draws none of these; text = the shared form text
+ * (src/data/content/forms/common.*.json), styled by the host through `.nl-msg`.
+ */
+import { commonText } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+
+interface Props { edition: Edition; errorId: string }
+const { edition, errorId } = Astro.props;
+const c = commonText(edition.locale);
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<p id={errorId} class="f-err nl-msg" hidden></p>
+<p class="f-alert nl-msg" role="alert" hidden></p>
+<p class="f-ok nl-msg" role="status" hidden>{c.success.title}</p>
+{siteKey && <div class="ts-slot" data-sitekey={siteKey} data-language={edition.locale} data-appearance="interaction-only"></div>}

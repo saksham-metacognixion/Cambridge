@@ -1,10 +1,29 @@
 {
   "ariaLabel": "Hero",
-  "banner": { "image": "hero/banner3", "alt": "", "layers": { "background": "hero/banner3-bg", "subject": "hero/banner3-subject" } },
-  "title": ["Restoring Hope,", "Enabling Life."],
-  "text": "Supporting every step of your recovery journey with compassionate care and clinical excellence.",
+  "banner": {
+    "image": "hero/banner3",
+    "alt": "",
+    "layers": {
+      "background": "hero/banner3-bg",
+      "subject": "hero/banner3-subject"
+    }
+  },
+  "title": [
+    "Restoring Hope,",
+    "Rebuilding Lives"
+  ],
+  "text": [
+    "A leader in post-acute and rehabilitation care, Cambridge Hospital combines clinical expertise with compassionate care to restore function, independence and quality of life."
+  ],
   "buttons": [
-    { "label": "Get in Touch", "href": "#contact" },
-    { "label": "Learn More", "href": "#" }
+    {
+      "label": "Get in Touch",
+      "href": "#contact"
+    },
+    {
+      "label": "Learn More",
+      "href": "#",
+      "page": "about"
+    }
   ]
 }

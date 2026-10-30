@@ -1,0 +1,108 @@
+[
+ {
+  "page": "/",
+  "form": "mobile",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 96,
+  "seo": 58,
+  "lcp": "1.7 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.4 s",
+  "si": "1.4 s",
+  "opportunities": [
+   "Defer offscreen images (Est savings of 23 KiB)",
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "a11yFails": []
+ },
+ {
+  "page": "/",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 96,
+  "seo": 58,
+  "lcp": "0.4 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.3 s",
+  "si": "0.3 s",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "a11yFails": []
+ },
+ {
+  "page": "/find-a-doctor",
+  "form": "mobile",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 96,
+  "seo": 58,
+  "lcp": "1.9 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.1 s",
+  "si": "1.1 s",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)"
+  ],
+  "a11yFails": []
+ },
+ {
+  "page": "/find-a-doctor",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 96,
+  "seo": 58,
+  "lcp": "0.4 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.3 s",
+  "si": "0.3 s",
+  "opportunities": [
+   "Properly size images (Est savings of 28 KiB)"
+  ],
+  "a11yFails": []
+ },
+ {
+  "page": "/our-hospitals/abu-dhabi",
+  "form": "mobile",
+  "performance": 99,
+  "accessibility": 100,
+  "bestPractices": 96,
+  "seo": 58,
+  "lcp": "1.9 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "1.4 s",
+  "si": "1.4 s",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 72 KiB)"
+  ],
+  "a11yFails": []
+ },
+ {
+  "page": "/our-hospitals/abu-dhabi",
+  "form": "desktop",
+  "performance": 100,
+  "accessibility": 100,
+  "bestPractices": 96,
+  "seo": 58,
+  "lcp": "0.5 s",
+  "cls": "0",
+  "tbt": "0 ms",
+  "fcp": "0.4 s",
+  "si": "0.4 s",
+  "opportunities": [
+   "Eliminate render-blocking resources (Est savings of 0 ms)",
+   "Properly size images (Est savings of 145 KiB)"
+  ],
+  "a11yFails": []
+ }
+]

@@ -1,0 +1,126 @@
+{
+ "_note": "Bugs 234-237: per-banner settings for tools/banners/rematte.cjs. grid = the existing cut-out (w x h) and where it sits in the client composite (x0, y0 composite px; ns = cut px per composite px), registered against the client file. Pocket / edgeZone / box coordinates are cut-out px.",
+ "doc": {
+  "asset": "src/assets/regions/{ae,sa}/doctors-page/banner-cutout.webp",
+  "client": "Banners - UAE/Find-a-Doctor-Banner - UAE.png (= KSA file, md5-identical). Pass the full composite; maxRow 1365 marks the 5 backdrop rows under the people. The hard key is cut from the composite trimmed to 1365 rows (client_cutout.py finds no figure otherwise).",
+  "grid": {
+   "w": 1028,
+   "h": 829,
+   "x0": 1255.726,
+   "y0": 234.488,
+   "ns": 0.729927
+  },
+  "D": 5,
+  "close": 10,
+  "maxRow": 1365,
+  "edgeZones": [
+   {
+    "box": [
+     560,
+     672,
+     640,
+     829
+    ],
+    "sigma": 20
+   }
+  ]
+ },
+ "geri_g": {
+  "asset": "src/assets/care/heroes/geriatric-care-cutout.webp",
+  "client": "Banners - UAE/Geriatric-Care-Banner-UAE.png",
+  "grid": {
+   "w": 978,
+   "h": 690,
+   "x0": 1248,
+   "y0": 425,
+   "nsx": 0.7298507462686568,
+   "nsy": 0.7301587301587301
+  },
+  "D": 5,
+  "close": 10,
+  "pockets": [
+   [
+    518,
+    388
+   ],
+   [
+    521,
+    394
+   ]
+  ]
+ },
+ "geri_sa": {
+  "asset": "src/assets/regions/sa/care/heroes/geriatric-care-cutout.webp",
+  "client": "Banners - KSA/Geriatric-Care-Banner-KSA.png",
+  "grid": {
+   "w": 974,
+   "h": 665,
+   "x0": 1273,
+   "y0": 459,
+   "nsx": 0.7301349325337332,
+   "nsy": 0.7299670691547749
+  },
+  "D": 5,
+  "close": 10
+ },
+ "home_g": {
+  "asset": "src/assets/care/heroes/home-healthcare-cutout.webp",
+  "client": "Banners - UAE/Home Care - UAE.png",
+  "grid": {
+   "w": 550,
+   "h": 844,
+   "x0": 1583.925,
+   "y0": 213.0,
+   "ns": 0.72868
+  },
+  "D": 5,
+  "close": 10
+ },
+ "home_sa": {
+  "asset": "src/assets/regions/sa/care/heroes/home-healthcare-cutout.webp",
+  "client": "Banners - KSA/Home-Health-Care-Banner-KSA.png",
+  "grid": {
+   "w": 612,
+   "h": 818,
+   "x0": 1538.25,
+   "y0": 253.45,
+   "ns": 0.73318
+  },
+  "D": 5,
+  "close": 10,
+  "pockets": [
+   [
+    568,
+    768
+   ],
+   [
+    568,
+    786
+   ]
+  ]
+ },
+ "icu_g": {
+  "asset": "src/assets/care/heroes/icu-critical-care-cutout.webp",
+  "client": "Banners - UAE/ICU & Critical Care - UAE.png",
+  "grid": {
+   "w": 1042,
+   "h": 803,
+   "x0": 1163.85,
+   "y0": 268.85,
+   "ns": 0.72918
+  },
+  "D": 5,
+  "close": 10,
+  "pockets": [
+   [
+    686,
+    241
+   ],
+   [
+    728,
+    229
+   ]
+  ],
+  "pocketTol": 12
+ }
+}

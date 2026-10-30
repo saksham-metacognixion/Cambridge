@@ -1,0 +1,102 @@
+{
+  "_note": "Al Khobar Hospital (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - KSA Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/sa/hospitals/cambridge-hospital-al-khobar/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. Banner (client assets, 9 Oct 2026): the client's own hero cut-out (R6-R7_Advanced-Care-in-Al-Khobar.png, docs/client-assets/hospital-banners/) over the live hero gradient, tools/client-assets/hospital-hero.py; static (no cursor-follow layers). Banner (client assets, 9 Oct 2026): the client's own hero cut-out (R6-R7_Advanced-Care-in-Al-Khobar.png, docs/client-assets/hospital-banners/) over the live hero gradient, tools/client-assets/hospital-hero.py; static (no cursor-follow layers). 13 Oct 2026 (Website Content - Suhad 4, EN - UAE / KSA Hospitals): new hero title, hero line and 'Experience the Environment of Care' paragraphs. 19 Oct 2026 (user): video = YouTube 21dmAeemgl8 (https://www.youtube.com/watch?v=21dmAeemgl8, title 'Cambridge Hospital Al Khobar'), played in place of the poster (EnvironmentBand inline mode). Poster = the video's own YouTube thumbnail (video.poster, tools/video-posters/fetch.py).",
+  "hero": {
+    "title": [
+      "Cambridge Hospital Al Khobar"
+    ],
+    "text": "An advanced rehabilitation and long-term care & hospital",
+    "banner": {
+      "image": "hospital-detail/banner-al-khobar",
+      "alt": ""
+    }
+  },
+  "video": {
+    "host": "youtube",
+    "id": "21dmAeemgl8",
+    "poster": "hospital-detail/al-khobar/video-poster"
+  },
+  "environment": {
+    "text": [
+      "Cambridge Hospital Al Khobar is a specialised long-term care and rehabilitation hospital equipped to manage complex cases, including those requiring intensive care. The hospital combines advanced clinical capabilities with structured rehabilitation programmes, supporting patients from critical care through recovery and towards improved functional independence.",
+      "The hospital delivers integrated care through a multidisciplinary approach, supported by advanced diagnostic services and purpose-built clinical facilities. With a focus on continuity of care, patient safety and measurable outcomes, Cambridge Hospital Al Khobar plays an important role in providing specialised care across the Eastern Province."
+    ]
+  },
+  "healing": {
+    "areas": [
+      {
+        "key": "outdoor-spaces",
+        "label": "Outdoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-exterior-1",
+            "alt": "Cambridge Hospital Al Khobar - Exterior 1"
+          }
+        ]
+      },
+      {
+        "key": "indoor-spaces",
+        "label": "Indoor Spaces",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-nursing-station",
+            "alt": "Cambridge Hospital Al Khobar - Nursing Station"
+          },
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-nursing-station-3",
+            "alt": "Cambridge Hospital Al Khobar - Nursing Station 3"
+          },
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-waiting-area",
+            "alt": "Cambridge Hospital Al Khobar - Waiting Area"
+          },
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-waiting-area-2",
+            "alt": "Cambridge Hospital Al Khobar - Waiting Area 2"
+          },
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-ct-scan",
+            "alt": "Cambridge Hospital Al Khobar - CT Scan"
+          },
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-corridor-2",
+            "alt": "Cambridge Hospital Al Khobar - Corridor 2"
+          }
+        ]
+      },
+      {
+        "key": "radiology",
+        "label": "Radiology",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-intensive-care-unit",
+            "alt": "Cambridge Hospital Al Khobar - Intensive Care Unit"
+          },
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-ct-scan",
+            "alt": "Cambridge Hospital Al Khobar - CT Scan"
+          }
+        ]
+      },
+      {
+        "key": "laboratory",
+        "label": "Laboratory",
+        "active": 0,
+        "images": [
+          {
+            "image": "hospital-detail/al-khobar/cambridge-hospital-al-khobar-laboratory-scaled",
+            "alt": "Cambridge Hospital Al Khobar - Laboratory scaled"
+          }
+        ]
+      }
+    ]
+  },
+  "heroLayout": {
+    "small": {
+      "x": 538,
+      "w": 448
+    }
+  }
+}

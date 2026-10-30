@@ -1,9 +1,45 @@
 {
-  "heading": "Expert Care, Trusted Doctors",
-  "intro": "Our specialists are committed to providing the right care at every stage of your journey.",
+  "heading": "Expert Doctors, One Collaborative Approach",
+  "intro": "Our doctors bring extensive expertise across a wide range of medical and rehabilitation disciplines, with experience caring for patients with complex needs. Working within multidisciplinary teams, they collaborate closely with therapists, nurses and other healthcare professionals to develop comprehensive, personalised care plans for each patient.",
   "filterLabel": "Filter doctors by country",
-  "filters": ["ALL", "KSA", "UAE"],
-  "doctors": ["amjad-abdelqader", "ahmad-al-khayer", "wael-sary", "suhaila-kallada", "mohammed-halawani", "rober-hanna-kassab"],
-  "buttons": ["Book Now", "See More", "See More", "See More", "See More", "See More"],
-  "buttonHref": "#"
+  "filters": [
+    "ALL",
+    "KSA",
+    "UAE"
+  ],
+  "doctors": [
+    "amjad-abdel-qader",
+    "ahmad-al-khayer",
+    "wael-sary",
+    "suhaila-kallada",
+    "saleh-damnan",
+    "rober-kassab"
+  ],
+  "buttons": [
+    {
+      "label": "Book Now",
+      "action": "book"
+    },
+    {
+      "label": "See More",
+      "action": "profile"
+    },
+    {
+      "label": "See More",
+      "action": "profile"
+    },
+    {
+      "label": "See More",
+      "action": "profile"
+    },
+    {
+      "label": "See More",
+      "action": "profile"
+    },
+    {
+      "label": "See More",
+      "action": "profile"
+    }
+  ],
+  "_note": "Home doctors row (Figma). buttons[i].action: book = opens the Book an Appointment pop-up with the doctor preselected; profile = the doctor profile page."
 }

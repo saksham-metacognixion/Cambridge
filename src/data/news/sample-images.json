@@ -1,0 +1,12 @@
+{
+  "$comment": "TEMPORARY sample photos for posts whose own image is not downloaded yet (NW1: live-site images behind Cloudflare). Only photos already in the project (Figma) are used. A post with its own file in src/assets never uses these. Set enabled=false (or delete this file's use) once Pramod's uploads are in src/assets/news.",
+  "enabled": true,
+  "images": [
+    "media-hub/tile-events",
+    "media-hub/tile-conferences",
+    "news/patient",
+    "media-hub/tile-health-articles",
+    "news/doctor",
+    "media-hub/tile-press-releases"
+  ]
+}

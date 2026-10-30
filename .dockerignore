@@ -1,0 +1,19 @@
+# Build context for the Dockerfile: only what `npm run build` and the form server need.
+node_modules
+dist
+dist-server
+.astro
+.git
+.vercel
+.wrangler
+api/forms
+# Secrets never go into an image: PUBLIC_* come in as build args, the rest at run time (compose.yaml env_file)
+.env
+.env.*
+.dev.vars
+# Reference material, not build inputs
+docs
+figma-cache
+QA
+tests
+**/__pycache__

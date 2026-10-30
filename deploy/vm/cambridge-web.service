@@ -1,0 +1,36 @@
+# systemd unit for the site on the Azure VM (deploy/vm/README.md). Installed by deploy/vm/setup.sh as
+# /etc/systemd/system/cambridge-web.service. Caddy (deploy/vm/Caddyfile) proxies the public ports to it.
+[Unit]
+Description=Cambridge Hospital website (tools/azure/server.ts)
+After=network-online.target
+Wants=network-online.target
+# Never stop retrying: with the default start limit, a crashing release puts the unit in a failed state that also
+# refuses the restart deploy/vm/activate.sh uses to roll back.
+StartLimitIntervalSec=0
+
+[Service]
+User=cambridge
+Group=cambridge
+# current -> releases/<version>, switched by deploy/vm/activate.sh before each restart.
+WorkingDirectory=/srv/cambridge/current
+ExecStart=/usr/bin/node /srv/cambridge/current/dist-server/server.mjs
+Environment=NODE_ENV=production PORT=8080 HOST=127.0.0.1
+# Run-time settings (SMTP, Turnstile secret, form inboxes). Optional so the site runs before the keys arrive.
+EnvironmentFile=-/etc/cambridge-web.env
+Restart=always
+RestartSec=2
+
+# The site only reads its files and opens outbound connections (Turnstile, SMTP).
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

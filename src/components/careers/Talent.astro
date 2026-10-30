@@ -1,0 +1,94 @@
+---
+import { Picture } from 'astro:assets';
+import { img } from '../../lib/images';
+import Band from './Band.astro';
+import lines from '../../assets/careers/talent-lines.svg';
+import type { Edition } from '../../lib/editions';
+
+/*
+ * "National Talent Development" (Figma 108:6675 band, page y 1835-2303, #e7e7e7 at 50%). Figma px from the band top:
+ * H 108:7060 x88 top +67 Medium 28/32 #004059 | 24 | intro 108:7061 x91 w496 Book 12/14 #6b6b6b, JUSTIFIED (2 lines) |
+ * 16 | UAE block 112:7200 (box 121 high) | 17 | KSA block 112:7201 (x91, w496) | ~42 to the band end.
+ * A block = teal Medium heading line, one empty line, then the paragraphs (Book 12/14, one empty 14px line between them).
+ * Figma's mixed line heights inside the first text line (10 / 14) are not kept: the client's text (5 Oct 2026) has three to four
+ * full paragraphs per block.
+ * Card 108:7058: white 214.853 x 268.276, radius 17.298, shadow 0 1 4 2 rgba(0,0,0,.13), at x661 (74 right of the text column),
+ * top = the intro's top; photo 108:7059 208 x 262 radius 17.3, inset 3 (PNG 1080x1350, object-cover). Line art 108:7042
+ * (220.117 x 168.514) behind the card at +86 / +50. Photo and art are never flipped on RTL; the art mirrors.
+ */
+interface Props {
+  edition: Edition;
+  c: {
+    ariaLabel: string; heading: string; text: string;
+    photo: { image: string; alt: string };
+    blocks: { heading: string; paragraphs: string[] }[];
+  };
+}
+const { edition, c } = Astro.props;
+const photo = img(c.photo.image, edition.region);
+---
+
+<Band bg="var(--color-veil)" labelledby="talent-heading">
+  <div class="talent">
+    <h2 id="talent-heading" class="h">{c.heading}</h2>
+    <div class="grid">
+      <div class="col">
+        <p class="intro">{c.text}</p>
+        {c.blocks.map((b) => (
+          <div class="blk">
+            <p class="hd">{b.heading}</p>
+            {b.paragraphs.map((t) => <p>{t}</p>)}
+          </div>
+        ))}
+      </div>
+      <div class="card-wrap">
+        <img loading="lazy" src={lines.src} alt="" aria-hidden="true" width="220.117" height="168.514" class="art" />
+        <div class="card">
+          <Picture src={photo} formats={['avif']} fallbackFormat="webp" width={285} height={359} widths={[285, 570]} sizes="(min-width: 1024px) 19.8vw, 285px" loading="lazy" decoding="async" alt={c.photo.alt} class="photo" pictureAttributes={{ class: 'contents' }} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Band>
+
+<style>
+  .talent { padding-block: calc(67 * var(--u)) calc(42.2 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy); overflow-wrap: anywhere; }
+  .grid { display: flex; flex-direction: column; gap: calc(32 * var(--u)); margin-top: calc(24 * var(--u)); }
+  .col { color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  .intro { margin: 0; text-align: justify; overflow-wrap: anywhere; }
+  .blk { margin: calc(16 * var(--u)) 0 0; min-height: calc(121 * var(--u)); overflow-wrap: anywhere; }
+  .blk + .blk { margin-top: calc(17 * var(--u)); }
+  .blk p { margin: 0; }
+  .blk p + p { margin-top: calc(14 * var(--u)); }
+  .hd { font-weight: 500; color: var(--color-navy); }
+  .card-wrap { position: relative; flex: none; width: calc(214.853 * var(--u)); height: calc(268.276 * var(--u)); }
+  .card { position: relative; box-sizing: border-box; width: 100%; height: 100%; padding: calc(3 * var(--u)); background: #fff; border-radius: var(--radius-card); box-shadow: 0 calc(1 * var(--u)) calc(4 * var(--u)) calc(2 * var(--u)) rgba(0, 0, 0, 0.13); }
+  .photo { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-card); } /* card + photo corners: bug 049 */
+  .art { position: absolute; inset-inline-start: calc(86 * var(--u)); top: calc(50 * var(--u)); width: calc(220.117 * var(--u)); height: calc(168.514 * var(--u)); max-width: none; pointer-events: none; }
+  :global([dir='rtl']) .art { scale: -1 1; }
+  @media (min-width: 1024px) {
+    .h { margin-inline-start: calc(88 * var(--u)); width: calc(576 * var(--u)); }
+    .grid { flex-direction: row; align-items: flex-start; gap: calc(74 * var(--u)); margin-inline-start: calc(91 * var(--u)); }
+    .col { flex: none; width: calc(496 * var(--u)); }
+    .intro { margin-bottom: 0; }
+  }
+  @media (max-width: 1023.98px) {
+    .art { display: none; }
+    .talent { padding-block: calc(40 * var(--u)); }
+  }
+  /* Phones narrower than 360: the longest word fits its column at this size, so overflow-wrap no longer splits it mid-word
+     (mobile QA M1, 13 Oct 2026: "Development" 258 px in a 254 px column at 320). Never larger than the size above; 360 px and up unchanged. */
+  @media (max-width: 359.98px) { .h { font-size: min(calc(28 * var(--u)), 11.7vw); } }
+  /* Figma justifies this text on its 855 / 496 px desktop column; on a phone column justify opens wide gaps between words
+     (mobile QA L3, 13 Oct 2026), so below 768 it follows the reading direction (left in English, right in Arabic). */
+  @media (max-width: 767.98px) { .intro { text-align: start; } }
+  /* The 294 px photo card is wider than the column under ~360 px and lost its right edge to the band's clip (mobile QA, 13 Oct
+     2026, 320: 33..327). Below 1024 it may shrink to the column, same proportions; at 360 and up its size is unchanged. */
+  @media (max-width: 1023.98px) { .card-wrap { max-width: 100%; height: auto; aspect-ratio: 214.853 / 268.276; } }
+  /* Bug 160 (15 Oct 2026): below 1024 the photo card kept the Figma column's start edge (x 35 with ~440px empty beside it at 768);
+     centred in the column instead, same size. */
+  @media (max-width: 1023.98px) { .card-wrap { margin-inline: auto; } }
+  /* Bug 147 (15 Oct 2026): Arabic phone heading size (global.css --ar-phone-h2 block). */
+  @media (max-width: 479.98px) { :global(html:lang(ar)) .h { font-size: var(--ar-phone-h2); } }
+</style>

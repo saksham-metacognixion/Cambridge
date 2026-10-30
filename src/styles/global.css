@@ -1,24 +1,78 @@
 @import "tailwindcss";
+/* Class-name scan: only the site sources. docs/ (saved live pages), figma-cache/ (Figma exports), tools/ and tests/ are
+   hundreds of MB of HTML/JS/SVG; scanning them made the dev server time out on this file ("transport invoke timed out")
+   and added unused utilities from the live site's markup to the build. */
+@source not "../../docs";
+@source not "../../figma-cache";
+@source not "../../tools";
+@source not "../../tests";
 
-/* ───────────── Fonts (self-hosted; drop the woff2 files into public/fonts/) ─────────────
-   Gotham licence is being checked with the client, so the files are NOT in the repo yet.
-   Until they are added, the fallback stack below is used (no other brand font is substituted). */
-@font-face { font-family: "Gotham"; font-weight: 300; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Light.woff2") format("woff2"); }
-@font-face { font-family: "Gotham"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Book.woff2") format("woff2"); }
-@font-face { font-family: "Gotham"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Medium.woff2") format("woff2"); }
-@font-face { font-family: "Gotham"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); }
+/* ───────────── Fonts (self-hosted from public/fonts/) ─────────────
+   Light / Book / Medium woff2 = the client's own files from the live site (5 Oct 2026); the web licence for the new
+   domain is still being confirmed (docs/open-decisions.md B1). No Bold file exists (D18). If a file is missing the
+   metric-matched fallback below renders (no other brand font is substituted).
+   Vertical metrics (bug 002, reopened): the woff2 files carry ascent 0.96em / descent 0.24em (a 1.2em content area), but
+   Figma lays Gotham out with ascent 0.76em / descent 0.192em ("auto" line height 0.952em: 39px -> 37px lines,
+   28px -> 27px). Fitted on 44 single-line texts of the Landing Page (Figma absoluteRenderBounds vs the browser's glyph
+   bounds; every Figma baseline matches within Figma's whole-pixel snapping). Without the overrides every line sat
+   ~0.076em lower in its line box than in Figma (3px on the hero heading) and heading -> paragraph gaps closed up. The
+   overrides only move glyphs inside their line box; line heights and line breaks are unchanged. */
+@font-face { font-family: "Gotham"; font-weight: 300; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Light.woff2") format("woff2"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Book.woff2") format("woff2"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Medium.woff2") format("woff2"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
+/* No Bold file exists (the live site has Light / Book / Medium only; docs/open-decisions.md D18). Without a 700 face
+   here, weight 700 resolves to Gotham Medium with synthetic bold and stays Gotham; a declared-but-missing face would
+   make the browser skip to the fallback family for bold text. Add the face back when Gotham-Bold.woff2 arrives:
+   @font-face { font-family: "Gotham"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); } */
+
+/* Metric-matched fallback (bug 002). Until the Gotham files arrive the system font renders, and its vertical metrics
+   differ from Gotham's: Figma lays Gotham out with ascent 0.76em / descent 0.192em (the same values as the Gotham
+   faces above: 39px headings sit on 37px lines, 28px on 27px), while Segoe UI / Helvetica / SF carry
+   ~1.0em ascent, so every heading sinks ~0.2em in its line box and the gap to the paragraph below closes up.
+   These faces are the SAME system fonts the stack would pick anyway (Windows / macOS / Android), with Gotham's
+   metrics applied, so text sits where Figma puts it on every OS. They do nothing once "Gotham" itself loads. */
+@font-face { font-family: "Gotham Fallback"; font-weight: 300; font-style: normal; src: local("Segoe UI Light"), local("HelveticaNeue-Light"), local("Helvetica Neue Light"), local("Roboto Light"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham Fallback"; font-weight: 400; font-style: normal; src: local("Segoe UI"), local("HelveticaNeue"), local("Helvetica Neue"), local("Roboto"), local("Arial"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham Fallback"; font-weight: 500; font-style: normal; src: local("Segoe UI Semibold"), local("HelveticaNeue-Medium"), local("Helvetica Neue Medium"), local("Roboto Medium"), local("Arial"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
+@font-face { font-family: "Gotham Fallback"; font-weight: 700; font-style: normal; src: local("Segoe UI Bold"), local("HelveticaNeue-Bold"), local("Helvetica Neue Bold"), local("Roboto Bold"), local("Arial Bold"); ascent-override: 76%; descent-override: 19.2%; line-gap-override: 0%; }
 
 /* ───────────── Scale ─────────────
    --design-w / --target-w come from src/lib/scale.ts (injected by BaseLayout).
    --u = the length of ONE Figma pixel.
-   ≥1024px: layout scales fluidly with the page width, capped at the target width (1440px).
+   ≥1024px: layout scales fluidly with the page width, capped at --max-w (scale.ts MAX_W = 1440 since bug 089, 13 Oct 2026;
+   it was 0 = no cap 10-13 Oct; --target-w = 1440 stays the reference width for build-time maths).
    <1024px: layout is re-flowed (stacked); --u stays fixed so text / radii / gaps keep their designed size. */
 :root {
   --u: calc(var(--target-w) * 1px / var(--design-w));
+  --up: 1;
 }
 @media (min-width: 1024px) {
-  :root { --u: calc(min(100cqw, var(--target-w) * 1px) / var(--design-w)); }
+  :root { --u: calc(min(100cqw, var(--max-w) * 1px) / var(--design-w)); }
+  /* --up = how much wider than the 1440 reference the page is (1 up to 1440, 1.33 at 1920, 1.78 at 2560; capped with --max-w).
+     Sizes that are deliberately fixed in CSS px at 1440 (the one button size R050, the hero text->button gap R058) multiply their
+     caps by it, so they keep their proportion to the scaled design on wide screens (10 Oct 2026). */
+  /* Only where a length / length division is valid (Chrome, Safari; NOT Firefox): elsewhere the whole token went invalid and every
+     .ui-btn lost its padding and height in Firefox at >= 1024px (bug 089, 13 Oct 2026). Without it --up stays 1, which is exact
+     while MAX_W <= 1440. */
+  @supports (width: calc(1px * (2px / 1px))) {
+    :root { --up: max(1, calc(min(100cqw, var(--max-w) * 1px) / (var(--target-w) * 1px))); }
+    @supports not (width: 1cqw) { :root { --up: max(1, calc(min(100vw, var(--max-w) * 1px) / (var(--target-w) * 1px))); } }
+  }
+  /* Browsers without container-query units (Safari < 16, Chrome < 105, Firefox < 110; cross-browser audit 9 Oct 2026): cqw
+     would make every `calc(... * var(--u))` invalid, so the viewport width stands in. It differs from the .page container
+     only by a classic scrollbar (overlay scrollbars on macOS / iOS = 0); .page clips that overhang. */
+  @supports not (width: 1cqw) {
+    :root { --u: calc(min(100vw, var(--max-w) * 1px) / var(--design-w)); }
+  }
 }
+/* Hero text -> button gap, ONE value for every hero with a paragraph (Home: Hero.astro, bug 065; inner pages: PageHero,
+   bug 055): 18 Figma px (24.6px at 1440, the Figma Home / Find a Doctor gap), kept within 24-32px at every width so the
+   buttons never sit against the text. Applied as a margin after the paragraph, in flow, so longer text pushes them down. */
+:root { --hero-btn-gap: clamp(24px, calc(18 * var(--u)), calc(32px * var(--up))); }
+/* Bug 156 (15 Oct 2026): below 1024 every page stacks its sections in flow, and the page wrappers used a fixed 10 units (13.7px)
+   between them because each section's desktop spacing comes from absolute Figma y-positions. ONE stacked-section gap for every
+   page wrapper (and before the footer): 40px on phones, growing to 56px on tablets. Desktop keeps the per-section Figma gaps. */
+:root { --stack-gap: clamp(40px, 7vw, 56px); }
 
 @theme {
   /* Full navigation from 1200px up, hamburger below (scope 2.8). Gives the nav: / max-nav: variants. */
@@ -27,21 +81,35 @@
   /* 1 spacing step = 1 Figma px, so  w-185  start-[-118]  top-1380  gap-11  are Figma values, scaled. */
   --spacing: var(--u);
 
-  /* Colours: exact hex values from Figma */
-  --color-navy: #004059;          /* headings, nav text, outline/fill accents */
-  --color-navy-alt: #00415a;      /* CTA labels, some fills (distinct in Figma: #00415a) */
-  --color-cyan: #00b8ff;
-  --color-body: #6b6b6b;
-  --color-teal-border: #418ea2;
-  --color-mist: #e7e7e7;          /* footer links, header hairlines */
-  --color-chip: #ededed;
-  --color-off-white: #fffdfd;
+  /* Colours: the brand palette (Cambridge Hospital Brand Guidelines, May 2026, p.33). Use these exact values, never a
+     visually matched shade. Primary: Deep Teal, Medical Green, Bright Healthcare Blue. Secondary: Muted Teal Blue,
+     Soft Steel Blue, Light Cool Grey.
+     Contrast (the guide: "ensure all color applications meet accessibility standards"; user decision 8 Oct 2026):
+       text on Bright Healthcare Blue = Deep Teal (4.95:1), never white (2.26:1);
+       text on white is Deep Teal; cyan / green / muted teal are never small text on white (2.26 / 2.65 / 3.74:1);
+       small white text only on Deep Teal (11.2:1); a cyan accent on light backgrounds = a fill, border or underline. */
+  --color-navy: #004059;          /* Deep Teal: logo, headings, nav text, outline/fill accents */
+  --color-navy-alt: #004059;      /* was Figma #00415a (a visual match of Deep Teal); kept as an alias for existing classes */
+  --color-cyan: #00b8ff;          /* Bright Healthcare Blue: CTAs, digital UI, accents */
+  --color-green: #21b573;         /* Medical Green: highlights, recovery messaging, icons */
+  --color-teal-border: #418ea2;   /* Muted Teal Blue: UI, hairlines */
+  --tab-selected: var(--color-teal-border); /* selected .ui-tab fill, every tab list (Tabs.astro, FAQ); bug 056: Figma 55:12215 */
+  --color-steel: #799fb9;         /* Soft Steel Blue: backgrounds, large sections, subtle UI */
+  --color-mist: #e7e7e7;          /* Light Cool Grey: footer links, header hairlines */
+  /* Text and neutrals (brand guidelines, user decision 8 Oct 2026). The guide sets all copy in Deep Teal and has no grey,
+     so body text is Deep Teal; neutral surfaces are Light Cool Grey or a tint of it on white (mist-25 / mist-50). */
+  --color-body: #004059;          /* body copy = Deep Teal (was Figma grey #6b6b6b) */
+  --color-mist-25: color-mix(in srgb, #e7e7e7 25%, #fff);   /* lightest neutral surface (was #f7f7f7-#f9f9f9) */
+  --color-mist-50: color-mix(in srgb, #e7e7e7 50%, #fff);   /* light neutral surface (was #f1f1f1 / #f2f2f2) */
+  --color-error: #ff4e4e;         /* the one colour outside the palette: form error state, non-text only (3.25:1 on white) */
+  --color-chip: #e7e7e7;
+  --color-off-white: #fff;
   --color-veil: rgba(231, 231, 231, 0.5);
-  --color-field: rgba(217, 217, 217, 0.5);
-  --color-dot-light: #f9f9f9;
-  --color-dot-grey: #d9d9d9;
+  --color-field: rgba(231, 231, 231, 0.8);
+  --color-dot-light: var(--color-mist-25);
+  --color-dot-grey: #e7e7e7;
 
-  --font-gotham: "Gotham", ui-sans-serif, system-ui, sans-serif;
+  --font-gotham: "Gotham", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif;
 
   /* Font sizes used in Figma, scaled: text-f13 = 13 Figma px */
   --text-f7: calc(7 * var(--u));
@@ -96,6 +164,85 @@
   --shadow-news: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13);
 }
 
+/* Arabic typeface (Brand Guidelines p.35): GE SS Two for Arabic text. Gotham stays first so Latin words, digits and
+   e-mail addresses on Arabic pages keep Gotham; Gotham has no Arabic glyphs, so Arabic letters fall through to GE SS Two.
+   Files = the live site's Medium / Bold (wp-content/uploads/2026/06, 8 Oct 2026; docs/open-decisions.md BG2). No Light file
+   exists, so Light / Book Arabic text resolves to Medium. unicode-range keeps the files off pages with no Arabic text. */
+@font-face { font-family: "GE SS Two"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoMedium.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+@font-face { font-family: "GE SS Two"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoBold.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+html:lang(ar) { --font-gotham: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
+
+/* Bug 130 interim (15 Oct 2026, Padmavathi): Arabic running text in a genuine Regular face. GE SS Two Regular / Light does not
+   exist in the licensed files (only Medium + Bold), so body copy used the Medium face and read as bold. Until the client / brand
+   agency supplies GESSTwoLight (Brand Guidelines May 2026 p.35), running text uses Tajawal Regular 400 (Google Fonts, SIL OFL 1.1,
+   Arabic subset from @fontsource/tajawal 5.2.5, licence in public/fonts/Tajawal-OFL.txt). It lives in its own family "GE SS Two
+   Body" = 400 Tajawal + 500 GE SS Two Medium + 700 GE SS Two Bold, so only weight-400 (and 300) text changes face; Medium /
+   Bold text inside paragraphs (strong, .font-medium, testimonial names) keeps GE SS Two, and so do headings (their own family
+   rule below, so a heading's lighter span stays GE SS Two Medium instead of mixing typefaces). size-adjust 109.5%: measured on real
+   paragraphs, GE SS Two Medium lines are 9.6% longer than Tajawal at the same size, so the adjusted face keeps the line lengths,
+   wraps and layout of the Medium face (x-heights 0.493 vs 0.454 em, same ratio). ascent / descent overrides copy the GE SS Two
+   Medium metrics (hhea 1690 / 492 of 2048) so baselines do not move. Wiring: inside main and footer the --font-gotham variable
+   itself points at the body stack, so every `font-gotham` utility and `var(--font-gotham)` rule there resolves to it (plain
+   font-family inheritance would lose to the utility class on most paragraphs); headings, buttons, pills, tabs and fields set
+   the variable back to the GE SS Two stack, so they keep Bold / Medium, and the header + mobile menu are outside main. When
+   the real GE SS Two Light / Regular file arrives: point the 400 src at it, drop size-adjust
+   and the overrides, delete the two Tajawal files, update docs/open-decisions.md B130. */
+@font-face { font-family: "GE SS Two Body"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Tajawal-Regular-arabic.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; size-adjust: 109.5%; ascent-override: 82.5%; descent-override: 24%; line-gap-override: 0%; }
+@font-face { font-family: "GE SS Two Body"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoMedium.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+@font-face { font-family: "GE SS Two Body"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/GESSTwoBold.woff2") format("woff2"); unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF; }
+html:lang(ar) { --font-ar-ui: "Gotham", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; --font-ar-body: "Gotham", "GE SS Two Body", "GE SS Two", "Gotham Fallback", ui-sans-serif, system-ui, sans-serif; }
+html:lang(ar) :is(main, footer) { --font-gotham: var(--font-ar-body); font-family: var(--font-gotham); }
+html:lang(ar) :is(main, footer) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading, .ui-btn, .ui-pill, .ui-tab, .ui-field, button) { --font-gotham: var(--font-ar-ui); font-family: var(--font-gotham); }
+
+/* Bugs 129 / 130 (15 Oct 2026): Arabic line spacing and heading weight.
+   The Figma line heights are Gotham's (title 37/39 = 0.95, body 14/12 = 1.17); GE SS Two's ascenders, descenders and diacritics
+   collided at them. Arabic pages only: headings 1.45, running text 1.65 (brief: 1.4-1.5 / 1.6-1.7). English is untouched.
+   `!important`: the Figma values are set per component (scoped rules, Tailwind leading-* classes, inline calc()), so one
+   override must beat every specificity; containers grow with the text (flow layouts; the hero stages have min-heights).
+   Weight: the only Arabic files are GE SS Two Medium (500) and Bold (700), so Book / Light Arabic text already renders Medium;
+   headings now take Bold, running text keeps Medium (the best contrast the licensed files allow; a Regular / Light file is an
+   open client dependency, docs/open-decisions.md B130). font-synthesis: Latin words inside an Arabic heading ask Gotham for 700;
+   Gotham stops at Medium (no Bold file), and the browser must not fake it. The header's fixed-box nav keeps its own metrics
+   (single-line items); the footer and the mobile menu are flow layouts and take the running-text height.
+   Bug 130 re-opened (15 Oct 2026): verified in Chrome, WebKit and Firefox that weights 300 / 400 / 500 all resolve to the
+   Medium file and 600 / 700 to Bold, so body text could not get lighter with the licensed files alone; running text now uses
+   the interim "GE SS Two Body" family above (Tajawal Regular at 400). Known limit: the recovery card heading ("Your recovery
+   matters to us", ContactRecovery.astro) is a lighter lead span + a `.font-medium` emphasis span, so on Arabic pages the whole
+   heading is Medium, the same face as... its paragraph was; making the emphasis Bold was tried and reverted: Bold is wider, the
+   heading wraps to four lines in its fixed Figma box (331u) at 1024-1920 and runs into the paragraph (open-decisions B130).
+   Bug 136 (15 Oct 2026): the `.menu` scope is the MOBILE menu only (below the header's 1200px breakpoint, Header.astro). From
+   1200px up the same `.menu` holds the desktop header, whose items are fixed Figma boxes (language toggle li 15 tall, top links,
+   region list, dropdown rows): the 1.65 line box (19px) inside the 15u box pushed the AR / EN labels 4-5px below the centre of
+   their pill / chip. Desktop keeps the Figma metrics; English pages are untouched either way. */
+html:lang(ar) { font-synthesis-weight: none; }
+html:lang(ar) :is(h1, h2, h3, h4, h5, h6, .hero-title, .ar-heading) { font-weight: 700 !important; line-height: 1.45 !important; }
+html:lang(ar) :is(main, footer) :is(p, li, dd, dt, label, legend, .rf-legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+@media (max-width: 1199.98px) {
+  html:lang(ar) .menu :is(p, li, dd, dt, label, legend, figcaption, blockquote, summary, td, th, .ar-text) { line-height: 1.65 !important; }
+}
+/* Bug 134 (15 Oct 2026): the gap between a heading and its intro paragraph on the Arabic Home canvases (Services, Doctors, Care
+   Support, Testimonials, Recovery) and the Media Hub newsletter card. The Figma spacer tracks (6-9 scaled px) were drawn for the
+   Gotham headings; with the 1.45 / 1.65 Arabic line heights (bug 129) the heavier GE SS Two Bold heading sat on its paragraph.
+   One value, used by each component's `html:lang(ar)` desktop override (>= 1024px); English keeps the Figma tracks. */
+html:lang(ar) { --ar-gap-heading: calc(14 * var(--u)); }
+/* Bug 147 (15 Oct 2026): Arabic phone headings. GE SS Two Bold is wider than Gotham and runs on 1.45 lines (bug 129), so the English
+   phone sizes broke the Arabic headings into 4-6 short lines (one word alone on a line). Arabic phones (< 480px): the heading size
+   tokens are 0.8x the English ones, hero titles are capped at 7vw (27px at 390) and headings wrap balanced, so no word is left alone
+   on its last line. Components with their own heading sizes (ContactRecovery, Newsletter, Why / Careers / About sections) use --ar-phone-h2. */
+@media (max-width: 479.98px) {
+  html:lang(ar) {
+    --ar-phone-h2: calc(28 * 0.8 * var(--u)); /* section headings sized in component CSS (the scaled text-f28) */
+    --text-f23: calc(23 * 0.8 * var(--u));
+    --text-f28: calc(28 * 0.8 * var(--u));
+    --text-f29p076: calc(29.076 * 0.8 * var(--u));
+    --text-f30: calc(30 * 0.8 * var(--u));
+    --text-f36: calc(36 * 0.8 * var(--u));
+    --text-f39: calc(39 * 0.8 * var(--u));
+  }
+  html:lang(ar) main :is(h1, h2, .hero-title) { text-wrap: balance; }
+  html:lang(ar) .hero-title { font-size: min(calc(39 * var(--u)), 7vw); }
+}
+
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -116,7 +263,7 @@ body {
 .stage {
   position: relative;
   width: 100%;
-  max-width: calc(var(--target-w) * 1px);
+  max-width: calc(var(--max-w) * 1px);
   margin-inline: auto;
   height: calc(var(--h) * var(--u));
   overflow-x: clip;
@@ -124,6 +271,27 @@ body {
 /* Below 1024px the absolute canvas is dropped: each section supplies its own stacked layout. */
 @media (max-width: 1023.98px) {
   .stage { height: auto; overflow-x: visible; }
+}
+
+/* Hero background on screens wider than the target width (bug 086, 9 Oct 2026; cross-engine rework 10 Oct). The stage stays
+   1440 wide and centred (the Figma composition, text, people and art are untouched); the page's white used to show on both
+   sides of it. Now the hero section (`.hero-bleed`, always full width) continues the banner's background to both viewport
+   edges with the image's own outermost pixel column: the gradient and the pills, which already run off the frame in Figma,
+   carry on to the edge; no photo is scaled or cropped. The column is a build-time vertical linear-gradient (lib/hero-edge.ts,
+   sampled from the source file), not the image stretched to 200000 %, which engines raster differently. Set by Hero /
+   PageHero / ContactHero:
+     --hero-edge-start / --hero-edge-end  gradients of the image's left / right pixel column
+     --hero-edge-h  the image's height relative to the section (banner layout 114.42 %, cover layout 323 Figma px)
+     --hero-edge-y  its top offset (cover layout: -1 Figma px)
+   ::before = the band at the inline start, showing the image's left column; ::after = the inline end, its right column. A
+   mirrored image (RTL, the default: the art flips with the layout) keeps that pairing; one that is not mirrored (`unflipped`:
+   keepComposition / mirror=false, a map, a photo) swaps it. Only drawn where a band exists (> 1440 px). */
+@media (min-width: 1441px) {
+  .hero-bleed::before, .hero-bleed::after { content: ''; position: absolute; top: 0; height: 100%; width: calc((100% - min(100%, var(--max-w) * 1px)) / 2); background-repeat: no-repeat; background-size: 100% var(--hero-edge-h, 114.42%); background-position: 0 var(--hero-edge-y, 0); pointer-events: none; }
+  .hero-bleed::before { inset-inline-start: 0; background-image: var(--hero-edge-start, none); }
+  .hero-bleed::after { inset-inline-end: 0; background-image: var(--hero-edge-end, none); }
+  [dir='rtl'] .hero-bleed.unflipped::before { background-image: var(--hero-edge-end, none); }
+  [dir='rtl'] .hero-bleed.unflipped::after { background-image: var(--hero-edge-start, none); }
 }
 
 /* Hairline borders from Figma, scaled. Width + style only: set the colour with border-<colour>. */
@@ -134,10 +302,52 @@ body {
 
 /* Card outline drawn as an overlay so it never shifts the card's children (Chrome draws any border as at least 1 device px,
    which would push absolutely-positioned content ~1px; Figma's 0.25px stroke doesn't). Host must be positioned. */
+/* Sub-pixel strokes: Chrome paints a border thinner than 1 device px as a FULL-colour device pixel, while Figma
+   antialiases it (a 0.25px #418ea2 stroke renders as ~25% teal). So the stroke is never thinner than 1 device px and its
+   colour is faded by the stroke's coverage as Figma renders it (Figma px x device pixel ratio, capped at 1): --sw .25 =
+   25% teal on a 1x screen, as in the Figma render. Strokes of 1 Figma px or more (buttons, --sw:1) keep their full colour.
+   A colour fade, not opacity, so the card content is unaffected. User decision 2 Oct 2026.
+   Bug 183 (16 Oct 2026, client photo from an iPhone): a stroke of 1 DEVICE px (0.33 CSS px on a 3x phone, 0.5 on a 2x laptop)
+   is too fine to see on a high-density screen, so the floor is now 1 CSS px on every screen: what a 1x desktop already showed.
+   The coverage fade is unchanged (1x: 25% teal for --sw .25), so a 1x screen renders pixel for pixel as before. */
+:root { --hair-dpr: 1; }
+/* Consent link ("Privacy policy" / "Terms & conditions") inside a form: inline text, so its tap area is extended with padding
+   (inline padding does not change the line layout). */
+@media (max-width: 1023.98px) { [data-field='consent'] a { padding-block: 15px; } }
+
+/* Hero on phones / tablets (no Figma frame): the banner photo is its own block above the text, so no word is drawn over the
+   photo or the navy pill bars. `.hero-media` = the photo wrapper, `.hero-copy` = title + text + button (display:contents from
+   1024px, where Figma's absolute layout applies). */
+@media (max-width: 1023.98px) {
+  /* A banner whose people stand against one edge of the 1052x500 art (About, bug 027) sets its own crop with the three
+     --hero-* variables (PageHero `small`): the box takes the aspect ratio of the strip that holds the whole group, capped in
+     height (the top of the art is cropped first, never the feet), and the art is anchored to that edge. */
+  .hero-media { position: relative; width: 100%; height: var(--hero-h, min(72vw, calc(300 * var(--u)))); aspect-ratio: var(--hero-aspect, auto); max-height: var(--hero-max-h, none); }
+  .hero-media img { position: absolute; top: 0; inset-inline-start: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: var(--hero-pos, 80% 30%); }
+  /* Bug 167 (15 Oct 2026): 16px side gutter, the page gutter below 1024 (was 24 units = 33px). */
+  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: calc(16 * var(--u)); padding: calc(28 * var(--u)) 16px calc(40 * var(--u)); }
+}
+@media (min-width: 1024px) { .hero-copy { display: contents; } }
+/* Inner-page hero title (Figma Gotham Medium 39 on 37px lines: PageHero, ContactHero, FeedbackHero). Bug 038: below 1024px
+   --u is fixed, so the 39px style is 53px on a phone and "Rehabilitation" was split mid-word to fit the column. The title now
+   scales with the viewport instead, capped at its design size: 8vw lets the longest hero word, "Neurorehabilitation" (9.8em in
+   Gotham Medium), fit the copy column (100vw - 2 x 24u padding) from 320px up, and keeps "Rehabilitation Care" on its Figma
+   line on every phone. Lines keep the Figma 37/39 ratio. break-word (never anywhere / break-all) only splits a word that is
+   wider than the whole column on its own, so a word is never broken to tidy a line. */
+.hero-title { overflow-wrap: break-word; word-break: normal; }
+@media (max-width: 1023.98px) {
+  .hero-title { font-size: min(calc(39 * var(--u)), 8vw); line-height: calc(37 / 39); text-wrap: balance; /* bug 168: no one-word last line ("Cambridge Hospital Abu / Dhabi" at 768) */ }
+}
+
+@media (min-resolution: 2dppx) { :root { --hair-dpr: 2; } }
+@media (min-resolution: 3dppx) { :root { --hair-dpr: 3; } }
 .hair-card { border: 0; }   /* optional: --sw (Figma px, default .25) and --sc (colour, default teal) */
 .hair-card::after {
   content: ""; position: absolute; inset: 0; box-sizing: border-box; pointer-events: none;
-  border: calc(var(--sw, 0.25) * var(--u)) solid var(--sc, var(--color-teal-border)); border-radius: inherit;
+  --hair-cover: min(1, var(--sw, 0.25) * var(--hair-dpr));
+  border: max(1px, calc(var(--sw, 0.25) * var(--u))) solid
+    color-mix(in srgb, var(--sc, var(--color-teal-border)) calc(var(--hair-cover) * 100%), transparent);
+  border-radius: inherit;
 }
 
 /* 44px touch targets (scope 2.8) without changing the look: an invisible hit layer centred on the control, at least
@@ -151,6 +361,17 @@ body {
   width: max(100%, var(--hit-w, 44px)); height: max(100%, var(--hit-h, 44px));
 }
 
+/* Screens wider than --max-w (cross-browser / responsive audit, 9 Oct 2026): --gutter = the white margin on EITHER
+   side of the centred stage (0 while the scale is uncapped, MAX_W = 0 since 10 Oct 2026; with MAX_W 1440 it was 240px at 1920). Rows that overflow the frame in Figma
+   (Home Doctors, Care Support, Testimonials) widen their scroller by it on both sides, keeping every card at its stage
+   position, so the row runs off the real screen edge instead of being cut at an invisible line in the middle of the page.
+   Reads 100cqw like --u (the .page container), so a classic scrollbar never adds to it. */
+:root { --gutter: 0px; }
+@media (min-width: 1024px) {
+  :root { --gutter: max(0px, calc((100cqw - var(--max-w) * 1px) / 2)); }
+  @supports not (width: 1cqw) { :root { --gutter: max(0px, calc((100vw - var(--max-w) * 1px) / 2)); } }
+}
+
 /* Horizontal row that overflows the frame on the right (Doctors, Care Support, Testimonials).
    Swipe / scroll only, no controls. Native scrollbar hidden; nothing added to the design. */
 .hscroll { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
@@ -158,3 +379,331 @@ body {
 /* Chrome rounds the initial RTL snap position of a row that overhangs the frame by 1px, which breaks the exact
    mirror at desktop widths. Desktop RTL rows scroll without snapping; mobile/tablet rows snap in both directions. */
 @media (min-width: 1024px) { [dir='rtl'] .hscroll { scroll-snap-type: none; } }
+/* Mouse drag on the rows (src/scripts/drag-scroll.ts, as on the live site's timeline): open hand over a row that overflows,
+   closed hand while dragging. Snapping and smooth scrolling are off during the drag so the row follows the pointer. */
+@media (hover: hover) and (pointer: fine) { .hscroll[data-drag-scroll] { cursor: grab; } }
+.hscroll.is-dragging { scroll-snap-type: none !important; scroll-behavior: auto !important; user-select: none; -webkit-user-select: none; }
+.hscroll.is-dragging, .hscroll.is-dragging * { cursor: grabbing !important; }
+
+/* Doctor cards (Home row, Find a Doctor, the doctor rows on Care / Patient Hub / Hospitals / articles): the photo zooms a
+   little on hover or when a link in the card has keyboard focus (bug 019, as on the live site). Only the photo scales, from
+   its bottom edge (it stands on the panel), so the card keeps its size: no layout shift, nothing clipped in a scroller.
+   1.04 keeps the largest photo (174 on a 180 panel) inside the card. Off with prefers-reduced-motion. */
+.dr-photo { transform-origin: 50% 100%; transition: scale 0.5s cubic-bezier(0.42, 0, 0.58, 1); } /* live: .doctor-image-box img, all .5s cubic-bezier(.42,0,.58,1), scale 1.04 */
+@media (hover: hover) { .dr-card:hover .dr-photo { scale: 1.04; } }
+.dr-card:has(:focus-visible) .dr-photo { scale: 1.04; }
+@media (prefers-reduced-motion: reduce) { .dr-photo, .dr-card:hover .dr-photo, .dr-card:has(:focus-visible) .dr-photo { scale: none; transition: none; } }
+
+/* ───────────── Shared filter controls (Figma 62:783 pills, 62:186 boxes; reused on Conditions, Insurance, Testimonials) ─────────────
+   .ui-pill: region pill 79 x 25, radius 12, 1px navy outline; pressed = navy fill. Place it with the parent's layout.
+   ONE rule for every ALL / KSA / UAE pill and tab (Home Doctors / Care Support / News, Find a Doctor, Conditions,
+   Insurance, Testimonials, Refer tabs): no padding or offset, the label is centred by flex (bug 003).
+   .ui-box > .ui-field + .ui-chev: 35 tall box, radius 10, 0.5px #418ea2, Gotham Book 10/14 navy, chevron 17 from the end.
+   Width of .ui-box: set by the page (311 on Find a Doctor / Conditions). */
+.ui-pill { width: calc(var(--pill-w, 79) * var(--u)); height: calc(25 * var(--u)); border-radius: var(--radius-pill); box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; font: 500 calc(10 * var(--u)) / calc(10 * var(--u)) var(--font-gotham); text-align: center; cursor: pointer; background: transparent; color: var(--color-navy); border: calc(1 * var(--u)) solid var(--color-navy); }
+.ui-pill[aria-pressed='true'], .ui-pill[aria-selected='true'] { background: var(--pill-on, var(--color-navy)); color: #fff; border: 0; }
+.ui-box { position: relative; flex: none; max-width: 100%; height: calc(35 * var(--u)); }
+.ui-field { appearance: none; -webkit-appearance: none; display: block; box-sizing: border-box; width: 100%; height: 100%; margin: 0; padding: 0 calc(31 * var(--u)) 0 calc(15 * var(--u)); background: transparent; color: var(--color-navy); border: calc(0.5 * var(--u)) solid var(--color-teal-border); border-radius: var(--radius-field); font: 400 calc(10 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); text-overflow: ellipsis; }
+.ui-field::placeholder { color: var(--color-navy); opacity: 1; }
+.ui-field::-webkit-calendar-picker-indicator, .ui-field::-webkit-list-button { display: none !important; opacity: 0; }
+.ui-field:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u)); }
+[dir='rtl'] .ui-field { padding: 0 calc(15 * var(--u)) 0 calc(31 * var(--u)); }
+.ui-chev { position: absolute; inset-inline-end: calc(17 * var(--u)); top: calc(17 * var(--u)); width: calc(7 * var(--u)); height: calc(4.207 * var(--u)); pointer-events: none; max-width: none; }
+
+/* ───────────── Button sizes and corner radii (bugs 044 / 049 / 050, client request 7 Oct 2026) ─────────────
+   Deviation from Figma requested by the client (VOC): Figma's buttons were too small to read (9-10px labels in ~96 x 22 boxes)
+   and every frame had its own size and corner. ONE set of values for the whole site, all here so a client change is one line:
+     .ui-btn      every action button (filled, outline, white): label 14-16px (15px at 1440 and on phones, 14px on small
+                  laptops), height 40px on desktop (36px at 1024), 44px on phones / tablets (touch), width from padding (the
+                  button grows with its label and never wraps it), corners --radius-btn.
+     .ui-btn-sm   the one smaller size, only where two buttons share a narrow card (doctor cards, hospital rows): label 14px,
+                  34-36px high on desktop (36 from ~1366), 40px below 1024 (its .hit layer keeps the 44px touch target).
+   The look (fill colour, outline, hover / focus) stays on the .btn-fill / .btn-fill-navy / .btn-fill-white / .btn-outline
+   classes below. Radii by element type (rounded everywhere, the bug 049 values): buttons and form fields 8px, cards and boxes
+   16px, large panels and bands 28px, pills / chips fully round. Circles (avatars, dots, round icons) keep 50%. */
+:root {
+  --radius-btn: 8px;
+  --radius-field: 8px;
+  --radius-card: 16px;
+  --radius-panel: 28px;
+  --radius-pill: 999px;
+  --btn-fs: clamp(14px, calc(11 * var(--u)), calc(16px * var(--up)));
+  --btn-h: 44px;
+  --btn-px: 20px;
+  --btn-sm-h: 40px;
+  --btn-sm-px: 14px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --btn-h: clamp(36px, calc(29 * var(--u)), calc(40px * var(--up)));
+    --btn-px: clamp(14px, calc(16 * var(--u)), calc(22px * var(--up)));
+    --btn-sm-h: clamp(34px, calc(27 * var(--u)), calc(36px * var(--up)));
+    --btn-sm-px: clamp(10px, calc(12 * var(--u)), calc(16px * var(--up)));
+  }
+}
+
+/* Header capped at its 1440 size on wider screens (client sheet "CH Website Comments.xlsx" row 3, 13 Oct 2026, user decision): the
+   header resets --u / --up to the 1440 values, and every token above that is computed from them is declared again here so it
+   is re-computed with the header's --u (a custom property is resolved where it is declared, on :root, and inherited as a
+   fixed value). Generated from the declarations above; KEEP IN SYNC when a --u / --up based token is added or changed.
+   --hu (declared on :root, so it keeps the PAGE scale inside the header) = the full-width horizontal unit: Header.astro uses it
+   to spread the header over the whole screen (logo at the start, the rest anchored to the end) while sizes stay at 1440. */
+@media (min-width: 1441px) {
+  :root { --hu: var(--u); }
+  .hd {
+    --u: calc(var(--target-w) * 1px / var(--design-w));
+    --up: 1;
+    --spacing: var(--u);
+    --text-f7: calc(7 * var(--u));
+    --text-f8: calc(8 * var(--u));
+    --text-f9: calc(9 * var(--u));
+    --text-f10: calc(10 * var(--u));
+    --text-f12: calc(12 * var(--u));
+    --text-f11p689: calc(11.689 * var(--u));
+    --text-f12p61: calc(12.61 * var(--u));
+    --text-f13: calc(13 * var(--u));
+    --text-f13p15: calc(13.15 * var(--u));
+    --text-f14: calc(14 * var(--u));
+    --text-f14p173: calc(14.173 * var(--u));
+    --text-f15: calc(15 * var(--u));
+    --text-f16: calc(16 * var(--u));
+    --text-f18p264: calc(18.264 * var(--u));
+    --text-f19: calc(19 * var(--u));
+    --text-f20p26: calc(20.26 * var(--u));
+    --text-f23: calc(23 * var(--u));
+    --text-f28: calc(28 * var(--u));
+    --text-f29p076: calc(29.076 * var(--u));
+    --text-f30: calc(30 * var(--u));
+    --text-f36: calc(36 * var(--u));
+    --text-f39: calc(39 * var(--u));
+    --radius-r3: calc(3 * var(--u));
+    --radius-r4: calc(4 * var(--u));
+    --radius-r5: calc(5 * var(--u));
+    --radius-r6: calc(6 * var(--u));
+    --radius-r7: calc(7 * var(--u));
+    --radius-r8: calc(8 * var(--u));
+    --radius-r10: calc(10 * var(--u));
+    --radius-r12: calc(12 * var(--u));
+    --radius-r15: calc(15 * var(--u));
+    --radius-r16: calc(16 * var(--u));
+    --radius-r18: calc(18 * var(--u));
+    --radius-r20: calc(20 * var(--u));
+    --radius-r21: calc(21.9 * var(--u));
+    --radius-r5p044: calc(5.044 * var(--u));
+    --radius-r7p306: calc(7.306 * var(--u));
+    --radius-r19p725: calc(19.725 * var(--u));
+    --radius-r30: calc(30 * var(--u));
+    --radius-r12p6: calc(12.658 * var(--u));
+    --shadow-bar: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.06);
+    --shadow-tile: 0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.25);
+    --shadow-post: calc(7.306 * var(--u)) calc(7.306 * var(--u)) calc(21.917 * var(--u)) 0 rgba(0, 0, 0, 0.2);
+    --shadow-nl-card: calc(7.31 * var(--u)) calc(7.31 * var(--u)) calc(21.92 * var(--u)) calc(-6 * var(--u)) rgba(0, 0, 0, 0.25);
+    --shadow-nl-form: 0 calc(2.922 * var(--u)) calc(87.667 * var(--u)) 0 rgba(142, 131, 113, 0.15);
+    --shadow-news: 0 calc(4 * var(--u)) calc(4 * var(--u)) rgba(0, 0, 0, 0.13);
+    --btn-fs: clamp(14px, calc(11 * var(--u)), calc(16px * var(--up)));
+    --btn-h: clamp(36px, calc(29 * var(--u)), calc(40px * var(--up)));
+    --btn-px: clamp(14px, calc(16 * var(--u)), calc(22px * var(--up)));
+    --btn-sm-h: clamp(34px, calc(27 * var(--u)), calc(36px * var(--up)));
+    --btn-sm-px: clamp(10px, calc(12 * var(--u)), calc(16px * var(--up)));
+  }
+}
+.ui-btn {
+  box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: none;
+  min-width: 0; max-width: 100%; min-height: var(--btn-h); margin: 0; padding: 0 var(--btn-px); border-radius: var(--radius-btn);
+  font-family: var(--font-gotham); font-style: normal; font-weight: 500; font-size: var(--btn-fs); line-height: 1.2;
+  letter-spacing: normal; text-align: center; text-transform: none; white-space: nowrap; text-decoration: none; cursor: pointer;
+}
+.ui-btn.ui-btn-sm { min-height: var(--btn-sm-h); padding-inline: var(--btn-sm-px); font-size: calc(14px * var(--up)); } /* label grows with the page beyond 1440 (--up) */
+/* The label (a direct text node or one <span>) sits on the button's centre line: the Gotham caps are centred (bug 007). */
+.ui-btn > span { display: block; line-height: 1; text-box: trim-both cap alphabetic; }
+.ui-btn > svg, .ui-btn > img { flex: none; }
+
+/* ───────────── Interactive states of buttons, pills and tabs (user request 7 Oct 2026) ─────────────
+   ONE place for the hover / focus-visible look of every button, pill and tab on the site. A control carries one class:
+     .btn-fill        primary button (Header Book an Appointment, Book Now, See More, View More Stories, Send Message, SUBMIT,
+                      Read More, Start Your Care / UAE / KSA on the care cards, ...): navy #004059 fill, white label
+                                                                       hover: cyan fill, Deep Teal label
+                      (bug 102, client 14 Oct 2026: navy at rest, cyan on hover, site-wide; Figma drew it cyan at rest)
+     .btn-fill-navy   navy / #004059 fill (View All, Calculate Now, Book Appointment on a profile, hospital / hub cards, ...)
+                      = the same look; the resting colour comes from the component (bg-navy text-white)
+                                                                       hover: cyan fill, Deep Teal label
+     .btn-fill-white  white fill on a navy band (Recovery, Careers Apply)   hover: cyan fill, Deep Teal label
+     .btn-outline     navy or cyan outline (Learn More / Find a Doctor hero buttons, Visit Page, 404 links, A-Z sort, ...)
+                                                                       hover: cyan border (label unchanged); a .hair-card outline grows
+                                                                       to 2px like the live site's .ctaBut1 (user request 6 Oct)
+     .btn-text        text-only button (footer Subscribe)                hover: cyan underline
+     .ui-pill         ALL / KSA / UAE, Blogs / News / Events, Refer tabs  hover (not pressed / selected): cyan border
+     .ui-tab          vertical tabs (detail topics, Careers, FAQ)         hover (not selected): #e7e7e7 fill, navy label;
+                                                                       selected: --tab-selected (#418ea2) fill, white label
+   Brand AA (8 Oct 2026): a label is never cyan or white on cyan; cyan marks a state as a fill, border or underline.
+   Pressed / selected states are untouched. Hover only where a pointer can hover (no stuck hover after a tap); disabled and
+   aria-disabled controls keep their look. Colour transitions = the live theme's link transition (Blocksy --theme-transition:
+   0.12s cubic-bezier(.455,.03,.515,.955), the same on every live page; Why Cambridge animation audit 7 Oct 2026), off with
+   prefers-reduced-motion. Every rule starts with
+   :root so it beats the component-scoped rules and the utility classes that set the resting colours. Labels inside a button
+   (`> *`) follow the button's hover colour where a utility class set theirs (text-navy, text-cyan). CSS only; RTL-neutral. */
+:root { --ui-ease: 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+:root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab {
+  transition: background-color var(--ui-ease), color var(--ui-ease), border-color var(--ui-ease), box-shadow var(--ui-ease);
+}
+/* Primary (.btn-fill) buttons: Deep Teal fill, white label at rest (bug 102; white on #004059 is 11.2:1). The cyan state always
+   carries the Deep Teal label (brand AA, 8 Oct 2026: white on #00b8ff is 2.26:1). */
+:root .btn-fill { background-color: var(--color-navy); }
+:root .btn-fill, :root .btn-fill > * { color: #fff; }
+:root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > * { transition: color var(--ui-ease); }
+:root .btn-outline.hair-card::after { transition: border-color var(--ui-ease), border-width var(--ui-ease); }
+/* Tab buttons = the live Greenshift tabs (.t-btn { transition: all .4s ease-in-out }; saved FAQs / Who We Are pages, 9 Oct 2026). */
+:root .ui-tab { transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
+/* Tab panels on phones (< 768, the live vertical tabs): the shown panel rises 8px and fades in over .28s
+   (Code Snippet 19964.css: .t-panel.active { animation: gs-panel-in .28s cubic-bezier(.22,1,.36,1) both }). */
+@keyframes ui-panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 767.98px) { .topics [role='tabpanel']:not([hidden]), .faq [role='tabpanel']:not([hidden]) { animation: ui-panel-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; } }
+@media (prefers-reduced-motion: reduce) { .topics [role='tabpanel'], .faq [role='tabpanel'] { animation: none; } }
+@media (hover: hover) {
+  :root :is(.btn-fill, .btn-fill-navy):not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: var(--color-navy); }
+  :root :is(.btn-fill, .btn-fill-navy):not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-navy); }
+  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover { background-color: var(--color-cyan); color: var(--color-navy); }
+  :root .btn-fill-white:not(:disabled):not([aria-disabled='true']):hover > * { color: var(--color-navy); }
+  :root .btn-outline:not(:disabled):not([aria-disabled='true']):hover { border-color: var(--color-cyan); }
+  :root .btn-outline.hair-card:not([aria-disabled='true']):hover::after { border: 2px solid var(--color-cyan); }
+  :root .btn-text:not(:disabled):not([aria-disabled='true']):hover { text-decoration: underline 2px var(--color-cyan); text-underline-offset: 0.25em; }
+  :root .ui-pill:not([aria-pressed='true']):not([aria-selected='true']):not(:disabled):hover { border-color: var(--color-cyan); }
+  :root .ui-tab:not([aria-selected='true']):not(:disabled):hover { background-color: var(--color-mist); color: var(--color-navy); }
+}
+/* Keyboard focus: a 2px ring 2px outside the control (cyan on white / outline controls). Navy buttons (.btn-fill,
+   .btn-fill-navy) also take the hover colours, so the ring is Deep Teal (bug 102): cyan fill + navy ring reads on white and on
+   navy bands alike (a cyan ring on white is only 2.26:1). Tabs keep their own rings (Tabs.astro inset, FAQ navy). */
+:root :is(.btn-fill, .btn-fill-navy):not([aria-disabled='true']):focus-visible { background-color: var(--color-cyan); color: var(--color-navy); }
+:root :is(.btn-fill, .btn-fill-navy):not([aria-disabled='true']):focus-visible > * { color: var(--color-navy); }
+:root :is(.btn-fill, .btn-fill-navy):focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+:root .btn-fill-white:focus-visible, :root .btn-outline:focus-visible, :root .btn-text:focus-visible, :root .ui-pill:focus-visible {
+  outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(2 * var(--u));
+}
+:root .btn-outline:focus-visible { border-color: var(--color-cyan); }
+:root .btn-outline.hair-card:focus-visible::after { border: 2px solid var(--color-cyan); }
+@media (prefers-reduced-motion: reduce) {
+  :root .btn-fill, :root .btn-fill-navy, :root .btn-fill-white, :root .btn-outline, :root .btn-text, :root .ui-pill, :root .ui-tab,
+  :root .btn-fill > *, :root .btn-fill-navy > *, :root .btn-fill-white > *, :root .btn-outline > *, :root .ui-pill > *, :root .btn-outline.hair-card::after { transition: none; }
+}
+
+/* Empty result of a client-side filter (Find a Doctor, Conditions, ...). No Figma design: body text style, centred.
+   Wording + look flagged for Pramod's approval. */
+.ui-empty { margin: 0; padding: calc(40 * var(--u)) calc(16 * var(--u)); text-align: center; font: 400 calc(12 * var(--u)) / calc(14 * var(--u)) var(--font-gotham); color: var(--color-body); }
+
+/* Centred multi-line intro paragraphs (bug 132, client, 15 Oct 2026): straight edges on both sides, the LAST line centred, the block
+   itself still centred under its heading (its own width / margin rules). Replaces text-align: center on the Home section intros, the
+   shared CenteredIntro (Refer, Insurance, International, Testimonials, Feedback, calculators), the hospital Environment / Healing
+   text, Why Trusted Standards and the Careers CTA band. Works in both directions (RTL: the edges are the box's inline edges). Manual
+   hyphenation only (no dictionary breaks in the brand copy). Phones narrower than 480: a ~40-character measure gives rivers when
+   justified, so the paragraphs stay plainly centred. One class, not a component rule: the components drop their own text-align
+   (Astro's scoped selectors are more specific than this one and would win). */
+.text-justify-center { text-align: justify; text-align-last: center; -webkit-hyphens: manual; hyphens: manual; }
+@media (max-width: 479.98px) { .text-justify-center { text-align: center; text-align-last: auto; } }
+.ui-empty[hidden] { display: none; }
+
+/* Video lightbox (src/scripts/video-facade.ts): About intro + hospital videos open here on play, as on the live site
+   (user decision, 6 Oct 2026). Native <dialog> + showModal; the overlay is the dialog itself (backdrop transparent).
+   Bug 031 (7 Oct 2026): the frame follows the video's shape. --vl-ratio (width / height, set by the script from the
+   facade's data-aspect: 16:9 by default, 9:16 for the About Short) drives both the aspect-ratio and the size: the stage is
+   as tall as --vl-max-h (85% of the viewport height, dynamic units on mobile) unless the viewport width caps it, so a
+   portrait video fills the height and a landscape one the width, never wider or taller than the screen, no padding bars.
+   The round close button sits on the stage's top inline-end corner (half outside), so it moves with the frame at every
+   size; the 24px dialog padding is what keeps it (22px overhang) inside the viewport. Logical inset: top-left in RTL. */
+.video-lightbox { --vl-ratio: 1.7777778; --vl-max-h: 85vh; --vl-pad: 24px; position: fixed; inset: 0; box-sizing: border-box; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: var(--vl-pad); border: 0; background: rgba(0, 0, 0, 0.7); opacity: 0; overflow: hidden; transition: opacity 300ms ease-in-out; } /* live GSLightbox: all .3s ease-in-out */
+@supports (height: 1dvh) { .video-lightbox { --vl-max-h: 85dvh; } }
+.video-lightbox[open] { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; } /* explicit track: WebKit sized the auto track from the stage's aspect-ratio max-content (423px in a 342px dialog at 390x800, 10 Oct 2026) */
+.video-lightbox.is-open { opacity: 1; }
+.video-lightbox::backdrop { background: transparent; }
+.video-lightbox-stage { position: relative; width: min(100%, calc(100vw - 2 * var(--vl-pad)), calc(var(--vl-max-h) * var(--vl-ratio))); max-height: 100%; aspect-ratio: var(--vl-ratio); transform: scale(0.8); transition: transform 300ms ease-in-out; } /* the 100vw term: WebKit resolves the percentage against the dialog's outer box, so a portrait frame at 390 came out 382px in a 342px area (10 Oct 2026) */ /* live: .gs-lightbox-content scale(.8) -> 1, .3s ease-in-out */
+.video-lightbox.is-open .video-lightbox-stage { transform: none; }
+.video-lightbox-frame { width: 100%; height: 100%; background: #000; }
+.video-lightbox-player { display: block; width: 100%; height: 100%; border: 0; background: #000; }
+.video-lightbox-close { position: absolute; z-index: 1; inset-block-start: -22px; inset-inline-end: -22px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: #fff; cursor: pointer; }
+.video-lightbox-close svg { width: 14px; height: 14px; }
+.video-lightbox-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .video-lightbox, .video-lightbox-stage { transition: none; } }
+
+/* Play-button pulse (About intro, hospital video): the live site's `play_button_pulse` CSS verbatim (animation audit 7 Oct 2026):
+   two 1px cyan rings on the button edge, each grows to 1.5x while fading out over 2s, the second 0.5s behind the first.
+   Sits on the play icon's box (.play); only when a video is set. */
+.video-pulse { pointer-events: none; border-radius: 50%; }
+.video-pulse::before, .video-pulse::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--color-cyan); animation: video-pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+.video-pulse::after { animation-delay: 0.5s; }
+@keyframes video-pulse { from { scale: 1; opacity: 1; } to { scale: 1.5; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .video-pulse::before, .video-pulse::after { animation: none; } }
+
+/* Sticky header (AN1, 9 Oct 2026, see Header.astro): the page templates wrap <Header /> in a z-index <div>, and a sticky box can
+   only move inside its parent, so that wrapper is the box that sticks (same offsets as .hd: the Figma top row scrolls away on
+   desktop, the whole bar sticks below 1200px). */
+/* Bug 103 (14 Oct 2026, client: "make the header a little smaller"): the desktop header drops Figma's white space above the top
+   row (--hd-trim-top) and below the main row (--hd-trim-bottom), in Figma px: 119 -> 90 (163 -> 123px at 1440), top-row text
+   45 -> 22px from the top, main-nav text 40 -> 24px from the bottom (12, not 13: the three-line Arabic "Visit" block keeps 6px
+   below its last line). Both rows keep their Figma positions relative to each other
+   (Header.astro subtracts --hd-trim-top from every Figma y), so the sticky cut moves up with them: 51 - 17 = the language chip's
+   bottom. Desktop (>= 1200px) only; the mobile bar has its own flow layout. */
+:root { --hd-trim-top: 17; --hd-trim-bottom: 12; }
+div:has(> .hd[data-sticky-header]) { position: sticky; top: 0; }
+@media (min-width: 1200px) { div:has(> .hd[data-sticky-header]) { top: calc((var(--hd-trim-top) - 51) * var(--u)); } }
+
+/* "Go to top" button (AN1, 9 Oct 2026) = the live Blocksy .ct-back-to-top: fixed 25px from the bottom and the inline end (the live
+   theme puts it right; mirrored here like every other control), 12px padding + 12px chevron, cyan (palette-3) with a Deep Teal
+   icon (brand AA), hover Muted Teal (palette-4) with a white icon, radius 2px, theme shadow; hidden = transparent, 15px lower,
+   invisible; shown = in place; opacity / colour / background / transform / visibility .3s ease. Not on phones (live .ct-hidden-sm). */
+.to-top, .to-call { position: fixed; z-index: 110; inset-inline-end: 25px; display: flex; align-items: center; justify-content: center; padding: 12px; margin: 0; border: 0; cursor: pointer; color: var(--color-navy); background: var(--color-cyan); box-shadow: 0 10px 20px rgba(41, 51, 61, 0.1); border-radius: 2px; transition: opacity 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
+.to-top { bottom: 25px; opacity: 0; visibility: hidden; transform: translate3d(0, 15px, 0); }
+.to-top svg, .to-call svg { display: block; width: 12px; height: 12px; fill: currentColor; }
+.to-top::before, .to-call::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; } /* 36px button -> 44px tap area on tablets (responsive audit 10 Oct 2026) */
+.to-top.is-shown { opacity: 1; visibility: visible; transform: translate3d(0, 0, 0); }
+@media (hover: hover) { .to-top:hover, .to-call:hover { background: var(--color-teal-border); color: #fff; } }
+.to-top:focus-visible, .to-call:focus-visible { outline: 2px solid var(--color-navy); outline-offset: 2px; }
+@media (max-width: 689.98px) { .to-top { display: none; } }
+@media (prefers-reduced-motion: reduce) { .to-top, .to-call { transition: none; } }
+
+/* "Call us" (Task 205, 19 Oct 2026, BaseLayout.astro): the "Go to top" button's twin (rule above), always visible, stacked on the
+   same inline end 10px above it: 25 + 36 (the arrow: 12 + 12 + 12) + 10 = 71px. Phones (< 690, no arrow there): it takes the
+   arrow's 25px corner, plus the iOS home-indicator inset when the page ever opts into viewport-fit=cover. Pressed = the hover
+   colours (touch screens have no hover). Hidden while the mobile menu panel is open, so it never sits on the menu's last items.
+   Destination on hold (src/data/call-button.json): the placeholder is aria-disabled with a not-allowed cursor, no action. */
+.to-call { bottom: 71px; text-decoration: none; }
+.to-call:active { background: var(--color-teal-border); color: #fff; }
+.to-call[aria-disabled="true"] { cursor: not-allowed; }
+@media (max-width: 689.98px) { .to-call { bottom: calc(25px + env(safe-area-inset-bottom, 0px)); } }
+@media (max-width: 1199.98px) { body:has(#nav-toggle:checked) .to-call { opacity: 0; visibility: hidden; } }
+/* --float-clear = the height the floating stack takes at the viewport's bottom inline-end corner + 12px air. Below 1024 the footer's
+   last row (copyright + legal links) is a full-width flow row that ends in that corner when the page is scrolled to the bottom,
+   so Footer.astro keeps at least this much padding under it (Task 205 QA: "Privacy Policy" sat under the buttons at 320-1023).
+   690-1023: arrow + call = 71 + 36 + 12; phones: call only = 25 + 36 + 12 (+ safe area). Desktop footer: its own Figma layout. */
+:root { --float-clear: 0px; }
+@media (max-width: 1023.98px) { :root { --float-clear: 119px; } }
+@media (max-width: 689.98px) { :root { --float-clear: calc(73px + env(safe-area-inset-bottom, 0px)); } }
+
+/* Card titles that link (AN10, 9 Oct 2026; the live card titles are links): colour and size come from the heading; hover = the
+   brand AA link treatment (Deep Teal text kept, 2px cyan underline) with the theme's .12s colour transition. Doctor names grow
+   their underline from 0 to 100 % over .7s ease like the live dynamic title (its background-image underline). Mouse only. */
+.title-link { color: inherit; text-decoration: underline 2px transparent; text-underline-offset: 0.25em; transition: text-decoration-color var(--ui-ease); }
+.title-link-grow { text-decoration: none; background-image: linear-gradient(transparent calc(100% - 2px), var(--color-cyan) 2px); background-repeat: no-repeat; background-size: 0% 100%; transition: background-size 0.7s ease; }
+@media (hover: hover) {
+  .title-link:hover { text-decoration-color: var(--color-cyan); }
+  .title-link-grow:hover { background-size: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .title-link, .title-link-grow { transition: none; } }
+/* Touch targets (responsive sweep, 9 Oct 2026): card title links (doctor names, conditions, news, hospital titles .tlink) are
+   14-30px high; below 1024 and on touch screens they get the .hit 44px layer, centred and invisible, so nothing moves. */
+@media (max-width: 1023.98px), (pointer: coarse) {
+  .title-link, .tlink { position: relative; }
+  .title-link::before, .tlink::before { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100%, 44px); height: max(100%, 44px); }
+}
+/* Touch devices (responsive audit 9 Oct 2026): every text field, select and textarea renders its text at 16px or more. Below
+   16px iOS Safari zooms the page into the field on focus and leaves it zoomed (the footer newsletter box was 12.3px, the pop-up
+   form fields 12.3 / 9.6px, the Media Hub and hospital-gallery selects 13.7px). Figma sizes stay on mouse devices. */
+@media (pointer: coarse) {
+  html body :is(input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='hidden']), select, textarea, [role='combobox']) { font-size: 16px !important; } /* !important: the component rules (.nl input[type=email], .modal .gf-box input, ...) are more specific */
+}
+
+/* Scroll entrances (scripts/aos.ts): the live site's Greenshift AOS CSS. Hidden = transparent and, for fade-up, max(50px, 15 %
+   of its own height) lower; shown = in place. 0.8s ease-in-out both ways (--aos-dur to change it); --aos-delay (stagger)
+   applies on the way in only. Only the element moves, never its section background. */
+.aos [data-aos] { transition-property: opacity, transform; transition-duration: var(--aos-dur, 800ms); transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
+.aos [data-aos]:not(.aos-animate) { opacity: 0; }
+.aos [data-aos='fade-up']:not(.aos-animate) { transform: translate3d(0, max(50px, 15%), 0); }
+.aos [data-aos].aos-animate { transition-delay: var(--aos-delay, 0ms); }

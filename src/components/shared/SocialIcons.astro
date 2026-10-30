@@ -1,0 +1,74 @@
+---
+import social from '../../data/social.json';
+import { parsePath } from '../../lib/editions';
+
+/*
+ * The Figma social icon strip (one SVG image, six icons at an equal pitch) with a link over each icon, so the strip looks
+ * exactly as designed and each icon opens the live site's profile (src/data/social.json). Icons without a link get no anchor.
+ * `class` / `style` position the strip exactly as the plain <img> did (the wrapper takes the image's box).
+ * Hover (animation audit 9 Oct 2026, live footer / Home contact icons: 38px -> 39px on hover, theme .12s): each link draws its
+ * own icon again from the same strip image (a background slice, shown only while hovered) and scales it by 39/38, so one icon
+ * grows while the strip image and the others stay put. Mouse only, off with reduced motion. (The live `stroke_hover` targets an
+ * <img>, so it has no visible effect and is not copied.)
+ */
+/* Threads (client, 19 Oct 2026, KSA only): the Figma strips have no Threads icon, so one is drawn here one icon pitch after
+ * LinkedIn, in the strip's own style (`look`: 'circle' = the Home card's navy disc, 'glyph' = the footer's white mark). x / y / size
+ * are in the strip's units (its width / height props, or `box`). Shown only when the edition has a threads link (social.json byRegion). */
+type ThreadsSpot = { x: number; y: number; size: number; look: 'circle' | 'glyph'; box?: [number, number] }; // box = the strip's exact w / h when width / height are rounded
+interface Props { src: string; width: number | string; height: number | string; alt?: string; class?: string; style?: string; dense?: boolean; threads?: ThreadsSpot }
+const { src, width, height, alt = '', class: cls = '', style = '', dense = false, threads } = Astro.props;
+// The edition's own profiles where it has them (social.json byRegion: the KSA accounts on /sa).
+const { edition } = parsePath(Astro.url.pathname);
+const own = (social.byRegion as Record<string, Record<string, string>>)[edition.region] ?? {};
+const links = (social.links as { id: string; label: string; href: string }[]).map((l) => ({ ...l, href: own[l.id] ?? l.href }));
+const threadsHref = threads ? own.threads : undefined;
+const [bw, bh] = threads?.box ?? [+width, +height];
+const pct = (v: number, of: number) => `${+((v / of) * 100).toFixed(3)}%`;
+const spot = threads && threadsHref
+  ? `left:${pct(threads.x, bw)};top:${pct(threads.y, bh)};width:${pct(threads.size, bw)};height:${pct(threads.size, bh)}`
+  : '';
+// Threads logo mark (24 x 24 box).
+const THREADS = 'M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z';
+---
+
+<div class:list={['soc', cls]} style={`--soc-src:url("${src}");${style}`}>
+  <img loading="lazy" src={src} width={width} height={height} alt={alt} class="soc-img" />
+  <ul class="soc-links" role="list">
+    {links.map((l, i) => (
+      <li style={`--i:${i}`}>{l.href && <a href={l.href} target="_blank" rel="noopener" class:list={['soc-a', dense && 'dense']}><span class="sr-only">{l.label}</span></a>}</li>
+    ))}
+    {spot && (
+      <li class="soc-th" style={spot}>
+        <a href={threadsHref} target="_blank" rel="noopener" class:list={['soc-a', dense && 'dense']}>
+          <span class="sr-only">Threads</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            {threads!.look === 'circle' ? (
+              <><circle cx="12" cy="12" r="12" fill="#004059" /><path d={THREADS} fill="#fff" transform="translate(5.4 5.4) scale(.55)" /></>
+            ) : (
+              <path d={THREADS} fill="#fff" />
+            )}
+          </svg>
+        </a>
+      </li>
+    )}
+  </ul>
+</div>
+
+<style>
+  .soc { position: relative; width: 100%; height: 100%; }
+  .soc-img { display: block; width: 100%; height: 100%; max-width: none; }
+  .soc-links { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; display: flex; direction: ltr; } /* the icons are drawn LTR in the image; the strip itself is mirrored by the page */
+  .soc-links li { flex: 1 1 0; position: relative; }
+  .soc-a { position: absolute; inset: 0; display: block; }
+  .soc-a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 4px; }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .soc-a::after { content: ''; position: absolute; inset: 0; background: var(--soc-src) no-repeat; background-size: 600% 100%; background-position: calc(var(--i) * 20%) 0; opacity: 0; transform: scale(1); transition: transform 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955), opacity 0s linear 0.12s; pointer-events: none; }
+    .soc-a:hover::after { opacity: 1; transform: scale(1.0263); transition: transform 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955), opacity 0s; } /* 39 / 38 */
+  }
+  /* The Threads icon sits outside the strip image (left/top in the strip's LTR box, like the icons above), same hover growth. */
+  .soc-links li.soc-th { position: absolute; flex: none; }
+  .soc-th svg { display: block; width: 100%; height: 100%; transition: transform 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .soc-th .soc-a::after { content: none; }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) { .soc-th .soc-a:hover svg { transform: scale(1.0263); } }
+  @media (max-width: 1023.98px) { .soc-a::before { content: ''; position: absolute; inset: 50% auto auto 50%; width: 100%; min-width: 44px; min-height: 44px; transform: translate(-50%, -50%); } } /* tap target */
+</style>

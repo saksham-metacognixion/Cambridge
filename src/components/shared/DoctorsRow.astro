@@ -1,0 +1,95 @@
+---
+import { content } from '../../lib/content';
+import { parsePath } from '../../lib/editions';
+import { isListed, profileDoctors, rowDoctorsForEdition } from '../../lib/doctors';
+import DoctorCard from '../doctors/DoctorCard.astro';
+import SectionIntro from './SectionIntro.astro';
+
+/*
+ * "Expert Care, Trusted Doctors" (Figma 59:13952 + 4 cards 59:14048/13990/14077/14019), section top = H2 top (page y 1994).
+ * Same card as Find a Doctor (DoctorCard); columns at the exact Figma x 48 / 294 / 541 / 788 (gaps 31 / 32 / 32), 215 wide, "See More" only.
+ * Wael's role text is 8px/10 + capitalize in Figma; made identical to the other cards on purpose (user decision 2 Oct).
+ * Gaps: H2 box (h33) -> text 3; text box (h26) -> cards 13. Identical on the condition detail pages (41:1924..41:2049) and
+ * Refer a Patient. Content (heading, text, listLabel, doctor slugs) comes from the page JSON via `content`.
+ */
+interface Props {
+  content: { heading: string; text: string; listLabel: string; slugs: string[] }; id?: string;
+  /** Our Care: the cards slide one at a time in an endless loop like the live page's Swiper (scripts/autoscroll.ts, step mode):
+   *  four in view on desktop (Figma x 48, 215 wide, the 31 / 32 / 32 gaps averaged so every step is the same). */
+  slider?: boolean;
+}
+const { edition } = parsePath(Astro.url.pathname);
+const { content: d, id = 'doctors-heading', slider = false } = Astro.props;
+const labels = content('doctors/page', edition.locale).card;
+// /ae and /sa: only that country's doctors (rowDoctorsForEdition), never the other country's. No card without a photo (isListed).
+const doctors = rowDoctorsForEdition(d.slugs.map((slug: string) => {
+  const doc = profileDoctors.find((x) => x.slug === slug);
+  if (!doc) throw new Error(`DoctorsRow: unknown doctor slug "${slug}" (src/data/doctors.json)`);
+  return doc;
+}).filter(isListed), edition);
+---
+
+<section class="docs" aria-labelledby={id}>
+  <SectionIntro id={id} heading={d.heading} text={d.text} gap={3} minH={26} />
+  <!-- Bug 163 (15 Oct 2026): the slider is the desktop row only (display: none below 1024, where the grid below is shown instead;
+       autoscroll.ts leaves a hidden scroller alone), so phones and tablets get the same stacked list / 2-up grid as every other page. -->
+  {slider && (
+    <div class="hscroll slide desk" data-autoscroll="step" data-autoscroll-restore="no">
+      <ul class="srow" role="list" aria-label={d.listLabel} data-loop-row>
+        {doctors.map((doc: any) => (
+          <li class="snap-start" data-loop-item><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
+        ))}
+      </ul>
+    </div>
+  )}
+  <ul class:list={['grid', slider && 'small']} role="list" aria-label={d.listLabel}>
+    {doctors.map((doc: any) => (
+      <li><DoctorCard doctor={doc} edition={edition} labels={labels} heading="h3" book={false} /></li>
+    ))}
+  </ul>
+</section>
+
+<script>
+  import '../../scripts/autoscroll';
+</script>
+
+<style>
+  .docs { max-width: calc(var(--max-w) * 1px); margin-inline: auto; }
+  .grid {
+    list-style: none; margin: calc(13 * var(--u)) 0 0; padding: 0; display: grid; justify-content: center;
+    grid-template-columns: repeat(auto-fill, calc(215 * var(--u))); column-gap: calc(20 * var(--u)); row-gap: calc(30.541 * var(--u));
+  }
+  .grid > li { display: flex; }
+  .slide { margin-top: calc(13 * var(--u)); }
+  .srow { list-style: none; margin: 0; padding: 0; display: flex; gap: calc(31.667 * var(--u)); }
+  .srow > li { display: flex; flex: 0 0 calc(215 * var(--u)); }
+  @media (min-width: 1024px) {
+    .grid {
+      width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); justify-content: start; column-gap: 0;
+      grid-template-columns: calc(215 * var(--u)) calc(31 * var(--u)) calc(215 * var(--u)) calc(32 * var(--u)) calc(215 * var(--u)) calc(32 * var(--u)) calc(215 * var(--u));
+    }
+    .grid > li:nth-child(4n + 1) { grid-column: 1; }
+    .grid > li:nth-child(4n + 2) { grid-column: 3; }
+    .grid > li:nth-child(4n + 3) { grid-column: 5; }
+    .grid > li:nth-child(4n) { grid-column: 7; }
+  }
+  @media (min-width: 1024px) {
+    .slide { width: calc(955 * var(--u)); margin-inline-start: calc(48 * var(--u)); }
+    .grid.small { display: none; }
+  }
+  @media (max-width: 1023.98px) {
+    /* Bug 143 added a 30-unit padding-top here because the page wrappers put only 13.7px between sections; since Bug 156 the
+       wrappers carry the shared --stack-gap (global.css), so the row needs no spacing of its own. */
+    .docs { padding-inline: 16px; }
+    /* Bug 143: the fixed 215-unit cards were centred in the gutter box (inset 48px at 390, 77px at 768) while the heading and intro
+       run from gutter to gutter. The cells now fill the box (1 per row on phones, 2 on tablets, the Patient Hub rule) and each card
+       is drawn at its cell's width: the card's own --u = cell width / 215 (below 1024 the page --u is a fixed px value, so the
+       cell can be a size container), so heading, intro and cards share both edges in either direction. */
+    @supports (width: 1cqw) {
+      .grid { justify-content: stretch; column-gap: calc(20 * var(--u)); grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(240 * var(--u))), 1fr)); }
+      .grid > li { container-type: inline-size; }
+      .grid > li > :global(.card) { --u: calc(100cqw / 215); }
+    }
+    .slide.desk { display: none; }
+  }
+</style>

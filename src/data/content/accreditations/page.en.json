@@ -1,0 +1,328 @@
+{
+  "_note": "Accreditations & Partnerships (Figma 55:12215). Text = Website Content - Suhad/About Cambridge/EN-Accreditations Tracked Changes.md with the tracked changes ACCEPTED (5 Oct 2026): all eight tabs now have content. The document asks to reconfirm the JAWDA section (name may have changed to Muashir), docs/open-decisions.md CT9. meta.* and alt texts are PLACEHOLDER. Seals (client assets, 9 Oct 2026): the client's L1 accreditation seals (docs/client-assets/accreditation-seals/, white background made transparent) in the other seven tabs, placed in the CARF seal's slot (589, 729) at 146 x 146. CARF `position: left` (bug 099, 13 Oct 2026): carf.png is 583 x 570 with 10 px transparent padding on the left and 23 on the right, so the default centred square crop left the seal 3 px left of centre; anchoring the build-time crop left trims only transparent pixels and centres it like the other seven (10 px padding on every side). The source file is unchanged.",
+  "meta": {
+    "title": "Accreditations & Partnerships | Cambridge Hospital",
+    "description": "Cambridge Hospital's care is guided by internationally recognised standards that ensure safety, consistency and measurable clinical outcomes: CARF, JCI, CBAHI, CAP, Kozyavkin, OSHAD, ADHICS and JAWDA."
+  },
+  "pendingTab": "Content pending",
+  "hero": {
+    "ariaLabel": "Standards That Define Our Care",
+    "banner": {
+      "image": "accreditations/banner",
+      "alt": ""
+    },
+    "title": [
+      "Standards That",
+      "Define Our Care"
+    ],
+    "text": "Our care is guided by internationally recognised standards that ensure safety, consistency, and measurable clinical outcomes.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "intro": {
+    "heading": "Internationally Recognised. Clinically Verified.",
+    "text": "Cambridge Hospital’s accreditations and certifications reflect externally assessed standards for quality, safety and clinical practice. They are subject to formal assessment and, where applicable, periodic renewal, helping to ensure that established international standards are consistently applied across our facilities, services and care pathways.",
+    "tabsLabel": "Accreditations and certifications"
+  },
+  "tabs": [
+    {
+      "label": "CARF Accredited",
+      "image": {
+        "image": "accreditations/carf",
+        "alt": "CARF accredited seal",
+        "x": 589.0,
+        "y": 729.0,
+        "w": 182.646,
+        "h": 182.646,
+        "position": "left"
+      },
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The Commission on Accreditation of Rehabilitation Facilities (CARF) is an international accrediting body for health and human services and is considered the international benchmark for rehabilitation services. CARF accreditation confirms that Cambridge Hospital’s rehabilitation programmes meet internationally recognised standards for patient outcomes, clinical processes and service delivery."
+        },
+        {
+          "type": "p",
+          "text": "Accredited facilities: Abu Dhabi – Al Ain – Al Mudeef – Dhahran – Khobar – Jeddah"
+        },
+        {
+          "type": "sec",
+          "text": "UAE Facilities"
+        },
+        {
+          "type": "p",
+          "text": "Accredited since 2017 and re-accredited to date"
+        },
+        {
+          "type": "p",
+          "text": "Accredited specialised programmes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Inpatient Rehabilitation - Stroke Specialty Programme",
+            "Inpatient Rehabilitation - LTAC Specialty Programme",
+            "Inpatient Rehabilitation - Adults",
+            "Inpatient Rehabilitation - Children and Adolescents",
+            "Outpatient Rehabilitation - Adults",
+            "Outpatient Rehabilitation - Children and Adolescents"
+          ]
+        },
+        {
+          "type": "sec",
+          "text": "Cambridge Hospital Saudi Arabia – Dhahran"
+        },
+        {
+          "type": "p",
+          "text": "Accredited since 2019 and re-accredited to date"
+        },
+        {
+          "type": "p",
+          "text": "Accredited specialised programmes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Inpatient Rehabilitation - Adults",
+            "Inpatient Rehabilitation - Children and Adolescents",
+            "Inpatient Rehabilitation - Stroke Specialty Programme",
+            "Inpatient Rehabilitation – Brain Injury",
+            "Inpatient Rehabilitation – Spinal Cord Injury",
+            "Inpatient Child and Adolescent Rehabilitation",
+            "Outpatient Rehabilitation - Adults",
+            "Outpatient Rehabilitation - Children and Adolescents"
+          ]
+        },
+        {
+          "type": "sec",
+          "text": "Cambridge Hospital Saudi Arabia – Khobar"
+        },
+        {
+          "type": "p",
+          "text": "Accredited since 2025"
+        },
+        {
+          "type": "p",
+          "text": "Accredited specialised programmes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Inpatient Rehabilitation - Adults",
+            "Inpatient Rehabilitation - Children and Adolescents"
+          ]
+        },
+        {
+          "type": "sec",
+          "text": "Cambridge Hospital Saudi Arabia – Jeddah"
+        },
+        {
+          "type": "p",
+          "text": "Accredited since 2026"
+        },
+        {
+          "type": "p",
+          "text": "Accredited specialised programmes:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Inpatient Rehabilitation - Adults",
+            "Inpatient Rehabilitation - Children and Adolescents"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "JCI Accredited",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cambridge Hospital’s facilities are accredited by Joint Commission International (JCI), an internationally recognised benchmark for healthcare quality and patient safety."
+        },
+        {
+          "type": "p",
+          "text": "JCI accreditation reflects compliance with internationally recognised standards covering patient safety and clinical risk management, quality improvement and governance, infection prevention and control, medication management and continuity and coordination of care."
+        },
+        {
+          "type": "p",
+          "text": "Accredited facilities: Abu Dhabi – Al Ain – Al Mudeef – Dhahran – Khobar - Jeddah"
+        }
+      ],
+      "image": {
+        "image": "accreditations/jci",
+        "alt": "JCI seal",
+        "x": 589.1,
+        "y": 729.0,
+        "w": 182.646,
+        "h": 182.646
+      }
+    },
+    {
+      "label": "CBAHI Accredited",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "In Saudi Arabia, Cambridge Hospital’s facilities are accredited by the Saudi Central Board for Accreditation of Healthcare Institutions (CBAHI), the national accreditation authority for healthcare institutions."
+        },
+        {
+          "type": "p",
+          "text": "CBAHI accreditation ensures compliance with Saudi national healthcare standards relating to the safety, quality, and effectiveness of healthcare across our facilities in Saudi Arabia."
+        },
+        {
+          "type": "p",
+          "text": "Accredited facilities: Dhahran – Khobar – Jeddah"
+        }
+      ],
+      "image": {
+        "image": "accreditations/cbahi",
+        "alt": "CBAHI seal",
+        "x": 542.0,
+        "y": 762.8,
+        "w": 182.646,
+        "h": 182.646
+      }
+    },
+    {
+      "label": "CAP Accredited",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cambridge Hospital’s laboratory services are accredited by the College of American Pathologists (CAP), an internationally recognised authority in laboratory quality and diagnostic accuracy."
+        },
+        {
+          "type": "p",
+          "text": "CAP accreditation underpins reliable diagnostic results through compliance with recognised laboratory standards and best practices for testing and reporting. This contributes to accurate diagnosis and patient safety through dependable diagnostics."
+        },
+        {
+          "type": "p",
+          "text": "Accredited facility: Jeddah"
+        }
+      ],
+      "image": {
+        "image": "accreditations/cap",
+        "alt": "CAP seal",
+        "x": 548.8,
+        "y": 755.0,
+        "w": 182.646,
+        "h": 182.646
+      }
+    },
+    {
+      "label": "Affiliated with the Kozyavkin Programme",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cambridge Hospital is affiliated with the Kozyavkin Method Group, an internationally recognised provider of intensive rehabilitation for children with cerebral palsy and neurological conditions."
+        },
+        {
+          "type": "p",
+          "text": "The affiliation strengthens our paediatric rehabilitation programmes through internationally recognised therapeutic approaches focused on neuromotor development, functional mobility, physical participation and long-term quality of life, delivered within a multidisciplinary framework."
+        },
+        {
+          "type": "p",
+          "text": "Affiliated facilities: Abu Dhabi – Al Ain – Dhahran"
+        }
+      ],
+      "image": {
+        "image": "accreditations/kozyavkin",
+        "alt": "Kozyavkin seal",
+        "x": 594.0,
+        "y": 729.0,
+        "w": 182.646,
+        "h": 182.646
+      }
+    },
+    {
+      "label": "OSHAD Certified",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cambridge Hospital is certified by the Abu Dhabi Occupational Safety and Health Centre (OSHAD), demonstrating compliance with occupational health and safety requirements and providing a safe environment for patients, team members, visitors, and contractors."
+        },
+        {
+          "type": "p",
+          "text": "Certified facilities: Abu Dhabi – Al Ain – Al Mudeef"
+        }
+      ],
+      "image": {
+        "image": "accreditations/oshad",
+        "alt": "OSHAD seal",
+        "x": 577.0,
+        "y": 739.3,
+        "w": 182.646,
+        "h": 182.646
+      }
+    },
+    {
+      "label": "ADHICS Certified",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cambridge Hospital is certified under the Abu Dhabi Healthcare Information and Cyber Security Standard (ADHICS), reflecting compliance with requirements for healthcare information governance and cybersecurity."
+        },
+        {
+          "type": "p",
+          "text": "These requirements cover the confidentiality of patient information, secure management of healthcare systems, protection against digital and cyber risks, and structured governance of information assets."
+        },
+        {
+          "type": "p",
+          "text": "Certified facilities: Abu Dhabi – Al Ain"
+        }
+      ],
+      "image": {
+        "image": "accreditations/adhics",
+        "alt": "ADHICS seal",
+        "x": 572.8,
+        "y": 742.2,
+        "w": 182.646,
+        "h": 182.646
+      }
+    },
+    {
+      "label": "JAWDA Certified",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cambridge Hospital participates in JAWDA, the Department of Health – Abu Dhabi program for healthcare quality performance and benchmarking. Participation reinforces transparent quality measurement, continuous performance improvement, accountability in care delivery, and benchmarking against system-wide standards."
+        },
+        {
+          "type": "p",
+          "text": "Certified facilities: Abu Dhabi – Al Ain"
+        }
+      ],
+      "image": {
+        "image": "accreditations/jawda",
+        "alt": "JAWDA seal",
+        "x": 589.0,
+        "y": 729.0,
+        "w": 182.646,
+        "h": 182.646
+      }
+    }
+  ],
+  "recovery": {
+    "tiles": [
+      {
+        "label": "Book an Appointment",
+        "href": "#book-appointment"
+      },
+      {
+        "label": "Find a Doctor",
+        "href": "#",
+        "page": "findDoctor"
+      },
+      {
+        "label": "Search Conditions",
+        "href": "#",
+        "page": "conditions"
+      },
+      {
+        "label": "Send an Inquiry",
+        "href": "#send-inquiry"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+# Build and deploy to the Azure VM on every push to main (deploy/vm/README.md).
+# Skipped until configured: repository variables VM_HOST and VM_KNOWN_HOSTS, secret VM_SSH_KEY
+# (Settings > Secrets and variables > Actions).
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One deployment at a time; a newer push waits instead of cancelling one half-way.
+concurrency:
+  group: azure-vm
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.VM_HOST != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+
+      # Astro keeps its optimized images (4,500+ AVIF / WebP, ~12 min to encode) in node_modules/.astro. Restoring them
+      # makes a build re-encode only new or changed images.
+      - uses: actions/cache@v4
+        with:
+          path: node_modules/.astro
+          key: astro-images-${{ hashFiles('src/assets/**', 'src/lib/image-service.ts', 'astro.config.mjs') }}
+          restore-keys: astro-images-
+
+      # The posts and authors written in the dashboard live on the VM (deploy/vm/README.md "Dashboard"): copy them in
+      # first, so a code deploy carries them and never removes one. Skipped until the dashboard exists on the VM.
+      - name: Content from the dashboard
+        env:
+          VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+          VM_KNOWN_HOSTS: ${{ vars.VM_KNOWN_HOSTS }}
+          DEPLOY_HOST: deploy@${{ vars.VM_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$VM_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$VM_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          SSH_KEY=~/.ssh/deploy_key ./deploy/vm/fetch-content.sh
+
+      # PUBLIC_* values are written into the HTML at build time (they are public by design); changing one needs a new build.
+      - run: npm run build:azure
+        env:
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+          PUBLIC_GOOGLE_MAPS_KEY: ${{ vars.PUBLIC_GOOGLE_MAPS_KEY }}
+
+      # The VM's host key is pinned (VM_KNOWN_HOSTS), so the upload cannot be redirected to another machine.
+      - name: Deploy
+        env:
+          VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+          VM_KNOWN_HOSTS: ${{ vars.VM_KNOWN_HOSTS }}
+          DEPLOY_HOST: deploy@${{ vars.VM_HOST }}
+        run: SSH_KEY=~/.ssh/deploy_key ./deploy/vm/deploy.sh

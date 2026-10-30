@@ -1,0 +1,87 @@
+---
+import { Picture } from 'astro:assets';
+import { px, vwSizes } from '../../lib/scale';
+import { img } from '../../lib/images';
+import { commonText } from '../../lib/forms';
+import type { Edition } from '../../lib/editions';
+import play from '../../assets/hospital-detail/play-58.svg';
+import pattern from '../../assets/hospital-detail/pattern-full-1.svg';
+
+/*
+ * "Experience the Environment of Care" (Figma 112:7721, page y 587-1206). Section top = the video top (587, 31 below the hero).
+ * Video poster 565 x 348 (Figma r15 -> --radius-card, bug 049) centred (x244), play icon 57.929 at (248.73, 134.72) inside it; the veil band
+ * rgba(231,231,231,.5) starts 135 below the video top (722) and ends at 1206. Pattern Full 1 (423 x 433) at (-126, 39) in the band,
+ * decoration clipped by the frame. Heading Medium 28 #004059 centred 30 below the video (965); text Book 12 #6b6b6b centred w539
+ * 13 below the heading box (1010), 3 paragraphs: lines 14, each new paragraph 5 lower (Figma 19px first lines); "Take a Tour"
+ * cyan button (Figma 100 x 21.333 r7, Medium 10: now the shared .ui-btn size, bugs 044/050) 17 below the text (1149); band bottom
+ * 35.67 below it.
+ * The player is created on click only (src/scripts/video-facade.ts) and plays IN the poster box, replacing the poster (inline
+ * mode, user decision 19 Oct 2026; About and news keep the lightbox). `video` = { host, id, poster? } from the hospital JSON;
+ * poster = the video's own YouTube thumbnail saved by tools/video-posters/fetch.py (user decision 19 Oct 2026), the shared
+ * poster when missing. 16:9 thumbnail in the 565 x 348 box: object-fit cover trims about 5% off each side.
+ */
+interface Props {
+  edition: Edition;
+  c: { ariaLabel: string; heading: string; video: { poster: string; alt: string; playLabel: string }; tour: { label: string; href: string } };
+  text: string[];
+  video: { host: string; id: string; poster?: string };
+}
+const { edition, c, text, video } = Astro.props;
+const poster = img(video.poster || c.video.poster, edition.region);
+const hasVideo = Boolean(video.host && video.id);
+const closeLabel = commonText(edition.locale).close as string;
+---
+
+<section class="env" aria-label={c.ariaLabel}>
+  <div class="band">
+    <div class="in">
+      <img loading="lazy" src={pattern.src} width={pattern.width} height={pattern.height} alt="" class="pattern" aria-hidden="true" />
+      <div id="hospital-video" class="video" data-video-facade data-video-mode="inline" data-host={video.host} data-id={video.id}>
+        <button type="button" class="poster" data-video-play data-close-label={closeLabel} aria-label={c.video.playLabel} aria-disabled={hasVideo ? undefined : 'true'}>
+          <Picture src={poster} formats={['avif']} fallbackFormat="webp" width={px(565)} height={px(348)} widths={[px(565), px(565) * 2]} sizes={vwSizes(565, '90vw')} loading="lazy" decoding="async" alt={c.video.alt} class="thumb" pictureAttributes={{ class: 'contents' }} />
+          {hasVideo && <span class="play video-pulse" aria-hidden="true"></span>}
+          <img loading="lazy" src={play.src} width={play.width} height={play.height} alt="" class="play" />
+        </button>
+      </div>
+      <h2 class="h">{c.heading}</h2>
+      <div class="text text-justify-center">{text.map((p) => <p>{p}</p>)}</div>
+      <a href={c.tour.href} class="tour ui-btn hit btn-fill">{c.tour.label}</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/video-facade';
+</script>
+
+<style>
+  /* flow-root (client sheet "CH Website Comments.xlsx" row 14, 13 Oct 2026: "no space between the header and the video"): the band's
+     135 top margin collapsed through the page's 31 gap above this section, so the video (pulled up 135) sat on the hero's bottom. */
+  .env { display: flow-root; font-family: var(--font-gotham); font-style: normal; }
+  .band { position: relative; margin-top: calc(135 * var(--u)); background: var(--color-veil); }
+  .in { position: relative; box-sizing: border-box; max-width: calc(var(--max-w) * 1px); margin-inline: auto; overflow-x: clip; padding: 0 16px calc(35.67 * var(--u)); /* bug 167: the 16px page gutter below 1024 (was 24 units = 33px) */ display: flex; flex-direction: column; align-items: center; }
+  .pattern { display: none; }
+  .video { position: relative; z-index: 1; flex: none; width: calc(565 * var(--u)); max-width: 100%; aspect-ratio: 565 / 348; margin-top: calc(-135 * var(--u)); border-radius: var(--radius-card); overflow: hidden; background: #e7e7e7; }
+  .poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+  .poster[aria-disabled='true'] { cursor: default; }
+  .poster :global(.thumb) { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; }
+  .play { position: absolute; width: calc(57.929 * var(--u)); height: calc(57.929 * var(--u)); inset-inline-start: calc(248.73 / 565 * 100%); top: calc(134.72 / 348 * 100%); max-width: none; }
+  .video :global(.player) { display: block; width: 100%; height: 100%; border: 0; background: #000; }
+  .h { position: relative; z-index: 1; margin: calc(30 * var(--u)) 0 0; max-width: calc(558 * var(--u)); font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(32 * var(--u)); color: var(--color-navy-alt); text-align: center; overflow-wrap: anywhere; }
+  .text { position: relative; z-index: 1; margin-top: calc(13 * var(--u)); width: calc(539 * var(--u)); max-width: 100%; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(14 * var(--u)); }
+  /* Bug 123 (client, 14 Oct 2026) justified the paragraphs with start-aligned last lines; bug 132 (15 Oct 2026): the shared
+     .text-justify-center (global.css) — straight edges, LAST line centred, plainly centred under 480. The block itself stays centred
+     (align-items above). */
+  .text p { margin: 0; overflow-wrap: anywhere; }
+  .text p + p { margin-top: calc(5 * var(--u)); }
+  .tour { position: relative; z-index: 1; margin-top: calc(17 * var(--u)); } /* size / label / corners: .ui-btn (bugs 044/050); colours: .btn-fill */
+  @media (min-width: 1024px) {
+    .in { padding-inline: 0; }
+    /* Bug 176 (16 Oct 2026): at the Figma x (-126) the pills (drawn to x 411 of the 423 box) ran 29 units under the centred heading
+       and text (.in is 1052 units wide from 1024 up, so the overlap was the same at every width). The pattern keeps its size and
+       height and moves towards the outer edge until its drawn end stops 12 units short of the widest text edge: the 558-unit
+       heading box, (1052 - 558) / 2 = 247. The part past the section edge is clipped as before (.in overflow-x: clip). */
+    .pattern { display: block; position: absolute; inset-inline-start: calc((247 - 12 - 411) * var(--u)); top: calc(39 * var(--u)); width: calc(423 * var(--u)); height: calc(433 * var(--u)); max-width: none; pointer-events: none; }
+    :global([dir='rtl']) .pattern { scale: -1 1; }
+  }
+</style>

@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "الحالات والتخصصات | مستشفى كامبريدج",
+    "description": "برامج إعادة تأهيل متخصصة ورعاية طويلة الأمد لمجموعة واسعة من الحالات العصبية، والعظمية، والحالات الطبية المعقدة."
+  },
+  "hero": {
+    "ariaLabel": "الحالات والتخصصات",
+    "title": [
+      "الحالات والتخصصات"
+    ],
+    "text": "برامج إعادة تأهيل متخصصة ورعاية طويلة الأمد لمجموعة واسعة من الحالات العصبية، والعظمية، والحالات الطبية المعقدة.",
+    "button": {
+      "label": "احجز موعد"
+    }
+  },
+  "_note": "Hero + meta = the client's Arabic Conditions & Specialities document (5 Oct 2026, CT16). Card button and CTA band = the live site's Arabic page (WordPress export page 19031, 6 Oct 2026).",
+  "card": {
+    "button": "اقرأ المزيد"
+  },
+  "recovery": {
+    "ariaLabel": "تعافيكُم غايتنا",
+    "text": "في مستشفى كامبريدج، تتكامل خدمات الرعاية المقدمة للمرضى المقيمين في المستشفى، ومرضى العيادات الخارجية، إلى جانب الرعاية المنزلية والرعاية داخل المدارس، لتلبية احتياجات المرضى في مختلف بيئات الرعاية ومراحل التعافي.",
+    "emphasis": [
+      "تعافيكُم غايتنا، ونرافقكم في كل خطوة على امتداد",
+      "رحلة التعافي."
+    ],
+    "tiles": [
+      {
+        "label": "احجز موعد"
+      },
+      {
+        "label": "ابحث عن طبيب"
+      },
+      {
+        "label": "ابحث عن تخصص"
+      },
+      {
+        "label": "أرسل استفسار"
+      }
+    ],
+    "_note": "Box text (13 Oct 2026) = Website Content - Suhad 4/About Cambridge/AR- Main Page.docx, closing banner (the English is the same on every page that shows this box)."
+  }
+}

@@ -1,0 +1,67 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { px, vwSizes } from '../../lib/scale';
+
+/*
+ * One service card (Figma Home "Services" 21:1398 cards, reused by the Our Care hub 36:5631 and the hospital pages 112:7721
+ * via CareCards.astro): photo 222 x 244 standing 3 above the white box 222 x 342 (hairline .25 #418ea2) in Figma; since bug 183
+ * (16 Oct 2026, client: the photo poked out over the top edge and the rounded corners of the outline) the photo starts AT the
+ * box's top edge instead (top 0, same size, so it ends 3 lower; the box keeps its Figma position via margin-top). Title Medium
+ * 19 at (+24, +259), description Book 9/10 #6b6b6b at +281 (box 154 wide), cyan button at the start, 16 above the bottom.
+ * `scale` shrinks everything but the button (hospital pages: 0.9884). Figma's button (74 x 17 r3, Medium 8 label) is the
+ * shared .ui-btn now (bug 044/050) and the card corners --radius-card (Figma r15, bug 049).
+ *
+ * Text block in normal flow (bug 011): title | description (any number of lines, English or Arabic) | button pushed to the
+ * bottom with margin-top: auto. The card is min-height 342 (Figma: 257 + 19 + 5 + 20 + 8 + 17 + 16; the .ui-btn is taller
+ * than Figma's 17, so the card is that much taller) and a longer description makes the card taller instead of running into
+ * the button. Put
+ * the card in a stretching cell (flex / grid, as both owners do) and every card of a row takes the tallest one's height, so
+ * the four buttons stay level. The title is set at line-height 1 from 257 (same baseline as Figma's 15 line from 259) so a
+ * wrapping title (Arabic) does not overlap itself.
+ * `buttons` (Global care cards, client sheet 13 Oct 2026 rows 6 + 12, lib/region-buttons.ts): one button per country (UAE / KSA)
+ * in place of the single button, side by side (wrapping if they ever do not fit), same .ui-btn look.
+ */
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  title: string;
+  desc: string;
+  href: string;
+  /** button text */
+  button: string;
+  /** accessible name of the button (the four cards share one label) */
+  buttonLabel?: string;
+  scale?: number;
+  titleTone?: 'cyan' | 'navy';
+  /** several buttons instead of the single one (Global: one per country) */
+  buttons?: { label: string; href: string }[] | null;
+}
+const { src, alt, title, desc, href, button, buttonLabel, scale: K = 1, titleTone = 'cyan', buttons } = Astro.props;
+---
+
+<article class="cc hair-card" style={`--k:${K};--sw:${0.25 * K}`}>
+  <Picture src={src} formats={['avif']} fallbackFormat="webp" width={px(222 * K)} height={px(244 * K)} widths={[px(222 * K), px(222 * K) * 2]} sizes={vwSizes(222 * K)} loading="lazy" decoding="async" alt={alt} class="cc-img" pictureAttributes={{ class: 'contents' }} />
+  <div class="cc-body">
+    <h3 class:list={['cc-title', 'text-navy']}>{title}</h3>
+    <p class="cc-desc">{desc}</p>
+    {buttons?.length ? (
+      <div class="cc-btns">
+        {buttons.map((b) => <a href={b.href} class="cc-btn ui-btn hit btn-fill" aria-label={`${b.label}: ${title}`}>{b.label}</a>)}
+      </div>
+    ) : (
+      <a href={href} class="cc-btn ui-btn hit btn-fill" aria-label={buttonLabel}>{button}</a>
+    )}
+  </div>
+</article>
+
+<style>
+  .cc { --cu: calc(var(--k) * var(--u)); position: relative; display: flex; flex-direction: column; box-sizing: border-box; width: 100%; min-height: calc(342 * var(--cu)); margin-top: calc(3 * var(--cu)); border-radius: var(--radius-card); background: #fff; font-family: var(--font-gotham); font-style: normal; }
+  .cc :global(.cc-img) { position: absolute; inset-inline-start: 0; top: 0; display: block; width: 100%; height: calc(244 * var(--cu)); object-fit: cover; max-width: none; border-start-start-radius: var(--radius-card); border-start-end-radius: var(--radius-card); }
+  .cc-body { position: relative; display: flex; flex-direction: column; flex: 1; box-sizing: border-box; padding: calc(257 * var(--cu)) calc(24 * var(--cu)) calc(16 * var(--cu)); }
+  .cc-title { margin: 0; font-weight: 500; font-size: calc(19 * var(--cu)); line-height: 1; overflow-wrap: anywhere; }
+  .cc-desc { margin: calc(5 * var(--cu)) 0 calc(8 * var(--cu)); max-width: calc(154 * var(--cu)); font-weight: 400; font-size: calc(9 * var(--cu)); line-height: calc(10 * var(--cu)); color: var(--color-body); overflow-wrap: anywhere; }
+  .cc-btn { margin-top: auto; align-self: flex-start; } /* size, label, corners: .ui-btn; colours: .btn-fill */
+  .cc-btns { display: flex; flex-wrap: wrap; gap: calc(8 * var(--cu)); margin-top: auto; }
+  .cc-btns .cc-btn { margin-top: 0; }
+</style>

@@ -1,0 +1,8 @@
+{
+  "$comment": "Floating \"Call us\" button (Task 205, 19 Oct 2026; BaseLayout.astro, CSS .to-call in global.css), stacked above \"Go to top\" on every page of every edition: a tel: link to the region's number below, on the region's EN + AR pages (BaseLayout strips spaces and dashes for the href). Numbers confirmed by the user 19 Oct 2026: Global = the UAE mobile +971 56 488 4880 (international format: a Global visitor may call from any country); UAE = the toll-free 800 692273 and KSA = the unified number 9200 13122, both in LOCAL format on purpose (these numbers only connect when dialled locally; same numbers as the Contact page links). null = an inert placeholder button (aria-disabled, no action): never fill with a guessed number.",
+  "phone": {
+    "global": "+971 56 488 4880",
+    "ae": "800 692273",
+    "sa": "9200 13122"
+  }
+}

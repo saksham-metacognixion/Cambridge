@@ -1,0 +1,83 @@
+{
+  "_note": "Shared parts of the hospital detail template (Figma 112:7721). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md + EN - KSA Hospitals.md (5 Oct 2026): the 'Designed for Comfort, Recovery and Wellbeing' heading + text (same for all six, healing.*) and the four care cards (care.*). Per-hospital text: <slug>.en.json (all six). meta.*, alt texts, aria labels and pending.* are PLACEHOLDERS. {name} = brand + city, {city} = city. The documents say the stats need review (CT13).",
+  "meta": {
+    "title": "{name} | Cambridge Hospital",
+    "description": "{name}: specialised rehabilitation and long-term care. Location, map and how to book an appointment."
+  },
+  "hero": {
+    "ariaLabel": "{name}",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "generated": {
+    "_note": "Every hospital has a content file since 5 Oct 2026 (the client's documents); kept for a future hospital without one: hero title from the Figma pattern 'Advanced Care / in <city>', the Abu Dhabi banner as a placeholder (flagged HD1), no hero text, no video / environment / gallery sections.",
+    "title": [
+      "Advanced Care ",
+      "in {city}"
+    ],
+    "banner": {
+      "image": "hospital-detail/banner-abu-dhabi",
+      "alt": ""
+    }
+  },
+  "environment": {
+    "ariaLabel": "Experience the Environment of Care",
+    "heading": "Experience the Environment of Care",
+    "video": {
+      "poster": "about/video-thumbnail",
+      "alt": "",
+      "playLabel": "Play the video"
+    },
+    "tour": {
+      "label": "Take a Tour",
+      "href": "#hospital-video"
+    }
+  },
+  "healing": {
+    "heading": "Designed for Comfort, Recovery and Wellbeing",
+    "selectLabel": "Choose an area",
+    "galleryLabel": "Photos of {area}",
+    "slideLabel": "Photo {n} of {total}",
+    "showSlide": "Show photo {n} of {total}",
+    "text": [
+      "Across Cambridge Hospital’s facilities, thoughtfully designed spaces support patients throughout their care and rehabilitation journey. Our comfortable indoor environments provide a calm and welcoming setting for treatment, rest and time with family, while landscaped outdoor areas offer opportunities to relax, enjoy fresh air and benefit from natural light.",
+      "Purpose designed rehabilitation gyms provide dedicated spaces for therapy, movement and functional training, supporting patients as they work towards their individual rehabilitation goals. Together, the indoor environments, outdoor spaces and rehabilitation facilities create a balanced care setting designed to support clinical recovery, comfort, wellbeing and daily function."
+    ]
+  },
+  "map": {
+    "ariaLabel": "Find us",
+    "lead": "Find Us in ",
+    "button": "Open in Google Maps",
+    "phoneLabel": "Phone",
+    "hoursLabel": "Opening hours",
+    "addressLabel": "Address"
+  },
+  "care": {
+    "heading": "Delivering Excellence Across Every Stage of Care",
+    "text": "At Cambridge Hospitals, we are committed to delivering advanced, patient-centric care with clinical excellence, providing a full spectrum of services designed around each patient’s individual needs.",
+    "listLabel": "Our services",
+    "button": "Start Your Care",
+    "_cardsNote": "cards = per-card text for the hospital pages only, keyed by the Home services card's care slug (CareCards overrides). The hospital documents (EN - UAE Hospitals / EN - KSA Hospitals, 'Delivering Excellence Across Every Stage of Care') word the Inpatient card '24/7 Specialised medical and rehabilitation care' where the Homepage document has '24/7 hospital care with specialist medical and rehabilitation services'; the other three cards are identical (CT29, 9 Oct 2026). 13 Oct 2026: the Suhad 4 hospital documents now use the Homepage wording '24/7 hospital care with specialist medical and rehabilitation services' (the override is kept so the Arabic card stays the one in shared.ar.json).",
+    "cards": {
+      "inpatient": {
+        "desc": "24/7 hospital care with specialist medical and rehabilitation services"
+      }
+    }
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-kassab"
+    ]
+  },
+  "pending": {
+    "note": "Content pending: this hospital page is generated from the hospital data until its text, video and photos are supplied."
+  }
+}

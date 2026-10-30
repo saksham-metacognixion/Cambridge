@@ -1,0 +1,18 @@
+{
+  "$comment": "Bug 095: sentiment faces of the Patient Feedback rating matrix (src/components/feedback/RatingFace.astro), keyed by the option values of the `rating` fields in src/data/forms.json 'feedback'. PROVISIONAL, NOT CLIENT-APPROVED (docs/open-decisions.md F095): Figma has no five-level face set. Shapes = the four Figma face icons of the Your Opinion Matters pop-up (112:7878: Excellent / Good / Medium / Poor), the 'dissatisfied' face = the Figma 'Good' face with its mouth turned down (derived, not designed). Colours = the selected-state sample colours Figma gives those four pop-up faces (#22B573 / #15ADBF / #FFD939 / #FF4E4E, figma-cache/forms-spec.md), 'dissatisfied' = the midpoint of Medium and Poor (#FF9444, derived). These are not brand colours (BG1 maps the pop-up's Medium / Poor to Soft Steel Blue / Deep Teal, which reads as no sentiment): change the hex values here once the client approves a set; the face outlines stay Deep Teal on every colour, so contrast does not depend on them.",
+  "approved": false,
+  "levels": {
+    "very-dissatisfied": { "face": "very-dissatisfied", "color": "#ff4e4e" },
+    "dissatisfied": { "face": "dissatisfied", "color": "#ff9444" },
+    "neutral": { "face": "neutral", "color": "#ffd939" },
+    "satisfied": { "face": "satisfied", "color": "#15adbf" },
+    "very-satisfied": { "face": "very-satisfied", "color": "#22b573" }
+  },
+  "$aliases": "Bug 095 reopened (14 Oct 2026): the four ratings of the Your Opinion Matters pop-up (forms.json 'feedback-popup': excellent / good / medium / poor) reuse the levels above, so both forms share one face set and one colour per sentiment.",
+  "aliases": {
+    "excellent": "very-satisfied",
+    "good": "satisfied",
+    "medium": "neutral",
+    "poor": "very-dissatisfied"
+  }
+}

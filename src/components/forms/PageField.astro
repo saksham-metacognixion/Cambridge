@@ -1,0 +1,77 @@
+---
+/*
+ * One labelled field of a page form in the grey-box Figma style (Refer a Patient 59:14344, International Patients 54:9239;
+ * layout values: ReferFields.astro / InternationalForm.astro). Selects take their options from `options` or a data `source`.
+ */
+import { fieldId, splitStar, sourceOptions, type FieldConfig, type Option } from '../../lib/forms';
+import DialSelect from './DialSelect.astro';
+import type { Edition } from '../../lib/editions';
+import chevSel from '../../assets/page-form/chevron-doctor.svg';
+import calendar from '../../assets/page-form/calendar.svg';
+import radioOn from '../../assets/page-form/radio-on.svg';
+import radioOff from '../../assets/page-form/radio-off.svg';
+
+interface Props {
+  form: string;
+  f: FieldConfig;
+  text: { label?: string; placeholder?: string; options?: Record<string, string> };
+  at: number;
+  /** label column in the one-column layout (768-1023), default `at` (bug 119, lib/forms labelAt) */
+  atNarrow?: number;
+  bold?: boolean;
+  dialLabel: string;
+  edition: Edition;
+}
+const { form, f, text, at, atNarrow, bold, dialLabel, edition } = Astro.props;
+const id = fieldId(form, f.name);
+const err = `${id}-error`;
+const [label, star] = splitStar(text.label ?? '');
+const opts: Option[] = f.source ? sourceOptions(f.source, edition) : (f.options ?? []).map((o) => ({ value: o, label: text.options?.[o] ?? o }));
+---
+
+{f.type === 'radio' ? (
+  <fieldset class="pf-field rf-radio" data-field={f.name} aria-describedby={err} style={`--at:${at}`}>
+    <!-- Bug 149 (QA, 15 Oct 2026): WebKit never floats a fieldset's rendered legend, so in Safari the options dropped a line below
+         "Gender". The legend stays for assistive tech (visually hidden); the visible label is the first item of the radio row. -->
+    <legend class="sr-only">{label}</legend>
+    <span class="pf-label rf-legend" aria-hidden="true">{label}<span>{star}</span></span>
+    <div class="rf-opts">
+      {opts.map((o) => (
+        <label class="rf-opt">
+          <input class="sr-only" type="radio" name={f.name} value={o.value} required={f.required} />
+          <span class="pf-radio" aria-hidden="true"><img loading="lazy" class="off" src={radioOff.src} alt="" width="11" height="11" /><img loading="lazy" class="on" src={radioOn.src} alt="" width="16.467" height="16.467" /></span>
+          <span>{o.label}</span>
+        </label>
+      ))}
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </fieldset>
+) : (
+  <div class:list={['pf-field', f.type === 'tel' && 'rf-tel-field']} data-field={f.name}>
+    <div class="pf-row" style={`--at:${at}${atNarrow !== undefined && atNarrow !== at ? `;--at-n:${atNarrow}` : ''}`}>
+      <label for={id} class:list={['pf-label', bold && 'rf-bold']}>{label}<span aria-hidden="true">{star}</span></label>
+      {f.type === 'tel' ? (
+        <>
+          <DialSelect name={f.name} edition={edition} label={dialLabel} variant="page" />
+          <input id={id} name={f.name} type="tel" inputmode="tel" dir="ltr" required={f.required} maxlength={f.max} autocomplete={f.autocomplete ?? 'off'} placeholder={text.placeholder} aria-describedby={err} class="pf-box pf-tel rf-grow" />
+        </>
+      ) : f.type === 'select' ? (
+        <div class="pf-select rf-grow rf-sel-ref">
+          <select id={id} name={f.name} required={f.required} aria-describedby={err} data-source={f.source} class="pf-box rf-ph">
+            <option value="" selected>{text.placeholder}</option>
+            {opts.map((o) => <option value={o.value}>{o.label}</option>)}
+          </select>
+          <img loading="lazy" src={chevSel.src} alt="" width="7" height="4.207" class="pf-chev" />
+        </div>
+      ) : f.type === 'date' ? (
+        <div class="rf-date rf-grow">
+          <input id={id} name={f.name} type="date" data-past data-empty required={f.required} aria-describedby={err} class="pf-box rf-date-box" />
+          <img loading="lazy" src={calendar.src} alt="" width="19.8" height="22" class="rf-cal" />
+        </div>
+      ) : (
+        <input id={id} name={f.name} type={f.type === 'email' ? 'email' : 'text'} required={f.required} maxlength={f.max} autocomplete={f.autocomplete ?? (f.type === 'email' ? 'email' : 'off')} placeholder={text.placeholder} aria-describedby={err} class:list={['pf-box rf-grow', text.placeholder && 'rf-ph-in']} />
+      )}
+    </div>
+    <p id={err} class="f-err" hidden></p>
+  </div>
+)}

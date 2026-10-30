@@ -1,23 +1,158 @@
 {
   "navToggleLabel": "Toggle navigation menu",
-  "logo": { "image": "header/logo", "alt": "Cambridge Hospital", "homeLabel": "Cambridge Hospital home" },
+  "logo": {
+    "image": "header/logo",
+    "alt": "Cambridge Hospital",
+    "homeLabel": "Cambridge Hospital home"
+  },
   "menuLabel": "Main",
   "topLinks": [
-    { "label": "Your Opinion Matters", "href": "#your-opinion" },
-    { "label": "Media Hub", "href": "#", "path": "media-hub" },
-    { "label": "Careers", "href": "#" },
-    { "label": "Knowledge Center", "href": "#" },
-    { "label": "FAQs", "href": "/faq" }
+    {
+      "label": "We are listening",
+      "href": "#",
+      "nav": "weAreListeningTarget"
+    },
+    {
+      "label": "Your Opinion Matters",
+      "href": "#your-opinion"
+    },
+    {
+      "label": "Media Hub",
+      "href": "#",
+      "page": "mediaHub"
+    },
+    {
+      "label": "Careers",
+      "href": "#",
+      "page": "careers"
+    },
+    {
+      "label": "Knowledge Centre",
+      "href": "#",
+      "query": "?category=health-articles#latest",
+      "page": "mediaHub"
+    },
+    {
+      "label": "FAQs",
+      "href": "#",
+      "page": "faq"
+    }
   ],
-  "lang": { "en": "EN", "ar": "AR" },
-  "region": { "label": "Global", "menuLabel": "Choose region", "options": [ { "region": "ae", "label": "UAE" }, { "region": "sa", "label": "KSA" } ] },
-  "visit": { "intro": "Visit", "lines": ["Cambridge", "Health Group"] },
+  "lang": {
+    "en": "EN",
+    "ar": "AR"
+  },
+  "region": {
+    "menuLabel": "Choose region",
+    "options": [
+      {
+        "region": "global",
+        "label": "Global"
+      },
+      {
+        "region": "ae",
+        "label": "UAE"
+      },
+      {
+        "region": "sa",
+        "label": "KSA"
+      }
+    ]
+  },
+  "visit": {
+    "intro": "Visit",
+    "lines": [
+      "Cambridge",
+      "Health Group"
+    ],
+    "href": "https://cambridge-health.com/"
+  },
   "mainLinks": [
-    { "label": "About Cambridge", "href": "#" },
-    { "label": "Our Care", "href": "#" },
-    { "label": "Patient Hub", "href": "#", "path": "patient-hub" },
-    { "label": "Our Hospitals", "href": "#" },
-    { "label": "Contact Us", "href": "#", "path": "contact" }
+    {
+      "label": "About Cambridge",
+      "href": "#",
+      "page": "about",
+      "children": [
+        {
+          "label": "Who We Are",
+          "page": "whoWeAre"
+        },
+        {
+          "label": "Why Cambridge Hospital",
+          "page": "whyCambridge"
+        },
+        {
+          "label": "Meet Our Team",
+          "page": "meetTheTeam"
+        },
+        {
+          "label": "Accreditations & Partnerships",
+          "page": "accreditations"
+        },
+        {
+          "label": "Careers",
+          "page": "careers"
+        }
+      ]
+    },
+    {
+      "label": "Our Care",
+      "href": "#",
+      "page": "ourCare",
+      "menu": "care"
+    },
+    {
+      "label": "Our Hospitals",
+      "href": "#",
+      "page": "hospitals",
+      "menu": "hospitals"
+    },
+    {
+      "label": "Patient Hub",
+      "href": "#",
+      "page": "patientHub",
+      "children": [
+        {
+          "label": "Conditions & Specialities",
+          "page": "conditions"
+        },
+        {
+          "label": "Find a Doctor",
+          "page": "findDoctor"
+        },
+        {
+          "label": "Refer a Patient",
+          "page": "referPatient"
+        },
+        {
+          "label": "International Patients",
+          "page": "internationalPatients"
+        },
+        {
+          "label": "Insurance Providers",
+          "page": "insuranceProviders"
+        },
+        {
+          "label": "Patient Testimonials",
+          "page": "patientTestimonials"
+        }
+      ]
+    },
+    {
+      "label": "Contact Us",
+      "href": "#",
+      "page": "contact"
+    }
   ],
-  "book": { "label": "BOOK AN APPOINTMENT", "ariaLabel": "Book an appointment", "href": "#book-appointment" }
+  "book": {
+    "label": "BOOK AN APPOINTMENT",
+    "ariaLabel": "Book an appointment",
+    "href": "#book-appointment"
+  },
+  "_note": "Header text (Figma). Top row labels = the site map's Top Navigation Bar (Website Content - Suhad/Site Map.docx, 5 Oct 2026): 'Careers', 'Knowledge Centre' (British spelling as in all the documents). Links: `page` = key in PAGE_PATHS (src/lib/paths.ts), `href` = literal (pop-ups), `nav` = src/data/nav.json target. Region switch: `region.options` = every region in menu order (`region` = id in src/data/editions.json); the button label is the option of the page's own edition (no fixed label). `visit.href` = the Cambridge Health Group website, opened in a new tab (bug 010): the URL the live site's footer links for \"Cambridge Health Group\" (WordPress export, 6 Oct 2026; its /ar/ page does not exist, so the Arabic editions use the same URL). Not confirmed by the client as the header target.",
+  "_submenuNote": "Main menu order (bug 046 reopened, 8 Oct 2026, client): About Cambridge, Our Care, Our Hospitals, Patient Hub, Contact Us (the live site order). Dropdowns: `children` = fixed page list from the live site header menu (WordPress export 6 Oct 2026, headermain / headermain-arabic, same order); `menu` = list generated from data: \"care\" = the Our Care services in src/data/care.json with their direct children as a fly-out (2 levels, never deeper), \"hospitals\" = the hospitals in src/data/hospitals.json. Every item is checked against the edition's route registry (src/lib/nav.ts headerSubmenu), so the menu only lists pages built there: Meet Our Team (no page yet), In-School Care on /sa and the other country's hospitals on /ae and /sa are left out automatically. Conditions & Specialities = the site spelling (live menu: Specialties). The Arabic file only carries labels, merged by position: keep both files in the same order.",
+  "toTop": "Go to top",
+  "_toTopNote": "toTop = the aria-label of the \"Go to top\" button (AN1, live Blocksy back-to-top, 9 Oct 2026). No approved Arabic yet (not in the WordPress export): English on the Arabic editions until Padmavathi sends it.",
+  "callUs": "Call us",
+  "_callUsNote": "callUs = the aria-label of the floating \"Call us\" button (Task 205, 19 Oct 2026; destination on hold, src/data/call-button.json). Arabic = the approved \"اتصل بنا\" already used for Contact us in the header / footer menus (reused, not translated)."
 }

@@ -6,8 +6,11 @@
  *   - Book an Appointment: doctors filtered by speciality (and the edition's region); a trigger with data-doctor preselects
  *   - validation from the form's src/data/forms.json rules, messages from src/data/content/forms/common.<locale>.json
  *   - Turnstile rendered when a form is first used; JSON submit to the Pages Function; success message
+ *   - optional attachment (bug 093, AttachField.astro): file name + remove button, type / size checked before sending
  * Nothing is stored in the browser either (no localStorage, no drafts).
  */
+
+import { checkFile, type AttachmentRules } from "../lib/attachments";
 
 type Rule = {
   name: string;
@@ -18,9 +21,12 @@ type Rule = {
 };
 type Config = {
   id: string;
+  consent?: boolean;
   fields: Rule[];
   errors: Record<string, string>;
   sending: string;
+  /** forms with a file field: the rules + the live-region messages ({name} = the file name) */
+  attachment?: AttachmentRules & { selected: string; removed: string };
 };
 type TurnstileApi = {
   render: (el: HTMLElement, o: Record<string, unknown>) => string;
@@ -56,6 +62,12 @@ export function openModal(id: string, trigger: HTMLElement | null) {
   if (form) {
     initForm(form);
     preselect(form, trigger?.dataset.doctor);
+    // Hidden context fields (forms.json ui.group "hidden"), e.g. the hospital whose page / row opened the pop-up.
+    form
+      .querySelectorAll<HTMLInputElement>("input[data-preselect]")
+      .forEach((i) => {
+        i.value = trigger?.dataset[i.dataset.preselect!] ?? "";
+      });
   }
   lockScroll(true);
   dlg.showModal();
@@ -167,13 +179,22 @@ function preselect(form: HTMLFormElement, slug?: string) {
   filterDoctors(form);
 }
 
-/* ───────── Dial code box: shows the code (Figma "+971") and the flag Figma has (UAE only) ───────── */
+/* ───────── Dial code box: shows the code (Figma "+971") and the country's flag (Figma's own for the UAE, bug 067) ───────── */
 function syncDial(sel: HTMLSelectElement) {
-  const box = sel.closest('[data-dial]');
+  const box = sel.closest("[data-dial]");
   const opt = sel.selectedOptions[0];
-  const code = box?.querySelector<HTMLElement>('.dial-code');
-  if (code && opt) code.textContent = opt.dataset.code ?? '';
-  box?.querySelectorAll<HTMLImageElement>('img[data-flag-for]').forEach((img) => (img.hidden = img.dataset.flagFor !== opt?.value));
+  const code = box?.querySelector<HTMLElement>(".dial-code bdi");
+  if (code && opt) code.textContent = opt.dataset.code ?? "";
+  const flag = box?.querySelector<HTMLImageElement>("img[data-flag]");
+  if (!flag || !opt) return;
+  const src =
+    opt.value === "AE"
+      ? flag.dataset.flagAe
+      : `${flag.dataset.flagBase}${opt.value}.svg`;
+  // No flag file for that country: hide the image, so the code moves into its slot (forms.css) instead of an empty gap.
+  flag.onerror = () => (flag.hidden = true);
+  flag.hidden = false;
+  if (src && flag.getAttribute("src") !== src) flag.src = src;
 }
 
 /* ───────── Forms ───────── */
@@ -211,8 +232,62 @@ export function initForm(form: HTMLFormElement) {
     e.preventDefault();
     void submit(form);
   });
-  form.querySelectorAll<HTMLSelectElement>('[data-dial] select').forEach((sel) => sel.addEventListener('change', () => syncDial(sel)));
+  form
+    .querySelectorAll<HTMLSelectElement>("[data-dial] select")
+    .forEach((sel) => {
+      sel.addEventListener("change", () => syncDial(sel));
+      syncDial(sel); // a country restored by the browser (back / forward) shows its own code and flag
+    });
+  // After the clear-on-change listeners above (same element: registration order), so a bad file's error stays.
+  initAttach(form);
   renderTurnstile(form);
+}
+
+/* ───────── Attachment (bug 093): one optional file, shown by name, removable; nothing kept after reset / success ───────── */
+function initAttach(form: HTMLFormElement) {
+  const c = cfg(form);
+  form.querySelectorAll<HTMLElement>("[data-attach]").forEach((box) => {
+    const input = box.querySelector<HTMLInputElement>('input[type="file"]');
+    const name = box.querySelector<HTMLElement>("[data-att-name]");
+    const remove = box.querySelector<HTMLButtonElement>("[data-att-remove]");
+    const status = box.querySelector<HTMLElement>("[data-att-status]");
+    if (!input || !name || !remove) return;
+    const sync = (say?: string) => {
+      const f = input.files?.[0];
+      box.toggleAttribute("data-has-file", !!f);
+      name.textContent = f?.name ?? "";
+      remove.hidden = !f;
+      if (status && say !== undefined) status.textContent = say;
+      const bad =
+        f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
+      if (bad) setError(form, input.name, c.errors[bad] ?? c.errors.invalid);
+    };
+    form.addEventListener("change", (e) => {
+      if (e.target !== input) return;
+      const f = input.files?.[0];
+      sync(f ? (c.attachment?.selected ?? "").replace("{name}", f.name) : "");
+    });
+    remove.addEventListener("click", () => {
+      input.value = "";
+      clearError(form, input.name);
+      sync(c.attachment?.removed ?? "");
+      input.focus();
+    });
+    // form.reset() (success, or a reset button) clears the input after the event: sync once it has.
+    form.addEventListener("reset", () =>
+      setTimeout(() => {
+        clearError(form, input.name);
+        sync("");
+      }),
+    );
+    // A file picked before this script loaded (the change that loaded it): shown and announced now.
+    const early = input.files?.[0];
+    sync(
+      early
+        ? (c.attachment?.selected ?? "").replace("{name}", early.name)
+        : undefined,
+    );
+  });
 }
 
 const cfg = (form: HTMLFormElement): Config =>
@@ -246,6 +321,14 @@ function validate(form: HTMLFormElement, c: Config): Record<string, string> {
   const out: Record<string, string> = {};
   const data = new FormData(form);
   for (const r of c.fields) {
+    if (r.type === "file") {
+      const f = controls(form, r.name)[0]?.files?.[0];
+      const bad =
+        f && c.attachment ? checkFile(f.name, f.size, c.attachment) : undefined;
+      if (bad) out[r.name] = bad;
+      else if (!f && r.required) out[r.name] = "required";
+      continue;
+    }
     const v = String(data.get(r.name) ?? "").trim();
     if (!v) {
       if (r.required) out[r.name] = "required";
@@ -261,7 +344,7 @@ function validate(form: HTMLFormElement, c: Config): Record<string, string> {
     )
       out[r.name] = "invalid_date";
   }
-  if (!data.get("consent")) out.consent = "consent";
+  if (c.consent !== false && !data.get("consent")) out.consent = "consent";
   return out;
 }
 
@@ -284,6 +367,8 @@ async function submit(form: HTMLFormElement) {
     alert.hidden = true;
     alert.textContent = "";
   }
+  const done = form.querySelector<HTMLElement>(".f-ok");
+  if (done) done.hidden = true;
   c.fields.forEach((f) => clearError(form, f.name));
   clearError(form, "consent");
 
@@ -307,6 +392,11 @@ async function submit(form: HTMLFormElement) {
       fields?: Record<string, string>;
     };
     if (res.ok && body.ok) return success(form);
+    // Body over the limit (our function: "too_large"; the host itself answers 413 without JSON): the attachment is the cause.
+    if ((res.status === 413 || body.error === "too_large") && c.attachment) {
+      const file = c.fields.find((f) => f.type === "file");
+      if (file) return showErrors(form, c, { [file.name]: "file_size" });
+    }
     if (body.error === "validation" && body.fields) {
       const mapped: Record<string, string> = {};
       for (const [k, v] of Object.entries(body.fields))
@@ -347,11 +437,21 @@ function showAlert(form: HTMLFormElement, msg: string) {
   }
 }
 function success(form: HTMLFormElement) {
+  // Newsletter boxes: the thank-you line sits inside the form, which stays (Figma has no success screen for them).
+  const inline = form.querySelector<HTMLElement>(".f-ok");
+  if (inline) {
+    form.reset();
+    resetTurnstile(form);
+    inline.hidden = false;
+    return;
+  }
   const ok = document.querySelector<HTMLElement>(
     `[data-success-for="${form.dataset.form}"]`,
   );
   form.reset();
-  form.querySelectorAll<HTMLSelectElement>('[data-dial] select').forEach(syncDial);
+  form
+    .querySelectorAll<HTMLSelectElement>("[data-dial] select")
+    .forEach(syncDial);
   form
     .querySelectorAll<HTMLInputElement>('input[type="date"]')
     .forEach((d) => d.toggleAttribute("data-empty", true));
@@ -379,13 +479,23 @@ function loadTurnstile() {
   tsLoading ??= new Promise<void>((resolve) => {
     if (window.turnstile) return resolve();
     // Another form on the page (e.g. the Contact section) may already have added the script: wait for it.
-    if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
-      const t = setInterval(() => { if (window.turnstile) { clearInterval(t); resolve(); } }, 100);
+    if (
+      document.querySelector(
+        'script[src*="challenges.cloudflare.com/turnstile"]',
+      )
+    ) {
+      const t = setInterval(() => {
+        if (window.turnstile) {
+          clearInterval(t);
+          resolve();
+        }
+      }, 100);
       return;
     }
     window.__tsReady = () => resolve();
-    const s = document.createElement('script');
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__tsReady';
+    const s = document.createElement("script");
+    s.src =
+      "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=__tsReady";
     s.async = true;
     document.head.appendChild(s);
   });
@@ -393,12 +503,12 @@ function loadTurnstile() {
 }
 /** Resolves when the form's Turnstile token is ready (or after a timeout: the server then answers "turnstile"). */
 async function turnstileToken(form: HTMLFormElement, ms = 8000) {
-  const slot = form.querySelector<HTMLElement>('.ts-slot');
+  const slot = form.querySelector<HTMLElement>(".ts-slot");
   if (!slot) return;
   const end = Date.now() + ms;
   while (Date.now() < end) {
     const id = slot.dataset.widget;
-    if (id && id !== 'pending' && window.turnstile?.getResponse(id)) return;
+    if (id && id !== "pending" && window.turnstile?.getResponse(id)) return;
     await new Promise((r) => setTimeout(r, 150));
   }
 }
@@ -409,7 +519,7 @@ function renderTurnstile(form: HTMLFormElement) {
   void loadTurnstile().then(() => {
     slot.dataset.widget = window.turnstile!.render(slot, {
       sitekey: slot.dataset.sitekey,
-      appearance: "interaction-only",
+      appearance: slot.dataset.appearance ?? "interaction-only",
       language: slot.dataset.language,
       size: "flexible",
     });

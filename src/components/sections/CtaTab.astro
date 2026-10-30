@@ -1,8 +1,8 @@
 ---
 import { img } from '../../lib/images';
-import { parsePath } from '../../lib/editions';
+import { parsePath, urlFor } from '../../lib/editions';
+import { pagePath } from '../../lib/paths';
 import { content } from '../../lib/content';
-import line6 from '../../assets/cta/line6.svg';
 
 const { edition } = parsePath(Astro.url.pathname);
 const c = content('home/cta', edition.locale);
@@ -15,32 +15,35 @@ const layout = [
   { size: 23, cx: 657, ix: 643, iy: 15 },
   { size: 26, cx: 921, ix: 905, iy: 14 },
 ];
-const items = layout.map((d, i) => ({ ...d, label: c.items[i].label, href: c.items[i].href, icon: img(c.items[i].icon, edition.region) }));
+const items = layout.map((d, i) => ({ ...d, label: c.items[i].label, href: c.items[i].page ? urlFor(edition, pagePath(c.items[i].page)) : c.items[i].href, icon: img(c.items[i].icon, edition.region) }));
 const dividers = [262, 524, 786];
 ---
 <!-- CTA Tab: page y 560, --h 82. Full-bleed white band, sits over the hero (parent handles stacking). -->
 <section class="relative bg-white" style="--h: 82" aria-label={c.ariaLabel}>
-  <div class="pointer-events-none absolute inset-0 hair-15" style="border-color:var(--color-teal-border)"></div>
+  <div class="cta-frame pointer-events-none absolute inset-0"></div>
   <div class="stage">
     <ul class="m-0 grid list-none grid-cols-2 p-0 lg:contents">
       {items.map((it, i) => (
         <li class:list={['cta-li relative max-lg:min-h-[calc(82*var(--u))]', i < 2 && 'b', i % 2 === 0 && 'r']}>
           <a href={it.href} class="flex h-full flex-col items-center justify-center gap-[calc(8*var(--u))] font-gotham not-italic lg:block lg:absolute lg:top-0 lg:h-82 lg:w-148" style={`inset-inline-start:calc(${it.cx - 74} * var(--u))`}>
-            <img src={it.icon.src} width={it.size} height={it.size} alt="" aria-hidden="true" class="lg:absolute" style={`width:calc(${it.size} * var(--u));height:calc(${it.size} * var(--u));inset-inline-start:calc(${it.ix - (it.cx - 74)} * var(--u));top:calc(${it.iy} * var(--u))`} />
+            <img loading="lazy" src={it.icon.src} width={it.size} height={it.size} alt="" aria-hidden="true" class="lg:absolute" style={`width:calc(${it.size} * var(--u));height:calc(${it.size} * var(--u));inset-inline-start:calc(${it.ix - (it.cx - 74)} * var(--u));top:calc(${it.iy} * var(--u))`} />
             <span class="block h-15 w-148 text-center font-medium text-f13 leading-[calc(15*var(--u))] text-navy-alt max-lg:w-auto lg:absolute lg:start-0 lg:top-55">{it.label}</span>
           </a>
         </li>
       ))}
     </ul>
     {dividers.map((x) => (
-      <img src={line6.src} alt="" aria-hidden="true" class="pointer-events-none absolute max-lg:hidden" style={`width:calc(82 * var(--u));height:calc(0.15 * var(--u));inset-inline-start:calc(${x - 41} * var(--u));top:calc(40.925 * var(--u));transform:rotate(90deg)`} />
+      <span aria-hidden="true" class="cta-div pointer-events-none absolute inset-y-0 max-lg:hidden" style={`inset-inline-start:calc(${x} * var(--u))`}></span>
     ))}
   </div>
 </section>
 <style>
+  /* visible 1px light-grey frame + dividers (user request 14 Oct, was 0.15u teal hairlines) */
+  .cta-frame { border: 1px solid var(--color-mist); border-top-width: 0; }
+  .cta-div { width: 1px; background: var(--color-mist); }
   @media (max-width: 1023.98px) {
-    .cta-li { border: 0 solid var(--color-teal-border); }
-    .cta-li.b { border-bottom-width: calc(0.15 * var(--u)); }
-    .cta-li.r { border-inline-end-width: calc(0.15 * var(--u)); }
+    .cta-li { border: 0 solid var(--color-mist); }
+    .cta-li.b { border-bottom-width: 1px; }
+    .cta-li.r { border-inline-end-width: 1px; }
   }
 </style>

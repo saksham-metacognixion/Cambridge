@@ -2,7 +2,8 @@
 /*
  * Book an Appointment pop-up — Figma 106:246 ("Pop Up - Option 1"), spec figma-cache/forms-spec.md.
  * Panel 586 wide; values are Figma px from the panel's top-left. Opened by every #book-appointment link; a link with
- * data-doctor="<slug>" (doctor cards, profile) preselects that doctor and its speciality.
+ * data-doctor="<slug>" (doctor cards, profile) preselects that doctor and its speciality; data-hospital="<slug>" (hospital pages,
+ * Home facility rows) fills the hidden `hospital` field so the email names the hospital (docs/open-decisions.md HD5).
  */
 import Modal from './Modal.astro';
 import FormShell from './FormShell.astro';
@@ -29,7 +30,6 @@ const radios = fieldsIn(ID, 'gender');
     edition={edition}
     submit={c.submit}
     ariaLabelledby={`${ID}-title`}
-    button={{ w: 99.169, h: 33.056, r: 9.917, fs: 9.917, ty: 11.9 }}
     gaps={{ consent: 13.52, submit: 13.52 }}
   >
     <div class="f-grid b-choose">
@@ -51,8 +51,8 @@ const radios = fieldsIn(ID, 'gender');
               <label class="b-opt hit">
                 <input class="sr-only" type="radio" name={f.name} value={o} required={f.required} />
                 <span class="b-ico" aria-hidden="true">
-                  <img class="on" src={radioOn.src} alt="" width="14.845" height="14.845" />
-                  <img class="off" src={radioOff.src} alt="" width="9.917" height="9.917" />
+                  <img loading="lazy" class="on" src={radioOn.src} alt="" width="14.845" height="14.845" />
+                  <img loading="lazy" class="off" src={radioOff.src} alt="" width="9.917" height="9.917" />
                 </span>
                 <span class="b-txt" style={`--gap:${i === 0 ? 7.21 : 4.96}`}>{t.options[o]}</span>
               </label>
@@ -65,6 +65,7 @@ const radios = fieldsIn(ID, 'gender');
     {fieldsIn(ID, 'message').map((f) => (
       <GlassField {...shared} field={f} text={c.fields[f.name] ?? {}} area={{ w: 523.794, h: 64.009, px: 9.34, py: 11.72, fs: 13.523 }} />
     ))}
+    {fieldsIn(ID, 'hidden').map((f) => <input type="hidden" name={f.name} value="" data-preselect={f.name} />)}
   </FormShell>
 </Modal>
 
@@ -72,10 +73,9 @@ const radios = fieldsIn(ID, 'gender');
   /* Panel 586 x 399.38 (grows by the consent row, which Figma doesn't draw). Content x 31.55..555.34. */
   :global(.p-book) { inline-size: calc(586 * var(--u)); padding: calc(21.64 * var(--u)) calc(30.656 * var(--u)) calc(14.72 * var(--u)) calc(31.55 * var(--u)); }
   /* Title centred 3.4 left of the panel centre: top 21.64, next block at 54.09. */
-  /* SUBMIT is centred on the panel (293), the content box is centred 0.45 to its right. */
-  :global(.p-book .f-submit) { inset-inline-start: calc(-0.45 * var(--u)); }
   .b-title { min-block-size: calc(32.45 * var(--u)); margin-inline-end: calc(7.694 * var(--u)); }
-  .b-choose { display: grid; grid-template-columns: repeat(2, calc(256.037 * var(--u))); column-gap: calc(11.72 * var(--u)); }
+  /* row-gap = the Patient Details row gap; only shows once the pair stacks below 1024 (bug 091) */
+  .b-choose { display: grid; grid-template-columns: repeat(2, calc(256.037 * var(--u))); column-gap: calc(11.72 * var(--u)); row-gap: calc(19.836 * var(--u)); }
   /* "Patient Details:" top 105.48 (19.836 below the selects), next row at 136.13 */
   .b-section { margin-block-start: calc(19.836 * var(--u)); min-block-size: calc(30.65 * var(--u)); }
   .b-details { display: grid; grid-template-columns: repeat(2, calc(256.037 * var(--u))); column-gap: calc(11.72 * var(--u)); row-gap: calc(19.836 * var(--u)); align-items: start; }
@@ -95,4 +95,9 @@ const radios = fieldsIn(ID, 'gender');
   .b-opt input:focus-visible + .b-ico { outline: calc(1 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); border-radius: 50%; }
   .b-txt { margin-inline-start: calc(var(--gap) * var(--u)); }
   .b-radios .f-err { clear: both; }
+  /* 320-359px phones only: let the gender options wrap instead of clipping */
+  @media (max-width: 359.98px) {
+    .b-opts { flex-wrap: wrap; row-gap: calc(8 * var(--u)); block-size: auto; }
+    .b-opt:first-child { min-inline-size: 0; margin-inline-end: calc(24 * var(--u)); }
+  }
 </style>

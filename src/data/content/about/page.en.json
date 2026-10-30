@@ -1,0 +1,167 @@
+{
+  "_note": "About Cambridge (Figma 45:4982; timeline = 307:494). Text = Website Content - Suhad/About Cambridge/EN-Main Page.md ('New Text' column, 5 Oct 2026): new hero, intro (no lead line), the 18-entry Journey of Excellence, 'Get to Know Cambridge' without a sub line. meta.description = the live About page's Rank Math description (WordPress export, 6 Oct 2026); meta.title, alt texts and aria labels are NOT in the document (PLACEHOLDER). Card links: page = key in PAGE_PATHS ('Who We Are' opens the Who We Are page (built 6 Oct 2026 from Figma 46:5841 + the live site's text, CT7 closed)). 'Your recovery matters' CTA = the shared Contact page block.",
+  "meta": {
+    "title": "About Cambridge | Cambridge Hospital",
+    "description": "Learn about Cambridge Hospital Group, our mission, accreditations, partnerships and commitment to specialised healthcare and rehabilitation services."
+  },
+  "hero": {
+    "ariaLabel": "A Leader in Post-Acute Care in the GCC",
+    "banner": {
+      "image": "about/banner",
+      "alt": ""
+    },
+    "title": [
+      "A Leader in",
+      "Post-Acute Care",
+      "in the GCC"
+    ],
+    "text": "Comprehensive care and clinical expertise centred on patients and families, from hospital to home.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    }
+  },
+  "intro": {
+    "ariaLabel": "About Cambridge Hospital",
+    "video": {
+      "poster": "about/video-thumbnail",
+      "alt": "",
+      "playLabel": "Play video"
+    },
+    "title": "Cambridge Hospital",
+    "subtitle": ["Personalised Care, Every Step", "of the Way"],
+    "lead": "",
+    "text": [
+      "Cambridge Hospital provides comprehensive and specialised post-acute, rehabilitation and long-term care for patients recovering from illness, injury or complex medical conditions, as well as those requiring ongoing support.",
+      "Our multidisciplinary teams deliver personalised care based on each patient’s needs, helping them recover, regain independence and improve their quality of life. We work closely with families throughout the journey, providing guidance and support as patients transition between different stages of care."
+    ]
+  },
+  "timeline": {
+    "ariaLabel": "Journey of Excellence",
+    "heading": "Journey of Excellence",
+    "prevLabel": "Previous",
+    "nextLabel": "Next",
+    "items": [
+      {
+        "year": "2012",
+        "title": ["Cambridge Group Establishment"],
+        "text": "The holding company was established to develop long-term care facilities across the region."
+      },
+      {
+        "year": "2014",
+        "title": ["UAE – Abu Dhabi and Al Ain Facilities Launch"],
+        "text": "Phase I in Abu Dhabi Hospital launched in June 2014, followed by Phase II in January 2015 and the Al Ain facility in April 2015."
+      },
+      {
+        "year": "2015",
+        "title": ["UAE - TVU Programme Launch"],
+        "text": "Launched the first Transitional Vent Unit (TVU) programme for mechanically ventilated patients."
+      },
+      {
+        "year": "2016",
+        "title": ["UAE & KSA Expansion"],
+        "text": "Secured a SAGIA (now MISA) license for expansion into Saudi Arabia and opened Phase II of Al Ain Facility."
+      },
+      {
+        "year": "2019",
+        "title": ["KSA - Dhahran Facility Launch"],
+        "text": "Opened the Eastern Province’s first dedicated inpatient and outpatient rehabilitation facility."
+      },
+      {
+        "year": "2020",
+        "title": ["UAE - Abu Dhabi Facility Expansion"],
+        "text": "Expanded the Abu Dhabi facility, with capacity reaching 106 beds."
+      },
+      {
+        "year": "2021",
+        "title": ["Group Acquisition by Amanat"],
+        "text": "Strategic acquisition by Amanat Holdings of majority stake to drive accelerated sustainable growth."
+      },
+      {
+        "year": "2023",
+        "title": ["KSA - IECC Jeddah Acquisition"],
+        "text": "Group acquired a majority stake in the IECC facility (now known as Cambridge Hospital Jeddah), adding 100 beds to the group’s portfolio."
+      },
+      {
+        "year": "2023",
+        "title": ["UAE - Al Ain Facility Expansion"],
+        "text": "Expanded the Al Ain facility to a capacity of 109 beds."
+      },
+      {
+        "year": "2024",
+        "title": ["UAE - Al Mudeef Centre Partnership"],
+        "text": "Entered into a public-private partnership with Zayed Authority for People of Determination to operate and maintain the 80-bed Al Mudeef facility."
+      },
+      {
+        "year": "2024",
+        "title": ["KSA - Al Khobar Facility Commissioning"],
+        "text": "Commissioned a long-term care and ICU facility in Saudi Arabia’s Eastern Province."
+      },
+      {
+        "year": "2025",
+        "title": ["KSA - Al Khobar Facility Expansion"],
+        "text": "Licensed 100 additional beds, including 30 rehabilitation beds, with planned target of 150 beds total."
+      },
+      {
+        "year": "2025",
+        "title": ["Cambridge Health Group Launch"],
+        "text": "Established Cambridge Health Group as the regional healthcare platform for strategic growth and portfolio expansion."
+      },
+      {
+        "year": "2026",
+        "title": ["KSA - Al Khobar Facility Expansion"],
+        "text": "Increased the Al Khobar facility’s capacity to 150 beds as part of the group’s expansion in Saudi Arabia."
+      },
+      {
+        "year": "2026",
+        "title": ["Full Ownership by Amanat"],
+        "text": "Amanat Holdings completes its phased acquisition of Cambridge Health Group, taking its stake to 100%."
+      },
+      {
+        "year": "2026",
+        "title": ["Cambridge Hospital Brand Unification"],
+        "text": "CMRC, Al Mudeef Center and IECC facilities in the UAE and Saudi Arabia unified under the Cambridge Hospital brand."
+      },
+      {
+        "year": "2026",
+        "title": ["KSA - Cambridge Homecare Launch"],
+        "text": "Launched Cambridge Homecare in Saudi Arabia, providing initial home-based patient services."
+      }
+    ]
+  },
+  "explore": {
+    "ariaLabel": "Get to Know Cambridge",
+    "heading": "Get to Know Cambridge",
+    "text": "",
+    "cards": [
+      {
+        "title": ["Who We Are"],
+        "button": "Learn More",
+        "page": "whoWeAre",
+        "image": "about/card-about",
+        "alt": ""
+      },
+      {
+        "title": ["Why Choose", "Cambridge", "Hospital"],
+        "button": "Discover More",
+        "page": "whyCambridge",
+        "image": "about/card-why",
+        "alt": ""
+      },
+      {
+        "title": ["Accreditations &", "Partnerships"],
+        "button": "View Details",
+        "page": "accreditations",
+        "image": "about/card-accreditations",
+        "alt": ""
+      },
+      {
+        "title": ["Careers"],
+        "button": "Explore Careers",
+        "page": "careers",
+        "image": "about/card-careers",
+        "alt": ""
+      }
+    ]
+  }
+}

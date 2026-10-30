@@ -1,0 +1,473 @@
+- generic [ref=e2]:
+  - banner [ref=e4]:
+    - checkbox "Toggle navigation menu" [ref=e5]
+    - generic [ref=e6]:
+      - link "Cambridge Hospital home" [ref=e7] [cursor=pointer]:
+        - /url: /ae/ar
+        - img "Cambridge Hospital" [ref=e8]
+      - generic [aria-hidden] [ref=e9] [cursor=pointer]
+      - text: BOOK AN APPOINTMENT
+  - main [ref=e13]:
+    - region "Hero" [ref=e15]:
+      - generic [ref=e16]:
+        - heading "Restoring Hope, Enabling Life." [level=1] [ref=e19]: Restoring Hope,Enabling Life.
+        - paragraph [ref=e20]: Supporting every step of your recovery journey with compassionate care and clinical excellence.
+        - generic [ref=e21]:
+          - link "Get in Touch" [ref=e22] [cursor=pointer]:
+            - /url: "#contact"
+          - link "Learn More" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+    - region "Quick actions" [ref=e28]:
+      - list [ref=e30]:
+        - listitem [ref=e31]:
+          - link "Book an Appointment" [ref=e32] [cursor=pointer]:
+            - /url: "#book-appointment"
+        - listitem [ref=e35]:
+          - link "Find a Doctor" [ref=e36] [cursor=pointer]:
+            - /url: "#doctors"
+        - listitem [ref=e39]:
+          - link "Search Conditions" [ref=e40] [cursor=pointer]:
+            - /url: /ae/ar/conditions-specialities
+        - listitem [ref=e43]:
+          - link "Send an Inquiry" [ref=e44] [cursor=pointer]:
+            - /url: "#send-inquiry"
+    - region [ref=e48]:
+      - generic [ref=e49]:
+        - heading "Delivering Excellence Across Every Stage of Care" [level=2] [ref=e50]
+        - paragraph [ref=e51]: At Cambridge Hospital, we are committed to delivering advanced, patient-centered care with clinical excellence, providing a full spectrum of services designed around your individual needs.
+        - list [ref=e52]:
+          - listitem [ref=e53]:
+            - img "Inpatient care ward" [ref=e55]
+            - heading "Inpatient Care" [level=3] [ref=e56]
+            - paragraph [ref=e57]: 24/7 hospital care for patients needing continuous support.
+            - link "Start Your Care" [ref=e58] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e60]:
+            - img "Outpatient consultation" [ref=e62]
+            - heading "Outpatient Care" [level=3] [ref=e63]
+            - paragraph [ref=e64]: Consultations, diagnostics, and treatments without admission.
+            - link "Start Your Care" [ref=e65] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e67]:
+            - img "Home health care visit" [ref=e69]
+            - heading "Home Health Care" [level=3] [ref=e70]
+            - paragraph [ref=e71]: Quality medical care delivered at home.
+            - link "Start Your Care" [ref=e72] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e74]:
+            - img "In-school care" [ref=e76]
+            - heading "In School Care" [level=3] [ref=e77]
+            - paragraph [ref=e78]: On-site care to support student health and safety.
+            - link "Start Your Care" [ref=e79] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=e83]:
+      - heading "Expert Care, Trusted Doctors" [level=2] [ref=e84]
+      - paragraph [ref=e85]: Our specialists are committed to providing the right care at every stage of your journey.
+      - group "Filter doctors by country" [ref=e86]:
+        - button "ALL" [pressed] [ref=e87] [cursor=pointer]
+        - button "KSA" [ref=e88] [cursor=pointer]
+        - button "UAE" [ref=e89] [cursor=pointer]
+      - generic [ref=e91]:
+        - article [ref=e92]:
+          - img "Dr. Amjad Abdelqader" [ref=e95]
+          - heading "Dr. Amjad Abdelqader" [level=3] [ref=e96]
+          - paragraph [ref=e97]: General Physician
+          - link "Book Now - Dr. Amjad Abdelqader" [ref=e98] [cursor=pointer]:
+            - /url: "#"
+          - generic: Book Now
+        - article [ref=e99]:
+          - img "Dr. Ahmad Al Khayer" [ref=e102]
+          - heading "Dr. Ahmad Al Khayer" [level=3] [ref=e103]
+          - paragraph [ref=e104]: Physical Medicine & Rehab Specialist
+          - link "See More - Dr. Ahmad Al Khayer" [ref=e105] [cursor=pointer]:
+            - /url: "#"
+          - generic: See More
+        - article [ref=e106]:
+          - img "Dr. Wael Sary" [ref=e109]
+          - heading "Dr. Wael Sary" [level=3] [ref=e110]
+          - paragraph [ref=e111]: ICU & Anesthesia Specialist
+          - link "See More - Dr. Wael Sary" [ref=e112] [cursor=pointer]:
+            - /url: "#"
+          - generic: See More
+        - article [ref=e113]:
+          - img "Dr. Suhaila Kallada" [ref=e116]
+          - heading "Dr. Suhaila Kallada" [level=3] [ref=e117]
+          - paragraph [ref=e118]: Physical Medicine & Rehab Specialist
+          - link "See More - Dr. Suhaila Kallada" [ref=e119] [cursor=pointer]:
+            - /url: "#"
+          - generic: See More
+        - article [ref=e120]:
+          - img "Dr. Mohammed Halawani" [ref=e123]
+          - heading "Dr. Mohammed Halawani" [level=3] [ref=e124]
+          - paragraph [ref=e125]: Neuro Specialist
+          - link "See More - Dr. Mohammed Halawani" [ref=e126] [cursor=pointer]:
+            - /url: "#"
+          - generic: See More
+        - article [ref=e127]:
+          - img "Dr. Rober Hanna Kassab" [ref=e130]
+          - heading "Dr. Rober Hanna Kassab" [level=3] [ref=e131]
+          - paragraph [ref=e132]: Physical Medicine & Rehab Specialist
+          - link "See More - Dr. Rober Hanna Kassab" [ref=e133] [cursor=pointer]:
+            - /url: "#"
+          - generic: See More
+    - generic [ref=e136]:
+      - heading "Complete Care Support" [level=2] [ref=e137]
+      - paragraph [ref=e138]: A range of diagnostic, therapeutic, and support services designed to enhance patient care and recovery.
+      - group "Filter services by country" [ref=e139]:
+        - button "ALL" [pressed] [ref=e140] [cursor=pointer]
+        - button "KSA" [ref=e141] [cursor=pointer]
+        - button "UAE" [ref=e142] [cursor=pointer]
+      - list [ref=e144]:
+        - listitem [ref=e145]:
+          - paragraph [ref=e147]: Radiology
+        - listitem [ref=e148]:
+          - paragraph [ref=e150]: Laboratory
+        - listitem [ref=e151]:
+          - paragraph [ref=e153]: Inpatient Pharmacy
+        - listitem [ref=e154]:
+          - paragraph [ref=e156]: Sensory Rooms
+        - listitem [ref=e157]:
+          - paragraph [ref=e159]: Inpatient Gym
+        - listitem [ref=e160]:
+          - paragraph [ref=e162]: Hydrotherapy
+        - listitem [ref=e163]:
+          - paragraph [ref=e165]: Outpatient Gym
+        - listitem [ref=e166]:
+          - paragraph [ref=e168]: CT Scan
+        - listitem [ref=e169]:
+          - paragraph [ref=e171]: Dialysis
+        - listitem [ref=e172]:
+          - paragraph [ref=e174]: Blood Bank
+    - generic [ref=e177]:
+      - heading "Bringing Expert Care Closer to You Across the Region." [level=2] [ref=e178]
+      - generic [ref=e180]:
+        - img "Map of the region showing Cambridge Hospital locations in Saudi Arabia and the United Arab Emirates" [ref=e181]
+        - generic [ref=e182]: Dhahran
+        - generic [ref=e183]: Al Khobar
+        - generic [ref=e184]: Abu Dhabi
+        - generic [ref=e185]: Al Ain
+        - generic [ref=e186]: Jeddah
+      - generic [ref=e187]:
+        - generic [ref=e188]: Hospitals
+        - list [ref=e190]:
+          - listitem [ref=e191]:
+            - img "Cambridge Hospital Abu Dhabi" [ref=e194]
+            - generic [ref=e195]:
+              - heading "Cambridge Hospital Abu Dhabi" [level=3] [ref=e196]:
+                - generic [ref=e197]: Cambridge Hospital
+                - generic [ref=e198]: Abu Dhabi
+              - generic [ref=e199]:
+                - link "Book Appointment" [ref=e200] [cursor=pointer]:
+                  - /url: "#book-appointment"
+                - link "Visit Page" [ref=e201] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e202]:
+            - img "Cambridge Hospital Al Ain" [ref=e205]
+            - generic [ref=e206]:
+              - heading "Cambridge Hospital Al Ain" [level=3] [ref=e207]:
+                - generic [ref=e208]: Cambridge Hospital
+                - generic [ref=e209]: Al Ain
+              - generic [ref=e210]:
+                - link "Book Appointment" [ref=e211] [cursor=pointer]:
+                  - /url: "#book-appointment"
+                - link "Visit Page" [ref=e212] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e213]:
+            - img "Cambridge Hospital Dhahran" [ref=e216]
+            - generic [ref=e217]:
+              - heading "Cambridge Hospital Dhahran" [level=3] [ref=e218]:
+                - generic [ref=e219]: Cambridge Hospital
+                - generic [ref=e220]: Dhahran
+              - generic [ref=e221]:
+                - link "Book Appointment" [ref=e222] [cursor=pointer]:
+                  - /url: "#book-appointment"
+                - link "Visit Page" [ref=e223] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e224]:
+            - img "Cambridge Hospital Al Khobar" [ref=e227]
+            - generic [ref=e228]:
+              - heading "Cambridge Hospital Al Khobar" [level=3] [ref=e229]:
+                - generic [ref=e230]: Cambridge Hospital
+                - generic [ref=e231]: Al Khobar
+              - generic [ref=e232]:
+                - link "Book Appointment" [ref=e233] [cursor=pointer]:
+                  - /url: "#book-appointment"
+                - link "Visit Page" [ref=e234] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e235]:
+            - img "Cambridge Hospital Jeddah" [ref=e238]
+            - generic [ref=e239]:
+              - heading "Cambridge Hospital Jeddah" [level=3] [ref=e240]:
+                - generic [ref=e241]: Cambridge Hospital
+                - generic [ref=e242]: Jeddah
+              - generic [ref=e243]:
+                - link "Book Appointment" [ref=e244] [cursor=pointer]:
+                  - /url: "#book-appointment"
+                - link "Visit Page" [ref=e245] [cursor=pointer]:
+                  - /url: "#"
+          - listitem [ref=e246]:
+            - img "Al Mudeef Center Abu Dhabi" [ref=e249]
+            - generic [ref=e250]:
+              - heading "Al Mudeef Center Abu Dhabi" [level=3] [ref=e251]:
+                - generic [ref=e252]: Al Mudeef Center
+                - generic [ref=e253]: Abu Dhabi
+              - generic [ref=e254]:
+                - link "Book Appointment" [ref=e255] [cursor=pointer]:
+                  - /url: "#book-appointment"
+                - link "Visit Page" [ref=e256] [cursor=pointer]:
+                  - /url: "#"
+      - generic [ref=e257]:
+        - paragraph [ref=e258]:
+          - generic [ref=e259]: 300,000+
+          - generic [ref=e260]: Unique OPD Visits
+        - paragraph [ref=e261]:
+          - generic [ref=e262]: 5,000+
+          - generic [ref=e263]: Improved Impatients
+        - paragraph [ref=e264]:
+          - generic [ref=e265]: 30,000+
+          - generic [ref=e266]: Homecare Visits
+        - paragraph [ref=e267]:
+          - generic [ref=e268]: 1200+
+          - generic [ref=e269]: Healthcare Professionals
+        - paragraph [ref=e270]:
+          - generic [ref=e271]: "720"
+          - generic [ref=e272]: Operational Beds
+        - paragraph [ref=e273]:
+          - generic [ref=e274]: "6"
+          - generic [ref=e275]: Care Presence
+    - generic [ref=e278]:
+      - generic [ref=e279]:
+        - heading "Stories of Care and Recovery" [level=2] [ref=e280]
+        - paragraph [ref=e281]: Hear from our patients as they share their journeys of recovery, care, and renewed independence.
+      - generic [ref=e283]:
+        - article [ref=e284]:
+          - paragraph [ref=e289]: Alhamdulillah, I regained my ability to walk in about 4 months with their help.
+          - img "Mohamed Al Menhali" [ref=e292]
+          - paragraph [ref=e293]: Mohamed Al Menhali
+        - article [ref=e294]:
+          - paragraph [ref=e299]: Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.
+          - paragraph [ref=e300]: Mohamed Salem Al Bloushi
+          - img "Mohamed Salem Al Bloushi" [ref=e303]
+        - article [ref=e304]:
+          - img "Tamam’s Mother" [ref=e311]
+          - paragraph [ref=e312]: We are truly grateful for the significant improvements we have observed in Tamam’s communication abilities.
+          - paragraph [ref=e313]: Tamam’s Mother
+        - article [ref=e314]:
+          - paragraph [ref=e323]: Shamma’s ability to communicate has improved remarkably and significantly, thanks to Cambridge.
+          - img "Shamma’s Mother" [ref=e325]
+          - paragraph [ref=e326]: Shamma’s Mother
+        - article [ref=e327]:
+          - paragraph [ref=e328]: Salem Bin Saleh
+          - img "Salem Bin Saleh" [ref=e340]
+          - paragraph [ref=e341]: Thank God, I was able to get back to walking within a timeframe of almost 4 months with God’s will and the help of the team.
+        - article [ref=e342]:
+          - img "Nujood Saeed" [ref=e355]
+          - paragraph [ref=e356]: With God’s grace and the team’s support, I was walking again in nearly 4 months.
+          - paragraph [ref=e357]: Nujood Saeed
+      - link "View More Stories" [ref=e358] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=e362]:
+      - heading "Start Your Recovery Today!" [level=2] [ref=e363]
+      - paragraph [ref=e364]: Our specialists provides personalized treatment and rehabilitation plans for your conditions.
+      - link "Book an Appointment" [ref=e365] [cursor=pointer]:
+        - /url: "#book-appointment"
+      - link "Find a Doctor" [ref=e367] [cursor=pointer]:
+        - /url: "#doctors"
+    - generic [ref=e371]:
+      - paragraph [ref=e372]: Quick insights to better understand your health and risks.
+      - generic [ref=e373]:
+        - img "Patient receiving care at Cambridge Hospital" [ref=e374]
+        - heading "Check Your Health in Seconds." [level=2] [ref=e375]:
+          - generic [ref=e376]: Check Your Health
+          - generic [ref=e377]: in Seconds.
+      - generic [ref=e378]:
+        - generic [ref=e379]:
+          - heading "BMI Calculator" [level=3] [ref=e380]
+          - paragraph [ref=e381]: Check your weight category instantly.
+          - 'link "Calculate Now: BMI Calculator" [ref=e382] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=e383]: Calculate Now
+        - generic [ref=e384]:
+          - heading "Stroke Risk Calculator" [level=3] [ref=e385]
+          - paragraph [ref=e386]: Understand your risk in minutes.
+          - 'link "Calculate Now: Stroke Risk Calculator" [ref=e387] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=e388]: Calculate Now
+        - generic [ref=e389]:
+          - heading "Heart Age Calculator" [level=3] [ref=e390]
+          - paragraph [ref=e391]: See how healthy and well your heart is.
+          - 'link "Calculate Now: Heart Age Calculator" [ref=e392] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=e393]: Calculate Now
+        - generic [ref=e394]:
+          - heading "Lung Health Calculator" [level=3] [ref=e395]
+          - paragraph [ref=e396]: Assess your lung health quickly.
+          - 'link "Calculate Now: Lung Health Calculator" [ref=e397] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=e398]: Calculate Now
+    - generic [ref=e401]:
+      - heading "News & Insights" [level=2] [ref=e402]
+      - generic [ref=e403]:
+        - button "Blogs" [ref=e404] [cursor=pointer]
+        - button "News" [ref=e405] [cursor=pointer]
+        - button "Events" [ref=e406] [cursor=pointer]
+      - generic [ref=e407]:
+        - article [ref=e408]:
+          - img "Cambridge Hospital Al Khobar building" [ref=e410]
+          - heading "Cambridge Hospital Al Khobar, a state-of-the-art rehabilitative hospital in the Eastern Province of Kingdom of Saudi Arabia." [level=3] [ref=e411]
+          - paragraph [ref=e412]: In Q2 2019, Cambridge Medical & Rehabilitation, the UAE’s leading post-acute rehabilitation and long-term care facility, announced the opening of its first medical and rehabilitation facility....
+          - link "Read more" [ref=e413] [cursor=pointer]:
+            - /url: "#"
+        - article [ref=e414]:
+          - img "Abdullah, a young Emirati patient, with his care team" [ref=e416]
+          - heading "Abdullah, a young Emirati, is a beacon of hope and a true success story of recovery, resilience, and renewed life." [level=3] [ref=e417]
+          - paragraph [ref=e418]: On August 11, 2018, 17-year-old Abdullah Al Mehrezi, bedridden and developing spasticity in all four limbs due to a dreadful road traffic accident that left him with severe traumatic brain injury, was admitted...
+          - link "Read more" [ref=e419] [cursor=pointer]:
+            - /url: "#"
+        - article [ref=e420]:
+          - img "Dr. Robert Kassab during a TV interview" [ref=e422]
+          - heading "Dr. Robert Kassab shares insights on stroke rehabilitation and long-term care in his recent TV interview on Sabah Al Arabiya." [level=3] [ref=e423]
+          - paragraph [ref=e424]: Watch Dr. Robert Kassab’s TV interview on Sabah Al Arabiya, where he shares expert insights on stroke rehabilitation and long-term care, highlighting the importance of specialized treatment....
+          - link "Read more" [ref=e425] [cursor=pointer]:
+            - /url: "#"
+    - generic [ref=e428]:
+      - heading "Accepted Insurance Providers" [level=2] [ref=e429]
+      - paragraph [ref=e430]: Providing seamless access to care through our extensive insurance network.
+      - list [ref=e431]:
+        - listitem [ref=e432]:
+          - img "Thiqa" [ref=e433]
+        - listitem [ref=e434]:
+          - img "Daman" [ref=e435]
+        - listitem [ref=e436]:
+          - img "ADNIC – Abu Dhabi National Insurance Company" [ref=e437]
+        - listitem [ref=e438]:
+          - img "Neuron" [ref=e439]
+        - listitem [ref=e440]:
+          - img "Almadallah Healthcare Management" [ref=e441]
+        - listitem [ref=e442]:
+          - img "SAICO" [ref=e443]
+        - listitem [ref=e444]:
+          - img "Nextcare" [ref=e445]
+      - link "View All" [ref=e446] [cursor=pointer]:
+        - /url: /ae/ar/insurance-providers
+    - generic [ref=e452]:
+      - heading "Get in touch with us" [level=2] [ref=e453]
+      - generic [ref=e454]:
+        - paragraph [ref=e455]: "Email:"
+        - paragraph [ref=e456]:
+          - link "info@cambridgehospital.com" [ref=e457] [cursor=pointer]:
+            - /url: mailto:info@cambridgehospital.com
+        - paragraph [ref=e458]: "Phone:"
+        - paragraph [ref=e459]: 800-2672 - UAE800-2772 - KSA
+        - paragraph [ref=e460]: "Address:"
+        - paragraph [ref=e461]: Prestige 17 Tower - Hamdan Bin Mohammed St - Mohamed Bin Zayed City - ME2 - Abu Dhabi
+        - paragraph [ref=e462]: "Follow us:"
+        - img "Social media icons" [ref=e463]
+      - generic [ref=e464]:
+        - generic [ref=e465]: Your Name
+        - textbox "Your Name" [ref=e466]
+        - generic [ref=e467]: Email Address
+        - textbox "Email Address" [ref=e468]
+        - generic [ref=e469]: Message
+        - textbox "Message" [ref=e470]:
+          - /placeholder: Write Something...
+        - button "Send Message" [ref=e471] [cursor=pointer]
+  - contentinfo [ref=e474]:
+    - generic [ref=e475]:
+      - img "Cambridge Hospital" [ref=e476]
+      - navigation [ref=e477]:
+        - heading "QUICK LINKS" [level=2] [ref=e478]
+        - list [ref=e479]:
+          - listitem [ref=e480]:
+            - link "Cambridge" [ref=e481] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e482]:
+            - link "Our Care" [ref=e483] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e484]:
+            - link "Patient Hub" [ref=e485] [cursor=pointer]:
+              - /url: /ae/ar/patient-hub
+          - listitem [ref=e486]:
+            - link "Our Hospitals" [ref=e487] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e488]:
+            - link "Contact Us" [ref=e489] [cursor=pointer]:
+              - /url: /ae/ar/contact
+          - listitem [ref=e490]:
+            - link "Book an Appointment" [ref=e491] [cursor=pointer]:
+              - /url: "#book-appointment"
+          - listitem [ref=e492]:
+            - link "Media Hub" [ref=e493] [cursor=pointer]:
+              - /url: /ae/ar/media-hub
+          - listitem [ref=e494]:
+            - link "Careers" [ref=e495] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e496]:
+            - link "Knowledge Center" [ref=e497] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e498]:
+            - link "FAQs" [ref=e499] [cursor=pointer]:
+              - /url: /ae/ar/faq
+            - link "Your Opinion Matters" [ref=e500] [cursor=pointer]:
+              - /url: "#your-opinion"
+          - listitem [ref=e501]:
+            - link "Find a Doctor" [ref=e502] [cursor=pointer]:
+              - /url: /ae/ar/find-a-doctor
+          - listitem [ref=e503]:
+            - link "Search Conditions" [ref=e504] [cursor=pointer]:
+              - /url: /ae/ar/conditions-specialities
+          - listitem [ref=e505]:
+            - link "Send an Inquiry" [ref=e506] [cursor=pointer]:
+              - /url: "#send-inquiry"
+      - navigation [ref=e507]:
+        - heading "SERVICES" [level=2] [ref=e508]
+        - list [ref=e509]:
+          - listitem [ref=e510]:
+            - link "Inpatient Care" [ref=e511] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e512]:
+            - link "Outpatient Care" [ref=e513] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e514]:
+            - link "Home Health Care" [ref=e515] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e516]:
+            - link "In School Care" [ref=e517] [cursor=pointer]:
+              - /url: "#"
+      - navigation [ref=e518]:
+        - heading "OUR HOSPITALS" [level=2] [ref=e519]
+        - list [ref=e520]:
+          - listitem [ref=e521]:
+            - link "Cambridge Hospital Abu Dhabi" [ref=e522] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e523]:
+            - link "Cambridge Hospital Al Ain" [ref=e524] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e525]:
+            - link "Cambridge Hospital Dhahran" [ref=e526] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e527]:
+            - link "Cambridge Hospital Al Khobar" [ref=e528] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e529]:
+            - link "Cambridge Hospital Jeddah" [ref=e530] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e531]:
+            - link "Al Mudeef Center Abu Dhabi" [ref=e532] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=e533]:
+        - heading "TRUSTED ACCREDITATIONS" [level=2] [ref=e534]
+        - 'img "Accreditations: JCI and other healthcare accreditation badges" [ref=e536]'
+      - generic [ref=e537]:
+        - heading "SUBSCRIBE TO OUR NEWSLETTER" [level=2] [ref=e538]
+        - generic [ref=e539]:
+          - generic [ref=e540]: Email
+          - textbox "Email" [ref=e541]:
+            - /placeholder: YOUR EMAIL
+          - button "Submit" [ref=e542] [cursor=pointer]
+      - paragraph [ref=e543]: Cambridge Hospital All Rights Reserved
+      - paragraph [ref=e544]:
+        - link "Compliance" [ref=e545] [cursor=pointer]:
+          - /url: "#"
+        - link "Privacy Policy" [ref=e546] [cursor=pointer]:
+          - /url: "#"

@@ -51,7 +51,7 @@ Photos, logos and the map are never flipped. Check: `dir="rtl"` must mirror ever
 * Interactions from the client: "Book an Appointment", "Send an Inquiry", "Your Opinion Matters" open modals later →
   render them as `<a href="#book-appointment">` / `#send-inquiry` / `#your-opinion` (no modal yet). Every other link `href="#"`.
   Email = `mailto:`. Forms = plain `<form action="/api/forms/<form-id>" method="POST">` handled by the Cloudflare
-  Pages Function `functions/api/forms/[form].ts` (fields in `src/data/forms.json`, Turnstile via `<Turnstile />`, hidden
+  Pages Function `functions/api/forms/[form].ts` (on the Vercel staging: `tools/vercel/api-forms.ts` bundled to `api/forms/[form].js`; fields in `src/data/forms.json`, Turnstile via `<Turnstile />`, hidden
   `edition` input, required `consent`; nothing stored), styled exactly like the Figma boxes.
 * HTML must be semantic (header/nav/main/section/h1-h6/ul/button/form/label) as long as the pixels stay identical. Alt text: `""` for decoration,
   a short accurate description (from the layer name / visible text) for photos and logos. Never add visible text.

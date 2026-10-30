@@ -1,0 +1,111 @@
+{
+  "_note": "Our Hospitals list (Figma 101:6247). Text = Website Content - Suhad/Our Hospitals/EN - Our Hospitals Main Page.md (5 Oct 2026). The document says the stats need review (docs/open-decisions.md CT13): numbers unchanged. Hospital names, addresses and photos: src/data/hospitals.json (listTitle / listButton). Stats {shared} = landing page numbers (src/lib/stats.ts). Config: src/data/hospitals-page.json.",
+  "meta": {
+    "title": "Our Hospitals | Cambridge Hospital",
+    "description": "Access Cambridge Hospital’s network of specialised facilities across the UAE and KSA, delivering consistent, high-quality care across every location."
+  },
+  "hero": {
+    "ariaLabel": "Six Locations. One Standard of Care.",
+    "banner": {
+      "image": "hospitals/banner",
+      "alt": ""
+    },
+    "title": [
+      "Six Locations. ",
+      "One Standard of Care."
+    ],
+    "text": "Access Cambridge Hospital’s network of specialised facilities across the UAE and KSA, delivering consistent, high-quality care across every location.",
+    "button": {
+      "label": "Book an Appointment",
+      "href": "#book-appointment"
+    },
+    "map": {
+      "alt": "",
+      "labels": [
+        {
+          "text": "Dhahran",
+          "x": 863.34,
+          "y": 288.4
+        },
+        {
+          "text": "Al Khobar",
+          "x": 880.31,
+          "y": 307.69
+        },
+        {
+          "text": "Abu Dhabi",
+          "x": 912.72,
+          "y": 376.36
+        },
+        {
+          "text": "Al Ain",
+          "x": 969.04,
+          "y": 354.75
+        },
+        {
+          "text": "Jeddah",
+          "x": 698.36,
+          "y": 404.91
+        }
+      ]
+    }
+  },
+  "list": {
+    "heading": "Find Care Near You",
+    "text": "Each Cambridge Hospital facility combines a welcoming environment with advanced medical technology and specialist expertise, creating spaces designed to support recovery, dignity and peace of mind.",
+    "listLabel": "Our hospitals",
+    "button": "View Hospital",
+    "empty": "No hospitals in this region yet."
+  },
+  "impact": {
+    "ariaLabel": "Real Impact. Real Outcomes.",
+    "heading": [
+      [
+        "Real Impact",
+        "."
+      ],
+      [
+        " Real Outcomes",
+        "."
+      ]
+    ],
+    "photo": {
+      "image": "hospitals/care",
+      "alt": "A nurse with her hand on a smiling patient's shoulder"
+    },
+    "stats": [
+      {
+        "shared": "opd"
+      },
+      {
+        "shared": "inpatients"
+      },
+      {
+        "number": "700+",
+        "label": "Operational Beds"
+      },
+      {
+        "shared": "homecare"
+      },
+      {
+        "number": "85%",
+        "label": "Discharge Rate"
+      },
+      {
+        "number": "14+",
+        "label": "Years of Experience"
+      }
+    ]
+  },
+  "doctors": {
+    "heading": "Expert Care, Trusted Doctors",
+    "text": "Our specialists are committed to providing the right care at every stage of your journey.",
+    "listLabel": "Our doctors",
+    "slugs": [
+      "ahmad-al-khayer",
+      "wael-sary",
+      "suhaila-kallada",
+      "rober-kassab"
+    ]
+  }
+}

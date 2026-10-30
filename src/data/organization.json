@@ -1,0 +1,6 @@
+{
+  "$comment": "Organization profile for structured data (SEO & GEO Dashboard Spec, Pratik 29 Oct 2026, section 3: rendered as Hospital / MedicalOrganization schema; src/lib/schema.ts). Names as already used on the site: 'Cambridge Hospital Group' = the live site's approved meta descriptions (seo.json), 'Cambridge Hospital' / Arabic = the hospital brand (hospitals.json). logo = the logo mark in public/ (512 x 512). Phone numbers come from call-button.json, social profiles from social.json (per edition), hospitals from hospitals.json: not repeated here. Editable from the CMS later (Phase 2).",
+  "name": "Cambridge Hospital Group",
+  "alternateName": ["Cambridge Hospital", "مستشفى كامبريدج"],
+  "logo": "/icon-512.png"
+}

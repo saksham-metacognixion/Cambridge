@@ -1,0 +1,402 @@
+{
+ "about/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/About-Cambridge-Banner-Global.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/About-Cambridge-Banner-KSA-1.avif"
+ },
+ "accreditations/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Accreditations-Affiliations-Global.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Accreditations-and-Affiliations-KSA.avif"
+ },
+ "care/banner-inpatient-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Inpatient-Care-UAE-1.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Inpatient-Care-main-banner-KSA.avif"
+ },
+ "care/banner-our-care": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Our-Care-Global.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Our-Care-Banner-KSA.avif",
+  "sa_recolour": true
+ },
+ "care/banner-post-acute-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Post-Acute-Care-Banner-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Post-Acute-Care-guy-Banner-KSA.avif"
+ },
+ "care/heroes/central-nervous-system": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Central-System-Anomalies-UAE.avif"
+ },
+ "care/heroes/cerebral-palsy-program": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Cerebral-Palsy-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cerebral-Palsy-KSA-2.avif"
+ },
+ "care/heroes/geriatric-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Geriatric-Care-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Geriatric-Care-Banner-KSA.avif"
+ },
+ "care/heroes/icu-critical-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/ICU-Critical-Care.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/ICU-Critical-Care-KSA-2.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/UAE/I1 Page banners/ICU-Critical-Care.png"
+  }
+ },
+ "care/heroes/in-school": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Inschool-Care-UAE-2.avif"
+ },
+ "care/heroes/long-term-acute-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Long-Term-Acute-Care-AUE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Long-Term-Acute-Care-Banner-KSA.avif"
+ },
+ "care/heroes/long-term-cardiac": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/LOng-Term-Cardiac-Anomalies-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Long-Term-Cardiac-Anomalies-Banner-KSA.avif"
+ },
+ "care/heroes/long-term-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Long-Term-Care-2-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Long-Term-Care-Banner-KSA.avif"
+ },
+ "care/heroes/long-term-care-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Long-Term-Care-UAE-1.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Long-Term-Care-2-Banner-KSA.avif"
+ },
+ "care/heroes/long-term-ventilated-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Long-Term-Ventilated-Care-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Long-term-VVentilated-Care-Banner-KSA-1.avif"
+ },
+ "care/heroes/mechanical-ventilation": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Ventilated-Patients-Care-UAE.avif"
+ },
+ "care/heroes/musculoskeletal-rehabilitation": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Musculoskeletal-Rehabilitation-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Musculoskeletal-Rehab-Banner-KSA.avif",
+  "unfade": {
+   "global": "restore",
+   "sa": "restore"
+  }
+ },
+ "care/heroes/neuro-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Neurorehabilitation-UAE-1.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Neurorhabilitation-Banner-KSA.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Neurorehabilitation.png"
+  }
+ },
+ "care/heroes/neuromuscular-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Neuromuscular-Rehabilitation-UAE-Ped.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Neuromuscular-Rehab-banner-KSA.avif"
+ },
+ "care/heroes/occupational-therapy": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Occupational-Therapy-UAE-Inner-Banner.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Occupational-Therapy-Banner-KSA.avif"
+ },
+ "care/heroes/outpatient": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Outpatient-Care-UAE-2.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Outpatient-Care-Banner-KSA-1.avif"
+ },
+ "care/heroes/paediatric-post-acute-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Post-Acute-Pediatic-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Post-Acute-Pediatric-Banner-KSA-1.avif"
+ },
+ "care/heroes/paediatric-transitional": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Pediatric-Transitional-Care-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Pediatric-Transitional-Care-Banner-KSA.avif"
+ },
+ "care/heroes/palliative-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Palliative-Care-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Palliative-Care-Banner-KSA.avif"
+ },
+ "care/heroes/pediatric-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Pediatric-Outpatient-UAE.avif"
+ },
+ "care/heroes/pediatric-long-term-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Pediatric-Long-Term-Care-UAE.avif"
+ },
+ "care/heroes/pediatric-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Pediatric-Care-UAE.avif"
+ },
+ "care/heroes/physical-medicine-rehab-care": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/PMNR-Banner-UAE.avif"
+ },
+ "care/heroes/physiotherapy": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Physiotherapy-Banner-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Physiotherapy-Banner-KSA-1.avif"
+ },
+ "care/heroes/post-surgical-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Post-Surgical-Rehabilitation-UAE-1.avif",
+  "ae": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Post-Surgical-Rehabilitation-UAE-1.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Post-Surgical-Rehabilitation-Banner-KSA.avif"
+ },
+ "care/heroes/pulmonary-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Pulmonary-Rehabilitation-Pediatric-UAE.avif"
+ },
+ "care/heroes/road-traffic-accident-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Road-Traffic-Accident-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Road-Traffic-Accident-Rehabilitation-KSA.avif"
+ },
+ "care/heroes/speech-language-rehab": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Speech-and-Language-Pediatric-UAE.avif"
+ },
+ "care/heroes/speech-language-therapy": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Speech-Language-Therapy-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Speech-Language-THerapy-Banner-KSA.avif"
+ },
+ "care/heroes/spinal-cord-injury-rehabilitation": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Spinal-Cord-Rehabilitation-UAE-1.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Spinal-Cord-Rehabilitation-Banner-KSA.avif"
+ },
+ "care/heroes/stroke-rehabilitation": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Stroke-Rehabilitation-UAE-1.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Stroke-Rehabilitation-Banner-KSA-1.avif",
+  "unfade": {
+   "global": "restore",
+   "sa": "restore"
+  }
+ },
+ "care/heroes/traumatic-brain-injury-rehabilitation": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Traumatic-Brain-Injury-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Traumatic-Brain-Injury-KSA.avif"
+ },
+ "care/heroes/weaning-program": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/VEntilation-Weaning-Program-UAE.avif"
+ },
+ "careers/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Career-Hub-Global-1.avif",
+  "sa": "crop"
+ },
+ "conditions/acquired-brain-injury": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Acquired-Brain-Injury.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Acquired-Brain-Injury.png",
+   "green": true,
+   "solid": true
+  }
+ },
+ "conditions/amputation-prosthetic-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Amputation-Prosthetic-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Amputation-Prosthetic-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/back-pain-lumbar-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Back-Pain-Lumbar-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Back-Pain-Lumbar-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/banner": {
+  "global": "crop"
+ },
+ "conditions/epilepsy": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Epilepsy.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Epilepsy.png",
+   "green": true
+  }
+ },
+ "conditions/fracture-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Fracture-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Fracture-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/guillain-barre-syndrome": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Guillain-Barre-Syndrome.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Guillain-Barre-Syndrome.png",
+   "green": true
+  }
+ },
+ "conditions/hip-fracture-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Hip-Fracture-Femoral-Neck-Fracture-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/hip-knee-replacement-recovery": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Hip-Knee-Replacement-Recovery.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Hip-Knee-Replacement-Recovery.png",
+   "green": true
+  }
+ },
+ "conditions/knee-ligament-cartilage-injuries": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Knee-Ligament-Cartilage-Injuries.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Knee-Ligament-Cartilage-Injuries.png",
+   "green": true
+  }
+ },
+ "conditions/motor-neuron-diseases": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Motor-Neuron-Diseases.avif"
+ },
+ "conditions/multiple-sclerosis": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Multiple-Sclerosis.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Multiple-Sclerosis.png",
+   "green": true,
+   "solid": true
+  }
+ },
+ "conditions/musculoskeletal-orthopaedic-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Musculoskeletal-Orthopedic-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Musculoskeletal-Orthopedic-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/neck-pain-cervical-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Neck-Pain-Cervical-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Neck-Pain-Cervical-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/parkinsons-disease": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Parkinsons-Disease.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Parkinsons-Disease.png",
+   "green": true
+  }
+ },
+ "conditions/shoulder-rotator-cuff-rehabilitation": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Shoulder-Injury-Rotator-Cuff-Rehabilitation.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Shoulder-Injury-Rotator-Cuff-Rehabilitation.png",
+   "green": true
+  }
+ },
+ "conditions/spinal-cord-injury": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Spinal-Cord-Injury.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Spinal-Cord-Injury.png",
+   "green": true
+  }
+ },
+ "conditions/stroke-rehabilitation": {
+  "global": "crop",
+  "unfade": {
+   "global": "figma"
+  }
+ },
+ "conditions/tennis-elbow": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Tennis-Elbow.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/Global/I5 Condition page banners/Tennis-Elbow.png",
+   "green": true
+  }
+ },
+ "conditions/traumatic-brain-injury": {
+  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Chiropractic-Therapy-KSA-1.avif"
+ },
+ "contact-page/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Contact-Us-Global.avif"
+ },
+ "doctors-page/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Find-a-Doctor-Banner.avif"
+ },
+ "faq/hero": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/FAQs-Cambridge-Hospital.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/FAQs-Cambridge-Hospital-KSA.avif"
+ },
+ "forms/feedback-hero": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Your-Opinion-Matters-Global.avif",
+  "sa": "crop"
+ },
+ "hero/banner3": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Cambridge-Hospital-Restoring-Hope-Enabling-Life.avif",
+  "ae": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Restoring-Hope-Enabling-Life-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Restoring-Hope-Enabling-Life-KSA-1.avif"
+ },
+ "hospital-detail/banner-abu-dhabi": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/06/Cambridge-Hospital-Abu-Dhabi.avif"
+ },
+ "hospital-detail/banner-al-ain": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Cambridge-Hospital-Al-Ain-UAE.avif"
+ },
+ "hospital-detail/banner-al-khobar": {
+  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Al-Khobar.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/KSA/Other - Other website images/Cambridge-Hospital-Al-Khobar-KSA.png"
+  }
+ },
+ "hospital-detail/banner-al-mudeef-abu-dhabi": {
+  "global": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Al-Mudeef-Center-UAE.avif"
+ },
+ "hospital-detail/banner-dhahran": {
+  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Dhahran.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/KSA/Other - Other website images/Cambridge-Hospital-Dhahran-KSA-1.png"
+  }
+ },
+ "hospital-detail/banner-jeddah": {
+  "global": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Cambridge-Hospital-Jeddah.avif"
+ },
+ "insurance-page/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Insurance-Providers-Cambridge-Hospital.avif",
+  "ae": "docs/cambridge-images-live/ae/wp-content/uploads/sites/2/2026/07/Insurance-UAE.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Insurance-KSA-2.avif",
+  "unfade": {
+   "ae": "restore",
+   "sa": "restore"
+  }
+ },
+ "international/banner": {
+  "global": "crop",
+  "sa": "crop",
+  "unfade": {
+   "sa": "restore"
+  }
+ },
+ "media-hub/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Media-Hub.avif"
+ },
+ "patient-hub/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Patient-Hub-Global.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Patient-Hub-Cambridge-Hospital-KSA.avif"
+ },
+ "refer/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Refer-a-Patient-Global-1.avif"
+ },
+ "testimonials-page/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/06/Patient-Testimonials-1.avif",
+  "sa": "crop",
+  "unfade": {
+   "sa": "restore"
+  }
+ },
+ "who-we-are/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Who-We-Are-Global.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Who-We-Are-Banner-KSA-2.avif"
+ },
+ "why/banner": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Why-Cambridge-Global.avif",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Why-Cambridge-Banner-KSA-1.avif"
+ },
+ "calculators/bmi": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/BMI-Calcualtor.png"
+ },
+ "calculators/heart-age": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Heart-Age-Calculator.avif"
+ },
+ "calculators/lung-health": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Lung-HEalth-Calculator-1-1.png"
+ },
+ "calculators/stroke-risk": {
+  "global": "docs/cambridge-images-live/wp-content/uploads/2026/07/Srroke-Risk-Calculator.avif"
+ },
+ "care/heroes/home-healthcare": {
+  "global": "crop",
+  "sa": "docs/cambridge-images-live/sa/wp-content/uploads/sites/3/2026/07/Home-Health-Care-Banner-KSA.avif",
+  "hd": {
+   "src": "docs/client-assets/website-images-oct14/UAE/I2-R8 Hospital photos & gallery/Home-Healthcare.png"
+  }
+ },
+ "conditions/neurorehabilitation": {
+  "global": "docs/client-assets/I5 Banners - condition pages/I5_Neurorehabilitation.png",
+  "unfade": {
+   "global": "restore"
+  }
+ }
+}

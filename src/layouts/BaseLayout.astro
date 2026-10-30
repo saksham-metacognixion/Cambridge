@@ -1,9 +1,13 @@
 ---
 import '../styles/global.css';
 import fs from 'node:fs';
-import { DESIGN_W, TARGET_W } from '../lib/scale';
+import { DESIGN_W, TARGET_W, MAX_W_CSS } from '../lib/scale';
 import { urlFor, type Edition } from '../lib/editions';
 import { absolute, alternates, ogLocale, INDEXABLE } from '../lib/seo';
+import { allRoutes } from '../lib/routes';
+import { content } from '../lib/content';
+import { pages as seoPages } from '../data/seo.json';
+import callButton from '../data/call-button.json';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 import Modals from '../components/forms/Modals.astro';
 
@@ -14,11 +18,33 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  /** edition ids where this page exists, when not all 6 (hospital pages: Global + own region) */
+  editionsWithPage?: string[];
+  /** false = no hreflang links (404 page) */
+  alternates?: boolean;
+  /** robots directive for this page (404: "noindex, nofollow"); staging adds noindex everywhere anyway */
+  robots?: string;
 }
 
-const { edition, path, title, description, ogImage } = Astro.props;
+const { edition, path, ogImage, alternates: withAlternates = true, robots } = Astro.props;
+// Live-site SEO (src/data/seo.json, keyed by page URL): the live <title> / meta description win over the template's own.
+const seo = (seoPages as Record<string, { title?: string; description?: string }>)[urlFor(edition, path)];
+const title = seo?.title || Astro.props.title;
+const description = seo?.description || Astro.props.description;
+// Editions that have this page: the page's own list, else the route registry's (src/lib/routes.ts: hospital pages, region-only
+// care services, bug 047), so hreflang never points at a page that is not built.
+const editionsWithPage = Astro.props.editionsWithPage ?? allRoutes().find((r) => r.path === path.replace(/^\/+|\/+$/g, ''))?.editions;
+const robotsContent = !INDEXABLE ? 'noindex, nofollow' : robots;
 const canonical = absolute(urlFor(edition, path));
 const ogImageUrl = ogImage ? absolute(ogImage) : undefined;
+
+// Floating "Call us" button (Task 205): the region's number from src/data/call-button.json (client-confirmed 19 Oct 2026).
+// null = an inert placeholder button (aria-disabled, no tel: link, no action), never a guessed number.
+const header = content('layout/header', edition.locale);
+const callPhone = (callButton.phone as Record<string, string | null>)[edition.region];
+const callHref = callPhone ? `tel:${callPhone.replace(/[^+\d]/g, '')}` : null;
+// The handset glyph of the site's own phone icon (src/assets/contact-page/icon-phone.svg), inlined so it takes currentColor.
+const PHONE_PATH = 'M18.9453 14.1846V17.0367C18.9463 17.3015 18.892 17.5636 18.7857 17.8062C18.6794 18.0488 18.5236 18.2665 18.3281 18.4455C18.1326 18.6245 17.9018 18.7608 17.6505 18.8456C17.3991 18.9305 17.1328 18.962 16.8686 18.9381C13.9373 18.6203 11.1216 17.6206 8.64774 16.0195C6.34612 14.5598 4.39474 12.6123 2.93219 10.3152C1.32229 7.83505 0.320414 5.01125 0.00773191 2.07263C-0.0160729 1.80973 0.0152335 1.54476 0.0996574 1.2946C0.184081 1.04443 0.319773 0.814551 0.498094 0.619592C0.676415 0.424632 0.893457 0.268865 1.1354 0.162208C1.37735 0.0555511 1.63889 0.000340763 1.90339 9.21731e-05H4.76117C5.22347 -0.00444882 5.67165 0.158935 6.02217 0.459789C6.3727 0.760644 6.60165 1.17844 6.66635 1.6353C6.78697 2.54804 7.01067 3.44424 7.33317 4.30679C7.46133 4.64707 7.48907 5.01688 7.41309 5.37241C7.33712 5.72794 7.16062 6.05429 6.9045 6.31277L5.69471 7.52017C7.05078 9.9003 9.0254 11.871 11.4103 13.2244L12.6201 12.017C12.8791 11.7614 13.206 11.5852 13.5623 11.5094C13.9185 11.4336 14.2891 11.4613 14.63 11.5892C15.4943 11.911 16.3923 12.1343 17.3068 12.2547C17.7695 12.3198 18.1921 12.5524 18.4942 12.9083C18.7963 13.2641 18.9569 13.7184 18.9453 14.1846Z';
 
 // Preload the main font only when the file has actually been added (avoids a 404 preload while Gotham is pending).
 const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
@@ -29,13 +55,18 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Location redirect + edition choice (CountryPopupLogic): first in <head>, so a UAE / KSA visitor leaves a Global page
+         before it is painted (user decision, 20 Oct 2026). -->
+    <CountryPopupLogic />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
+    {robotsContent && <meta name="robots" content={robotsContent} />}
     <link rel="canonical" href={canonical} />
-    {alternates(path).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {withAlternates && alternates(path, editionsWithPage).map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <!-- Tab icon on every page = the logo mark (public/favicon.*, built from src/assets/header/logo.svg) -->
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -46,7 +77,13 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <meta name="twitter:card" content="summary_large_image" />
 
     {hasMainFont && <link rel="preload" href="/fonts/Gotham-Book.woff2" as="font" type="font/woff2" crossorigin />}
-    <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W}}`}></style>
+    <!-- Arabic pages: the body face (GE SS Two Medium, global.css) is preloaded too, so its text swaps in before the hero settles (CLS seen on /ae/ar in the 9 Oct 2026 performance audit). -->
+    {edition.dir === 'rtl' && <link rel="preload" href="/fonts/GESSTwoMedium.woff2" as="font" type="font/woff2" crossorigin />}
+    <!-- Bug 130 interim (15 Oct 2026): Arabic running text is Tajawal Regular ("GE SS Two Body" 400, global.css), so it is the main body face on RTL pages. -->
+    {edition.dir === 'rtl' && <link rel="preload" href="/fonts/Tajawal-Regular-arabic.woff2" as="font" type="font/woff2" crossorigin />}
+    <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W};--max-w:${MAX_W_CSS}}`}></style>
+    <!-- Scroll entrances (data-aos, scripts/aos.ts) are armed before first paint, so nothing flashes; no JS = all visible. -->
+    <script is:inline>"IntersectionObserver"in window&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&document.documentElement.classList.add("aos")</script>
     <slot name="head" />
   </head>
   <body>
@@ -54,6 +91,34 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
       <slot />
       <Modals edition={edition} />
     </div>
-    <CountryPopupLogic />
+    <!-- Cookie consent banner mounts here once the analytics decision is made (docs/open-decisions.md B9); nothing is built yet.
+         The legal pages (privacy, cookies) are at PAGE_PATHS.privacyPolicy / cookiePolicy. -->
+    <div id="consent-banner" hidden></div>
+    <!-- "Go to top" = the live Blocksy back-to-top button (AN1, 9 Oct 2026): fixed at the bottom inline end, shown once the page is
+         scrolled (scripts/back-to-top.ts), smooth scroll to the top on click; not on phones (live .ct-hidden-sm). -->
+    <!-- "Call us" (Task 205, 19 Oct 2026): fixed above "Go to top" (same size / colours / shadow, global.css .to-call), always shown,
+         phones included. A tel: link to the region's client-confirmed number (src/data/call-button.json, 19 Oct 2026);
+         a region without a number gets a disabled placeholder button with no action. -->
+    {callHref ? (
+      <a class="to-call" href={callHref} aria-label={header.callUs}>
+        <svg width="12" height="12" viewBox="0 0 18.9459 18.9459" aria-hidden="true" focusable="false"><path d={PHONE_PATH} /></svg>
+      </a>
+    ) : (
+      <button type="button" class="to-call" aria-label={header.callUs} aria-disabled="true" data-call-pending>
+        <svg width="12" height="12" viewBox="0 0 18.9459 18.9459" aria-hidden="true" focusable="false"><path d={PHONE_PATH} /></svg>
+      </button>
+    )}
+    <button type="button" class="to-top" data-to-top aria-label={header.toTop}>
+      <svg width="12" height="12" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2.3 15.2L10 7.5l7.7 7.6c.6.7 1.2.7 1.8 0 .6-.6.6-1.3 0-1.9l-8.6-8.6c-.2-.3-.5-.4-.9-.4s-.7.1-.9.4L.5 13.2c-.6.6-.6 1.2 0 1.9.6.8 1.2.7 1.8.1z" /></svg>
+    </button>
+    <script>
+      // Mouse drag on every horizontal row (.hscroll), all pages.
+      import '../scripts/drag-scroll';
+      // Scroll entrances ([data-aos]), all pages.
+      import '../scripts/aos';
+      // Sticky header state + "Go to top" button (AN1, animation audit 9 Oct 2026).
+      import '../scripts/sticky-header';
+      import '../scripts/back-to-top';
+    </script>
   </body>
 </html>

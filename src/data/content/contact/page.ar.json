@@ -1,1 +1,69 @@
-{}
+{
+  "_note": "Website Content - Suhad 4/Navigation Bar/AR - Contact us.docx (14 Oct 2026 export): hero.text = the line under the banner title, intro = the line under the 'Contact Us' form heading, text exactly as in the document (user request 14 Oct 2026; the phone at the top = the document's suggestion, rendered from details.phone). Live site Arabic (WordPress export docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), text exactly as on the live site (page 19053 'اتصل بنا'): hero, heading, website link, CTA band. Form labels: no Arabic (the live forms are a plugin, not exported). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"Contact Cambridge Hospital\" = WP export Contact page 76 -> 19053 (attribute); \"Open in Google Maps\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (\"Open in Google Maps\" button). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): \"E-mail\" / \"Email\" = the term in home/contact.ar.json emailLabel \"البريد الإلكتروني:\" (live Arabic, WordPress export page 19153).",
+  "meta": {
+    "title": "اتصل بنا | مستشفى كامبريدج",
+    "description": "تواصل مع فريقنا من المتخصصين ذوي الخبرة في منشآتنا في الإمارات العربية المتحدة والسعودية. سواء كان لديك أسئلة أو تحتاج إلى مساعدة، نحن هنا لمساعدتك."
+  },
+  "hero": {
+    "title": [
+      "نحن هنا لمساعدتكم"
+    ],
+    "ariaLabel": "تواصل مع مستشفى كامبريدج",
+    "text": "فريقنا على استعداد للإجابة عن استفساراتكم وتقديم المساعدة التي تحتاجون إليها."
+  },
+  "heading": "تواصل معنا",
+  "details": {
+    "web": "www.cambridgehospital.com/ar",
+    "webHref": "https://cambridgehospital.com/ar/",
+    "byRegion": {
+      "global": {
+        "phones": [
+          {
+            "phone": "800-692273",
+            "phoneHref": "800692273",
+            "label": "الإمارات"
+          },
+          {
+            "phone": "9200-13122",
+            "phoneHref": "920013122",
+            "label": "السعودية"
+          }
+        ]
+      }
+    },
+    "_byRegionNote": "Global banner (client, 16 Oct 2026): both numbers; the Arabic labels are the Home contact card's approved words (home/contact.ar.json), nothing new translated."
+  },
+  "recovery": {
+    "ariaLabel": "تعافيكُم غايتنا",
+    "text": "في مستشفى كامبريدج، تتكامل خدمات الرعاية المقدمة للمرضى المقيمين في المستشفى، ومرضى العيادات الخارجية، إلى جانب الرعاية المنزلية والرعاية داخل المدارس، لتلبية احتياجات المرضى في مختلف بيئات الرعاية ومراحل التعافي.",
+    "lead": "تعافيكُم غايتنا،",
+    "emphasis": [
+      " ونرافقكم في كل خطوة على امتداد",
+      "رحلة التعافي."
+    ],
+    "tiles": [
+      {
+        "label": "احجز موعد"
+      },
+      {
+        "label": "ابحث عن طبيب"
+      },
+      {
+        "label": "إحالة مريض"
+      },
+      {
+        "label": "أرسل استفسار"
+      }
+    ],
+    "_note": "Box text (13 Oct 2026) = Website Content - Suhad 4/About Cambridge/AR- Main Page.docx, closing banner (the English is the same on every page that shows this box)."
+  },
+  "map": {
+    "directions": "فتح الموقع في خرائط Google"
+  },
+  "form": {
+    "_note": "Bug 114 (reopened 14 Oct 2026): labelColumn = desktop label column in Figma units (English 88). The Arabic e-mail label is 113.2 wide (155px at 1440), + the English 6.8 gap after the longest label (Full Name*) = 120. Re-check with .astro/qc-bug114r/measure.mjs when the remaining Arabic labels arrive (docs/arabic-missing-strings.md).",
+    "labelColumn": 120,
+    "emailLabel": "البريد الإلكتروني*"
+  },
+  "intro": "يرجى تعبئة النموذج أدناه، وسيتولى فريقنا متابعة طلبكم والتواصل معكم في أقرب وقت ممكن."
+}

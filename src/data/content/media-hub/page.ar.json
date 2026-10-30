@@ -1,1 +1,49 @@
-{}
+{
+  "_note": "Hero, 'Explore' heading, category names and newsletter = Website Content - Suhad 2/Navigation Bar/AR - Media Hub.docx (7 Oct 2026), text exactly as in the document; meta.description = the hero text (as in English). 'What's Trending', button and newsletter heading split: live site Arabic (WordPress export, 6 Oct 2026). Tile titles (post titles) and the select label: no Arabic (English shown). Bug 075 (9 Oct 2026, R053, approved Arabic reused, not translated): \"SUBSCRIBE\" = saved live Arabic hospital pages docs/cambridge-images-live/_pages/{ae,sa}/ar/hospitals/*.html (newsletter button). Mobile QA H2 (13 Oct 2026, approved Arabic reused, not translated): newsletter \"Email\" = the same newsletter field in the footer (layout/footer.ar.json).",
+  "meta": {
+    "title": "المركز الإعلامي | مستشفى كامبريدج",
+    "description": "اطّلع على أحدث أخبار مستشفى كامبريدج، والرؤى الطبية، وأبرز المستجدات في قطاع الرعاية الصحية وما حوله."
+  },
+  "hero": {
+    "title": [
+      "ابق على اطلاع مع كامبريدج"
+    ],
+    "text": "اطّلع على أحدث أخبار مستشفى كامبريدج، والرؤى الطبية، وأبرز المستجدات في قطاع الرعاية الصحية وما حوله.",
+    "button": {
+      "label": "احجز موعد"
+    },
+    "ariaLabel": "ابق على اطلاع مع كامبريدج"
+  },
+  "explore": {
+    "title": "استكشف محتوى مركزنا الإعلامي",
+    "categories": [
+      {
+        "label": "الفعاليات"
+      },
+      {
+        "label": "المؤتمرات"
+      },
+      {
+        "label": "البيانات الصحفية"
+      },
+      {
+        "label": "المقالات الصحية"
+      }
+    ]
+  },
+  "latest": {
+    "eyebrow": "ما هو الرائج",
+    "title": "أحدث المدونات والمنشورات",
+    "seeMore": "عرض المزيد"
+  },
+  "newsletter": {
+    "heading": [
+      "اشترك في ",
+      "نشرتنا الإخبارية"
+    ],
+    "text": "اشترك في نشرتنا الإخبارية لتصلك أحدث أخبارنا ومستجداتنا، والمزيد!",
+    "submit": "اشترك",
+    "emailLabel": "بريدك الإلكتروني",
+    "emailPlaceholder": "بريدك الإلكتروني"
+  }
+}

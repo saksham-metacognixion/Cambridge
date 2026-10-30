@@ -1,0 +1,11 @@
+{
+  "scroll": {
+    "label": "Pages",
+    "dot": "Go to page {n}"
+  },
+  "slides": {
+    "label": "Photos",
+    "dot": "Go to photo {n}"
+  },
+  "_note": "Accessible names of the shared pagination dots (src/components/shared/Pagination.astro): the <nav> label and each dot's label ({n} = page / photo number, {total} = count). Not in Figma (its dots are static dividers); wording flagged for Pramod with the other UI texts (docs/open-decisions.md WP2)."
+}

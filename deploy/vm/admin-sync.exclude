@@ -1,0 +1,16 @@
+# rsync excludes for deploy/vm/deploy.sh when it copies the source into the dashboard's checkout (/srv/cambridge/admin).
+# The content the dashboard owns (src/content, news / author images) is synced separately and never overwritten.
+.git
+node_modules
+dist
+dist-server
+dist-admin
+.admin
+.astro
+.env
+.dev.vars
+figma-cache
+docs
+src/content
+src/assets/news
+src/assets/authors

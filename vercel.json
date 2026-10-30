@@ -1075,16 +1075,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/patient-hub/find-a-doctor/mohammed-halawani",
-      "destination": "/ae/patient-hub/find-a-doctor/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/patient-hub/find-a-doctor/mohammed-halawani/",
-      "destination": "/ae/patient-hub/find-a-doctor/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/patient-hub/find-a-doctor/saleh-damnan",
       "destination": "/ae/patient-hub/find-a-doctor/",
       "statusCode": 301
@@ -1872,16 +1862,6 @@
     {
       "source": "/ae/ar/care/home-healthcare/",
       "destination": "/ae/ar/care/homecare/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/patient-hub/find-a-doctor/mohammed-halawani",
-      "destination": "/ae/ar/patient-hub/find-a-doctor/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/patient-hub/find-a-doctor/mohammed-halawani/",
-      "destination": "/ae/ar/patient-hub/find-a-doctor/",
       "statusCode": 301
     },
     {
@@ -3485,6 +3465,66 @@
       "statusCode": 301
     },
     {
+      "source": "/patient-hub/find-a-doctor/mohammed-halawani",
+      "destination": "/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/patient-hub/find-a-doctor/mohammed-halawani/",
+      "destination": "/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-hub/find-a-doctor/mohammed-halawani",
+      "destination": "/ar/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-hub/find-a-doctor/mohammed-halawani/",
+      "destination": "/ar/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/patient-hub/find-a-doctor/mohammed-halawani",
+      "destination": "/sa/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/patient-hub/find-a-doctor/mohammed-halawani/",
+      "destination": "/sa/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/patient-hub/find-a-doctor/mohammed-halawani",
+      "destination": "/sa/ar/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/patient-hub/find-a-doctor/mohammed-halawani/",
+      "destination": "/sa/ar/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/patient-hub/find-a-doctor/mohammed-halawani",
+      "destination": "/sa/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/patient-hub/find-a-doctor/mohammed-halawani/",
+      "destination": "/sa/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/patient-hub/find-a-doctor/mohammed-halawani",
+      "destination": "/sa/ar/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/patient-hub/find-a-doctor/mohammed-halawani/",
+      "destination": "/sa/ar/leadership/mohammed-halawani/",
+      "statusCode": 301
+    },
+    {
       "source": "/leadership",
       "destination": "/about/meet-the-team/",
       "statusCode": 301
@@ -3501,6 +3541,16 @@
     },
     {
       "source": "/leadership/azeem-anwar/",
+      "destination": "/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/leadership/wael-alsayed",
+      "destination": "/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/leadership/wael-alsayed/",
       "destination": "/about/meet-the-team/",
       "statusCode": 301
     },
@@ -3535,6 +3585,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/leadership/wael-alsayed",
+      "destination": "/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/leadership/wael-alsayed/",
+      "destination": "/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/leadership/dr-mohammed-halawani",
       "destination": "/ar/leadership/mohammed-halawani/",
       "statusCode": 301
@@ -3565,6 +3625,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ae/leadership/wael-alsayed",
+      "destination": "/ae/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/leadership/wael-alsayed/",
+      "destination": "/ae/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
       "source": "/ae/leadership/mohammed-halawani",
       "destination": "/ae/about/meet-the-team/",
       "statusCode": 301
@@ -3585,22 +3655,22 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/leadership/mohammed-alhayyan",
-      "destination": "/ae/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/leadership/mohammed-alhayyan/",
-      "destination": "/ae/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/leadership/amal-al-hanwa",
       "destination": "/ae/about/meet-the-team/",
       "statusCode": 301
     },
     {
       "source": "/ae/leadership/amal-al-hanwa/",
+      "destination": "/ae/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/leadership/mohammed-alhayyan",
+      "destination": "/ae/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/leadership/mohammed-alhayyan/",
       "destination": "/ae/about/meet-the-team/",
       "statusCode": 301
     },
@@ -3625,16 +3695,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/leadership/wael-alsayed",
-      "destination": "/ae/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/leadership/wael-alsayed/",
-      "destination": "/ae/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/ar/leadership",
       "destination": "/ae/ar/about/meet-the-team/",
       "statusCode": 301
@@ -3651,6 +3711,16 @@
     },
     {
       "source": "/ae/ar/leadership/azeem-anwar/",
+      "destination": "/ae/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/leadership/wael-alsayed",
+      "destination": "/ae/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/leadership/wael-alsayed/",
       "destination": "/ae/ar/about/meet-the-team/",
       "statusCode": 301
     },
@@ -3675,22 +3745,22 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/ar/leadership/mohammed-alhayyan",
-      "destination": "/ae/ar/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/leadership/mohammed-alhayyan/",
-      "destination": "/ae/ar/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
       "source": "/ae/ar/leadership/amal-al-hanwa",
       "destination": "/ae/ar/about/meet-the-team/",
       "statusCode": 301
     },
     {
       "source": "/ae/ar/leadership/amal-al-hanwa/",
+      "destination": "/ae/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/leadership/mohammed-alhayyan",
+      "destination": "/ae/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ae/ar/leadership/mohammed-alhayyan/",
       "destination": "/ae/ar/about/meet-the-team/",
       "statusCode": 301
     },
@@ -3715,16 +3785,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ae/ar/leadership/wael-alsayed",
-      "destination": "/ae/ar/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ae/ar/leadership/wael-alsayed/",
-      "destination": "/ae/ar/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
       "source": "/sa/leadership",
       "destination": "/sa/about/meet-the-team/",
       "statusCode": 301
@@ -3741,6 +3801,16 @@
     },
     {
       "source": "/sa/leadership/azeem-anwar/",
+      "destination": "/sa/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/leadership/wael-alsayed",
+      "destination": "/sa/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/leadership/wael-alsayed/",
       "destination": "/sa/about/meet-the-team/",
       "statusCode": 301
     },
@@ -3815,6 +3885,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sa/leadership/hamzeh-abu-salha",
+      "destination": "/sa/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/leadership/hamzeh-abu-salha/",
+      "destination": "/sa/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
       "source": "/sa/leadership/wasim-zubair",
       "destination": "/sa/about/meet-the-team/",
       "statusCode": 301
@@ -3855,16 +3935,6 @@
       "statusCode": 301
     },
     {
-      "source": "/sa/leadership/hamzeh-abu-salha",
-      "destination": "/sa/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/leadership/hamzeh-abu-salha/",
-      "destination": "/sa/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
       "source": "/sa/ar/leadership",
       "destination": "/sa/ar/about/meet-the-team/",
       "statusCode": 301
@@ -3881,6 +3951,16 @@
     },
     {
       "source": "/sa/ar/leadership/azeem-anwar/",
+      "destination": "/sa/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/leadership/wael-alsayed",
+      "destination": "/sa/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/leadership/wael-alsayed/",
       "destination": "/sa/ar/about/meet-the-team/",
       "statusCode": 301
     },
@@ -3955,6 +4035,16 @@
       "statusCode": 301
     },
     {
+      "source": "/sa/ar/leadership/hamzeh-abu-salha",
+      "destination": "/sa/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sa/ar/leadership/hamzeh-abu-salha/",
+      "destination": "/sa/ar/about/meet-the-team/",
+      "statusCode": 301
+    },
+    {
       "source": "/sa/ar/leadership/wasim-zubair",
       "destination": "/sa/ar/about/meet-the-team/",
       "statusCode": 301
@@ -3995,16 +4085,6 @@
       "statusCode": 301
     },
     {
-      "source": "/sa/ar/leadership/hamzeh-abu-salha",
-      "destination": "/sa/ar/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/ar/leadership/hamzeh-abu-salha/",
-      "destination": "/sa/ar/about/meet-the-team/",
-      "statusCode": 301
-    },
-    {
       "source": "/ar/cambridge-hospital",
       "destination": "/ar/",
       "statusCode": 301
@@ -4012,346 +4092,6 @@
     {
       "source": "/ar/cambridge-hospital/",
       "destination": "/ar/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/16th-hot-topics-in-pediatrics-conference-and-exhibition",
-      "destination": "/ar/media-hub/16th-hot-topics-in-pediatrics-conference-and-exhibition/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/16th-hot-topics-in-pediatrics-conference-and-exhibition/",
-      "destination": "/ar/media-hub/16th-hot-topics-in-pediatrics-conference-and-exhibition/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/17th-seha-international-pediatric-conference",
-      "destination": "/ar/media-hub/17th-seha-international-pediatric-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/17th-seha-international-pediatric-conference/",
-      "destination": "/ar/media-hub/17th-seha-international-pediatric-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/1st-ehs-international-critical-care-organ-donation-and-transplant-conference",
-      "destination": "/ar/media-hub/1st-ehs-international-critical-care-organ-donation-and-transplant-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/1st-ehs-international-critical-care-organ-donation-and-transplant-conference/",
-      "destination": "/ar/media-hub/1st-ehs-international-critical-care-organ-donation-and-transplant-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/1st-seha-national-corporate-case-management-symposium",
-      "destination": "/ar/media-hub/1st-seha-national-corporate-case-management-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/1st-seha-national-corporate-case-management-symposium/",
-      "destination": "/ar/media-hub/1st-seha-national-corporate-case-management-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/20th-emirates-critical-care-conference",
-      "destination": "/ar/media-hub/20th-emirates-critical-care-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/20th-emirates-critical-care-conference/",
-      "destination": "/ar/media-hub/20th-emirates-critical-care-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference",
-      "destination": "/ar/media-hub/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
-      "destination": "/ar/media-hub/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference",
-      "destination": "/ar/media-hub/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
-      "destination": "/ar/media-hub/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/5th-international-patient-experience-symposium",
-      "destination": "/ar/media-hub/5th-international-patient-experience-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/5th-international-patient-experience-symposium/",
-      "destination": "/ar/media-hub/5th-international-patient-experience-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/7th-international-physical-and-rehabilitation-medicine-conference",
-      "destination": "/ar/media-hub/7th-international-physical-and-rehabilitation-medicine-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/7th-international-physical-and-rehabilitation-medicine-conference/",
-      "destination": "/ar/media-hub/7th-international-physical-and-rehabilitation-medicine-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation",
-      "destination": "/ar/media-hub/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
-      "destination": "/ar/media-hub/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/amanat-holdings-acquires-cambridge-hospital",
-      "destination": "/ar/media-hub/amanat-holdings-acquires-cambridge-hospital/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/amanat-holdings-acquires-cambridge-hospital/",
-      "destination": "/ar/media-hub/amanat-holdings-acquires-cambridge-hospital/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/best-of-sccm-critical-care-congress",
-      "destination": "/ar/media-hub/best-of-sccm-critical-care-congress/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/best-of-sccm-critical-care-congress/",
-      "destination": "/ar/media-hub/best-of-sccm-critical-care-congress/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-announces-sar-100-million-jeddah-expansion",
-      "destination": "/ar/media-hub/cambridge-health-group-announces-sar-100-million-jeddah-expansion/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-announces-sar-100-million-jeddah-expansion/",
-      "destination": "/ar/media-hub/cambridge-health-group-announces-sar-100-million-jeddah-expansion/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer",
-      "destination": "/ar/media-hub/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
-      "destination": "/ar/media-hub/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar",
-      "destination": "/ar/media-hub/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar/",
-      "destination": "/ar/media-hub/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership",
-      "destination": "/ar/media-hub/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
-      "destination": "/ar/media-hub/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities",
-      "destination": "/ar/media-hub/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities/",
-      "destination": "/ar/media-hub/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-at-abu-dhabi-global-health-week-2025",
-      "destination": "/ar/media-hub/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
-      "destination": "/ar/media-hub/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-at-the-global-health-exhibition-in-riyadh",
-      "destination": "/ar/media-hub/cambridge-hospital-at-the-global-health-exhibition-in-riyadh/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-at-the-global-health-exhibition-in-riyadh/",
-      "destination": "/ar/media-hub/cambridge-hospital-at-the-global-health-exhibition-in-riyadh/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-expands-its-al-ain-facility",
-      "destination": "/ar/media-hub/cambridge-hospital-expands-its-al-ain-facility/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-expands-its-al-ain-facility/",
-      "destination": "/ar/media-hub/cambridge-hospital-expands-its-al-ain-facility/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae",
-      "destination": "/ar/media-hub/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae/",
-      "destination": "/ar/media-hub/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-jeddah-completes-major-200-bed-expansion",
-      "destination": "/ar/media-hub/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
-      "destination": "/ar/media-hub/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference",
-      "destination": "/ar/media-hub/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference/",
-      "destination": "/ar/media-hub/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-organizes-icu-rehabilitation-symposium",
-      "destination": "/ar/media-hub/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
-      "destination": "/ar/media-hub/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-participates-in-the-tawam-case-management-symposium",
-      "destination": "/ar/media-hub/cambridge-hospital-participates-in-the-tawam-case-management-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-participates-in-the-tawam-case-management-symposium/",
-      "destination": "/ar/media-hub/cambridge-hospital-participates-in-the-tawam-case-management-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-participates-in-whx-dubai-2026",
-      "destination": "/ar/media-hub/cambridge-hospital-participates-in-whx-dubai-2026/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-participates-in-whx-dubai-2026/",
-      "destination": "/ar/media-hub/cambridge-hospital-participates-in-whx-dubai-2026/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation",
-      "destination": "/ar/media-hub/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation/",
-      "destination": "/ar/media-hub/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-sponsors-first-fujairah-icu-symposium",
-      "destination": "/ar/media-hub/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
-      "destination": "/ar/media-hub/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference",
-      "destination": "/ar/media-hub/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference/",
-      "destination": "/ar/media-hub/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-supports-the-mena-rehabilitation-congress",
-      "destination": "/ar/media-hub/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
-      "destination": "/ar/media-hub/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia",
-      "destination": "/ar/media-hub/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia/",
-      "destination": "/ar/media-hub/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs",
-      "destination": "/ar/media-hub/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
-      "destination": "/ar/media-hub/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/emirates-critical-care-conference",
-      "destination": "/ar/media-hub/emirates-critical-care-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/emirates-critical-care-conference/",
-      "destination": "/ar/media-hub/emirates-critical-care-conference/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/young-patient-walks-independently-following-an-intensive-kozyavkin-program",
-      "destination": "/ar/media-hub/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
-      "destination": "/ar/media-hub/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
       "statusCode": 301
     },
     {
@@ -4365,6 +4105,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/16th-hot-topics-in-pediatrics-conference-and-exhibition",
+      "destination": "/ar/media-hub/16th-hot-topics-in-pediatrics-conference-and-exhibition/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/16th-hot-topics-in-pediatrics-conference-and-exhibition/",
+      "destination": "/ar/media-hub/16th-hot-topics-in-pediatrics-conference-and-exhibition/",
+      "statusCode": 301
+    },
+    {
       "source": "/17th-seha-international-pediatric-conference",
       "destination": "/media-hub/17th-seha-international-pediatric-conference/",
       "statusCode": 301
@@ -4372,6 +4122,16 @@
     {
       "source": "/17th-seha-international-pediatric-conference/",
       "destination": "/media-hub/17th-seha-international-pediatric-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/17th-seha-international-pediatric-conference",
+      "destination": "/ar/media-hub/17th-seha-international-pediatric-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/17th-seha-international-pediatric-conference/",
+      "destination": "/ar/media-hub/17th-seha-international-pediatric-conference/",
       "statusCode": 301
     },
     {
@@ -4385,6 +4145,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/1st-ehs-international-critical-care-organ-donation-and-transplant-conference",
+      "destination": "/ar/media-hub/1st-ehs-international-critical-care-organ-donation-and-transplant-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/1st-ehs-international-critical-care-organ-donation-and-transplant-conference/",
+      "destination": "/ar/media-hub/1st-ehs-international-critical-care-organ-donation-and-transplant-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/1st-seha-national-corporate-case-management-symposium",
       "destination": "/media-hub/1st-seha-national-corporate-case-management-symposium/",
       "statusCode": 301
@@ -4392,6 +4162,16 @@
     {
       "source": "/1st-seha-national-corporate-case-management-symposium/",
       "destination": "/media-hub/1st-seha-national-corporate-case-management-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/1st-seha-national-corporate-case-management-symposium",
+      "destination": "/ar/media-hub/1st-seha-national-corporate-case-management-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/1st-seha-national-corporate-case-management-symposium/",
+      "destination": "/ar/media-hub/1st-seha-national-corporate-case-management-symposium/",
       "statusCode": 301
     },
     {
@@ -4405,6 +4185,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/20th-emirates-critical-care-conference",
+      "destination": "/ar/media-hub/20th-emirates-critical-care-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/20th-emirates-critical-care-conference/",
+      "destination": "/ar/media-hub/20th-emirates-critical-care-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference",
       "destination": "/media-hub/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
       "statusCode": 301
@@ -4412,6 +4202,16 @@
     {
       "source": "/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
       "destination": "/media-hub/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference",
+      "destination": "/ar/media-hub/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
+      "destination": "/ar/media-hub/2nd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
       "statusCode": 301
     },
     {
@@ -4425,6 +4225,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference",
+      "destination": "/ar/media-hub/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
+      "destination": "/ar/media-hub/3rd-international-pediatric-neurodisability-and-neurorehabilitation-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/5th-international-patient-experience-symposium",
       "destination": "/media-hub/5th-international-patient-experience-symposium/",
       "statusCode": 301
@@ -4432,6 +4242,16 @@
     {
       "source": "/5th-international-patient-experience-symposium/",
       "destination": "/media-hub/5th-international-patient-experience-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/5th-international-patient-experience-symposium",
+      "destination": "/ar/media-hub/5th-international-patient-experience-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/5th-international-patient-experience-symposium/",
+      "destination": "/ar/media-hub/5th-international-patient-experience-symposium/",
       "statusCode": 301
     },
     {
@@ -4445,6 +4265,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/7th-international-physical-and-rehabilitation-medicine-conference",
+      "destination": "/ar/media-hub/7th-international-physical-and-rehabilitation-medicine-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/7th-international-physical-and-rehabilitation-medicine-conference/",
+      "destination": "/ar/media-hub/7th-international-physical-and-rehabilitation-medicine-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation",
       "destination": "/media-hub/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
       "statusCode": 301
@@ -4452,6 +4282,16 @@
     {
       "source": "/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
       "destination": "/media-hub/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation",
+      "destination": "/ar/media-hub/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
+      "destination": "/ar/media-hub/al-mudeef-centre-achieves-jci-accreditation-following-comprehensive-transformation/",
       "statusCode": 301
     },
     {
@@ -4465,6 +4305,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/amanat-holdings-acquires-cambridge-hospital",
+      "destination": "/ar/media-hub/amanat-holdings-acquires-cambridge-hospital/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/amanat-holdings-acquires-cambridge-hospital/",
+      "destination": "/ar/media-hub/amanat-holdings-acquires-cambridge-hospital/",
+      "statusCode": 301
+    },
+    {
       "source": "/best-of-sccm-critical-care-congress",
       "destination": "/media-hub/best-of-sccm-critical-care-congress/",
       "statusCode": 301
@@ -4472,6 +4322,16 @@
     {
       "source": "/best-of-sccm-critical-care-congress/",
       "destination": "/media-hub/best-of-sccm-critical-care-congress/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/best-of-sccm-critical-care-congress",
+      "destination": "/ar/media-hub/best-of-sccm-critical-care-congress/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/best-of-sccm-critical-care-congress/",
+      "destination": "/ar/media-hub/best-of-sccm-critical-care-congress/",
       "statusCode": 301
     },
     {
@@ -4485,6 +4345,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-health-group-announces-sar-100-million-jeddah-expansion",
+      "destination": "/ar/media-hub/cambridge-health-group-announces-sar-100-million-jeddah-expansion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-health-group-announces-sar-100-million-jeddah-expansion/",
+      "destination": "/ar/media-hub/cambridge-health-group-announces-sar-100-million-jeddah-expansion/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer",
       "destination": "/media-hub/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
       "statusCode": 301
@@ -4492,6 +4362,16 @@
     {
       "source": "/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
       "destination": "/media-hub/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer",
+      "destination": "/ar/media-hub/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
+      "destination": "/ar/media-hub/cambridge-health-group-appoints-wael-abdallah-as-chief-executive-officer/",
       "statusCode": 301
     },
     {
@@ -4505,6 +4385,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar",
+      "destination": "/ar/media-hub/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar/",
+      "destination": "/ar/media-hub/cambridge-health-group-continues-expansion-across-saudi-arabia-with-capacity-increase-at-cambridge-hospital-al-khobar/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership",
       "destination": "/media-hub/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
       "statusCode": 301
@@ -4512,6 +4402,16 @@
     {
       "source": "/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
       "destination": "/media-hub/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership",
+      "destination": "/ar/media-hub/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
+      "destination": "/ar/media-hub/cambridge-health-group-renews-its-kozyavkin-medical-group-partnership/",
       "statusCode": 301
     },
     {
@@ -4525,6 +4425,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities",
+      "destination": "/ar/media-hub/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities/",
+      "destination": "/ar/media-hub/cambridge-hospital-achieves-jci-reaccreditation-across-its-uae-facilities/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-at-abu-dhabi-global-health-week-2025",
       "destination": "/media-hub/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
       "statusCode": 301
@@ -4532,6 +4442,16 @@
     {
       "source": "/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
       "destination": "/media-hub/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-at-abu-dhabi-global-health-week-2025",
+      "destination": "/ar/media-hub/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
+      "destination": "/ar/media-hub/cambridge-hospital-at-abu-dhabi-global-health-week-2025/",
       "statusCode": 301
     },
     {
@@ -4545,6 +4465,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-at-the-global-health-exhibition-in-riyadh",
+      "destination": "/ar/media-hub/cambridge-hospital-at-the-global-health-exhibition-in-riyadh/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-at-the-global-health-exhibition-in-riyadh/",
+      "destination": "/ar/media-hub/cambridge-hospital-at-the-global-health-exhibition-in-riyadh/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-expands-its-al-ain-facility",
       "destination": "/media-hub/cambridge-hospital-expands-its-al-ain-facility/",
       "statusCode": 301
@@ -4552,6 +4482,16 @@
     {
       "source": "/cambridge-hospital-expands-its-al-ain-facility/",
       "destination": "/media-hub/cambridge-hospital-expands-its-al-ain-facility/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-expands-its-al-ain-facility",
+      "destination": "/ar/media-hub/cambridge-hospital-expands-its-al-ain-facility/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-expands-its-al-ain-facility/",
+      "destination": "/ar/media-hub/cambridge-hospital-expands-its-al-ain-facility/",
       "statusCode": 301
     },
     {
@@ -4565,6 +4505,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae",
+      "destination": "/ar/media-hub/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae/",
+      "destination": "/ar/media-hub/cambridge-hospital-introduces-the-kozyavkin-method-in-the-uae/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-jeddah-completes-major-200-bed-expansion",
       "destination": "/media-hub/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
       "statusCode": 301
@@ -4572,6 +4522,16 @@
     {
       "source": "/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
       "destination": "/media-hub/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-jeddah-completes-major-200-bed-expansion",
+      "destination": "/ar/media-hub/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
+      "destination": "/ar/media-hub/cambridge-hospital-jeddah-completes-major-200-bed-expansion/",
       "statusCode": 301
     },
     {
@@ -4585,6 +4545,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference",
+      "destination": "/ar/media-hub/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference/",
+      "destination": "/ar/media-hub/cambridge-hospital-joins-6th-tvm-healthcare-investors-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-organizes-icu-rehabilitation-symposium",
       "destination": "/media-hub/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
       "statusCode": 301
@@ -4592,6 +4562,16 @@
     {
       "source": "/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
       "destination": "/media-hub/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-organizes-icu-rehabilitation-symposium",
+      "destination": "/ar/media-hub/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
+      "destination": "/ar/media-hub/cambridge-hospital-organizes-icu-rehabilitation-symposium/",
       "statusCode": 301
     },
     {
@@ -4605,6 +4585,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-participates-in-the-tawam-case-management-symposium",
+      "destination": "/ar/media-hub/cambridge-hospital-participates-in-the-tawam-case-management-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-participates-in-the-tawam-case-management-symposium/",
+      "destination": "/ar/media-hub/cambridge-hospital-participates-in-the-tawam-case-management-symposium/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-participates-in-whx-dubai-2026",
       "destination": "/media-hub/cambridge-hospital-participates-in-whx-dubai-2026/",
       "statusCode": 301
@@ -4612,6 +4602,16 @@
     {
       "source": "/cambridge-hospital-participates-in-whx-dubai-2026/",
       "destination": "/media-hub/cambridge-hospital-participates-in-whx-dubai-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-participates-in-whx-dubai-2026",
+      "destination": "/ar/media-hub/cambridge-hospital-participates-in-whx-dubai-2026/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-participates-in-whx-dubai-2026/",
+      "destination": "/ar/media-hub/cambridge-hospital-participates-in-whx-dubai-2026/",
       "statusCode": 301
     },
     {
@@ -4625,6 +4625,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation",
+      "destination": "/ar/media-hub/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation/",
+      "destination": "/ar/media-hub/cambridge-hospital-saudi-arabia-earns-three-year-carf-accreditation/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-sponsors-first-fujairah-icu-symposium",
       "destination": "/media-hub/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
       "statusCode": 301
@@ -4632,6 +4642,16 @@
     {
       "source": "/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
       "destination": "/media-hub/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-sponsors-first-fujairah-icu-symposium",
+      "destination": "/ar/media-hub/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
+      "destination": "/ar/media-hub/cambridge-hospital-sponsors-first-fujairah-icu-symposium/",
       "statusCode": 301
     },
     {
@@ -4645,6 +4665,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference",
+      "destination": "/ar/media-hub/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference/",
+      "destination": "/ar/media-hub/cambridge-hospital-sponsors-the-13th-seha-international-pediatric-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-supports-the-mena-rehabilitation-congress",
       "destination": "/media-hub/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
       "statusCode": 301
@@ -4652,6 +4682,16 @@
     {
       "source": "/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
       "destination": "/media-hub/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-supports-the-mena-rehabilitation-congress",
+      "destination": "/ar/media-hub/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
+      "destination": "/ar/media-hub/cambridge-hospital-supports-the-mena-rehabilitation-congress/",
       "statusCode": 301
     },
     {
@@ -4665,6 +4705,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia",
+      "destination": "/ar/media-hub/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia/",
+      "destination": "/ar/media-hub/cambridge-hospital-welcomes-its-first-patients-in-saudi-arabia/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs",
       "destination": "/media-hub/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
       "statusCode": 301
@@ -4672,6 +4722,16 @@
     {
       "source": "/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
       "destination": "/media-hub/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs",
+      "destination": "/ar/media-hub/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
+      "destination": "/ar/media-hub/cambridge-medical-rehabilitation-center-accredited-by-the-commission-on-accreditation-of-rehabilitation-facilities-for-stroke-specialty-and-ltac-programs/",
       "statusCode": 301
     },
     {
@@ -4685,6 +4745,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/emirates-critical-care-conference",
+      "destination": "/ar/media-hub/emirates-critical-care-conference/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/emirates-critical-care-conference/",
+      "destination": "/ar/media-hub/emirates-critical-care-conference/",
+      "statusCode": 301
+    },
+    {
       "source": "/young-patient-walks-independently-following-an-intensive-kozyavkin-program",
       "destination": "/media-hub/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
       "statusCode": 301
@@ -4695,573 +4765,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/a-family-reunion-supporting-emotional-recovery",
-      "destination": "/ar/media-hub/a-family-reunion-supporting-emotional-recovery/",
+      "source": "/ar/young-patient-walks-independently-following-an-intensive-kozyavkin-program",
+      "destination": "/ar/media-hub/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
       "statusCode": 301
     },
     {
-      "source": "/ar/a-family-reunion-supporting-emotional-recovery/",
-      "destination": "/ar/media-hub/a-family-reunion-supporting-emotional-recovery/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/a-musical-parade-at-al-mudeef-center",
-      "destination": "/ar/media-hub/a-musical-parade-at-al-mudeef-center/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/a-musical-parade-at-al-mudeef-center/",
-      "destination": "/ar/media-hub/a-musical-parade-at-al-mudeef-center/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/al-khobar-opening-and-employee-recognition",
-      "destination": "/ar/media-hub/al-khobar-opening-and-employee-recognition/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/al-khobar-opening-and-employee-recognition/",
-      "destination": "/ar/media-hub/al-khobar-opening-and-employee-recognition/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain",
-      "destination": "/ar/media-hub/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
-      "destination": "/ar/media-hub/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-al-ain-staff-sports-day",
-      "destination": "/ar/media-hub/cambridge-hospital-al-ain-staff-sports-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-al-ain-staff-sports-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-al-ain-staff-sports-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-hosts-musical-activity-day-for-patients",
-      "destination": "/ar/media-hub/cambridge-hospital-hosts-musical-activity-day-for-patients/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-hosts-musical-activity-day-for-patients/",
-      "destination": "/ar/media-hub/cambridge-hospital-hosts-musical-activity-day-for-patients/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-emirati-womens-day",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-emirati-womens-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-emirati-womens-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-emirati-womens-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-the-uaes-52nd-national-day",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-the-uaes-52nd-national-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-the-uaes-52nd-national-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-the-uaes-52nd-national-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-uae-flag-day",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-uae-flag-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-uae-flag-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-uae-flag-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-world-cerebral-palsy-day",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-world-cerebral-palsy-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-world-cerebral-palsy-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-world-cerebral-palsy-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-world-occupational-therapy-day",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-world-occupational-therapy-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-world-occupational-therapy-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-world-occupational-therapy-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-world-physiotherapy-day",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-world-physiotherapy-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-marks-world-physiotherapy-day/",
-      "destination": "/ar/media-hub/cambridge-hospital-marks-world-physiotherapy-day/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-patients-take-part-in-outdoor-activities",
-      "destination": "/ar/media-hub/cambridge-hospital-patients-take-part-in-outdoor-activities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-patients-take-part-in-outdoor-activities/",
-      "destination": "/ar/media-hub/cambridge-hospital-patients-take-part-in-outdoor-activities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-patients-visit-the-cultural-foundation",
-      "destination": "/ar/media-hub/cambridge-hospital-patients-visit-the-cultural-foundation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/cambridge-hospital-patients-visit-the-cultural-foundation/",
-      "destination": "/ar/media-hub/cambridge-hospital-patients-visit-the-cultural-foundation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/community-walkathon-in-shakhbout-city",
-      "destination": "/ar/media-hub/community-walkathon-in-shakhbout-city/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/community-walkathon-in-shakhbout-city/",
-      "destination": "/ar/media-hub/community-walkathon-in-shakhbout-city/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/creative-patient-activities-at-cambridge-hospital-jeddah",
-      "destination": "/ar/media-hub/creative-patient-activities-at-cambridge-hospital-jeddah/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/creative-patient-activities-at-cambridge-hospital-jeddah/",
-      "destination": "/ar/media-hub/creative-patient-activities-at-cambridge-hospital-jeddah/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/creative-workshops-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/creative-workshops-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/creative-workshops-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/creative-workshops-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/customer-service-communication-workshop",
-      "destination": "/ar/media-hub/customer-service-communication-workshop/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/customer-service-communication-workshop/",
-      "destination": "/ar/media-hub/customer-service-communication-workshop/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/eid-al-adha-celebrations-across-all-facilities",
-      "destination": "/ar/media-hub/eid-al-adha-celebrations-across-all-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/eid-al-adha-celebrations-across-all-facilities/",
-      "destination": "/ar/media-hub/eid-al-adha-celebrations-across-all-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/eid-al-adha-community-support-initiative",
-      "destination": "/ar/media-hub/eid-al-adha-community-support-initiative/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/eid-al-adha-community-support-initiative/",
-      "destination": "/ar/media-hub/eid-al-adha-community-support-initiative/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/employee-mental-health-day-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/employee-mental-health-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/employee-mental-health-day-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/employee-mental-health-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/fatima-college-collaboration-visit",
-      "destination": "/ar/media-hub/fatima-college-collaboration-visit/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/fatima-college-collaboration-visit/",
-      "destination": "/ar/media-hub/fatima-college-collaboration-visit/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/go-green-initiative-across-uae-facilities",
-      "destination": "/ar/media-hub/go-green-initiative-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/go-green-initiative-across-uae-facilities/",
-      "destination": "/ar/media-hub/go-green-initiative-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/indoor-patient-activities-and-cultural-outings",
-      "destination": "/ar/media-hub/indoor-patient-activities-and-cultural-outings/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/indoor-patient-activities-and-cultural-outings/",
-      "destination": "/ar/media-hub/indoor-patient-activities-and-cultural-outings/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/infection-control-awareness-at-cambridge-hospital-jeddah",
-      "destination": "/ar/media-hub/infection-control-awareness-at-cambridge-hospital-jeddah/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/infection-control-awareness-at-cambridge-hospital-jeddah/",
-      "destination": "/ar/media-hub/infection-control-awareness-at-cambridge-hospital-jeddah/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/intergenerational-visit-for-elderly-patients",
-      "destination": "/ar/media-hub/intergenerational-visit-for-elderly-patients/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/intergenerational-visit-for-elderly-patients/",
-      "destination": "/ar/media-hub/intergenerational-visit-for-elderly-patients/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-day-of-older-persons",
-      "destination": "/ar/media-hub/international-day-of-older-persons/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-day-of-older-persons/",
-      "destination": "/ar/media-hub/international-day-of-older-persons/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-day-of-persons-with-disabilities",
-      "destination": "/ar/media-hub/international-day-of-persons-with-disabilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-day-of-persons-with-disabilities/",
-      "destination": "/ar/media-hub/international-day-of-persons-with-disabilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-family-day-at-cambridge-hospital-al-ain",
-      "destination": "/ar/media-hub/international-family-day-at-cambridge-hospital-al-ain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-family-day-at-cambridge-hospital-al-ain/",
-      "destination": "/ar/media-hub/international-family-day-at-cambridge-hospital-al-ain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-nurses-day-and-wellness-program",
-      "destination": "/ar/media-hub/international-nurses-day-and-wellness-program/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/international-nurses-day-and-wellness-program/",
-      "destination": "/ar/media-hub/international-nurses-day-and-wellness-program/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/little-health-champions-community-event",
-      "destination": "/ar/media-hub/little-health-champions-community-event/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/little-health-champions-community-event/",
-      "destination": "/ar/media-hub/little-health-champions-community-event/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/nursing-career-day-at-cambridge-hospital-jeddah",
-      "destination": "/ar/media-hub/nursing-career-day-at-cambridge-hospital-jeddah/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/nursing-career-day-at-cambridge-hospital-jeddah/",
-      "destination": "/ar/media-hub/nursing-career-day-at-cambridge-hospital-jeddah/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-and-staff-activities-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/patient-and-staff-activities-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-and-staff-activities-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/patient-and-staff-activities-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-celebrations-and-community-experiences",
-      "destination": "/ar/media-hub/patient-celebrations-and-community-experiences/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-celebrations-and-community-experiences/",
-      "destination": "/ar/media-hub/patient-celebrations-and-community-experiences/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-experience-activities-across-uae-facilities",
-      "destination": "/ar/media-hub/patient-experience-activities-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-experience-activities-across-uae-facilities/",
-      "destination": "/ar/media-hub/patient-experience-activities-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-experience-activities-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/patient-experience-activities-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-experience-activities-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/patient-experience-activities-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-experience-program-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/patient-experience-program-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/patient-experience-program-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/patient-experience-program-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-and-eid-activities-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-eid-and-health-awareness-activities",
-      "destination": "/ar/media-hub/ramadan-eid-and-health-awareness-activities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-eid-and-health-awareness-activities/",
-      "destination": "/ar/media-hub/ramadan-eid-and-health-awareness-activities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-gatherings-across-cambridge-hospital",
-      "destination": "/ar/media-hub/ramadan-gatherings-across-cambridge-hospital/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-gatherings-across-cambridge-hospital/",
-      "destination": "/ar/media-hub/ramadan-gatherings-across-cambridge-hospital/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-iftar-campaign-with-emirates-red-crescent",
-      "destination": "/ar/media-hub/ramadan-iftar-campaign-with-emirates-red-crescent/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-iftar-campaign-with-emirates-red-crescent/",
-      "destination": "/ar/media-hub/ramadan-iftar-campaign-with-emirates-red-crescent/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-stakeholder-iftar-gatherings",
-      "destination": "/ar/media-hub/ramadan-stakeholder-iftar-gatherings/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-stakeholder-iftar-gatherings/",
-      "destination": "/ar/media-hub/ramadan-stakeholder-iftar-gatherings/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-visit-to-elderly-patients-at-ssmc",
-      "destination": "/ar/media-hub/ramadan-visit-to-elderly-patients-at-ssmc/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ramadan-visit-to-elderly-patients-at-ssmc/",
-      "destination": "/ar/media-hub/ramadan-visit-to-elderly-patients-at-ssmc/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/saudi-arabia-annual-staff-gathering",
-      "destination": "/ar/media-hub/saudi-arabia-annual-staff-gathering/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/saudi-arabia-annual-staff-gathering/",
-      "destination": "/ar/media-hub/saudi-arabia-annual-staff-gathering/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/saudi-founding-day-celebrations",
-      "destination": "/ar/media-hub/saudi-founding-day-celebrations/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/saudi-founding-day-celebrations/",
-      "destination": "/ar/media-hub/saudi-founding-day-celebrations/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/saudi-national-day-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/saudi-national-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/saudi-national-day-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/saudi-national-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/statistics-centre-abu-dhabi-visits-cambridge-hospital",
-      "destination": "/ar/media-hub/statistics-centre-abu-dhabi-visits-cambridge-hospital/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/statistics-centre-abu-dhabi-visits-cambridge-hospital/",
-      "destination": "/ar/media-hub/statistics-centre-abu-dhabi-visits-cambridge-hospital/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/stress-and-time-management-workshop",
-      "destination": "/ar/media-hub/stress-and-time-management-workshop/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/stress-and-time-management-workshop/",
-      "destination": "/ar/media-hub/stress-and-time-management-workshop/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/stuttering-awareness-day-at-dhahran-mall",
-      "destination": "/ar/media-hub/stuttering-awareness-day-at-dhahran-mall/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/stuttering-awareness-day-at-dhahran-mall/",
-      "destination": "/ar/media-hub/stuttering-awareness-day-at-dhahran-mall/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/team-building-sessions-across-uae-facilities",
-      "destination": "/ar/media-hub/team-building-sessions-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/team-building-sessions-across-uae-facilities/",
-      "destination": "/ar/media-hub/team-building-sessions-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/uae-annual-staff-gathering-at-al-raha-beach",
-      "destination": "/ar/media-hub/uae-annual-staff-gathering-at-al-raha-beach/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/uae-annual-staff-gathering-at-al-raha-beach/",
-      "destination": "/ar/media-hub/uae-annual-staff-gathering-at-al-raha-beach/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/uae-flag-day-across-cambridge-hospital-facilities",
-      "destination": "/ar/media-hub/uae-flag-day-across-cambridge-hospital-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/uae-flag-day-across-cambridge-hospital-facilities/",
-      "destination": "/ar/media-hub/uae-flag-day-across-cambridge-hospital-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-cerebral-palsy-day-across-uae-facilities",
-      "destination": "/ar/media-hub/world-cerebral-palsy-day-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-cerebral-palsy-day-across-uae-facilities/",
-      "destination": "/ar/media-hub/world-cerebral-palsy-day-across-uae-facilities/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-occupational-therapy-day-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-patient-safety-day-at-cambridge-hospital-dhahran",
-      "destination": "/ar/media-hub/world-patient-safety-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-patient-safety-day-at-cambridge-hospital-dhahran/",
-      "destination": "/ar/media-hub/world-patient-safety-day-at-cambridge-hospital-dhahran/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-physiotherapy-day-celebrations",
-      "destination": "/ar/media-hub/world-physiotherapy-day-celebrations/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/world-physiotherapy-day-celebrations/",
-      "destination": "/ar/media-hub/world-physiotherapy-day-celebrations/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/your-joy-is-our-eid-community-visit",
-      "destination": "/ar/media-hub/your-joy-is-our-eid-community-visit/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/your-joy-is-our-eid-community-visit/",
-      "destination": "/ar/media-hub/your-joy-is-our-eid-community-visit/",
+      "source": "/ar/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
+      "destination": "/ar/media-hub/young-patient-walks-independently-following-an-intensive-kozyavkin-program/",
       "statusCode": 301
     },
     {
@@ -5275,6 +4785,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/a-family-reunion-supporting-emotional-recovery",
+      "destination": "/ar/media-hub/a-family-reunion-supporting-emotional-recovery/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/a-family-reunion-supporting-emotional-recovery/",
+      "destination": "/ar/media-hub/a-family-reunion-supporting-emotional-recovery/",
+      "statusCode": 301
+    },
+    {
       "source": "/a-musical-parade-at-al-mudeef-center",
       "destination": "/media-hub/a-musical-parade-at-al-mudeef-center/",
       "statusCode": 301
@@ -5282,6 +4802,16 @@
     {
       "source": "/a-musical-parade-at-al-mudeef-center/",
       "destination": "/media-hub/a-musical-parade-at-al-mudeef-center/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/a-musical-parade-at-al-mudeef-center",
+      "destination": "/ar/media-hub/a-musical-parade-at-al-mudeef-center/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/a-musical-parade-at-al-mudeef-center/",
+      "destination": "/ar/media-hub/a-musical-parade-at-al-mudeef-center/",
       "statusCode": 301
     },
     {
@@ -5295,6 +4825,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/al-khobar-opening-and-employee-recognition",
+      "destination": "/ar/media-hub/al-khobar-opening-and-employee-recognition/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/al-khobar-opening-and-employee-recognition/",
+      "destination": "/ar/media-hub/al-khobar-opening-and-employee-recognition/",
+      "statusCode": 301
+    },
+    {
       "source": "/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain",
       "destination": "/media-hub/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
       "statusCode": 301
@@ -5302,6 +4842,16 @@
     {
       "source": "/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
       "destination": "/media-hub/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain",
+      "destination": "/ar/media-hub/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
+      "destination": "/ar/media-hub/asian-football-cup-final-viewing-at-cambridge-hospital-al-ain/",
       "statusCode": 301
     },
     {
@@ -5315,6 +4865,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-al-ain-staff-sports-day",
+      "destination": "/ar/media-hub/cambridge-hospital-al-ain-staff-sports-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-al-ain-staff-sports-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-al-ain-staff-sports-day/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-hosts-musical-activity-day-for-patients",
       "destination": "/media-hub/cambridge-hospital-hosts-musical-activity-day-for-patients/",
       "statusCode": 301
@@ -5322,6 +4882,16 @@
     {
       "source": "/cambridge-hospital-hosts-musical-activity-day-for-patients/",
       "destination": "/media-hub/cambridge-hospital-hosts-musical-activity-day-for-patients/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-hosts-musical-activity-day-for-patients",
+      "destination": "/ar/media-hub/cambridge-hospital-hosts-musical-activity-day-for-patients/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-hosts-musical-activity-day-for-patients/",
+      "destination": "/ar/media-hub/cambridge-hospital-hosts-musical-activity-day-for-patients/",
       "statusCode": 301
     },
     {
@@ -5335,6 +4905,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-marks-emirati-womens-day",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-emirati-womens-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-emirati-womens-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-emirati-womens-day/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-marks-the-uaes-52nd-national-day",
       "destination": "/media-hub/cambridge-hospital-marks-the-uaes-52nd-national-day/",
       "statusCode": 301
@@ -5342,6 +4922,16 @@
     {
       "source": "/cambridge-hospital-marks-the-uaes-52nd-national-day/",
       "destination": "/media-hub/cambridge-hospital-marks-the-uaes-52nd-national-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-the-uaes-52nd-national-day",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-the-uaes-52nd-national-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-the-uaes-52nd-national-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-the-uaes-52nd-national-day/",
       "statusCode": 301
     },
     {
@@ -5355,6 +4945,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-marks-uae-flag-day",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-uae-flag-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-uae-flag-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-uae-flag-day/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-marks-world-cerebral-palsy-day",
       "destination": "/media-hub/cambridge-hospital-marks-world-cerebral-palsy-day/",
       "statusCode": 301
@@ -5362,6 +4962,16 @@
     {
       "source": "/cambridge-hospital-marks-world-cerebral-palsy-day/",
       "destination": "/media-hub/cambridge-hospital-marks-world-cerebral-palsy-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-world-cerebral-palsy-day",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-world-cerebral-palsy-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-world-cerebral-palsy-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-world-cerebral-palsy-day/",
       "statusCode": 301
     },
     {
@@ -5375,6 +4985,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-marks-world-occupational-therapy-day",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-world-occupational-therapy-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-world-occupational-therapy-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-world-occupational-therapy-day/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-marks-world-physiotherapy-day",
       "destination": "/media-hub/cambridge-hospital-marks-world-physiotherapy-day/",
       "statusCode": 301
@@ -5382,6 +5002,16 @@
     {
       "source": "/cambridge-hospital-marks-world-physiotherapy-day/",
       "destination": "/media-hub/cambridge-hospital-marks-world-physiotherapy-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-world-physiotherapy-day",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-world-physiotherapy-day/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-marks-world-physiotherapy-day/",
+      "destination": "/ar/media-hub/cambridge-hospital-marks-world-physiotherapy-day/",
       "statusCode": 301
     },
     {
@@ -5395,6 +5025,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/cambridge-hospital-patients-take-part-in-outdoor-activities",
+      "destination": "/ar/media-hub/cambridge-hospital-patients-take-part-in-outdoor-activities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-patients-take-part-in-outdoor-activities/",
+      "destination": "/ar/media-hub/cambridge-hospital-patients-take-part-in-outdoor-activities/",
+      "statusCode": 301
+    },
+    {
       "source": "/cambridge-hospital-patients-visit-the-cultural-foundation",
       "destination": "/media-hub/cambridge-hospital-patients-visit-the-cultural-foundation/",
       "statusCode": 301
@@ -5402,6 +5042,16 @@
     {
       "source": "/cambridge-hospital-patients-visit-the-cultural-foundation/",
       "destination": "/media-hub/cambridge-hospital-patients-visit-the-cultural-foundation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-patients-visit-the-cultural-foundation",
+      "destination": "/ar/media-hub/cambridge-hospital-patients-visit-the-cultural-foundation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/cambridge-hospital-patients-visit-the-cultural-foundation/",
+      "destination": "/ar/media-hub/cambridge-hospital-patients-visit-the-cultural-foundation/",
       "statusCode": 301
     },
     {
@@ -5415,6 +5065,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/community-walkathon-in-shakhbout-city",
+      "destination": "/ar/media-hub/community-walkathon-in-shakhbout-city/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/community-walkathon-in-shakhbout-city/",
+      "destination": "/ar/media-hub/community-walkathon-in-shakhbout-city/",
+      "statusCode": 301
+    },
+    {
       "source": "/creative-patient-activities-at-cambridge-hospital-jeddah",
       "destination": "/media-hub/creative-patient-activities-at-cambridge-hospital-jeddah/",
       "statusCode": 301
@@ -5422,6 +5082,16 @@
     {
       "source": "/creative-patient-activities-at-cambridge-hospital-jeddah/",
       "destination": "/media-hub/creative-patient-activities-at-cambridge-hospital-jeddah/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/creative-patient-activities-at-cambridge-hospital-jeddah",
+      "destination": "/ar/media-hub/creative-patient-activities-at-cambridge-hospital-jeddah/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/creative-patient-activities-at-cambridge-hospital-jeddah/",
+      "destination": "/ar/media-hub/creative-patient-activities-at-cambridge-hospital-jeddah/",
       "statusCode": 301
     },
     {
@@ -5435,6 +5105,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/creative-workshops-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/creative-workshops-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/creative-workshops-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/creative-workshops-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
       "source": "/customer-service-communication-workshop",
       "destination": "/media-hub/customer-service-communication-workshop/",
       "statusCode": 301
@@ -5442,6 +5122,16 @@
     {
       "source": "/customer-service-communication-workshop/",
       "destination": "/media-hub/customer-service-communication-workshop/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/customer-service-communication-workshop",
+      "destination": "/ar/media-hub/customer-service-communication-workshop/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/customer-service-communication-workshop/",
+      "destination": "/ar/media-hub/customer-service-communication-workshop/",
       "statusCode": 301
     },
     {
@@ -5455,6 +5145,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/eid-al-adha-celebrations-across-all-facilities",
+      "destination": "/ar/media-hub/eid-al-adha-celebrations-across-all-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/eid-al-adha-celebrations-across-all-facilities/",
+      "destination": "/ar/media-hub/eid-al-adha-celebrations-across-all-facilities/",
+      "statusCode": 301
+    },
+    {
       "source": "/eid-al-adha-community-support-initiative",
       "destination": "/media-hub/eid-al-adha-community-support-initiative/",
       "statusCode": 301
@@ -5462,6 +5162,16 @@
     {
       "source": "/eid-al-adha-community-support-initiative/",
       "destination": "/media-hub/eid-al-adha-community-support-initiative/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/eid-al-adha-community-support-initiative",
+      "destination": "/ar/media-hub/eid-al-adha-community-support-initiative/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/eid-al-adha-community-support-initiative/",
+      "destination": "/ar/media-hub/eid-al-adha-community-support-initiative/",
       "statusCode": 301
     },
     {
@@ -5475,6 +5185,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/employee-mental-health-day-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/employee-mental-health-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/employee-mental-health-day-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/employee-mental-health-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
       "source": "/fatima-college-collaboration-visit",
       "destination": "/media-hub/fatima-college-collaboration-visit/",
       "statusCode": 301
@@ -5482,6 +5202,16 @@
     {
       "source": "/fatima-college-collaboration-visit/",
       "destination": "/media-hub/fatima-college-collaboration-visit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/fatima-college-collaboration-visit",
+      "destination": "/ar/media-hub/fatima-college-collaboration-visit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/fatima-college-collaboration-visit/",
+      "destination": "/ar/media-hub/fatima-college-collaboration-visit/",
       "statusCode": 301
     },
     {
@@ -5495,6 +5225,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/go-green-initiative-across-uae-facilities",
+      "destination": "/ar/media-hub/go-green-initiative-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/go-green-initiative-across-uae-facilities/",
+      "destination": "/ar/media-hub/go-green-initiative-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
       "source": "/indoor-patient-activities-and-cultural-outings",
       "destination": "/media-hub/indoor-patient-activities-and-cultural-outings/",
       "statusCode": 301
@@ -5502,6 +5242,16 @@
     {
       "source": "/indoor-patient-activities-and-cultural-outings/",
       "destination": "/media-hub/indoor-patient-activities-and-cultural-outings/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/indoor-patient-activities-and-cultural-outings",
+      "destination": "/ar/media-hub/indoor-patient-activities-and-cultural-outings/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/indoor-patient-activities-and-cultural-outings/",
+      "destination": "/ar/media-hub/indoor-patient-activities-and-cultural-outings/",
       "statusCode": 301
     },
     {
@@ -5515,6 +5265,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/infection-control-awareness-at-cambridge-hospital-jeddah",
+      "destination": "/ar/media-hub/infection-control-awareness-at-cambridge-hospital-jeddah/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/infection-control-awareness-at-cambridge-hospital-jeddah/",
+      "destination": "/ar/media-hub/infection-control-awareness-at-cambridge-hospital-jeddah/",
+      "statusCode": 301
+    },
+    {
       "source": "/intergenerational-visit-for-elderly-patients",
       "destination": "/media-hub/intergenerational-visit-for-elderly-patients/",
       "statusCode": 301
@@ -5522,6 +5282,16 @@
     {
       "source": "/intergenerational-visit-for-elderly-patients/",
       "destination": "/media-hub/intergenerational-visit-for-elderly-patients/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/intergenerational-visit-for-elderly-patients",
+      "destination": "/ar/media-hub/intergenerational-visit-for-elderly-patients/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/intergenerational-visit-for-elderly-patients/",
+      "destination": "/ar/media-hub/intergenerational-visit-for-elderly-patients/",
       "statusCode": 301
     },
     {
@@ -5535,6 +5305,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/international-day-of-older-persons",
+      "destination": "/ar/media-hub/international-day-of-older-persons/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/international-day-of-older-persons/",
+      "destination": "/ar/media-hub/international-day-of-older-persons/",
+      "statusCode": 301
+    },
+    {
       "source": "/international-day-of-persons-with-disabilities",
       "destination": "/media-hub/international-day-of-persons-with-disabilities/",
       "statusCode": 301
@@ -5542,6 +5322,16 @@
     {
       "source": "/international-day-of-persons-with-disabilities/",
       "destination": "/media-hub/international-day-of-persons-with-disabilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/international-day-of-persons-with-disabilities",
+      "destination": "/ar/media-hub/international-day-of-persons-with-disabilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/international-day-of-persons-with-disabilities/",
+      "destination": "/ar/media-hub/international-day-of-persons-with-disabilities/",
       "statusCode": 301
     },
     {
@@ -5555,6 +5345,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/international-family-day-at-cambridge-hospital-al-ain",
+      "destination": "/ar/media-hub/international-family-day-at-cambridge-hospital-al-ain/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/international-family-day-at-cambridge-hospital-al-ain/",
+      "destination": "/ar/media-hub/international-family-day-at-cambridge-hospital-al-ain/",
+      "statusCode": 301
+    },
+    {
       "source": "/international-nurses-day-and-wellness-program",
       "destination": "/media-hub/international-nurses-day-and-wellness-program/",
       "statusCode": 301
@@ -5562,6 +5362,16 @@
     {
       "source": "/international-nurses-day-and-wellness-program/",
       "destination": "/media-hub/international-nurses-day-and-wellness-program/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/international-nurses-day-and-wellness-program",
+      "destination": "/ar/media-hub/international-nurses-day-and-wellness-program/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/international-nurses-day-and-wellness-program/",
+      "destination": "/ar/media-hub/international-nurses-day-and-wellness-program/",
       "statusCode": 301
     },
     {
@@ -5575,6 +5385,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/little-health-champions-community-event",
+      "destination": "/ar/media-hub/little-health-champions-community-event/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/little-health-champions-community-event/",
+      "destination": "/ar/media-hub/little-health-champions-community-event/",
+      "statusCode": 301
+    },
+    {
       "source": "/nursing-career-day-at-cambridge-hospital-jeddah",
       "destination": "/media-hub/nursing-career-day-at-cambridge-hospital-jeddah/",
       "statusCode": 301
@@ -5582,6 +5402,16 @@
     {
       "source": "/nursing-career-day-at-cambridge-hospital-jeddah/",
       "destination": "/media-hub/nursing-career-day-at-cambridge-hospital-jeddah/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/nursing-career-day-at-cambridge-hospital-jeddah",
+      "destination": "/ar/media-hub/nursing-career-day-at-cambridge-hospital-jeddah/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/nursing-career-day-at-cambridge-hospital-jeddah/",
+      "destination": "/ar/media-hub/nursing-career-day-at-cambridge-hospital-jeddah/",
       "statusCode": 301
     },
     {
@@ -5595,6 +5425,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/patient-and-staff-activities-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/patient-and-staff-activities-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-and-staff-activities-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/patient-and-staff-activities-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
       "source": "/patient-celebrations-and-community-experiences",
       "destination": "/media-hub/patient-celebrations-and-community-experiences/",
       "statusCode": 301
@@ -5602,6 +5442,16 @@
     {
       "source": "/patient-celebrations-and-community-experiences/",
       "destination": "/media-hub/patient-celebrations-and-community-experiences/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-celebrations-and-community-experiences",
+      "destination": "/ar/media-hub/patient-celebrations-and-community-experiences/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-celebrations-and-community-experiences/",
+      "destination": "/ar/media-hub/patient-celebrations-and-community-experiences/",
       "statusCode": 301
     },
     {
@@ -5615,6 +5465,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/patient-experience-activities-across-uae-facilities",
+      "destination": "/ar/media-hub/patient-experience-activities-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-experience-activities-across-uae-facilities/",
+      "destination": "/ar/media-hub/patient-experience-activities-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
       "source": "/patient-experience-activities-at-cambridge-hospital-dhahran",
       "destination": "/media-hub/patient-experience-activities-at-cambridge-hospital-dhahran/",
       "statusCode": 301
@@ -5622,6 +5482,16 @@
     {
       "source": "/patient-experience-activities-at-cambridge-hospital-dhahran/",
       "destination": "/media-hub/patient-experience-activities-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-experience-activities-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/patient-experience-activities-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-experience-activities-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/patient-experience-activities-at-cambridge-hospital-dhahran/",
       "statusCode": 301
     },
     {
@@ -5635,6 +5505,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/patient-experience-program-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/patient-experience-program-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/patient-experience-program-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/patient-experience-program-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
       "source": "/ramadan-and-eid-activities-at-cambridge-hospital-dhahran",
       "destination": "/media-hub/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
       "statusCode": 301
@@ -5642,6 +5522,16 @@
     {
       "source": "/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
       "destination": "/media-hub/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-and-eid-activities-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/ramadan-and-eid-activities-at-cambridge-hospital-dhahran/",
       "statusCode": 301
     },
     {
@@ -5655,6 +5545,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/ramadan-eid-and-health-awareness-activities",
+      "destination": "/ar/media-hub/ramadan-eid-and-health-awareness-activities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-eid-and-health-awareness-activities/",
+      "destination": "/ar/media-hub/ramadan-eid-and-health-awareness-activities/",
+      "statusCode": 301
+    },
+    {
       "source": "/ramadan-gatherings-across-cambridge-hospital",
       "destination": "/media-hub/ramadan-gatherings-across-cambridge-hospital/",
       "statusCode": 301
@@ -5662,6 +5562,16 @@
     {
       "source": "/ramadan-gatherings-across-cambridge-hospital/",
       "destination": "/media-hub/ramadan-gatherings-across-cambridge-hospital/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-gatherings-across-cambridge-hospital",
+      "destination": "/ar/media-hub/ramadan-gatherings-across-cambridge-hospital/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-gatherings-across-cambridge-hospital/",
+      "destination": "/ar/media-hub/ramadan-gatherings-across-cambridge-hospital/",
       "statusCode": 301
     },
     {
@@ -5675,6 +5585,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/ramadan-iftar-campaign-with-emirates-red-crescent",
+      "destination": "/ar/media-hub/ramadan-iftar-campaign-with-emirates-red-crescent/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-iftar-campaign-with-emirates-red-crescent/",
+      "destination": "/ar/media-hub/ramadan-iftar-campaign-with-emirates-red-crescent/",
+      "statusCode": 301
+    },
+    {
       "source": "/ramadan-stakeholder-iftar-gatherings",
       "destination": "/media-hub/ramadan-stakeholder-iftar-gatherings/",
       "statusCode": 301
@@ -5682,6 +5602,16 @@
     {
       "source": "/ramadan-stakeholder-iftar-gatherings/",
       "destination": "/media-hub/ramadan-stakeholder-iftar-gatherings/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-stakeholder-iftar-gatherings",
+      "destination": "/ar/media-hub/ramadan-stakeholder-iftar-gatherings/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-stakeholder-iftar-gatherings/",
+      "destination": "/ar/media-hub/ramadan-stakeholder-iftar-gatherings/",
       "statusCode": 301
     },
     {
@@ -5695,6 +5625,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/ramadan-visit-to-elderly-patients-at-ssmc",
+      "destination": "/ar/media-hub/ramadan-visit-to-elderly-patients-at-ssmc/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ramadan-visit-to-elderly-patients-at-ssmc/",
+      "destination": "/ar/media-hub/ramadan-visit-to-elderly-patients-at-ssmc/",
+      "statusCode": 301
+    },
+    {
       "source": "/saudi-arabia-annual-staff-gathering",
       "destination": "/media-hub/saudi-arabia-annual-staff-gathering/",
       "statusCode": 301
@@ -5702,6 +5642,16 @@
     {
       "source": "/saudi-arabia-annual-staff-gathering/",
       "destination": "/media-hub/saudi-arabia-annual-staff-gathering/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/saudi-arabia-annual-staff-gathering",
+      "destination": "/ar/media-hub/saudi-arabia-annual-staff-gathering/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/saudi-arabia-annual-staff-gathering/",
+      "destination": "/ar/media-hub/saudi-arabia-annual-staff-gathering/",
       "statusCode": 301
     },
     {
@@ -5715,6 +5665,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/saudi-founding-day-celebrations",
+      "destination": "/ar/media-hub/saudi-founding-day-celebrations/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/saudi-founding-day-celebrations/",
+      "destination": "/ar/media-hub/saudi-founding-day-celebrations/",
+      "statusCode": 301
+    },
+    {
       "source": "/saudi-national-day-at-cambridge-hospital-dhahran",
       "destination": "/media-hub/saudi-national-day-at-cambridge-hospital-dhahran/",
       "statusCode": 301
@@ -5722,6 +5682,16 @@
     {
       "source": "/saudi-national-day-at-cambridge-hospital-dhahran/",
       "destination": "/media-hub/saudi-national-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/saudi-national-day-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/saudi-national-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/saudi-national-day-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/saudi-national-day-at-cambridge-hospital-dhahran/",
       "statusCode": 301
     },
     {
@@ -5735,6 +5705,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/statistics-centre-abu-dhabi-visits-cambridge-hospital",
+      "destination": "/ar/media-hub/statistics-centre-abu-dhabi-visits-cambridge-hospital/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/statistics-centre-abu-dhabi-visits-cambridge-hospital/",
+      "destination": "/ar/media-hub/statistics-centre-abu-dhabi-visits-cambridge-hospital/",
+      "statusCode": 301
+    },
+    {
       "source": "/stress-and-time-management-workshop",
       "destination": "/media-hub/stress-and-time-management-workshop/",
       "statusCode": 301
@@ -5742,6 +5722,16 @@
     {
       "source": "/stress-and-time-management-workshop/",
       "destination": "/media-hub/stress-and-time-management-workshop/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/stress-and-time-management-workshop",
+      "destination": "/ar/media-hub/stress-and-time-management-workshop/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/stress-and-time-management-workshop/",
+      "destination": "/ar/media-hub/stress-and-time-management-workshop/",
       "statusCode": 301
     },
     {
@@ -5755,6 +5745,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/stuttering-awareness-day-at-dhahran-mall",
+      "destination": "/ar/media-hub/stuttering-awareness-day-at-dhahran-mall/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/stuttering-awareness-day-at-dhahran-mall/",
+      "destination": "/ar/media-hub/stuttering-awareness-day-at-dhahran-mall/",
+      "statusCode": 301
+    },
+    {
       "source": "/team-building-sessions-across-uae-facilities",
       "destination": "/media-hub/team-building-sessions-across-uae-facilities/",
       "statusCode": 301
@@ -5762,6 +5762,16 @@
     {
       "source": "/team-building-sessions-across-uae-facilities/",
       "destination": "/media-hub/team-building-sessions-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/team-building-sessions-across-uae-facilities",
+      "destination": "/ar/media-hub/team-building-sessions-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/team-building-sessions-across-uae-facilities/",
+      "destination": "/ar/media-hub/team-building-sessions-across-uae-facilities/",
       "statusCode": 301
     },
     {
@@ -5775,6 +5785,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/uae-annual-staff-gathering-at-al-raha-beach",
+      "destination": "/ar/media-hub/uae-annual-staff-gathering-at-al-raha-beach/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/uae-annual-staff-gathering-at-al-raha-beach/",
+      "destination": "/ar/media-hub/uae-annual-staff-gathering-at-al-raha-beach/",
+      "statusCode": 301
+    },
+    {
       "source": "/uae-flag-day-across-cambridge-hospital-facilities",
       "destination": "/media-hub/uae-flag-day-across-cambridge-hospital-facilities/",
       "statusCode": 301
@@ -5782,6 +5802,16 @@
     {
       "source": "/uae-flag-day-across-cambridge-hospital-facilities/",
       "destination": "/media-hub/uae-flag-day-across-cambridge-hospital-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/uae-flag-day-across-cambridge-hospital-facilities",
+      "destination": "/ar/media-hub/uae-flag-day-across-cambridge-hospital-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/uae-flag-day-across-cambridge-hospital-facilities/",
+      "destination": "/ar/media-hub/uae-flag-day-across-cambridge-hospital-facilities/",
       "statusCode": 301
     },
     {
@@ -5795,6 +5825,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/world-cerebral-palsy-day-across-uae-facilities",
+      "destination": "/ar/media-hub/world-cerebral-palsy-day-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/world-cerebral-palsy-day-across-uae-facilities/",
+      "destination": "/ar/media-hub/world-cerebral-palsy-day-across-uae-facilities/",
+      "statusCode": 301
+    },
+    {
       "source": "/world-occupational-therapy-day-at-cambridge-hospital-dhahran",
       "destination": "/media-hub/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
       "statusCode": 301
@@ -5802,6 +5842,16 @@
     {
       "source": "/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
       "destination": "/media-hub/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/world-occupational-therapy-day-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/world-occupational-therapy-day-at-cambridge-hospital-dhahran/",
       "statusCode": 301
     },
     {
@@ -5815,6 +5865,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/world-patient-safety-day-at-cambridge-hospital-dhahran",
+      "destination": "/ar/media-hub/world-patient-safety-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/world-patient-safety-day-at-cambridge-hospital-dhahran/",
+      "destination": "/ar/media-hub/world-patient-safety-day-at-cambridge-hospital-dhahran/",
+      "statusCode": 301
+    },
+    {
       "source": "/world-physiotherapy-day-celebrations",
       "destination": "/media-hub/world-physiotherapy-day-celebrations/",
       "statusCode": 301
@@ -5825,6 +5885,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/world-physiotherapy-day-celebrations",
+      "destination": "/ar/media-hub/world-physiotherapy-day-celebrations/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/world-physiotherapy-day-celebrations/",
+      "destination": "/ar/media-hub/world-physiotherapy-day-celebrations/",
+      "statusCode": 301
+    },
+    {
       "source": "/your-joy-is-our-eid-community-visit",
       "destination": "/media-hub/your-joy-is-our-eid-community-visit/",
       "statusCode": 301
@@ -5832,6 +5902,26 @@
     {
       "source": "/your-joy-is-our-eid-community-visit/",
       "destination": "/media-hub/your-joy-is-our-eid-community-visit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/your-joy-is-our-eid-community-visit",
+      "destination": "/ar/media-hub/your-joy-is-our-eid-community-visit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/your-joy-is-our-eid-community-visit/",
+      "destination": "/ar/media-hub/your-joy-is-our-eid-community-visit/",
+      "statusCode": 301
+    },
+    {
+      "source": "/5-years-anniversary-dr-ihab-el-ghonimi",
+      "destination": "/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/5-years-anniversary-dr-ihab-el-ghonimi/",
+      "destination": "/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
       "statusCode": 301
     },
     {
@@ -5855,6 +5945,16 @@
       "statusCode": 301
     },
     {
+      "source": "/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story",
+      "destination": "/media-hub/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
+      "statusCode": 301
+    },
+    {
+      "source": "/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
+      "destination": "/media-hub/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story",
       "destination": "/ar/media-hub/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
       "statusCode": 301
@@ -5865,6 +5965,16 @@
       "statusCode": 301
     },
     {
+      "source": "/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation",
+      "destination": "/media-hub/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
+      "destination": "/media-hub/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation",
       "destination": "/ar/media-hub/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
       "statusCode": 301
@@ -5872,6 +5982,16 @@
     {
       "source": "/ar/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
       "destination": "/ar/media-hub/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dr-ihab-el-ghonimi-interview-fujairah-tv",
+      "destination": "/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dr-ihab-el-ghonimi-interview-fujairah-tv/",
+      "destination": "/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
       "statusCode": 301
     },
     {
@@ -5895,6 +6015,16 @@
       "statusCode": 301
     },
     {
+      "source": "/dr-jamil-itani-interview-fujairah-tv",
+      "destination": "/media-hub/dr-jamil-itani-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dr-jamil-itani-interview-fujairah-tv/",
+      "destination": "/media-hub/dr-jamil-itani-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84-%D8%B9%D9%8A%D8%AA%D8%A7%D9%86%D9%8A-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7%D9%84%D9%81",
       "destination": "/ar/media-hub/dr-jamil-itani-interview-fujairah-tv/",
       "statusCode": 301
@@ -5912,6 +6042,16 @@
     {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%a7%d9%84%d8%af%d9%83%d8%aa%d9%88%d8%b1-%d8%ac%d9%85%d9%8a%d9%84-%d8%b9%d9%8a%d8%aa%d8%a7%d9%86%d9%8a-%d9%82%d9%86%d8%a7%d8%a9-%d8%a7%d9%84%d9%81/",
       "destination": "/ar/media-hub/dr-jamil-itani-interview-fujairah-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dr-jamil-itani-interview-mbc-tv",
+      "destination": "/media-hub/dr-jamil-itani-interview-mbc-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dr-jamil-itani-interview-mbc-tv/",
+      "destination": "/media-hub/dr-jamil-itani-interview-mbc-tv/",
       "statusCode": 301
     },
     {
@@ -5935,6 +6075,16 @@
       "statusCode": 301
     },
     {
+      "source": "/dr-rober-interview-al-arabiya-tv",
+      "destination": "/media-hub/dr-rober-interview-al-arabiya-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/dr-rober-interview-al-arabiya-tv/",
+      "destination": "/media-hub/dr-rober-interview-al-arabiya-tv/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9-%D8%AF-%D8%B1%D9%88%D8%A8%D9%8A%D8%B1-%D9%82%D9%86%D8%A7%D8%A9-%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9",
       "destination": "/ar/media-hub/dr-rober-interview-al-arabiya-tv/",
       "statusCode": 301
@@ -5952,6 +6102,16 @@
     {
       "source": "/ar/%d9%85%d9%82%d8%a7%d8%a8%d9%84%d8%a9-%d8%af-%d8%b1%d9%88%d8%a8%d9%8a%d8%b1-%d9%82%d9%86%d8%a7%d8%a9-%d8%a7%d9%84%d8%b9%d8%b1%d8%a8%d9%8a%d8%a9/",
       "destination": "/ar/media-hub/dr-rober-interview-al-arabiya-tv/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eccc-2019-coverage",
+      "destination": "/media-hub/eccc-2019-coverage/",
+      "statusCode": 301
+    },
+    {
+      "source": "/eccc-2019-coverage/",
+      "destination": "/media-hub/eccc-2019-coverage/",
       "statusCode": 301
     },
     {
@@ -5975,6 +6135,16 @@
       "statusCode": 301
     },
     {
+      "source": "/mechanical-ventilation-important-facts-in-the-era-of-covid-19",
+      "destination": "/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
+      "statusCode": 301
+    },
+    {
+      "source": "/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
+      "destination": "/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
+      "statusCode": 301
+    },
+    {
       "source": "/ar/mechanical-ventilation-important-facts-in-the-era-of-covid-19",
       "destination": "/ar/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
       "statusCode": 301
@@ -5982,6 +6152,16 @@
     {
       "source": "/ar/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
       "destination": "/ar/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
+      "statusCode": 301
+    },
+    {
+      "source": "/year-of-tolerance-dr-ihab-el-ghonimi",
+      "destination": "/media-hub/year-of-tolerance-dr-ihab-el-ghonimi/",
+      "statusCode": 301
+    },
+    {
+      "source": "/year-of-tolerance-dr-ihab-el-ghonimi/",
+      "destination": "/media-hub/year-of-tolerance-dr-ihab-el-ghonimi/",
       "statusCode": 301
     },
     {
@@ -6005,103 +6185,13 @@
       "statusCode": 301
     },
     {
-      "source": "/5-years-anniversary-dr-ihab-el-ghonimi",
-      "destination": "/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
+      "source": "/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care",
+      "destination": "/media-hub/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care/",
       "statusCode": 301
     },
     {
-      "source": "/5-years-anniversary-dr-ihab-el-ghonimi/",
-      "destination": "/media-hub/5-years-anniversary-dr-ihab-el-ghonimi/",
-      "statusCode": 301
-    },
-    {
-      "source": "/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story",
-      "destination": "/media-hub/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
-      "statusCode": 301
-    },
-    {
-      "source": "/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
-      "destination": "/media-hub/abdullah-an-emirati-youth-a-beacon-of-hope-and-a-success-story/",
-      "statusCode": 301
-    },
-    {
-      "source": "/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation",
-      "destination": "/media-hub/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
-      "destination": "/media-hub/abdullah-jayoul-a-success-story-from-dependence-to-weaning-from-mechanical-ventilation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-ihab-el-ghonimi-interview-fujairah-tv",
-      "destination": "/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-ihab-el-ghonimi-interview-fujairah-tv/",
-      "destination": "/media-hub/dr-ihab-el-ghonimi-interview-fujairah-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-jamil-itani-interview-fujairah-tv",
-      "destination": "/media-hub/dr-jamil-itani-interview-fujairah-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-jamil-itani-interview-fujairah-tv/",
-      "destination": "/media-hub/dr-jamil-itani-interview-fujairah-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-jamil-itani-interview-mbc-tv",
-      "destination": "/media-hub/dr-jamil-itani-interview-mbc-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-jamil-itani-interview-mbc-tv/",
-      "destination": "/media-hub/dr-jamil-itani-interview-mbc-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-rober-interview-al-arabiya-tv",
-      "destination": "/media-hub/dr-rober-interview-al-arabiya-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/dr-rober-interview-al-arabiya-tv/",
-      "destination": "/media-hub/dr-rober-interview-al-arabiya-tv/",
-      "statusCode": 301
-    },
-    {
-      "source": "/eccc-2019-coverage",
-      "destination": "/media-hub/eccc-2019-coverage/",
-      "statusCode": 301
-    },
-    {
-      "source": "/eccc-2019-coverage/",
-      "destination": "/media-hub/eccc-2019-coverage/",
-      "statusCode": 301
-    },
-    {
-      "source": "/mechanical-ventilation-important-facts-in-the-era-of-covid-19",
-      "destination": "/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
-      "statusCode": 301
-    },
-    {
-      "source": "/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
-      "destination": "/media-hub/mechanical-ventilation-important-facts-in-the-era-of-covid-19/",
-      "statusCode": 301
-    },
-    {
-      "source": "/year-of-tolerance-dr-ihab-el-ghonimi",
-      "destination": "/media-hub/year-of-tolerance-dr-ihab-el-ghonimi/",
-      "statusCode": 301
-    },
-    {
-      "source": "/year-of-tolerance-dr-ihab-el-ghonimi/",
-      "destination": "/media-hub/year-of-tolerance-dr-ihab-el-ghonimi/",
+      "source": "/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care/",
+      "destination": "/media-hub/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care/",
       "statusCode": 301
     },
     {
@@ -6115,13 +6205,13 @@
       "statusCode": 301
     },
     {
-      "source": "/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care",
-      "destination": "/media-hub/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care/",
+      "source": "/8-exercises-for-easing-tennis-elbow-plus-prevention-tips",
+      "destination": "/media-hub/8-exercises-for-easing-tennis-elbow-plus-prevention-tips/",
       "statusCode": 301
     },
     {
-      "source": "/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care/",
-      "destination": "/media-hub/cambridge-medical-rehabilitation-center-re-accreditation-by-jci-for-a-gold-standard-of-care/",
+      "source": "/8-exercises-for-easing-tennis-elbow-plus-prevention-tips/",
+      "destination": "/media-hub/8-exercises-for-easing-tennis-elbow-plus-prevention-tips/",
       "statusCode": 301
     },
     {
@@ -6135,66 +6225,6 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation",
-      "destination": "/ar/media-hub/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
-      "destination": "/ar/media-hub/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy",
-      "destination": "/ar/media-hub/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy/",
-      "destination": "/ar/media-hub/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/lateral-epicondylitis",
-      "destination": "/ar/media-hub/lateral-epicondylitis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/lateral-epicondylitis/",
-      "destination": "/ar/media-hub/lateral-epicondylitis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/newborn-brachial-plexus-injuries",
-      "destination": "/ar/media-hub/newborn-brachial-plexus-injuries/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/newborn-brachial-plexus-injuries/",
-      "destination": "/ar/media-hub/newborn-brachial-plexus-injuries/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/role-of-physiotherapy-in-shoulder-pain-management",
-      "destination": "/ar/media-hub/role-of-physiotherapy-in-shoulder-pain-management/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/role-of-physiotherapy-in-shoulder-pain-management/",
-      "destination": "/ar/media-hub/role-of-physiotherapy-in-shoulder-pain-management/",
-      "statusCode": 301
-    },
-    {
-      "source": "/8-exercises-for-easing-tennis-elbow-plus-prevention-tips",
-      "destination": "/media-hub/8-exercises-for-easing-tennis-elbow-plus-prevention-tips/",
-      "statusCode": 301
-    },
-    {
-      "source": "/8-exercises-for-easing-tennis-elbow-plus-prevention-tips/",
-      "destination": "/media-hub/8-exercises-for-easing-tennis-elbow-plus-prevention-tips/",
-      "statusCode": 301
-    },
-    {
       "source": "/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation",
       "destination": "/media-hub/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
       "statusCode": 301
@@ -6202,6 +6232,16 @@
     {
       "source": "/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
       "destination": "/media-hub/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation",
+      "destination": "/ar/media-hub/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
+      "destination": "/ar/media-hub/brachial-plexus-injury-diagnosis-treatment-and-rehabilitation/",
       "statusCode": 301
     },
     {
@@ -6215,6 +6255,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy",
+      "destination": "/ar/media-hub/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy/",
+      "destination": "/ar/media-hub/carpal-tunnel-syndrome-and-other-entrapment-neuropathies-and-role-of-occupational-therapy/",
+      "statusCode": 301
+    },
+    {
       "source": "/lateral-epicondylitis",
       "destination": "/media-hub/lateral-epicondylitis/",
       "statusCode": 301
@@ -6222,6 +6272,16 @@
     {
       "source": "/lateral-epicondylitis/",
       "destination": "/media-hub/lateral-epicondylitis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/lateral-epicondylitis",
+      "destination": "/ar/media-hub/lateral-epicondylitis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/lateral-epicondylitis/",
+      "destination": "/ar/media-hub/lateral-epicondylitis/",
       "statusCode": 301
     },
     {
@@ -6235,6 +6295,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/newborn-brachial-plexus-injuries",
+      "destination": "/ar/media-hub/newborn-brachial-plexus-injuries/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/newborn-brachial-plexus-injuries/",
+      "destination": "/ar/media-hub/newborn-brachial-plexus-injuries/",
+      "statusCode": 301
+    },
+    {
       "source": "/role-of-physiotherapy-in-shoulder-pain-management",
       "destination": "/media-hub/role-of-physiotherapy-in-shoulder-pain-management/",
       "statusCode": 301
@@ -6245,53 +6315,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/home-exercises-for-stiff-and-frozen-shoulder",
-      "destination": "/ar/media-hub/home-exercises-for-stiff-and-frozen-shoulder/",
+      "source": "/ar/role-of-physiotherapy-in-shoulder-pain-management",
+      "destination": "/ar/media-hub/role-of-physiotherapy-in-shoulder-pain-management/",
       "statusCode": 301
     },
     {
-      "source": "/ar/home-exercises-for-stiff-and-frozen-shoulder/",
-      "destination": "/ar/media-hub/home-exercises-for-stiff-and-frozen-shoulder/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/neck-pain",
-      "destination": "/ar/media-hub/neck-pain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/neck-pain/",
-      "destination": "/ar/media-hub/neck-pain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/rheumatoid-arthritis",
-      "destination": "/ar/media-hub/rheumatoid-arthritis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/rheumatoid-arthritis/",
-      "destination": "/ar/media-hub/rheumatoid-arthritis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/shoulder-tendonitis",
-      "destination": "/ar/media-hub/shoulder-tendonitis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/shoulder-tendonitis/",
-      "destination": "/ar/media-hub/shoulder-tendonitis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/tendinitis-symptoms-causes-tests-and-treatment",
-      "destination": "/ar/media-hub/tendinitis-symptoms-causes-tests-and-treatment/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/tendinitis-symptoms-causes-tests-and-treatment/",
-      "destination": "/ar/media-hub/tendinitis-symptoms-causes-tests-and-treatment/",
+      "source": "/ar/role-of-physiotherapy-in-shoulder-pain-management/",
+      "destination": "/ar/media-hub/role-of-physiotherapy-in-shoulder-pain-management/",
       "statusCode": 301
     },
     {
@@ -6305,6 +6335,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/home-exercises-for-stiff-and-frozen-shoulder",
+      "destination": "/ar/media-hub/home-exercises-for-stiff-and-frozen-shoulder/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/home-exercises-for-stiff-and-frozen-shoulder/",
+      "destination": "/ar/media-hub/home-exercises-for-stiff-and-frozen-shoulder/",
+      "statusCode": 301
+    },
+    {
       "source": "/neck-pain",
       "destination": "/media-hub/neck-pain/",
       "statusCode": 301
@@ -6312,6 +6352,16 @@
     {
       "source": "/neck-pain/",
       "destination": "/media-hub/neck-pain/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/neck-pain",
+      "destination": "/ar/media-hub/neck-pain/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/neck-pain/",
+      "destination": "/ar/media-hub/neck-pain/",
       "statusCode": 301
     },
     {
@@ -6325,6 +6375,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/rheumatoid-arthritis",
+      "destination": "/ar/media-hub/rheumatoid-arthritis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/rheumatoid-arthritis/",
+      "destination": "/ar/media-hub/rheumatoid-arthritis/",
+      "statusCode": 301
+    },
+    {
       "source": "/shoulder-tendonitis",
       "destination": "/media-hub/shoulder-tendonitis/",
       "statusCode": 301
@@ -6332,6 +6392,16 @@
     {
       "source": "/shoulder-tendonitis/",
       "destination": "/media-hub/shoulder-tendonitis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/shoulder-tendonitis",
+      "destination": "/ar/media-hub/shoulder-tendonitis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/shoulder-tendonitis/",
+      "destination": "/ar/media-hub/shoulder-tendonitis/",
       "statusCode": 301
     },
     {
@@ -6345,13 +6415,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/exercises-for-moderate-to-severe-cases-of-frozen-shoulder",
-      "destination": "/ar/media-hub/exercises-for-moderate-to-severe-cases-of-frozen-shoulder/",
+      "source": "/ar/tendinitis-symptoms-causes-tests-and-treatment",
+      "destination": "/ar/media-hub/tendinitis-symptoms-causes-tests-and-treatment/",
       "statusCode": 301
     },
     {
-      "source": "/ar/exercises-for-moderate-to-severe-cases-of-frozen-shoulder/",
-      "destination": "/ar/media-hub/exercises-for-moderate-to-severe-cases-of-frozen-shoulder/",
+      "source": "/ar/tendinitis-symptoms-causes-tests-and-treatment/",
+      "destination": "/ar/media-hub/tendinitis-symptoms-causes-tests-and-treatment/",
       "statusCode": 301
     },
     {
@@ -6365,23 +6435,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/frozen-shoulders-adhesive-capsulitis",
-      "destination": "/ar/media-hub/frozen-shoulders-adhesive-capsulitis/",
+      "source": "/ar/exercises-for-moderate-to-severe-cases-of-frozen-shoulder",
+      "destination": "/ar/media-hub/exercises-for-moderate-to-severe-cases-of-frozen-shoulder/",
       "statusCode": 301
     },
     {
-      "source": "/ar/frozen-shoulders-adhesive-capsulitis/",
-      "destination": "/ar/media-hub/frozen-shoulders-adhesive-capsulitis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/physical-therapy-in-the-management-of-frozen-shoulder",
-      "destination": "/ar/media-hub/physical-therapy-in-the-management-of-frozen-shoulder/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/physical-therapy-in-the-management-of-frozen-shoulder/",
-      "destination": "/ar/media-hub/physical-therapy-in-the-management-of-frozen-shoulder/",
+      "source": "/ar/exercises-for-moderate-to-severe-cases-of-frozen-shoulder/",
+      "destination": "/ar/media-hub/exercises-for-moderate-to-severe-cases-of-frozen-shoulder/",
       "statusCode": 301
     },
     {
@@ -6395,6 +6455,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/frozen-shoulders-adhesive-capsulitis",
+      "destination": "/ar/media-hub/frozen-shoulders-adhesive-capsulitis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/frozen-shoulders-adhesive-capsulitis/",
+      "destination": "/ar/media-hub/frozen-shoulders-adhesive-capsulitis/",
+      "statusCode": 301
+    },
+    {
       "source": "/physical-therapy-in-the-management-of-frozen-shoulder",
       "destination": "/media-hub/physical-therapy-in-the-management-of-frozen-shoulder/",
       "statusCode": 301
@@ -6405,23 +6475,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/12-exercises-and-stretches-for-shoulder-pain",
-      "destination": "/ar/media-hub/12-exercises-and-stretches-for-shoulder-pain/",
+      "source": "/ar/physical-therapy-in-the-management-of-frozen-shoulder",
+      "destination": "/ar/media-hub/physical-therapy-in-the-management-of-frozen-shoulder/",
       "statusCode": 301
     },
     {
-      "source": "/ar/12-exercises-and-stretches-for-shoulder-pain/",
-      "destination": "/ar/media-hub/12-exercises-and-stretches-for-shoulder-pain/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/frozen-shoulder-causes-symptoms-and-treatments",
-      "destination": "/ar/media-hub/frozen-shoulder-causes-symptoms-and-treatments/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/frozen-shoulder-causes-symptoms-and-treatments/",
-      "destination": "/ar/media-hub/frozen-shoulder-causes-symptoms-and-treatments/",
+      "source": "/ar/physical-therapy-in-the-management-of-frozen-shoulder/",
+      "destination": "/ar/media-hub/physical-therapy-in-the-management-of-frozen-shoulder/",
       "statusCode": 301
     },
     {
@@ -6435,6 +6495,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/12-exercises-and-stretches-for-shoulder-pain",
+      "destination": "/ar/media-hub/12-exercises-and-stretches-for-shoulder-pain/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/12-exercises-and-stretches-for-shoulder-pain/",
+      "destination": "/ar/media-hub/12-exercises-and-stretches-for-shoulder-pain/",
+      "statusCode": 301
+    },
+    {
       "source": "/frozen-shoulder-causes-symptoms-and-treatments",
       "destination": "/media-hub/frozen-shoulder-causes-symptoms-and-treatments/",
       "statusCode": 301
@@ -6445,23 +6515,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/how-stress-leads-to-neck-and-shoulder-pains",
-      "destination": "/ar/media-hub/how-stress-leads-to-neck-and-shoulder-pains/",
+      "source": "/ar/frozen-shoulder-causes-symptoms-and-treatments",
+      "destination": "/ar/media-hub/frozen-shoulder-causes-symptoms-and-treatments/",
       "statusCode": 301
     },
     {
-      "source": "/ar/how-stress-leads-to-neck-and-shoulder-pains/",
-      "destination": "/ar/media-hub/how-stress-leads-to-neck-and-shoulder-pains/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/top-10-shoulder-stretches-for-pain-and-tightness",
-      "destination": "/ar/media-hub/top-10-shoulder-stretches-for-pain-and-tightness/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/top-10-shoulder-stretches-for-pain-and-tightness/",
-      "destination": "/ar/media-hub/top-10-shoulder-stretches-for-pain-and-tightness/",
+      "source": "/ar/frozen-shoulder-causes-symptoms-and-treatments/",
+      "destination": "/ar/media-hub/frozen-shoulder-causes-symptoms-and-treatments/",
       "statusCode": 301
     },
     {
@@ -6475,6 +6535,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/how-stress-leads-to-neck-and-shoulder-pains",
+      "destination": "/ar/media-hub/how-stress-leads-to-neck-and-shoulder-pains/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/how-stress-leads-to-neck-and-shoulder-pains/",
+      "destination": "/ar/media-hub/how-stress-leads-to-neck-and-shoulder-pains/",
+      "statusCode": 301
+    },
+    {
       "source": "/top-10-shoulder-stretches-for-pain-and-tightness",
       "destination": "/media-hub/top-10-shoulder-stretches-for-pain-and-tightness/",
       "statusCode": 301
@@ -6485,23 +6555,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/rehabilitation-role-in-orthopedic-conditions",
-      "destination": "/ar/media-hub/rehabilitation-role-in-orthopedic-conditions/",
+      "source": "/ar/top-10-shoulder-stretches-for-pain-and-tightness",
+      "destination": "/ar/media-hub/top-10-shoulder-stretches-for-pain-and-tightness/",
       "statusCode": 301
     },
     {
-      "source": "/ar/rehabilitation-role-in-orthopedic-conditions/",
-      "destination": "/ar/media-hub/rehabilitation-role-in-orthopedic-conditions/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/shoulder-elbow-conditions-in-sports-medicine",
-      "destination": "/ar/media-hub/shoulder-elbow-conditions-in-sports-medicine/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/shoulder-elbow-conditions-in-sports-medicine/",
-      "destination": "/ar/media-hub/shoulder-elbow-conditions-in-sports-medicine/",
+      "source": "/ar/top-10-shoulder-stretches-for-pain-and-tightness/",
+      "destination": "/ar/media-hub/top-10-shoulder-stretches-for-pain-and-tightness/",
       "statusCode": 301
     },
     {
@@ -6515,6 +6575,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/rehabilitation-role-in-orthopedic-conditions",
+      "destination": "/ar/media-hub/rehabilitation-role-in-orthopedic-conditions/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/rehabilitation-role-in-orthopedic-conditions/",
+      "destination": "/ar/media-hub/rehabilitation-role-in-orthopedic-conditions/",
+      "statusCode": 301
+    },
+    {
       "source": "/shoulder-elbow-conditions-in-sports-medicine",
       "destination": "/media-hub/shoulder-elbow-conditions-in-sports-medicine/",
       "statusCode": 301
@@ -6525,13 +6595,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/shoulder-pain-guide",
-      "destination": "/ar/media-hub/shoulder-pain-guide/",
+      "source": "/ar/shoulder-elbow-conditions-in-sports-medicine",
+      "destination": "/ar/media-hub/shoulder-elbow-conditions-in-sports-medicine/",
       "statusCode": 301
     },
     {
-      "source": "/ar/shoulder-pain-guide/",
-      "destination": "/ar/media-hub/shoulder-pain-guide/",
+      "source": "/ar/shoulder-elbow-conditions-in-sports-medicine/",
+      "destination": "/ar/media-hub/shoulder-elbow-conditions-in-sports-medicine/",
       "statusCode": 301
     },
     {
@@ -6545,63 +6615,13 @@
       "statusCode": 301
     },
     {
-      "source": "/ar/aortic-stenosis",
-      "destination": "/ar/media-hub/aortic-stenosis/",
+      "source": "/ar/shoulder-pain-guide",
+      "destination": "/ar/media-hub/shoulder-pain-guide/",
       "statusCode": 301
     },
     {
-      "source": "/ar/aortic-stenosis/",
-      "destination": "/ar/media-hub/aortic-stenosis/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/atrial-septal-defect",
-      "destination": "/ar/media-hub/atrial-septal-defect/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/atrial-septal-defect/",
-      "destination": "/ar/media-hub/atrial-septal-defect/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/coarctation-of-the-aorta",
-      "destination": "/ar/media-hub/coarctation-of-the-aorta/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/coarctation-of-the-aorta/",
-      "destination": "/ar/media-hub/coarctation-of-the-aorta/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ebsteins-anomaly",
-      "destination": "/ar/media-hub/ebsteins-anomaly/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/ebsteins-anomaly/",
-      "destination": "/ar/media-hub/ebsteins-anomaly/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/feeding-difficulties",
-      "destination": "/ar/media-hub/feeding-difficulties/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/feeding-difficulties/",
-      "destination": "/ar/media-hub/feeding-difficulties/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/gastroesophageal-reflux-disease-gerd",
-      "destination": "/ar/media-hub/gastroesophageal-reflux-disease-gerd/",
-      "statusCode": 301
-    },
-    {
-      "source": "/ar/gastroesophageal-reflux-disease-gerd/",
-      "destination": "/ar/media-hub/gastroesophageal-reflux-disease-gerd/",
+      "source": "/ar/shoulder-pain-guide/",
+      "destination": "/ar/media-hub/shoulder-pain-guide/",
       "statusCode": 301
     },
     {
@@ -6615,6 +6635,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/aortic-stenosis",
+      "destination": "/ar/media-hub/aortic-stenosis/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/aortic-stenosis/",
+      "destination": "/ar/media-hub/aortic-stenosis/",
+      "statusCode": 301
+    },
+    {
       "source": "/atrial-septal-defect",
       "destination": "/media-hub/atrial-septal-defect/",
       "statusCode": 301
@@ -6622,6 +6652,16 @@
     {
       "source": "/atrial-septal-defect/",
       "destination": "/media-hub/atrial-septal-defect/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/atrial-septal-defect",
+      "destination": "/ar/media-hub/atrial-septal-defect/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/atrial-septal-defect/",
+      "destination": "/ar/media-hub/atrial-septal-defect/",
       "statusCode": 301
     },
     {
@@ -6635,6 +6675,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/coarctation-of-the-aorta",
+      "destination": "/ar/media-hub/coarctation-of-the-aorta/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/coarctation-of-the-aorta/",
+      "destination": "/ar/media-hub/coarctation-of-the-aorta/",
+      "statusCode": 301
+    },
+    {
       "source": "/ebsteins-anomaly",
       "destination": "/media-hub/ebsteins-anomaly/",
       "statusCode": 301
@@ -6642,6 +6692,16 @@
     {
       "source": "/ebsteins-anomaly/",
       "destination": "/media-hub/ebsteins-anomaly/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ebsteins-anomaly",
+      "destination": "/ar/media-hub/ebsteins-anomaly/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/ebsteins-anomaly/",
+      "destination": "/ar/media-hub/ebsteins-anomaly/",
       "statusCode": 301
     },
     {
@@ -6655,6 +6715,16 @@
       "statusCode": 301
     },
     {
+      "source": "/ar/feeding-difficulties",
+      "destination": "/ar/media-hub/feeding-difficulties/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/feeding-difficulties/",
+      "destination": "/ar/media-hub/feeding-difficulties/",
+      "statusCode": 301
+    },
+    {
       "source": "/gastroesophageal-reflux-disease-gerd",
       "destination": "/media-hub/gastroesophageal-reflux-disease-gerd/",
       "statusCode": 301
@@ -6662,6 +6732,16 @@
     {
       "source": "/gastroesophageal-reflux-disease-gerd/",
       "destination": "/media-hub/gastroesophageal-reflux-disease-gerd/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/gastroesophageal-reflux-disease-gerd",
+      "destination": "/ar/media-hub/gastroesophageal-reflux-disease-gerd/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ar/gastroesophageal-reflux-disease-gerd/",
+      "destination": "/ar/media-hub/gastroesophageal-reflux-disease-gerd/",
       "statusCode": 301
     },
     {
@@ -6942,26 +7022,6 @@
     {
       "source": "/ae/ar/doctor/hasan-abueideh/",
       "destination": "/ae/ar/patient-hub/find-a-doctor/hasan-abueideh/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/doctor/mohammed-halawani",
-      "destination": "/sa/patient-hub/find-a-doctor/mohammed-halawani/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/doctor/mohammed-halawani/",
-      "destination": "/sa/patient-hub/find-a-doctor/mohammed-halawani/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/ar/doctor/mohammed-halawani",
-      "destination": "/sa/ar/patient-hub/find-a-doctor/mohammed-halawani/",
-      "statusCode": 301
-    },
-    {
-      "source": "/sa/ar/doctor/mohammed-halawani/",
-      "destination": "/sa/ar/patient-hub/find-a-doctor/mohammed-halawani/",
       "statusCode": 301
     },
     {

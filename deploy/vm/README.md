@@ -15,13 +15,33 @@ push to main ──► GitHub Actions (.github/workflows/deploy-vm.yml): npm tes
 
 The server is the same one App Service would run (`tools/azure/`): pages, redirects, 404s, forms, country cookie.
 
+The dashboard (`tools/admin/`, one superadmin at `/admin`) runs next to it:
+
+```
+Caddy /admin*, /api/admin* ──► node dist-admin/admin-server.mjs on 127.0.0.1:8788   (systemd unit cambridge-admin, user cambridge)
+   edits  /srv/cambridge/admin/src/content/{news,authors}/*.json  + src/assets/{news,authors}/   (a checkout of this repository)
+   "Publish site" / a scheduled post ──► deploy/vm/publish.sh: npm run build:azure there ──► new release ──► activate.sh
+GitHub deploy ──► fetch-content.sh (VM posts -> checkout) ──► build ──► deploy.sh: release + sync the source into /srv/cambridge/admin
+nightly 02:30 UTC ──► cambridge-backup.timer: src/content + images + .admin -> /srv/cambridge/backups (30 kept) [+ Azure Blob]
+```
+
+**The VM is the source of truth for posts, authors and their images.** The client writes them in the dashboard; a GitHub
+deploy first copies them into the build (`fetch-content.sh`) and only ever *adds* repository files to the VM, never
+overwrites or removes one there. Add or change a post through the dashboard, not in the repository.
+
 | File | Installed as |
 |---|---|
-| `setup.sh` | Run once (safe to re-run): Node 22, Caddy, users `cambridge` / `deploy`, sudoers, directories |
-| `cambridge-web.service` | `/etc/systemd/system/cambridge-web.service` |
-| `Caddyfile` | `/etc/caddy/Caddyfile` |
+| `setup.sh` | Run once (safe to re-run): Node 22, Caddy, users `cambridge` / `deploy`, sudoers, directories, units |
+| `cambridge-web.service` | `/etc/systemd/system/cambridge-web.service` (the site) |
+| `cambridge-admin.service` | `/etc/systemd/system/cambridge-admin.service` (the dashboard, port 8788) |
+| `cambridge-backup.service` + `.timer` | Nightly content backup (`backup.sh`) |
+| `Caddyfile` | `/etc/caddy/Caddyfile` (site + `/admin*`, `/api/admin*` routes) |
 | `cambridge-web.env.example` | `/etc/cambridge-web.env` (root only; kept on re-run) |
-| `deploy.sh`, `activate.sh` | Used by every deployment |
+| `cambridge-admin.env.example` | `/etc/cambridge-admin.env` (root only; kept on re-run): superadmin login, build keys |
+| `deploy.sh`, `activate.sh` | Used by every deployment; `deploy.sh` also syncs the source into the dashboard's checkout and runs `admin-update.sh` |
+| `fetch-content.sh` | Before a build: the dashboard's posts from the VM into the checkout (`npm run content:pull`) |
+| `publish.sh` | The dashboard's Publish on the VM: build there, new release, `activate.sh` |
+| `admin-sync.exclude` | What `deploy.sh` leaves out of the dashboard's checkout |
 
 ## 1. Network (Azure Portal > VM > Networking > Network settings > inbound rules)
 
@@ -65,6 +85,21 @@ sudo nano /etc/cambridge-web.env          # SMTP, Turnstile secret, form inboxes
 sudo systemctl restart cambridge-web
 ```
 
+## 5b. Dashboard login (once)
+
+```bash
+node tools/admin/hash-password.mjs 'the superadmin password'    # on a laptop; prints ADMIN_PASSWORD_HASH=...
+ssh azureuser@<vm-ip>
+sudo nano /etc/cambridge-admin.env     # ADMIN_EMAIL, ADMIN_PASSWORD_HASH (without the quotes), ADMIN_SESSION_SECRET (openssl rand -hex 32),
+                                       # PUBLIC_TURNSTILE_SITE_KEY + PUBLIC_GOOGLE_MAPS_KEY (same as the GitHub variables)
+sudo systemctl restart cambridge-admin
+```
+
+The dashboard is at `https://<domain>/admin` after the first deploy (which creates `/srv/cambridge/admin`). Its first
+Publish encodes every image (~12 min on a 2-vCPU VM; a 4 GB VM is the minimum for the build); later ones reuse the cache in
+`/srv/cambridge/cache` and take 1–3 minutes. Optional, recommended: put `/admin*` and `/api/admin*` behind Cloudflare Access
+(Zero Trust > Access > Applications, self-hosted, path `admin`) so only the superadmin's email can even reach the login.
+
 ## 6. HTTPS (Cloudflare)
 
 The domain's DNS is on Cloudflare: visitors connect to Cloudflare, which connects to the VM over HTTPS and checks the
@@ -101,6 +136,9 @@ in the Caddyfile, so nobody reaches the VM around Cloudflare.
 | Status / logs | `systemctl status cambridge-web`, `journalctl -u cambridge-web -f`, `journalctl -u caddy -f` |
 | Roll back | `sudo -u deploy bash /srv/cambridge/releases/<previous>/activate.sh` |
 | Restart | `sudo systemctl restart cambridge-web` |
+| Dashboard | `systemctl status cambridge-admin`, `journalctl -u cambridge-admin -f` (the publish log is also shown in the UI) |
+| Backups | `/srv/cambridge/backups/content-<date>.tar.gz`; restore: `sudo -u cambridge tar -xzf <archive> -C /srv/cambridge/admin`, then Publish |
+| Pull the posts into a laptop checkout | `DEPLOY_HOST=deploy@<vm-ip> SSH_KEY=~/.ssh/cambridge_deploy npm run content:pull` |
 
 A release that does not answer within 20 s is rolled back automatically; the workflow run then fails.
 OS security updates install themselves (Ubuntu's unattended-upgrades); reboot when `/var/run/reboot-required` exists.

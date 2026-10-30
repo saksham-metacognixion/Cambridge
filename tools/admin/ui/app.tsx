@@ -4,6 +4,7 @@ import { useEffect, useState } from "preact/hooks";
 import { api, errorText } from "./api";
 import { PostsList, PostEditor, type Author } from "./posts";
 import { AuthorsList, AuthorEditor } from "./authors";
+import { Settings } from "./settings";
 import { Toast } from "./ui";
 
 type Me = { email: string; siteUrl: string; categories: { key: string; label: string }[] };
@@ -25,7 +26,7 @@ function App() {
 
   if (me === undefined) return <p class="empty">Loading…</p>;
   if (!me) return <Login onDone={(m) => setMe(m)} />;
-  const m = /^\/admin(?:\/(posts|authors)(?:\/([^/]+))?)?\/?$/.exec(path);
+  const m = /^\/admin(?:\/(posts|authors|settings)(?:\/([^/]+))?)?\/?$/.exec(path);
   const section = m?.[1] ?? "posts";
   const id = m?.[2];
   return (
@@ -36,6 +37,7 @@ function App() {
           <nav class="nav" aria-label="Sections">
             <a href="/admin/posts" class={section === "posts" ? "active" : ""} onClick={(e) => { e.preventDefault(); nav("/admin/posts"); }}>Blog &amp; PR</a>
             <a href="/admin/authors" class={section === "authors" ? "active" : ""} onClick={(e) => { e.preventDefault(); nav("/admin/authors"); }}>Authors</a>
+            <a href="/admin/settings" class={section === "settings" ? "active" : ""} onClick={(e) => { e.preventDefault(); nav("/admin/settings"); }}>Settings</a>
           </nav>
           <span class="spacer" />
           <PublishButton toast={setToast} />
@@ -49,6 +51,7 @@ function App() {
         {section === "posts" && id && <PostEditor key={id} slug={id} nav={nav} siteUrl={me.siteUrl} categories={me.categories} authors={authors} toast={setToast} />}
         {section === "authors" && !id && <AuthorsList nav={nav} />}
         {section === "authors" && id && <AuthorEditor key={id} slug={id} nav={nav} toast={setToast} />}
+        {section === "settings" && <Settings toast={setToast} siteUrl={me.siteUrl} />}
       </main>
       <Toast text={toast} />
     </div>
@@ -86,8 +89,9 @@ function Login({ onDone }: { onDone: (m: Me) => void }) {
 /** "Publish site" in the top bar: starts the build and shows its progress; polls while it runs. */
 function PublishButton({ toast }: { toast: (t: string) => void }) {
   const [pub, setPub] = useState<Publish>({ state: "idle", output: [] });
+  const [next, setNext] = useState<{ slug: string; title: string; at: string }[]>([]);
   const [open, setOpen] = useState(false);
-  const refresh = async () => { const r = await api<{ publish: Publish }>("GET", "/publish"); if (r.publish) setPub(r.publish); return r.publish; };
+  const refresh = async () => { const r = await api<{ publish: Publish; schedule?: { next: typeof next } }>("GET", "/publish"); if (r.publish) setPub(r.publish); if (r.schedule) setNext(r.schedule.next); return r.publish; };
   useEffect(() => { refresh(); }, []);
   useEffect(() => {
     if (pub.state !== "running") return;
@@ -108,6 +112,8 @@ function PublishButton({ toast }: { toast: (t: string) => void }) {
           {pub.finishedAt && <p class="counter">Finished {new Date(pub.finishedAt).toLocaleString()}</p>}
           <p class="help" style="margin-top:8px">Publishing rebuilds the website with every saved post. It takes about a minute.</p>
           {pub.output.length > 0 && <pre>{pub.output.slice(-40).join("\n")}</pre>}
+          {next.length > 0 && <div style="margin-top:10px"><b style="font-size:14px">Goes live by itself</b>
+            <ul style="margin:6px 0 0;padding-inline-start:18px;font-size:13px">{next.map((d) => <li key={d.slug}>{d.title || d.slug} · {new Date(d.at).toLocaleString()}</li>)}</ul></div>}
         </div>
       )}
     </div>

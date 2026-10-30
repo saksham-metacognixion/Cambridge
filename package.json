@@ -25,6 +25,7 @@
     "test:azure": "node tests/azure-server.test.mjs",
     "test:admin": "node tests/admin-server.test.mjs",
     "admin:bundle": "node tools/admin/bundle.mjs",
+    "content:pull": "bash deploy/vm/fetch-content.sh",
     "admin": "node tools/admin/bundle.mjs && node dist-admin/admin-server.mjs"
   },
   "dependencies": {

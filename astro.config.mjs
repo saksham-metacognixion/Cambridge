@@ -133,6 +133,10 @@ export default defineConfig({
   // The integration below moves each edition's 404 page to <prefix>/404.html, the file the hosts serve for unknown URLs.
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'auto' },
+  // The optimised-image cache (4,500+ AVIF / WebP, ~12 min to encode) defaults to node_modules/.astro. On the Azure VM the
+  // dashboard's builds keep it outside the checkout (ASTRO_CACHE_DIR, deploy/vm/cambridge-admin.service) so `npm ci` on a
+  // code deploy does not throw it away.
+  ...(process.env.ASTRO_CACHE_DIR ? { cacheDir: process.env.ASTRO_CACHE_DIR } : {}),
   integrations: [notFoundPages(), browserCompatCss(), fontVersions()],
   devToolbar: { enabled: false },
   // Bug 190 (16 Oct 2026): no quality was set anywhere, so every photo (<Picture> / <Image>) was encoded at sharp's default AVIF

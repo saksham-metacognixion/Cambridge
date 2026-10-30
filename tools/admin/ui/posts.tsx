@@ -4,6 +4,7 @@ import { api, errorText } from "./api";
 import { DESC, TITLE, runChecks, seoDescription, seoTitle, stripHtml, type Locale } from "./checks";
 import { Counter, Field, Pairs, StringList, Text, scoreClass, today } from "./ui";
 import { ImageUpload } from "./upload";
+import { RichText } from "./editor";
 
 export type Summary = { slug: string; date: string; updated?: string; category: string; type: "blog" | "pr"; status: string; editions: string[]; title: string; hasArabic: boolean; seo: boolean; imageAlt: boolean; keyword: boolean; keywords: string[]; author: string; reviewer: string; image: string };
 export type Post = { slug: string; date: string; updated?: string; category: string; type: "blog" | "pr"; status: "draft" | "scheduled" | "published" | "archived"; publish_at?: string; editions: string[]; image: string; image_source?: string; hero_photo?: "full"; previous_slugs?: string[]; author?: string; reviewer?: string; noindex?: boolean; en: Locale & { old_url?: string; hero_button?: boolean; canonical?: string }; ar?: Post["en"]; [k: string]: unknown };
@@ -174,8 +175,8 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
               <input id="slug" class="input" value={p.slug} placeholder={slugify(p.en.title)} onInput={(e) => set({ slug: slugify((e.currentTarget as HTMLInputElement).value) })} onBlur={() => !p.slug && set({ slug: slugify(p.en.title) })} />
             </Field>}
             <Field id="excerpt" label="Short summary (listing cards)"><Text id="excerpt" rows={3} dir={dir} value={loc!.excerpt ?? ""} onInput={(v) => setLoc({ excerpt: v })} /></Field>
-            <Field id="body" label="Article (HTML: p, h2, h3, ul, ol, a, strong, em, table, figure)" hint={`${stripHtml(loc!.body ?? "").split(" ").filter(Boolean).length} words`}>
-              <Text id="body" rows={18} mono dir={dir} value={loc!.body ?? ""} onInput={(v) => setLoc({ body: v })} />
+            <Field id="body" label="Article" hint={`${stripHtml(loc!.body ?? "").split(" ").filter(Boolean).length} words. Headings (H2 / H3) help readers and AI assistants find each section.`}>
+              <RichText id="body" dir={dir} value={loc!.body ?? ""} onChange={(v) => setLoc({ body: v })} slug={isNew ? "" : p.slug} otherBody={lang === "ar" ? p.en.body : p.ar?.body} otherLabel={lang === "ar" ? "English" : "Arabic"} />
             </Field>
             <Field id="alt" label="Featured image description (alt text)" hint="Required before publishing."><Text id="alt" dir={dir} value={loc!.image_alt ?? ""} onInput={(v) => setLoc({ image_alt: v })} /></Field>
           </div>
@@ -208,7 +209,7 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
               </Field>
               <Field id="date" label="Publish date"><Text id="date" type="date" value={p.date} onInput={(v) => set({ date: v })} /></Field>
             </div>
-            {p.status === "scheduled" && <Field id="at" label="Goes live at (your local time)"><Text id="at" type="datetime-local" value={(p.publish_at ?? "").slice(0, 16)} onInput={(v) => set({ publish_at: v ? new Date(v).toISOString() : undefined })} /></Field>}
+            {p.status === "scheduled" && <Field id="at" label="Goes live at (your local time)" hint="The website rebuilds by itself at this time; nobody needs to press Publish. Empty = midnight (UTC) on the publish date."><Text id="at" type="datetime-local" value={(p.publish_at ?? "").slice(0, 16)} onInput={(v) => set({ publish_at: v ? new Date(v).toISOString() : undefined })} /></Field>}
             <Field id="upd" label="Last updated" hint={<button class="link" onClick={() => set({ updated: today() })}>Mark as updated today</button>}><Text id="upd" type="date" value={p.updated ?? ""} onInput={(v) => set({ updated: v || undefined })} /></Field>
             <div class="field"><span style="font-weight:500;font-size:14px">Shown on</span>
               <div class="row">{EDITIONS.map(([k, l]) => <label key={k} class="check"><input type="checkbox" checked={p.editions.includes(k)} onChange={(e) => set({ editions: (e.currentTarget as HTMLInputElement).checked ? [...p.editions, k] : p.editions.filter((x) => x !== k) })} />{l}</label>)}</div>

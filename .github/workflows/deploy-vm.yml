@@ -36,6 +36,20 @@ jobs:
           key: astro-images-${{ hashFiles('src/assets/**', 'src/lib/image-service.ts', 'astro.config.mjs') }}
           restore-keys: astro-images-
 
+      # The posts and authors written in the dashboard live on the VM (deploy/vm/README.md "Dashboard"): copy them in
+      # first, so a code deploy carries them and never removes one. Skipped until the dashboard exists on the VM.
+      - name: Content from the dashboard
+        env:
+          VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+          VM_KNOWN_HOSTS: ${{ vars.VM_KNOWN_HOSTS }}
+          DEPLOY_HOST: deploy@${{ vars.VM_HOST }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$VM_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$VM_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          SSH_KEY=~/.ssh/deploy_key ./deploy/vm/fetch-content.sh
+
       # PUBLIC_* values are written into the HTML at build time (they are public by design); changing one needs a new build.
       - run: npm run build:azure
         env:
@@ -48,9 +62,4 @@ jobs:
           VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
           VM_KNOWN_HOSTS: ${{ vars.VM_KNOWN_HOSTS }}
           DEPLOY_HOST: deploy@${{ vars.VM_HOST }}
-        run: |
-          install -d -m 700 ~/.ssh
-          printf '%s\n' "$VM_SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "$VM_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          SSH_KEY=~/.ssh/deploy_key ./deploy/vm/deploy.sh
+        run: SSH_KEY=~/.ssh/deploy_key ./deploy/vm/deploy.sh

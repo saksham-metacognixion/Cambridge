@@ -1,9 +1,16 @@
 {
-  "$comment": "AI crawler access in robots.txt (SEO & GEO Dashboard Spec, Pratik 29 Oct 2026, section 6; src/pages/robots.txt.ts). true = Allow, false = Disallow the whole site for that crawler. Default all true = the same access every crawler already had under 'User-agent: *' (spec recommendation; open question to the client). Staging (INDEXABLE = false) disallows everything whatever is set here. The CMS settings screen edits this file later (Phase 2).",
+  "$comment": "AI crawler access in robots.txt (SEO & GEO Dashboard Spec, Pratik 29 Oct 2026, section 6; src/pages/robots.txt.ts). true = Allow, false = Disallow the whole site for that crawler. Every crawler not listed falls under 'User-agent: *' = allowed. Edited from the dashboard (Settings > AI crawlers, tools/admin/ui/settings.tsx). Client (30 Oct 2026): AI search bots must be allowed from the root, so the search / answer crawlers are listed as Allow explicitly; Cloudflare's own AI-bot blocking must be off as well. Staging (INDEXABLE = false) disallows everything whatever is set here.",
   "aiCrawlers": {
+    "OAI-SearchBot": true,
+    "ChatGPT-User": true,
     "GPTBot": true,
     "PerplexityBot": true,
+    "Perplexity-User": true,
+    "Claude-SearchBot": true,
+    "Claude-User": true,
     "ClaudeBot": true,
-    "Google-Extended": true
+    "Google-Extended": true,
+    "Applebot": true,
+    "Bingbot": true
   }
 }

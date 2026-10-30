@@ -22,7 +22,7 @@ mkdirSync(join(root, 'public/fonts'), { recursive: true });
 cpSync('public/fonts/Gotham-Book.woff2', join(root, 'public/fonts/Gotham-Book.woff2'));
 Object.assign(process.env, {
   CONTENT_ROOT: root, LOCAL_DEV: 'true', ADMIN_EMAIL: 'Admin@Example.test', ADMIN_PASSWORD_HASH: hashPassword('correct horse battery'),
-  ADMIN_SESSION_SECRET: 'test-secret', PUBLISH_COMMAND: 'echo building && echo done',
+  ADMIN_SESSION_SECRET: 'test-secret', PUBLISH_COMMAND: 'echo building && echo done', SCHEDULE_CHECK_SECONDS: '1',
 });
 
 const server = start(0, '127.0.0.1');
@@ -127,12 +127,39 @@ assert.equal(r.status, 200); assert.equal(r.headers.get('content-type'), 'image/
 assert.equal((await upload(`/api/admin/upload/posts/${slug}`, Buffer.from('not an image'))).status, 400);
 assert.equal((await upload(`/api/admin/upload/posts/no-such-post`, png)).status, 404); ok('bad file -> 400, unknown post -> 404');
 
+// --- settings: robots.txt AI crawlers (src/data/robots.json) ---
+mkdirSync(join(root, 'src/data'), { recursive: true });
+writeFileSync(join(root, 'src/data/robots.json'), JSON.stringify({ $comment: 'kept', aiCrawlers: { GPTBot: true } }));
+assert.deepEqual((await call('GET', '/api/admin/settings/robots')).body.aiCrawlers, { GPTBot: true });
+assert.equal((await write('PUT', '/api/admin/settings/robots', { aiCrawlers: { GPTBot: 'yes' } })).status, 400);
+assert.equal((await write('PUT', '/api/admin/settings/robots', { aiCrawlers: { 'bad name!': true } })).status, 400);
+assert.equal((await write('PUT', '/api/admin/settings/robots', { aiCrawlers: { GPTBot: false, PerplexityBot: true } })).status, 200);
+const robotsFile = JSON.parse(readFileSync(join(root, 'src/data/robots.json'), 'utf8'));
+assert.deepEqual(robotsFile, { $comment: 'kept', aiCrawlers: { GPTBot: false, PerplexityBot: true } });
+assert.ok(readdirSync(join(root, '.admin/versions/settings')).some((f) => f.startsWith('robots-')));
+ok('robots settings: read, validated, written with the comment kept and a version copy');
+
 // --- publish ---
 r = await write('POST', '/api/admin/publish');
 assert.equal(r.status, 202);
 for (let i = 0; i < 50 && (await call('GET', '/api/admin/publish')).body.publish.state === 'running'; i++) await new Promise((t) => setTimeout(t, 100));
 r = await call('GET', '/api/admin/publish');
 assert.equal(r.body.publish.state, 'ok'); assert.deepEqual(r.body.publish.output, ['building', 'done']); ok('publish runs the build command and reports its output');
+
+// --- scheduled posts: one due in the past goes live by itself (status flipped, version kept, build started); one in the future waits ---
+const sched = (slug, at) => ({ slug, date: '2026-10-30', category: 'health-articles', type: 'blog', status: 'scheduled', publish_at: at, editions: ['global'], image: '', en: { title: `Scheduled ${slug}`, body: '<p>Soon.</p>' } });
+assert.equal((await write('POST', '/api/admin/posts', sched('due-post', new Date(Date.now() - 60_000).toISOString()))).status, 201);
+assert.equal((await write('POST', '/api/admin/posts', sched('later-post', '2099-01-01T09:00:00.000Z'))).status, 201);
+for (let i = 0; i < 40 && (await call('GET', `/api/admin/posts/due-post`)).body.item.status !== 'published'; i++) await new Promise((t) => setTimeout(t, 100));
+r = await call('GET', '/api/admin/posts/due-post');
+assert.equal(r.body.item.status, 'published'); assert.equal(r.body.item.publish_at, undefined);
+assert.ok(readdirSync(join(root, '.admin/versions/posts/due-post')).some((f) => f.endsWith('-scheduled.json')));
+for (let i = 0; i < 50 && (await call('GET', '/api/admin/publish')).body.publish.state === 'running'; i++) await new Promise((t) => setTimeout(t, 100));
+r = await call('GET', '/api/admin/publish');
+assert.equal(r.body.publish.state, 'ok'); assert.ok(r.body.schedule.lastRun, 'the scheduler started a build');
+assert.deepEqual(r.body.schedule.next.map((d) => d.slug), ['later-post']);
+assert.equal((await call('GET', `/api/admin/posts/later-post`)).body.item.status, 'scheduled');
+ok('a scheduled post goes live on time by itself; a future one waits and is listed as next');
 
 // --- logout ---
 await write('POST', '/api/admin/logout');

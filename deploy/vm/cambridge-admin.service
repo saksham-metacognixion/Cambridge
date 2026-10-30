@@ -1,0 +1,37 @@
+# systemd unit for the dashboard's admin service (tools/admin/) on the Azure VM. Installed by deploy/vm/setup.sh as
+# /etc/systemd/system/cambridge-admin.service. Caddy (deploy/vm/Caddyfile) routes /admin* and /api/admin* to it.
+# It edits the posts / authors in /srv/cambridge/admin/src/content and, on "Publish site", builds the site there and makes
+# the build live exactly like a GitHub deploy (deploy/vm/publish.sh -> activate.sh).
+[Unit]
+Description=Cambridge Hospital dashboard (tools/admin/server.ts)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+User=cambridge
+Group=cambridge
+UMask=0002
+WorkingDirectory=/srv/cambridge/admin
+ExecStart=/usr/bin/node /srv/cambridge/admin/dist-admin/admin-server.mjs
+Environment=NODE_ENV=production PORT=8788 HOST=127.0.0.1
+Environment=CONTENT_ROOT=/srv/cambridge/admin PUBLISH_COMMAND=/srv/cambridge/admin/deploy/vm/publish.sh
+# The build's caches (npm, Astro's optimised images) live outside the checkout so a code deploy never throws them away.
+Environment=HOME=/srv/cambridge/cache ASTRO_CACHE_DIR=/srv/cambridge/cache/astro
+# ADMIN_EMAIL, ADMIN_PASSWORD_HASH, ADMIN_SESSION_SECRET, ADMIN_SITE_URL, the PUBLIC_* build keys (root only).
+EnvironmentFile=/etc/cambridge-admin.env
+Restart=always
+RestartSec=2
+
+# Writes only under /srv/cambridge; it needs sudo for one command (restart the site after a publish, deploy/vm/activate.sh),
+# so NoNewPrivileges is not set here.
+ProtectSystem=full
+ReadWritePaths=/srv/cambridge
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+
+[Install]
+WantedBy=multi-user.target

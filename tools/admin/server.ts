@@ -252,6 +252,37 @@ function startPublish() {
   child.on("error", (e) => { keep(Buffer.from(e.message)); Object.assign(publish, { state: "failed", finishedAt: new Date().toISOString() }); });
 }
 
+// ---------- scheduled posts: go live on time without anyone pressing Publish ----------
+// Every SCHEDULE_CHECK_SECONDS (default 60; 0 = off) the service looks for posts with status "scheduled" whose time has
+// passed, marks them "published" (a version copy is kept) and starts one build. The build itself already treats a
+// scheduled post whose time has passed as live (src/lib/news.ts isLive), so the file change only keeps the dashboard
+// and the file honest; the build is what puts the post on the website.
+type Due = { slug: string; title: string; at: string };
+type Schedule = { next: Due[]; lastCheck?: string; lastRun?: string; pending: boolean };
+const schedule: Schedule = { next: [], pending: false };
+const dueAt = (p: Record<string, any>) => (p.publish_at as string) || `${p.date}T00:00:00Z`;
+export function checkSchedule(now = Date.now()) {
+  const scheduled = listKind("posts").filter((p) => p.status === "scheduled" && typeof p.slug === "string");
+  schedule.next = scheduled
+    .map((p) => ({ slug: p.slug as string, title: (p.en as any)?.title ?? "", at: dueAt(p) }))
+    .filter((d) => Date.parse(d.at) > now)
+    .sort((a, b) => a.at.localeCompare(b.at));
+  for (const p of scheduled) {
+    const at = Date.parse(dueAt(p));
+    if (Number.isNaN(at) || at > now) continue;
+    const slug = p.slug as string;
+    snapshot("posts", slug, "scheduled");
+    delete p.publish_at;
+    writeJson(fileOf("posts", slug), { ...p, status: "published" });
+    schedule.pending = true;
+    console.log(`admin server: scheduled post "${slug}" is due, publishing`);
+  }
+  if (schedule.pending && publish.state !== "running") {
+    try { startPublish(); schedule.pending = false; schedule.lastRun = new Date(now).toISOString(); } catch (e) { console.error(`admin server: scheduled publish: ${e instanceof Error ? e.message : e}`); }
+  }
+  schedule.lastCheck = new Date(now).toISOString();
+}
+
 // ---------- HTTP ----------
 class HttpError extends Error {
   constructor(public status: number, public code: string, public details?: unknown) { super(code); }
@@ -308,6 +339,24 @@ export async function handle(req: IncomingMessage): Promise<Response> {
   // Every write needs the custom header: a cross-site form or image tag cannot add it (CSRF, on top of SameSite=Strict).
   if (method !== "GET" && req.headers["x-requested-with"] !== "admin") return json(403, { ok: false, error: "missing_header" });
 
+  // --- settings: robots.txt AI crawler access (spec section 6; src/data/robots.json, read by src/pages/robots.txt.ts) ---
+  if (route === "/settings/robots") {
+    const file = path.join(root(), "src", "data", "robots.json");
+    if (method === "GET") return json(200, { ok: true, aiCrawlers: (readJson(file) as any)?.aiCrawlers ?? {} });
+    if (method === "PUT") {
+      const body = (await readBody(req)) as { aiCrawlers?: Record<string, unknown> };
+      const entries = Object.entries(body?.aiCrawlers ?? {});
+      const bad = entries.find(([k, v]) => !/^[A-Za-z0-9_.-]{1,60}$/.test(k) || typeof v !== "boolean");
+      if (!body?.aiCrawlers || bad) return json(400, { ok: false, error: "invalid", details: [{ field: bad ? bad[0] : "aiCrawlers", message: "crawler names: letters, digits, - _ .; value true (allow) or false (block)" }] });
+      const current = (readJson(file) as Record<string, unknown>) ?? {};
+      const dir = path.join(root(), ".admin", "versions", "settings");
+      fs.mkdirSync(dir, { recursive: true });
+      if (fs.existsSync(file)) fs.copyFileSync(file, path.join(dir, `robots-${new Date().toISOString().replace(/[:.]/g, "-")}.json`));
+      writeJson(file, { ...current, aiCrawlers: Object.fromEntries(entries) });
+      return json(200, { ok: true, aiCrawlers: Object.fromEntries(entries) });
+    }
+  }
+
   // --- images: GET /image/<key> (preview), POST /upload/<posts|authors>/<slug>[?suffix=2] (raw image body) ---
   if (route.startsWith("/image/") && method === "GET") return imageFile(decodeURIComponent(route.slice("/image/".length))) ?? json(404, { ok: false, error: "not_found" });
   const up = /^\/upload\/(posts|authors)\/([^/]+)$/.exec(route);
@@ -330,7 +379,7 @@ export async function handle(req: IncomingMessage): Promise<Response> {
   // --- publish ---
   if (route === "/publish") {
     if (method === "POST") startPublish();
-    return json(method === "POST" ? 202 : 200, { ok: true, publish });
+    return json(method === "POST" ? 202 : 200, { ok: true, publish, schedule });
   }
 
   // --- content: /posts, /posts/<slug>, /posts/<slug>/versions, /posts/<slug>/restore, /posts/<slug>/rename; same for /authors ---
@@ -432,6 +481,13 @@ export function start(port: number, host?: string) {
   requireConfig();
   const server = createServer(listener);
   server.requestTimeout = 30_000;
+  const every = Number(env.SCHEDULE_CHECK_SECONDS ?? 60);
+  if (every > 0) {
+    const tick = () => { try { checkSchedule(); } catch (e) { console.error(`admin server: schedule check: ${e instanceof Error ? e.message : e}`); } };
+    const timer = setInterval(tick, every * 1000);
+    timer.unref();
+    server.once("listening", tick).once("close", () => clearInterval(timer));
+  }
   return server.listen(port, host);
 }
 

@@ -32,8 +32,8 @@
       "location": {
         "lat": 24.3507866,
         "lng": 54.6375318,
-        "placeId": "",
-        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+        "placeId": "ChIJ8_c79MM3Xj4RVkmIOnMpwO0",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending). Place ID (20 Oct 2026): the Google place at exactly this position, titled 'مستشفى كامبريدج - ابوظبي' (feature id 0x3e5e37c3f43bf7f3:0xedc029733a884956, the Place ID is that id encoded, as for Jeddah), so Open in Google Maps / directions open the hospital's own listing instead of a bare coordinate pin."
       }
     },
     {
@@ -67,8 +67,8 @@
       "location": {
         "lat": 24.2311383,
         "lng": 55.6805982,
-        "placeId": "",
-        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+        "placeId": "ChIJiRz0Rhuyij4RvayTpQob0q0",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending). Place ID (20 Oct 2026): the Google place at exactly this position, titled 'Cambridge Hospital - Al Ain' (feature id 0x3e8ab21b46f41c89:0xadd21b0aa593acbd, the Place ID is that id encoded, as for Jeddah), so Open in Google Maps / directions open the hospital's own listing instead of a bare coordinate pin."
       }
     },
     {
@@ -106,8 +106,8 @@
       "location": {
         "lat": 24.3239001,
         "lng": 54.6089327,
-        "placeId": "",
-        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+        "placeId": "ChIJmWoi0qY5Xj4ROl50N-9SyZ8",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending). Place ID (20 Oct 2026): the Google place at exactly this position, titled 'Al Mudeef Centre' (feature id 0x3e5e39a6d2226a99:0x9fc952ef37745e3a, the Place ID is that id encoded, as for Jeddah), so Open in Google Maps / directions open the hospital's own listing instead of a bare coordinate pin."
       }
     },
     {
@@ -141,8 +141,8 @@
       "location": {
         "lat": 26.3191904,
         "lng": 50.1556885,
-        "placeId": "",
-        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+        "placeId": "ChIJY5dO0G7mST4RUSLrYGZPVYM",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending). Place ID (20 Oct 2026): the Google place at exactly this position, titled 'CMRC Saudi Arabia Hospital' (feature id 0x3e49e66ed04e9763:0x83554f6660eb2251, the Place ID is that id encoded, as for Jeddah), so Open in Google Maps / directions open the hospital's own listing instead of a bare coordinate pin."
       }
     },
     {
@@ -176,8 +176,8 @@
       "location": {
         "lat": 26.1862228,
         "lng": 50.2090257,
-        "placeId": "",
-        "source": "Google place position, checked 7 Oct 2026 (client approval pending)"
+        "placeId": "ChIJpfUbrczFST4RxHP5kIDkYyM",
+        "source": "Google place position, checked 7 Oct 2026 (client approval pending). Place ID (20 Oct 2026): the Google place at exactly this position, titled 'Cambridge Hospital Al Khobar' (feature id 0x3e49c5ccad1bf5a5:0x2363e48090f973c4, the Place ID is that id encoded, as for Jeddah), so Open in Google Maps / directions open the hospital's own listing instead of a bare coordinate pin."
       }
     },
     {

@@ -9,6 +9,9 @@
  * "w/h", or "portrait" / "landscape") becomes the --vl-ratio custom property (width / height) on the dialog; the CSS sizes
  * the frame from it, so a portrait video gets a portrait frame and a landscape one a 16:9 frame, both fitted to the
  * viewport (85dvh tall at most, never wider than the screen). Look: .video-lightbox rules in src/styles/global.css.
+ * Inline mode (user decision, 19 Oct 2026, hospital pages): data-video-mode="inline" on the facade plays the video in place
+ * instead: the player replaces the poster button inside the facade box for good (class "player", styled by the component)
+ * and takes the focus. data-aspect is not used there: the box keeps its own shape.
  */
 const RATIOS: Record<string, number> = {
   landscape: 16 / 9,
@@ -123,6 +126,13 @@ function close() {
   );
 }
 
+/** Inline mode: the player takes the poster's place in the facade box; the poster does not come back. */
+function playInline(wrap: HTMLElement, player: HTMLElement) {
+  player.setAttribute("class", "player");
+  wrap.replaceChildren(player);
+  player.focus();
+}
+
 document
   .querySelectorAll<HTMLElement>("[data-video-facade]")
   .forEach((wrap) => {
@@ -130,6 +140,8 @@ document
     if (!btn) return;
     btn.addEventListener("click", () => {
       const el = embed(wrap.dataset.host ?? "", wrap.dataset.id ?? "");
-      if (el) open(el, btn, aspectRatio(wrap.dataset.aspect));
+      if (!el) return;
+      if (wrap.dataset.videoMode === "inline") playInline(wrap, el);
+      else open(el, btn, aspectRatio(wrap.dataset.aspect));
     });
   });

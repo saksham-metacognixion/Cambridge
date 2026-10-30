@@ -2,7 +2,7 @@
 import { getImage } from 'astro:assets';
 import { editions, editionFromBase, urlFor } from '../../../lib/editions';
 import { content } from '../../../lib/content';
-import { allPostSlugs, postFor, postImage, badgeDate, NEWS_PATHS } from '../../../lib/news';
+import { allPostSlugs, postFor, postImage, postTitleSize, badgeDate, NEWS_PATHS } from '../../../lib/news';
 import { sanitizeHtml } from '../../../lib/sanitize';
 import { img } from '../../../lib/images';
 import { showPendingNote } from '../../../lib/conditions';
@@ -62,9 +62,9 @@ const hero = {
   ariaLabel: post.title,
   banner: { image, alt: post.image_alt || '' },
   title: [post.title],
-  button: c.hero.button,
+  button: post.hero_button === false ? undefined : c.hero.button, // per-post opt-out (news README: hero_button)
 };
-const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
+const pos = { titleSize: postTitleSize(post.title, post.language), titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
 ---
 
 <BaseLayout edition={edition} path={NEWS_PATHS.article(slug)} title={title} description={description} ogImage={ogImage}>
@@ -79,7 +79,7 @@ const pos = { titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
   <main>
     <article>
       <div id="hero" class="relative">
-        {image ? <PageHero content={hero} pos={pos} h={322} variant="cover" mirror={false} side /> : <PageHero content={{ ...hero, banner: { image: 'conditions/accidents-rehabilitation', alt: '' } }} pos={pos} h={322} variant="cover" />}
+        {image ? <PageHero content={hero} pos={pos} h={322} variant="cover" mirror={false} side fullPhoto={post.hero_photo === 'full'} /> : <PageHero content={{ ...hero, banner: { image: 'conditions/accidents-rehabilitation', alt: '' } }} pos={pos} h={322} variant="cover" />}
       </div>
       <div id="overview" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(34 * var(--u))">
         <ArticleBody heading={c.overviewHeading} date={date} intro={intro} html={html} pending={pending} video={c.video} />

@@ -112,3 +112,9 @@ export function switchHref(target: Edition, path: string, fallback: "ancestor" |
   while (p && !paths.has(p)) p = p.includes("/") ? p.slice(0, p.lastIndexOf("/")) : "";
   return urlFor(target, p);
 }
+
+/** The same page in another edition, or null when that edition has no such page (the location redirect never lands on a 404 or a stand-in page). */
+export function samePageHref(target: Edition, path: string): string | null {
+  const p = path.replace(/^\/+|\/+$/g, "");
+  return allRoutes(target).some((r) => r.path === p) ? urlFor(target, p) : null;
+}

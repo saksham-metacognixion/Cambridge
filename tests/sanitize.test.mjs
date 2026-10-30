@@ -26,6 +26,15 @@ assert.equal(
   '<figure data-youtube="Hmhu4kql_Pw"><a href="https://www.youtube.com/watch?v=Hmhu4kql_Pw" target="_blank" rel="noopener">t</a></figure>',
 );
 assert.equal(sanitizeHtml('<figure data-youtube="x\" onclick=\"y"><a>t</a></figure>'), '<figure><a>t</a></figure>');
+// image marker of a site-written post: a safe asset key survives on <figure>, the img keeps its alt
+assert.equal(
+  sanitizeHtml('<figure data-image="news/some-post-2" class="x"><img alt="Signing"></figure>'),
+  '<figure data-image="news/some-post-2"><img alt="Signing" loading="lazy" decoding="async"></figure>',
+);
+// keys that could leave src/assets or are not a plain asset path are dropped
+assert.equal(sanitizeHtml('<figure data-image="../secret"><img alt="a"></figure>'), '<figure><img alt="a" loading="lazy" decoding="async"></figure>');
+assert.equal(sanitizeHtml('<figure data-image="news/x.png"><img alt="a"></figure>'), '<figure><img alt="a" loading="lazy" decoding="async"></figure>');
+assert.equal(sanitizeHtml('<figure data-image="/news/x"><img alt="a"></figure>'), '<figure><img alt="a" loading="lazy" decoding="async"></figure>');
 // empty input
 assert.equal(sanitizeHtml(''), '');
 

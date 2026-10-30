@@ -1,0 +1,31 @@
+---
+/*
+ * A photo inside a post's text (site-written posts, src/data/news/site-posts.json: <figure data-image="<key>"><img alt>,
+ * kept by src/lib/sanitize.ts). Same look as the body's other images (no Figma design for in-text images, AR4): the photo's
+ * own width, never wider than the text column. Unlike a raw <img>, it is an optimised Picture (AVIF + WebP fallback,
+ * width/height set, lazy). An unknown key stops the build (lib/images.ts img()).
+ * layout="constrained": Astro picks the srcset widths (never wider than the original: fixed steps upscaled a 939 px photo to
+ * 960) and writes `sizes` itself, so the code never reads .width (which would copy the full-size original into dist,
+ * lib/images.ts).
+ */
+import { Picture } from 'astro:assets';
+import { img } from '../../lib/images';
+import type { RegionId } from '../../lib/editions';
+
+interface Props { imageKey: string; alt: string; region: RegionId }
+const { imageKey, alt, region } = Astro.props;
+const src = img(imageKey, region);
+---
+
+<figure>
+  <Picture
+    src={src}
+    formats={['avif']}
+    fallbackFormat="webp"
+    layout="constrained"
+    alt={alt}
+    loading="lazy"
+    decoding="async"
+    pictureAttributes={{ class: 'contents' }}
+  />
+</figure>

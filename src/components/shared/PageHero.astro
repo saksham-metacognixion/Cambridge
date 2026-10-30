@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import { heroEdge } from '../../lib/hero-edge';
 import { heroSubjectStrip, heroSmallCrop } from '../../lib/hero-strip';
 import { px } from '../../lib/scale';
@@ -64,6 +64,9 @@ interface Props {
    *  170:839: photo on the right, the title on a light plain area), its leading edge fading into the light surface. A post
    *  image is any shape or pattern (the live "Emblem" pill artwork, busy photos), so it never runs under the title. */
   side?: boolean;
+  /** `side` posts with `hero_photo: "full"` (news README, user 23 Oct 2026: "proper full image"): >= 1024 the WHOLE photo fills the
+   *  ~16:9 box (object-cover), not the 1052x323 strip that the box then cropped again (heads cut off). Below 1024 unchanged. */
+  fullPhoto?: boolean;
   /** Bug 086 (screens wider than 1440): how the background reaches the viewport edges (styles/global.css .hero-bleed).
    *  'edges' = each side continues the background layer's own edge column (gradient + pills; the default with layers);
    *  'start' = both sides continue the banner's START column (the plain gradient side; the default for a flat banner,
@@ -74,7 +77,7 @@ interface Props {
    *  flat 212-tall Conditions cut-out, so it covered the end of the intro. true = the paragraph stops 24px before the shape. */
   clearPills?: boolean;
 }
-const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false, clearPills = false } = Astro.props;
+const { content: c, pos, h = 437, variant = 'banner', tone = 'navy', button = 'outline', mirror = true, keepComposition = false, buttonAttrs = {}, follow = 'people', side = false, fullPhoto = false, clearPills = false } = Astro.props;
 const { edition } = parsePath(Astro.url.pathname);
 // Live-site banner art (banner brief 14 Oct 2026, components/shared/BannerArt.astro): gradient + pill shape + the people cut-out at
 // the live size and place, on a 500px-at-1440 stage. Not for the Our Hospitals map (HeroMap pins over its own art) or news photos.
@@ -102,6 +105,18 @@ const pic = {
   formats: ['avif'], fallbackFormat: 'webp', width: px(1052), height: px(imgH), widths: [720, 1052, 1440, 2104],
   sizes: crop ? crop.sizes : side ? '(min-width: 1024px) 55vw, 100vw' : '100vw', loading: 'eager', decoding: 'async', pictureAttributes: { class: 'contents' },
 } as const;
+// News post photo (`side`, user, 21 Oct 2026: "on mobile we are not able to see the full image"): the desktop files are the
+// 1052x323 crop of the photo (fit cover), and below 1024 the phone box crops that strip again, so only part of the photo showed.
+// Art direction, one <picture>: >= 1024 the same crop and widths as before (desktop unchanged); below 1024 the WHOLE photo at its
+// own aspect ratio, full width (layout constrained: widths never above the original, which is never read here, lib/images.ts).
+const postPhoto = side && !layers && banner
+  ? await (async () => {
+      const desk = (format: 'avif' | 'webp') => getImage({ src: banner, format, width: pic.width, ...(fullPhoto ? {} : { height: pic.height }), widths: [...pic.widths] });
+      const phone = (format: 'avif' | 'webp') => getImage({ src: banner, format, layout: 'constrained' });
+      const [dAvif, dWebp, mAvif, mWebp] = await Promise.all([desk('avif'), desk('webp'), phone('avif'), phone('webp')]);
+      return { dAvif, dWebp, mAvif, mWebp };
+    })()
+  : null;
 // Bug 086: the background's edge columns continue to the viewport edges beyond 1440 px (global.css .hero-bleed). The band
 // image = the static layer; a flat banner continues its start column on both sides (its end edge is a photo), unless told otherwise.
 const bleed = Astro.props.bleed ?? (side ? 'none' : layers ? 'edges' : 'start');
@@ -129,7 +144,14 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
           <Picture src={layers.subject} alt={c.banner.alt} fetchpriority="high" data-hero-subject class:list={imgClass} {...pic} />
         </>
       ) : (
-        <Picture src={banner!} alt={c.banner.alt} fetchpriority="high" class:list={imgClass} {...pic} />
+        postPhoto ? (
+          <picture class="contents">
+            <source media="(min-width: 1024px)" type="image/avif" srcset={postPhoto.dAvif.srcSet.attribute} sizes="55vw" />
+            <source media="(min-width: 1024px)" type="image/webp" srcset={postPhoto.dWebp.srcSet.attribute} sizes="55vw" />
+            <source type="image/avif" srcset={postPhoto.mAvif.srcSet.attribute} sizes="100vw" width={postPhoto.mAvif.attributes.width} height={postPhoto.mAvif.attributes.height} />
+            <img src={postPhoto.mWebp.src} srcset={postPhoto.mWebp.srcSet.attribute} sizes="100vw" width={postPhoto.mWebp.attributes.width} height={postPhoto.mWebp.attributes.height} alt={c.banner.alt} fetchpriority="high" loading="eager" decoding="async" class:list={[...imgClass, 'post-photo']} />
+          </picture>
+        ) : <Picture src={banner!} alt={c.banner.alt} fetchpriority="high" class:list={imgClass} {...pic} />
       )}
     </div>}
 
@@ -185,11 +207,23 @@ const mapVars = mapLive ? `--map-up:${MAP_UP};--hero-edge-h:calc(500 * var(--u))
     .side { background: var(--color-mist-50); } /* bug 086: the post's plain surface reaches the viewport edges too */
     .side .stage { background: var(--color-mist-50); }
     .side .hero-media { inset-inline-start: 45%; }
+    /* Long post titles (user, 21 Oct 2026): the Figma post hero (Health Article Layout) has a one-line title in a fixed 322 stage,
+       so a long title (or a medium one plus the button at 1024-1440) ran out of the stage over the Overview heading. The stage
+       keeps 322 as its minimum and grows with the copy, as the live banners do (.bn-live): the copy is in flow at the same Figma
+       place (95 in, `titleTop` down) with 8 below it (the Figma composition itself leaves ~10 under an Arabic button, so a short
+       title never makes the stage taller than Figma), and the photo fills the grown stage (object-cover). Long titles also
+       step down in size first (lib/news.ts postTitleSize). */
+    .side .stage { height: auto; min-height: calc(var(--h) * var(--u)); }
+    .side .copy { position: relative; inset: auto; top: auto; margin-inline-start: calc(95 * var(--u)); padding-block: calc(var(--tt) * var(--u)) calc(8 * var(--u)); }
+    .side .cover { height: calc(100% + 1 * var(--u)); }
     .side .hero-media::after { content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 30%; background: linear-gradient(to right, var(--color-mist-50), transparent); }
     :global([dir='rtl']) .side .hero-media::after { background: linear-gradient(to left, var(--color-mist-50), transparent); }
   }
   @media (max-width: 1023.98px) {
     .cover { top: 0; height: 100%; }
+    /* News post photo below 1024: the whole photo at its own aspect ratio (the <picture> serves the uncropped file here). */
+    .side .hero-media { height: auto; aspect-ratio: auto; max-height: none; }
+    .side .post-photo { position: static; height: auto; object-fit: fill; }
     /* Bug 167 (15 Oct 2026): the copy keeps the page's 16px gutter below 1024 like the sections under it (was 24 units = 33px). */
     .copy { --copy-gap: calc(16 * var(--u)); gap: var(--copy-gap); padding: calc(28 * var(--u)) 16px calc(40 * var(--u)); }
     .text { max-width: calc(var(--xw) * var(--u)); }

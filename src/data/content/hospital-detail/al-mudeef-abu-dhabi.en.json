@@ -1,5 +1,5 @@
 {
-  "_note": "Al Mudeef Centre (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/al-mudeef-center-abu-dhabi/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/al-mudeef-center-abu-dhabi/, Al-Mudeef-Center-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers). 13 Oct 2026 (Website Content - Suhad 4, EN - UAE / KSA Hospitals): new hero title, hero line and 'Experience the Environment of Care' paragraphs.",
+  "_note": "Al Mudeef Centre (Figma 112:7721 template). Text = Website Content - Suhad/Our Hospitals/EN - UAE Hospitals.md (5 Oct 2026): hero title + text, 'Experience the Environment of Care' paragraphs. No banner, video or gallery photos for this hospital yet: video.host / video.id: empty = the play button does nothing (A3). Gallery (missing-image audit, 9 Oct 2026): the live page's own photos and tabs (/ae/hospitals/al-mudeef-center-abu-dhabi/), saved through the user's Chrome into docs/cambridge-images-live / docs/cambridge-images-ksa, wired by tools/live-images/wire-hospitals.py. Banner (missing-image audit, 9 Oct 2026): the live page's own hero image (/ae/hospitals/al-mudeef-center-abu-dhabi/, Al-Mudeef-Center-UAE.avif) over the live hero gradient, tools/live-images/hospital-heroes.py; static (no cursor-follow layers). 13 Oct 2026 (Website Content - Suhad 4, EN - UAE / KSA Hospitals): new hero title, hero line and 'Experience the Environment of Care' paragraphs. 19 Oct 2026 (user): video = YouTube 3vms_hyty68 (https://www.youtube.com/watch?v=3vms_hyty68, title 'Introducing the New Al Mudeef - Abu Dhabi Facility'), played in place of the poster (EnvironmentBand inline mode). Poster = the video's own YouTube thumbnail (video.poster, tools/video-posters/fetch.py).",
   "hero": {
     "title": [
       "Al Mudeef Centre Abu Dhabi"
@@ -11,8 +11,9 @@
     }
   },
   "video": {
-    "host": "",
-    "id": ""
+    "host": "youtube",
+    "id": "3vms_hyty68",
+    "poster": "hospital-detail/al-mudeef-abu-dhabi/video-poster"
   },
   "environment": {
     "text": [

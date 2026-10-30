@@ -24,7 +24,18 @@ files are never overwritten). What the import does with each field is documented
 | image_alt | the attachment's alt text on the current site; falls back to the title when empty |
 | region | `global` for every post (the export has no region; every edition lists all posts, D15) |
 | language | `en` or `ar`. An edition uses its language's record for a slug, and falls back to the English record |
+| hero_button | optional; `false` = the article hero shows no "Consult for a Care Plan" button (per post, user decision). Absent = the button shows |
+| hero_photo | optional; `"full"` = on desktop (>= 1024 px) the article hero shows the whole photo in its ~16:9 box instead of the 1052x323 strip (which the box crops again, e.g. heads cut off). Set on the client press releases (user, 23 Oct 2026); other posts unchanged |
 | image_crop | optional, Figma placeholder only (unused since the import): `{h,l,t,w}` crop copied from Figma |
+
+## Posts written for this site (`site-posts.json`)
+
+Posts that were never on the WordPress site (e.g. a press release the client sends as a Word document) go in
+`site-posts.json`, kept **by hand**; the import never touches it. Same fields as above (`old_url` empty, plus `source` =
+the document the text came from). `src/lib/news.ts` lists both files together, newest first, and stops the build if a slug
+is in both. A photo inside the text is `<figure data-image="<asset key>"><img alt="..."></figure>`: the key is a file
+under `src/assets` without extension (e.g. `news/<slug>-2`), rendered as an optimised picture
+(`src/components/article/ArticleImage.astro`).
 
 `src/data/news.json` is a different file: the three Home "News & Insights" cards with their Figma text and crops; their
 slugs point at posts of this file so "Read more" opens the article.

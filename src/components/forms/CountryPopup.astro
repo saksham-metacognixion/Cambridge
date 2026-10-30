@@ -2,7 +2,8 @@
 /*
  * Country pop-up = Figma "Welcome Page" 76:196 (scope 2.3), spec figma-cache/forms-spec.md. ONE component, one
  * <dialog> per detected country in src/data/country-popup.json (text, map, flag, the two buttons and their targets).
- * Global editions only. Rendered (and its script shipped) only when the config flag `enabled` is true, or when
+ * Global, and since 20 Oct 2026 /ae and /sa too (the confirmation after the location redirect: `onRegion` in the config;
+ * lib/country-popup.ts picks the version per edition). Rendered (and its script shipped) only when `enabled` is true, or when
  * PUBLIC_COUNTRY_POPUP=on is set for a staging preview. When/whether to open comes from the existing logic:
  * functions/_middleware.ts (Cloudflare country -> ch_geo cookie) + CountryPopupLogic.astro (html[data-country-popup],
  * window.chooseEdition saves the choice for as long as country-popup.json `remember` says; default: per tab). Values: Figma px from the card's
@@ -11,7 +12,7 @@
  * largest first paint (LCP) there; it loads eagerly with fetchpriority=high instead of waiting for the dialog to open.
  */
 import { Picture } from 'astro:assets';
-import config from '../../data/country-popup.json';
+import { countryPopups } from '../../lib/country-popup';
 import { content } from '../../lib/content';
 import { img } from '../../lib/images';
 import { px, vwSizes } from '../../lib/scale';
@@ -22,20 +23,20 @@ import pinDot from '../../assets/forms/welcome/pin-dot.svg';
 
 interface Props { edition: Edition }
 const { edition } = Astro.props;
-const on = config.enabled || import.meta.env.PUBLIC_COUNTRY_POPUP === 'on';
 const c = content('forms/welcome', edition.locale);
-const countries = Object.entries(config.countries) as [string, (typeof config.countries)['AE']][];
+// Global: the "you are in <country>" version; /ae, /sa: the confirmation after the location redirect (lib/country-popup.ts).
+const popups = countryPopups(edition.region);
 ---
 
-{on && edition.region === 'global' && (
+{popups.length > 0 && (
   <>
-    {countries.map(([iso, v]) => {
+    {popups.map(({ iso, map: mapKey, flag: flagKey, version: v }) => {
       const t = c[v.text];
-      const map = img(v.map);
-      const flag = img(v.flag);
+      const map = img(mapKey);
+      const flag = img(flagKey);
       const titleId = `country-popup-${iso}-title`;
       return (
-        <dialog id={`country-popup-${iso}`} class="modal cp" aria-labelledby={titleId} aria-modal="true" data-country-dialog={iso}>
+        <dialog id={`country-popup-${iso}`} class="modal cp" aria-labelledby={titleId} aria-modal="true" data-country-dialog={iso} data-stay={edition.region}>
           <div class="cp-card" data-panel>
             <div class="cp-left">
               <img loading="lazy" class="cp-logo" src={logo.src} width="114" height="64" alt={c.logoAlt} />
@@ -58,8 +59,8 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
       );
     })}
     <script>
-      // Opens the detected country's pop-up on a Global visit (html[data-country-popup] = ISO country, set by
-      // CountryPopupLogic.astro from the edge cookie). No dialog for that country = nothing shown.
+      // Opens the detected country's pop-up (html[data-country-popup] = ISO country, set by CountryPopupLogic.astro from the
+      // edge cookie): on Global, or on /ae / /sa as the confirmation after the location redirect. No dialog for that country = nothing shown.
       // Bug 061: a URL that asks for a form pop-up (/book-an-appointment/ -> /#book-appointment, Modals.astro) shows that
       // pop-up first; the country pop-up waits until it is closed, so it can never cover it whichever script runs first.
       const FORM_HASHES: Record<string, string> = { '#book-appointment': 'book-appointment', '#send-inquiry': 'send-enquiry-popup', '#your-opinion': 'feedback-popup' };
@@ -75,8 +76,8 @@ const countries = Object.entries(config.countries) as [string, (typeof config.co
         }
         const choose = (region: string) => (window as unknown as { chooseEdition?: (r: string) => void }).chooseEdition?.(region);
         dlg.querySelectorAll<HTMLButtonElement>('[data-target]').forEach((b) => b.addEventListener('click', () => { choose(b.dataset.target!); dlg.close(); }));
-        // Esc: the visitor stays where they are (remembered like a choice, see CountryPopupLogic).
-        dlg.addEventListener('cancel', () => choose('global'));
+        // Esc: the visitor stays where they are (Global, or the region they were sent to), remembered like a choice (CountryPopupLogic).
+        dlg.addEventListener('cancel', () => choose(dlg.dataset.stay!));
         dlg.showModal();
         // Focus the title, not the first button: opened by the page (no click / key), a focused button drew its focus ring on
         // every phone (mobile QA S3, 13 Oct 2026). Screen readers still start at the title; Tab reaches the buttons.

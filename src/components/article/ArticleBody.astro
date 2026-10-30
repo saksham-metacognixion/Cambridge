@@ -14,8 +14,11 @@
  * The HTML comes sanitized from src/lib/sanitize.ts (allow-list), so set:html is safe here. A YouTube marker of the news
  * import (<figure data-youtube="id"><a href>title</a></figure>, kept by the sanitizer) is rendered as ArticleVideo (click-to-play
  * poster); the HTML around it stays as is, each piece a direct child of .body so the spacing rules apply to the video too.
+ * Same for a photo marker of a site-written post (<figure data-image="key"><img alt></figure>): rendered as ArticleImage.
  */
 import ArticleVideo from './ArticleVideo.astro';
+import ArticleImage from './ArticleImage.astro';
+import { parsePath } from '../../lib/editions';
 interface Props {
   heading: string;
   /** h1 on the legal pages (no hero), h2 on the articles (the post title is the hero H1) */
@@ -29,13 +32,17 @@ interface Props {
 }
 const { heading, headingTag: H = 'h2', date, intro, html, pending, video } = Astro.props;
 
-type Seg = { html: string } | { id: string; title: string; href: string };
+const { edition } = parsePath(Astro.url.pathname);
+type Seg = { html: string } | { id: string; title: string; href: string } | { imageKey: string; alt: string };
 const segs: Seg[] = [];
-const marker = /<figure data-youtube="([A-Za-z0-9_-]{11})">\s*<a href="([^"]*)"[^>]*>([\s\S]*?)<\/a>\s*<\/figure>/g;
+// Group 1-3: YouTube marker (id, link, title); group 4-5: photo marker (asset key, alt). Keys are validated by the sanitizer.
+const marker =
+  /<figure data-youtube="([A-Za-z0-9_-]{11})">\s*<a href="([^"]*)"[^>]*>([\s\S]*?)<\/a>\s*<\/figure>|<figure data-image="([^"]+)">\s*<img alt="([^"]*)"[^>]*>\s*<\/figure>/g;
 let at = 0;
 for (const m of html.matchAll(marker)) {
   if (m.index! > at) segs.push({ html: html.slice(at, m.index) });
-  segs.push({ id: m[1], href: m[2], title: m[3].replace(/<[^>]+>/g, '').trim() });
+  if (m[4]) segs.push({ imageKey: m[4], alt: m[5] });
+  else segs.push({ id: m[1], href: m[2], title: m[3].replace(/<[^>]+>/g, '').trim() });
   at = m.index! + m[0].length;
 }
 if (at < html.length) segs.push({ html: html.slice(at) });
@@ -49,7 +56,10 @@ if (at < html.length) segs.push({ html: html.slice(at) });
   </div>
   {html && (
     <div class="body">
-      {segs.map((s) => ('html' in s ? <Fragment set:html={s.html} /> : <ArticleVideo id={s.id} title={s.title} href={s.href} playLabel={video?.playLabel ?? s.title} />))}
+      {segs.map((s) =>
+        'html' in s ? <Fragment set:html={s.html} />
+        : 'imageKey' in s ? <ArticleImage imageKey={s.imageKey} alt={s.alt} region={edition.region} />
+        : <ArticleVideo id={s.id} title={s.title} href={s.href} playLabel={video?.playLabel ?? s.title} />)}
     </div>
   )}
   {!html && pending && <p class="pending" role="note">{pending}</p>}

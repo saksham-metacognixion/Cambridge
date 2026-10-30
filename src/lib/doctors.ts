@@ -38,10 +38,18 @@ export interface Doctor {
   show_book_now?: boolean;
 }
 
-/** Doctors shown in the list and given a profile page. */
-export const allDoctors: Doctor[] = (doctorData.doctors as unknown as Doctor[]).filter((d) => d.listed !== false);
 /** Every doctor incl. the ones not in the list (profiles are generated for all of them). */
 export const profileDoctors: Doctor[] = doctorData.doctors as unknown as Doctor[];
+
+/**
+ * A doctor gets a card (Find a Doctor, the doctor rows) only with a photo (user decision, 19 Oct 2026: the KSA doctors without
+ * a photo in the WordPress export are hidden, never shown as an empty card). The rule reads the data, so a doctor comes back as
+ * soon as `photo` is filled by the importer. Profile pages stay for every doctor (old URLs 301 to them, src/lib/redirects.ts).
+ */
+export const isListed = (d: Doctor) => d.listed !== false && !!d.photo;
+
+/** Doctors shown in the list (Find a Doctor grid and its filters). */
+export const allDoctors: Doctor[] = profileDoctors.filter(isListed);
 
 export const hospitals = hospitalData.hospitals;
 export const specialties = specialtyData.specialties;
@@ -105,7 +113,7 @@ export function rowDoctorsForEdition(list: Doctor[], e: Edition): Doctor[] {
   const own = list.filter((d) => d.country === c);
   if (own.length) return own;
   const home = homeDoctors.doctors.map((s: string) => profileDoctors.find((d) => d.slug === s)!).filter(Boolean);
-  const order = [...home, ...profileDoctors.filter((d) => d.photo && !home.includes(d))];
-  return order.filter((d) => d.country === c && d.listed !== false).slice(0, list.length);
+  const order = [...home, ...profileDoctors.filter((d) => !home.includes(d))];
+  return order.filter((d) => d.country === c && isListed(d)).slice(0, list.length);
 }
 

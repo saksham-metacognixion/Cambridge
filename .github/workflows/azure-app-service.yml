@@ -1,0 +1,52 @@
+# Build and deploy to Azure App Service on every push to main (deploy/azure/README.md).
+# Skipped until the App Service exists: set the repository variable AZURE_WEBAPP_NAME and the secret
+# AZURE_WEBAPP_PUBLISH_PROFILE (Settings > Secrets and variables > Actions).
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One deployment at a time; a newer push waits instead of cancelling one half-way.
+concurrency:
+  group: azure-app-service
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.AZURE_WEBAPP_NAME != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+
+      # Astro keeps its optimized images (4,500+ AVIF / WebP, ~12 min to encode) in node_modules/.astro. Restoring them
+      # makes a build re-encode only new or changed images.
+      - uses: actions/cache@v4
+        with:
+          path: node_modules/.astro
+          key: astro-images-${{ hashFiles('src/assets/**', 'src/lib/image-service.ts', 'astro.config.mjs') }}
+          restore-keys: astro-images-
+
+      # PUBLIC_* values are written into the HTML at build time (they are public by design); changing one needs a new build.
+      - run: npm run build:azure
+        env:
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+          PUBLIC_GOOGLE_MAPS_KEY: ${{ vars.PUBLIC_GOOGLE_MAPS_KEY }}
+
+      # The deployment is the build and the bundled server only: no package.json, so App Service installs nothing.
+      - run: zip -qr site.zip dist dist-server
+
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: site.zip

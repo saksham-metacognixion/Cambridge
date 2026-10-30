@@ -93,7 +93,7 @@ const pills = pillX.map((x, i) => {
       ))}
     </div>
 
-    <div id="news-cards" data-news-cards class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40 lg:contents">
+    <div id="news-cards" data-news-cards class="max-lg:mt-30 max-lg:flex max-lg:flex-col max-lg:items-center max-lg:gap-40">
       {cards.map((c) => <NewsCard F={F} {...c} />)}
     </div>
     {pills.filter((p) => p.sets.length).map((p) => (
@@ -104,10 +104,10 @@ const pills = pillX.map((x, i) => {
 
     <!-- Pagination dots of the cards box (Figma's dot divider at y 544, cyan active dot): shared component (bug 012). Shown
          only when the box overflows sideways; the three cards fit at every width (stacked below 1024), so nothing shows today. -->
-    <div class="lg:absolute lg:start-0 lg:top-544 lg:w-full max-lg:mt-30">
+    <div class="news-dots max-lg:mt-30">
       <Pagination for="news-cards" tone="cyan" />
     </div>
-    <div class="hidden lg:block absolute start-60 -rotate-[0.31deg]" style="top:calc(587.375 * var(--u));width:calc(915.014 * var(--u));height:calc(0.25 * var(--u))">
+    <div class="news-line hidden lg:block -rotate-[0.31deg]">
       <img loading="lazy" src={line.src} width={line.width} height={line.height} alt="" class="block w-full h-full" />
     </div>
   </div>
@@ -121,8 +121,15 @@ const pills = pillX.map((x, i) => {
 <style>
   @media (min-width: 1024px) {
     [data-x] { inset-inline-start: calc(var(--x) * var(--u)); }
-    [data-news] :global([data-card]) { inset-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
-    [data-news] :global([data-card] > :not(:first-child)) { inset-inline-start: calc((var(--lx, 0)) * var(--u)); }
+    /* Rows from the Figma y positions: cards at 113, dots at 544, divider line at 587.375. The cards row is a minimum, so a card
+       taller than Figma's (a long post title, Arabic line heights) grows the section instead of overlapping the line. The three
+       cards share the row's one cell, each offset by its Figma x, so the row is as tall as the tallest card. */
+    [data-news] .stage { display: grid; grid-template-columns: 100%; grid-template-rows: calc(113 * var(--u)) minmax(calc(431 * var(--u)), auto) minmax(calc(43.375 * var(--u)), auto) auto; align-content: start; height: auto; min-height: calc(var(--h) * var(--u)); }
+    [data-news-cards] { grid-row: 2; display: grid; grid-template-columns: 100%; align-items: start; }
+    [data-news] :global([data-card]) { grid-area: 1 / 1; margin-inline-start: calc(var(--cx) * var(--u)); width: calc(var(--w) * var(--u)); }
+    [data-news] :global([data-card] > :not(:first-child)) { margin-inline-start: calc((var(--lx, 0)) * var(--u)); }
+    .news-dots { grid-row: 3; }
+    .news-line { grid-row: 4; margin-inline-start: calc(60 * var(--u)); width: calc(915.014 * var(--u)); height: calc(0.25 * var(--u)); }
   }
   /* Bug 158 (15 Oct 2026): 768-1023 the three cards sat in one 396px column (the phone stack). Tablets get the 2-up step used by
      HospitalCards / SubServiceGrid (cells of at least 240 units, 24-unit column gap), the cards fill their cells, so they sit 2 + 1.

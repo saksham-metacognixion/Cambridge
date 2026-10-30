@@ -8,7 +8,7 @@ import { DOCTOR_PATHS, profileDoctors, doctorEditions } from "./doctors";
 import { PAGE_PATHS, pagePath } from "./paths";
 import legal from "../data/legal.json";
 import { CONDITION_PATHS, allDetailSlugs } from "./conditions";
-import { NEWS_PATHS, allPostSlugs, postFor, postsFor } from "./news";
+import { NEWS_PATHS, allPostSlugs, postEditions, postFor, postsFor } from "./news";
 import { HOSPITAL_PATHS, hospitals, hospitalEditions } from "./hospitals";
 import { CARE_PATHS, allCareNodes, careInRegion } from "./care";
 import { calculators } from "./calculators";
@@ -65,7 +65,8 @@ function routes(): PageRoute[] {
     ...allPostSlugs.map((slug) => ({
       key: `post-${slug}`,
       path: NEWS_PATHS.article(slug),
-      lastmod: (e: Edition) => postFor(slug, e)?.date,
+      editions: postEditions(slug),
+      lastmod: (e: Edition) => { const p = postFor(slug, e); return p && (p.updated || p.date); },
     })),
     { key: "patient-hub", path: PAGE_PATHS.patientHub },
     ...calculators.map((c) => ({

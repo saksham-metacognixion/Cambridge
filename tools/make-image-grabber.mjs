@@ -1,3 +1,4 @@
+// NOTE (30 Oct 2026): src/data/news/posts.json was retired; the posts live in src/content/news/<slug>.json (one file per post, both languages). This tool still expects posts.json: re-run the import into a scratch posts.json, then tools/migrate-news.mjs, or point it at the post files.
 // Writes a script to paste into the browser console on https://cambridgehospital.com (logged in or not): the visitor's own
 // browser passes the Cloudflare check that blocks every scripted download (NW1), so it fetches the images the site needs
 // and saves them as ONE file, cambridge-images.tar (paths = the live URL paths, plus media.json = WordPress media id -> path).

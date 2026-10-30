@@ -1,76 +1,88 @@
-import type { Edition, LocaleId } from "./editions";
-import posts from "../data/news/posts.json";
-import sitePosts from "../data/news/site-posts.json";
+import { editions, type Edition, type LocaleId } from "./editions";
 import samples from "../data/news/sample-images.json";
+import mediaHub from "../data/content/media-hub/page.en.json";
 import { img } from "./images";
+import { postSchema, type PostFile, type PostLocale } from "./news-schema";
 
 /*
- * News posts, schema in src/data/news/README.md. Two sources, one list: posts.json (GENERATED from the WordPress export,
- * never edited by hand) + site-posts.json (posts written for this site, e.g. press releases the client sends as documents;
- * kept by hand, never touched by the import). A slug may live in only one of them.
- * Every edition lists ALL posts (region rule still to be confirmed with Pramod; `region` stays in the data).
- * URL pattern in ONE place: list = Media Hub, article = media-hub/<slug>. UNCONFIRMED with Pramod (the current site's
- * post URLs could not be read, docs/open-decisions.md D7 / AR2); `old_url` on each post feeds the 301 map
- * (src/lib/redirects.ts -> dist/_redirects).
+ * News posts: one file per post, src/content/news/<slug>.json (schema + field notes in src/lib/news-schema.ts, history in
+ * src/data/news/README.md). The dashboard writes these files; the build reads them here and validates every one (a bad file
+ * stops the build with its name and the field). Posts come from the WordPress import of the old site (129, Oct 2026) and
+ * from the dashboard / hand-written files since (press releases the client sends as documents).
+ * Only LIVE posts are built: status "published", or "scheduled" once its time has passed. `editions` says which Media Hubs
+ * list a post and where its article page exists (migrated posts: all three, D15).
+ * URL pattern in ONE place: list = Media Hub, article = media-hub/<slug>. `old_url` on each language feeds the 301 map
+ * (src/lib/redirects.ts -> dist/_redirects), `previous_slugs` the 301s of a renamed post.
  */
 export const NEWS_PATHS = {
   list: "media-hub",
   article: (slug: string) => `media-hub/${slug}`,
 };
 
-export interface Post {
-  slug: string;
-  old_url: string;
-  title: string;
-  date: string;
-  category: string;
-  excerpt: string;
-  body: string;
-  image: string;
-  image_alt: string;
-  region: string;
-  language: LocaleId;
-  image_crop?: { h: string; l: string; t: string; w: string };
-  /** false = the article hero shows no button ("Consult for a Care Plan"); absent = it shows */
-  hero_button?: boolean;
-  /** "full" = the desktop hero shows the whole photo, not the 1052x323 strip (news README: hero_photo) */
-  hero_photo?: 'full';
-  /** site-posts.json only: the document the text was taken from */
-  source?: string;
-}
+/** One language of one post, as the templates use it (the file's shared fields + that language's fields). */
+export type Post = Omit<PostFile, "en" | "ar"> & PostLocale & { language: LocaleId };
 
-const wordpress = posts as Post[];
-const authored = sitePosts.posts as Post[];
-// One slug, one source: a site post may not shadow (or be shadowed by) a WordPress post after a re-import.
-const wpSlugs = new Set(wordpress.map((p) => p.slug));
-for (const p of authored)
-  if (wpSlugs.has(p.slug))
-    throw new Error(
-      `News: slug "${p.slug}" is in both posts.json (WordPress import) and site-posts.json; rename the site post`,
-    );
-const all: Post[] = [...wordpress, ...authored];
+// ---------- load + validate ----------
+const KNOWN_CATEGORIES = new Set([...(mediaHub.explore.categories as { key: string }[]).map((c) => c.key), "interviews"]);
+const files = import.meta.glob<unknown>("../content/news/*.json", { eager: true, import: "default" });
+
+/** Every post file, validated, drafts included (the dashboard's list); newest first. */
+export const newsFiles: PostFile[] = Object.entries(files)
+  .map(([path, raw]) => {
+    const name = path.split("/").pop()!;
+    const file = `src/content/news/${name}`;
+    const parsed = postSchema.safeParse(raw);
+    if (!parsed.success)
+      throw new Error(
+        `News: ${file} is invalid:\n` + parsed.error.issues.map((i) => `  ${i.path.join(".") || "(root)"}: ${i.message}`).join("\n"),
+      );
+    const post = parsed.data;
+    if (`${post.slug}.json` !== name) throw new Error(`News: ${file}: slug "${post.slug}" must equal the file name`);
+    if (!KNOWN_CATEGORIES.has(post.category)) throw new Error(`News: ${file}: unknown category "${post.category}"`);
+    return post;
+  })
+  .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
+
+const today = new Date().toISOString().slice(0, 10);
+/** Built and listed: published, or scheduled with its time passed. */
+export const isLive = (p: PostFile) =>
+  p.status === "published" || (p.status === "scheduled" && (p.publish_at ? Date.parse(p.publish_at) <= Date.now() : p.date <= today));
+
+const live = newsFiles.filter(isLive);
+const record = (p: PostFile, language: LocaleId): Post => {
+  const { en, ar, ...shared } = p;
+  return { ...shared, ...(language === "ar" ? ar! : en), language };
+};
+/** Flat list of every live language record (English first per post): the redirects and the templates read this. */
+export const newsRecords: Post[] = live.flatMap((p) => [record(p, "en"), ...(p.ar ? [record(p, "ar")] : [])]);
+const all = newsRecords;
+
+/** Edition ids where a post's page exists (hreflang / sitemaps): its `editions`, both languages. */
+export const postEditions = (slug: string): string[] => {
+  const p = live.find((x) => x.slug === slug);
+  return editions.filter((e) => p?.editions.includes(e.region)).map((e) => e.id);
+};
+const inEdition = (p: Post, edition: Edition) => p.editions.includes(edition.region);
 
 /** Posts for an edition, newest first. A slug without a record in the edition's language falls back to English. */
 export function postsFor(edition: Edition): Post[] {
   const bySlug = new Map<string, Post>();
   for (const p of all) {
-    if (p.language === "en" && !bySlug.has(p.slug)) bySlug.set(p.slug, p);
+    if (p.language === "en" && inEdition(p, edition) && !bySlug.has(p.slug)) bySlug.set(p.slug, p);
   }
   if (edition.locale !== "en")
     for (const p of all)
-      if (p.language === edition.locale) bySlug.set(p.slug, p);
+      if (p.language === edition.locale && inEdition(p, edition)) bySlug.set(p.slug, p);
   return [...bySlug.values()].sort((a, b) => b.date.localeCompare(a.date));
 }
 
-/** Every slug that gets an article page (one page per slug in every edition). */
-export const allPostSlugs: string[] = [...new Set(all.map((p) => p.slug))];
+/** Every live slug (one article page per slug in each of its editions). */
+export const allPostSlugs: string[] = live.map((p) => p.slug);
 
-/** The record of one slug for an edition (its language, else English). */
+/** The record of one slug for an edition (its language, else English); undefined when the post is not in that edition. */
 export function postFor(slug: string, edition: Edition): Post | undefined {
-  return (
-    all.find((p) => p.slug === slug && p.language === edition.locale) ??
-    all.find((p) => p.slug === slug && p.language === "en")
-  );
+  const p = all.find((x) => x.slug === slug && x.language === edition.locale) ?? all.find((x) => x.slug === slug && x.language === "en");
+  return p && inEdition(p, edition) ? p : undefined;
 }
 
 /** Whether a slug has an article page; used to wire cards (a missing slug links to the 404 page). */
@@ -106,7 +118,7 @@ const hasImg = (key: string) => { try { img(key); return true; } catch { return 
 const categoryRank = new Map<string, number>();
 {
   const seen = new Map<string, number>();
-  for (const p of [...new Map(all.map((p) => [p.slug, p])).values()].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))) {
+  for (const p of live) {
     const n = seen.get(p.category) ?? 0;
     categoryRank.set(p.slug, n);
     seen.set(p.category, n + 1);

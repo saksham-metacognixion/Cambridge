@@ -2,7 +2,7 @@
 import { getImage } from 'astro:assets';
 import { editions, editionFromBase, urlFor } from '../../../lib/editions';
 import { content } from '../../../lib/content';
-import { allPostSlugs, postFor, postImage, postTitleSize, badgeDate, NEWS_PATHS } from '../../../lib/news';
+import { allPostSlugs, postEditions, postFor, postImage, postTitleSize, badgeDate, NEWS_PATHS } from '../../../lib/news';
 import { sanitizeHtml } from '../../../lib/sanitize';
 import { img } from '../../../lib/images';
 import { showPendingNote } from '../../../lib/conditions';
@@ -17,25 +17,28 @@ import DoctorsRow from '../../../components/shared/DoctorsRow.astro';
 import ContactRecovery from '../../../components/contact/ContactRecovery.astro';
 
 /*
- * Article template (Health Article Layout, Figma 170:839): one page per post slug in every edition (src/data/news/posts.json,
- * the edition's language record or the English one). The frame shows a condition page, so its blocks are filled from the post:
+ * Article template (Health Article Layout, Figma 170:839): one page per post slug in each of its editions (src/content/news/<slug>.json
+ * `editions`; the edition's language record or the English one). The frame shows a condition page, so its blocks are filled from the post:
  * hero (cover image = post image, H1 = title, 1 line of 39/37 at top 99; button 6 below as on 67:3070) | 34 | Overview H2 +
  * intro (excerpt) + body HTML (ArticleBody) | 48 | "Expert Care, Trusted Doctors" H2 (1593) + cards (1668) | 51.54 |
  * CTA band (1988, heading top 50) | 68 | footer (2324). Doctors BEFORE the CTA band here (the condition pages have the reverse).
  */
 export function getStaticPaths() {
-  return editions.flatMap((e) => allPostSlugs.map((slug) => ({ params: { base: e.base || undefined, slug } })));
+  return editions.flatMap((e) => allPostSlugs.filter((slug) => postEditions(slug).includes(e.id)).map((slug) => ({ params: { base: e.base || undefined, slug } })));
 }
 
 const edition = editionFromBase(Astro.params.base);
 const { slug } = Astro.params as { slug: string };
 const post = postFor(slug, edition);
-if (!post) throw new Error(`Article "${slug}": no record in posts.json`);
+if (!post) throw new Error(`Article "${slug}": no record in src/content/news for ${edition.id}`);
 const c = content('article/page', edition.locale);
 const loc = edition.locale;
 
-const title = c.meta.title.replace('{title}', post.title);
-const description = post.excerpt || c.meta.descriptionFallback.replace('{title}', post.title);
+// <title> / meta description: the post's own SEO fields (the live site's values for migrated posts), else the template pattern.
+const title = post.seo?.title || c.meta.title.replace('{title}', post.title);
+// The structured data keeps the excerpt as its description (as before the SEO fields moved into the post file, 30 Oct 2026).
+const excerptDescription = post.excerpt || c.meta.descriptionFallback.replace('{title}', post.title);
+const description = post.seo?.description || excerptDescription;
 const html = sanitizeHtml(post.body);
 // Bug 152 (15 Oct 2026): the WordPress excerpt is (the start of) the body's first paragraph on almost every post (122 / 129 Arabic,
 // 120 / 129 English), so the intro line printed that paragraph twice. The intro shows only when the body does not open with it.
@@ -67,11 +70,11 @@ const hero = {
 const pos = { titleSize: postTitleSize(post.title, post.language), titleTop: 99, titleW: 385, buttonGap: 6, labelX: 5, labelW: 153 };
 ---
 
-<BaseLayout edition={edition} path={NEWS_PATHS.article(slug)} title={title} description={description} ogImage={ogImage}>
+<BaseLayout edition={edition} path={NEWS_PATHS.article(slug)} title={title} description={description} ogImage={ogImage} editionsWithPage={postEditions(slug)} robots={post.noindex ? 'noindex, nofollow' : undefined}>
   <Fragment slot="head">
     <meta property="article:published_time" content={post.date} />
     <!-- Article / NewsArticle structured data (src/lib/schema.ts); a temporary sample photo (NW1) is never given as the article's image. -->
-    <script type="application/ld+json" set:html={ldJson(articleSchema(post, edition, { url: absolute(urlFor(edition, NEWS_PATHS.article(slug))), description, image: ogImage && !sampleImage ? absolute(ogImage) : undefined }))} />
+    <script type="application/ld+json" set:html={ldJson(articleSchema(post, edition, { url: absolute(urlFor(edition, NEWS_PATHS.article(slug))), description: excerptDescription, image: ogImage && !sampleImage ? absolute(ogImage) : undefined }))} />
   </Fragment>
   <div class="relative" style="z-index:14">
     <Header />

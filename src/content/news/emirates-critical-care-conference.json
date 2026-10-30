@@ -1,0 +1,35 @@
+{
+  "slug": "emirates-critical-care-conference",
+  "date": "2026-07-22",
+  "category": "conferences",
+  "image": "news/emirates-critical-care-conference",
+  "image_source": "https://cambridgehospital.com/wp-content/uploads/2026/07/Emirates-Critical-Care-Conference.avif",
+  "region": "global",
+  "type": "pr",
+  "status": "published",
+  "editions": [
+    "global",
+    "ae",
+    "sa"
+  ],
+  "en": {
+    "title": "Emirates Critical Care Conference",
+    "excerpt": "Cambridge Hospital participated in the Emirates Critical Care Conference, where Dr. Wael Sary delivered a clinical presentation. The event enabled medical and...",
+    "body": "<p>Cambridge Hospital participated in the Emirates Critical Care Conference, where Dr. Wael Sary delivered a clinical presentation. The event enabled medical and business-development teams to engage with the critical care community, exchange knowledge and strengthen professional relationships across the region.</p>",
+    "old_url": "/emirates-critical-care-conference/",
+    "seo": {
+      "title": "Emirates Critical Care Conference | Cambridge Hospital",
+      "description": "Cambridge Hospital participated in the Emirates Critical Care Conference, where Dr. Wael Sary delivered a clinical presentation. The event enabled medical and"
+    }
+  },
+  "ar": {
+    "title": "مؤتمر الإمارات للرعاية الحرجة",
+    "excerpt": "شارك مستشفى كامبريدج في مؤتمر الإمارات للرعاية الحرجة، حيث قدم الدكتور وائل ساري عرضا سريريا. مكن الحدث فرق الطب وتطوير الأعمال من التفاعل مع مجتمع الرعاية...",
+    "body": "<p>شارك مستشفى كامبريدج في مؤتمر الإمارات للرعاية الحرجة، حيث قدم الدكتور وائل ساري عرضا سريريا. مكن الحدث فرق الطب وتطوير الأعمال من التفاعل مع مجتمع الرعاية الحرجة، وتبادل المعرفة، وتعزيز العلاقات المهنية في جميع أنحاء المنطقة. </p>",
+    "old_url": "/ar/emirates-critical-care-conference/",
+    "seo": {
+      "title": "مؤتمر الإمارات للرعاية الحرجة | مستشفى كامبريدج",
+      "description": "شارك مستشفى كامبريدج في مؤتمر الإمارات للرعاية الحرجة، حيث قدم الدكتور وائل ساري عرضا سريريا. مكن الحدث فرق الطب وتطوير الأعمال من التفاعل مع مجتمع الرعاية"
+    }
+  }
+}

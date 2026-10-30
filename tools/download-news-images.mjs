@@ -1,3 +1,4 @@
+// NOTE (30 Oct 2026): src/data/news/posts.json was retired; the posts live in src/content/news/<slug>.json (one file per post, both languages). This tool still expects posts.json: re-run the import into a scratch posts.json, then tools/migrate-news.mjs, or point it at the post files.
 // Downloads the news images into src/assets so Astro can optimise them (AVIF/WebP, 1x/2x):
 //   - every post's `image_source` (featured image on the current site) -> src/assets/<image>.<ext>
 //   - every image of src/data/wp-images.json (live-site photos for placeholders: conditions, care, testimonials, insurer logos ...)

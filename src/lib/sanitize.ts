@@ -1,5 +1,5 @@
 /*
- * Build-time HTML sanitizer for the article bodies in src/data/news/posts.json (Pramod's export of the current site).
+ * Build-time HTML sanitizer for the article bodies in src/content/news/<slug>.json (the WordPress import of the old site and posts written since).
  * Allow-list only: a small set of text tags and attributes survives; every other tag is dropped (its text is kept), and
  * the whole content of <script>, <style>, <iframe>, <object>, <embed>, <svg>, <noscript>, <template> is removed.
  * No dependency: a tokenizer over the tag syntax is enough for trusted-source content that is rendered statically.
@@ -7,7 +7,7 @@
  * rules), alt, width, height, loading=lazy. Body text tags: see TAGS.
  * Videos: the news import (tools/import-wp-news.mjs) writes a YouTube embed as <figure data-youtube="<11-char id>">
  * with a link inside; that one data attribute is kept (validated) so ArticleBody can render a click-to-play facade.
- * Images from src/assets: a post written for this site (src/data/news/site-posts.json) places a photo in its text as
+ * Images from src/assets: a post written for this site (src/content/news/<slug>.json) places a photo in its text as
  * <figure data-image="<asset key>"><img alt="..."></figure>; the key (lowercase path, no extension, no "..") is kept so
  * ArticleBody renders an optimised <Picture> (AVIF/WebP, 1x/2x) instead of a raw <img>.
  */

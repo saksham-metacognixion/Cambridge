@@ -3,7 +3,7 @@
  * Cloudflare Pages `_redirects` file (each rule in both forms, `/x` and `/x/`, because the live URLs end in a slash), and
  * converted for the nginx staging server by deploy/deploy.sh.
  * Sources: the WordPress export (docs/cambridgehospital.WordPress.2026-10-06.xml, 6 Oct 2026), news `old_url`
- * (src/data/news/posts.json), doctor `old_url` (bug 059), condition `old_slug`, the testimonial / leadership REST exports
+ * (src/content/news/<slug>.json `old_url` / `previous_slugs`), doctor `old_url` (bug 059), condition `old_slug`, the testimonial / leadership REST exports
  * (docs/testimonial.json, docs/leadership.json: bug 060). Our Care pages keep their live URLs (care.json slugs, bug 058).
  * A rule whose source ends in "/*" is a Cloudflare splat rule (every URL under that path); those come last, after every
  * exact rule, because the first matching rule wins (tools/vercel-json.mjs, tools/qc/serve.mjs and deploy/deploy.sh read
@@ -11,7 +11,7 @@
  */
 import { editions, urlFor } from "./editions";
 import { PAGE_PATHS } from "./paths";
-import { NEWS_PATHS } from "./news";
+import { NEWS_PATHS, newsRecords, newsFiles, isLive } from "./news";
 import { conditions, CONDITION_PATHS } from "./conditions";
 import { DOCTOR_PATHS, profileDoctors, doctorEditions } from "./doctors";
 import {
@@ -20,7 +20,6 @@ import {
   careOutsideRegion,
   CARE_PATHS,
 } from "./care";
-import posts from "../data/news/posts.json";
 import { leaders, leaderEditions, leaderHref, LEADER_PATHS } from "./leadership";
 
 export interface Redirect {
@@ -162,9 +161,12 @@ export function pageRedirects(): Redirect[] {
   return out;
 }
 
-/** One line per post whose old URL differs; English posts go to Global English, Arabic posts to Global Arabic. */
+/**
+ * One line per post whose old URL differs; English posts go to Global English, Arabic posts to Global Arabic. A post renamed in
+ * the dashboard keeps its earlier slugs in `previous_slugs`: each one 301s to the current URL in every edition of the post.
+ */
 export function newsRedirects(): Redirect[] {
-  return (posts as { slug: string; old_url: string; language: string }[])
+  const old = newsRecords
     .filter((p) => p.old_url)
     .map((p) => ({
       from: pathOf(p.old_url),
@@ -173,6 +175,16 @@ export function newsRedirects(): Redirect[] {
         NEWS_PATHS.article(p.slug),
       ),
     }));
+  const renamed = newsFiles
+    .filter(isLive)
+    .flatMap((p) =>
+      p.previous_slugs.flatMap((prev) =>
+        editions
+          .filter((e) => p.editions.includes(e.region))
+          .map((e) => ({ from: urlFor(e, NEWS_PATHS.article(prev)), to: urlFor(e, NEWS_PATHS.article(p.slug)) })),
+      ),
+    );
+  return [...old, ...renamed];
 }
 
 /**

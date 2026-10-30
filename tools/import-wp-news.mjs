@@ -1,3 +1,4 @@
+// NOTE (30 Oct 2026): src/data/news/posts.json was retired; the posts live in src/content/news/<slug>.json (one file per post, both languages). This tool still expects posts.json: re-run the import into a scratch posts.json, then tools/migrate-news.mjs, or point it at the post files.
 // Converts the WordPress export of the current site (WXR 1.2, posts + attachments) into src/data/news/posts.json
 // (schema: src/data/news/README.md). No dependency: the WXR fields are read with regular expressions per <item>.
 //

@@ -17,7 +17,7 @@ const c = content('media-hub/page', edition.locale);
 const page = c.meta;
 
 /*
- * Media Hub list template (Figma 100:5522, drafts copy). Posts come from src/data/news/posts.json.
+ * Media Hub list template (Figma 100:5522, drafts copy). Posts come from src/content/news/<slug>.json (src/lib/news.ts).
  * Hero (Figma 46:7562): title 141 / w494 / h74 (two lines in Figma, one in the copy), text 219 / w374, button 265. The photo is a phone showing the News page and the
  * logo, so on RTL it is never flipped (bug 021, keepComposition).
  * Vertical gaps between blocks are inside each component (Figma distances). Footer starts at Figma y 2273 = 53 below the

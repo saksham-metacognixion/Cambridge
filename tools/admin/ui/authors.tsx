@@ -3,6 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 import { api, errorText } from "./api";
 import { Field, StringList, Text } from "./ui";
 import { slugify } from "./posts";
+import { ImageUpload } from "./upload";
 
 type Author = { slug: string; name: { en: string; ar?: string }; role?: { en: string; ar?: string }; credentials?: string; bio?: { en: string; ar?: string }; photo?: string; linkedin?: string; same_as?: string[]; active?: boolean };
 type Nav = (path: string) => void;
@@ -79,7 +80,7 @@ export function AuthorEditor({ slug, nav, toast }: { slug: string; nav: Nav; toa
           <div class="card">
             <h2>Profile</h2>
             {isNew && <Field id="slug" label="Web address" hint="Leave empty to make it from the name."><input id="slug" class="input" value={a.slug} placeholder={slugify(a.name.en)} onInput={(e) => set({ slug: slugify((e.currentTarget as HTMLInputElement).value) })} /></Field>}
-            <Field id="photo" label="Photo (file key under src/assets, e.g. authors/dr-name)"><Text id="photo" value={a.photo ?? ""} onInput={(v) => set({ photo: v })} /></Field>
+            <ImageUpload kind="authors" slug={isNew ? "" : a.slug} value={a.photo ?? ""} onChange={(key) => set({ photo: key })} label="Photo" hint="A square portrait works best." />
             <Field id="li" label="LinkedIn"><Text id="li" value={a.linkedin ?? ""} placeholder="https://www.linkedin.com/in/…" onInput={(v) => set({ linkedin: v })} /></Field>
             <div class="field"><span style="font-weight:500;font-size:14px">Other profiles (schema sameAs)</span><StringList value={a.same_as?.length ? a.same_as : []} onChange={(v) => set({ same_as: v })} placeholder="https://…" add="Add a profile link" /></div>
             <label class="check"><input type="checkbox" checked={a.active !== false} onChange={(e) => set({ active: (e.currentTarget as HTMLInputElement).checked ? undefined : false })} />Shown on the website</label>

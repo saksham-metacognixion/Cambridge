@@ -2,14 +2,15 @@
 // (the repo's content is never touched). Run: npm run test:admin
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const tmp = mkdtempSync(join(tmpdir(), 'ch-admin-'));
 const out = join(tmp, 'admin-server.mjs');
-await build({ entryPoints: ['tools/admin/server.ts'], bundle: true, format: 'esm', platform: 'node', outfile: out, logLevel: 'warning' });
+await build({ entryPoints: ['tools/admin/server.ts'], bundle: true, format: 'esm', platform: 'node', outfile: out, external: ['sharp'], logLevel: 'warning' });
+import sharp from 'sharp';
 const { start, hashPassword } = await import(pathToFileURL(out).href);
 
 // Content root = a temp folder with two real posts copied in.
@@ -105,6 +106,26 @@ r = await write('DELETE', '/api/admin/authors/dr-test?confirm=dr-test');
 assert.equal(r.status, 409); assert.deepEqual(r.body.posts, [slug]); ok('an author in use cannot be deleted');
 await write('PUT', `/api/admin/posts/${slug}`, post);
 assert.equal((await write('DELETE', '/api/admin/authors/dr-test?confirm=dr-test')).status, 200); ok('unused author deleted');
+
+// --- images ---
+// A noisy 2400 x 1600 PNG (several MB) must come back as a WebP under 200 KB, saved as src/assets/news/<slug>.webp.
+mkdirSync(join(root, 'src/assets/news'), { recursive: true });
+writeFileSync(join(root, `src/assets/news/${slug}.jpg`), 'old file'); // an imported featured image with another extension
+const noise = Buffer.alloc(2400 * 1600 * 3); for (let i = 0; i < noise.length; i++) noise[i] = (i * 2654435761) >>> 24;
+const png = await sharp(noise, { raw: { width: 2400, height: 1600, channels: 3 } }).png().toBuffer();
+const upload = (path, body, type = 'image/png') => fetch(`${base}${path}`, { method: 'POST', headers: { Cookie: cookie, 'Content-Type': type, 'X-Requested-With': 'admin' }, body });
+r = await upload(`/api/admin/upload/posts/${slug}`, png); let u = await r.json();
+assert.equal(r.status, 200); assert.equal(u.key, `news/${slug}`); assert.ok(u.bytes <= 200 * 1024, `webp is ${u.bytes} bytes`); assert.ok(u.width <= 1600 && u.width >= 480, `width ${u.width}`);
+assert.ok(existsSync(join(root, `src/assets/news/${slug}.webp`))); assert.ok(!existsSync(join(root, `src/assets/news/${slug}.jpg`)));
+assert.ok(readdirSync(join(root, '.admin/versions/images/news')).some((f) => f.endsWith(`${slug}.jpg`))); ok(`upload -> WebP ${Math.round(u.bytes / 1024)} KB at ${u.width} px (noise image), the old .jpg moved to versions`);
+// A real-looking photo (smooth gradient) stays at the full 1600 px.
+const grad = Buffer.alloc(2400 * 1600 * 3); for (let y = 0; y < 1600; y++) for (let x = 0; x < 2400; x++) { const i = (y * 2400 + x) * 3; grad[i] = x / 10; grad[i + 1] = y / 7; grad[i + 2] = 120; }
+r = await upload(`/api/admin/upload/posts/${slug}`, await sharp(grad, { raw: { width: 2400, height: 1600, channels: 3 } }).jpeg().toBuffer(), 'image/jpeg'); u = await r.json();
+assert.equal(u.width, 1600); assert.ok(u.bytes <= 200 * 1024); ok(`photo-like upload keeps 1600 px (${Math.round(u.bytes / 1024)} KB)`);
+r = await fetch(`${base}/api/admin/image/news/${slug}`, { headers: { Cookie: cookie } });
+assert.equal(r.status, 200); assert.equal(r.headers.get('content-type'), 'image/webp'); ok('image preview served by key');
+assert.equal((await upload(`/api/admin/upload/posts/${slug}`, Buffer.from('not an image'))).status, 400);
+assert.equal((await upload(`/api/admin/upload/posts/no-such-post`, png)).status, 404); ok('bad file -> 400, unknown post -> 404');
 
 // --- publish ---
 r = await write('POST', '/api/admin/publish');

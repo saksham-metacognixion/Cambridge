@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 import { api, errorText } from "./api";
 import { DESC, TITLE, runChecks, seoDescription, seoTitle, stripHtml, type Locale } from "./checks";
 import { Counter, Field, Pairs, StringList, Text, scoreClass, today } from "./ui";
+import { ImageUpload } from "./upload";
 
 export type Summary = { slug: string; date: string; updated?: string; category: string; type: "blog" | "pr"; status: string; editions: string[]; title: string; hasArabic: boolean; seo: boolean; imageAlt: boolean; keyword: boolean; keywords: string[]; author: string; reviewer: string; image: string };
 export type Post = { slug: string; date: string; updated?: string; category: string; type: "blog" | "pr"; status: "draft" | "scheduled" | "published" | "archived"; publish_at?: string; editions: string[]; image: string; image_source?: string; hero_photo?: "full"; previous_slugs?: string[]; author?: string; reviewer?: string; noindex?: boolean; en: Locale & { old_url?: string; hero_button?: boolean; canonical?: string }; ar?: Post["en"]; [k: string]: unknown };
@@ -241,7 +242,7 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
               <Field id="type" label="Type"><select id="type" class="input" value={p.type} onChange={(e) => set({ type: (e.currentTarget as HTMLSelectElement).value as Post["type"] })}><option value="blog">Blog (Article)</option><option value="pr">PR / News (NewsArticle)</option></select></Field>
               <Field id="cat" label="Category"><select id="cat" class="input" value={p.category} onChange={(e) => set({ category: (e.currentTarget as HTMLSelectElement).value })}>{[...categories, { key: "interviews", label: "Interviews" }].map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}</select></Field>
             </div>
-            <Field id="img" label="Featured image (file key under src/assets, e.g. news/my-post)" hint="Upload from the dashboard comes next; for now the file is added by the developer."><Text id="img" value={p.image} onInput={(v) => set({ image: v })} /></Field>
+            <ImageUpload kind="posts" slug={isNew ? "" : p.slug} value={p.image} onChange={(key) => set({ image: key })} label="Featured image" hint="JPG, PNG, WebP or HEIC; saved as WebP under 200 KB. Describe it in the alt text field." />
             <div class="grid-2">
               <Field id="au" label="Written by"><select id="au" class="input" value={p.author ?? ""} onChange={(e) => set({ author: (e.currentTarget as HTMLSelectElement).value || undefined })}><option value="">Cambridge Hospital</option>{authors.map((a) => <option key={a.slug} value={a.slug}>{a.name.en}</option>)}</select></Field>
               <Field id="rv" label="Reviewed by"><select id="rv" class="input" value={p.reviewer ?? ""} onChange={(e) => set({ reviewer: (e.currentTarget as HTMLSelectElement).value || undefined })}><option value="">No reviewer</option>{authors.map((a) => <option key={a.slug} value={a.slug}>{a.name.en}</option>)}</select></Field>

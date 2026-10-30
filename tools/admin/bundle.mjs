@@ -11,6 +11,8 @@ await build({
   format: 'esm',
   platform: 'node',
   target: 'node22',
+  // sharp (image uploads) is native: loaded from the checkout's node_modules at run time (tools/admin/server.ts sharp()).
+  external: ['sharp'],
   logLevel: 'warning',
 });
 await build({

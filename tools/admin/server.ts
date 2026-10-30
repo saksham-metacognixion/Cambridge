@@ -16,6 +16,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { createRequire } from "node:module";
 import { postSchema } from "../../src/lib/news-schema";
 import { authorSchema } from "../../src/lib/authors-schema";
 import { SITE_URL } from "../../site.config.mjs";
@@ -168,6 +169,71 @@ function authorsInUse(slug: string) {
   return listKind("posts").filter((p: any) => p.author === slug || p.reviewer === slug).map((p: any) => p.slug);
 }
 
+// ---------- images (spec section 5: upload compresses to WebP under 200 KB) ----------
+const IMAGE_DIRS: Record<Kind, { dir: string; maxWidth: number }> = {
+  posts: { dir: "news", maxWidth: 1600 }, // the article hero shows at most ~1440 px wide
+  authors: { dir: "authors", maxWidth: 800 },
+};
+const MAX_UPLOAD = 15 * 1024 * 1024;
+const MAX_IMAGE_BYTES = 200 * 1024;
+const IMAGE_TYPES: Record<string, string> = { ".webp": "image/webp", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".avif": "image/avif", ".svg": "image/svg+xml" };
+// sharp is a native module (Astro's own image library): not bundled, loaded from the checkout's node_modules at run time.
+let sharpMod: any;
+function sharp() {
+  if (!sharpMod) {
+    const req = createRequire(path.join(root(), "package.json"));
+    try { sharpMod = req("sharp"); } catch { sharpMod = createRequire(path.join(process.cwd(), "package.json"))("sharp"); }
+  }
+  return sharpMod;
+}
+function readRaw(req: IncomingMessage, max: number): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    let size = 0;
+    req.on("data", (c: Buffer) => { size += c.length; if (size > max) { reject(new HttpError(413, "too_large")); req.destroy(); return; } chunks.push(c); });
+    req.on("end", () => resolve(Buffer.concat(chunks)));
+    req.on("error", reject);
+  });
+}
+/**
+ * Converts an upload to WebP under 200 KB (resized to the kind's width, EXIF rotation applied, quality stepped down until it
+ * fits) and saves it as src/assets/<dir>/<name>.webp. Any other file with the same name (an imported .jpg / .avif) moves to
+ * .admin/versions/images/ first, because the site resolves an image by its key without extension (src/lib/images.ts).
+ */
+async function saveImage(kind: Kind, name: string, data: Buffer) {
+  const { dir, maxWidth } = IMAGE_DIRS[kind];
+  const folder = path.join(root(), "src", "assets", dir);
+  let out: Buffer | null = null, info: { width: number; height: number } | null = null;
+  const src = sharp()(data, { failOn: "error" }).rotate();
+  // Quality first (a photo at 1600 px fits at ~70), then the width, so even a very noisy image lands under the limit.
+  outer: for (const width of [maxWidth, 1280, 1024, 800, 640, 480].filter((w, i, a) => w <= maxWidth && a.indexOf(w) === i)) {
+    const base = src.clone().resize({ width, withoutEnlargement: true });
+    for (let quality = 82; quality >= 42; quality -= 8) {
+      const r = await base.clone().webp({ quality }).toBuffer({ resolveWithObject: true });
+      out = r.data; info = r.info;
+      if (out.length <= MAX_IMAGE_BYTES) break outer;
+    }
+  }
+  if (!out || !info) throw new HttpError(400, "bad_image");
+  fs.mkdirSync(folder, { recursive: true });
+  const old = fs.existsSync(folder) ? fs.readdirSync(folder).filter((f) => f.replace(/\.[a-z0-9]+$/i, "") === name) : [];
+  const keep = path.join(root(), ".admin", "versions", "images", dir);
+  for (const f of old) { fs.mkdirSync(keep, { recursive: true }); fs.renameSync(path.join(folder, f), path.join(keep, `${new Date().toISOString().replace(/[:.]/g, "-")}-${f}`)); }
+  const file = path.join(folder, `${name}.webp`);
+  fs.writeFileSync(`${file}.tmp`, out);
+  fs.renameSync(`${file}.tmp`, file);
+  return { key: `${dir}/${name}`, bytes: out.length, width: info.width, height: info.height, replaced: old };
+}
+/** The file behind an image key (src/assets/<key>.<ext>), for the dashboard's previews. */
+function imageFile(key: string): Response | null {
+  if (!/^[a-z0-9-]+\/[\p{L}\p{N}-]+$/u.test(key)) return null;
+  const folder = path.join(root(), "src", "assets", path.dirname(key));
+  if (!fs.existsSync(folder)) return null;
+  const f = fs.readdirSync(folder).find((x) => x.replace(/\.[a-z0-9]+$/i, "") === path.basename(key) && IMAGE_TYPES[path.extname(x).toLowerCase()]);
+  if (!f) return null;
+  return new Response(fs.readFileSync(path.join(folder, f)), { status: 200, headers: { "Content-Type": IMAGE_TYPES[path.extname(f).toLowerCase()], "Cache-Control": "no-cache", "X-Robots-Tag": "noindex" } });
+}
+
 // ---------- publish (site build) ----------
 type Publish = { state: "idle" | "running" | "ok" | "failed"; startedAt?: string; finishedAt?: string; output: string[] };
 const publish: Publish = { state: "idle", output: [] };
@@ -241,6 +307,25 @@ export async function handle(req: IncomingMessage): Promise<Response> {
     return json(200, { ok: true, email: user, siteUrl: env.ADMIN_SITE_URL || SITE_URL, categories: (mediaHub.explore.categories as { key: string; label: string }[]).map(({ key, label }) => ({ key, label })) });
   // Every write needs the custom header: a cross-site form or image tag cannot add it (CSRF, on top of SameSite=Strict).
   if (method !== "GET" && req.headers["x-requested-with"] !== "admin") return json(403, { ok: false, error: "missing_header" });
+
+  // --- images: GET /image/<key> (preview), POST /upload/<posts|authors>/<slug>[?suffix=2] (raw image body) ---
+  if (route.startsWith("/image/") && method === "GET") return imageFile(decodeURIComponent(route.slice("/image/".length))) ?? json(404, { ok: false, error: "not_found" });
+  const up = /^\/upload\/(posts|authors)\/([^/]+)$/.exec(route);
+  if (up && method === "POST") {
+    const kind = up[1] as Kind;
+    const s = decodeURIComponent(up[2]);
+    const suffix = url.searchParams.get("suffix") ?? "";
+    if (!SLUG.test(s) || !/^[a-z0-9]{0,10}$/.test(suffix)) return json(400, { ok: false, error: "bad_slug" });
+    if (!fs.existsSync(fileOf(kind, s))) return json(404, { ok: false, error: "not_found" });
+    const data = await readRaw(req, MAX_UPLOAD);
+    if (!data.length) return json(400, { ok: false, error: "bad_image" });
+    try {
+      return json(200, { ok: true, ...(await saveImage(kind, suffix ? `${s}-${suffix}` : s, data)) });
+    } catch (e) {
+      if (e instanceof HttpError) throw e;
+      return json(400, { ok: false, error: "bad_image" });
+    }
+  }
 
   // --- publish ---
   if (route === "/publish") {

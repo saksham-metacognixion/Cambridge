@@ -41,6 +41,10 @@ await test('inlineScriptHashes + buildHeadersRule: one hash for the same script 
     assert.match(rule, /\n  Permissions-Policy: camera=\(\)/);
     assert.doesNotMatch(rule, /script-src[^;]*unsafe-inline/, 'no unsafe-inline for scripts');
     assert.match(rule, /frame-src https:\/\/challenges\.cloudflare\.com https:\/\/www\.youtube-nocookie\.com https:\/\/player\.vimeo\.com/);
+    // Google Analytics (Analytics.astro): the loader by domain, the hits by domain; never by 'unsafe-inline'.
+    assert.match(rule, /script-src[^;]* https:\/\/www\.googletagmanager\.com/);
+    assert.match(rule, /connect-src[^;]* https:\/\/\*\.google-analytics\.com https:\/\/www\.googletagmanager\.com/);
+    assert.match(rule, /img-src[^;]* https:\/\/\*\.google-analytics\.com/);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 

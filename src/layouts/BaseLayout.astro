@@ -10,6 +10,7 @@ import { pages as seoPages } from '../data/seo.json';
 import callButton from '../data/call-button.json';
 import CountryPopupLogic from '../components/CountryPopupLogic.astro';
 import Modals from '../components/forms/Modals.astro';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   edition: Edition;
@@ -84,6 +85,8 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
     <style is:inline set:html={`:root{--design-w:${DESIGN_W};--target-w:${TARGET_W};--max-w:${MAX_W_CSS}}`}></style>
     <!-- Scroll entrances (data-aos, scripts/aos.ts) are armed before first paint, so nothing flashes; no JS = all visible. -->
     <script is:inline>"IntersectionObserver"in window&&matchMedia("(prefers-reduced-motion: no-preference)").matches&&document.documentElement.classList.add("aos")</script>
+    <!-- Google Analytics 4 (B9, 2 Nov 2026): only when a measurement id is set at build time (src/data/analytics.json from the dashboard, else PUBLIC_GA_MEASUREMENT_ID). -->
+    <Analytics />
     <slot name="head" />
   </head>
   <body>
@@ -91,8 +94,9 @@ const hasMainFont = fs.existsSync('public/fonts/Gotham-Book.woff2');
       <slot />
       <Modals edition={edition} />
     </div>
-    <!-- Cookie consent banner mounts here once the analytics decision is made (docs/open-decisions.md B9); nothing is built yet.
-         The legal pages (privacy, cookies) are at PAGE_PATHS.privacyPolicy / cookiePolicy. -->
+    <!-- Cookie consent banner mount (docs/open-decisions.md B9): Google Analytics is in since 2 Nov 2026 (Analytics.astro, Consent
+         Mode default "granted" in src/data/analytics.json); a banner built here sets that default to "denied" and calls
+         gtag('consent', 'update', ...) on accept. The legal pages (privacy, cookies) are at PAGE_PATHS.privacyPolicy / cookiePolicy. -->
     <div id="consent-banner" hidden></div>
     <!-- "Go to top" = the live Blocksy back-to-top button (AN1, 9 Oct 2026): fixed at the bottom inline end, shown once the page is
          scrolled (scripts/back-to-top.ts), smooth scroll to the top on click; not on phones (live .ct-hidden-sm). -->

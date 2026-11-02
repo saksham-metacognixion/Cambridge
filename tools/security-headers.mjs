@@ -16,6 +16,9 @@
 //     (scripts / tiles / fonts from *.googleapis.com, *.gstatic.com, *.google.com, *.googleusercontent.com, *.ggpht.com;
 //     blob: workers for the vector renderer); the pin icons are data: SVGs
 //   - click-to-play videos (src/scripts/video-facade.ts): frames from www.youtube-nocookie.com and player.vimeo.com
+//   - Google Analytics 4 (src/components/Analytics.astro, only when PUBLIC_GA_MEASUREMENT_ID is set): gtag.js from
+//     www.googletagmanager.com, hits to *.google-analytics.com (regional endpoints too) / *.analytics.google.com (covered by
+//     *.google.com) and the tag's own pixels / config calls on those hosts
 // 'unsafe-inline' stays for styles only: the pages carry hundreds of style="" attributes (Figma positions) and Maps injects
 // its own; a style policy cannot be hashed per attribute.
 import { readdir, readFile } from 'node:fs/promises';
@@ -29,11 +32,11 @@ export function contentSecurityPolicy(hashes) {
   const inline = hashes.map((h) => `'sha256-${h}'`).join(' ');
   return [
     `default-src 'self'`,
-    `script-src 'self' ${inline} https://challenges.cloudflare.com https://maps.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com https://*.googleusercontent.com blob:`.replace(/\s+/g, ' '),
+    `script-src 'self' ${inline} https://challenges.cloudflare.com https://www.googletagmanager.com https://maps.googleapis.com https://*.gstatic.com https://*.google.com https://*.ggpht.com https://*.googleusercontent.com blob:`.replace(/\s+/g, ' '),
     `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
-    `img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.googleusercontent.com https://*.ggpht.com`,
+    `img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.googleusercontent.com https://*.ggpht.com https://*.google-analytics.com https://www.googletagmanager.com`,
     `font-src 'self' https://fonts.gstatic.com`,
-    `connect-src 'self' https://*.googleapis.com https://*.gstatic.com https://*.google.com data: blob:`,
+    `connect-src 'self' https://*.googleapis.com https://*.gstatic.com https://*.google.com https://*.google-analytics.com https://www.googletagmanager.com data: blob:`,
     `frame-src https://challenges.cloudflare.com https://www.youtube-nocookie.com https://player.vimeo.com https://*.google.com`,
     `worker-src blob:`,
     `object-src 'none'`,

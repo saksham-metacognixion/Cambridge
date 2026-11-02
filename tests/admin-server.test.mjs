@@ -169,6 +169,20 @@ assert.deepEqual(robotsFile, { $comment: 'kept', aiCrawlers: { GPTBot: false, Pe
 assert.ok(readdirSync(join(root, '.admin/versions/settings')).some((f) => f.startsWith('robots-')));
 ok('robots settings: read, validated, written with the comment kept and a version copy');
 
+// --- settings: Google Analytics measurement id (src/data/analytics.json) ---
+writeFileSync(join(root, 'src/data/analytics.json'), JSON.stringify({ $comment: 'kept', measurementId: '', load: 'deferred' }));
+assert.equal((await call('GET', '/api/admin/settings/analytics')).body.measurementId, '');
+assert.equal((await write('PUT', '/api/admin/settings/analytics', { measurementId: 'UA-12345-1' })).status, 400);
+assert.equal((await write('PUT', '/api/admin/settings/analytics', { measurementId: 'G-ABC' })).status, 400);
+assert.equal((await write('PUT', '/api/admin/settings/analytics', { measurementId: 12 })).status, 400);
+r = await write('PUT', '/api/admin/settings/analytics', { measurementId: ' g-gynztc8rsl ' });
+assert.equal(r.status, 200); assert.equal(r.body.measurementId, 'G-GYNZTC8RSL');
+assert.deepEqual(JSON.parse(readFileSync(join(root, 'src/data/analytics.json'), 'utf8')), { $comment: 'kept', measurementId: 'G-GYNZTC8RSL', load: 'deferred' });
+assert.equal((await write('PUT', '/api/admin/settings/analytics', { measurementId: '' })).status, 200);
+assert.equal((await call('GET', '/api/admin/settings/analytics')).body.measurementId, '');
+assert.ok(readdirSync(join(root, '.admin/versions/settings')).some((f) => f.startsWith('analytics-')));
+ok('analytics settings: id validated and upper-cased, empty allowed, other options kept, version copy');
+
 // --- publish ---
 r = await write('POST', '/api/admin/publish');
 assert.equal(r.status, 202);

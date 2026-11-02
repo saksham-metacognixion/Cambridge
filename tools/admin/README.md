@@ -11,7 +11,7 @@ no GitHub account for the client: the files are the content, the build validates
 | UI | `tools/admin/ui/` (preact, plain CSS) | Login, posts list + editor (EN / AR, SEO, GEO, score, Google preview), authors |
 | Article editor | `tools/admin/ui/editor.tsx` | Rich text (headings, bold, italic, links, lists, quote, photo, YouTube) with an HTML view; see below |
 | Checks | `tools/admin/ui/checks.ts` | The spec's focus-keyword rules + GEO checks, warnings only |
-| Settings | `tools/admin/ui/settings.tsx` | AI crawlers (robots.txt) and the manual 301 redirects (see below) |
+| Settings | `tools/admin/ui/settings.tsx` | AI crawlers (robots.txt), the manual 301 redirects (see below) and the Google Analytics id (`measurementId` in `src/data/analytics.json`; empty = the build's `PUBLIC_GA_MEASUREMENT_ID`, both empty = no tag; `GET` / `PUT /api/admin/settings/analytics`) |
 | Preview | `tools/admin/server.ts` (`/admin/preview/*`) | `astro dev` on demand behind the login: a saved post as the real page, no build (see below) |
 | Bundle | `tools/admin/bundle.mjs` -> `dist-admin/` | `npm run admin:bundle`; `npm run admin` bundles and starts |
 | Tests | `tests/admin-server.test.mjs` | `npm run test:admin` (in `npm test`): the API over real HTTP against a temp copy |

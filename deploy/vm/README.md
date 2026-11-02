@@ -73,6 +73,7 @@ ssh azureuser@<vm-ip> "sudo bash /tmp/vm/setup.sh '$(cat ~/.ssh/cambridge_deploy
 | Secret | `VM_SSH_KEY` | Contents of `~/.ssh/cambridge_deploy` (the private key) |
 | Variable | `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (build time) |
 | Variable | `PUBLIC_GOOGLE_MAPS_KEY` | Maps JavaScript API browser key (build time) |
+| Variable | `PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 measurement id `G-XXXXXXXXXX` (build time; empty = no Google tag) |
 
 Then Actions > Deploy to Azure VM > Run workflow (later pushes to `main` deploy by themselves). Check the site on
 the domain (section 6).
@@ -91,7 +92,7 @@ sudo systemctl restart cambridge-web
 node tools/admin/hash-password.mjs 'the superadmin password'    # on a laptop; prints ADMIN_PASSWORD_HASH=...
 ssh azureuser@<vm-ip>
 sudo nano /etc/cambridge-admin.env     # ADMIN_EMAIL, ADMIN_PASSWORD_HASH (without the quotes), ADMIN_SESSION_SECRET (openssl rand -hex 32),
-                                       # PUBLIC_TURNSTILE_SITE_KEY + PUBLIC_GOOGLE_MAPS_KEY (same as the GitHub variables)
+                                       # PUBLIC_TURNSTILE_SITE_KEY + PUBLIC_GOOGLE_MAPS_KEY + PUBLIC_GA_MEASUREMENT_ID (same as the GitHub variables)
 sudo systemctl restart cambridge-admin
 ```
 

@@ -1,7 +1,9 @@
-// Settings: which AI crawlers may read the site (spec section 6) and the manual 301 redirects (the spec's redirect manager).
+// Settings: which AI crawlers may read the site (spec section 6), the manual 301 redirects (the spec's redirect manager) and
+// the Google Analytics measurement id (user, 2 Nov 2026).
 // AI crawlers write src/data/robots.json; the build turns it into one robots.txt group per crawler (src/pages/robots.txt.ts).
 // Everything not listed falls under "User-agent: *" = allowed. Redirects write src/data/redirects.json; the build puts them
-// first in dist/_redirects (src/lib/redirects.ts), ahead of the automatic ones (old live-site URLs, renamed posts).
+// first in dist/_redirects (src/lib/redirects.ts), ahead of the automatic ones (old live-site URLs, renamed posts). Analytics
+// writes `measurementId` in src/data/analytics.json, read at build time by src/components/Analytics.astro.
 import { useEffect, useState } from "preact/hooks";
 import { api, errorText } from "./api";
 import { setUnsaved } from "./unsaved";
@@ -24,22 +26,25 @@ const KNOWN: Record<string, string> = {
   "Meta-ExternalAgent": "Meta: training data",
   "Amazonbot": "Amazon Alexa answers",
   "CCBot": "Common Crawl (open dataset used for AI training)",
+  "DuckAssistBot": "DuckDuckGo AI answers",
+  "MistralAI-User": "Mistral Le Chat browsing on a user's request",
   "Bytespider": "ByteDance / TikTok",
 };
 
 export function Settings({ toast, siteUrl }: { toast: (t: string) => void; siteUrl: string }) {
   return (
     <div>
-      <div class="page-head"><div><h1>Settings</h1><p class="sub">AI crawlers, robots.txt and redirects.</p></div></div>
+      <div class="page-head"><div><h1>Settings</h1><p class="sub">AI crawlers, robots.txt, redirects and Google Analytics.</p></div></div>
       <div class="editor" style="margin-top:14px">
         <div>
           <Crawlers toast={toast} siteUrl={siteUrl} />
           <Redirects toast={toast} />
+          <Analytics toast={toast} />
         </div>
         <div class="side">
           <div class="card">
             <h2>What reaches the website</h2>
-            <p class="help">Both settings are saved here at once and reach the website on the next <b>Publish site</b>.</p>
+            <p class="help">Each setting is saved here and reaches the website on the next <b>Publish site</b>.</p>
             <p class="help">Cloudflare can block AI crawlers before they reach the site ("Block AI bots", "Managed robots.txt"). Those switches are in the Cloudflare dashboard, not here.</p>
           </div>
         </div>
@@ -160,6 +165,41 @@ function Redirects({ toast }: { toast: (t: string) => void }) {
         </details>
       )}
       {siteUrl && <p class="counter" style="margin-top:12px">A redirect can be checked after publishing by opening the old address on {siteUrl.replace(/^https?:\/\//, "")}.</p>}
+    </div>
+  );
+}
+
+/* ---------- Google Analytics ---------- */
+function Analytics({ toast }: { toast: (t: string) => void }) {
+  const [id, setId] = useState<string | null>(null);
+  const [orig, setOrig] = useState<string | null>(null);
+  const [fallback, setFallback] = useState("");
+  const [err, setErr] = useState("");
+  useEffect(() => { api<{ measurementId: string; fallback: string }>("GET", "/settings/analytics").then((r) => { setId(r.measurementId ?? ""); setOrig(r.measurementId ?? ""); setFallback(r.fallback ?? ""); }); }, []);
+  const dirty = id !== null && orig !== null && id.trim().toUpperCase() !== orig;
+  useEffect(() => { setUnsaved("settings:analytics", dirty); return () => setUnsaved("settings:analytics", false); }, [dirty]);
+  if (id === null || orig === null) return <div class="card"><p class="empty">Loading…</p></div>;
+  const save = async () => {
+    setErr("");
+    const r = await api<{ measurementId: string }>("PUT", "/settings/analytics", { measurementId: id });
+    if (!r.ok) { setErr(errorText(r)); return; }
+    setId(r.measurementId!); setOrig(r.measurementId!);
+    toast(r.measurementId ? "Saved. Press Publish site to put the tag on the website." : "Saved. Press Publish site to remove the tag from the website.");
+  };
+  const effective = orig || fallback;
+  return (
+    <div class="card">
+      <h2>Google Analytics <span class="badge">GA4</span></h2>
+      <p class="help">The measurement id of this website's GA4 web stream (GA Admin &gt; Data streams &gt; your stream), like <code>G-XXXXXXXXXX</code>. With an id the Google tag is on every page; leave it empty and nothing is sent to Google.</p>
+      {err && <div class="error-box" role="alert" style="margin-bottom:12px">{err}</div>}
+      <div class="row">
+        <input class="input" value={id} placeholder="G-XXXXXXXXXX" aria-label="Google Analytics measurement id" aria-invalid={!!err || undefined} style={`max-width:260px;font-family:ui-monospace,monospace${err ? ";border-color:var(--error)" : ""}`} spellcheck={false} onInput={(e) => setId((e.currentTarget as HTMLInputElement).value)} onKeyDown={(e) => e.key === "Enter" && dirty && save()} />
+      </div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn btn-primary" disabled={!dirty} onClick={save}>Save</button>
+        <span class="counter">{dirty ? "Unsaved changes." : "Saved."} The id reaches the website on the next <b>Publish site</b>.</span>
+      </div>
+      <p class="counter" style="margin-top:12px">{effective ? <span>The website is built with <code>{effective}</code>{!orig && fallback ? " (from the server's settings, used while this field is empty)" : ""}.</span> : "No Google tag on the website."}</p>
     </div>
   );
 }

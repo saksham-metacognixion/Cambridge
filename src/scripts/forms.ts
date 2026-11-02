@@ -437,6 +437,10 @@ function showAlert(form: HTMLFormElement, msg: string) {
   }
 }
 function success(form: HTMLFormElement) {
+  // Analytics (src/components/Analytics.astro, B9): a `generate_lead` event per sent form, by its data-form id.
+  document.dispatchEvent(
+    new CustomEvent("ch:form-success", { detail: { form: form.dataset.form } }),
+  );
   // Newsletter boxes: the thank-you line sits inside the form, which stays (Figma has no success screen for them).
   const inline = form.querySelector<HTMLElement>(".f-ok");
   if (inline) {

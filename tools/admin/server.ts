@@ -263,8 +263,15 @@ function startPublish() {
   };
   child.stdout.on("data", keep);
   child.stderr.on("data", keep);
-  child.on("close", (code) => Object.assign(publish, { state: code === 0 ? "ok" : "failed", finishedAt: new Date().toISOString() }));
-  child.on("error", (e) => { keep(Buffer.from(e.message)); Object.assign(publish, { state: "failed", finishedAt: new Date().toISOString() }); });
+  // The result goes to the service log as well (journalctl on the VM): the panel's copy lives in memory only, until the next
+  // publish or restart, and a failure must be findable without the dashboard open.
+  const done = (state: "ok" | "failed", why?: string) => {
+    Object.assign(publish, { state, finishedAt: new Date().toISOString() });
+    console.log(`admin server: publish ${state}${why ? ` (${why})` : ""}, started ${publish.startedAt}`);
+    if (state === "failed") for (const line of publish.output.slice(-15)) console.log(`admin server: publish | ${line}`);
+  };
+  child.on("close", (code, signal) => done(code === 0 ? "ok" : "failed", code === 0 ? undefined : `exit ${code ?? signal}`));
+  child.on("error", (e) => { keep(Buffer.from(e.message)); done("failed", e.message); });
 }
 
 // ---------- scheduled posts: go live on time without anyone pressing Publish ----------
@@ -517,6 +524,25 @@ export async function handle(req: IncomingMessage): Promise<Response> {
       if (fs.existsSync(file)) fs.copyFileSync(file, path.join(dir, `robots-${new Date().toISOString().replace(/[:.]/g, "-")}.json`));
       writeJson(file, { ...current, aiCrawlers: Object.fromEntries(entries) });
       return json(200, { ok: true, aiCrawlers: Object.fromEntries(entries) });
+    }
+  }
+  // --- settings: Google Analytics 4 measurement id (src/data/analytics.json `measurementId`, read at build time by
+  // src/components/Analytics.astro; empty = the build's PUBLIC_GA_MEASUREMENT_ID fallback, both empty = no Google tag) ---
+  if (route === "/settings/analytics") {
+    const file = path.join(root(), "src", "data", "analytics.json");
+    const current = (readJson(file) as Record<string, unknown>) ?? {};
+    const fallback = (env.PUBLIC_GA_MEASUREMENT_ID ?? "").trim();
+    if (method === "GET") return json(200, { ok: true, measurementId: typeof current.measurementId === "string" ? current.measurementId : "", fallback });
+    if (method === "PUT") {
+      const body = (await readBody(req)) as { measurementId?: unknown };
+      const id = typeof body?.measurementId === "string" ? body.measurementId.trim().toUpperCase() : null;
+      if (id === null || (id && !/^(G|GT|AW|DC)-[A-Z0-9]{4,20}$/.test(id)))
+        return json(400, { ok: false, error: "invalid", details: [{ field: "measurementId", message: "A Google Analytics measurement id looks like G-XXXXXXXXXX (GA Admin > Data streams > your web stream). Leave it empty to send nothing to Google" }] });
+      const dir = path.join(root(), ".admin", "versions", "settings");
+      fs.mkdirSync(dir, { recursive: true });
+      if (fs.existsSync(file)) fs.copyFileSync(file, path.join(dir, `analytics-${new Date().toISOString().replace(/[:.]/g, "-")}.json`));
+      writeJson(file, { ...current, measurementId: id });
+      return json(200, { ok: true, measurementId: id, fallback });
     }
   }
   // --- settings: manual 301 redirects (src/data/redirects.json; the whole list is read and written at once, like robots) ---

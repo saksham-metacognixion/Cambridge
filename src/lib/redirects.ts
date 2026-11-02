@@ -21,6 +21,8 @@ import {
   CARE_PATHS,
 } from "./care";
 import { leaders, leaderEditions, leaderHref, LEADER_PATHS } from "./leadership";
+import { redirectsFileSchema } from "./redirects-schema";
+import manualFile from "../data/redirects.json";
 
 export interface Redirect {
   from: string;
@@ -264,6 +266,20 @@ export function sectionRedirects(): Redirect[] {
 }
 
 /**
+ * Rules added by hand in the dashboard (Settings > Redirects, src/data/redirects.json; schema src/lib/redirects-schema.ts).
+ * The build stops on a bad file, as it does for a bad post. They come first in allRedirects(), so a manual rule wins over a
+ * generated one for the same old address.
+ */
+export function manualRedirects(): Redirect[] {
+  const parsed = redirectsFileSchema.safeParse(manualFile);
+  if (!parsed.success)
+    throw new Error(
+      "Redirects: src/data/redirects.json is invalid:\n" + parsed.error.issues.map((i) => `  ${i.path.join(".") || "(root)"}: ${i.message}`).join("\n"),
+    );
+  return parsed.data.redirects.map(({ from, to }) => ({ from, to }));
+}
+
+/**
  * All rules, deduplicated by source, without no-op rules. Sources are compared without their trailing slash (bug 057:
  * "/media-hub/x" and the target "/media-hub/x/" are the same page, a rule between them would loop) and with their
  * percent-encoding in uppercase (bug 060: the seven Arabic post slugs; src/pages/[redirects].ts also writes the lowercase twin).
@@ -273,6 +289,7 @@ export function allRedirects(): Redirect[] {
   const bare = (p: string) => p.replace(/\/+$/, "");
   const isSplat = (r: Redirect) => r.from.endsWith("/*");
   const rules = [
+    ...manualRedirects(),
     ...pageRedirects(),
     ...newsRedirects(),
     ...doctorRedirects(),

@@ -135,6 +135,56 @@ function blocks(parent: Node, wrap = "p"): string[] {
 export const serialize = (root: Node) => blocks(root).join("\n\n");
 export const normalizeHtml = (html: string) => { const d = document.createElement("div"); d.innerHTML = html; return serialize(d); };
 const photoKeys = (html: string) => Array.from((html || "").matchAll(/<figure data-image="([^"]+)">\s*<img alt="([^"]*)"/g)).map((m) => ({ key: m[1], alt: m[2] }));
+/* ---------- block formatting: paragraph / H2 / H3 / quote (bug 254) ---------- */
+// Done on the DOM, not with execCommand("formatBlock"): Chrome nests the new block inside the old one (<h2><p>…</p></h2>)
+// instead of replacing it, so a heading never went back to a paragraph. Firefox replaces, but neither browser toggles.
+// Rules: the button of the format a block already has turns it back into a paragraph; a quote is
+// <blockquote><p>…</p></blockquote>, the shape the stored HTML has; lists, tables and figures are left alone.
+type BlockTag = "p" | "h2" | "h3" | "blockquote";
+const PLAIN: Record<string, string> = { p: "p", div: "p", pre: "p", h2: "h2", h3: "h3", h4: "h4", blockquote: "blockquote" };
+const kindOf = (n: Node) => (n.nodeType === 1 ? PLAIN[(n as Element).tagName.toLowerCase()] ?? "" : "");
+const isInline = (n: Node) => n.nodeType === 3 || (n.nodeType === 1 && (INLINE.has(tagOf(n as Element)) || UNWRAP.has(tagOf(n as Element)) || tagOf(n as Element) === "img"));
+/** Changes the top-level blocks the selection touches to `tag` (or to paragraphs when they all have it). Keeps the selection. */
+function changeBlocks(root: HTMLElement, tag: BlockTag): boolean {
+  const s = document.getSelection(); if (!s || !s.rangeCount) return false;
+  const r = s.getRangeAt(0);
+  const top = (n: Node | null) => { while (n && n.parentNode && n.parentNode !== root) n = n.parentNode; return n && n.parentNode === root ? n : null; };
+  const a = top(r.startContainer), b = top(r.endContainer); if (!a || !b) return false;
+  const picked: Node[] = []; for (let n: Node | null = a; n; n = n.nextSibling) { picked.push(n); if (n === b) break; }
+  const blocks = picked.filter((n) => kindOf(n) || isInline(n)); if (!blocks.length) return false;
+  const target: BlockTag = tag !== "p" && blocks.every((n) => kindOf(n) === tag) ? "p" : tag;
+  if (blocks.every((n) => kindOf(n) === target)) return false;
+  const start: [Node, number] = [r.startContainer, r.startOffset], end: [Node, number] = [r.endContainer, r.endOffset];
+  const moved = new Map<Node, Node>(); // a replaced element -> the element that now holds its content
+  let first: Node | null = null;
+  const make = (kids: Node[]) => { const inner = document.createElement(target === "blockquote" ? "p" : target); inner.append(...kids); const el = target === "blockquote" ? document.createElement("blockquote") : inner; if (el !== inner) el.append(inner); first ??= inner; return { el, inner }; };
+  for (const n of blocks) {
+    const kind = kindOf(n);
+    if (kind === target) continue;
+    if (!kind) { // bare text or inline on the root (Firefox leaves a line like that after a list is removed): the whole line
+      if (!n.parentNode) continue; // already taken by the run of an earlier node
+      let from: Node = n; while (from.previousSibling && isInline(from.previousSibling)) from = from.previousSibling;
+      const run: Node[] = []; for (let k: Node | null = from; k && isInline(k); k = k.nextSibling) run.push(k);
+      const { el, inner } = make([]); root.insertBefore(el, from); inner.append(...run); continue;
+    }
+    const e = n as Element;
+    if (kind === "blockquote") {
+      // each paragraph of the quote (or its bare text) becomes a block of its own; the caret in the quote itself lands in the first
+      let run: Node[] = [], own: Node | null = null;
+      const put = (kids: Node[]) => { const { el, inner } = make(kids); root.insertBefore(el, e); own ??= inner; return inner; };
+      const flush = () => { if (run.some((k) => k.nodeType === 1 || /\S/.test(k.nodeValue ?? ""))) put(run); run = []; };
+      for (const k of Array.from(e.childNodes)) { if (kindOf(k)) { flush(); moved.set(k, put(Array.from(k.childNodes))); } else run.push(k); }
+      flush(); moved.set(e, own ?? root);
+    } else { const { el, inner } = make(Array.from(e.childNodes)); root.insertBefore(el, e); moved.set(e, inner); }
+    e.remove();
+  }
+  const place = ([c, o]: [Node, number]): [Node, number] => { const m = moved.get(c); if (m) return [m, Math.min(o, m.childNodes.length)]; return root.contains(c) ? [c, o] : [first ?? root, 0]; };
+  const nr = document.createRange(); const ns = place(start), ne = place(end);
+  try { nr.setStart(ns[0], ns[1]); nr.setEnd(ne[0], ne[1]); } catch { nr.setStart(first ?? root, 0); nr.collapse(true); }
+  s.removeAllRanges(); s.addRange(nr);
+  return true;
+}
+
 const youtubeId = (url: string) => /(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{11})/.exec(url)?.[1] ?? (/^[A-Za-z0-9_-]{11}$/.test(url.trim()) ? url.trim() : "");
 
 /* ---------- the component ---------- */
@@ -167,16 +217,18 @@ export function RichText({ id, value, onChange, dir, slug, otherBody, otherLabel
     last.current = value; emitted.current.clear();
   }, [value, mode]);
   useEffect(() => { try { document.execCommand("defaultParagraphSeparator", false, "p"); } catch { /* old browsers */ } }, []);
+  const readState = () => {
+    const root = el.current; const sel = document.getSelection();
+    if (!root || !sel || !sel.anchorNode || !root.contains(sel.anchorNode)) return;
+    let n: Node | null = sel.anchorNode; let block = "p", link = false, strong = false;
+    while (n && n !== root) { if (n.nodeType === 1) { const t = (n as Element).tagName.toLowerCase(); if (t === "a") link = true; if (t === "b" || t === "strong") strong = true; if (["h2", "h3", "h4", "blockquote", "li"].includes(t) && block === "p") block = t; } n = n.parentNode; }
+    // Firefox answers "bold" from the computed weight, so every heading counted as bold: inside a heading only a <strong> counts
+    const bold = /^h/.test(block) ? strong : document.queryCommandState("bold");
+    setState({ bold, italic: document.queryCommandState("italic"), ul: document.queryCommandState("insertUnorderedList"), ol: document.queryCommandState("insertOrderedList"), block, link });
+  };
   useEffect(() => {
-    const onSel = () => {
-      const root = el.current; const sel = document.getSelection();
-      if (!root || !sel || !sel.anchorNode || !root.contains(sel.anchorNode)) return;
-      let n: Node | null = sel.anchorNode; let block = "p", link = false;
-      while (n && n !== root) { if (n.nodeType === 1) { const t = (n as Element).tagName.toLowerCase(); if (t === "a") link = true; if (["h2", "h3", "h4", "blockquote", "li"].includes(t) && block === "p") block = t; } n = n.parentNode; }
-      setState({ bold: document.queryCommandState("bold"), italic: document.queryCommandState("italic"), ul: document.queryCommandState("insertUnorderedList"), ol: document.queryCommandState("insertOrderedList"), block, link });
-    };
-    document.addEventListener("selectionchange", onSel);
-    return () => document.removeEventListener("selectionchange", onSel);
+    document.addEventListener("selectionchange", readState);
+    return () => document.removeEventListener("selectionchange", readState);
   }, []);
 
   const emit = () => {
@@ -187,6 +239,12 @@ export function RichText({ id, value, onChange, dir, slug, otherBody, otherLabel
     const html = serialize(root); last.current = html; emitted.current.add(html); onChange(html);
   };
   const exec = (cmd: string, arg?: string) => { el.current?.focus(); document.execCommand(cmd, false, arg); emit(); };
+  const setBlock = (tag: BlockTag) => {
+    const root = el.current; if (!root) return; root.focus();
+    if (!root.firstElementChild) { document.execCommand("formatBlock", false, tag === "blockquote" ? "p" : tag); } // nothing typed yet: wrap the line
+    else if (!changeBlocks(root, tag)) return;
+    emit(); readState();
+  };
   const saveSel = () => { const s = document.getSelection(); saved.current = s && s.rangeCount && el.current?.contains(s.anchorNode) ? s.getRangeAt(0).cloneRange() : null; };
   const restoreSel = () => {
     const root = el.current; if (!root) return; root.focus();
@@ -240,9 +298,9 @@ export function RichText({ id, value, onChange, dir, slug, otherBody, otherLabel
     <div class="rte">
       <div class="rte-bar" role="toolbar" aria-label="Formatting">
         {mode === "visual" && <>
-          <B cmd="formatBlock" arg="p" label="¶" title="Paragraph" on={state.block === "p"} />
-          <B cmd="formatBlock" arg="h2" label="H2" title="Heading" on={state.block === "h2"} />
-          <B cmd="formatBlock" arg="h3" label="H3" title="Sub-heading" on={state.block === "h3"} />
+          <B label="¶" title="Paragraph" on={state.block === "p"} onClick={() => setBlock("p")} />
+          <B label="H2" title="Heading" on={state.block === "h2"} onClick={() => setBlock("h2")} />
+          <B label="H3" title="Sub-heading" on={state.block === "h3"} onClick={() => setBlock("h3")} />
           <span class="rte-sep" />
           <B cmd="bold" label="B" title="Bold (Ctrl+B)" on={state.bold} />
           <B cmd="italic" label="I" title="Italic (Ctrl+I)" on={state.italic} />
@@ -250,7 +308,7 @@ export function RichText({ id, value, onChange, dir, slug, otherBody, otherLabel
           <span class="rte-sep" />
           <B cmd="insertUnorderedList" label="• List" title="Bullet list" on={state.ul} />
           <B cmd="insertOrderedList" label="1. List" title="Numbered list" on={state.ol} />
-          <B cmd="formatBlock" arg="blockquote" label="Quote" title="Quote" on={state.block === "blockquote"} />
+          <B label="Quote" title="Quote" on={state.block === "blockquote"} onClick={() => setBlock("blockquote")} />
           <span class="rte-sep" />
           <B label="Photo" title="Photo in the text" onClick={() => (slug ? open({ kind: "photo" }) : setMsg({ ok: false, text: "Save the post first, then add photos." }))} />
           <B label="Video" title="YouTube video" onClick={() => open({ kind: "video", url: "", title: "" })} />

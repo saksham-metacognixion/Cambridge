@@ -6,5 +6,10 @@
  */
 export const SITE_URL = 'https://cambridgehospital.com';
 
-/** false = staging: every page gets `noindex` and robots.txt disallows crawling. Flip to true at go-live. */
-export const INDEXABLE = false;
+/**
+ * true = production: pages are indexable and robots.txt allows crawling (and the AI search crawlers in src/data/robots.json).
+ * Switched on 2 Nov 2026 (user decision: the site goes into search; the live site had shipped with `noindex` on every page).
+ * false = every page gets `noindex, nofollow` and robots.txt disallows crawling. Staging hosts stay out of search by a host
+ * header instead: Vercel `X-Robots-Tag: noindex, nofollow` (tools/vercel-json.mjs), nginx deploy/nginx/cambridge-staging.conf.
+ */
+export const INDEXABLE = true;

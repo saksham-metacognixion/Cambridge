@@ -44,7 +44,8 @@ export function runChecks(l: Locale, slug: string, o: { otherKeywords: string[];
     c("GEO", "FAQ with 2+ questions", (l.faqs || []).filter((f) => f.q && f.a).length >= 2, "Real patient questions with short answers (also FAQPage schema).", 5),
     c("GEO", "2+ sources", (l.sources || []).filter((s) => s.url).length >= 2, "Link the studies or official pages the facts come from.", 5),
     c("GEO", "Named author", !!o.author, "Choose the author (byline + Person schema).", 4),
-    c("GEO", "Reviewed by a clinician", !!o.reviewer, "A medical reviewer shows expertise and trust.", 5),
+    // a separate person: the author reviewing their own article is no review (bug 259; the server refuses it too)
+    c("GEO", "Reviewed by a clinician", !!o.reviewer && o.reviewer !== o.author, o.reviewer && o.reviewer === o.author ? "The reviewer must be a different person from the author." : "A medical reviewer shows expertise and trust.", 5),
     c("GEO", "Updated in the last 12 months", age < 366, "Refresh the facts and set \"Last updated\".", 3),
     c("GEO", "Body is 600+ words (depth)", bodyText.length > 0 && wordCount >= 600, "Thin pages are rarely cited.", 2),
   ];

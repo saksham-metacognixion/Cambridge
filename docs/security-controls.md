@@ -3,6 +3,7 @@
 Status: 30 October 2026. Prepared for the client's security review of the website hosting and management arrangement.
 Each control names where it is implemented in this repository, so it can be verified rather than taken on trust.
 Items marked **planned** are built but not yet running on the production server (they need server access to install).
+The contractual side (obligations, response times, backup objectives) is drafted separately in `docs/security-annex-draft.md`.
 
 ## 1. What the website is
 
@@ -32,7 +33,7 @@ Items marked **planned** are built but not yet running on the production server 
 |---|---|
 | HTTPS everywhere: Cloudflare edge certificate for visitors; Cloudflare to origin in **Full (strict)** mode with a Cloudflare Origin Certificate on the server (valid to 2041). HTTP redirects to HTTPS. | `deploy/vm/Caddyfile`, `deploy/vm/README.md` section 6 |
 | Cloudflare in front of the origin: DDoS protection, WAF, bot management, caching. Only Cloudflare's published IP ranges are trusted for the visitor's IP (`trusted_proxies`). Recommended (client's Cloudflare account): restrict the VM's inbound 80/443 to Cloudflare IPs. | `deploy/vm/Caddyfile` |
-| `X-Content-Type-Options: nosniff` on every response. **Gap found in this review (30 Oct 2026):** `Strict-Transport-Security`, `Content-Security-Policy`, `Referrer-Policy`, `Permissions-Policy` and `X-Frame-Options` are not yet sent. HSTS can be switched on in Cloudflare today (SSL/TLS > Edge Certificates); the others are a small change in the page server, proposed as the first item under the maintenance contract. | `tools/azure/handler.ts` |
+| Security headers on every response: `Strict-Transport-Security` (1 year), `Content-Security-Policy` (scripts only from the site itself, allowed inline scripts by SHA-256 hash, no `unsafe-inline` for scripts; third parties limited to Cloudflare Turnstile, Google Maps on Contact Us, YouTube / Vimeo players; `frame-ancestors 'self'`, `object-src 'none'`, `form-action 'self'`), `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (camera, microphone, geolocation, payment, USB off). Generated at build time, so a new inline script that would weaken the policy fails the build. (Gap found in this review on 30 Oct 2026: before this change the live site sent only `nosniff`; **goes live with the next deployment to `main`**.) | `tools/security-headers.mjs`, `astro.config.mjs` (`securityHeaders`), `tools/azure/handler.ts` (`dist/_headers`), `tests/security-headers.test.mjs` |
 | Form endpoint accepts only requests from the site's own origin (`ALLOWED_ORIGINS`), bounded body size (32 KB, larger only for the one form with an attachment), attachment type / size / magic-bytes checks. | `functions/api/forms/[form].ts` |
 
 ## 4. Server hardening (Azure VM)
@@ -56,6 +57,7 @@ Items marked **planned** are built but not yet running on the production server 
 | Every save is validated against the content schema; invalid content never reaches the site. Article HTML is sanitised at build time with an allow-list (no scripts, iframes, event handlers). | `src/lib/news-schema.ts`, `src/lib/sanitize.ts` |
 | Uploaded images are re-encoded (never served as uploaded), size-limited (15 MB in, under 200 KB out). | `tools/admin/server.ts` |
 | Every change keeps the previous version (restore from the UI); deletions keep a copy. | `.admin/versions/` |
+| The dashboard pages send their own security headers (`Content-Security-Policy` with scripts only from the site, `X-Frame-Options: DENY`, HSTS, `Referrer-Policy`, `Permissions-Policy`). | `tools/admin/server.ts` (`UI_SECURITY_HEADERS`) |
 | The dashboard process runs as the unprivileged `cambridge` user, bound to localhost; reachable only through Cloudflare + Caddy. Recommended: Cloudflare Access in front of `/admin*` (login restricted to the superadmin's email). **Planned** on production. | `deploy/vm/cambridge-admin.service`, `deploy/vm/Caddyfile` |
 | Automated tests cover authentication, rate limiting, CSRF, validation, versions, uploads (26+ checks, run on every deploy). | `tests/admin-server.test.mjs` |
 
@@ -96,7 +98,7 @@ Items marked **planned** are built but not yet running on the production server 
 
 | Evidence | How |
 |---|---|
-| HTTPS / headers | `curl -I https://cambridgehospital.com/` or https://securityheaders.com, https://www.ssllabs.com/ssltest/ (today this will show the missing headers listed in section 3) |
+| HTTPS / headers | `curl -I https://cambridgehospital.com/` or https://securityheaders.com, https://www.ssllabs.com/ssltest/ (after the next deployment; until then the live site shows only `nosniff`) |
 | Cloudflare settings (TLS mode, WAF, bot rules) | Client's own Cloudflare account |
 | Server configuration | This repository: `deploy/vm/` (units, Caddyfile, setup script), reviewable line by line |
 | Tests passing on each deploy | GitHub Actions run log (`Deploy to Azure VM`) |

@@ -1,20 +1,59 @@
 // Posts: the list (search, status tabs, score) and the editor (English / Arabic text, SEO, GEO, publish settings).
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { api, errorText } from "./api";
 import { DESC, TITLE, runChecks, seoDescription, seoTitle, stripHtml, type Locale } from "./checks";
 import { Counter, Field, Pairs, StringList, Text, scoreClass, today } from "./ui";
 import { ImageUpload } from "./upload";
 import { RichText } from "./editor";
+import { setUnsaved } from "./unsaved";
+import type { Nav } from "./app";
 
 export type Summary = { slug: string; date: string; updated?: string; category: string; type: "blog" | "pr"; status: string; editions: string[]; title: string; hasArabic: boolean; seo: boolean; imageAlt: boolean; keyword: boolean; keywords: string[]; author: string; reviewer: string; image: string };
 export type Post = { slug: string; date: string; updated?: string; category: string; type: "blog" | "pr"; status: "draft" | "scheduled" | "published" | "archived"; publish_at?: string; editions: string[]; image: string; image_source?: string; hero_photo?: "full"; previous_slugs?: string[]; author?: string; reviewer?: string; noindex?: boolean; en: Locale & { old_url?: string; hero_button?: boolean; canonical?: string }; ar?: Post["en"]; [k: string]: unknown };
 export type Author = { slug: string; name: { en: string; ar?: string }; role?: { en: string; ar?: string }; active?: boolean };
 type Category = { key: string; label: string };
-type Nav = (path: string) => void;
 
 const STATUS: Record<string, string> = { published: "Published", scheduled: "Scheduled", draft: "Draft", archived: "Archived" };
 const EDITIONS: [string, string][] = [["global", "Global"], ["ae", "UAE"], ["sa", "KSA"]];
-export const blank = (): Post => ({ slug: "", date: today(), category: "health-articles", type: "blog", status: "draft", editions: ["global", "ae", "sa"], image: "", en: { title: "" } });
+/**
+ * Preview of a SAVED post as the real page (drafts included), served by the admin service behind the login
+ * (tools/admin/server.ts /admin/preview: `astro dev`, no build). Opened in the first of the post's editions (Global, UAE,
+ * KSA order) in the given language; Arabic only when the post has an Arabic version.
+ */
+export const previewHref = (p: { slug: string; editions: string[]; hasArabic?: boolean }, lang: "en" | "ar" = "en") => {
+  const region = EDITIONS.map(([k]) => k).find((k) => p.editions.includes(k)) ?? "global";
+  const parts = [region === "global" ? "" : region, lang === "ar" && p.hasArabic ? "ar" : "", "media-hub", p.slug].filter(Boolean);
+  return `/admin/preview/${parts.join("/")}/`;
+};
+/** What a new post of each type starts with in the hero (bug 260, client 2 Nov 2026): a press release has no "Consult for a
+ *  Care Plan" button and shows the whole photo, like the two press releases published so far; a blog has the button and the
+ *  strip. hero_button: undefined = shown, false = hidden (per language); hero_photo: "full" or undefined. */
+const HERO: Record<Post["type"], { button?: false; photo?: "full" }> = { blog: {}, pr: { button: false, photo: "full" } };
+export const blank = (type: Post["type"] = "blog"): Post => ({ slug: "", date: today(), category: "health-articles", type, status: "draft", editions: ["global", "ae", "sa"], image: "", ...(HERO[type].photo ? { hero_photo: HERO[type].photo } : {}), en: { title: "", ...(HERO[type].button === false ? { hero_button: false } : {}) } });
+/** The Arabic version as it starts when the first Arabic field is filled in (bug 257: opening the tab creates nothing). It takes
+ *  the English version's button setting, which is the type's default unless someone changed it. */
+const arStart = (p: Post): Post["en"] => ({ title: "", ...(p.en.hero_button === false ? { hero_button: false } : {}) });
+/** True when a language version holds anything a person wrote (an Arabic version with nothing in it is not saved, bug 257). */
+const hasContent = (l?: Post["en"]) => !!l && (
+  [l.title, l.excerpt, l.image_alt, l.focus_keyword, l.canonical, l.old_url, l.seo?.title, l.seo?.description].some((x) => (x ?? "").trim()) ||
+  !!stripHtml(l.body ?? "") || /<(img|iframe|figure|video)\b/i.test(l.body ?? "") ||
+  (l.key_takeaways ?? []).some((t) => t.trim()) || (l.faqs ?? []).some((f) => f.q.trim() || f.a.trim()) || (l.sources ?? []).some((x) => x.url.trim() || (x.title ?? "").trim()));
+const AR_TITLE = "Arabic title is required. Add a title or remove the Arabic version.";
+const SAME_PERSON = "The reviewer must be a different person from the author.";
+// Server validation errors in words (bug 257): the schema's field paths and messages are for developers.
+const FIELD: Record<string, string> = { title: "title", excerpt: "short summary", body: "article", image_alt: "featured image description (alt text)", focus_keyword: "focus keyword", canonical: "canonical link", "seo.title": "meta title", "seo.description": "meta description", key_takeaways: "key takeaways", faqs: "questions", "faqs.q": "FAQ question", "faqs.a": "FAQ answer", sources: "sources", "sources.url": "source link", "sources.title": "source name", slug: "web address", date: "publish date", updated: "last updated date", category: "category", type: "type", status: "status", publish_at: "go-live time", editions: "\"Shown on\"", image: "featured image", author: "\"Written by\"", reviewer: "\"Reviewed by\"", hero_photo: "hero photo setting", hero_button: "button setting" };
+export function readable({ field, message }: { field: string; message: string }): string {
+  if (field === "ar.title" && /received undefined|Too small/.test(message)) return AR_TITLE;
+  const m = /^(en|ar)\.(.+)$/.exec(field);
+  const rest = m ? m[2].replace(/\.\d+(\.|$)/g, "$1").replace(/\.$/, "") : field;
+  const what = `${m ? (m[1] === "en" ? "English " : "Arabic ") : ""}${FIELD[rest] ?? rest}`;
+  const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+  const key = /Unrecognized keys?: (.+)/.exec(message);
+  if (key) return `${field === "(root)" ? "The post" : cap(what)} has a field the website does not know: ${key[1]}.`;
+  const phrase = /received undefined/.test(message) ? "is required" : /Too small: expected string/.test(message) ? "cannot be empty" : /Too small: expected array/.test(message) ? "needs at least one choice" : /Invalid (string|input)|must match pattern|calendar date/.test(message) ? "is not valid" : /Invalid (option|enum)/.test(message) ? "has a value that is not allowed" : "";
+  if (phrase) return `${cap(what)} ${phrase}.`;
+  return /^[a-z]/.test(message) ? `${cap(what)} ${message}.` : message; // the server's own messages are already sentences
+}
 
 /* ---------- list ---------- */
 export function PostsList({ nav, siteUrl }: { nav: Nav; siteUrl: string }) {
@@ -69,7 +108,8 @@ function Row({ item: i, nav, siteUrl }: { item: Summary; nav: Nav; siteUrl: stri
         </div>
       </div>
       <div class="row">
-        {live && <a class="btn btn-sm" href={`${siteUrl}/media-hub/${i.slug}/`} target="_blank" rel="noopener">View</a>}
+        {live ? <a class="btn btn-sm" href={`${siteUrl}/media-hub/${i.slug}/`} target="_blank" rel="noopener">View</a>
+          : <a class="btn btn-sm" href={previewHref(i)} target="_blank" rel="noopener" title="See the saved post as the real page (only for you; nothing is published)">Preview</a>}
         <button class="btn btn-sm btn-navy" onClick={() => nav(`/admin/posts/${i.slug}`)}>Edit</button>
       </div>
     </div>
@@ -109,38 +149,64 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
     api<{ items: Summary[] }>("GET", "/posts").then((r) => setOthers((r.items ?? []).filter((i) => i.slug !== slug && i.status === "published").flatMap((i) => i.keywords ?? [])));
   }, [slug]);
 
-  const loc = p?.[lang];
+  const loc = p ? (lang === "ar" ? p.ar ?? arStart(p) : p.en) : undefined; // the Arabic tab shows an empty form until something is typed
+  const touched = useRef({ en: false, ar: false, photo: false }); // hero settings changed by hand in this editor (bug 260)
   const result = useMemo(() => (p && loc ? runChecks(loc, p.slug, { otherKeywords: others, author: p.author, reviewer: p.reviewer, updated: p.updated, date: p.date }) : null), [p, lang, others]);
+  const dirty = !!p && !!orig && JSON.stringify(p) !== JSON.stringify(orig);
+  useLayoutEffect(() => { setUnsaved(`post:${slug}`, dirty); return () => setUnsaved(`post:${slug}`, false); }, [dirty, slug]); // "Publish site" waits for a save; leaving asks (bug 256). Layout effect: the flag changes with the screen, not a frame later
   if (!p || !orig) return <p class="empty">{err?.text ?? "Loading…"}</p>;
-  const dirty = JSON.stringify(p) !== JSON.stringify(orig);
   const set = (patch: Partial<Post>) => setP({ ...p, ...patch });
-  const setLoc = (patch: Partial<Locale>) => setP({ ...p, [lang]: { ...(p[lang] as Locale), ...patch } });
+  const setLoc = (patch: Partial<Locale>) => setP({ ...p, [lang]: { ...(lang === "ar" ? p.ar ?? arStart(p) : p.en), ...patch } });
+  // Blog <-> PR: the hero settings follow the new type's default unless they were changed by hand (now, or before: a value that
+  // is not the old type's default was chosen by someone).
+  const changeType = (type: Post["type"]) => {
+    const from = HERO[p.type], to = HERO[type];
+    const next: Post = { ...p, type };
+    if (!touched.current.photo && p.hero_photo === from.photo) { if (to.photo) next.hero_photo = to.photo; else delete next.hero_photo; }
+    for (const l of ["en", "ar"] as const) {
+      const x = p[l];
+      if (!x || touched.current[l] || x.hero_button !== from.button) continue;
+      const y = { ...x }; if (to.button === false) y.hero_button = false; else delete y.hero_button;
+      next[l] = y;
+    }
+    setP(next);
+  };
+  // "Written by" and "Reviewed by" are two different people (bug 259): choosing the reviewer as author clears the reviewer.
+  const changeAuthor = (author?: string) => {
+    if (author && author === p.reviewer) { set({ author, reviewer: undefined }); toast("Reviewer cleared: " + SAME_PERSON.charAt(0).toLowerCase() + SAME_PERSON.slice(1)); }
+    else set({ author });
+  };
   const dir = lang === "ar" ? "rtl" : undefined;
 
   const save = async (status?: Post["status"]) => {
     setBusy(true); setErr(null);
     const clean = (l?: Post["en"]) => l && { ...l, key_takeaways: l.key_takeaways?.map((t) => t.trim()).filter(Boolean), faqs: l.faqs?.filter((f) => f.q.trim() || f.a.trim()), sources: l.sources?.filter((s) => s.url.trim() || (s.title ?? "").trim()) };
-    const data: Post = { ...p, slug: p.slug || slugify(p.en.title), status: status ?? p.status, updated: !isNew && dirty ? today() : p.updated, en: clean(p.en)!, ...(p.ar ? { ar: clean(p.ar) } : {}) };
+    const { ar, ...shared } = p;
+    const keepAr = hasContent(ar); // an Arabic version nobody wrote anything in is left out (bug 257)
+    const data: Post = { ...shared, slug: p.slug || slugify(p.en.title), status: status ?? p.status, updated: !isNew && dirty ? today() : p.updated, en: clean(p.en)!, ...(keepAr ? { ar: clean(ar) } : {}) };
     for (const l of ["en", "ar"] as const) { const x = data[l] as Record<string, unknown> | undefined; if (x) for (const k of Object.keys(x)) if (x[k] === undefined || x[k] === "" || (Array.isArray(x[k]) && (x[k] as unknown[]).length === 0)) delete x[k]; }
     if (data.updated === undefined) delete data.updated;
     if (data.status !== "scheduled") delete data.publish_at;
     if (!data.en.title?.trim()) { setErr({ text: "Add a title first." }); setBusy(false); return; }
+    if (data.ar && !data.ar.title?.trim()) { setErr({ text: AR_TITLE }); setBusy(false); return; }
+    if (data.author && data.author === data.reviewer) { setErr({ text: SAME_PERSON }); setBusy(false); return; }
     if ((data.status === "published" || data.status === "scheduled") && !(data.en.image_alt || "").trim() && data.image) { setErr({ text: "Describe the featured image (alt text) before publishing." }); setBusy(false); return; }
     const r = isNew ? await api("POST", "/posts", data) : await api("PUT", `/posts/${p.slug}`, data);
     setBusy(false);
     if (!r.ok) { setErr({ text: errorText(r), fields: r.details }); return; }
     toast(data.status === "published" ? "Saved. Press Publish to put it on the website." : "Saved");
-    if (isNew) nav(`/admin/posts/${data.slug}`); else { setOrig(data); setP(data); }
+    if (isNew) nav(`/admin/posts/${data.slug}`, { force: true }); else { setOrig(data); setP(data); }
   };
   const rename = async () => {
+    if (dirty) { setErr({ text: "Save your changes before changing the web address." }); return; } // the editor reloads from the saved file
     const r = await api("POST", `/posts/${p.slug}/rename`, { slug: newSlug });
     if (!r.ok) { setErr({ text: errorText(r) }); return; }
-    toast(`Address changed. The old one redirects to the new one.`); nav(`/admin/posts/${newSlug}`);
+    toast(`Address changed. The old one redirects to the new one.`); nav(`/admin/posts/${newSlug}`, { force: true });
   };
   const remove = async () => {
     const r = await api("DELETE", `/posts/${p.slug}?confirm=${encodeURIComponent(confirmDelete)}`);
     if (!r.ok) { setErr({ text: errorText(r) }); return; }
-    toast("Post deleted (a copy is kept)"); nav("/admin/posts");
+    toast("Post deleted (a copy is kept)"); nav("/admin/posts", { force: true });
   };
   const loadVersions = async () => { const r = await api<{ versions: { id: string; bytes: number }[] }>("GET", `/posts/${p.slug}/versions`); setVersions(r.versions ?? []); };
   const restore = async (id: string) => {
@@ -158,16 +224,19 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
         <h1>{isNew ? "New post" : p.en.title}</h1>
         <span class="spacer" />
         <span class={`chip ${p.status === "published" ? "live" : p.status}`}>{STATUS[p.status]}</span>
+        {!isNew && (dirty
+          ? <button class="btn btn-sm" disabled title="Save first: the preview shows the saved version">Preview</button>
+          : <a class="btn btn-sm" href={previewHref({ slug: p.slug, editions: p.editions, hasArabic: !!p.ar }, lang)} target="_blank" rel="noopener" title="See the saved post as the real page, drafts included (only for you; nothing is published)">Preview{lang === "ar" && p.ar ? " (AR)" : ""}</a>)}
         {!isNew && p.status === "published" && <a class="btn btn-sm" href={`${siteUrl}/media-hub/${p.slug}/`} target="_blank" rel="noopener">View on site</a>}
       </div>
-      {err && <div class="error-box" role="alert">{err.text}{err.fields && <ul>{err.fields.map((f) => <li key={f.field}><b>{f.field}</b>: {f.message}</li>)}</ul>}</div>}
+      {err && <div class="error-box" role="alert">{err.text}{err.fields && <ul>{err.fields.map((f) => <li key={f.field}>{readable(f)}</li>)}</ul>}</div>}
 
       <div class="editor" style="margin-top:14px">
         <div>
           <div class="card">
             <div class="lang-tabs" role="tablist">
               <button role="tab" class="tab" aria-selected={lang === "en"} onClick={() => setLang("en")}>English</button>
-              <button role="tab" class="tab" aria-selected={lang === "ar"} onClick={() => { if (!p.ar) set({ ar: { title: "" } }); setLang("ar"); }}>{p.ar ? "العربية" : "+ Add Arabic"}</button>
+              <button role="tab" class="tab" aria-selected={lang === "ar"} onClick={() => setLang("ar")}>{p.ar || lang === "ar" ? "العربية" : "+ Add Arabic"}</button>
               {lang === "ar" && p.ar && <button class="link" style="margin-inline-start:auto" onClick={() => { const { ar, ...rest } = p; setP(rest as Post); setLang("en"); }}>Remove Arabic version</button>}
             </div>
             <Field id="title" label="Title (the page heading)"><Text id="title" value={loc!.title} dir={dir} onInput={(v) => setLoc({ title: v })} /></Field>
@@ -218,7 +287,7 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
               <button class="btn btn-primary" disabled={busy} onClick={() => save()}>{busy ? "Saving…" : "Save"}</button>
               {p.status !== "published" && <button class="btn btn-navy" disabled={busy} onClick={() => save("published")}>Save &amp; mark published</button>}
             </div>
-            <p class="counter" style="margin-top:8px">{dirty ? "Unsaved changes." : "All changes saved."} Changes reach the website when you press <b>Publish site</b> at the top.</p>
+            <p class="counter" style="margin-top:8px">{dirty ? "Unsaved changes." : "All changes saved."} Changes reach the website when you press <b>Publish site</b> at the top. <b>Preview</b> (top of the page) shows the saved post as the real page before that.</p>
           </div>
 
           {result && <ScoreCard score={result.score} checks={result.checks} />}
@@ -240,16 +309,16 @@ export function PostEditor({ slug, nav, siteUrl, categories, authors, toast }: {
           <div class="card">
             <h2>Details</h2>
             <div class="grid-2">
-              <Field id="type" label="Type"><select id="type" class="input" value={p.type} onChange={(e) => set({ type: (e.currentTarget as HTMLSelectElement).value as Post["type"] })}><option value="blog">Blog (Article)</option><option value="pr">PR / News (NewsArticle)</option></select></Field>
+              <Field id="type" label="Type"><select id="type" class="input" value={p.type} onChange={(e) => changeType((e.currentTarget as HTMLSelectElement).value as Post["type"])}><option value="blog">Blog (Article)</option><option value="pr">PR / News (NewsArticle)</option></select></Field>
               <Field id="cat" label="Category"><select id="cat" class="input" value={p.category} onChange={(e) => set({ category: (e.currentTarget as HTMLSelectElement).value })}>{[...categories, { key: "interviews", label: "Interviews" }].map((c) => <option key={c.key} value={c.key}>{c.label}</option>)}</select></Field>
             </div>
             <ImageUpload kind="posts" slug={isNew ? "" : p.slug} value={p.image} onChange={(key) => set({ image: key })} label="Featured image" hint="JPG, PNG, WebP or HEIC; saved as WebP under 200 KB. Describe it in the alt text field." />
             <div class="grid-2">
-              <Field id="au" label="Written by"><select id="au" class="input" value={p.author ?? ""} onChange={(e) => set({ author: (e.currentTarget as HTMLSelectElement).value || undefined })}><option value="">Cambridge Hospital</option>{authors.map((a) => <option key={a.slug} value={a.slug}>{a.name.en}</option>)}</select></Field>
-              <Field id="rv" label="Reviewed by"><select id="rv" class="input" value={p.reviewer ?? ""} onChange={(e) => set({ reviewer: (e.currentTarget as HTMLSelectElement).value || undefined })}><option value="">No reviewer</option>{authors.map((a) => <option key={a.slug} value={a.slug}>{a.name.en}</option>)}</select></Field>
+              <Field id="au" label="Written by"><select id="au" class="input" value={p.author ?? ""} onChange={(e) => changeAuthor((e.currentTarget as HTMLSelectElement).value || undefined)}><option value="">Cambridge Hospital</option>{authors.map((a) => <option key={a.slug} value={a.slug}>{a.name.en}</option>)}</select></Field>
+              <Field id="rv" label="Reviewed by"><select id="rv" class="input" value={p.reviewer ?? ""} onChange={(e) => set({ reviewer: (e.currentTarget as HTMLSelectElement).value || undefined })}><option value="">No reviewer</option>{authors.filter((a) => a.slug !== p.author || a.slug === p.reviewer).map((a) => <option key={a.slug} value={a.slug}>{a.name.en}</option>)}</select></Field>
             </div>
-            <label class="check"><input type="checkbox" checked={p.hero_photo === "full"} onChange={(e) => set({ hero_photo: (e.currentTarget as HTMLInputElement).checked ? "full" : undefined })} />Show the whole photo in the hero (desktop)</label>
-            <label class="check"><input type="checkbox" checked={loc!.hero_button !== false} onChange={(e) => setLoc({ hero_button: (e.currentTarget as HTMLInputElement).checked ? undefined : false } as Partial<Locale>)} />Show the "Consult for a Care Plan" button</label>
+            <label class="check"><input type="checkbox" checked={p.hero_photo === "full"} onChange={(e) => { touched.current.photo = true; set({ hero_photo: (e.currentTarget as HTMLInputElement).checked ? "full" : undefined }); }} />Show the whole photo in the hero (desktop)</label>
+            <label class="check"><input type="checkbox" checked={loc!.hero_button !== false} onChange={(e) => { touched.current[lang] = true; setLoc({ hero_button: (e.currentTarget as HTMLInputElement).checked ? undefined : false } as Partial<Locale>); }} />Show the "Consult for a Care Plan" button</label>
           </div>
 
           {!isNew && <div class="card">

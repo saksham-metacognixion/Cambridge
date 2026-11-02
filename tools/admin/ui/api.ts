@@ -24,7 +24,7 @@ export function errorText(r: { error?: string; details?: { field: string; messag
     case "bad_slug": return "The web address may only contain letters, numbers and hyphens.";
     case "not_found": return "This item no longer exists.";
     case "in_use": return `This author is used by ${r.posts?.length ?? "some"} post(s). Change those first.`;
-    case "publish_running": return "A publish is already running.";
+    case "publish_running": return "A build is already in progress. Your changes will be included in the next publish.";
     case "confirm_slug": return "Type the web address to confirm.";
     default: return r.error ? `Something went wrong (${r.error}).` : "Something went wrong.";
   }

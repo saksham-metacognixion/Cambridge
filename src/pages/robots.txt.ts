@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { absolute, INDEXABLE } from '../lib/seo';
 import robots from '../data/robots.json';
 
-// Staging (INDEXABLE = false in site.config.mjs) blocks all crawling.
+// INDEXABLE = false (site.config.mjs) blocks all crawling; true (production since 2 Nov 2026) allows it.
 // Production: everyone allowed, then one group per AI crawler from src/data/robots.json (a named group replaces the "*" group
 // for that crawler, so each one gets its own Allow / Disallow).
 const aiGroups = () =>

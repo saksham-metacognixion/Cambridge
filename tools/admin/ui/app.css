@@ -23,7 +23,8 @@ input, select, textarea { font: inherit; color: var(--navy); }
 
 /* layout */
 .topbar { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 4px 4px rgba(0,0,0,.06); }
-.topbar-in { display: flex; align-items: center; gap: 20px; padding: 10px 24px; max-width: 1400px; margin: 0 auto; }
+.topbar-in { display: flex; align-items: center; gap: 12px 20px; padding: 10px 24px; max-width: 1400px; margin: 0 auto; flex-wrap: wrap; }
+@media (max-width: 700px) { .topbar-in { padding: 10px 16px; } .who { display: none; } .nav a { padding: 8px 10px; } .main { padding: 20px 16px 60px; } }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .brand img { height: 34px; width: auto; }
 .brand .tag { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: var(--navy); padding: 3px 8px; border-radius: 999px; }
@@ -57,7 +58,7 @@ input, select, textarea { font: inherit; color: var(--navy); }
 .help { color: var(--grey); font-size: 13px; margin: -6px 0 12px; }
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 .field label { font-weight: 500; font-size: 14px; }
-.input, textarea.input, select.input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-s); background: rgba(231,231,231,.35); outline: none; }
+.input, textarea.input, select.input { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-s); background: rgba(231,231,231,.35); outline: none; }
 .input:focus { border-color: var(--cyan); background: #fff; box-shadow: 0 0 0 3px rgba(0,184,255,.15); }
 textarea.input { resize: vertical; line-height: 1.5; }
 textarea.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; }
@@ -65,7 +66,7 @@ textarea.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace
 .counter.ok { color: var(--green); } .counter.warn { color: var(--amber); } .counter.bad { color: var(--error); }
 .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .row > .input { flex: 1 1 200px; width: auto; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .check { display: flex; align-items: center; gap: 8px; font-size: 14px; min-height: 36px; }
 .check input { width: 18px; height: 18px; accent-color: var(--navy); }
 .error-box { background: #fdecec; color: #8a1f1a; border-radius: var(--radius-s); padding: 10px 12px; font-size: 14px; }
@@ -151,3 +152,9 @@ textarea.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace
 .rte-body figure[data-youtube] figcaption:empty::before { content: "Video title…"; }
 .rte-body .rte-x { position: absolute; top: 8px; inset-inline-end: 8px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(0,0,0,.6); color: #fff; font-size: 16px; }
 .rte-html { border: 0 !important; border-radius: 0 0 var(--radius-s) var(--radius-s) !important; box-shadow: none !important; }
+
+/* "Unsaved changes" dialog (bug 256) */
+.confirm { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; width: calc(100% - 32px); max-width: 420px; color: var(--navy); background: var(--card); box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+.confirm::backdrop { background: rgba(0,64,89,.35); }
+.confirm p { margin: 0 0 16px; font-weight: 500; }
+.confirm .row { justify-content: flex-end; }

@@ -1,12 +1,13 @@
 // Authors and medical reviewers: list + editor (src/content/authors/<slug>.json, src/lib/authors-schema.ts).
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useState } from "preact/hooks";
 import { api, errorText } from "./api";
+import { setUnsaved } from "./unsaved";
 import { Field, StringList, Text } from "./ui";
 import { slugify } from "./posts";
 import { ImageUpload } from "./upload";
+import type { Nav } from "./app";
 
 type Author = { slug: string; name: { en: string; ar?: string }; role?: { en: string; ar?: string }; credentials?: string; bio?: { en: string; ar?: string }; photo?: string; linkedin?: string; same_as?: string[]; active?: boolean };
-type Nav = (path: string) => void;
 const blank = (): Author => ({ slug: "", name: { en: "" }, active: true });
 
 export function AuthorsList({ nav }: { nav: Nav }) {
@@ -36,9 +37,12 @@ export function AuthorsList({ nav }: { nav: Nav }) {
 export function AuthorEditor({ slug, nav, toast }: { slug: string; nav: Nav; toast: (t: string) => void }) {
   const isNew = slug === "new";
   const [a, setA] = useState<Author | null>(isNew ? blank() : null);
+  const [orig, setOrig] = useState<Author | null>(isNew ? blank() : null); // what is saved, for the unsaved-changes check
   const [err, setErr] = useState<{ text: string; fields?: { field: string; message: string }[] } | null>(null);
   const [confirm, setConfirm] = useState("");
-  useEffect(() => { if (!isNew) api<{ item: Author }>("GET", `/authors/${slug}`).then((r) => (r.item ? setA(r.item) : setErr({ text: "Author not found." }))); }, [slug]);
+  useEffect(() => { if (!isNew) api<{ item: Author }>("GET", `/authors/${slug}`).then((r) => (r.item ? (setA(r.item), setOrig(r.item)) : setErr({ text: "Author not found." }))); }, [slug]);
+  const dirty = !!a && !!orig && JSON.stringify(a) !== JSON.stringify(orig);
+  useLayoutEffect(() => { setUnsaved(`author:${slug}`, dirty); return () => setUnsaved(`author:${slug}`, false); }, [dirty, slug]); // "Publish site" waits for a save; leaving asks (bug 256). Layout effect: the flag changes with the screen, not a frame later
   if (!a) return <p class="empty">{err?.text ?? "Loading…"}</p>;
   const set = (patch: Partial<Author>) => setA({ ...a, ...patch });
   const loc = (k: "name" | "role" | "bio", l: "en" | "ar", v: string) => set({ [k]: { ...(a[k] ?? { en: "" }), [l]: v || undefined } } as Partial<Author>);
@@ -52,12 +56,12 @@ export function AuthorEditor({ slug, nav, toast }: { slug: string; nav: Nav; toa
     if (!data.name.en.trim()) { setErr({ text: "Add the name first." }); return; }
     const r = isNew ? await api("POST", "/authors", data) : await api("PUT", `/authors/${a.slug}`, data);
     if (!r.ok) { setErr({ text: errorText(r), fields: r.details }); return; }
-    toast("Author saved"); if (isNew) nav(`/admin/authors/${data.slug}`); else setA(data);
+    toast("Author saved"); if (isNew) nav(`/admin/authors/${data.slug}`, { force: true }); else { setA(data); setOrig(data); }
   };
   const remove = async () => {
     const r = await api("DELETE", `/authors/${a.slug}?confirm=${encodeURIComponent(confirm)}`);
     if (!r.ok) { setErr({ text: errorText(r) }); return; }
-    toast("Author deleted"); nav("/admin/authors");
+    toast("Author deleted"); nav("/admin/authors", { force: true });
   };
   return (
     <div>

@@ -56,10 +56,17 @@ const remember = (config as { remember?: string }).remember ?? 'forever';
 const devCountry = import.meta.env.DEV ? ((config as { devCountry?: string }).devCountry ?? '') : '';
 const fallback = (config as { fallbackCountry?: string }).fallbackCountry ?? '';
 const known = countryPopups(current).map((p) => p.iso);
+// The per-page values travel in a JSON element the browser never runs, so the script below is the same text on every page
+// and the Content-Security-Policy can allow it by hash (tools/security-headers.mjs; no 'unsafe-inline' for scripts).
+const json = JSON.stringify({ targets, regional, redirect, current, remember, devCountry, fallback, known }).replace(/</g, '\\u003c');
 ---
 
-<script is:inline define:vars={{ targets, regional, redirect, current, remember, devCountry, fallback, known }}>
+<script is:inline type="application/json" id="ch-edition-config" set:html={json}></script>
+<script is:inline>
   (function () {
+    var cfg = JSON.parse(document.getElementById('ch-edition-config').textContent);
+    var targets = cfg.targets, regional = cfg.regional, redirect = cfg.redirect, current = cfg.current;
+    var remember = cfg.remember, devCountry = cfg.devCountry, fallback = cfg.fallback, known = cfg.known;
     var c = document.cookie;
     var secure = location.protocol === 'https:' ? '; Secure' : '';
     function read(n) { var m = c.match(new RegExp('(?:^|;\\s*)' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }

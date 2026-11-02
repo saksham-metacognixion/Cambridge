@@ -44,9 +44,14 @@ export const newsFiles: PostFile[] = Object.entries(files)
   .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 
 const today = new Date().toISOString().slice(0, 10);
+/**
+ * Preview (the dashboard's `astro dev` behind /admin/preview, tools/admin/server.ts): every post counts as live, drafts,
+ * scheduled and archived included, so a saved post can be looked at before it is published. Never set for a build.
+ */
+const PREVIEW = process.env.NEWS_PREVIEW === "true";
 /** Built and listed: published, or scheduled with its time passed. */
 export const isLive = (p: PostFile) =>
-  p.status === "published" || (p.status === "scheduled" && (p.publish_at ? Date.parse(p.publish_at) <= Date.now() : p.date <= today));
+  PREVIEW || p.status === "published" || (p.status === "scheduled" && (p.publish_at ? Date.parse(p.publish_at) <= Date.now() : p.date <= today));
 
 const live = newsFiles.filter(isLive);
 const record = (p: PostFile, language: LocaleId): Post => {

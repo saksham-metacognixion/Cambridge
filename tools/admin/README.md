@@ -11,6 +11,8 @@ no GitHub account for the client: the files are the content, the build validates
 | UI | `tools/admin/ui/` (preact, plain CSS) | Login, posts list + editor (EN / AR, SEO, GEO, score, Google preview), authors |
 | Article editor | `tools/admin/ui/editor.tsx` | Rich text (headings, bold, italic, links, lists, quote, photo, YouTube) with an HTML view; see below |
 | Checks | `tools/admin/ui/checks.ts` | The spec's focus-keyword rules + GEO checks, warnings only |
+| Settings | `tools/admin/ui/settings.tsx` | AI crawlers (robots.txt) and the manual 301 redirects (see below) |
+| Preview | `tools/admin/server.ts` (`/admin/preview/*`) | `astro dev` on demand behind the login: a saved post as the real page, no build (see below) |
 | Bundle | `tools/admin/bundle.mjs` -> `dist-admin/` | `npm run admin:bundle`; `npm run admin` bundles and starts |
 | Tests | `tests/admin-server.test.mjs` | `npm run test:admin` (in `npm test`): the API over real HTTP against a temp copy |
 
@@ -31,9 +33,56 @@ npm run preview                                   # the built site, after a Publ
 - Renaming a post's web address keeps the old one: it is added to `previous_slugs` and 301s to the new URL.
 - Delete asks for the web address to be typed and keeps a copy under `.admin/versions/<kind>/<slug>/…-deleted.json`.
 - An author named as `author` / `reviewer` on any post cannot be deleted.
+- A post's `reviewer` is a different person from its `author` (`400`, field `reviewer`; the GEO check "Reviewed by a
+  clinician" only passes for a second person).
 - Writes need the `X-Requested-With: admin` header (CSRF guard) and the session cookie (HttpOnly, SameSite=Strict,
   Secure unless `LOCAL_DEV=true`, 12 h). Login: 5 wrong attempts per IP = 15 minutes blocked. Request bodies are never logged.
-- Publish runs `PUBLISH_COMMAND` in `CONTENT_ROOT`, one at a time; the UI polls its state and shows the log tail.
+- Publish runs `PUBLISH_COMMAND` in `CONTENT_ROOT`, one at a time (a second request while one runs = `409 publish_running`).
+  The UI polls its state every 5 s while the dashboard is open (2 s during a build), so a build started in another tab or
+  by the scheduler shows as "Publishing…" everywhere; it refuses to start while an editor has unsaved changes (a build only
+  sees saved files) and tells people a build takes `PUBLISH_MINUTES` (25) minutes.
+
+## In the dashboard (UI)
+
+- Leaving a post, author or Settings page with unsaved changes asks "You have unsaved changes. Leave without saving?"
+  (Stay / Leave), for every dashboard link and the browser's Back / Forward inside the dashboard; a reload, a tab close or
+  another site gets the browser's own warning. Nothing asks once the changes are saved.
+- The Arabic version of a post is created by the first Arabic text typed, not by opening the tab; an Arabic version with
+  nothing in it is left out on save, one with text but no title asks for the title.
+- New posts: Blog shows the "Consult for a Care Plan" button; PR / News hides it and shows the whole photo in the hero
+  (both languages). Switching the type moves these settings to the new type's default unless they were changed by hand.
+- `logo.svg` / `favicon.svg` (copies of `src/assets/header/logo.svg` and `public/favicon.svg`) are part of the UI bundle.
+
+## Preview before publishing
+
+"Preview" (post editor header, and in the list for posts that are not live) opens the SAVED post as the real page, drafts,
+scheduled and archived posts included, at `/admin/preview/<edition>/media-hub/<slug>/` (the post's first edition; the Arabic
+tab previews the Arabic version). Behind the login only; nothing is published and nothing is indexed (`noindex`, `no-store`).
+How: the service starts `astro dev` in `CONTENT_ROOT` the first time a preview is opened (`PREVIEW_COMMAND`, default
+`npx --no-install astro dev --host 127.0.0.1 --port $PREVIEW_PORT --ignore-lock`, with `ASTRO_BASE=/admin/preview` and
+`NEWS_PREVIEW=true`: astro.config.mjs puts the pages under that base, `src/lib/news.ts` treats every post as live) and
+proxies `/admin/preview/*` to it; the first request waits for it (up to 20 s, then a "Starting…" page that reloads itself).
+A page renders in about a second from the files on disk, so a change to a saved post shows at once. Astro reads the SET of
+content files only at start, so the dev server is stopped when a post, author or image is added, renamed or deleted
+(`previewInvalidate`) and starts again at the next preview request (a few seconds). It is stopped after
+`PREVIEW_IDLE_MINUTES` (20) without a request and when the service stops; while it runs it takes about 1 GB of memory.
+Vite's own URLs (`/@vite`, `/@fs`, `/src`, `/@id`, `/node_modules`) are not under the base: the proxy prefixes them in HTML /
+CSS / JS bodies and strips the prefix again on the way in (setting Vite's `base` breaks the dev server's page routing).
+Links inside the preview point at the live site, as on the page itself. A small "Preview · not published" badge is added.
+
+## Redirects (Settings > Redirects)
+
+Manual 301 redirects, old address -> new address, written to `src/data/redirects.json` (schema `src/lib/redirects-schema.ts`;
+the build stops on a bad file). The build merges them FIRST into `dist/_redirects` (`src/lib/redirects.ts manualRedirects`),
+ahead of the generated rules (old live-site URLs, renamed posts), so a manual rule wins for the same old address; every host
+reads that file (Cloudflare, `vercel.json`, the Azure page server, nginx). Saved as a whole list (`GET` / `PUT
+/api/admin/settings/redirects`), each rule normalised: a full address of this site becomes its path, the source loses its
+trailing slash and is percent-encoded as browsers send it (an Arabic path pastes fine), a page target gets the slash every
+page URL ends in; the target may be a full `https://` link elsewhere. Refused with the row and field named: a source that is
+not a path (query, `*`, the home page), a target that is itself redirected (no chains), the old and new address the same, a
+source listed twice, and the address of a published / scheduled post (rename the post instead: `previous_slugs` makes that
+redirect by itself; those automatic ones are listed read-only under the manual list). A rule keeps the date it was added;
+every save keeps the previous file under `.admin/versions/settings/`. Changes reach the website on the next Publish.
 
 ## Scheduled posts
 

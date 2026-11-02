@@ -12,6 +12,20 @@ const categories = JSON.parse(fs.readFileSync('src/data/content/media-hub/page.e
 const KNOWN = new Set([...categories, 'interviews']);
 const MIGRATED = 131; // 129 WordPress posts + 2 written for this site, all with an Arabic version (never fewer)
 
+// Manual redirects (src/data/redirects.json, the dashboard's redirect manager; full schema in src/lib/redirects-schema.ts).
+{
+  const file = JSON.parse(fs.readFileSync('src/data/redirects.json', 'utf8'));
+  assert.ok(Array.isArray(file.redirects), 'redirects.json: "redirects" must be a list');
+  const seen = new Set();
+  for (const r of file.redirects) {
+    assert.match(r.from, /^\/[^\s?#*]+$/, `redirects.json: bad source "${r.from}"`);
+    assert.ok(!r.from.endsWith('/'), `redirects.json: source "${r.from}" is stored without its trailing slash`);
+    assert.match(r.to, /^(\/[^\s]*|https?:\/\/[^\s]+)$/, `redirects.json: bad target "${r.to}"`);
+    assert.ok(!seen.has(r.from), `redirects.json: "${r.from}" listed twice`);
+    seen.add(r.from);
+  }
+}
+
 assert.ok(posts.length >= MIGRATED, `${DIR}: ${posts.length} posts, expected at least ${MIGRATED}`);
 const slugs = new Set();
 for (const p of posts) {

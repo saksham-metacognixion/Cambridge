@@ -18,6 +18,19 @@ const redirects = readFileSync('dist/_redirects', 'utf8')
   // "(.*)" takes any rest, slash included. The Arabic sources are already listed in both hex cases (src/pages/[redirects].ts).
   .map(([from, to, code]) => ({ source: from.replace(/\/\*$/, '/:splat(.*)'), destination: to, statusCode: Number(code) || 301 }));
 
+// The security headers the build appended to dist/_headers (astro.config.mjs securityHeaders): the "/*" rule's lines.
+const securityHeaders = (() => {
+  const text = readFileSync('dist/_headers', 'utf8');
+  const start = text.indexOf('\n/*\n');
+  if (start < 0) throw new Error('dist/_headers has no "/*" rule: run `npm run build` first (astro.config.mjs securityHeaders)');
+  return text
+    .slice(start + 4)
+    .split('\n')
+    .filter((line) => /^\s/.test(line))
+    .map((line) => line.trim())
+    .map((line) => ({ key: line.slice(0, line.indexOf(':')).trim(), value: line.slice(line.indexOf(':') + 1).trim() }));
+})();
+
 const config = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
   framework: null,
@@ -25,7 +38,11 @@ const config = {
   outputDirectory: 'dist',
   // Long-lived caching for files whose URL changes with their content: /_astro/* (hashed names) and /fonts/* (?v=<hash>, added by
   // fontVersions() in astro.config.mjs). Vercel's default for public files is max-age=0 (revalidate on every page view).
-  headers: ['/_astro/(.*)', '/fonts/(.*)'].map((source) => ({ source, headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] })),
+  headers: [
+    // Vercel = the staging link only (production is the Azure VM): never indexed, whatever site.config.mjs INDEXABLE says.
+    { source: '/(.*)', headers: [...securityHeaders, { key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
+    ...['/_astro/(.*)', '/fonts/(.*)'].map((source) => ({ source, headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] })),
+  ],
   redirects: [
     ...redirects,
     { source: '/:path((?!api/|_astro/)(?:[^/]+/)*[^/.]+)', destination: '/:path/', statusCode: 301 },
@@ -33,4 +50,4 @@ const config = {
 };
 
 writeFileSync('vercel.json', JSON.stringify(config, null, 2) + '\n');
-console.log(`vercel.json: ${redirects.length} redirects + trailing-slash rule`);
+console.log(`vercel.json: ${redirects.length} redirects + trailing-slash rule, ${securityHeaders.length} security headers`);

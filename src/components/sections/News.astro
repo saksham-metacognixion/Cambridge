@@ -13,7 +13,7 @@ const { edition } = parsePath(Astro.url.pathname);
 const txt = content('home/news', edition.locale);
 // "Read more" -> the post's article page (media-hub/<slug>); a slug that is in no export record goes to the 404 page (AR5).
 // Default cards: the three slugs of home/news JSON with the Figma photos + crops (news.json); their title and excerpt come
-// from the post record in the edition's language (src/data/news/posts.json), so the Arabic editions show the Arabic post.
+// from the post record in the edition's language (src/content/news/<slug>.json), so the Arabic editions show the Arabic post.
 // Tabs: each pill = a category of the export (filterCategories in home/news JSON); pressing it shows that category's three
 // latest posts of the edition's language. A post whose image file is not downloaded yet shows a temporary sample photo (src/data/news/sample-images.json, NW1).
 const articleHref = (slug: string) => (hasPost(slug) ? urlFor(edition, NEWS_PATHS.article(slug)) : urlFor(edition, PAGE_PATHS.notFound));

@@ -1,0 +1,4 @@
+{
+  "$comment": "Manual 301 redirects (SEO & GEO dashboard redirect manager, 2 Nov 2026; schema src/lib/redirects-schema.ts). Edited from the dashboard (Settings > Redirects, tools/admin/ui/settings.tsx). Each rule: from = the old address on this site without its trailing slash, to = the new address (a page of this site, ending in a slash, or a full https:// link), note = why. The build puts these rules FIRST in dist/_redirects (src/lib/redirects.ts manualRedirects), ahead of the generated ones (old live-site URLs, renamed posts), so a manual rule wins when both name the same old address. Chains are refused by the dashboard: point every rule straight at the final page.",
+  "redirects": []
+}

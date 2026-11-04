@@ -352,3 +352,20 @@ BOTH languages. Arabic pages show the panel only once its Arabic is filled in; u
 
 RTL rendering of these English strings is handled in `src/components/forms/forms.css` (punctuation in its place, text kept on
 the right); it needs no change when the Arabic arrives.
+
+## Added 30 Oct 2026: article GEO blocks and author page (`article/page.ar.json`, key `geo.*`)
+
+| Key | English shown |
+|---|---|
+| `geo.writtenBy` | Written by |
+| `geo.reviewedBy` | Reviewed by |
+| `geo.published` | Published |
+| `geo.updated` | Last updated |
+| `geo.takeaways` | Key takeaways |
+| `geo.faq` | Frequently asked questions |
+| `geo.sources` | Sources |
+| `geo.author.meta.title` | {name} \| Cambridge Hospital |
+| `geo.author.meta.descriptionFallback` | {name}, {role} at Cambridge Hospital. |
+| `geo.author.articles` | Articles by {name} |
+| `geo.author.none` | No articles yet. |
+| `geo.author.linkedin` | LinkedIn profile |

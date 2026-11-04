@@ -1,0 +1,21 @@
+# Vercel staging uploads (vercel deploy): only what the build needs. Everything here is either generated, a local tool,
+# documentation or design exports; src/, public/, functions/, tools/, the configs and package files go up.
+# The Vercel CLI does not read .gitignore, so the generated / local folders are listed again.
+.git
+.astro
+.admin
+.vercel
+node_modules
+dist
+dist-admin
+dist-server
+figma-cache
+docs
+QA
+tests
+deploy
+.github
+.env
+.env.*
+*.log
+**/__pycache__

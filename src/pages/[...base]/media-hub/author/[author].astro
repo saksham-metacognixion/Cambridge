@@ -1,0 +1,106 @@
+---
+import { getImage } from 'astro:assets';
+import { editions, editionFromBase, urlFor } from '../../../../lib/editions';
+import { content } from '../../../../lib/content';
+import { activeAuthors, authorBio, authorEditions, authorName, authorRole, postsByAuthor, AUTHOR_PATHS } from '../../../../lib/authors';
+import type { AuthorFile } from '../../../../lib/authors-schema';
+import { cardData } from '../../../../lib/news-image';
+import { img } from '../../../../lib/images';
+import { absolute } from '../../../../lib/seo';
+import { ldJson, personSchema } from '../../../../lib/schema';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import PostCard from '../../../../components/media-hub/PostCard.astro';
+import ContactRecovery from '../../../../components/contact/ContactRecovery.astro';
+
+/*
+ * Author / reviewer page (SEO & GEO dashboard, 30 Oct 2026; designed in the site's style, no Figma frame): media-hub/author/<slug>
+ * in every edition. Profile band (photo, name as the page H1 in the hero title style, role, credentials, bio, LinkedIn as the
+ * hero's outline button) | "Articles by <name>" with the Media Hub cards of the posts the person wrote or reviewed | the
+ * article pages' CTA band | footer. Person structured data in the head.
+ */
+export function getStaticPaths() {
+  return editions.flatMap((e) => activeAuthors.map((a) => ({ params: { base: e.base || undefined, author: a.slug }, props: { author: a } })));
+}
+const { author: a } = Astro.props as { author: AuthorFile };
+const edition = editionFromBase(Astro.params.base);
+const loc = edition.locale;
+const c = content('article/page', loc);
+const name = authorName(a, loc);
+const role = authorRole(a, loc);
+const bio = authorBio(a, loc);
+const title = c.geo.author.meta.title.replace('{name}', name);
+const description = bio || c.geo.author.meta.descriptionFallback.replace('{name}', name).replace('{role}', role || 'Cambridge Hospital');
+let photo: { src: string; srcset: string } | null = null;
+let photoUrl: string | undefined;
+if (a.photo) {
+  try {
+    const src = img(a.photo, edition.region);
+    const one = await getImage({ src, width: 240, height: 240, fit: 'cover', format: 'webp' });
+    const two = await getImage({ src, width: 480, height: 480, fit: 'cover', format: 'webp' });
+    photo = { src: one.src, srcset: `${one.src} 1x, ${two.src} 2x` };
+    photoUrl = absolute(two.src);
+  } catch {
+    console.warn(`[authors] ${a.slug}: photo "${a.photo}" not found in src/assets`);
+  }
+}
+const cards = await Promise.all(postsByAuthor(a, edition).map((p) => cardData(p, edition)));
+---
+
+<BaseLayout edition={edition} path={AUTHOR_PATHS.page(a.slug)} title={title} description={description} ogImage={photoUrl} editionsWithPage={authorEditions()}>
+  <script slot="head" type="application/ld+json" set:html={ldJson(personSchema(a, edition, photoUrl))} />
+  <div class="relative" style="z-index:14">
+    <Header />
+  </div>
+  <main>
+    <section class="prof" aria-labelledby="author-name">
+      <div class="prof-in">
+        {photo && <img class="photo" src={photo.src} srcset={photo.srcset} width="240" height="240" alt={name} loading="eager" fetchpriority="high" />}
+        <div class="text">
+          <h1 id="author-name" class="name">{name}</h1>
+          {(role || a.credentials) && <p class="role">{[role, a.credentials].filter(Boolean).join(' · ')}</p>}
+          {bio && <p class="bio">{bio}</p>}
+          {a.linkedin && <a class="btn" href={a.linkedin} target="_blank" rel="noopener">{c.geo.author.linkedin}</a>}
+        </div>
+      </div>
+    </section>
+    <section class="posts" aria-labelledby="author-articles">
+      <h2 id="author-articles" class="h">{c.geo.author.articles.replace('{name}', name)}</h2>
+      {cards.length === 0 && <p class="none">{c.geo.author.none}</p>}
+      {cards.length > 0 && <ul class="grid" role="list">{cards.map((card) => <li class="flex"><PostCard card={card} /></li>)}</ul>}
+    </section>
+    <div id="recovery" class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(51.54 * var(--u))">
+      <ContactRecovery content={c.recovery} headTop={50} />
+    </div>
+  </main>
+  <div class="relative max-lg:mt-(--stack-gap) lg:mt-(--gap)" style="--gap:calc(68 * var(--u))">
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .prof, .posts { max-width: calc(var(--max-w) * 1px); margin-inline: auto; padding-inline: 16px; box-sizing: border-box; font-family: var(--font-gotham); font-style: normal; color: var(--color-body); }
+  .prof { padding-top: calc(60 * var(--u)); }
+  .prof-in { display: flex; gap: calc(28 * var(--u)); align-items: flex-start; }
+  .photo { flex: none; width: calc(120 * var(--u)); height: calc(120 * var(--u)); border-radius: 50%; object-fit: cover; background: var(--color-veil); }
+  .name { margin: 0; font-weight: 500; font-size: calc(39 * var(--u)); line-height: 1.15; color: var(--color-navy); overflow-wrap: anywhere; }
+  .role { margin: calc(8 * var(--u)) 0 0; font-size: calc(16 * var(--u)); line-height: calc(22 * var(--u)); color: var(--color-teal-border); }
+  .bio { margin: calc(14 * var(--u)) 0 0; max-width: calc(610 * var(--u)); font-size: calc(12 * var(--u)); line-height: calc(18 * var(--u)); overflow-wrap: anywhere; }
+  .btn { display: inline-flex; align-items: center; margin-top: calc(18 * var(--u)); min-height: max(44px, calc(30 * var(--u))); padding-inline: calc(18 * var(--u)); border: calc(1 * var(--u)) solid var(--color-cyan); border-radius: calc(7 * var(--u)); color: var(--color-cyan); font-weight: 500; font-size: calc(13 * var(--u)); text-decoration: none; transition: background-color .15s, color .15s; }
+  .btn:hover, .btn:focus-visible { background: var(--color-cyan); color: #fff; }
+  .posts { margin-top: calc(48 * var(--u)); }
+  .h { margin: 0; font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); }
+  .none { margin: calc(12 * var(--u)) 0 0; font-size: calc(12 * var(--u)); }
+  .grid { list-style: none; margin: calc(24 * var(--u)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(30 * var(--u)) calc(24 * var(--u)); }
+  @media (max-width: 1023.98px) {
+    .prof, .posts { padding-inline: calc(24 * var(--u)); }
+    .prof-in { flex-direction: column; }
+    .name { font-size: calc(30 * var(--u)); }
+  }
+  @media (min-width: 1024px) {
+    .prof, .posts { padding-inline: 0; }
+    .prof-in, .h, .grid, .none { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .prof-in { padding-top: 0; }
+  }
+</style>

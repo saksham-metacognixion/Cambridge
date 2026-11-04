@@ -26,5 +26,15 @@ www.cambridgehospital.com {
 # The site, and any staging subdomain pointed at this VM in Cloudflare (e.g. new.cambridgehospital.com).
 cambridgehospital.com, *.cambridgehospital.com {
 	import origin_tls
-	reverse_proxy 127.0.0.1:8080
+	# The dashboard (tools/admin/, systemd unit cambridge-admin on 127.0.0.1:8788): the admin UI and its API. Everything
+	# else (including /fonts/, which the admin UI also uses) is the site.
+	handle /admin* {
+		reverse_proxy 127.0.0.1:8788
+	}
+	handle /api/admin* {
+		reverse_proxy 127.0.0.1:8788
+	}
+	handle {
+		reverse_proxy 127.0.0.1:8080
+	}
 }

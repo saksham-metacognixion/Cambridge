@@ -46,14 +46,22 @@ for (const m of html.matchAll(marker)) {
   at = m.index! + m[0].length;
 }
 if (at < html.length) segs.push({ html: html.slice(at) });
+// GEO blocks (SEO & GEO dashboard): rendered up front, so a slot whose condition is false adds nothing to the page
+// (Astro.slots.has is true as soon as a slotted element exists in the template, even inside a false condition).
+const slot = async (name: string) => ((await Astro.slots.render(name)) ?? '').trim(); // undefined when the page passes no slot (legal pages)
+const byline = await slot('byline');
+const before = await slot('before-body');
+const after = await slot('after-body');
 ---
 
 <section class="art" aria-labelledby="overview-heading">
   <H id="overview-heading" class="h">{heading}</H>
   <div class="intro">
-    {date && <p class="date"><time datetime={date.iso} aria-label={`${date.label}: ${date.text}`}>{date.text}</time></p>}
+    {byline && <Fragment set:html={byline} />}
+    {date &&<p class="date"><time datetime={date.iso} aria-label={`${date.label}: ${date.text}`}>{date.text}</time></p>}
     {intro.map((p) => <p>{p}</p>)}
   </div>
+  {before && <div class="extra" set:html={before} />}
   {html && (
     <div class="body">
       {segs.map((s) =>
@@ -63,6 +71,7 @@ if (at < html.length) segs.push({ html: html.slice(at) });
     </div>
   )}
   {!html && pending && <p class="pending" role="note">{pending}</p>}
+  {after && <div class="extra after" set:html={after} />}
 </section>
 
 <style>
@@ -71,6 +80,9 @@ if (at < html.length) segs.push({ html: html.slice(at) });
   .intro { margin-top: calc(12 * var(--u)); }
   .intro p { margin: 0; overflow-wrap: anywhere; }
   .intro p + p { margin-top: calc(14 * var(--u)); }
+  .intro :global(.byline) + p { margin-top: calc(14 * var(--u)); }
+  .extra { margin-top: calc(33 * var(--u)); }
+  .extra :global(> * + *) { margin-top: calc(40 * var(--u)); }
   .pending { margin: calc(33 * var(--u)) 0 0; font-style: italic; }
   .body { margin-top: calc(33 * var(--u)); overflow-wrap: anywhere; }
   .body :global(> *) { margin: 0; }
@@ -105,8 +117,8 @@ if (at < html.length) segs.push({ html: html.slice(at) });
     .h { margin-inline-start: calc(56 * var(--u)); width: calc(558 * var(--u)); }
     .intro, .pending { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
     /* Bug 167 (15 Oct 2026): the prose column is capped at 760 units (~85 characters a line; it ran the full 937 = 1283px). */
-    .body { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
-    .intro, .body { max-width: calc(760 * var(--u)); }
+    .body, .extra { margin-inline-start: calc(58 * var(--u)); width: calc(937 * var(--u)); }
+    .intro, .body, .extra { max-width: calc(760 * var(--u)); }
     .body :global(h2) { margin-inline-start: calc(-2 * var(--u)); }
   }
 </style>

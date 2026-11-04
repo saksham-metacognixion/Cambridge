@@ -1,0 +1,57 @@
+---
+/*
+ * FAQ block of an article (SEO & GEO dashboard, 30 Oct 2026): the FAQ page's accordion (FaqSection.astro: question bar
+ * rgba(231,231,231,.45) / Deep Teal when open, Book 11.041 question, the two Figma chevrons, answer panel in mist) at the
+ * prose column's width, under an H2 in the body's heading style. Same markup (details.qa) and the shared accordion script,
+ * so the motion and the "one open at a time" rule match the FAQ page. The questions also go out as FAQPage structured data.
+ */
+import chevOpen from '../../assets/faq/chevron-open.svg';
+import chevClosed from '../../assets/faq/chevron-closed.svg';
+
+interface Props { heading: string; items: { q: string; a: string }[] }
+const { heading, items } = Astro.props;
+const n = (i: number) => String(i + 1).padStart(2, '0') + '. ';
+const paras = (a: string) => a.split(/\n{2,}/).map((p) => p.split('\n'));
+---
+
+<section class="afaq" aria-labelledby="article-faq-heading">
+  <h2 id="article-faq-heading" class="h">{heading}</h2>
+  <div class="items">
+    {items.map((it, k) => (
+      <details class:list={['qa', k === 0 && 'is-open']} name="article-faq" open={k === 0}>
+        <summary class="bar">
+          <h3 class="q">{n(k)}{it.q}</h3>
+          <img loading="lazy" class="chev chev-open" src={chevOpen.src} width="9.661" height="5.806" alt="" />
+          <img loading="lazy" class="chev chev-closed" src={chevClosed.src} width="9.661" height="5.806" alt="" />
+        </summary>
+        <div class="ans">{paras(it.a).map((lines) => <p>{lines.map((l, j) => (<>{j > 0 && <br />}{l}</>))}</p>)}</div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<script>
+  import '../../scripts/accordion';
+</script>
+
+<style>
+  .afaq { font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0 0 calc(12 * var(--u)); font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .qa { position: relative; }
+  .qa + .qa { margin-top: calc(17.255 * var(--u)); }
+  .qa[open] + .qa { margin-top: calc(10 * var(--u)); }
+  .bar { position: relative; z-index: 1; display: flex; align-items: flex-start; box-sizing: border-box; min-height: calc(46.925 * var(--u)); padding-block: calc(8.97 * var(--u)) calc(8 * var(--u)); padding-inline: calc(19.32 * var(--u)) calc(35 * var(--u)); border-radius: var(--radius-card); background: rgba(231, 231, 231, 0.45); color: #004059; cursor: pointer; list-style: none; transition: background-color .3s ease-in-out, color .3s ease-in-out; }
+  .bar::-webkit-details-marker { display: none; }
+  .bar:focus-visible { outline: calc(2 * var(--u)) solid var(--color-navy); outline-offset: calc(2 * var(--u)); }
+  .qa[open] > .bar { background: var(--color-navy); color: #fff; }
+  .qa[open]:not(.is-open) > .bar { background: rgba(231, 231, 231, 0.45); color: #004059; }
+  .q { margin: 0; padding-block: calc(5.9 * var(--u)); font-weight: 400; font-size: calc(11.041 * var(--u)); line-height: calc(14.9 * var(--u)); overflow-wrap: anywhere; }
+  .chev { position: absolute; inset-inline-end: calc(16 * var(--u)); top: calc(17.94 * var(--u)); width: calc(9.661 * var(--u)); height: calc(5.806 * var(--u)); max-width: none; display: block; transition: transform .3s ease-in-out, opacity .3s ease-in-out; }
+  .qa:not(.is-open) .chev { transform: rotate(180deg); }
+  .qa:not(.is-open) .chev-open, .qa.is-open .chev-closed { opacity: 0; }
+  .ans { position: relative; box-sizing: border-box; overflow: hidden; max-height: 5000px; margin-top: calc(-37.925 * var(--u)); padding-block: calc(51 * var(--u)) calc(15.24 * var(--u)); padding-inline: calc(23 * var(--u)) calc(16 * var(--u)); border-radius: var(--radius-card); background: var(--color-mist-25); transition: max-height .25s ease-out, opacity .25s ease-out, padding .25s ease-out; }
+  .qa:not(.is-open) .ans { max-height: 0; opacity: 0; }
+  .ans p { margin: 0; color: var(--color-navy-alt); font-size: calc(11.041 * var(--u)); line-height: calc(17.252 * var(--u)); overflow-wrap: anywhere; }
+  .ans p + p { margin-top: calc(8 * var(--u)); }
+  @media (prefers-reduced-motion: reduce) { .bar, .chev, .ans { transition: none; } }
+</style>

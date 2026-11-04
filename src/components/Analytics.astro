@@ -1,0 +1,55 @@
+---
+/*
+ * Google Analytics 4 (B9, 2 Nov 2026, user: "add Google Analytics"). Rendered only when a measurement id (G-XXXXXXXXXX) is
+ * set at build time: `measurementId` in src/data/analytics.json (edited from the dashboard, Settings > Google Analytics) wins,
+ * PUBLIC_GA_MEASUREMENT_ID (.env.example; public by design like the Turnstile / Maps keys) is the fallback; both empty =
+ * nothing of Google's on the page. Options in src/data/analytics.json:
+ *   - `load`: "deferred" = gtag.js is requested after the page's load event (PageSpeed 95+ rule: nothing of Google's before
+ *     the hero is painted; the page_view queues in dataLayer meanwhile, so it is never lost), "eager" = at once.
+ *   - `consent`: Consent Mode v2 default ("granted" today: no cookie banner exists, B9). A banner later sets it to "denied"
+ *     and calls gtag('consent', 'update', {...}) on accept; GA then sends cookieless pings only until the visitor agrees.
+ *   - `forms`: a `generate_lead` event (GA4 recommended event = a conversion) with form_id + edition on every successful form
+ *     send: src/scripts/forms.ts dispatches `ch:form-success` once the function answered ok.
+ * Every hit carries `edition` (global / ae / sa) and `site_language` (en / ar), read from <html data-region lang>: register them as
+ * custom dimensions in GA (Admin > Custom definitions) to report per edition.
+ * The build's values travel in a JSON element the browser never runs, so the inline script below is the SAME text on every
+ * page and the Content-Security-Policy allows it by hash (tools/security-headers.mjs, no 'unsafe-inline' for scripts);
+ * gtag.js itself and its beacons are allowed by domain there (www.googletagmanager.com, *.google-analytics.com).
+ */
+import config from '../data/analytics.json';
+
+const id = ((config as { measurementId?: string }).measurementId ?? '').trim() || (import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '').trim();
+if (id && !/^(G|GT|AW|DC)-[A-Z0-9]+$/i.test(id))
+  console.warn(`[analytics] measurement id "${id}" does not look like a Google tag id (G-XXXXXXXXXX): the tag is still rendered`);
+const json = JSON.stringify({ id, load: config.load, consent: config.consent === 'denied' ? 'denied' : 'granted', forms: config.forms !== false }).replace(/</g, '\\u003c');
+---
+
+{id && (
+  <Fragment>
+    <script is:inline type="application/json" id="ch-analytics-config" set:html={json}></script>
+    <script is:inline>
+      (function () {
+        var cfg = JSON.parse(document.getElementById('ch-analytics-config').textContent);
+        var html = document.documentElement;
+        var edition = html.getAttribute('data-region') || 'global';
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('consent', 'default', { ad_storage: cfg.consent, ad_user_data: cfg.consent, ad_personalization: cfg.consent, analytics_storage: cfg.consent });
+        gtag('js', new Date());
+        gtag('config', cfg.id, { edition: edition, site_language: (html.lang || 'en').slice(0, 2) });
+        if (cfg.forms) document.addEventListener('ch:form-success', function (e) {
+          gtag('event', 'generate_lead', { form_id: (e.detail && e.detail.form) || 'form', edition: edition });
+        });
+        function load() {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfg.id);
+          document.head.appendChild(s);
+        }
+        if (cfg.load === 'eager' || document.readyState === 'complete') load();
+        else window.addEventListener('load', load, { once: true });
+      })();
+    </script>
+  </Fragment>
+)}

@@ -1,3 +1,4 @@
+// NOTE (30 Oct 2026): src/data/news/posts.json was retired; the posts live in src/content/news/<slug>.json (one file per post, both languages). This tool still expects posts.json: re-run the import into a scratch posts.json, then tools/migrate-news.mjs, or point it at the post files.
 // Wires the live site's images saved by tools/make-image-grabber.mjs (folders docs/cambridge-images*/, unpacked from
 // cambridge-images.tar: wp-content/uploads/... + media.json = WordPress media id -> path) into src/assets + the data JSON.
 // Only EMPTY slots are filled; a Figma image already in place is never replaced (Figma = design source of truth).

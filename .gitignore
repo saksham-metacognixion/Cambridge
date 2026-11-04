@@ -49,3 +49,7 @@ __pycache__/
 
 # Prateek's 16 Oct 2026 banner composites (165 MB, OneDrive "Cambridge Hospital - Website Images"): source of tools/banners/composite.py, not tracked
 docs/client-assets/website-images-oct16/
+
+# Dashboard admin service (tools/admin/): bundle, and the versions / deleted copies it keeps next to the content
+dist-admin/
+.admin/

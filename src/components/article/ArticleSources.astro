@@ -1,0 +1,29 @@
+---
+/*
+ * Sources / references of an article (SEO & GEO dashboard, 30 Oct 2026; site style): an H2 in the body's heading style and a
+ * numbered list in the body's list type (Book 12/18), each item a link that opens in a new tab. Also the article's schema
+ * `citation` (src/lib/schema.ts).
+ */
+interface Props { heading: string; items: { title?: string; url: string }[] }
+const { heading, items } = Astro.props;
+const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return u; } };
+---
+
+<section class="src" aria-labelledby="sources-heading">
+  <h2 id="sources-heading" class="h">{heading}</h2>
+  <ol class="list">
+    {items.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.title || s.url}</a>{s.title && <span class="host"> ({host(s.url)})</span>}</li>)}
+  </ol>
+</section>
+
+<style>
+  .src { font-family: var(--font-gotham); font-style: normal; }
+  .h { margin: 0 0 calc(9 * var(--u)); font-weight: 500; font-size: calc(28 * var(--u)); line-height: calc(33 * var(--u)); color: var(--color-navy-alt); overflow-wrap: anywhere; }
+  .list { margin: 0; padding: 0; margin-inline-start: calc(20 * var(--u)); color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(18 * var(--u)); }
+  .list li { margin-inline-start: calc(18 * var(--u)); overflow-wrap: anywhere; }
+  .list li + li { margin-top: calc(4 * var(--u)); }
+  .list li::marker { color: var(--color-teal-border); }
+  a { color: var(--color-navy); text-decoration: underline; text-decoration-skip-ink: none; text-underline-position: from-font; }
+  a:focus-visible { outline: calc(2 * var(--u)) solid var(--color-cyan); outline-offset: calc(1 * var(--u)); }
+  .host { color: var(--color-body); }
+</style>

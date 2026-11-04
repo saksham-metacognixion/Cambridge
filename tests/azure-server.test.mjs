@@ -30,7 +30,7 @@ const files = {
   'favicon.svg': '<svg/>',
   '_redirects': ['/events /media-hub/?category=events#latest 301', '/old-page /contact-us/ 301',
     '/%D8%A7%D9%84%D8%B9%D9%86%D8%A7%D9%8A%D8%A9 /ar/ 301', '/sa/doctor/* /sa/find-a-doctor/ 301', '/sa/doctor/kept/ /never/ 301', '/first/ /one/ 301', '/first/ /two/ 301'].join('\n') + '\n',
-  '_headers': '# comment\n/_astro/*\n  Cache-Control: public, max-age=31536000, immutable\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n',
+  '_headers': '# comment\n/_astro/*\n  Cache-Control: public, max-age=31536000, immutable\n/fonts/*\n  Cache-Control: public, max-age=31536000, immutable\n\n# security\n/*\n  X-Frame-Options: SAMEORIGIN\n  Content-Security-Policy: default-src \'self\'; script-src \'self\' \'sha256-abc=\'\n',
 };
 for (const [name, body] of Object.entries(files)) {
   mkdirSync(dirname(join(root, name)), { recursive: true });
@@ -84,6 +84,8 @@ const cases = [
   ['404: no path traversal out of dist', () => get('/..%2f..%2f..%2fetc%2fpasswd'), async (r) => r.status === 404 && !(await r.text()).includes('root:')],
   ['headers: dist/_headers rule on /_astro/*', () => get('/_astro/app.abc123.js'), (r) => r.headers.get('cache-control') === 'public, max-age=31536000, immutable'],
   ['headers: pages revalidate', () => get('/ae/'), (r) => r.headers.get('cache-control') === 'public, max-age=0, must-revalidate' && r.headers.get('x-content-type-options') === 'nosniff'],
+  ['headers: the "/*" security rule on pages (value with colons kept whole)', () => get('/ae/'), (r) => r.headers.get('x-frame-options') === 'SAMEORIGIN' && r.headers.get('content-security-policy') === "default-src 'self'; script-src 'self' 'sha256-abc='"],
+  ['headers: the "/*" rule on files too, the later path rule still wins for its own header', () => get('/_astro/app.abc123.js'), (r) => r.headers.get('x-frame-options') === 'SAMEORIGIN' && r.headers.get('cache-control') === 'public, max-age=31536000, immutable'],
   ['cache: matching If-None-Match -> 304, no body', async () => { const etag = (await get('/ae/')).headers.get('etag'); return get('/ae/', { 'If-None-Match': etag }); },
     async (r) => r.status === 304 && (await r.text()) === ''],
   ['HEAD: headers only', () => get('/ae/', {}, 'HEAD'), async (r) => r.status === 200 && r.headers.get('content-length') === '20' && (await r.text()) === ''],

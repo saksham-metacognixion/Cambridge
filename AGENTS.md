@@ -152,8 +152,12 @@ Database or stored submissions · CMS/admin panel · leads/appointments back off
 writing or translating content · new images or design beyond Figma · patient portal, payments, or
 integrations with hospital systems, CRMs or insurers.
 
-**To be confirmed:** analytics (Google Analytics + cookie consent banner, or none) — leave room for a consent
-banner. Post-launch CMS — keep content in JSON.
+**Analytics (user, 2 Nov 2026): Google Analytics 4 is built** (`src/components/Analytics.astro`, options `src/data/analytics.json`),
+rendered only when a measurement id is set at build time: `measurementId` in `src/data/analytics.json`, edited from the dashboard
+(Settings > Google Analytics, since 2 Nov 2026), falling back to `PUBLIC_GA_MEASUREMENT_ID`; the CSP allows Google's tag hosts.
+Staging uses `G-GYNZTC8RSL` (user, 2 Nov 2026). Still to confirm: production's id, and a cookie consent banner (room is left:
+`#consent-banner`, Consent Mode default `granted` until then).
+Post-launch CMS — keep content in JSON.
 
 ## 14. Timeline (all work on a private staging link)
 Setup 2 Oct (skeleton, routing for 6 editions, design system) · Core journeys 6 Oct (Home, Find a Doctor,

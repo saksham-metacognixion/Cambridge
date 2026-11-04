@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { transform as lightningTransform, Features } from 'lightningcss';
 import { loadEnv } from 'vite';
+import { buildHeadersRule } from './tools/security-headers.mjs';
 
 // Bug 209 (19 Oct 2026): the Contact Us map key is baked in at build time (ContactForm.astro). A deploy whose environment lacks
 // it built silently and shipped the placeholder map, so say so in the build log. A warning only: an unconfigured environment
@@ -85,6 +86,28 @@ function browserCompatCss() {
 }
 
 /** dist/<prefix>/404/index.html -> dist/<prefix>/404.html: the file Cloudflare Pages / nginx / Vercel serve for unknown URLs. */
+/*
+ * Security headers (client security review, 30 Oct 2026; tools/security-headers.mjs): after the build, every page's inline
+ * scripts are hashed and a "/*" rule with HSTS, Content-Security-Policy, X-Frame-Options, Referrer-Policy and
+ * Permissions-Policy is appended to dist/_headers, which the Azure page server applies to every response (vercel.json copies
+ * it for staging). Runs last: the other passes rewrite HTML, and the hashes must be of the final text.
+ */
+function securityHeaders() {
+  return {
+    name: 'security-headers',
+    hooks: {
+      'astro:build:done': async ({ dir, logger }) => {
+        const root = fileURLToPath(dir);
+        const { rule, hashes } = await buildHeadersRule(root);
+        const file = join(root, '_headers');
+        const current = await readFile(file, 'utf8').catch(() => '');
+        await writeFile(file, current.replace(/\n?$/, '\n') + '\n# Security headers for every path (astro.config.mjs securityHeaders, tools/security-headers.mjs)\n' + rule);
+        logger.info(`security headers written to _headers (${hashes.length} inline script hashes)`);
+      },
+    },
+  };
+}
+
 function notFoundPages() {
   return {
     name: 'not-found-pages',
@@ -132,8 +155,19 @@ export default defineConfig({
   // tools/vercel-json.mjs, deploy/nginx, Cloudflare Pages by default). Page URLs come from urlFor (src/lib/editions.ts).
   // The integration below moves each edition's 404 page to <prefix>/404.html, the file the hosts serve for unknown URLs.
   trailingSlash: 'always',
+  // Preview (SEO & GEO dashboard, 2 Nov 2026): the admin service runs `astro dev` with ASTRO_BASE=/admin/preview and
+  // NEWS_PREVIEW=true (tools/admin/server.ts) and proxies that path, so a saved post, drafts included, can be seen as the
+  // real page without a build. The base puts the page and /_image URLs under /admin/preview, the only path Caddy sends to
+  // the admin service; Vite's own URLs (/@vite, /@fs, /src) stay at the root and the proxy rewrites them (vite.base here
+  // breaks the dev server's page routing, measured 2 Nov 2026). HMR is off there (no websocket through the proxy).
+  // Never set for a build.
+  ...(process.env.ASTRO_BASE ? { base: process.env.ASTRO_BASE } : {}),
   build: { format: 'directory', inlineStylesheets: 'auto' },
-  integrations: [notFoundPages(), browserCompatCss(), fontVersions()],
+  // The optimised-image cache (4,500+ AVIF / WebP, ~12 min to encode) defaults to node_modules/.astro. On the Azure VM the
+  // dashboard's builds keep it outside the checkout (ASTRO_CACHE_DIR, deploy/vm/cambridge-admin.service) so `npm ci` on a
+  // code deploy does not throw it away.
+  ...(process.env.ASTRO_CACHE_DIR ? { cacheDir: process.env.ASTRO_CACHE_DIR } : {}),
+  integrations: [notFoundPages(), browserCompatCss(), fontVersions(), securityHeaders()],
   devToolbar: { enabled: false },
   // Bug 190 (16 Oct 2026): no quality was set anywhere, so every photo (<Picture> / <Image>) was encoded at sharp's default AVIF
   // quality 50 with 4:2:0 chroma: soft faces and smeared patterns (the red-checked ghutra), banners 7-25 KB. src/lib/image-service.ts
@@ -147,6 +181,7 @@ export default defineConfig({
     // Vite blocks unknown Host headers unless listed here.
     server: {
       allowedHosts: ['.ngrok-free.dev', '.ngrok-free.app', '.ngrok.app'],
+      ...(process.env.ASTRO_BASE ? { hmr: false } : {}),
       // .astro/ holds the QA scratch builds (many GB, rewritten while QA runs); watching it and the docs/figma-cache exports
       // stalled the dev server (transport invoke timeouts on global.css).
       watch: { ignored: ['**/.astro/**', '**/dist/**', '**/docs/**', '**/figma-cache/**'] },

@@ -1,0 +1,10 @@
+# Runs deploy/vm/backup.sh every night at 02:30 UTC (06:30 UAE). Installed and enabled by deploy/vm/setup.sh.
+[Unit]
+Description=Nightly Cambridge Hospital dashboard content backup
+
+[Timer]
+OnCalendar=*-*-* 02:30:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

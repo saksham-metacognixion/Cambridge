@@ -4,6 +4,7 @@ import { content, t } from '../../../lib/content';
 import { hospitalsIn, hospitalEditions, hospitalName, detailContent, HOSPITAL_PATHS, type Hospital } from '../../../lib/hospitals';
 import { showPendingNote } from '../../../lib/conditions';
 import { INDEXABLE } from '../../../lib/seo';
+import { ldJson, hospitalSchema } from '../../../lib/schema';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
@@ -59,6 +60,7 @@ const healText = { ...shared.healing, ...(own?.healing.heading ? { heading: own.
 ---
 
 <BaseLayout edition={edition} path={HOSPITAL_PATHS.detail(h.slug)} title={fill(shared.meta.title)} description={fill(shared.meta.description)} editionsWithPage={hospitalEditions(h)}>
+  <script slot="head" type="application/ld+json" set:html={ldJson(hospitalSchema(h, edition))} />
   <div class="relative" style="z-index:14">
     <Header />
   </div>

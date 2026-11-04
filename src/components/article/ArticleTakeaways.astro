@@ -1,0 +1,24 @@
+---
+/*
+ * "Key takeaways" box (SEO & GEO dashboard, 30 Oct 2026; site style, no Figma frame): between the intro and the article, in
+ * the prose column. The FAQ page's closed-bar fill (rgba(231,231,231,.45)) with the card radius, a Medium 16 heading like the
+ * body's H3, and a short list whose markers are Muted Teal, text Book 12/18 like the body's list items. Also the article's
+ * schema `description` (src/lib/schema.ts).
+ */
+interface Props { heading: string; items: string[] }
+const { heading, items } = Astro.props;
+---
+
+<aside class="tk" aria-labelledby="takeaways-heading">
+  <h2 id="takeaways-heading" class="h">{heading}</h2>
+  <ul class="list">{items.map((t) => <li>{t}</li>)}</ul>
+</aside>
+
+<style>
+  .tk { box-sizing: border-box; padding: calc(18 * var(--u)) calc(22 * var(--u)) calc(20 * var(--u)); border-radius: var(--radius-card); background: rgba(231, 231, 231, 0.45); border-inline-start: calc(4 * var(--u)) solid var(--color-cyan); }
+  .h { margin: 0; font-weight: 500; font-size: calc(16 * var(--u)); line-height: calc(19 * var(--u)); color: var(--color-navy-alt); }
+  .list { margin: calc(9 * var(--u)) 0 0; padding: 0; margin-inline-start: calc(18 * var(--u)); list-style: disc; color: var(--color-body); font-size: calc(12 * var(--u)); line-height: calc(18 * var(--u)); }
+  .list li { padding-inline-start: calc(2 * var(--u)); overflow-wrap: anywhere; }
+  .list li::marker { color: var(--color-teal-border); }
+  .list li + li { margin-top: calc(4 * var(--u)); }
+</style>

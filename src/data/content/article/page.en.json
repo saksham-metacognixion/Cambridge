@@ -60,5 +60,24 @@
   },
   "video": {
     "playLabel": "Play video"
+  },
+  "geo": {
+    "_note": "GEO blocks of the SEO & GEO dashboard (30 Oct 2026, designed in the site's style, no Figma frame; docs/open-decisions.md SG2): shown only on posts that carry the fields. No Arabic yet (docs/arabic-missing-strings.md).",
+    "writtenBy": "Written by",
+    "reviewedBy": "Reviewed by",
+    "published": "Published",
+    "updated": "Last updated",
+    "takeaways": "Key takeaways",
+    "faq": "Frequently asked questions",
+    "sources": "Sources",
+    "author": {
+      "meta": {
+        "title": "{name} | Cambridge Hospital",
+        "descriptionFallback": "{name}, {role} at Cambridge Hospital."
+      },
+      "articles": "Articles by {name}",
+      "none": "No articles yet.",
+      "linkedin": "LinkedIn profile"
+    }
   }
 }

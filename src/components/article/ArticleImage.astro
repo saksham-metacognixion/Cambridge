@@ -1,6 +1,6 @@
 ---
 /*
- * A photo inside a post's text (site-written posts, src/data/news/site-posts.json: <figure data-image="<key>"><img alt>,
+ * A photo inside a post's text (site-written posts, src/content/news/<slug>.json: <figure data-image="<key>"><img alt>,
  * kept by src/lib/sanitize.ts). Same look as the body's other images (no Figma design for in-text images, AR4): the photo's
  * own width, never wider than the text column. Unlike a raw <img>, it is an optimised Picture (AVIF + WebP fallback,
  * width/height set, lazy). An unknown key stops the build (lib/images.ts img()).

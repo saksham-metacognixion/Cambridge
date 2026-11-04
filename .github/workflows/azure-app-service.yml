@@ -41,6 +41,7 @@ jobs:
         env:
           PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
           PUBLIC_GOOGLE_MAPS_KEY: ${{ vars.PUBLIC_GOOGLE_MAPS_KEY }}
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
 
       # The deployment is the build and the bundled server only: no package.json, so App Service installs nothing.
       - run: zip -qr site.zip dist dist-server

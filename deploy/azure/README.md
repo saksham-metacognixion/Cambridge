@@ -55,6 +55,7 @@ Every push to `main` tests, builds and deploys. Repository Settings > Secrets an
 | Secret | `AZURE_WEBAPP_PUBLISH_PROFILE` | App Service > Overview > Download publish profile (file contents) |
 | Variable | `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile site key (build time, public) |
 | Variable | `PUBLIC_GOOGLE_MAPS_KEY` | Maps JavaScript API browser key, restricted to the site's domains (build time, public) |
+| Variable | `PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 measurement id `G-XXXXXXXXXX` (build time, public; empty = no Google tag) |
 
 Use the workflow in this repo, not the one Deployment Center generates: that one deploys the repository and lets App
 Service build it, which does not produce `dist-server/`.

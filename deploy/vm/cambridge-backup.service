@@ -1,0 +1,10 @@
+# Nightly content backup (deploy/vm/backup.sh), started by cambridge-backup.timer.
+[Unit]
+Description=Cambridge Hospital dashboard content backup
+
+[Service]
+Type=oneshot
+User=cambridge
+Group=cambridge
+EnvironmentFile=/etc/cambridge-admin.env
+ExecStart=/usr/bin/bash /srv/cambridge/admin/deploy/vm/backup.sh

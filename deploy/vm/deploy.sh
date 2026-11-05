@@ -14,7 +14,11 @@ ssh_cmd=(ssh -o BatchMode=yes)
 
 # printf %q keeps a key path with spaces intact inside rsync's -e string. Group-writable (group cambridge via the setgid
 # releases directory): the dashboard's own publishes (user cambridge, deploy/vm/publish.sh) prune old releases too.
-rsync -az --chmod=D2775,F664 -e "$(printf '%q ' "${ssh_cmd[@]}")" dist dist-server deploy/vm/activate.sh "$DEPLOY_HOST:/srv/cambridge/releases/$release/"
+# Shared folders on the VM (bug 261, 5 Nov 2026): -a would copy the runner's group (gid 1001 = deploy on the VM) onto every
+# file, which user cambridge is not in; --no-group leaves the group to the setgid directories (cambridge). --omit-dir-times:
+# rsync may not set the time of a directory the dashboard created (owner cambridge), and that failure alone fails a deploy.
+rsync_opts=(-az --no-group --omit-dir-times --chmod=D2775,F664)
+rsync "${rsync_opts[@]}" -e "$(printf '%q ' "${ssh_cmd[@]}")" dist dist-server deploy/vm/activate.sh "$DEPLOY_HOST:/srv/cambridge/releases/$release/"
 "${ssh_cmd[@]}" "$DEPLOY_HOST" "bash /srv/cambridge/releases/$release/activate.sh"
 
 # The dashboard's checkout (/srv/cambridge/admin, deploy/vm/README.md "Dashboard"): the same source, so its Publish builds
@@ -23,9 +27,9 @@ rsync -az --chmod=D2775,F664 -e "$(printf '%q ' "${ssh_cmd[@]}")" dist dist-serv
 # deploy/vm/fetch-content.sh before the build so the release itself carries the dashboard's posts.
 if "${ssh_cmd[@]}" "$DEPLOY_HOST" "test -d /srv/cambridge/admin"; then
   rsh="$(printf '%q ' "${ssh_cmd[@]}")"
-  rsync -az --delete --chmod=D2775,F664 --exclude-from=deploy/vm/admin-sync.exclude -e "$rsh" ./ "$DEPLOY_HOST:/srv/cambridge/admin/"
+  rsync "${rsync_opts[@]}" --delete --exclude-from=deploy/vm/admin-sync.exclude -e "$rsh" ./ "$DEPLOY_HOST:/srv/cambridge/admin/"
   for dir in src/content src/assets/news src/assets/authors; do
-    [ -d "$dir" ] && rsync -az --ignore-existing --chmod=D2775,F664 -e "$rsh" "$dir/" "$DEPLOY_HOST:/srv/cambridge/admin/$dir/"
+    [ -d "$dir" ] && rsync "${rsync_opts[@]}" --ignore-existing -e "$rsh" "$dir/" "$DEPLOY_HOST:/srv/cambridge/admin/$dir/"
   done
   "${ssh_cmd[@]}" "$DEPLOY_HOST" "bash /srv/cambridge/admin/deploy/vm/admin-update.sh"
 fi

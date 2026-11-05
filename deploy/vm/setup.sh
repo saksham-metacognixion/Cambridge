@@ -37,11 +37,20 @@ chmod 600 /home/deploy/.ssh/authorized_keys
 # Releases are written by `deploy` (GitHub) and by the dashboard (`cambridge`, deploy/vm/publish.sh): one group, setgid
 # directories, so either can switch and prune them. /srv/cambridge/admin = the dashboard's checkout of the repository
 # (code synced by deploy.sh, posts edited by the dashboard); /srv/cambridge/cache = npm + Astro image caches.
+# Owner deploy on /srv/cambridge, releases and admin: rsync (user deploy) sets the mode and time of the folders it syncs
+# into, which only their owner may do; group cambridge + setgid so the dashboard writes there too, and /srv/cambridge
+# itself is group-writable because a dashboard publish switches the `current` link there (deploy/vm/activate.sh).
 usermod -aG cambridge deploy
-install -d -o deploy -g deploy /srv/cambridge
-install -d -m 2775 -o deploy -g cambridge /srv/cambridge/releases
-install -d -m 2775 -o cambridge -g cambridge /srv/cambridge/admin /srv/cambridge/cache /srv/cambridge/backups
-chmod 2775 /srv/cambridge/releases
+install -d /srv/cambridge /srv/cambridge/releases /srv/cambridge/admin /srv/cambridge/cache /srv/cambridge/backups
+chown deploy:cambridge /srv/cambridge /srv/cambridge/releases /srv/cambridge/admin
+chown cambridge:cambridge /srv/cambridge/cache /srv/cambridge/backups
+chmod 2775 /srv/cambridge /srv/cambridge/releases /srv/cambridge/admin /srv/cambridge/cache /srv/cambridge/backups
+# Repair for a VM set up before 5 Nov 2026 (bug 261): deploy.sh's rsync gave every file the runner's group (= deploy), which
+# the dashboard (user cambridge) is not in. Everything under the shared folders belongs to group cambridge, group-writable,
+# directories setgid; harmless and quick when nothing is wrong.
+chgrp -R cambridge /srv/cambridge/releases /srv/cambridge/admin
+chmod -R g+rwX /srv/cambridge/releases /srv/cambridge/admin
+find /srv/cambridge/releases /srv/cambridge/admin -type d ! -perm -g+s -exec chmod g+s {} +
 
 sudoers=/etc/sudoers.d/cambridge-deploy
 cat > "$sudoers" <<'SUDO'

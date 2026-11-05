@@ -140,6 +140,18 @@ in the Caddyfile, so nobody reaches the VM around Cloudflare.
 | Dashboard | `systemctl status cambridge-admin`, `journalctl -u cambridge-admin -f` (the publish log is also shown in the UI) |
 | Backups | `/srv/cambridge/backups/content-<date>.tar.gz`; restore: `sudo -u cambridge tar -xzf <archive> -C /srv/cambridge/admin`, then Publish |
 | Pull the posts into a laptop checkout | `DEPLOY_HOST=deploy@<vm-ip> SSH_KEY=~/.ssh/cambridge_deploy npm run content:pull` |
+| A deploy fails in rsync with `chgrp` / `failed to set times` / `Operation not permitted` | Ownership under `/srv/cambridge` drifted: re-run `setup.sh` (section 3), which repairs it (bug 261, `docs/bug-261-vm-shared-folders.md`) |
+
+### Who owns what under `/srv/cambridge`
+
+Two users write there: `deploy` (GitHub deploys, `deploy.sh` / `activate.sh` / `admin-update.sh`) and `cambridge` (the dashboard:
+`publish.sh`, post edits, backups). `setup.sh` makes it work for both and is the only place that sets it (safe to re-run):
+
+| Path | Owner | Why |
+|---|---|---|
+| `/srv/cambridge`, `releases/`, `admin/` | `deploy:cambridge`, `2775` | rsync (user `deploy`) sets the mode of the folders it syncs into, which only the owner may do; the dashboard writes there through the group; a dashboard publish switches the `current` link in `/srv/cambridge` |
+| `cache/`, `backups/` | `cambridge:cambridge`, `2775` | the dashboard's; `admin-update.sh` (user `deploy`) fills the npm cache through the group |
+| everything inside | group `cambridge`, group-writable, directories setgid | `deploy.sh` syncs with `--no-group --chmod=D2775,F664`, both services and scripts run with umask `002` |
 
 A release that does not answer within 20 s is rolled back automatically; the workflow run then fails.
 OS security updates install themselves (Ubuntu's unattended-upgrades); reboot when `/var/run/reboot-required` exists.
